@@ -86,7 +86,9 @@ static const GLvoid *swizzle_texture(GLsizei width, GLsizei height,
 void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
                   GLsizei width, GLsizei height, GLint border,
                   GLenum format, GLenum type, const GLvoid *data) {
-
+#ifndef ALLOW_MIPMAP
+    if (level!=0) return;
+#endif
     GLtexture *bound = state.texture.bound;
     GLvoid *pixels = (GLvoid *)data;
     if (data) {
@@ -181,6 +183,10 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
 void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
                      GLsizei width, GLsizei height, GLenum format, GLenum type,
                      const GLvoid *data) {
+#ifndef ALLOW_MIPMAP
+    if (level!=0) return;
+#endif
+
     LOAD_GLES(void, glTexSubImage2D, GLenum, GLint, GLint,
               GLint, GLsizei, GLsizei,
               GLenum, GLenum, const GLvoid *);
@@ -266,6 +272,14 @@ void glTexParameteri(GLenum target, GLenum pname, GLint param) {
     LOAD_GLES(void, glTexParameteri, GLenum, GLenum, GLint);
     target = map_tex_target(target);
     switch (param) {
+#ifndef ALLOW_MIPMAP
+        case GL_NEAREST_MIPMAP_NEAREST:
+        case GL_LINEAR_MIPMAP_NEAREST:
+        case GL_NEAREST_MIPMAP_LINEAR:
+        case GL_LINEAR_MIPMAP_LINEAR:
+            param = GL_LINEAR;
+            break;
+#endif
         case GL_CLAMP:
             param = GL_CLAMP_TO_EDGE;
             break;
