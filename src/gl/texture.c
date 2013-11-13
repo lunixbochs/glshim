@@ -242,44 +242,41 @@ void glPixelStorei(GLenum pname, GLint param) {
 }
 
 void glBindTexture(GLenum target, GLuint texture) {
-    if (state.list.active) {
-        rlBindTexture(state.list.active, texture);
-    } else {
-        if (texture) {
-            int ret;
-            khint_t k;
-            khash_t(tex) *list = state.texture.list;
-            if (! list) {
-                list = state.texture.list = kh_init(tex);
-                // segfaults if we don't do a single put
-                kh_put(tex, list, 1, &ret);
-                kh_del(tex, list, 1);
-            }
-
-            k = kh_get(tex, list, texture);
-            gltexture_t *tex = NULL;;
-            if (k == kh_end(list)){
-                k = kh_put(tex, list, texture, &ret);
-                tex = kh_value(list, k) = malloc(sizeof(gltexture_t));
-                tex->texture = texture;
-                tex->target = target;
-                tex->width = 0;
-                tex->height = 0;
-                tex->uploaded = false;
-            } else {
-                tex = kh_value(list, k);
-            }
-            state.texture.bound = tex;
-        } else {
-            state.texture.bound = NULL;
+    PUSH_IF_COMPILING(glBindTexture);
+    if (texture) {
+        int ret;
+        khint_t k;
+        khash_t(tex) *list = state.texture.list;
+        if (! list) {
+            list = state.texture.list = kh_init(tex);
+            // segfaults if we don't do a single put
+            kh_put(tex, list, 1, &ret);
+            kh_del(tex, list, 1);
         }
 
-        state.texture.rect_arb = (target == GL_TEXTURE_RECTANGLE_ARB);
-        target = map_tex_target(target);
-
-        LOAD_GLES(glBindTexture);
-        gles_glBindTexture(target, texture);
+        k = kh_get(tex, list, texture);
+        gltexture_t *tex = NULL;;
+        if (k == kh_end(list)){
+            k = kh_put(tex, list, texture, &ret);
+            tex = kh_value(list, k) = malloc(sizeof(gltexture_t));
+            tex->texture = texture;
+            tex->target = target;
+            tex->width = 0;
+            tex->height = 0;
+            tex->uploaded = false;
+        } else {
+            tex = kh_value(list, k);
+        }
+        state.texture.bound = tex;
+    } else {
+        state.texture.bound = NULL;
     }
+
+    state.texture.rect_arb = (target == GL_TEXTURE_RECTANGLE_ARB);
+    target = map_tex_target(target);
+
+    LOAD_GLES(glBindTexture);
+    gles_glBindTexture(target, texture);
 }
 
 // TODO: also glTexParameterf(v)?

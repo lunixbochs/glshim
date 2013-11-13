@@ -34,7 +34,6 @@ typedef struct _renderlist_t {
     GLboolean q2t;
 
     khash_t(material) *material;
-    GLuint texture;
     struct _renderlist_t *prev;
     struct _renderlist_t *next;
     GLboolean open;
@@ -50,7 +49,6 @@ extern void draw_renderlist(renderlist_t *list);
 extern void q2t_renderlist(renderlist_t *list);
 extern void end_renderlist(renderlist_t *list);
 
-extern void rlBindTexture(renderlist_t *list, GLuint texture);
 extern void rlColor4f(renderlist_t *list, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
 extern void rlMaterialfv(renderlist_t *list, GLenum face, GLenum pname, const GLfloat * params);
 extern void rlNormal3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z);

@@ -28,7 +28,6 @@ renderlist_t *alloc_renderlist() {
     list->material = NULL;
     list->indices = NULL;
     list->q2t = false;
-    list->texture = 0;
 
     list->prev = NULL;
     list->next = NULL;
@@ -126,10 +125,12 @@ void end_renderlist(renderlist_t *list) {
         return;
 
     list->open = false;
+    // TODO: what about multitexturing?
     gltexture_t *bound = state.texture.bound;
     if (list->tex && bound && (bound->width != bound->nwidth || bound->height != bound->nheight)) {
         tex_coord_npot(list->tex, list->len, bound->width, bound->height, bound->nwidth, bound->nheight);
     }
+    // TODO: how does multitexturing affect this?
     // GL_ARB_texture_rectangle
     if (list->tex && state.texture.rect_arb && bound) {
         tex_coord_rect_arb(list->tex, list->len, bound->width, bound->height);
@@ -162,8 +163,6 @@ void draw_renderlist(renderlist_t *list) {
                 glPackedCall(cl->calls[i]);
             }
         }
-        if (list->texture)
-            glBindTexture(GL_TEXTURE_2D, list->texture);
         if (! list->len)
             continue;
 
@@ -203,8 +202,6 @@ void draw_renderlist(renderlist_t *list) {
             )
         }
 
-        GLuint texture;
-
         bool stipple = false;
         if (! list->tex) {
             // TODO: do we need to support GL_LINE_STRIP?
@@ -215,6 +212,7 @@ void draw_renderlist(renderlist_t *list) {
                 glEnable(GL_TEXTURE_2D);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE);
                 list->tex = gen_stipple_tex_coords(list->vert, list->len);
+                bind_stipple_tex();
             } else if (state.enable.texgen_s || state.enable.texgen_t) {
                 gen_tex_coords(list->vert, &list->tex, list->len);
             }
@@ -348,10 +346,6 @@ void rlTexCoord2f(renderlist_t *list, GLfloat s, GLfloat t) {
     }
     GLfloat *tex = list->lastTex;
     tex[0] = s; tex[1] = t;
-}
-
-void rlBindTexture(renderlist_t *list, GLuint texture) {
-    list->texture = texture;
 }
 
 void rlPushCall(renderlist_t *list, packed_call_t *data) {
