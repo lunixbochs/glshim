@@ -391,17 +391,6 @@ void glColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
 #endif
 }
 
-#ifndef USE_ES2
-void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
-    LOAD_GLES(glMaterialfv);
-    if (state.list.active) {
-        rlMaterialfv(state.list.active, face, pname, params);
-    } else {
-        gles_glMaterialfv(face, pname, params);
-    }
-}
-#endif
-
 void glTexCoord2f(GLfloat s, GLfloat t) {
     if (state.list.active) {
         rlTexCoord2f(state.list.active, s, t);

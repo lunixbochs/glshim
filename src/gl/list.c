@@ -25,7 +25,6 @@ renderlist_t *alloc_renderlist() {
     list->normal = NULL;
     list->color = NULL;
     list->tex = NULL;
-    list->material = NULL;
     list->indices = NULL;
     list->q2t = false;
 
@@ -61,13 +60,6 @@ void free_renderlist(renderlist_t *list) {
         if (list->normal) free(list->normal);
         if (list->color) free(list->color);
         if (list->tex) free(list->tex);
-        if (list->material) {
-            rendermaterial_t *m;
-            kh_foreach_value(list->material, m,
-                free(m);
-            )
-            kh_destroy(material, list->material);
-        }
         if (list->indices) free(list->indices);
         next = list->next;
         free(list);
@@ -194,14 +186,6 @@ void draw_renderlist(renderlist_t *list) {
             glDisableClientState(GL_COLOR_ARRAY);
         }
 
-        if (list->material) {
-            khash_t(material) *map = list->material;
-            rendermaterial_t *m;
-            kh_foreach_value(map, m,
-                glMaterialfv(GL_FRONT_AND_BACK, m->pname, m->color);
-            )
-        }
-
         bool stipple = false;
         if (! list->tex) {
             // TODO: do we need to support GL_LINE_STRIP?
@@ -299,37 +283,6 @@ void rlColor4f(renderlist_t *list, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     } else {
         resize_renderlist(list);
     }
-}
-
-void rlMaterialfv(renderlist_t *list, GLenum face, GLenum pname, const GLfloat * params) {
-    rendermaterial_t *m;
-    khash_t(material) *map;
-    khint_t k;
-    int ret;
-    if (! list->material) {
-        list->material = map = kh_init(material);
-        // segfaults if we don't do a single put
-        kh_put(material, map, 1, &ret);
-        kh_del(material, map, 1);
-    } else {
-        map = list->material;
-    }
-
-    // TODO: currently puts all faces in the same map
-    k = kh_get(material, map, pname);
-    if (k == kh_end(map)) {
-        k = kh_put(material, map, pname, &ret);
-        m = kh_value(map, k) = malloc(sizeof(rendermaterial_t));
-    } else {
-        m = kh_value(map, k);
-    }
-
-    m->face = face;
-    m->pname = pname;
-    m->color[0] = params[0];
-    m->color[1] = params[1];
-    m->color[2] = params[2];
-    m->color[3] = params[3];
 }
 
 void rlTexCoord2f(renderlist_t *list, GLfloat s, GLfloat t) {
