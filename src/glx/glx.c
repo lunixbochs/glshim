@@ -1,4 +1,3 @@
-#include <execinfo.h>
 #include <fcntl.h>
 #include <linux/fb.h>
 #include <signal.h>
@@ -112,7 +111,7 @@ static Display *g_display;
 #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
 #endif
 static bool g_showfps = false;
-static bool g_usefb = false;
+static bool g_usefb = true;
 static bool g_vsync = false;
 static bool g_xrefresh = false;
 static bool g_stacktrace = false;
@@ -127,9 +126,6 @@ static int fbdev = -1;
 static int swap_interval = 1;
 
 static void init_display(Display *display) {
-    if (! g_display) {
-        g_display = XOpenDisplay(NULL);
-    }
     if (g_usefb) {
         eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     } else {
@@ -159,24 +155,6 @@ static void signal_handler(int sig) {
     }
 #endif
 
-    if (g_stacktrace) {
-        switch (sig) {
-            case SIGBUS:
-            case SIGFPE:
-            case SIGILL:
-            case SIGSEGV: {
-                void *array[10];
-                size_t size = backtrace(array, 10);
-                if (! size) {
-                    printf("No stacktrace. Compile with -funwind-tables.\n");
-                } else {
-                    printf("Stacktrace: %i\n", size);
-                    backtrace_symbols_fd(array, size, 2);
-                }
-                break;
-            }
-        }
-    }
     signal(sig, SIG_DFL);
     raise(sig);
 }
@@ -227,17 +205,9 @@ GLXContext glXCreateContext(Display *display,
                             GLXContext shareList,
                             Bool isDirect) {
     EGLint configAttribs[] = {
-#ifdef PANDORA
-        EGL_RED_SIZE, 5,
-        EGL_GREEN_SIZE, 6,
-        EGL_BLUE_SIZE, 5,
-#endif
-        EGL_DEPTH_SIZE, 16,
 #ifdef USE_ES2
         EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
 #else
-        EGL_BUFFER_SIZE, 16,
-        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
         EGL_RENDERABLE_TYPE, EGL_OPENGL_ES_BIT,
 #endif
         EGL_NONE
@@ -251,7 +221,6 @@ GLXContext glXCreateContext(Display *display,
 #else
     EGLint *attrib_list = NULL;
 #endif
-
     scan_env();
 
 #ifdef BCMHOST
@@ -347,14 +316,8 @@ XVisualInfo *glXChooseVisual(Display *display,
                              int screen,
                              int *attributes) {
 
-    // apparently can't trust the Display I'm passed?
-    if (g_display == NULL) {
-        g_display = XOpenDisplay(NULL);
-    }
-    int depth = DefaultDepth(g_display, screen);
-    XVisualInfo *visual = (XVisualInfo *)malloc(sizeof(XVisualInfo));
-    XMatchVisualInfo(g_display, screen, depth, TrueColor, visual);
-    return visual;
+    static XVisualInfo fake = {0};
+    return &fake;
 }
 
 /*
@@ -382,9 +345,14 @@ Bool glXMakeCurrent(Display *display,
         init_display(display);
     }
 
+    static EGLint const window_attribute_list[] = {
+        EGL_RENDER_BUFFER, EGL_BACK_BUFFER,
+        EGL_NONE
+    };
+
     if (g_usefb)
         drawable = 0;
-    eglSurface = eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, NULL);
+    eglSurface = eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, window_attribute_list);
     CheckEGLErrors();
 
     EGLBoolean result = eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
@@ -518,12 +486,8 @@ int glXGetFBConfigAttrib(Display *display, GLXFBConfig config, int attribute, in
 }
 
 XVisualInfo *glXGetVisualFromFBConfig(Display *display, GLXFBConfig config) {
-    if (g_display == NULL) {
-        g_display = XOpenDisplay(NULL);
-    }
-    XVisualInfo *visual = (XVisualInfo *)malloc(sizeof(XVisualInfo));
-    XMatchVisualInfo(g_display, 0, 16, TrueColor, visual);
-    return visual;
+    static XVisualInfo fake = {0};
+    return &fake;
 }
 
 GLXContext glXCreateNewContext(Display *display, GLXFBConfig config,
