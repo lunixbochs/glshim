@@ -341,7 +341,6 @@ void glBegin(GLenum mode) {
     if (! state.list.compiling) {
         state.list.active = alloc_renderlist();
     }
-    memcpy(state.list.active->lastColor, state.color, sizeof(GLfloat) * 4);
     state.list.active->mode = mode;
 }
 
@@ -378,6 +377,9 @@ void glVertex3f(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 void glColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
+    state.color[0] = r; state.color[1] = g;
+    state.color[2] = b; state.color[3] = a;
+
     if (state.list.active) {
         rlColor4f(state.list.active, r, g, b, a);
     }
@@ -385,8 +387,6 @@ void glColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     else {
         LOAD_GLES(glColor4f);
         gles_glColor4f(r, g, b, a);
-        state.color[0] = r; state.color[1] = g;
-        state.color[2] = b; state.color[3] = a;
     }
 #endif
 }

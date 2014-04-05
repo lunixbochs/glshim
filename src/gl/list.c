@@ -260,7 +260,7 @@ void rlVertex3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
 
     if (list->color) {
         GLfloat *color = list->color + (list->len * 4);
-        memcpy(color, list->lastColor, sizeof(GLfloat) * 4);
+        memcpy(color, state.color, sizeof(GLfloat) * 4);
     }
 
     if (list->tex) {
@@ -296,14 +296,11 @@ void rlColor4f(renderlist_t *list, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
         int i;
         for (i = 0; i < list->len; i++) {
             GLfloat *color = (list->color + (i * 4));
-            memcpy(color, list->lastColor, sizeof(GLfloat) * 4);
+            memcpy(color, state.color, sizeof(GLfloat) * 4);
         }
     } else {
         resize_renderlist(list);
     }
-
-    GLfloat *color = list->lastColor;
-    color[0] = r; color[1] = g; color[2] = b; color[3] = a;
 }
 
 void rlMaterialfv(renderlist_t *list, GLenum face, GLenum pname, const GLfloat * params) {

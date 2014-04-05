@@ -23,7 +23,6 @@ typedef struct _renderlist_t {
     unsigned long cap;
     GLenum mode;
     GLfloat lastNormal[3];
-    GLfloat lastColor[4];
     GLfloat lastTex[2];
 
     call_list_t calls;
