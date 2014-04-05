@@ -46,6 +46,14 @@ void *gles;
 #endif // USE_ES2
 #endif // GLES_LIB
 
+#ifndef MIN
+#define MIN(a, b) (((a) < (b) ? (a) : (b)))
+#endif
+
+#ifndef MAX
+#define MAX(a, b) (((a) > (b) ? (a) : (b)))
+#endif
+
 #define WARN_NULL(name) if (name == NULL) printf("libGL: warning, " #name " is NULL\n");
 
 #define LOAD_GLES(name)                                             \

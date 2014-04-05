@@ -89,15 +89,17 @@ void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
     }
     pixels = (GLubyte *)dst;
 
-    for (int y = 0; y < height; y++) {
+    // shrink our pixel ranges to stay inside the viewport
+    int ystart = MAX(0, -rPos.y);
+    height = MIN(viewport.height - rPos.y, height);
+
+    int xstart = MAX(0, -rPos.x);
+    int screen_width = MIN(viewport.width - rPos.x, width);
+
+    for (int y = ystart; y < height; y++) {
         to = raster + 4 * (GLuint)(rPos.x + ((rPos.y - y) * viewport.width));
-        from = pixels + 4 * (y * width);
-        for (int x = 0; x < width; x++) {
-            *to++ = *from++;
-            *to++ = *from++;
-            *to++ = *from++;
-            *to++ = *from++;
-        }
+        from = pixels + 4 * (xstart + y * width);
+        memcpy(to, from, 4 * screen_width);
     }
     if (pixels != data)
         free(pixels);
