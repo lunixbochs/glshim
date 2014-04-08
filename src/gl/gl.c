@@ -75,22 +75,15 @@ static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
 }
 
 void glEnable(GLenum cap) {
-    if (state.list.compiling && state.list.active) {
-        push_glEnable(cap);
-    } else {
-        LOAD_GLES(glEnable);
-        proxy_glEnable(cap, true, gles_glEnable);
-    }
-
+    PUSH_IF_COMPILING(glEnable);
+    LOAD_GLES(glEnable);
+    proxy_glEnable(cap, true, gles_glEnable);
 }
 
 void glDisable(GLenum cap) {
-    if (state.list.compiling && state.list.active) {
-        push_glDisable(cap);
-    } else {
-        LOAD_GLES(glDisable);
-        proxy_glEnable(cap, false, gles_glDisable);
-    }
+    PUSH_IF_COMPILING(glDisable);
+    LOAD_GLES(glDisable);
+    proxy_glEnable(cap, false, gles_glDisable);
 }
 
 #ifndef USE_ES2
