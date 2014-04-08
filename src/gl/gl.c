@@ -112,10 +112,10 @@ GLboolean glIsEnabled(GLenum cap) {
     }
 }
 
-static renderlist_t *arrays_to_renderlist(renderlist_t *list, GLenum mode,
-                                        GLsizei skip, GLsizei count) {
+static renderlist_t *rl_from_arrays(renderlist_t *list, GLenum mode,
+                                    GLsizei skip, GLsizei count) {
     if (! list)
-        list = alloc_renderlist();
+        list = rl_alloc();
 
     list->mode = mode;
     list->len = count;
@@ -133,7 +133,7 @@ static renderlist_t *arrays_to_renderlist(renderlist_t *list, GLenum mode,
         list->tex = copy_gl_pointer(&state.pointers.tex_coord, 2, skip, count);
     }
 
-    end_renderlist(list);
+    rl_end(list);
     return list;
 }
 
@@ -166,17 +166,17 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindi
         GLsizei min, max;
 
         if (compiling)
-            list = state.list.active = extend_renderlist(state.list.active);
+            list = state.list.active = rl_extend(state.list.active);
 
         normalize_indices(indices, &max, &min, count);
-        list = arrays_to_renderlist(list, mode, 0, max + 1);
+        list = rl_from_arrays(list, mode, 0, max + 1);
         list->indices = indices;
         list->len = count;
 
-        end_renderlist(list);
+        rl_end(list);
         if (! compiling) {
-            draw_renderlist(list);
-            free_renderlist(list);
+            rl_draw(list);
+            rl_free(list);
         }
     } else {
         LOAD_GLES(glDrawElements);
@@ -191,16 +191,16 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
 
     renderlist_t *list, *active = state.list.active;
     if (active && state.list.compiling) {
-        list = state.list.active = extend_renderlist(active);
-        arrays_to_renderlist(list, mode, first, count);
+        list = state.list.active = rl_extend(active);
+        rl_from_arrays(list, mode, first, count);
         return;
     }
 
     if (should_intercept_render(mode)) {
-        list = arrays_to_renderlist(NULL, mode, first, count);
-        end_renderlist(list);
-        draw_renderlist(list);
-        free_renderlist(list);
+        list = rl_from_arrays(NULL, mode, first, count);
+        rl_end(list);
+        rl_draw(list);
+        rl_free(list);
     } else {
         // TODO: some draw states require us to use the full pipeline here
         // like texgen, stipple, npot
@@ -332,7 +332,7 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
 
 void glBegin(GLenum mode) {
     if (! state.list.compiling) {
-        state.list.active = alloc_renderlist();
+        state.list.active = rl_alloc();
     }
     state.list.active->mode = mode;
 }
@@ -342,18 +342,18 @@ void glEnd() {
 
     // render if we're not in a display list
     if (! state.list.compiling) {
-        end_renderlist(state.list.active);
-        draw_renderlist(state.list.active);
-        free_renderlist(state.list.active);
+        rl_end(state.list.active);
+        rl_draw(state.list.active);
+        rl_free(state.list.active);
         state.list.active = NULL;
     } else {
-        state.list.active = extend_renderlist(state.list.active);
+        state.list.active = rl_extend(state.list.active);
     }
 }
 
 void glNormal3f(GLfloat x, GLfloat y, GLfloat z) {
     if (state.list.active) {
-        rlNormal3f(state.list.active, x, y, z);
+        rl_normal3f(state.list.active, x, y, z);
     }
 #ifndef USE_ES2
     else {
@@ -365,7 +365,7 @@ void glNormal3f(GLfloat x, GLfloat y, GLfloat z) {
 
 void glVertex3f(GLfloat x, GLfloat y, GLfloat z) {
     if (state.list.active) {
-        rlVertex3f(state.list.active, x, y, z);
+        rl_vertex3f(state.list.active, x, y, z);
     }
 }
 
@@ -374,7 +374,7 @@ void glColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     state.color[2] = b; state.color[3] = a;
 
     if (state.list.active) {
-        rlColor4f(state.list.active, r, g, b, a);
+        rl_color4f(state.list.active, r, g, b, a);
     }
 #ifndef USE_ES2
     else {
@@ -386,7 +386,7 @@ void glColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
 
 void glTexCoord2f(GLfloat s, GLfloat t) {
     if (state.list.active) {
-        rlTexCoord2f(state.list.active, s, t);
+        rl_tex_coord2f(state.list.active, s, t);
     }
 }
 
@@ -472,7 +472,7 @@ void glNewList(GLuint list, GLenum mode) {
     state.list.name = list;
     state.list.mode = mode;
     // TODO: if state.list.active is already defined, we probably need to clean up here
-    state.list.active = state.list.first = alloc_renderlist();
+    state.list.active = state.list.first = rl_alloc();
     state.list.compiling = true;
 }
 
@@ -492,12 +492,12 @@ void glCallList(GLuint list) {
     // TODO: the output of this call can be compiled into another display list
     renderlist_t *l = glGetList(list);
     if (l)
-        draw_renderlist(l);
+        rl_draw(l);
 }
 
 void glPushCall(void *call) {
     if (state.list.compiling && state.list.active) {
-        rlPushCall(state.list.active, call);
+        rl_push_call(state.list.active, call);
     }
 }
 
@@ -540,7 +540,7 @@ void glCallLists(GLsizei n, GLenum type, const GLvoid *lists) {
 void glDeleteList(GLuint list) {
     renderlist_t *l = glGetList(list);
     if (l) {
-        free_renderlist(l);
+        rl_free(l);
         state.lists[list-1] = NULL;
     }
 

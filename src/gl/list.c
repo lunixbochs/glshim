@@ -11,7 +11,7 @@
 static GLushort *cached_q2t = NULL;
 static unsigned long cached_q2t_len = 0;
 
-renderlist_t *alloc_renderlist() {
+renderlist_t *rl_alloc() {
     renderlist_t *list = (renderlist_t *)malloc(sizeof(renderlist_t));
     list->len = 0;
     list->cap = DEFAULT_RENDER_LIST_CAPACITY;
@@ -34,16 +34,16 @@ renderlist_t *alloc_renderlist() {
     return list;
 }
 
-renderlist_t *extend_renderlist(renderlist_t *list) {
-    renderlist_t *new = alloc_renderlist();
+renderlist_t *rl_extend(renderlist_t *list) {
+    renderlist_t *new = rl_alloc();
     list->next = new;
     new->prev = list;
     if (list->open)
-        end_renderlist(list);
+        rl_end(list);
     return new;
 }
 
-void free_renderlist(renderlist_t *list) {
+void rl_free(renderlist_t *list) {
     // we want the first list in the chain
     while (list->prev)
         list = list->prev;
@@ -67,7 +67,7 @@ void free_renderlist(renderlist_t *list) {
 }
 
 static inline
-void resize_renderlist(renderlist_t *list) {
+void rl_resize(renderlist_t *list) {
     if (list->len >= list->cap) {
         list->cap += DEFAULT_RENDER_LIST_CAPACITY;
         realloc_sublist(list->vert, 3, list->cap);
@@ -77,7 +77,8 @@ void resize_renderlist(renderlist_t *list) {
     }
 }
 
-void q2t_renderlist(renderlist_t *list) {
+// quads to triangles
+void rl_q2t(renderlist_t *list) {
     if (!list->len || !list->vert || list->q2t) return;
     // TODO: split to multiple lists if list->len > 65535
 
@@ -112,7 +113,7 @@ void q2t_renderlist(renderlist_t *list) {
     return;
 }
 
-void end_renderlist(renderlist_t *list) {
+void rl_end(renderlist_t *list) {
     if (! list->open)
         return;
 
@@ -130,7 +131,7 @@ void end_renderlist(renderlist_t *list) {
     switch (list->mode) {
         case GL_QUADS:
             list->mode = GL_TRIANGLES;
-            q2t_renderlist(list);
+            rl_q2t(list);
             break;
         case GL_POLYGON:
             list->mode = GL_TRIANGLE_FAN;
@@ -141,7 +142,7 @@ void end_renderlist(renderlist_t *list) {
     }
 }
 
-void draw_renderlist(renderlist_t *list) {
+void rl_draw(renderlist_t *list) {
     if (!list) return;
     LOAD_GLES(glDrawArrays);
     LOAD_GLES(glDrawElements);
@@ -228,16 +229,16 @@ void draw_renderlist(renderlist_t *list) {
 
 // gl function wrappers
 
-void rlVertex3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
+void rl_vertex3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
     if (list->vert == NULL) {
         list->vert = alloc_sublist(3, list->cap);
     } else {
-        resize_renderlist(list);
+        rl_resize(list);
     }
 
     if (list->normal) {
         GLfloat *normal = list->normal + (list->len * 3);
-        memcpy(normal, list->lastNormal, sizeof(GLfloat) * 3);
+        memcpy(normal, list->last.normal, sizeof(GLfloat) * 3);
     }
 
     if (list->color) {
@@ -247,15 +248,15 @@ void rlVertex3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
 
     if (list->tex) {
         GLfloat *tex = list->tex + (list->len * 2);
-        memcpy(tex, list->lastTex, sizeof(GLfloat) * 2);
+        memcpy(tex, list->last.tex, sizeof(GLfloat) * 2);
     }
 
     GLfloat *vert = list->vert + (list->len++ * 3);
     vert[0] = x; vert[1] = y; vert[2] = z;
 }
 
-void rlNormal3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
-    GLfloat *normal = list->lastNormal;
+void rl_normal3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
+    GLfloat *normal = list->last.normal;
     normal[0] = x; normal[1] = y; normal[2] = z;
 
     if (list->normal == NULL) {
@@ -264,14 +265,14 @@ void rlNormal3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
         int i;
         for (i = 0; i < list->len; i++) {
             GLfloat *normal = (list->normal + (i * 4));
-            memcpy(normal, list->lastNormal, sizeof(GLfloat) * 4);
+            memcpy(normal, list->last.normal, sizeof(GLfloat) * 4);
         }
     } else {
-        resize_renderlist(list);
+        rl_resize(list);
     }
 }
 
-void rlColor4f(renderlist_t *list, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
+void rl_color3f(renderlist_t *list, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     if (list->color == NULL) {
         list->color = alloc_sublist(4, list->cap);
         // catch up
@@ -281,27 +282,27 @@ void rlColor4f(renderlist_t *list, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
             memcpy(color, state.color, sizeof(GLfloat) * 4);
         }
     } else {
-        resize_renderlist(list);
+        rl_resize(list);
     }
 }
 
-void rlTexCoord2f(renderlist_t *list, GLfloat s, GLfloat t) {
+void rl_tex_coord2f(renderlist_t *list, GLfloat s, GLfloat t) {
     if (list->tex == NULL) {
         list->tex = alloc_sublist(2, list->cap);
         // catch up
         GLfloat *tex = list->tex;
         for (int i = 0; i < list->len; i++) {
-            memcpy(tex, list->lastTex, sizeof(GLfloat) * 2);
+            memcpy(tex, list->last.tex, sizeof(GLfloat) * 2);
             tex += 2;
         }
     } else {
-        resize_renderlist(list);
+        rl_resize(list);
     }
-    GLfloat *tex = list->lastTex;
+    GLfloat *tex = list->last.tex;
     tex[0] = s; tex[1] = t;
 }
 
-void rlPushCall(renderlist_t *list, packed_call_t *data) {
+void rl_push_call(renderlist_t *list, packed_call_t *data) {
     call_list_t *cl = &list->calls;
     if (!cl->calls) {
         cl->cap = DEFAULT_CALL_LIST_CAPACITY;
