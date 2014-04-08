@@ -12,24 +12,8 @@ static GLushort *cached_q2t = NULL;
 static unsigned long cached_q2t_len = 0;
 
 renderlist_t *rl_alloc() {
-    renderlist_t *list = (renderlist_t *)malloc(sizeof(renderlist_t));
-    list->len = 0;
+    renderlist_t *list = (renderlist_t *)calloc(1, sizeof(renderlist_t));
     list->cap = DEFAULT_RENDER_LIST_CAPACITY;
-
-    list->calls.len = 0;
-    list->calls.cap = 0;
-    list->calls.calls = NULL;
-
-    list->mode = 0;
-    list->vert = NULL;
-    list->normal = NULL;
-    list->color = NULL;
-    list->tex = NULL;
-    list->indices = NULL;
-    list->q2t = false;
-
-    list->prev = NULL;
-    list->next = NULL;
     list->open = true;
     return list;
 }
