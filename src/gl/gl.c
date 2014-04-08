@@ -377,7 +377,7 @@ void glColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
         rl_color4f(state.list.active, r, g, b, a);
     }
 #ifndef USE_ES2
-    else {
+    if (! state.list.compiling) {
         LOAD_GLES(glColor4f);
         gles_glColor4f(r, g, b, a);
     }
