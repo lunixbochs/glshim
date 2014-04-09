@@ -50,26 +50,22 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
     init_raster();
 
     const GLubyte *from;
-    GLubyte *to;
+    GLuint *to;
     int x, y;
 
     // copy to pixel data
     // TODO: strip blank lines and mirror vertically?
     for (y = 0; y < height; y++) {
-        to = raster + 4 * (GLuint)(rPos.x + ((rPos.y - y) * viewport.width));
+        to = (GLuint *)raster + (GLuint)(rPos.x + ((rPos.y - y) * viewport.width));
         from = bitmap + (y * 2);
-        for (x = 0; x < (width + 7 / 8); x++) {
+        for (x = 0; x < width; x += 8) {
             if (rPos.x + x > viewport.width || rPos.y + y > viewport.height)
                 continue;
-            // TODO: wasteful, unroll this?
-            GLubyte b = from[(x / 8)];
-            int p = (b & (1 << (7 - (x % 8)))) ? 1 : 0;
-            // r, g, b, a
-            p = (p ? 255 : 0);
-            *to++ = p;
-            *to++ = p;
-            *to++ = p;
-            *to++ = p;
+
+            GLubyte b = *from++;
+            for (int j = 8; j--; ) {
+                *to++ = (b & (1 << j)) ? 0xFFFFFFFF : 0;
+            }
         }
     }
 
