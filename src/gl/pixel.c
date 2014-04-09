@@ -83,13 +83,25 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
         type_case(GL_UNSIGNED_BYTE, GLubyte, write_each(, * 255.0))
         // TODO: force 565 to RGB? then we can change [4] -> 3
         type_case(GL_UNSIGNED_SHORT_5_6_5, GLushort,
-            GLfloat color[4];
+            GLfloat color[3];
             color[dst_color->red] = pixel.r;
             color[dst_color->green] = pixel.g;
             color[dst_color->blue] = pixel.b;
             *d = ((GLuint)(color[0] * 31) & 0x1f << 11) |
                  ((GLuint)(color[1] * 63) & 0x3f << 5) |
                  ((GLuint)(color[2] * 31) & 0x1f);
+        )
+        type_case(GL_UNSIGNED_SHORT_5_5_5_1, GLushort,
+            GLfloat color[4];
+            color[dst_color->red] = pixel.r;
+            color[dst_color->green] = pixel.g;
+            color[dst_color->blue] = pixel.b;
+            color[dst_color->alpha] = pixel.a;
+            // TODO: can I macro this or something? it follows a pretty strict form.
+            *d = ((GLuint)(color[0] * 31) & 0x1f << 0) |
+                 ((GLuint)(color[1] * 31) & 0x1f << 5) |
+                 ((GLuint)(color[2] * 31) & 0x1f << 10)  |
+                 ((GLuint)(color[3] * 1)  & 0x01 << 15);
         )
         default:
             printf("libGL: Unsupported target data type: %i\n", dst_type);
