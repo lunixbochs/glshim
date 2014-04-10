@@ -28,14 +28,19 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     viewport.y = y;
     viewport.width = width;
     viewport.height = height;
+    viewport.nwidth = npot(width);
+    viewport.nheight = npot(height);
 }
 
 void init_raster() {
     if (!viewport.width || !viewport.height) {
         glGetIntegerv(GL_VIEWPORT, (GLint *)&viewport);
+        viewport.nwidth = npot(viewport.width);
+        viewport.nheight = npot(viewport.height);
     }
-    if (!raster)
-        raster = (GLubyte *)malloc(4 * viewport.width * viewport.height * sizeof(GLubyte));
+    if (!raster) {
+        raster = (GLubyte *)malloc(4 * viewport.nwidth * viewport.nheight * sizeof(GLubyte));
+    }
 }
 
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
@@ -56,7 +61,7 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
     // copy to pixel data
     // TODO: strip blank lines and mirror vertically?
     for (y = 0; y < height; y++) {
-        to = (GLuint *)raster + (GLuint)(rPos.x + ((rPos.y - y) * viewport.width));
+        to = (GLuint *)raster + (GLuint)(rPos.x + ((rPos.y - y) * viewport.nwidth));
         from = bitmap + (y * 2);
         for (x = 0; x < width; x += 8) {
             if (rPos.x + x > viewport.width || rPos.y + y > viewport.height)
@@ -93,7 +98,7 @@ void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
     int screen_width = MIN(viewport.width - rPos.x, width);
 
     for (int y = ystart; y < height; y++) {
-        to = raster + 4 * (GLuint)(rPos.x + ((rPos.y - y) * viewport.width));
+        to = raster + 4 * (GLuint)(rPos.x + ((rPos.y - y) * viewport.nwidth));
         from = pixels + 4 * (xstart + y * width);
         memcpy(to, from, 4 * screen_width);
     }
@@ -122,8 +127,8 @@ void render_raster() {
         -1, 1, 0,
     };
 
-    float sw = viewport.width / (GLfloat)npot(viewport.width);
-    float sh = viewport.height / (GLfloat)npot(viewport.height);
+    float sw = viewport.width / (GLfloat)viewport.nwidth;
+    float sh = viewport.height / (GLfloat)viewport.nheight;
 
     GLfloat tex[] = {
         0, sh,
@@ -157,10 +162,8 @@ void render_raster() {
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, npot(viewport.width), npot(viewport.height),
-                 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, viewport.width, viewport.height,
-                    GL_RGBA, GL_UNSIGNED_BYTE, raster);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, viewport.nwidth, viewport.nheight,
+                 0, GL_RGBA, GL_UNSIGNED_BYTE, raster);
 
     LOAD_GLES(glDrawArrays);
     gles_glDrawArrays(GL_TRIANGLE_FAN, 0, 4);

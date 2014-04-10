@@ -4,16 +4,12 @@
 #define RASTER_H
 
 typedef struct {
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
+    GLfloat x, y, z;
 } rasterpos_t;
 
 typedef struct {
-    GLint x;
-    GLint y;
-    GLsizei width;
-    GLsizei height;
+    GLint x, y;
+    GLsizei width, height, nwidth, nheight;
 } viewport_t;
 
 extern void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
