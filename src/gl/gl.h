@@ -34,17 +34,16 @@
 // will become a reference to dlopen'd gles
 void *gles;
 
-#ifndef GLES_LIB
+static const char *gles_lib[] = {
 #ifdef USE_ES2
-#define GLES_LIB "libGLESv2.so"
+    "libGLESv2_CM.so",
+    "libGLESv2.so",
 #else
-#if defined(BCMHOST)
-#define GLES_LIB "libGLESv1_CM.so"
-#else
-#define GLES_LIB "libGLES_CM.so"
-#endif // BCMHOST
+    "libGLESv1_CM.so",
+    "libGLES_CM.so",
 #endif // USE_ES2
-#endif // GLES_LIB
+    NULL
+};
 
 #ifndef MIN
 #define MIN(a, b) (((a) < (b) ? (a) : (b)))
@@ -60,7 +59,9 @@ void *gles;
     static name##_PTR gles_##name;                                  \
     if (gles_##name == NULL) {                                      \
         if (gles == NULL) {                                         \
-            gles = dlopen(GLES_LIB, RTLD_LOCAL | RTLD_LAZY);        \
+            for (int i = 0; gles_lib[i] && !gles; i++) {            \
+                gles = dlopen(gles_lib[i], RTLD_LOCAL | RTLD_LAZY); \
+            }                                                       \
             WARN_NULL(gles);                                        \
         }                                                           \
         gles_##name = (name##_PTR)dlsym(gles, #name);               \
