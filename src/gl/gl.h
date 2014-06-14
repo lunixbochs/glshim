@@ -34,13 +34,20 @@
 // will become a reference to dlopen'd gles
 void *gles;
 
+static const char *gles_ext[] = {
+    "so",
+    "dylib",
+    "dll",
+    NULL,
+};
+
 static const char *gles_lib[] = {
 #ifdef USE_ES2
-    "libGLESv2_CM.so",
-    "libGLESv2.so",
+    "libGLESv2_CM",
+    "libGLESv2",
 #else
-    "libGLESv1_CM.so",
-    "libGLES_CM.so",
+    "libGLESv1_CM",
+    "libGLES_CM",
 #endif // USE_ES2
     NULL
 };
@@ -55,17 +62,40 @@ static const char *gles_lib[] = {
 
 #define WARN_NULL(name) if (name == NULL) printf("libGL: warning, " #name " is NULL\n");
 
-#define LOAD_GLES(name)                                             \
-    static name##_PTR gles_##name;                                  \
-    if (gles_##name == NULL) {                                      \
-        if (gles == NULL) {                                         \
-            for (int i = 0; gles_lib[i] && !gles; i++) {            \
-                gles = dlopen(gles_lib[i], RTLD_LOCAL | RTLD_LAZY); \
-            }                                                       \
-            WARN_NULL(gles);                                        \
-        }                                                           \
-        gles_##name = (name##_PTR)dlsym(gles, #name);               \
-        WARN_NULL(gles_##name);                                     \
+static void load_gles_lib() {
+    if (gles) {
+        return;
+    }
+    char gles_name[PATH_MAX + 1];
+    char *override = getenv("LIBGL_GLES");
+    if (override) {
+        if ((gles = dlopen(override, RTLD_LOCAL | RTLD_LAZY))) {
+            strncpy(gles_name, override, PATH_MAX);
+            printf("libGL backend: %s\n", gles_name);
+            return;
+        }
+    }
+    for (int i = 0; gles_lib[i]; i++) {
+        for (int e = 0; gles_ext[e]; e++) {
+            snprintf(gles_name, PATH_MAX, "%s.%s", gles_lib[i], gles_ext[e]);
+            gles = dlopen(gles_name, RTLD_LOCAL | RTLD_LAZY);
+            if (gles) {
+                printf("libGL backend: %s\n", gles_name);
+                return;
+            }
+        }
+    }
+    WARN_NULL(gles);
+}
+
+#define LOAD_GLES(name)                                                 \
+    static name##_PTR gles_##name;                                      \
+    if (gles_##name == NULL) {                                          \
+        if (gles == NULL) {                                             \
+            load_gles_lib();                                            \
+        }                                                               \
+        gles_##name = (name##_PTR)dlsym(gles, #name);                   \
+        WARN_NULL(gles_##name);                                         \
     }
 
 #define GL_TYPE_CASE(name, var, magic, type, code) \
