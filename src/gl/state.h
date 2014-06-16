@@ -87,6 +87,7 @@ typedef struct {
     texgen_state_t texgen;
     texture_state_t texture;
     GLfloat color[4];
+    GLfloat normal[3];
 } glstate_t;
 
 #endif

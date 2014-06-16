@@ -352,6 +352,10 @@ void glEnd() {
 }
 
 void glNormal3f(GLfloat x, GLfloat y, GLfloat z) {
+    state.normal[0] = x;
+    state.normal[1] = y;
+    state.normal[2] = z;
+
     if (state.list.active) {
         rl_normal3f(state.list.active, x, y, z);
     }
