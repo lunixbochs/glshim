@@ -1,5 +1,6 @@
 #include "gl.h"
 
+void *gles = NULL;
 glstate_t state = {.color = {1.0f, 1.0f, 1.0f, 1.0f}};
 
 // config functions

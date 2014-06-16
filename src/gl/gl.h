@@ -40,7 +40,7 @@
 #define GLdouble double
 
 // will become a reference to dlopen'd gles
-void *gles;
+extern void *gles;
 
 static const char *gles_ext[] = {
     "so",
