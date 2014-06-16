@@ -2,8 +2,8 @@
 cd "$(dirname "$0")"
 
 base=../src/
-gles=$(ls -1 yml/*-1.1.yml | tr '\n' ',' | sed -e 's/,$//')
-gles2=$(ls -1 yml/*-2.0.yml | tr '\n' ',' | sed -e 's/,$//')
+gles="yml/gles-1.1.yml"
+gles2="yml/gles-2.0.yml"
 
 ./gen.py "$gles" --ifndef USE_ES2 gleswrap.c.j2 gleswrap.c gles.h > "$base/gl/wrap/gles.c" &
 ./gen.py "$gles" --ifndef USE_ES2 glwrap.h.j2 gleswrap.h ../gl.h > "$base/gl/wrap/gles.h" &
