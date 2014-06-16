@@ -96,7 +96,7 @@ static const char *gles_lib[] = {
     }
 
 #define PUSH_IF_COMPILING_EXT(name, ...)             \
-    if (state.list.compiling && state.list.active) { \
+    if (state.list.active) { \
         push_##name(__VA_ARGS__);                    \
         return (name##_RETURN)0;                     \
     }
@@ -220,6 +220,7 @@ static inline const GLboolean valid_vertex_type(GLenum type) {
 
 #include "wrap/stub.h"
 #include "wrap/gl.h"
+#include "block.h"
 #include "eval.h"
 #include "light.h"
 #include "line.h"

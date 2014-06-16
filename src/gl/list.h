@@ -1,51 +1,28 @@
 #include "gl.h"
 
-#ifndef DISPLAY_LIST_H
-#define DISPLAY_LIST_H
+#ifndef DISPLAYLIST_H
+#define DISPLAYLIST_H
 
-typedef struct _call_list_t {
-    unsigned long len;
-    unsigned long cap;
+#include <stdbool.h>
+#include <stdint.h>
+
+#define DEFAULT_DISPLAYLIST_CAPACITY 16
+
+typedef struct {
+    uint32_t len;
+    uint32_t cap;
+    bool open;
     packed_call_t **calls;
-} call_list_t;
+} displaylist_t;
 
-typedef struct _renderlist_t {
-    unsigned long len;
-    unsigned long cap;
-    GLenum mode;
-    struct {
-        GLfloat normal[3];
-        GLfloat color[4];
-        GLfloat tex[2];
-    } last;
-
-    call_list_t calls;
-    GLfloat *vert;
-    GLfloat *normal;
-    GLfloat *color;
-    GLfloat *tex;
-    GLushort *indices;
-    GLboolean q2t;
-
-    struct _renderlist_t *prev;
-    struct _renderlist_t *next;
-    GLboolean open;
-} renderlist_t;
-
-#define DEFAULT_CALL_LIST_CAPACITY 20
-#define DEFAULT_RENDER_LIST_CAPACITY 20
-
-extern renderlist_t *rl_alloc();
-extern renderlist_t *rl_extend(renderlist_t *list);
-extern void rl_free(renderlist_t *list);
-extern void rl_draw(renderlist_t *list);
-extern void rl_q2t(renderlist_t *list);
-extern void rl_end(renderlist_t *list);
-
-extern void rl_color4f(renderlist_t *list, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
-extern void rl_normal3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z);
-extern void rl_push_call(renderlist_t *list, packed_call_t *data);
-extern void rl_tex_coord2f(renderlist_t *list, GLfloat s, GLfloat t);
-extern void rl_vertex3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z);
+extern displaylist_t *dl_alloc();
+extern void dl_append(displaylist_t *dl, packed_call_t *call);
+extern void dl_append_block(displaylist_t *dl, block_t *block);
+extern void dl_call(displaylist_t *dl);
+extern void dl_close(displaylist_t *dl);
+extern void dl_decref(packed_call_t *call);
+extern void dl_extend(displaylist_t *dl, displaylist_t *append);
+extern void dl_free(displaylist_t *dl);
+extern void dl_incref(packed_call_t *call);
 
 #endif

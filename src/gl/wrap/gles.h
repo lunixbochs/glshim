@@ -7,6 +7,7 @@
 typedef struct {
     int format;
     void *func;
+    int refs;
     void *args;
 } packed_call_t;
 
@@ -100,6 +101,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum func;
+    int refs;
     ARGS_void_GLenum args;
 } PACKED_void_GLenum;
 typedef struct {
@@ -114,6 +116,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLclampf func;
+    int refs;
     ARGS_void_GLenum_GLclampf args;
 } PACKED_void_GLenum_GLclampf;
 typedef struct {
@@ -128,6 +131,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLclampx func;
+    int refs;
     ARGS_void_GLenum_GLclampx args;
 } PACKED_void_GLenum_GLclampx;
 typedef struct {
@@ -142,6 +146,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLuint func;
+    int refs;
     ARGS_void_GLenum_GLuint args;
 } PACKED_void_GLenum_GLuint;
 typedef struct {
@@ -156,6 +161,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum func;
+    int refs;
     ARGS_void_GLenum_GLenum args;
 } PACKED_void_GLenum_GLenum;
 typedef struct {
@@ -172,6 +178,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum func;
+    int refs;
     ARGS_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum args;
 } PACKED_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum;
 typedef struct {
@@ -188,6 +195,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ args;
 } PACKED_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__;
 typedef struct {
@@ -201,6 +209,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLbitfield func;
+    int refs;
     ARGS_void_GLbitfield args;
 } PACKED_void_GLbitfield;
 typedef struct {
@@ -217,6 +226,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampf_GLclampf_GLclampf_GLclampf func;
+    int refs;
     ARGS_void_GLclampf_GLclampf_GLclampf_GLclampf args;
 } PACKED_void_GLclampf_GLclampf_GLclampf_GLclampf;
 typedef struct {
@@ -233,6 +243,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampx_GLclampx_GLclampx_GLclampx func;
+    int refs;
     ARGS_void_GLclampx_GLclampx_GLclampx_GLclampx args;
 } PACKED_void_GLclampx_GLclampx_GLclampx_GLclampx;
 typedef struct {
@@ -246,6 +257,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampf func;
+    int refs;
     ARGS_void_GLclampf args;
 } PACKED_void_GLclampf;
 typedef struct {
@@ -259,6 +271,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampx func;
+    int refs;
     ARGS_void_GLclampx args;
 } PACKED_void_GLclampx;
 typedef struct {
@@ -272,6 +285,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLint func;
+    int refs;
     ARGS_void_GLint args;
 } PACKED_void_GLint;
 typedef struct {
@@ -286,6 +300,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_const_GLfloat___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_const_GLfloat___GENPT__ args;
 } PACKED_void_GLenum_const_GLfloat___GENPT__;
 typedef struct {
@@ -300,6 +315,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_const_GLfixed___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_const_GLfixed___GENPT__ args;
 } PACKED_void_GLenum_const_GLfixed___GENPT__;
 typedef struct {
@@ -316,6 +332,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfloat_GLfloat_GLfloat_GLfloat func;
+    int refs;
     ARGS_void_GLfloat_GLfloat_GLfloat_GLfloat args;
 } PACKED_void_GLfloat_GLfloat_GLfloat_GLfloat;
 typedef struct {
@@ -332,6 +349,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLubyte_GLubyte_GLubyte_GLubyte func;
+    int refs;
     ARGS_void_GLubyte_GLubyte_GLubyte_GLubyte args;
 } PACKED_void_GLubyte_GLubyte_GLubyte_GLubyte;
 typedef struct {
@@ -348,6 +366,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfixed_GLfixed_GLfixed_GLfixed func;
+    int refs;
     ARGS_void_GLfixed_GLfixed_GLfixed_GLfixed args;
 } PACKED_void_GLfixed_GLfixed_GLfixed_GLfixed;
 typedef struct {
@@ -364,6 +383,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLboolean_GLboolean_GLboolean_GLboolean func;
+    int refs;
     ARGS_void_GLboolean_GLboolean_GLboolean_GLboolean args;
 } PACKED_void_GLboolean_GLboolean_GLboolean_GLboolean;
 typedef struct {
@@ -380,6 +400,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ args;
 } PACKED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__;
 typedef struct {
@@ -400,6 +421,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__ args;
 } PACKED_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__;
 typedef struct {
@@ -421,6 +443,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__ args;
 } PACKED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__;
 typedef struct {
@@ -441,6 +464,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint func;
+    int refs;
     ARGS_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint args;
 } PACKED_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint;
 typedef struct {
@@ -461,6 +485,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei func;
+    int refs;
     ARGS_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei args;
 } PACKED_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei;
 typedef struct {
@@ -475,6 +500,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLsizei_const_GLuint___GENPT__ func;
+    int refs;
     ARGS_void_GLsizei_const_GLuint___GENPT__ args;
 } PACKED_void_GLsizei_const_GLuint___GENPT__;
 typedef struct {
@@ -488,6 +514,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLboolean func;
+    int refs;
     ARGS_void_GLboolean args;
 } PACKED_void_GLboolean;
 typedef struct {
@@ -502,6 +529,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampf_GLclampf func;
+    int refs;
     ARGS_void_GLclampf_GLclampf args;
 } PACKED_void_GLclampf_GLclampf;
 typedef struct {
@@ -516,6 +544,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampx_GLclampx func;
+    int refs;
     ARGS_void_GLclampx_GLclampx args;
 } PACKED_void_GLclampx_GLclampx;
 typedef struct {
@@ -531,6 +560,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLsizei func;
+    int refs;
     ARGS_void_GLenum_GLint_GLsizei args;
 } PACKED_void_GLenum_GLint_GLsizei;
 typedef struct {
@@ -547,6 +577,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__ args;
 } PACKED_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__;
 typedef struct {
@@ -557,6 +588,7 @@ typedef void (*FUNC_void)();
 typedef struct {
     int format;
     FUNC_void func;
+    int refs;
 } PACKED_void;
 typedef struct {
     int func;
@@ -569,6 +601,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLfloat func;
+    int refs;
     ARGS_void_GLenum_GLfloat args;
 } PACKED_void_GLenum_GLfloat;
 typedef struct {
@@ -583,6 +616,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLfixed func;
+    int refs;
     ARGS_void_GLenum_GLfixed args;
 } PACKED_void_GLenum_GLfixed;
 typedef struct {
@@ -601,6 +635,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat func;
+    int refs;
     ARGS_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat args;
 } PACKED_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat;
 typedef struct {
@@ -619,6 +654,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed func;
+    int refs;
     ARGS_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed args;
 } PACKED_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed;
 typedef struct {
@@ -633,6 +669,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLsizei_GLuint___GENPT__ func;
+    int refs;
     ARGS_void_GLsizei_GLuint___GENPT__ args;
 } PACKED_void_GLsizei_GLuint___GENPT__;
 typedef struct {
@@ -647,6 +684,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLboolean___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLboolean___GENPT__ args;
 } PACKED_void_GLenum_GLboolean___GENPT__;
 typedef struct {
@@ -662,6 +700,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_GLint___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLenum_GLint___GENPT__ args;
 } PACKED_void_GLenum_GLenum_GLint___GENPT__;
 typedef struct {
@@ -676,6 +715,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLfloat___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLfloat___GENPT__ args;
 } PACKED_void_GLenum_GLfloat___GENPT__;
 typedef struct {
@@ -690,6 +730,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLfixed___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLfixed___GENPT__ args;
 } PACKED_void_GLenum_GLfixed___GENPT__;
 typedef struct {
@@ -700,6 +741,7 @@ typedef GLenum (*FUNC_GLenum)();
 typedef struct {
     int format;
     FUNC_GLenum func;
+    int refs;
 } PACKED_GLenum;
 typedef struct {
     int func;
@@ -712,6 +754,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLint___GENPT__ args;
 } PACKED_void_GLenum_GLint___GENPT__;
 typedef struct {
@@ -727,6 +770,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_GLfloat___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLenum_GLfloat___GENPT__ args;
 } PACKED_void_GLenum_GLenum_GLfloat___GENPT__;
 typedef struct {
@@ -742,6 +786,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_GLfixed___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLenum_GLfixed___GENPT__ args;
 } PACKED_void_GLenum_GLenum_GLfixed___GENPT__;
 typedef struct {
@@ -756,6 +801,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLvoid___GENPT____GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLvoid___GENPT____GENPT__ args;
 } PACKED_void_GLenum_GLvoid___GENPT____GENPT__;
 typedef struct {
@@ -769,6 +815,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_const_GLubyte___GENPT___GLenum func;
+    int refs;
     ARGS_const_GLubyte___GENPT___GLenum args;
 } PACKED_const_GLubyte___GENPT___GLenum;
 typedef struct {
@@ -782,6 +829,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_GLboolean_GLuint func;
+    int refs;
     ARGS_GLboolean_GLuint args;
 } PACKED_GLboolean_GLuint;
 typedef struct {
@@ -795,6 +843,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_GLboolean_GLenum func;
+    int refs;
     ARGS_GLboolean_GLenum args;
 } PACKED_GLboolean_GLenum;
 typedef struct {
@@ -810,6 +859,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_GLfloat func;
+    int refs;
     ARGS_void_GLenum_GLenum_GLfloat args;
 } PACKED_void_GLenum_GLenum_GLfloat;
 typedef struct {
@@ -825,6 +875,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_const_GLfloat___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLenum_const_GLfloat___GENPT__ args;
 } PACKED_void_GLenum_GLenum_const_GLfloat___GENPT__;
 typedef struct {
@@ -840,6 +891,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_GLfixed func;
+    int refs;
     ARGS_void_GLenum_GLenum_GLfixed args;
 } PACKED_void_GLenum_GLenum_GLfixed;
 typedef struct {
@@ -855,6 +907,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_const_GLfixed___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLenum_const_GLfixed___GENPT__ args;
 } PACKED_void_GLenum_GLenum_const_GLfixed___GENPT__;
 typedef struct {
@@ -868,6 +921,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfloat func;
+    int refs;
     ARGS_void_GLfloat args;
 } PACKED_void_GLfloat;
 typedef struct {
@@ -881,6 +935,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfixed func;
+    int refs;
     ARGS_void_GLfixed args;
 } PACKED_void_GLfixed;
 typedef struct {
@@ -894,6 +949,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_const_GLfloat___GENPT__ func;
+    int refs;
     ARGS_void_const_GLfloat___GENPT__ args;
 } PACKED_void_const_GLfloat___GENPT__;
 typedef struct {
@@ -907,6 +963,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_const_GLfixed___GENPT__ func;
+    int refs;
     ARGS_void_const_GLfixed___GENPT__ args;
 } PACKED_void_const_GLfixed___GENPT__;
 typedef struct {
@@ -924,6 +981,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat func;
+    int refs;
     ARGS_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat args;
 } PACKED_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat;
 typedef struct {
@@ -941,6 +999,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed func;
+    int refs;
     ARGS_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed args;
 } PACKED_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed;
 typedef struct {
@@ -956,6 +1015,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfloat_GLfloat_GLfloat func;
+    int refs;
     ARGS_void_GLfloat_GLfloat_GLfloat args;
 } PACKED_void_GLfloat_GLfloat_GLfloat;
 typedef struct {
@@ -971,6 +1031,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfixed_GLfixed_GLfixed func;
+    int refs;
     ARGS_void_GLfixed_GLfixed_GLfixed args;
 } PACKED_void_GLfixed_GLfixed_GLfixed;
 typedef struct {
@@ -986,6 +1047,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLsizei_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLsizei_const_GLvoid___GENPT__ args;
 } PACKED_void_GLenum_GLsizei_const_GLvoid___GENPT__;
 typedef struct {
@@ -1000,6 +1062,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint func;
+    int refs;
     ARGS_void_GLenum_GLint args;
 } PACKED_void_GLenum_GLint;
 typedef struct {
@@ -1014,6 +1077,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfloat_GLfloat func;
+    int refs;
     ARGS_void_GLfloat_GLfloat args;
 } PACKED_void_GLfloat_GLfloat;
 typedef struct {
@@ -1028,6 +1092,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLfixed_GLfixed func;
+    int refs;
     ARGS_void_GLfixed_GLfixed args;
 } PACKED_void_GLfixed_GLfixed;
 typedef struct {
@@ -1047,6 +1112,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__ args;
 } PACKED_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__;
 typedef struct {
@@ -1061,6 +1127,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampf_GLboolean func;
+    int refs;
     ARGS_void_GLclampf_GLboolean args;
 } PACKED_void_GLclampf_GLboolean;
 typedef struct {
@@ -1075,6 +1142,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLclampx_GLboolean func;
+    int refs;
     ARGS_void_GLclampx_GLboolean args;
 } PACKED_void_GLclampx_GLboolean;
 typedef struct {
@@ -1091,6 +1159,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLint_GLint_GLsizei_GLsizei func;
+    int refs;
     ARGS_void_GLint_GLint_GLsizei_GLsizei args;
 } PACKED_void_GLint_GLint_GLsizei_GLsizei;
 typedef struct {
@@ -1106,6 +1175,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLuint func;
+    int refs;
     ARGS_void_GLenum_GLint_GLuint args;
 } PACKED_void_GLenum_GLint_GLuint;
 typedef struct {
@@ -1119,6 +1189,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLuint func;
+    int refs;
     ARGS_void_GLuint args;
 } PACKED_void_GLuint;
 typedef struct {
@@ -1134,6 +1205,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_GLenum func;
+    int refs;
     ARGS_void_GLenum_GLenum_GLenum args;
 } PACKED_void_GLenum_GLenum_GLenum;
 typedef struct {
@@ -1149,6 +1221,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_GLint func;
+    int refs;
     ARGS_void_GLenum_GLenum_GLint args;
 } PACKED_void_GLenum_GLenum_GLint;
 typedef struct {
@@ -1164,6 +1237,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLenum_const_GLint___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLenum_const_GLint___GENPT__ args;
 } PACKED_void_GLenum_GLenum_const_GLint___GENPT__;
 typedef struct {
@@ -1185,6 +1259,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__ args;
 } PACKED_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__;
 typedef struct {
@@ -1206,6 +1281,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__ func;
+    int refs;
     ARGS_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__ args;
 } PACKED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__;
 typedef struct {
@@ -2531,6 +2607,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glActiveTexture_PACKED *packed_data = malloc(sizeof(glActiveTexture_PACKED)); \
     packed_data->format = glActiveTexture_FORMAT; \
     packed_data->func = glActiveTexture; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)texture; \
     glPushCall((void *)packed_data); \
 }
@@ -2540,6 +2617,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glAlphaFunc_PACKED *packed_data = malloc(sizeof(glAlphaFunc_PACKED)); \
     packed_data->format = glAlphaFunc_FORMAT; \
     packed_data->func = glAlphaFunc; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)func; \
     packed_data->args.a2 = (GLclampf)ref; \
     glPushCall((void *)packed_data); \
@@ -2550,6 +2628,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glAlphaFuncx_PACKED *packed_data = malloc(sizeof(glAlphaFuncx_PACKED)); \
     packed_data->format = glAlphaFuncx_FORMAT; \
     packed_data->func = glAlphaFuncx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)func; \
     packed_data->args.a2 = (GLclampx)ref; \
     glPushCall((void *)packed_data); \
@@ -2560,6 +2639,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glBindBuffer_PACKED *packed_data = malloc(sizeof(glBindBuffer_PACKED)); \
     packed_data->format = glBindBuffer_FORMAT; \
     packed_data->func = glBindBuffer; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLuint)buffer; \
     glPushCall((void *)packed_data); \
@@ -2570,6 +2650,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glBindTexture_PACKED *packed_data = malloc(sizeof(glBindTexture_PACKED)); \
     packed_data->format = glBindTexture_FORMAT; \
     packed_data->func = glBindTexture; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLuint)texture; \
     glPushCall((void *)packed_data); \
@@ -2580,6 +2661,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glBlendFunc_PACKED *packed_data = malloc(sizeof(glBlendFunc_PACKED)); \
     packed_data->format = glBlendFunc_FORMAT; \
     packed_data->func = glBlendFunc; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)sfactor; \
     packed_data->args.a2 = (GLenum)dfactor; \
     glPushCall((void *)packed_data); \
@@ -2590,6 +2672,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glBufferData_PACKED *packed_data = malloc(sizeof(glBufferData_PACKED)); \
     packed_data->format = glBufferData_FORMAT; \
     packed_data->func = glBufferData; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLsizeiptr)size; \
     packed_data->args.a3 = (GLvoid *)data; \
@@ -2602,6 +2685,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glBufferSubData_PACKED *packed_data = malloc(sizeof(glBufferSubData_PACKED)); \
     packed_data->format = glBufferSubData_FORMAT; \
     packed_data->func = glBufferSubData; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLintptr)offset; \
     packed_data->args.a3 = (GLsizeiptr)size; \
@@ -2614,6 +2698,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClear_PACKED *packed_data = malloc(sizeof(glClear_PACKED)); \
     packed_data->format = glClear_FORMAT; \
     packed_data->func = glClear; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLbitfield)mask; \
     glPushCall((void *)packed_data); \
 }
@@ -2623,6 +2708,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClearColor_PACKED *packed_data = malloc(sizeof(glClearColor_PACKED)); \
     packed_data->format = glClearColor_FORMAT; \
     packed_data->func = glClearColor; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampf)red; \
     packed_data->args.a2 = (GLclampf)green; \
     packed_data->args.a3 = (GLclampf)blue; \
@@ -2635,6 +2721,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClearColorx_PACKED *packed_data = malloc(sizeof(glClearColorx_PACKED)); \
     packed_data->format = glClearColorx_FORMAT; \
     packed_data->func = glClearColorx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampx)red; \
     packed_data->args.a2 = (GLclampx)green; \
     packed_data->args.a3 = (GLclampx)blue; \
@@ -2647,6 +2734,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClearDepthf_PACKED *packed_data = malloc(sizeof(glClearDepthf_PACKED)); \
     packed_data->format = glClearDepthf_FORMAT; \
     packed_data->func = glClearDepthf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampf)depth; \
     glPushCall((void *)packed_data); \
 }
@@ -2656,6 +2744,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClearDepthx_PACKED *packed_data = malloc(sizeof(glClearDepthx_PACKED)); \
     packed_data->format = glClearDepthx_FORMAT; \
     packed_data->func = glClearDepthx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampx)depth; \
     glPushCall((void *)packed_data); \
 }
@@ -2665,6 +2754,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClearStencil_PACKED *packed_data = malloc(sizeof(glClearStencil_PACKED)); \
     packed_data->format = glClearStencil_FORMAT; \
     packed_data->func = glClearStencil; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLint)s; \
     glPushCall((void *)packed_data); \
 }
@@ -2674,6 +2764,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClientActiveTexture_PACKED *packed_data = malloc(sizeof(glClientActiveTexture_PACKED)); \
     packed_data->format = glClientActiveTexture_FORMAT; \
     packed_data->func = glClientActiveTexture; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)texture; \
     glPushCall((void *)packed_data); \
 }
@@ -2683,6 +2774,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClipPlanef_PACKED *packed_data = malloc(sizeof(glClipPlanef_PACKED)); \
     packed_data->format = glClipPlanef_FORMAT; \
     packed_data->func = glClipPlanef; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)plane; \
     packed_data->args.a2 = (GLfloat *)equation; \
     glPushCall((void *)packed_data); \
@@ -2693,6 +2785,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glClipPlanex_PACKED *packed_data = malloc(sizeof(glClipPlanex_PACKED)); \
     packed_data->format = glClipPlanex_FORMAT; \
     packed_data->func = glClipPlanex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)plane; \
     packed_data->args.a2 = (GLfixed *)equation; \
     glPushCall((void *)packed_data); \
@@ -2703,6 +2796,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glColor4f_PACKED *packed_data = malloc(sizeof(glColor4f_PACKED)); \
     packed_data->format = glColor4f_FORMAT; \
     packed_data->func = glColor4f; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)red; \
     packed_data->args.a2 = (GLfloat)green; \
     packed_data->args.a3 = (GLfloat)blue; \
@@ -2715,6 +2809,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glColor4ub_PACKED *packed_data = malloc(sizeof(glColor4ub_PACKED)); \
     packed_data->format = glColor4ub_FORMAT; \
     packed_data->func = glColor4ub; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLubyte)red; \
     packed_data->args.a2 = (GLubyte)green; \
     packed_data->args.a3 = (GLubyte)blue; \
@@ -2727,6 +2822,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glColor4x_PACKED *packed_data = malloc(sizeof(glColor4x_PACKED)); \
     packed_data->format = glColor4x_FORMAT; \
     packed_data->func = glColor4x; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)red; \
     packed_data->args.a2 = (GLfixed)green; \
     packed_data->args.a3 = (GLfixed)blue; \
@@ -2739,6 +2835,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glColorMask_PACKED *packed_data = malloc(sizeof(glColorMask_PACKED)); \
     packed_data->format = glColorMask_FORMAT; \
     packed_data->func = glColorMask; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLboolean)red; \
     packed_data->args.a2 = (GLboolean)green; \
     packed_data->args.a3 = (GLboolean)blue; \
@@ -2751,6 +2848,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glColorPointer_PACKED *packed_data = malloc(sizeof(glColorPointer_PACKED)); \
     packed_data->format = glColorPointer_FORMAT; \
     packed_data->func = glColorPointer; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLint)size; \
     packed_data->args.a2 = (GLenum)type; \
     packed_data->args.a3 = (GLsizei)stride; \
@@ -2763,6 +2861,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glCompressedTexImage2D_PACKED *packed_data = malloc(sizeof(glCompressedTexImage2D_PACKED)); \
     packed_data->format = glCompressedTexImage2D_FORMAT; \
     packed_data->func = glCompressedTexImage2D; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLint)level; \
     packed_data->args.a3 = (GLenum)internalformat; \
@@ -2779,6 +2878,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glCompressedTexSubImage2D_PACKED *packed_data = malloc(sizeof(glCompressedTexSubImage2D_PACKED)); \
     packed_data->format = glCompressedTexSubImage2D_FORMAT; \
     packed_data->func = glCompressedTexSubImage2D; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLint)level; \
     packed_data->args.a3 = (GLint)xoffset; \
@@ -2796,6 +2896,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glCopyTexImage2D_PACKED *packed_data = malloc(sizeof(glCopyTexImage2D_PACKED)); \
     packed_data->format = glCopyTexImage2D_FORMAT; \
     packed_data->func = glCopyTexImage2D; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLint)level; \
     packed_data->args.a3 = (GLenum)internalformat; \
@@ -2812,6 +2913,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glCopyTexSubImage2D_PACKED *packed_data = malloc(sizeof(glCopyTexSubImage2D_PACKED)); \
     packed_data->format = glCopyTexSubImage2D_FORMAT; \
     packed_data->func = glCopyTexSubImage2D; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLint)level; \
     packed_data->args.a3 = (GLint)xoffset; \
@@ -2828,6 +2930,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glCullFace_PACKED *packed_data = malloc(sizeof(glCullFace_PACKED)); \
     packed_data->format = glCullFace_FORMAT; \
     packed_data->func = glCullFace; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)mode; \
     glPushCall((void *)packed_data); \
 }
@@ -2837,6 +2940,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDeleteBuffers_PACKED *packed_data = malloc(sizeof(glDeleteBuffers_PACKED)); \
     packed_data->format = glDeleteBuffers_FORMAT; \
     packed_data->func = glDeleteBuffers; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLsizei)n; \
     packed_data->args.a2 = (GLuint *)buffers; \
     glPushCall((void *)packed_data); \
@@ -2847,6 +2951,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDeleteTextures_PACKED *packed_data = malloc(sizeof(glDeleteTextures_PACKED)); \
     packed_data->format = glDeleteTextures_FORMAT; \
     packed_data->func = glDeleteTextures; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLsizei)n; \
     packed_data->args.a2 = (GLuint *)textures; \
     glPushCall((void *)packed_data); \
@@ -2857,6 +2962,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDepthFunc_PACKED *packed_data = malloc(sizeof(glDepthFunc_PACKED)); \
     packed_data->format = glDepthFunc_FORMAT; \
     packed_data->func = glDepthFunc; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)func; \
     glPushCall((void *)packed_data); \
 }
@@ -2866,6 +2972,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDepthMask_PACKED *packed_data = malloc(sizeof(glDepthMask_PACKED)); \
     packed_data->format = glDepthMask_FORMAT; \
     packed_data->func = glDepthMask; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLboolean)flag; \
     glPushCall((void *)packed_data); \
 }
@@ -2875,6 +2982,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDepthRangef_PACKED *packed_data = malloc(sizeof(glDepthRangef_PACKED)); \
     packed_data->format = glDepthRangef_FORMAT; \
     packed_data->func = glDepthRangef; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampf)near; \
     packed_data->args.a2 = (GLclampf)far; \
     glPushCall((void *)packed_data); \
@@ -2885,6 +2993,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDepthRangex_PACKED *packed_data = malloc(sizeof(glDepthRangex_PACKED)); \
     packed_data->format = glDepthRangex_FORMAT; \
     packed_data->func = glDepthRangex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampx)near; \
     packed_data->args.a2 = (GLclampx)far; \
     glPushCall((void *)packed_data); \
@@ -2895,6 +3004,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDisable_PACKED *packed_data = malloc(sizeof(glDisable_PACKED)); \
     packed_data->format = glDisable_FORMAT; \
     packed_data->func = glDisable; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)cap; \
     glPushCall((void *)packed_data); \
 }
@@ -2904,6 +3014,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDisableClientState_PACKED *packed_data = malloc(sizeof(glDisableClientState_PACKED)); \
     packed_data->format = glDisableClientState_FORMAT; \
     packed_data->func = glDisableClientState; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)array; \
     glPushCall((void *)packed_data); \
 }
@@ -2913,6 +3024,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDrawArrays_PACKED *packed_data = malloc(sizeof(glDrawArrays_PACKED)); \
     packed_data->format = glDrawArrays_FORMAT; \
     packed_data->func = glDrawArrays; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)mode; \
     packed_data->args.a2 = (GLint)first; \
     packed_data->args.a3 = (GLsizei)count; \
@@ -2924,6 +3036,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glDrawElements_PACKED *packed_data = malloc(sizeof(glDrawElements_PACKED)); \
     packed_data->format = glDrawElements_FORMAT; \
     packed_data->func = glDrawElements; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)mode; \
     packed_data->args.a2 = (GLsizei)count; \
     packed_data->args.a3 = (GLenum)type; \
@@ -2936,6 +3049,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glEnable_PACKED *packed_data = malloc(sizeof(glEnable_PACKED)); \
     packed_data->format = glEnable_FORMAT; \
     packed_data->func = glEnable; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)cap; \
     glPushCall((void *)packed_data); \
 }
@@ -2945,6 +3059,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glEnableClientState_PACKED *packed_data = malloc(sizeof(glEnableClientState_PACKED)); \
     packed_data->format = glEnableClientState_FORMAT; \
     packed_data->func = glEnableClientState; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)array; \
     glPushCall((void *)packed_data); \
 }
@@ -2954,6 +3069,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFinish_PACKED *packed_data = malloc(sizeof(glFinish_PACKED)); \
     packed_data->format = glFinish_FORMAT; \
     packed_data->func = glFinish; \
+    packed_data->refs = 0; \
     glPushCall((void *)packed_data); \
 }
 #endif
@@ -2962,6 +3078,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFlush_PACKED *packed_data = malloc(sizeof(glFlush_PACKED)); \
     packed_data->format = glFlush_FORMAT; \
     packed_data->func = glFlush; \
+    packed_data->refs = 0; \
     glPushCall((void *)packed_data); \
 }
 #endif
@@ -2970,6 +3087,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFogf_PACKED *packed_data = malloc(sizeof(glFogf_PACKED)); \
     packed_data->format = glFogf_FORMAT; \
     packed_data->func = glFogf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfloat)param; \
     glPushCall((void *)packed_data); \
@@ -2980,6 +3098,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFogfv_PACKED *packed_data = malloc(sizeof(glFogfv_PACKED)); \
     packed_data->format = glFogfv_FORMAT; \
     packed_data->func = glFogfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfloat *)params; \
     glPushCall((void *)packed_data); \
@@ -2990,6 +3109,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFogx_PACKED *packed_data = malloc(sizeof(glFogx_PACKED)); \
     packed_data->format = glFogx_FORMAT; \
     packed_data->func = glFogx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfixed)param; \
     glPushCall((void *)packed_data); \
@@ -3000,6 +3120,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFogxv_PACKED *packed_data = malloc(sizeof(glFogxv_PACKED)); \
     packed_data->format = glFogxv_FORMAT; \
     packed_data->func = glFogxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfixed *)params; \
     glPushCall((void *)packed_data); \
@@ -3010,6 +3131,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFrontFace_PACKED *packed_data = malloc(sizeof(glFrontFace_PACKED)); \
     packed_data->format = glFrontFace_FORMAT; \
     packed_data->func = glFrontFace; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)mode; \
     glPushCall((void *)packed_data); \
 }
@@ -3019,6 +3141,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFrustumf_PACKED *packed_data = malloc(sizeof(glFrustumf_PACKED)); \
     packed_data->format = glFrustumf_FORMAT; \
     packed_data->func = glFrustumf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)left; \
     packed_data->args.a2 = (GLfloat)right; \
     packed_data->args.a3 = (GLfloat)bottom; \
@@ -3033,6 +3156,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glFrustumx_PACKED *packed_data = malloc(sizeof(glFrustumx_PACKED)); \
     packed_data->format = glFrustumx_FORMAT; \
     packed_data->func = glFrustumx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)left; \
     packed_data->args.a2 = (GLfixed)right; \
     packed_data->args.a3 = (GLfixed)bottom; \
@@ -3047,6 +3171,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGenBuffers_PACKED *packed_data = malloc(sizeof(glGenBuffers_PACKED)); \
     packed_data->format = glGenBuffers_FORMAT; \
     packed_data->func = glGenBuffers; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLsizei)n; \
     packed_data->args.a2 = (GLuint *)buffers; \
     glPushCall((void *)packed_data); \
@@ -3057,6 +3182,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGenTextures_PACKED *packed_data = malloc(sizeof(glGenTextures_PACKED)); \
     packed_data->format = glGenTextures_FORMAT; \
     packed_data->func = glGenTextures; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLsizei)n; \
     packed_data->args.a2 = (GLuint *)textures; \
     glPushCall((void *)packed_data); \
@@ -3067,6 +3193,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetBooleanv_PACKED *packed_data = malloc(sizeof(glGetBooleanv_PACKED)); \
     packed_data->format = glGetBooleanv_FORMAT; \
     packed_data->func = glGetBooleanv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLboolean *)params; \
     glPushCall((void *)packed_data); \
@@ -3077,6 +3204,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetBufferParameteriv_PACKED *packed_data = malloc(sizeof(glGetBufferParameteriv_PACKED)); \
     packed_data->format = glGetBufferParameteriv_FORMAT; \
     packed_data->func = glGetBufferParameteriv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLint *)params; \
@@ -3088,6 +3216,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetClipPlanef_PACKED *packed_data = malloc(sizeof(glGetClipPlanef_PACKED)); \
     packed_data->format = glGetClipPlanef_FORMAT; \
     packed_data->func = glGetClipPlanef; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)plane; \
     packed_data->args.a2 = (GLfloat *)equation; \
     glPushCall((void *)packed_data); \
@@ -3098,6 +3227,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetClipPlanex_PACKED *packed_data = malloc(sizeof(glGetClipPlanex_PACKED)); \
     packed_data->format = glGetClipPlanex_FORMAT; \
     packed_data->func = glGetClipPlanex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)plane; \
     packed_data->args.a2 = (GLfixed *)equation; \
     glPushCall((void *)packed_data); \
@@ -3108,6 +3238,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetError_PACKED *packed_data = malloc(sizeof(glGetError_PACKED)); \
     packed_data->format = glGetError_FORMAT; \
     packed_data->func = glGetError; \
+    packed_data->refs = 0; \
     glPushCall((void *)packed_data); \
 }
 #endif
@@ -3116,6 +3247,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetFixedv_PACKED *packed_data = malloc(sizeof(glGetFixedv_PACKED)); \
     packed_data->format = glGetFixedv_FORMAT; \
     packed_data->func = glGetFixedv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfixed *)params; \
     glPushCall((void *)packed_data); \
@@ -3126,6 +3258,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetFloatv_PACKED *packed_data = malloc(sizeof(glGetFloatv_PACKED)); \
     packed_data->format = glGetFloatv_FORMAT; \
     packed_data->func = glGetFloatv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfloat *)params; \
     glPushCall((void *)packed_data); \
@@ -3136,6 +3269,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetIntegerv_PACKED *packed_data = malloc(sizeof(glGetIntegerv_PACKED)); \
     packed_data->format = glGetIntegerv_FORMAT; \
     packed_data->func = glGetIntegerv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLint *)params; \
     glPushCall((void *)packed_data); \
@@ -3146,6 +3280,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetLightfv_PACKED *packed_data = malloc(sizeof(glGetLightfv_PACKED)); \
     packed_data->format = glGetLightfv_FORMAT; \
     packed_data->func = glGetLightfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)light; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3157,6 +3292,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetLightxv_PACKED *packed_data = malloc(sizeof(glGetLightxv_PACKED)); \
     packed_data->format = glGetLightxv_FORMAT; \
     packed_data->func = glGetLightxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)light; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -3168,6 +3304,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetMaterialfv_PACKED *packed_data = malloc(sizeof(glGetMaterialfv_PACKED)); \
     packed_data->format = glGetMaterialfv_FORMAT; \
     packed_data->func = glGetMaterialfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)face; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3179,6 +3316,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetMaterialxv_PACKED *packed_data = malloc(sizeof(glGetMaterialxv_PACKED)); \
     packed_data->format = glGetMaterialxv_FORMAT; \
     packed_data->func = glGetMaterialxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)face; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -3190,6 +3328,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetPointerv_PACKED *packed_data = malloc(sizeof(glGetPointerv_PACKED)); \
     packed_data->format = glGetPointerv_FORMAT; \
     packed_data->func = glGetPointerv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLvoid **)params; \
     glPushCall((void *)packed_data); \
@@ -3200,6 +3339,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetString_PACKED *packed_data = malloc(sizeof(glGetString_PACKED)); \
     packed_data->format = glGetString_FORMAT; \
     packed_data->func = glGetString; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)name; \
     glPushCall((void *)packed_data); \
 }
@@ -3209,6 +3349,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetTexEnvfv_PACKED *packed_data = malloc(sizeof(glGetTexEnvfv_PACKED)); \
     packed_data->format = glGetTexEnvfv_FORMAT; \
     packed_data->func = glGetTexEnvfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3220,6 +3361,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetTexEnviv_PACKED *packed_data = malloc(sizeof(glGetTexEnviv_PACKED)); \
     packed_data->format = glGetTexEnviv_FORMAT; \
     packed_data->func = glGetTexEnviv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLint *)params; \
@@ -3231,6 +3373,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetTexEnvxv_PACKED *packed_data = malloc(sizeof(glGetTexEnvxv_PACKED)); \
     packed_data->format = glGetTexEnvxv_FORMAT; \
     packed_data->func = glGetTexEnvxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -3242,6 +3385,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetTexParameterfv_PACKED *packed_data = malloc(sizeof(glGetTexParameterfv_PACKED)); \
     packed_data->format = glGetTexParameterfv_FORMAT; \
     packed_data->func = glGetTexParameterfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3253,6 +3397,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetTexParameteriv_PACKED *packed_data = malloc(sizeof(glGetTexParameteriv_PACKED)); \
     packed_data->format = glGetTexParameteriv_FORMAT; \
     packed_data->func = glGetTexParameteriv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLint *)params; \
@@ -3264,6 +3409,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glGetTexParameterxv_PACKED *packed_data = malloc(sizeof(glGetTexParameterxv_PACKED)); \
     packed_data->format = glGetTexParameterxv_FORMAT; \
     packed_data->func = glGetTexParameterxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -3275,6 +3421,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glHint_PACKED *packed_data = malloc(sizeof(glHint_PACKED)); \
     packed_data->format = glHint_FORMAT; \
     packed_data->func = glHint; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)mode; \
     glPushCall((void *)packed_data); \
@@ -3285,6 +3432,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glIsBuffer_PACKED *packed_data = malloc(sizeof(glIsBuffer_PACKED)); \
     packed_data->format = glIsBuffer_FORMAT; \
     packed_data->func = glIsBuffer; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLuint)buffer; \
     glPushCall((void *)packed_data); \
 }
@@ -3294,6 +3442,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glIsEnabled_PACKED *packed_data = malloc(sizeof(glIsEnabled_PACKED)); \
     packed_data->format = glIsEnabled_FORMAT; \
     packed_data->func = glIsEnabled; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)cap; \
     glPushCall((void *)packed_data); \
 }
@@ -3303,6 +3452,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glIsTexture_PACKED *packed_data = malloc(sizeof(glIsTexture_PACKED)); \
     packed_data->format = glIsTexture_FORMAT; \
     packed_data->func = glIsTexture; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLuint)texture; \
     glPushCall((void *)packed_data); \
 }
@@ -3312,6 +3462,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightModelf_PACKED *packed_data = malloc(sizeof(glLightModelf_PACKED)); \
     packed_data->format = glLightModelf_FORMAT; \
     packed_data->func = glLightModelf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfloat)param; \
     glPushCall((void *)packed_data); \
@@ -3322,6 +3473,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightModelfv_PACKED *packed_data = malloc(sizeof(glLightModelfv_PACKED)); \
     packed_data->format = glLightModelfv_FORMAT; \
     packed_data->func = glLightModelfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfloat *)params; \
     glPushCall((void *)packed_data); \
@@ -3332,6 +3484,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightModelx_PACKED *packed_data = malloc(sizeof(glLightModelx_PACKED)); \
     packed_data->format = glLightModelx_FORMAT; \
     packed_data->func = glLightModelx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfixed)param; \
     glPushCall((void *)packed_data); \
@@ -3342,6 +3495,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightModelxv_PACKED *packed_data = malloc(sizeof(glLightModelxv_PACKED)); \
     packed_data->format = glLightModelxv_FORMAT; \
     packed_data->func = glLightModelxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfixed *)params; \
     glPushCall((void *)packed_data); \
@@ -3352,6 +3506,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightf_PACKED *packed_data = malloc(sizeof(glLightf_PACKED)); \
     packed_data->format = glLightf_FORMAT; \
     packed_data->func = glLightf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)light; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat)param; \
@@ -3363,6 +3518,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightfv_PACKED *packed_data = malloc(sizeof(glLightfv_PACKED)); \
     packed_data->format = glLightfv_FORMAT; \
     packed_data->func = glLightfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)light; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3374,6 +3530,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightx_PACKED *packed_data = malloc(sizeof(glLightx_PACKED)); \
     packed_data->format = glLightx_FORMAT; \
     packed_data->func = glLightx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)light; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed)param; \
@@ -3385,6 +3542,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLightxv_PACKED *packed_data = malloc(sizeof(glLightxv_PACKED)); \
     packed_data->format = glLightxv_FORMAT; \
     packed_data->func = glLightxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)light; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -3396,6 +3554,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLineWidth_PACKED *packed_data = malloc(sizeof(glLineWidth_PACKED)); \
     packed_data->format = glLineWidth_FORMAT; \
     packed_data->func = glLineWidth; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)width; \
     glPushCall((void *)packed_data); \
 }
@@ -3405,6 +3564,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLineWidthx_PACKED *packed_data = malloc(sizeof(glLineWidthx_PACKED)); \
     packed_data->format = glLineWidthx_FORMAT; \
     packed_data->func = glLineWidthx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)width; \
     glPushCall((void *)packed_data); \
 }
@@ -3414,6 +3574,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLoadIdentity_PACKED *packed_data = malloc(sizeof(glLoadIdentity_PACKED)); \
     packed_data->format = glLoadIdentity_FORMAT; \
     packed_data->func = glLoadIdentity; \
+    packed_data->refs = 0; \
     glPushCall((void *)packed_data); \
 }
 #endif
@@ -3422,6 +3583,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLoadMatrixf_PACKED *packed_data = malloc(sizeof(glLoadMatrixf_PACKED)); \
     packed_data->format = glLoadMatrixf_FORMAT; \
     packed_data->func = glLoadMatrixf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat *)m; \
     glPushCall((void *)packed_data); \
 }
@@ -3431,6 +3593,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLoadMatrixx_PACKED *packed_data = malloc(sizeof(glLoadMatrixx_PACKED)); \
     packed_data->format = glLoadMatrixx_FORMAT; \
     packed_data->func = glLoadMatrixx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed *)m; \
     glPushCall((void *)packed_data); \
 }
@@ -3440,6 +3603,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glLogicOp_PACKED *packed_data = malloc(sizeof(glLogicOp_PACKED)); \
     packed_data->format = glLogicOp_FORMAT; \
     packed_data->func = glLogicOp; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)opcode; \
     glPushCall((void *)packed_data); \
 }
@@ -3449,6 +3613,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMaterialf_PACKED *packed_data = malloc(sizeof(glMaterialf_PACKED)); \
     packed_data->format = glMaterialf_FORMAT; \
     packed_data->func = glMaterialf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)face; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat)param; \
@@ -3460,6 +3625,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMaterialfv_PACKED *packed_data = malloc(sizeof(glMaterialfv_PACKED)); \
     packed_data->format = glMaterialfv_FORMAT; \
     packed_data->func = glMaterialfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)face; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3471,6 +3637,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMaterialx_PACKED *packed_data = malloc(sizeof(glMaterialx_PACKED)); \
     packed_data->format = glMaterialx_FORMAT; \
     packed_data->func = glMaterialx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)face; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed)param; \
@@ -3482,6 +3649,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMaterialxv_PACKED *packed_data = malloc(sizeof(glMaterialxv_PACKED)); \
     packed_data->format = glMaterialxv_FORMAT; \
     packed_data->func = glMaterialxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)face; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -3493,6 +3661,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMatrixMode_PACKED *packed_data = malloc(sizeof(glMatrixMode_PACKED)); \
     packed_data->format = glMatrixMode_FORMAT; \
     packed_data->func = glMatrixMode; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)mode; \
     glPushCall((void *)packed_data); \
 }
@@ -3502,6 +3671,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMultMatrixf_PACKED *packed_data = malloc(sizeof(glMultMatrixf_PACKED)); \
     packed_data->format = glMultMatrixf_FORMAT; \
     packed_data->func = glMultMatrixf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat *)m; \
     glPushCall((void *)packed_data); \
 }
@@ -3511,6 +3681,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMultMatrixx_PACKED *packed_data = malloc(sizeof(glMultMatrixx_PACKED)); \
     packed_data->format = glMultMatrixx_FORMAT; \
     packed_data->func = glMultMatrixx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed *)m; \
     glPushCall((void *)packed_data); \
 }
@@ -3520,6 +3691,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMultiTexCoord4f_PACKED *packed_data = malloc(sizeof(glMultiTexCoord4f_PACKED)); \
     packed_data->format = glMultiTexCoord4f_FORMAT; \
     packed_data->func = glMultiTexCoord4f; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLfloat)s; \
     packed_data->args.a3 = (GLfloat)t; \
@@ -3533,6 +3705,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glMultiTexCoord4x_PACKED *packed_data = malloc(sizeof(glMultiTexCoord4x_PACKED)); \
     packed_data->format = glMultiTexCoord4x_FORMAT; \
     packed_data->func = glMultiTexCoord4x; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLfixed)s; \
     packed_data->args.a3 = (GLfixed)t; \
@@ -3546,6 +3719,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glNormal3f_PACKED *packed_data = malloc(sizeof(glNormal3f_PACKED)); \
     packed_data->format = glNormal3f_FORMAT; \
     packed_data->func = glNormal3f; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)nx; \
     packed_data->args.a2 = (GLfloat)ny; \
     packed_data->args.a3 = (GLfloat)nz; \
@@ -3557,6 +3731,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glNormal3x_PACKED *packed_data = malloc(sizeof(glNormal3x_PACKED)); \
     packed_data->format = glNormal3x_FORMAT; \
     packed_data->func = glNormal3x; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)nx; \
     packed_data->args.a2 = (GLfixed)ny; \
     packed_data->args.a3 = (GLfixed)nz; \
@@ -3568,6 +3743,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glNormalPointer_PACKED *packed_data = malloc(sizeof(glNormalPointer_PACKED)); \
     packed_data->format = glNormalPointer_FORMAT; \
     packed_data->func = glNormalPointer; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)type; \
     packed_data->args.a2 = (GLsizei)stride; \
     packed_data->args.a3 = (GLvoid *)pointer; \
@@ -3579,6 +3755,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glOrthof_PACKED *packed_data = malloc(sizeof(glOrthof_PACKED)); \
     packed_data->format = glOrthof_FORMAT; \
     packed_data->func = glOrthof; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)left; \
     packed_data->args.a2 = (GLfloat)right; \
     packed_data->args.a3 = (GLfloat)bottom; \
@@ -3593,6 +3770,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glOrthox_PACKED *packed_data = malloc(sizeof(glOrthox_PACKED)); \
     packed_data->format = glOrthox_FORMAT; \
     packed_data->func = glOrthox; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)left; \
     packed_data->args.a2 = (GLfixed)right; \
     packed_data->args.a3 = (GLfixed)bottom; \
@@ -3607,6 +3785,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPixelStorei_PACKED *packed_data = malloc(sizeof(glPixelStorei_PACKED)); \
     packed_data->format = glPixelStorei_FORMAT; \
     packed_data->func = glPixelStorei; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLint)param; \
     glPushCall((void *)packed_data); \
@@ -3617,6 +3796,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPointParameterf_PACKED *packed_data = malloc(sizeof(glPointParameterf_PACKED)); \
     packed_data->format = glPointParameterf_FORMAT; \
     packed_data->func = glPointParameterf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfloat)param; \
     glPushCall((void *)packed_data); \
@@ -3627,6 +3807,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPointParameterfv_PACKED *packed_data = malloc(sizeof(glPointParameterfv_PACKED)); \
     packed_data->format = glPointParameterfv_FORMAT; \
     packed_data->func = glPointParameterfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfloat *)params; \
     glPushCall((void *)packed_data); \
@@ -3637,6 +3818,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPointParameterx_PACKED *packed_data = malloc(sizeof(glPointParameterx_PACKED)); \
     packed_data->format = glPointParameterx_FORMAT; \
     packed_data->func = glPointParameterx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfixed)param; \
     glPushCall((void *)packed_data); \
@@ -3647,6 +3829,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPointParameterxv_PACKED *packed_data = malloc(sizeof(glPointParameterxv_PACKED)); \
     packed_data->format = glPointParameterxv_FORMAT; \
     packed_data->func = glPointParameterxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)pname; \
     packed_data->args.a2 = (GLfixed *)params; \
     glPushCall((void *)packed_data); \
@@ -3657,6 +3840,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPointSize_PACKED *packed_data = malloc(sizeof(glPointSize_PACKED)); \
     packed_data->format = glPointSize_FORMAT; \
     packed_data->func = glPointSize; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)size; \
     glPushCall((void *)packed_data); \
 }
@@ -3666,6 +3850,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPointSizePointerOES_PACKED *packed_data = malloc(sizeof(glPointSizePointerOES_PACKED)); \
     packed_data->format = glPointSizePointerOES_FORMAT; \
     packed_data->func = glPointSizePointerOES; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)type; \
     packed_data->args.a2 = (GLsizei)stride; \
     packed_data->args.a3 = (GLvoid *)pointer; \
@@ -3677,6 +3862,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPointSizex_PACKED *packed_data = malloc(sizeof(glPointSizex_PACKED)); \
     packed_data->format = glPointSizex_FORMAT; \
     packed_data->func = glPointSizex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)size; \
     glPushCall((void *)packed_data); \
 }
@@ -3686,6 +3872,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPolygonOffset_PACKED *packed_data = malloc(sizeof(glPolygonOffset_PACKED)); \
     packed_data->format = glPolygonOffset_FORMAT; \
     packed_data->func = glPolygonOffset; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)factor; \
     packed_data->args.a2 = (GLfloat)units; \
     glPushCall((void *)packed_data); \
@@ -3696,6 +3883,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPolygonOffsetx_PACKED *packed_data = malloc(sizeof(glPolygonOffsetx_PACKED)); \
     packed_data->format = glPolygonOffsetx_FORMAT; \
     packed_data->func = glPolygonOffsetx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)factor; \
     packed_data->args.a2 = (GLfixed)units; \
     glPushCall((void *)packed_data); \
@@ -3706,6 +3894,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPopMatrix_PACKED *packed_data = malloc(sizeof(glPopMatrix_PACKED)); \
     packed_data->format = glPopMatrix_FORMAT; \
     packed_data->func = glPopMatrix; \
+    packed_data->refs = 0; \
     glPushCall((void *)packed_data); \
 }
 #endif
@@ -3714,6 +3903,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glPushMatrix_PACKED *packed_data = malloc(sizeof(glPushMatrix_PACKED)); \
     packed_data->format = glPushMatrix_FORMAT; \
     packed_data->func = glPushMatrix; \
+    packed_data->refs = 0; \
     glPushCall((void *)packed_data); \
 }
 #endif
@@ -3722,6 +3912,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glReadPixels_PACKED *packed_data = malloc(sizeof(glReadPixels_PACKED)); \
     packed_data->format = glReadPixels_FORMAT; \
     packed_data->func = glReadPixels; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLint)x; \
     packed_data->args.a2 = (GLint)y; \
     packed_data->args.a3 = (GLsizei)width; \
@@ -3737,6 +3928,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glRotatef_PACKED *packed_data = malloc(sizeof(glRotatef_PACKED)); \
     packed_data->format = glRotatef_FORMAT; \
     packed_data->func = glRotatef; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)angle; \
     packed_data->args.a2 = (GLfloat)x; \
     packed_data->args.a3 = (GLfloat)y; \
@@ -3749,6 +3941,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glRotatex_PACKED *packed_data = malloc(sizeof(glRotatex_PACKED)); \
     packed_data->format = glRotatex_FORMAT; \
     packed_data->func = glRotatex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)angle; \
     packed_data->args.a2 = (GLfixed)x; \
     packed_data->args.a3 = (GLfixed)y; \
@@ -3761,6 +3954,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glSampleCoverage_PACKED *packed_data = malloc(sizeof(glSampleCoverage_PACKED)); \
     packed_data->format = glSampleCoverage_FORMAT; \
     packed_data->func = glSampleCoverage; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampf)value; \
     packed_data->args.a2 = (GLboolean)invert; \
     glPushCall((void *)packed_data); \
@@ -3771,6 +3965,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glSampleCoveragex_PACKED *packed_data = malloc(sizeof(glSampleCoveragex_PACKED)); \
     packed_data->format = glSampleCoveragex_FORMAT; \
     packed_data->func = glSampleCoveragex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLclampx)value; \
     packed_data->args.a2 = (GLboolean)invert; \
     glPushCall((void *)packed_data); \
@@ -3781,6 +3976,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glScalef_PACKED *packed_data = malloc(sizeof(glScalef_PACKED)); \
     packed_data->format = glScalef_FORMAT; \
     packed_data->func = glScalef; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)x; \
     packed_data->args.a2 = (GLfloat)y; \
     packed_data->args.a3 = (GLfloat)z; \
@@ -3792,6 +3988,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glScalex_PACKED *packed_data = malloc(sizeof(glScalex_PACKED)); \
     packed_data->format = glScalex_FORMAT; \
     packed_data->func = glScalex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)x; \
     packed_data->args.a2 = (GLfixed)y; \
     packed_data->args.a3 = (GLfixed)z; \
@@ -3803,6 +4000,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glScissor_PACKED *packed_data = malloc(sizeof(glScissor_PACKED)); \
     packed_data->format = glScissor_FORMAT; \
     packed_data->func = glScissor; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLint)x; \
     packed_data->args.a2 = (GLint)y; \
     packed_data->args.a3 = (GLsizei)width; \
@@ -3815,6 +4013,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glShadeModel_PACKED *packed_data = malloc(sizeof(glShadeModel_PACKED)); \
     packed_data->format = glShadeModel_FORMAT; \
     packed_data->func = glShadeModel; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)mode; \
     glPushCall((void *)packed_data); \
 }
@@ -3824,6 +4023,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glStencilFunc_PACKED *packed_data = malloc(sizeof(glStencilFunc_PACKED)); \
     packed_data->format = glStencilFunc_FORMAT; \
     packed_data->func = glStencilFunc; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)func; \
     packed_data->args.a2 = (GLint)ref; \
     packed_data->args.a3 = (GLuint)mask; \
@@ -3835,6 +4035,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glStencilMask_PACKED *packed_data = malloc(sizeof(glStencilMask_PACKED)); \
     packed_data->format = glStencilMask_FORMAT; \
     packed_data->func = glStencilMask; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLuint)mask; \
     glPushCall((void *)packed_data); \
 }
@@ -3844,6 +4045,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glStencilOp_PACKED *packed_data = malloc(sizeof(glStencilOp_PACKED)); \
     packed_data->format = glStencilOp_FORMAT; \
     packed_data->func = glStencilOp; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)fail; \
     packed_data->args.a2 = (GLenum)zfail; \
     packed_data->args.a3 = (GLenum)zpass; \
@@ -3855,6 +4057,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexCoordPointer_PACKED *packed_data = malloc(sizeof(glTexCoordPointer_PACKED)); \
     packed_data->format = glTexCoordPointer_FORMAT; \
     packed_data->func = glTexCoordPointer; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLint)size; \
     packed_data->args.a2 = (GLenum)type; \
     packed_data->args.a3 = (GLsizei)stride; \
@@ -3867,6 +4070,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexEnvf_PACKED *packed_data = malloc(sizeof(glTexEnvf_PACKED)); \
     packed_data->format = glTexEnvf_FORMAT; \
     packed_data->func = glTexEnvf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat)param; \
@@ -3878,6 +4082,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexEnvfv_PACKED *packed_data = malloc(sizeof(glTexEnvfv_PACKED)); \
     packed_data->format = glTexEnvfv_FORMAT; \
     packed_data->func = glTexEnvfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3889,6 +4094,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexEnvi_PACKED *packed_data = malloc(sizeof(glTexEnvi_PACKED)); \
     packed_data->format = glTexEnvi_FORMAT; \
     packed_data->func = glTexEnvi; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLint)param; \
@@ -3900,6 +4106,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexEnviv_PACKED *packed_data = malloc(sizeof(glTexEnviv_PACKED)); \
     packed_data->format = glTexEnviv_FORMAT; \
     packed_data->func = glTexEnviv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLint *)params; \
@@ -3911,6 +4118,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexEnvx_PACKED *packed_data = malloc(sizeof(glTexEnvx_PACKED)); \
     packed_data->format = glTexEnvx_FORMAT; \
     packed_data->func = glTexEnvx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed)param; \
@@ -3922,6 +4130,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexEnvxv_PACKED *packed_data = malloc(sizeof(glTexEnvxv_PACKED)); \
     packed_data->format = glTexEnvxv_FORMAT; \
     packed_data->func = glTexEnvxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -3933,6 +4142,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexImage2D_PACKED *packed_data = malloc(sizeof(glTexImage2D_PACKED)); \
     packed_data->format = glTexImage2D_FORMAT; \
     packed_data->func = glTexImage2D; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLint)level; \
     packed_data->args.a3 = (GLint)internalformat; \
@@ -3950,6 +4160,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexParameterf_PACKED *packed_data = malloc(sizeof(glTexParameterf_PACKED)); \
     packed_data->format = glTexParameterf_FORMAT; \
     packed_data->func = glTexParameterf; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat)param; \
@@ -3961,6 +4172,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexParameterfv_PACKED *packed_data = malloc(sizeof(glTexParameterfv_PACKED)); \
     packed_data->format = glTexParameterfv_FORMAT; \
     packed_data->func = glTexParameterfv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfloat *)params; \
@@ -3972,6 +4184,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexParameteri_PACKED *packed_data = malloc(sizeof(glTexParameteri_PACKED)); \
     packed_data->format = glTexParameteri_FORMAT; \
     packed_data->func = glTexParameteri; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLint)param; \
@@ -3983,6 +4196,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexParameteriv_PACKED *packed_data = malloc(sizeof(glTexParameteriv_PACKED)); \
     packed_data->format = glTexParameteriv_FORMAT; \
     packed_data->func = glTexParameteriv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLint *)params; \
@@ -3994,6 +4208,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexParameterx_PACKED *packed_data = malloc(sizeof(glTexParameterx_PACKED)); \
     packed_data->format = glTexParameterx_FORMAT; \
     packed_data->func = glTexParameterx; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed)param; \
@@ -4005,6 +4220,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexParameterxv_PACKED *packed_data = malloc(sizeof(glTexParameterxv_PACKED)); \
     packed_data->format = glTexParameterxv_FORMAT; \
     packed_data->func = glTexParameterxv; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLenum)pname; \
     packed_data->args.a3 = (GLfixed *)params; \
@@ -4016,6 +4232,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTexSubImage2D_PACKED *packed_data = malloc(sizeof(glTexSubImage2D_PACKED)); \
     packed_data->format = glTexSubImage2D_FORMAT; \
     packed_data->func = glTexSubImage2D; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLenum)target; \
     packed_data->args.a2 = (GLint)level; \
     packed_data->args.a3 = (GLint)xoffset; \
@@ -4033,6 +4250,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTranslatef_PACKED *packed_data = malloc(sizeof(glTranslatef_PACKED)); \
     packed_data->format = glTranslatef_FORMAT; \
     packed_data->func = glTranslatef; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfloat)x; \
     packed_data->args.a2 = (GLfloat)y; \
     packed_data->args.a3 = (GLfloat)z; \
@@ -4044,6 +4262,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glTranslatex_PACKED *packed_data = malloc(sizeof(glTranslatex_PACKED)); \
     packed_data->format = glTranslatex_FORMAT; \
     packed_data->func = glTranslatex; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLfixed)x; \
     packed_data->args.a2 = (GLfixed)y; \
     packed_data->args.a3 = (GLfixed)z; \
@@ -4055,6 +4274,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glVertexPointer_PACKED *packed_data = malloc(sizeof(glVertexPointer_PACKED)); \
     packed_data->format = glVertexPointer_FORMAT; \
     packed_data->func = glVertexPointer; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLint)size; \
     packed_data->args.a2 = (GLenum)type; \
     packed_data->args.a3 = (GLsizei)stride; \
@@ -4067,6 +4287,7 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     glViewport_PACKED *packed_data = malloc(sizeof(glViewport_PACKED)); \
     packed_data->format = glViewport_FORMAT; \
     packed_data->func = glViewport; \
+    packed_data->refs = 0; \
     packed_data->args.a1 = (GLint)x; \
     packed_data->args.a2 = (GLint)y; \
     packed_data->args.a3 = (GLsizei)width; \
