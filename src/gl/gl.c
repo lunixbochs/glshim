@@ -146,7 +146,7 @@ static renderlist_t *arrays_to_renderlist(renderlist_t *list, GLenum mode,
 
 static inline bool should_intercept_render(GLenum mode) {
     return (
-        (state.enable.vertex_array && ! valid_vertex_type(state.pointers.vertex.type)) ||
+        (state.enable.vertex_array && ! gl_valid_vertex_type(state.pointers.vertex.type)) ||
         state.enable.texgen_s || state.enable.texgen_t ||
         (mode == GL_LINES && state.enable.line_stipple) ||
         mode == GL_QUADS

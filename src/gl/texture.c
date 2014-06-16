@@ -43,22 +43,14 @@ static void *swizzle_texture(GLsizei width, GLsizei height,
                              const GLvoid *data) {
     bool convert = false;
     switch (*format) {
-        case GL_ALPHA:
         case GL_RGB:
-        case GL_RGBA:
-        case GL_LUMINANCE:
-        case GL_LUMINANCE_ALPHA:
             break;
         default:
             convert = true;
             break;
     }
     switch (*type) {
-        case GL_FLOAT:
         case GL_UNSIGNED_BYTE:
-        case GL_UNSIGNED_SHORT_5_6_5:
-        case GL_UNSIGNED_SHORT_4_4_4_4:
-        case GL_UNSIGNED_SHORT_5_5_5_1:
             break;
         case GL_UNSIGNED_INT_8_8_8_8_REV:
             *type = GL_UNSIGNED_BYTE;
@@ -71,13 +63,13 @@ static void *swizzle_texture(GLsizei width, GLsizei height,
     if (convert) {
         GLvoid *pixels = (GLvoid *)data;
         if (! pixel_convert(data, &pixels, width, height,
-                            *format, *type, GL_RGBA, GL_UNSIGNED_BYTE)) {
-            printf("libGL swizzle error: (%#4x, %#4x -> RGBA, UNSIGNED_BYTE)\n",
+                            *format, *type, GL_RGB, GL_UNSIGNED_BYTE)) {
+            printf("libGL swizzle error: (%#4x, %#4x -> RGB, UNSIGNED_BYTE)\n",
                 *format, *type);
             return NULL;
         }
         *type = GL_UNSIGNED_BYTE;
-        *format = GL_RGBA;
+        *format = GL_RGB;
         return pixels;
     }
     return (void *)data;
@@ -93,7 +85,7 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
         // implements GL_UNPACK_ROW_LENGTH
         if (state.texture.unpack_row_length && state.texture.unpack_row_length != width) {
             int imgWidth, pixelSize;
-            pixelSize = pixel_sizeof(format, type);
+            pixelSize = gl_pixel_sizeof(format, type);
             imgWidth = state.texture.unpack_row_length * pixelSize;
             GLubyte *dst = (GLubyte *)malloc(width * height * pixelSize);
             pixels = (GLvoid *)dst;
@@ -157,12 +149,14 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
                 bound->nwidth = nwidth;
                 bound->nheight = nheight;
             }
-            if (height != nheight || width != nwidth) {
+            if (false && (height != nheight || width != nwidth)) {
                 gles_glTexImage2D(target, level, format, nwidth, nheight, border,
                                   format, type, NULL);
                 gles_glTexSubImage2D(target, level, 0, 0, width, height,
                                      format, type, pixels);
             } else {
+                printf("glTexImage2D(0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%04x)\n",
+                                     target, level, format, border, format, type);
                 gles_glTexImage2D(target, level, format, width, height, border,
                                   format, type, pixels);
             }

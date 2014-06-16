@@ -123,12 +123,12 @@ bool pixel_convert(const GLvoid *src, GLvoid **dst,
                    GLenum dst_format, GLenum dst_type) {
     const colorlayout_t *src_color, *dst_color;
     GLuint pixels = width * height;
-    GLuint dst_size = pixels * pixel_sizeof(dst_format, dst_type);
+    GLuint dst_size = pixels * gl_pixel_sizeof(dst_format, dst_type);
 
     // printf("pixel conversion: %ix%i - %i, %i -> %i, %i\n", width, height, src_format, src_type, dst_format, dst_type);
     src_color = get_color_map(src_format);
     dst_color = get_color_map(dst_format);
-    if (!dst_size || !pixel_sizeof(src_format, src_type)
+    if (!dst_size || !gl_pixel_sizeof(src_format, src_type)
         || !src_color->type || !dst_color->type)
         return false;
 
@@ -139,8 +139,8 @@ bool pixel_convert(const GLvoid *src, GLvoid **dst,
             return true;
         }
     } else {
-        GLsizei src_stride = pixel_sizeof(src_format, src_type);
-        GLsizei dst_stride = pixel_sizeof(dst_format, dst_type);
+        GLsizei src_stride = gl_pixel_sizeof(src_format, src_type);
+        GLsizei dst_stride = gl_pixel_sizeof(dst_format, dst_type);
         *dst = malloc(dst_size);
         uintptr_t src_pos = (uintptr_t)src;
         uintptr_t dst_pos = (uintptr_t)*dst;
@@ -170,7 +170,7 @@ bool pixel_scale(const GLvoid *old, GLvoid **new,
     GLvoid *dst;
     uintptr_t src, pos, pixel;
 
-    pixel_size = pixel_sizeof(format, type);
+    pixel_size = gl_pixel_sizeof(format, type);
     dst = malloc(pixel_size * new_width * new_height);
     src = (uintptr_t)old;
     pos = (uintptr_t)dst;
