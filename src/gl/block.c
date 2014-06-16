@@ -226,7 +226,7 @@ void bl_normal3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
     }
 }
 
-void bl_color3f(block_t *block, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
+void bl_color4f(block_t *block, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     if (block->color == NULL) {
         block->color = alloc_sublist(4, GL_FLOAT, block->cap);
         // catch up
