@@ -8,6 +8,14 @@
 #include <string.h>
 #include "khash.h"
 
+#ifdef __linux__
+#include <linux/limits.h>
+#endif
+
+#ifndef PATH_MAX
+#define PATH_MAX 254
+#endif
+
 #ifdef __ARM_NEON__
 #include <arm_neon.h>
 #endif
