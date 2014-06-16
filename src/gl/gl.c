@@ -1,6 +1,6 @@
 #include "gl.h"
 
-void *gles = NULL;
+void *gles;
 glstate_t state = {.color = {1.0f, 1.0f, 1.0f, 1.0f}};
 
 // config functions
@@ -76,22 +76,15 @@ static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
 }
 
 void glEnable(GLenum cap) {
-    if (state.list.compiling && state.list.active) {
-        push_glEnable(cap);
-    } else {
-        LOAD_GLES(glEnable);
-        proxy_glEnable(cap, true, gles_glEnable);
-    }
-
+    PUSH_IF_COMPILING(glEnable);
+    LOAD_GLES(glEnable);
+    proxy_glEnable(cap, true, gles_glEnable);
 }
 
 void glDisable(GLenum cap) {
-    if (state.list.compiling && state.list.active) {
-        push_glDisable(cap);
-    } else {
-        LOAD_GLES(glDisable);
-        proxy_glEnable(cap, false, gles_glDisable);
-    }
+    PUSH_IF_COMPILING(glDisable);
+    LOAD_GLES(glDisable);
+    proxy_glEnable(cap, false, gles_glDisable);
 }
 
 #ifndef USE_ES2
@@ -120,29 +113,26 @@ GLboolean glIsEnabled(GLenum cap) {
     }
 }
 
-static renderlist_t *arrays_to_renderlist(renderlist_t *list, GLenum mode,
-                                        GLsizei skip, GLsizei count) {
-    if (! list)
-        list = alloc_renderlist();
+static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
+    block_t *block = bl_new(mode);
 
-    list->mode = mode;
-    list->len = count;
-    list->cap = count;
+    block->len = count;
+    block->cap = count;
     if (state.enable.vertex_array) {
-        list->vert = copy_gl_pointer(&state.pointers.vertex, 3, skip, count);
+        block->vert = copy_gl_pointer(&state.pointers.vertex, 3, skip, count);
     }
     if (state.enable.color_array) {
-        list->color = copy_gl_pointer(&state.pointers.color, 4, skip, count);
+        block->color = copy_gl_pointer(&state.pointers.color, 4, skip, count);
     }
     if (state.enable.normal_array) {
-        list->normal = copy_gl_pointer(&state.pointers.normal, 3, skip, count);
+        block->normal = copy_gl_pointer(&state.pointers.normal, 3, skip, count);
     }
     if (state.enable.tex_coord_array) {
-        list->tex = copy_gl_pointer(&state.pointers.tex_coord, 2, skip, count);
+        block->tex = copy_gl_pointer(&state.pointers.tex_coord, 2, skip, count);
     }
 
-    end_renderlist(list);
-    return list;
+    bl_end(block);
+    return block;
 }
 
 static inline bool should_intercept_render(GLenum mode) {
@@ -168,23 +158,21 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindi
         return;
     }
 
-    bool compiling = (state.list.active && state.list.compiling);
-    if (compiling) {
-        renderlist_t *list = NULL;
+    displaylist_t *list = state.list.active;
+    if (list) {
         GLsizei min, max;
 
-        if (compiling)
-            list = state.list.active = extend_renderlist(state.list.active);
-
         normalize_indices(indices, &max, &min, count);
-        list = arrays_to_renderlist(list, mode, 0, max + 1);
-        list->indices = indices;
-        list->len = count;
+        block_t *block = block_from_arrays(mode, 0, max + 1);
+        block->indices = indices;
+        block->len = count;
 
-        end_renderlist(list);
-        if (! compiling) {
-            draw_renderlist(list);
-            free_renderlist(list);
+        bl_end(block);
+        if (list) {
+            dl_append_block(list, block);
+        } else {
+            bl_draw(block);
+            bl_free(block);
         }
     } else {
         LOAD_GLES(glDrawElements);
@@ -197,18 +185,18 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
     if (mode == GL_QUAD_STRIP)
         mode = GL_TRIANGLE_STRIP;
 
-    renderlist_t *list, *active = state.list.active;
-    if (active && state.list.compiling) {
-        list = state.list.active = extend_renderlist(active);
-        arrays_to_renderlist(list, mode, first, count);
+    displaylist_t *active = state.list.active;
+    if (active) {
+        block_t *block = block_from_arrays(mode, first, count);
+        dl_append_block(active, block);
         return;
     }
 
     if (should_intercept_render(mode)) {
-        list = arrays_to_renderlist(NULL, mode, first, count);
-        end_renderlist(list);
-        draw_renderlist(list);
-        free_renderlist(list);
+        block_t *block = block_from_arrays(mode, first, count);
+        bl_end(block);
+        bl_draw(block);
+        bl_free(block);
     } else {
         // TODO: some draw states require us to use the full pipeline here
         // like texgen, stipple, npot
@@ -339,24 +327,29 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
 // immediate mode functions
 
 void glBegin(GLenum mode) {
-    if (! state.list.compiling) {
-        state.list.active = alloc_renderlist();
+    if (state.block.active) {
+        printf("libGL: undefined behavior: nested glBegin()\n");
+    } else {
+        state.block.active = bl_new(mode);
+        displaylist_t *list = state.list.active;
+        if (list) {
+            dl_append_block(list, state.block.active);
+        }
     }
-    state.list.active->mode = mode;
 }
 
 void glEnd() {
-    if (! state.list.active) return;
+    block_t *block = state.block.active;
+    if (! block)
+        return;
 
     // render if we're not in a display list
-    if (! state.list.compiling) {
-        end_renderlist(state.list.active);
-        draw_renderlist(state.list.active);
-        free_renderlist(state.list.active);
-        state.list.active = NULL;
-    } else {
-        state.list.active = extend_renderlist(state.list.active);
+    if (! state.list.active) {
+        bl_end(block);
+        bl_draw(block);
+        bl_free(block);
     }
+    state.block.active = NULL;
 }
 
 void glNormal3f(GLfloat x, GLfloat y, GLfloat z) {
@@ -364,8 +357,9 @@ void glNormal3f(GLfloat x, GLfloat y, GLfloat z) {
     state.normal[1] = y;
     state.normal[2] = z;
 
-    if (state.list.active) {
-        rlNormal3f(state.list.active, x, y, z);
+    block_t *block = state.block.active;
+    if (block) {
+        bl_normal3f(block, x, y, z);
     }
 #ifndef USE_ES2
     else {
@@ -376,40 +370,35 @@ void glNormal3f(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 void glVertex3f(GLfloat x, GLfloat y, GLfloat z) {
-    if (state.list.active) {
-        rlVertex3f(state.list.active, x, y, z);
+    block_t *block = state.block.active;
+    if (block) {
+        bl_vertex3f(block, x, y, z);
     }
 }
 
-void glColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
-    state.color[0] = r; state.color[1] = g;
-    state.color[2] = b; state.color[3] = a;
+void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
+    state.color[0] = red;
+    state.color[1] = green;
+    state.color[2] = blue;
+    state.color[3] = alpha;
 
-    if (state.list.active) {
-        rlColor4f(state.list.active, r, g, b, a);
+    block_t *block = state.block.active;
+    if (block) {
+        bl_color4f(block, red, green, blue, alpha);
     }
 #ifndef USE_ES2
     else {
+        PUSH_IF_COMPILING(glColor4f);
         LOAD_GLES(glColor4f);
-        gles_glColor4f(r, g, b, a);
+        gles_glColor4f(red, green, blue, alpha);
     }
 #endif
 }
-
-#ifndef USE_ES2
-void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
-    LOAD_GLES(glMaterialfv);
-    if (state.list.active) {
-        rlMaterialfv(state.list.active, face, pname, params);
-    } else {
-        gles_glMaterialfv(face, pname, params);
-    }
-}
-#endif
 
 void glTexCoord2f(GLfloat s, GLfloat t) {
-    if (state.list.active) {
-        rlTexCoord2f(state.list.active, s, t);
+    block_t *block = state.block.active;
+    if (block) {
+        bl_tex_coord2f(block, s, t);
     }
 }
 
@@ -452,19 +441,19 @@ void glArrayElement(GLint i) {
 }
 
 // TODO: between a lock and unlock, I can assume the array pointers are unchanged
-// so I can build a renderlist_t on the first call and hold onto it
-// maybe I need a way to call a renderlist_t with (first, count)
+// so I can build a block_t on the first call and hold onto it
+// maybe I need a way to call a block_t with (first, count)
 void glLockArraysEXT(GLint first, GLsizei count) {
-    state.list.locked = true;
+    state.block.locked = true;
 }
 
 void glUnlockArraysEXT() {
-    state.list.locked = false;
+    state.block.locked = false;
 }
 
 // display lists
 
-static renderlist_t *glGetList(GLuint list) {
+static displaylist_t *get_list(GLuint list) {
     if (glIsList(list))
         return state.lists[list - 1];
 
@@ -495,15 +484,14 @@ void glNewList(GLuint list, GLenum mode) {
     state.list.name = list;
     state.list.mode = mode;
     // TODO: if state.list.active is already defined, we probably need to clean up here
-    state.list.active = state.list.first = alloc_renderlist();
-    state.list.compiling = true;
+    state.list.active = dl_alloc();
 }
 
 void glEndList() {
     GLuint list = state.list.name;
-    if (state.list.compiling) {
-        state.lists[list - 1] = state.list.first;
-        state.list.compiling = false;
+    displaylist_t *dl = state.list.active;
+    if (state.list.active) {
+        state.lists[list - 1] = dl;
         state.list.active = NULL;
         if (state.list.mode == GL_COMPILE_AND_EXECUTE) {
             glCallList(list);
@@ -513,14 +501,21 @@ void glEndList() {
 
 void glCallList(GLuint list) {
     // TODO: the output of this call can be compiled into another display list
-    renderlist_t *l = glGetList(list);
-    if (l)
-        draw_renderlist(l);
+    displaylist_t *l = get_list(list);
+    displaylist_t *active = state.list.active;
+    if (l) {
+        if (active) {
+            dl_extend(active, l);
+        } else {
+            dl_call(l);
+        }
+    }
 }
 
 void glPushCall(void *call) {
-    if (state.list.compiling && state.list.active) {
-        rlPushCall(state.list.active, call);
+    displaylist_t *active = state.list.active;
+    if (active) {
+        dl_append(active, call);
     }
 }
 
@@ -561,9 +556,9 @@ void glCallLists(GLsizei n, GLenum type, const GLvoid *lists) {
 }
 
 void glDeleteList(GLuint list) {
-    renderlist_t *l = glGetList(list);
+    displaylist_t *l = get_list(list);
     if (l) {
-        free_renderlist(l);
+        dl_free(l);
         state.lists[list-1] = NULL;
     }
 
@@ -572,7 +567,7 @@ void glDeleteList(GLuint list) {
 
 void glDeleteLists(GLuint list, GLsizei range) {
     for (int i = 0; i < range; i++) {
-        glDeleteList(list+i);
+        glDeleteList(list + i);
     }
 }
 

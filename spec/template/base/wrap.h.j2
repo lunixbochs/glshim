@@ -4,6 +4,7 @@
 typedef struct {
     int format;
     void *func;
+    int refs;
     void *args;
 } packed_call_t;
 
@@ -30,6 +31,7 @@ typedef struct {
 typedef struct {
     int format;
     FUNC_{{ f.types }} func;
+    int refs;
     {% if f.args %}
     ARGS_{{ f.types }} args;
     {% endif %}

@@ -51,10 +51,7 @@ typedef struct {
 
 
 typedef struct {
-    renderlist_t *active;
-    renderlist_t *first;
-    GLboolean compiling;
-    GLboolean locked;
+    displaylist_t *active;
     GLuint base;
     GLuint name;
     GLenum mode;
@@ -62,6 +59,12 @@ typedef struct {
     GLuint count;
     GLuint cap;
 } displaylist_state_t;
+
+
+typedef struct {
+    block_t *active;
+    GLboolean locked;
+} block_state_t;
 
 
 typedef struct {
@@ -79,11 +82,12 @@ typedef struct {
 
 typedef struct {
     displaylist_state_t list;
+    block_state_t block;
     enable_state_t enable;
     map_state_t *map_grid;
     map_states_t map1, map2;
     pointer_states_t pointers;
-    renderlist_t **lists;
+    displaylist_t **lists;
     texgen_state_t texgen;
     texture_state_t texture;
     GLfloat color[4];
