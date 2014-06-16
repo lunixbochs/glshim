@@ -255,7 +255,7 @@ void rlVertex3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
 
     if (list->normal) {
         GLfloat *normal = list->normal + (list->len * 3);
-        memcpy(normal, list->lastNormal, sizeof(GLfloat) * 3);
+        memcpy(normal, state.normal, sizeof(GLfloat) * 3);
     }
 
     if (list->color) {
@@ -273,16 +273,13 @@ void rlVertex3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
 }
 
 void rlNormal3f(renderlist_t *list, GLfloat x, GLfloat y, GLfloat z) {
-    GLfloat *normal = list->lastNormal;
-    normal[0] = x; normal[1] = y; normal[2] = z;
-
     if (list->normal == NULL) {
         list->normal = alloc_sublist(3, list->cap);
         // catch up
         int i;
         for (i = 0; i < list->len; i++) {
-            GLfloat *normal = (list->normal + (i * 4));
-            memcpy(normal, list->lastNormal, sizeof(GLfloat) * 4);
+            GLfloat *normal = (list->normal + (i * 3));
+            memcpy(normal, state.normal, sizeof(GLfloat) * 3);
         }
     } else {
         resize_renderlist(list);
