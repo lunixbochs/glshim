@@ -36,8 +36,8 @@ void (*block_draw_t)(block_t *block);
 
 typedef struct {
     int format;
-    int refs;
     block_t *block;
+    int refs;
 } block_call_t;
 
 extern block_t *bl_new(GLenum mode);
