@@ -352,19 +352,20 @@ void glEnd() {
     state.block.active = NULL;
 }
 
-void glNormal3f(GLfloat x, GLfloat y, GLfloat z) {
-    state.normal[0] = x;
-    state.normal[1] = y;
-    state.normal[2] = z;
+void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
+    state.normal[0] = nx;
+    state.normal[1] = ny;
+    state.normal[2] = nz;
 
     block_t *block = state.block.active;
     if (block) {
-        bl_normal3f(block, x, y, z);
+        bl_normal3f(block, nx, ny, nz);
     }
 #ifndef USE_ES2
     else {
+        PUSH_IF_COMPILING(glNormal3f);
         LOAD_GLES(glNormal3f);
-        gles_glNormal3f(x, y, z);
+        gles_glNormal3f(nx, ny, nz);
     }
 #endif
 }
