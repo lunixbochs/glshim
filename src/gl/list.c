@@ -7,6 +7,7 @@ displaylist_t *dl_alloc() {
     displaylist_t *dl = malloc(sizeof(displaylist_t));
     dl->cap = 0;
     dl->len = 0;
+    dl->calls = NULL;
     dl->open = true;
     return dl;
 }
