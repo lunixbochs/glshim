@@ -11,7 +11,9 @@ else()
 endif()
 
 add_library(GL SHARED ${GL_SOURCES})
-add_library(GL_static STATIC ${GL_SOURCES})
+set_target_properties(GL PROPERTIES VERSION 1.2.0 SOVERSION 1.2.0)
+
+add_library(GL_static STATIC EXCLUDE_FROM_ALL ${GL_SOURCES})
 set_target_properties(GL_static PROPERTIES OUTPUT_NAME GL)
 
 add_library(GL2 SHARED EXCLUDE_FROM_ALL ${GL_SOURCES})
@@ -34,7 +36,7 @@ if(CMAKE_SHARED_LIBRARY_SUFFIX MATCHES ".so")
 endif()
 
 aux_source_directory(preload PRELOAD_SOURCES)
-add_library(preload SHARED ${PRELOAD_SOURCES})
+add_library(preload SHARED EXCLUDE_FROM_ALL ${PRELOAD_SOURCES})
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(preload X11)
 endif()
