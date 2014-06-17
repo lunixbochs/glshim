@@ -2,7 +2,6 @@
 #include "bcm_host.h"
 #endif
 
-#include <EGL/egl.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <X11/Xlib.h>

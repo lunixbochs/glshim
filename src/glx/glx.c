@@ -8,6 +8,7 @@
 
 #include "glx.h"
 #include <GLES/gl.h>
+#include <EGL/egl.h>
 
 bool eglInitialized = false;
 EGLDisplay eglDisplay;
