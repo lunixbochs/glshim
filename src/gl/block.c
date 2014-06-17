@@ -59,7 +59,7 @@ static inline void bl_grow(block_t *block) {
     if (block->len >= block->cap) {
         block->cap += DEFAULT_BLOCK_CAPACITY;
         // TODO: store list types on block and use block->types.vert, etc directly?
-        realloc_sublist(block->vert, 2, GL_FLOAT, block->cap);
+        realloc_sublist(block->vert, 3, GL_FLOAT, block->cap);
         realloc_sublist(block->normal, 3, GL_FLOAT, block->cap);
         realloc_sublist(block->color, 4, GL_FLOAT, block->cap);
         realloc_sublist(block->tex, 2, GL_FLOAT, block->cap);
