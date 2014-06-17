@@ -70,13 +70,15 @@ void bl_q2t(block_t *block) {
     if (!block->len || !block->vert || block->q2t) return;
     // TODO: split to multiple blocks if block->len > 65535
 
-    // TODO: q2t on glDrawElements?
-    // just set new_indices[i] = indices[q2t.cache[i]]
-    if (block->indices)
-        free(block->indices);
-
     q2t_calc(block->len);
-    // TODO: just use q2t.cache when rendering sees block->q2t
+    if (block->indices) {
+        GLushort *indices = malloc(block->len);
+        for (int i = 0; i < block->len; i++) {
+            indices[i] = block->indices[q2t.cache[i]];
+        }
+        free(block->indices);
+        block->indices = indices;
+    }
     block->q2t = true;
     block->len *= 1.5;
     return;
