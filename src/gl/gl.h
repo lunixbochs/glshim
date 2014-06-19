@@ -113,7 +113,7 @@ static void load_gles_lib() {
     }
 
 #define PUSH_IF_COMPILING_EXT(name, ...)             \
-    if (state.list.active) { \
+    if (state.list.active) {                         \
         push_##name(__VA_ARGS__);                    \
         return (name##_RETURN)0;                     \
     }
