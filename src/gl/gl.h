@@ -6,7 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "khash.h"
+#include "types.h"
 
 #ifdef __linux__
 #include <linux/limits.h>
@@ -96,14 +98,18 @@ static void load_gles_lib() {
     WARN_NULL(gles);
 }
 
-#define LOAD_GLES(name)                                                 \
-    static name##_PTR gles_##name;                                      \
-    if (gles_##name == NULL) {                                          \
-        if (gles == NULL) {                                             \
-            load_gles_lib();                                            \
-        }                                                               \
-        gles_##name = (name##_PTR)dlsym(gles, #name);                   \
-        WARN_NULL(gles_##name);                                         \
+#define LOAD_GLES(name)                                   \
+    static name##_PTR gles_##name;                        \
+    {                                                     \
+        static bool first = true;                         \
+        if (first) {                                      \
+            first = false;                                \
+            if (gles == NULL) {                           \
+                load_gles_lib();                          \
+            }                                             \
+            gles_##name = (name##_PTR)dlsym(gles, #name); \
+            WARN_NULL(gles_##name);                       \
+        }                                                 \
     }
 
 #define PUSH_IF_COMPILING_EXT(name, ...)             \

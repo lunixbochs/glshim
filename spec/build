@@ -4,9 +4,10 @@ cd "$(dirname "$0")"
 base=../src/
 gles="yml/gles-1.1.yml"
 gles2="yml/gles-2.0.yml"
+glx="yml/my_glx.yml,yml/glxext.yml"
 
 ./gen.py "$gles" --ifndef USE_ES2 gleswrap.c.j2 gleswrap.c gles.h > "$base/gl/wrap/gles.c" &
-./gen.py "$gles" --ifndef USE_ES2 glwrap.h.j2 gleswrap.h ../gl.h > "$base/gl/wrap/gles.h" &
+./gen.py --deep "$gles,$glx" --ifndef USE_ES2 glwrap.h.j2 gleswrap.h ../gl.h > "$base/gl/wrap/gles.h" &
 ./gen.py "$gles" --ifndef USE_ES2 glxfuncs.j2 glxfuncs.inc ../gl/gl.h > "$base/glx/glesfuncs.inc" &
 
 ./gen.py "$gles2" --ifdef USE_ES2 gleswrap.c.j2 gles2wrap.c gles2.h > "$base/gl/wrap/gles2.c" &

@@ -20,7 +20,7 @@ void glXStub(void *x, ...) {
     return;
 }
 
-void *glXGetProcAddressARB(const char *name) {
+void *glXGetProcAddressARB(const GLubyte *name) {
     // generated gles wrappers
 #ifdef USE_ES2
     #include "gles2funcs.inc"
@@ -267,6 +267,6 @@ void *glXGetProcAddressARB(const char *name) {
     return NULL;
 }
 
-void *glXGetProcAddress(const char *name) {
+void *glXGetProcAddress(const GLubyte *name) {
     return glXGetProcAddressARB(name);
 }
