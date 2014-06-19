@@ -78,8 +78,12 @@ static void load_gles_lib() {
     }
     char gles_name[PATH_MAX + 1];
     char *override = getenv("LIBGL_GLES");
+    int flags = RTLD_LOCAL | RTLD_NOW;
+#ifdef RTLD_DEEPBIND
+    flags |= RTLD_DEEPBIND;
+#endif
     if (override) {
-        if ((gles = dlopen(override, RTLD_LOCAL | RTLD_LAZY))) {
+        if ((gles = dlopen(override, flags))) {
             strncpy(gles_name, override, PATH_MAX);
             printf("libGL backend: %s\n", gles_name);
             return;
@@ -88,7 +92,7 @@ static void load_gles_lib() {
     for (int i = 0; gles_lib[i]; i++) {
         for (int e = 0; gles_ext[e]; e++) {
             snprintf(gles_name, PATH_MAX, "%s.%s", gles_lib[i], gles_ext[e]);
-            gles = dlopen(gles_name, RTLD_LOCAL | RTLD_LAZY);
+            gles = dlopen(gles_name, flags);
             if (gles) {
                 printf("libGL backend: %s\n", gles_name);
                 return;
