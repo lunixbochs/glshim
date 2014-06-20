@@ -244,59 +244,59 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
     tf = cf = nf = vf = GL_FLOAT;
 
     switch (format) {
-        GL_V2F: vert = 2; break;
-        GL_V3F: vert = 3; break;
-        GL_C4UB_V2F:
+        case GL_V2F: vert = 2; break;
+        case GL_V3F: vert = 3; break;
+        case GL_C4UB_V2F:
             color = 4; cf = GL_UNSIGNED_BYTE;
             vert = 2;
             break;
-        GL_C4UB_V3F:
+        case GL_C4UB_V3F:
             color = 4; cf = GL_UNSIGNED_BYTE;
             vert = 3;
             break;
-        GL_C3F_V3F:
+        case GL_C3F_V3F:
             color = 3;
             vert = 4;
             break;
-        GL_N3F_V3F:
+        case GL_N3F_V3F:
             normal = 3;
             vert = 3;
             break;
-        GL_C4F_N3F_V3F:
+        case GL_C4F_N3F_V3F:
             color = 4;
             normal = 3;
             vert = 3;
             break;
-        GL_T2F_V3F:
+        case GL_T2F_V3F:
             tex = 2;
             vert = 3;
             break;
-        GL_T4F_V4F:
+        case GL_T4F_V4F:
             tex = 4;
             vert = 4;
             break;
-        GL_T2F_C4UB_V3F:
+        case GL_T2F_C4UB_V3F:
             tex = 2;
             color = 4; cf = GL_UNSIGNED_BYTE;
             vert = 3;
             break;
-        GL_T2F_C3F_V3F:
+        case GL_T2F_C3F_V3F:
             tex = 2;
             color = 3;
             vert = 3;
             break;
-        GL_T2F_N3F_V3F:
+        case GL_T2F_N3F_V3F:
             tex = 2;
             normal = 3;
             vert = 3;
             break;
-        GL_T2F_C4F_N3F_V3F:
+        case GL_T2F_C4F_N3F_V3F:
             tex = 2;
             color = 4;
             normal = 3;
             vert = 3;
             break;
-        GL_T4F_C4F_N3F_V4F:
+        case GL_T4F_C4F_N3F_V4F:
             tex = 4;
             color = 4;
             normal = 4;

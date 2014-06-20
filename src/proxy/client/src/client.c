@@ -5355,6 +5355,16 @@ void glXSwapBuffers(Display * dpy, GLXDrawable drawable) {
     syscall(SYS_proxy, (void *)&packed_data, NULL);
 }
 #endif
+#if !defined(skip_client_glXSwapIntervalEXT) && !defined(skip_index_glXSwapIntervalEXT)
+void glXSwapIntervalEXT(Display * dpy, GLXDrawable drawable, int interval) {
+    glXSwapIntervalEXT_INDEXED packed_data;
+    packed_data.func = glXSwapIntervalEXT_INDEX;
+    packed_data.args.a1 = (Display *)dpy;
+    packed_data.args.a2 = (GLXDrawable)drawable;
+    packed_data.args.a3 = (int)interval;
+    syscall(SYS_proxy, (void *)&packed_data, NULL);
+}
+#endif
 #if !defined(skip_client_glXSwapIntervalMESA) && !defined(skip_index_glXSwapIntervalMESA)
 int glXSwapIntervalMESA(unsigned int interval) {
     glXSwapIntervalMESA_INDEXED packed_data;
@@ -19530,6 +19540,9 @@ __GLXextFuncPtr glXGetProcAddressARB(const GLubyte *name) {
     }
     if (strcmp(name, "glXSwapBuffers") == 0) {
         return (void *)glXSwapBuffers;
+    }
+    if (strcmp(name, "glXSwapIntervalEXT") == 0) {
+        return (void *)glXSwapIntervalEXT;
     }
     if (strcmp(name, "glXSwapIntervalMESA") == 0) {
         return (void *)glXSwapIntervalMESA;

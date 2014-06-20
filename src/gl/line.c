@@ -5,7 +5,7 @@ GLushort stipplePattern = 0xFFFF;
 GLubyte *stippleData = NULL;
 GLuint stippleTexture = 0;
 
-void glLineStipple(GLuint factor, GLushort pattern) {
+void glLineStipple(GLint factor, GLushort pattern) {
     stippleFactor = factor;
     stipplePattern = pattern;
     if (stippleData != NULL) {

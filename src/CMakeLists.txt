@@ -25,16 +25,6 @@ if(BCMHOST)
     target_link_libraries(GL2 ${PI_LIBS} GLESv2)
 endif()
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    target_link_libraries(GL X11 EGL)
-    target_link_libraries(GL2 X11 EGL)
-endif()
-
-if(CMAKE_SHARED_LIBRARY_SUFFIX MATCHES ".so")
-    set_target_properties(GL PROPERTIES SUFFIX ".so.1")
-    set_target_properties(GL2 PROPERTIES SUFFIX ".so.1")
-endif()
-
 aux_source_directory(preload PRELOAD_SOURCES)
 add_library(preload SHARED EXCLUDE_FROM_ALL ${PRELOAD_SOURCES})
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")

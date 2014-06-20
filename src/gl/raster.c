@@ -12,6 +12,7 @@ GLubyte *raster = NULL;
 */
 
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
+    PROXY_GLES(glRasterPos3f);
     rPos.x = x;
     rPos.y = y;
     rPos.z = z;
@@ -19,7 +20,7 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
 
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     PUSH_IF_COMPILING(glViewport);
-    LOAD_GLES(glViewport);
+    PROXY_GLES(glViewport)
     if (raster) {
         render_raster();
     }
@@ -45,6 +46,7 @@ void init_raster() {
 
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
               GLfloat xmove, GLfloat ymove, const GLubyte *bitmap) {
+    PROXY_GLES(glBitmap);
     // TODO: shouldn't be drawn if the raster pos is outside the viewport?
     // TODO: negative width/height mirrors bitmap?
     if (!width && !height) {
@@ -80,8 +82,11 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
 
 void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
                   GLenum type, const GLvoid *data) {
-    GLubyte *pixels, *from, *to;
+    const GLubyte *from, *pixels = data;
+    GLubyte *to;
     GLvoid *dst = NULL;
+
+    PROXY_GLES(glDrawPixels);
 
     init_raster();
     if (! pixel_convert(data, &dst, width, height,
@@ -103,7 +108,7 @@ void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
         memcpy(to, from, 4 * screen_width);
     }
     if (pixels != data)
-        free(pixels);
+        free((void *)pixels);
 }
 
 void render_raster() {

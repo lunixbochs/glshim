@@ -56,7 +56,7 @@ void glDepthRange(GLdouble nearVal, GLdouble farVal) {
 void glFogi(GLenum pname, GLint param) {
     glFogf(pname, param);
 }
-void glFogiv(GLenum pname, GLint *iparams) {
+void glFogiv(GLenum pname, const GLint *iparams) {
     switch (pname) {
         case GL_FOG_DENSITY:
         case GL_FOG_START:
@@ -76,14 +76,13 @@ void glFogiv(GLenum pname, GLint *iparams) {
         }
     }
 }
-void glFrustum(GLdouble left, GLdouble right, GLdouble bottom,
-             GLdouble top, GLdouble near, GLdouble far) {
+void glFrustum(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near, GLdouble far) {
     glFrustumf(left, right, bottom, top, near, far);
 }
 void glLighti(GLenum light, GLenum pname, GLint param) {
     glLightf(light, pname, param);
 }
-void glLightiv(GLenum light, GLenum pname, GLint *iparams) {
+void glLightiv(GLenum light, GLenum pname, const GLint *iparams) {
     switch (pname) {
         case GL_AMBIENT:
         case GL_DIFFUSE:
@@ -118,7 +117,7 @@ void glLightiv(GLenum light, GLenum pname, GLint *iparams) {
 void glLightModeli(GLenum pname, GLint param) {
     glLightModelf(pname, param);
 }
-void glLightModeliv(GLenum pname, GLint *iparams) {
+void glLightModeliv(GLenum pname, const GLint *iparams) {
     switch (pname) {
         case GL_LIGHT_MODEL_AMBIENT: {
             GLfloat params[4];
@@ -142,8 +141,7 @@ void glMateriali(GLenum face, GLenum pname, GLint param) {
 void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
     glMultiTexCoord4f(target, s, t, 0.0f, 0.0f);
 }
-void glOrtho(GLdouble left, GLdouble right, GLdouble bottom,
-             GLdouble top, GLdouble near, GLdouble far) {
+void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near, GLdouble far) {
     glOrthof(left, right, bottom, top, near, far);
 }
 
@@ -158,15 +156,13 @@ void glClipPlanefOES(GLenum plane, const GLfloat *equation) {
 void glDepthRangefOES(GLclampf near, GLclampf far) {
     glDepthRangef(near, far);
 }
-void glFrustumfOES(GLfloat left, GLfloat right, GLfloat bottom,
-                   GLfloat top, GLfloat near, GLfloat far) {
+void glFrustumfOES(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far) {
     glFrustumf(left, right, bottom, top, near, far);
 }
 void glGetClipPlanefOES(GLenum pname, GLfloat equation[4]) {
     glGetClipPlanef(pname, equation);
 }
-void glOrthofOES(GLfloat left, GLfloat right, GLfloat bottom,
-                 GLfloat top, GLfloat near, GLfloat far) {
+void glOrthofOES(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far) {
     glOrthof(left, right, bottom, top, near, far);
 }
 
@@ -179,9 +175,10 @@ void glOrthofOES(GLfloat left, GLfloat right, GLfloat bottom,
         glVertex2##suffix(x2, y1);                            \
         glVertex2##suffix(x2, y2);                            \
         glVertex2##suffix(x1, y2);                            \
+        glEnd();                                              \
     }                                                         \
-    void glRect##suffix##v(const type *v) {                   \
-        glRect##suffix(v[0], v[1], v[2], v[3]);               \
+    void glRect##suffix##v(const type *v1, const type *v2) {  \
+        glRect##suffix(v1[0], v1[1], v2[0], v2[1]);           \
     }
 
 GL_RECT(d, GLdouble)
@@ -230,63 +227,63 @@ void glNormal3##suffix##v(const type *v) {                  \
 void glRasterPos2##suffix(type x, type y) {                 \
     glRasterPos3f(x, y, 0);                                 \
 }                                                           \
-void glRasterPos2##suffix##v(type *v) {                     \
+void glRasterPos2##suffix##v(const type *v) {               \
     glRasterPos3f(v[0], v[1], 0);                           \
 }                                                           \
 void glRasterPos3##suffix(type x, type y, type z) {         \
     glRasterPos3f(x, y, z);                                 \
 }                                                           \
-void glRasterPos3##suffix##v(type *v) {                     \
+void glRasterPos3##suffix##v(const type *v) {               \
     glRasterPos3f(v[0], v[1], v[2]);                        \
 }                                                           \
 void glRasterPos4##suffix(type x, type y, type z, type w) { \
     glRasterPos4f(x, y, z, w);                              \
 }                                                           \
-void glRasterPos4##suffix##v(type *v) {                     \
+void glRasterPos4##suffix##v(const type *v) {               \
     glRasterPos4f(v[0], v[1], v[2], v[3]);                  \
 }                                                           \
 /* vertex */                                                \
 void glVertex2##suffix(type x, type y) {                    \
     glVertex2f(x, y);                                       \
 }                                                           \
-void glVertex2##suffix##v(type *v) {                        \
+void glVertex2##suffix##v(const type *v) {                  \
     glVertex2f(v[0], v[1]);                                 \
 }                                                           \
 void glVertex3##suffix(type x, type y, type z) {            \
     glVertex3f(x, y, z);                                    \
 }                                                           \
-void glVertex3##suffix##v(type *v) {                        \
+void glVertex3##suffix##v(const type *v) {                  \
     glVertex3f(v[0], v[1], v[2]);                           \
 }                                                           \
 void glVertex4##suffix(type r, type g, type b, type w) {    \
     glVertex4f(r, g, b, w);                                 \
 }                                                           \
-void glVertex4##suffix##v(type *v) {                        \
+void glVertex4##suffix##v(const type *v) {                  \
     glVertex4f(v[0], v[1], v[2], v[3]);                     \
 }                                                           \
 /* texture */                                               \
 void glTexCoord1##suffix(type s) {                          \
     glTexCoord2f(s, 0);                                     \
 }                                                           \
-void glTexCoord1##suffix##v(type *t) {                      \
+void glTexCoord1##suffix##v(const type *t) {                \
     glTexCoord2f(t[0], 0);                                  \
 }                                                           \
 void glTexCoord2##suffix(type s, type t) {                  \
     glTexCoord2f(s, t);                                     \
 }                                                           \
-void glTexCoord2##suffix##v(type *t) {                      \
+void glTexCoord2##suffix##v(const type *t) {                \
     glTexCoord2f(t[0], t[1]);                               \
 }                                                           \
 void glTexCoord3##suffix(type s, type t, type r) {          \
     glTexCoord2f(s, t);                                     \
 }                                                           \
-void glTexCoord3##suffix##v(type *t) {                      \
+void glTexCoord3##suffix##v(const type *t) {                \
     glTexCoord2f(t[0], t[1]);                               \
 }                                                           \
 void glTexCoord4##suffix(type s, type t, type r, type q) {  \
     glTexCoord2f(s, t);                                     \
 }                                                           \
-void glTexCoord4##suffix##v(type *t) {                      \
+void glTexCoord4##suffix##v(const type *t) {                \
     glTexCoord2f(t[0], t[1]);                               \
 }
 
@@ -361,10 +358,10 @@ THUNK(Double, GLdouble)
 void glColor3f(GLfloat r, GLfloat g, GLfloat b) {
     glColor4f(r, g, b, 1.0f);
 }
-void glColor3fv(GLfloat *c) {
+void glColor3fv(const GLfloat *c) {
     glColor4f(c[0], c[1], c[2], 1.0f);
 }
-void glColor4fv(GLfloat *c) {
+void glColor4fv(const GLfloat *c) {
     glColor4f(c[0], c[1], c[2], c[3]);
 }
 void glIndexfv(const GLfloat *c) {
@@ -400,19 +397,19 @@ void glEvalCoord2d(GLdouble u, GLdouble v) {
     glEvalCoord2f(u, v);
 }
 
-void glEvalCoord1fv(GLfloat *v) {
+void glEvalCoord1fv(const GLfloat *v) {
     glEvalCoord1f(v[0]);
 }
 
-void glEvalCoord1dv(GLdouble *v) {
+void glEvalCoord1dv(const GLdouble *v) {
     glEvalCoord1d(v[0]);
 }
 
-void glEvalCoord2fv(GLfloat *v) {
+void glEvalCoord2fv(const GLfloat *v) {
     glEvalCoord2f(v[0], v[1]);
 }
 
-void glEvalCoord2dv(GLdouble *v) {
+void glEvalCoord2dv(const GLdouble *v) {
     glEvalCoord2d(v[0], v[1]);
 }
 
@@ -436,7 +433,7 @@ void glMultMatrixd(const GLdouble *m) {
 }
 
 // normal
-void glNormal3fv(GLfloat *v) {
+void glNormal3fv(const GLfloat *v) {
     glNormal3f(v[0], v[1], v[2]);
 }
 
@@ -444,22 +441,22 @@ void glNormal3fv(GLfloat *v) {
 void glTexCoord1f(GLfloat s) {
     glTexCoord2f(s, 0);
 }
-void glTexCoord1fv(GLfloat *t) {
+void glTexCoord1fv(const GLfloat *t) {
     glTexCoord2f(t[0], 0);
 }
-void glTexCoord2fv(GLfloat *t) {
+void glTexCoord2fv(const GLfloat *t) {
     glTexCoord2f(t[0], t[1]);
 }
 void glTexCoord3f(GLfloat s, GLfloat t, GLfloat r) {
     glTexCoord2f(s, t);
 }
-void glTexCoord3fv(GLfloat *t) {
+void glTexCoord3fv(const GLfloat *t) {
     glTexCoord2f(t[0], t[1]);
 }
 void glTexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q) {
     glTexCoord2f(s, t);
 }
-void glTexCoord4fv(GLfloat *t) {
+void glTexCoord4fv(const GLfloat *t) {
     glTexCoord2f(t[0], t[1]);
 }
 
@@ -471,11 +468,11 @@ void glTexGenf(GLenum coord, GLenum pname, GLfloat param) {
     // TODO: this is gross/lossy.
     glTexGeni(coord, pname, param);
 }
-void glTexGendv(GLenum coord, GLenum pname, GLdouble *params) {
+void glTexGendv(GLenum coord, GLenum pname, const GLdouble *params) {
     // TODO: stub
     // glTexGenfv(coord, pname, thunked_params);
 }
-void glTexGeniv(GLenum coord, GLenum pname, GLint *params) {
+void glTexGeniv(GLenum coord, GLenum pname, const GLint *params) {
     // TODO: stub
     // glTexGenfv(coord, pname, thunked_params);
 }
@@ -495,16 +492,16 @@ void glTranslated(GLdouble x, GLdouble y, GLdouble z) {
 void glVertex2f(GLfloat x, GLfloat y) {
     glVertex3f(x, y, 0);
 }
-void glVertex2fv(GLfloat *v) {
+void glVertex2fv(const GLfloat *v) {
     glVertex3f(v[0], v[1], 0);
 }
-void glVertex3fv(GLfloat *v) {
+void glVertex3fv(const GLfloat *v) {
     glVertex3f(v[0], v[1], v[2]);
 }
 void glVertex4f(GLfloat r, GLfloat g, GLfloat b, GLfloat w) {
     glVertex3f(r/w, g/w, b/w);
 }
-void glVertex4fv(GLfloat *v) {
+void glVertex4fv(const GLfloat *v) {
     glVertex3f(v[0]/v[3], v[1]/v[3], v[2]/v[3]);
 }
 

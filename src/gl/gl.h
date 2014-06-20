@@ -1,5 +1,5 @@
 #include <dlfcn.h>
-#include <GLES/gl.h>
+#include <GL/gl.h>
 #include <inttypes.h>
 #include <math.h>
 #include <stdbool.h>
@@ -27,7 +27,6 @@
 
 #include "../config.h"
 #include "wrap/es.h"
-#include "const.h"
 
 #define checkError(code)                          \
     {int error; while ((error = glGetError())) {} \
@@ -123,6 +122,12 @@ static void load_gles_lib() {
     }
 
 #define PUSH_IF_COMPILING(name) PUSH_IF_COMPILING_EXT(name, name##_ARG_NAMES)
+
+#define PROXY_GLES(name) \
+    LOAD_GLES(name); \
+    if (gles_##name != NULL) { \
+        return gles_##name(name##_ARG_NAMES); \
+    }
 
 #include "gl_helpers.h"
 

@@ -69,7 +69,7 @@ STUB(void glPixelZoom(GLfloat xfactor, GLfloat yfactor))
 STUB(void glPolygonMode(GLenum face, GLenum mode))
 STUB(void glPolygonStipple(const GLubyte *mask))
 STUB(void glPopName())
-STUB(void glPushName())
+STUB(void glPushName(GLuint name))
 STUB(void glReadBuffer(GLenum mode))
 STUB(void glSecondaryColor3f(GLfloat r, GLfloat g, GLfloat b))
 

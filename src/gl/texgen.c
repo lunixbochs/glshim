@@ -13,7 +13,7 @@ void glTexGeni(GLenum coord, GLenum pname, GLint param) {
     }
 }
 
-void glTexGenfv(GLenum coord, GLenum pname, GLfloat *param) {
+void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
     // pname is in: GL_TEXTURE_GEN_MODE, GL_OBJECT_PLANE, GL_EYE_PLANE
 
     if (pname == GL_TEXTURE_GEN_MODE) {

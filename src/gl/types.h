@@ -1,8 +1,17 @@
 #ifndef GL_TYPES_H
 #define GL_TYPES_H
 
+#include <stdint.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+
+// gles
+
+typedef void *GLDEBUGPROC;
+typedef int32_t GLclampx;
+typedef int32_t GLfixed;
+
+// glx + x11
 
 typedef void *DMbuffer;
 typedef void *GLXContextID;
