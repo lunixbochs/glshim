@@ -100,9 +100,12 @@ static const GLboolean gl_is_type_packed(GLenum type) {
 static const GLsizei gl_pixel_sizeof(GLenum format, GLenum type) {
     GLsizei width = 0;
     switch (format) {
+        case GL_ALPHA:
+        case GL_LUMINANCE:
         case GL_RED:
             width = 1;
             break;
+        case GL_LUMINANCE_ALPHA:
         case GL_RG:
             width = 2;
             break;
