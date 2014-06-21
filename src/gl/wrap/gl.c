@@ -138,6 +138,42 @@ void glLightModeliv(GLenum pname, const GLint *iparams) {
 void glMateriali(GLenum face, GLenum pname, GLint param) {
     glMaterialf(face, pname, param);
 }
+void glMaterialiv(GLenum face, GLenum pname, const GLint *param) {
+    GLfloat f[4];
+    switch (pname) {
+        case GL_AMBIENT_AND_DIFFUSE:
+        case GL_AMBIENT:
+        case GL_DIFFUSE:
+        case GL_SPECULAR:
+        case GL_EMISSION:
+            f[3] = param[3];
+        case GL_COLOR_INDEXES:
+            f[2] = param[2];
+            f[1] = param[1];
+        case GL_SHININESS:
+            f[0] = param[0];
+            break;
+    }
+    glMaterialfv(face, pname, f);
+}
+void glGetMaterialiv(GLenum face, GLenum pname, GLint *param) {
+    GLfloat f[4];
+    glGetMaterialfv(face, pname, f);
+    switch (pname) {
+        case GL_AMBIENT_AND_DIFFUSE:
+        case GL_AMBIENT:
+        case GL_DIFFUSE:
+        case GL_SPECULAR:
+        case GL_EMISSION:
+            param[3] = f[3];
+        case GL_COLOR_INDEXES:
+            param[2] = f[2];
+            param[1] = f[1];
+        case GL_SHININESS:
+            param[0] = f[0];
+            break;
+    }
+}
 void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
     glMultiTexCoord4f(target, s, t, 0.0f, 0.0f);
 }

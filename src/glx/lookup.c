@@ -244,7 +244,6 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     STUB(glFeedbackBuffer);
     STUB(glGetClipPlane);
     STUB(glGetLightiv);
-    STUB(glGetMaterialiv);
     STUB(glGetPixelMapfv);
     STUB(glGetPixelMapuiv);
     STUB(glGetPixelMapusv);
@@ -253,7 +252,6 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     STUB(glGetTexGendv);
     STUB(glGetTexGenfv);
     STUB(glGetTexGeniv);
-    STUB(glMaterialiv);
     STUB(glPassThrough);
     STUB(glPixelMapfv);
     STUB(glPixelMapuiv);
@@ -261,7 +259,6 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     STUB(glPixelStoref);
     STUB(glPrioritizeTextures);
     STUB(glSelectBuffer);
-    STUB(glTexSubImage1D);
 
     printf("glXGetProcAddress: %s not found.\n", name);
     return NULL;
