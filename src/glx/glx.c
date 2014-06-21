@@ -226,6 +226,7 @@ static void scan_env() {
 }
 
 GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct) {
+    scan_env();
     PROXY_GLES(glXCreateContext);
     EGLint configAttribs[] = {
 #ifdef PANDORA
@@ -253,7 +254,6 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
     EGLint *attrib_list = NULL;
 #endif
 
-    scan_env();
 
 #ifdef BCMHOST
     if (! g_bcm_active) {
