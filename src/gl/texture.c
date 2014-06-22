@@ -155,8 +155,6 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
                 gles_glTexSubImage2D(target, level, 0, 0, width, height,
                                      format, type, pixels);
             } else {
-                printf("glTexImage2D(0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%04x, 0x%04x)\n",
-                                     target, level, format, border, format, type);
                 gles_glTexImage2D(target, level, format, width, height, border,
                                   format, type, pixels);
             }
