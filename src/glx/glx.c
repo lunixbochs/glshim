@@ -9,7 +9,8 @@
 
 #include "glx.h"
 
-#include <GLES/gl.h>
+#include "../gl/text.h"
+
 #include <EGL/egl.h>
 
 bool eglInitialized = false;
@@ -428,7 +429,14 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
                 printf("libGL fps: %.2f, avg: %.2f\n", fps, avg);
             }
         }
+
         last_frame = now;
+
+        if (fps > 0) {
+            char buf[17] = {0};
+            snprintf(buf, 16, "%.2f fps\n", fps);
+            text_draw(4, 17, buf);
+        }
     }
 
     PROXY_GLES(glXSwapBuffers);
