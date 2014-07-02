@@ -20,7 +20,7 @@ static void q2t_calc(int len) {
 
     if (q2t.cache)
         free(q2t.cache);
-    q2t.cache = malloc(len * sizeof(GLushort));
+    q2t.cache = malloc(len * 1.5 * sizeof(GLushort));
     q2t.len = len;
 
     int a = 0, b = 1, c = 2, d = 3;
