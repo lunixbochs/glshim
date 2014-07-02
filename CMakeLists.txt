@@ -16,7 +16,10 @@ if(BCMHOST)
 endif()
 
 link_directories(${CMAKE_BINARY_DIR}/lib)
-add_definitions(-g -std=c99 -funwind-tables -O2)
+add_definitions(-g -std=c99 -funwind-tables -O2 -ffast-math)
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
+    add_definitions(-fsingle-precision-constant -mfpu=neon -march=armv7-a -mcpu=cortex-a8 -mtune=cortex-a8)
+endif()
 
 include_directories(include)
 add_subdirectory(src)
