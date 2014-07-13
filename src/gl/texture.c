@@ -43,14 +43,22 @@ static void *swizzle_texture(GLsizei width, GLsizei height,
                              const GLvoid *data) {
     bool convert = false;
     switch (*format) {
+        case GL_ALPHA:
         case GL_RGB:
+        case GL_RGBA:
+        case GL_LUMINANCE:
+        case GL_LUMINANCE_ALPHA:
             break;
         default:
             convert = true;
             break;
     }
     switch (*type) {
+        case GL_FLOAT:
         case GL_UNSIGNED_BYTE:
+        case GL_UNSIGNED_SHORT_5_6_5:
+        case GL_UNSIGNED_SHORT_4_4_4_4:
+        case GL_UNSIGNED_SHORT_5_5_5_1:
             break;
         case GL_UNSIGNED_INT_8_8_8_8_REV:
             *type = GL_UNSIGNED_BYTE;
@@ -63,13 +71,13 @@ static void *swizzle_texture(GLsizei width, GLsizei height,
     if (convert) {
         GLvoid *pixels = (GLvoid *)data;
         if (! pixel_convert(data, &pixels, width, height,
-                            *format, *type, GL_RGB, GL_UNSIGNED_BYTE)) {
-            printf("libGL swizzle error: (%#4x, %#4x -> RGB, UNSIGNED_BYTE)\n",
+                            *format, *type, GL_RGBA, GL_UNSIGNED_BYTE)) {
+            printf("libGL swizzle error: (%#4x, %#4x -> RGBA, UNSIGNED_BYTE)\n",
                 *format, *type);
             return NULL;
         }
         *type = GL_UNSIGNED_BYTE;
-        *format = GL_RGB;
+        *format = GL_RGBA;
         return pixels;
     }
     return (void *)data;
