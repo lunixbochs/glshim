@@ -130,8 +130,6 @@ static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
     if (state.enable.tex_coord_array) {
         block->tex = copy_gl_pointer(&state.pointers.tex_coord, 2, skip, count);
     }
-
-    bl_end(block);
     return block;
 }
 
@@ -188,6 +186,7 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
     displaylist_t *active = state.list.active;
     if (active) {
         block_t *block = block_from_arrays(mode, first, count);
+        bl_end(block);
         dl_append_block(active, block);
         return;
     }
@@ -343,9 +342,9 @@ void glEnd() {
     if (! block)
         return;
 
+    bl_end(block);
     // render if we're not in a display list
     if (! state.list.active) {
-        bl_end(block);
         bl_draw(block);
         bl_free(block);
     }
