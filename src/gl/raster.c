@@ -19,7 +19,7 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     rPos.z = z;
 
     GLuint *dst = NULL;
-    if (pixel_convert(state.color, (GLvoid **)&dst, 1, 1, GL_RGBA, GL_FLOAT, GL_RGBA, GL_UNSIGNED_BYTE)) {
+    if (pixel_convert(CURRENT.color, (GLvoid **)&dst, 1, 1, GL_RGBA, GL_FLOAT, GL_RGBA, GL_UNSIGNED_BYTE)) {
         bitmap_pixel = *dst;
         free(dst);
     } else {

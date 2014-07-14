@@ -1,7 +1,11 @@
 #include "gl.h"
 
 void *gles = NULL;
-glstate_t state = {.color = {1.0f, 1.0f, 1.0f, 1.0f}};
+glstate_t state = {
+    .current = {
+        .color = {1.0f, 1.0f, 1.0f, 1.0f}
+    },
+};
 
 // config functions
 const GLubyte *glGetString(GLenum name) {
@@ -119,6 +123,7 @@ GLboolean glIsEnabled(GLenum cap) {
 
 static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
     block_t *block = bl_new(mode);
+    block->artificial = true;
 
     block->len = count;
     block->cap = count;
@@ -158,6 +163,7 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindi
     // TODO: do this in a more direct fashion.
     if (should_intercept_render(mode)) {
         glBegin(mode);
+        state.block.active->artificial = true;
         for (int i = 0; i < count; i++) {
             glArrayElement(indices[i]);
         }
@@ -339,10 +345,10 @@ void glBegin(GLenum mode) {
     if (state.block.active) {
         printf("libGL: undefined behavior: nested glBegin()\n");
     } else {
-        state.block.active = bl_new(mode);
+        block_t *block = state.block.active = bl_new(mode);
         displaylist_t *list = state.list.active;
         if (list) {
-            dl_append_block(list, state.block.active);
+            dl_append_block(list, block);
         }
     }
 }
@@ -352,31 +358,13 @@ void glEnd() {
     if (! block)
         return;
 
+    state.block.active = NULL;
     bl_end(block);
     // render if we're not in a display list
     if (! state.list.active) {
         bl_draw(block);
         bl_free(block);
     }
-    state.block.active = NULL;
-}
-
-void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
-    state.normal[0] = nx;
-    state.normal[1] = ny;
-    state.normal[2] = nz;
-
-    block_t *block = state.block.active;
-    if (block) {
-        bl_normal3f(block, nx, ny, nz);
-    }
-#ifndef USE_ES2
-    else {
-        PUSH_IF_COMPILING(glNormal3f);
-        LOAD_GLES(glNormal3f);
-        gles_glNormal3f(nx, ny, nz);
-    }
-#endif
 }
 
 void glVertex3f(GLfloat x, GLfloat y, GLfloat z) {
@@ -386,18 +374,38 @@ void glVertex3f(GLfloat x, GLfloat y, GLfloat z) {
     }
 }
 
-void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
-    state.color[0] = red;
-    state.color[1] = green;
-    state.color[2] = blue;
-    state.color[3] = alpha;
-
+void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
     block_t *block = state.block.active;
     if (block) {
-        bl_color4f(block, red, green, blue, alpha);
+        bl_track_normal(block);
     }
+
+    GLfloat *normal = CURRENT.normal;
+    normal[0] = nx;
+    normal[1] = ny;
+    normal[2] = nz;
+
+    if (! block) {
+        PUSH_IF_COMPILING(glNormal3f);
+        LOAD_GLES(glNormal3f);
+        gles_glNormal3f(nx, ny, nz);
+    }
+}
+
+void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
+    block_t *block = state.block.active;
+    if (block) {
+        bl_track_color(block);
+    }
+
+    GLfloat *color = CURRENT.color;
+    color[0] = red;
+    color[1] = green;
+    color[2] = blue;
+    color[3] = alpha;
+
 #ifndef USE_ES2
-    else {
+    if (! block) {
         PUSH_IF_COMPILING(glColor4f);
         LOAD_GLES(glColor4f);
         gles_glColor4f(red, green, blue, alpha);
@@ -412,7 +420,15 @@ void glTexCoord2f(GLfloat s, GLfloat t) {
 void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
     block_t *block = state.block.active;
     if (block) {
-        bl_multi_tex_coord2f(block, target, s, t);
+        bl_track_tex(block, target);
+    }
+
+    GLfloat *tex = CURRENT.tex[target - GL_TEXTURE0];
+    tex[0] = s;
+    tex[1] = t;
+
+    if (! block) {
+        PUSH_IF_COMPILING(glMultiTexCoord2f);
     }
 }
 

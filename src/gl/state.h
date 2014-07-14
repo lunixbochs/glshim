@@ -54,7 +54,16 @@ typedef struct {
 
 
 typedef struct {
+    GLfloat color[4];
+    GLfloat normal[3];
+    GLfloat tex[MAX_TEX][3];
+} current_state_t;
+
+
+typedef struct {
     displaylist_t *active;
+    current_state_t current;
+
     GLuint base;
     GLuint name;
     GLenum mode;
@@ -93,8 +102,7 @@ typedef struct {
     displaylist_t **lists;
     texgen_state_t texgen[MAX_TEX];
     texture_state_t texture;
-    GLfloat color[4];
-    GLfloat normal[3];
+    current_state_t current;
 } glstate_t;
 
 #endif

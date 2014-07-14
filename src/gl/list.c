@@ -78,6 +78,7 @@ void dl_call(displaylist_t *dl) {
             case RENDER_BLOCK_FORMAT: {
                 block_t *block = ((block_call_t *)call)->block;
                 bl_draw(block);
+                bl_pollute(block);
                 break;
             }
             default:

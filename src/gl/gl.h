@@ -129,6 +129,8 @@ static void load_gles_lib() {
         return gles_##name(name##_ARG_NAMES); \
     }
 
+#define CURRENT (state.list.active ? state.list.current : state.current)
+
 #include "gl_helpers.h"
 
 #include "wrap/stub.h"

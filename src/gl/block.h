@@ -29,7 +29,12 @@ typedef struct {
     GLushort *indices;
     GLboolean q2t;
 
+    struct {
+        int tex[MAX_TEX], color, normal;
+    } incomplete;
+
     GLboolean open;
+    GLboolean artificial;
 } block_t;
 
 void (*block_draw_t)(block_t *block);
@@ -46,10 +51,12 @@ extern void bl_draw(block_t *block);
 extern void bl_q2t(block_t *block);
 extern void bl_end(block_t *block);
 
-extern void bl_color4f(block_t *block, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
-extern void bl_multi_tex_coord2f(block_t *block, GLenum target, GLfloat s, GLfloat t);
-extern void bl_normal3f(block_t *block, GLfloat x, GLfloat y, GLfloat z);
-extern void bl_push_call(block_t *block, packed_call_t *data);
 extern void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z);
+extern void bl_track_color(block_t *block);
+extern void bl_track_normal(block_t *block);
+extern void bl_track_tex(block_t *block, GLenum target);
+extern void bl_pollute(block_t *block);
+
+extern void bl_push_call(block_t *block, packed_call_t *data);
 
 #endif
