@@ -174,6 +174,12 @@ void glGetMaterialiv(GLenum face, GLenum pname, GLint *param) {
             break;
     }
 }
+void glMultiTexCoord1f(GLenum target, GLfloat s) {
+    glMultiTexCoord2f(target, s, 0);
+}
+void glMultiTexCoord1fv(GLenum target, const GLfloat *t) {
+    glMultiTexCoord2f(target, t[0], 0);
+}
 void glMultiTexCoord2fARB(GLenum target, GLfloat s, GLfloat t) {
     glMultiTexCoord2f(target, s, t);
 }
@@ -181,6 +187,12 @@ void glMultiTexCoord2fv(GLenum target, const GLfloat *t) {
     glMultiTexCoord2f(target, t[0], t[1]);
 }
 void glMultiTexCoord2fvARB(GLenum target, const GLfloat *t) {
+    glMultiTexCoord2f(target, t[0], t[1]);
+}
+void glMultiTexCoord3f(GLenum target, GLfloat s, GLfloat t, GLfloat r) {
+    glMultiTexCoord2f(target, s, t);
+}
+void glMultiTexCoord3fv(GLenum target, const GLfloat *t) {
     glMultiTexCoord2f(target, t[0], t[1]);
 }
 void glMultiTexCoord4f(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q) {
