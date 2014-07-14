@@ -3,6 +3,7 @@
 rasterpos_t rPos = {0, 0, 0};
 viewport_t viewport = {0, 0, 0, 0};
 GLubyte *raster = NULL;
+static GLuint bitmap_pixel = 0xFFFFFFFF;
 
 /* raster engine:
     we render pixels to memory somewhere
@@ -16,6 +17,14 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     rPos.x = x;
     rPos.y = y;
     rPos.z = z;
+
+    GLuint *dst = NULL;
+    if (pixel_convert(state.color, (GLvoid **)&dst, 1, 1, GL_RGBA, GL_FLOAT, GL_RGBA, GL_UNSIGNED_BYTE)) {
+        bitmap_pixel = *dst;
+        free(dst);
+    } else {
+        bitmap_pixel = 0xFFFFFFFF;
+    }
 }
 
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
@@ -71,7 +80,7 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
 
             GLubyte b = *from++;
             for (int j = 8; j--; ) {
-                *to++ = (b & (1 << j)) ? 0xFFFFFFFF : 0;
+                *to++ = (b & (1 << j)) ? bitmap_pixel : 0;
             }
         }
     }
