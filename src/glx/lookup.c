@@ -109,7 +109,15 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     EX(glTexCoord3##suffix##v);       \
     EX(glTexCoord3##suffix);          \
     EX(glTexCoord4##suffix##v);       \
-    EX(glTexCoord4##suffix);
+    EX(glTexCoord4##suffix);          \
+    EX(glMultiTexCoord1##suffix##v);  \
+    EX(glMultiTexCoord1##suffix);     \
+    EX(glMultiTexCoord2##suffix##v);  \
+    EX(glMultiTexCoord2##suffix);     \
+    EX(glMultiTexCoord3##suffix##v);  \
+    EX(glMultiTexCoord3##suffix);     \
+    EX(glMultiTexCoord4##suffix##v);  \
+    EX(glMultiTexCoord4##suffix);
 
     THUNK(b, GLbyte);
     THUNK(d, GLdouble);
@@ -199,6 +207,13 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     EX(glMapGrid2f);
     EX(glMateriali);
     EX(glMultiTexCoord2f);
+    EX(glMultiTexCoord2fARB);
+    EX(glMultiTexCoord2fv);
+    EX(glMultiTexCoord2fvARB);
+    EX(glMultiTexCoord4f);
+    EX(glMultiTexCoord4fARB);
+    EX(glMultiTexCoord4fv);
+    EX(glMultiTexCoord4fvARB);
     EX(glMultMatrixd);
     EX(glNewList);
     EX(glOrtho);

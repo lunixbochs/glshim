@@ -174,9 +174,28 @@ void glGetMaterialiv(GLenum face, GLenum pname, GLint *param) {
             break;
     }
 }
-void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
-    glMultiTexCoord4f(target, s, t, 0.0f, 0.0f);
+void glMultiTexCoord2fARB(GLenum target, GLfloat s, GLfloat t) {
+    glMultiTexCoord2f(target, s, t);
 }
+void glMultiTexCoord2fv(GLenum target, const GLfloat *t) {
+    glMultiTexCoord2f(target, t[0], t[1]);
+}
+void glMultiTexCoord2fvARB(GLenum target, const GLfloat *t) {
+    glMultiTexCoord2f(target, t[0], t[1]);
+}
+void glMultiTexCoord4f(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q) {
+    glMultiTexCoord2f(target, s, t);
+}
+void glMultiTexCoord4fARB(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q) {
+    glMultiTexCoord2f(target, s, t);
+}
+void glMultiTexCoord4fv(GLenum target, const GLfloat *t) {
+    glMultiTexCoord2f(target, t[0], t[1]);
+}
+void glMultiTexCoord4fvARB(GLenum target, const GLfloat *t) {
+    glMultiTexCoord2f(target, t[0], t[1]);
+}
+
 void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near, GLdouble far) {
     glOrthof(left, right, bottom, top, near, far);
 }
@@ -321,6 +340,30 @@ void glTexCoord4##suffix(type s, type t, type r, type q) {  \
 }                                                           \
 void glTexCoord4##suffix##v(const type *t) {                \
     glTexCoord2f(t[0], t[1]);                               \
+}                                                           \
+void glMultiTexCoord1##suffix(GLenum target, type s) {      \
+    glMultiTexCoord2f(target, s, 0);                        \
+}                                                                              \
+void glMultiTexCoord1##suffix##v(GLenum target, const type *v) {               \
+    glMultiTexCoord2f(target, v[0], 0);                                        \
+}                                                                              \
+void glMultiTexCoord2##suffix(GLenum target, type s, type t) {                 \
+    glMultiTexCoord2f(target, s, t);                                           \
+}                                                                              \
+void glMultiTexCoord2##suffix##v(GLenum target, const type *v) {               \
+    glMultiTexCoord2f(target, v[0], v[1]);                                     \
+}                                                                              \
+void glMultiTexCoord3##suffix(GLenum target, type s, type t, type r) {         \
+    glMultiTexCoord2f(target, s, t);                                           \
+}                                                                              \
+void glMultiTexCoord3##suffix##v(GLenum target, const type *v) {               \
+    glMultiTexCoord2f(target, v[0], v[1]);                                     \
+}                                                                              \
+void glMultiTexCoord4##suffix(GLenum target, type s, type t, type r, type q) { \
+    glMultiTexCoord2f(target, s, t);                                           \
+}                                                                              \
+void glMultiTexCoord4##suffix##v(GLenum target, const type *v) {               \
+    glMultiTexCoord2f(target, v[0], v[1]);                                     \
 }
 
 THUNK(b, GLbyte, (float)CHAR_MAX)

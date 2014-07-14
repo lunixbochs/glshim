@@ -8,8 +8,8 @@ void glTexGeni(GLenum coord, GLenum pname, GLint param) {
         GL_SPHERE_MAP, GL_NORMAL_MAP, or GL_REFLECTION_MAP
     */
     switch (coord) {
-        case GL_S: state.texgen.S = param; break;
-        case GL_T: state.texgen.T = param; break;
+        case GL_S: state.texgen[state.texture.active].S = param; break;
+        case GL_T: state.texgen[state.texture.active].T = param; break;
     }
 }
 
@@ -18,16 +18,16 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
 
     if (pname == GL_TEXTURE_GEN_MODE) {
         switch (coord) {
-            case GL_S: state.texgen.S = *param; break;
-            case GL_T: state.texgen.T = *param; break;
+            case GL_S: state.texgen[state.texture.active].S = *param; break;
+            case GL_T: state.texgen[state.texture.active].T = *param; break;
         }
     } else {
         switch (coord) {
             case GL_S:
-                memcpy(state.texgen.Sv, param, 4 * sizeof(GLfloat));
+                memcpy(state.texgen[state.texture.active].Sv, param, 4 * sizeof(GLfloat));
                 break;
             case GL_T:
-                memcpy(state.texgen.Tv, param, 4 * sizeof(GLfloat));
+                memcpy(state.texgen[state.texture.active].Tv, param, 4 * sizeof(GLfloat));
                 break;
         }
     }
@@ -88,22 +88,23 @@ static inline void tex_coord_loop(GLfloat *verts, GLfloat *out, GLint count, GLe
     }
 }
 
-void gen_tex_coords(GLfloat *verts, GLfloat **coords, GLint count) {
+void gen_tex_coords(GLuint texture, GLfloat *verts, GLfloat **coords, GLint count) {
     // TODO: do less work when called from glDrawElements?
 
     *coords = (GLfloat *)malloc(count * 2 * sizeof(GLfloat));
-    if (state.enable.texgen_s)
-        tex_coord_loop(verts, *coords, count, state.texgen.S, state.texgen.Sv);
-    if (state.enable.texgen_t)
-        tex_coord_loop(verts, *coords+1, count, state.texgen.T, state.texgen.Tv);
+    texgen_state_t *texgen = &state.texgen[texture];
+    if (state.enable.texgen_s[texture])
+        tex_coord_loop(verts, *coords, count, texgen->S, texgen->Sv);
+    if (state.enable.texgen_t[texture])
+        tex_coord_loop(verts, *coords + 1, count, texgen->T, texgen->Tv);
 
     int i;
     for (i = 0; i < count; i++) {
         GLfloat *tex = &(*coords)[i];
-        if (state.enable.texgen_s)
-            tex[0] = gen_tex_coord(&verts[i], state.texgen.S, state.texgen.Sv);
+        if (state.enable.texgen_s[texture])
+            tex[0] = gen_tex_coord(&verts[i], texgen->S, texgen->Sv);
 
-        if (state.enable.texgen_t)
-            tex[1] = gen_tex_coord(&verts[i], state.texgen.T, state.texgen.Tv);
+        if (state.enable.texgen_t[texture])
+            tex[1] = gen_tex_coord(&verts[i], texgen->T, texgen->Tv);
     }
 }

@@ -43,7 +43,10 @@ void glPushAttrib(GLbitfield mask) {
     if (mask & GL_CURRENT_BIT) {
         glGetFloatv(GL_CURRENT_COLOR, cur->color);
         glGetFloatv(GL_CURRENT_NORMAL, cur->normal);
-        glGetFloatv(GL_CURRENT_TEXTURE_COORDS, cur->tex);
+        // TODO: this won't work until I implement GL_CURRENT_TEXTURE_COORDS
+        // for (int i = 0; i < MAX_TEX; i++) {
+        //    glGetFloatv(GL_CURRENT_TEXTURE_COORDS, cur->tex[i]);
+        // }
     }
 
     if (mask & GL_DEPTH_BUFFER_BIT) {
@@ -200,12 +203,12 @@ void glPushClientAttrib(GLbitfield mask) {
         cur->vert_enable = state.enable.vertex_array;
         cur->color_enable = state.enable.color_array;
         cur->normal_enable = state.enable.normal_array;
-        cur->tex_enable = state.enable.tex_coord_array;
+        memcpy(&cur->tex_enable, &state.enable.tex_coord_array, sizeof(GLboolean) * MAX_TEX);
 
         memcpy(&cur->verts, &state.pointers.vertex, sizeof(pointer_state_t));
         memcpy(&cur->color, &state.pointers.color, sizeof(pointer_state_t));
         memcpy(&cur->normal, &state.pointers.normal, sizeof(pointer_state_t));
-        memcpy(&cur->tex, &state.pointers.tex_coord, sizeof(pointer_state_t));
+        memcpy(&cur->tex, &state.pointers.tex_coord, sizeof(pointer_state_t) * MAX_TEX);
     }
 
     clientStack->len++;
@@ -253,7 +256,9 @@ void glPopAttrib() {
 #ifndef USE_ES2
         glNormal3f(v3(cur->normal));
 #endif
-        glTexCoord2f(v2(cur->tex));
+        for (int i = 0; i < MAX_TEX; i++) {
+            glMultiTexCoord2f(GL_TEXTURE0 + i, v2(cur->tex[i]));
+        }
     }
 
     if (cur->mask & GL_DEPTH_BUFFER_BIT) {

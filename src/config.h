@@ -1,6 +1,9 @@
 #define SYS_proxy 9999
 #define MAX_EVAL_ORDER 30
 
+#define MAX_TEX 4
+#define GL_TEXTURE_MAX (GL_TEXTURE0 + MAX_TEX)
+
 // don't auto-wrap these functions
 #define skip_glColor4ub
 
@@ -20,8 +23,11 @@
 #define skip_glViewport
 
 // texture.c
+#define skip_glActiveTexture
 #define skip_glBindTexture
+#define skip_glClientActiveTexture
 #define skip_glDeleteTextures
+#define skip_glMultiTexCoord4f
 #define skip_glPixelStorei
 #define skip_glTexImage2D
 #define skip_glTexParameteri

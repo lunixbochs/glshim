@@ -87,7 +87,7 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
                   GLsizei width, GLsizei height, GLint border,
                   GLenum format, GLenum type, const GLvoid *data) {
 
-    gltexture_t *bound = state.texture.bound;
+    gltexture_t *bound = state.texture.bound[state.texture.active];
     GLvoid *pixels = (GLvoid *)data;
     if (data) {
         // implements GL_UNPACK_ROW_LENGTH
@@ -240,6 +240,7 @@ void glPixelStorei(GLenum pname, GLint param) {
 
 void glBindTexture(GLenum target, GLuint texture) {
     PUSH_IF_COMPILING(glBindTexture);
+    GLuint active = state.texture.active;
     if (texture) {
         int ret;
         khint_t k;
@@ -264,16 +265,41 @@ void glBindTexture(GLenum target, GLuint texture) {
         } else {
             tex = kh_value(list, k);
         }
-        state.texture.bound = tex;
+        state.texture.bound[active] = tex;
     } else {
-        state.texture.bound = NULL;
+        state.texture.bound[active] = NULL;
     }
 
-    state.texture.rect_arb = (target == GL_TEXTURE_RECTANGLE_ARB);
+    state.texture.rect_arb[active] = (target == GL_TEXTURE_RECTANGLE_ARB);
     target = map_tex_target(target);
 
     LOAD_GLES(glBindTexture);
     gles_glBindTexture(target, texture);
+}
+
+void glActiveTexture(GLenum texture) {
+    PUSH_IF_COMPILING(glActiveTexture);
+    if ((texture < GL_TEXTURE0) || (texture > GL_TEXTURE_MAX)) {
+        // TODO: set the GL error flag?
+        fprintf(stderr, "glActiveTexture: texture > GL_TEXTURE_MAX\n");
+        return;
+    }
+
+    state.texture.active = texture - GL_TEXTURE0;
+    LOAD_GLES(glActiveTexture);
+    gles_glActiveTexture(texture);
+}
+
+void glClientActiveTexture(GLenum texture) {
+    PUSH_IF_COMPILING(glClientActiveTexture);
+    if ((texture < GL_TEXTURE0) || (texture > GL_TEXTURE_MAX)) {
+        // TODO: set the GL error flag?
+        fprintf(stderr, "glClientActiveTexture: texture > GL_TEXTURE_MAX\n");
+        return;
+    }
+    state.texture.client = texture - GL_TEXTURE0;
+    LOAD_GLES(glClientActiveTexture);
+    gles_glClientActiveTexture(texture);
 }
 
 // TODO: also glTexParameterf(v)?
@@ -300,8 +326,10 @@ void glDeleteTextures(GLsizei n, const GLuint *textures) {
             k = kh_get(tex, list, t);
             if (k != kh_end(list)) {
                 tex = kh_value(list, k);
-                if (tex == state.texture.bound)
-                    state.texture.bound = NULL;
+                for (int j = 0; j < MAX_TEX; j++) {
+                    if (tex == state.texture.bound[j])
+                        state.texture.bound[j] = NULL;
+                }
                 free(tex);
                 kh_del(tex, list, k);
             }

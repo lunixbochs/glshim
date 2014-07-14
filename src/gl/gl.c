@@ -17,7 +17,9 @@ const GLubyte *glGetString(GLenum name) {
             return (const GLubyte *)(char *){
 #ifndef USE_ES2
                 // "GL_ARB_vertex_buffer_object "
+                "GL_ARB_multitexture "
                 "GL_EXT_secondary_color "
+                "GL_EXT_texture_env_combine "
 #else
                 "GL_ARB_vertex_shader "
                 "GL_ARB_fragment_shader "
@@ -59,16 +61,16 @@ static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
 
     switch (cap) {
         proxy_enable(GL_BLEND, blend);
-        proxy_enable(GL_TEXTURE_2D, texture_2d);
-        enable(GL_TEXTURE_GEN_S, texgen_s);
-        enable(GL_TEXTURE_GEN_T, texgen_t);
+        proxy_enable(GL_TEXTURE_2D, texture_2d[state.texture.active]);
+        enable(GL_TEXTURE_GEN_S, texgen_s[state.texture.active]);
+        enable(GL_TEXTURE_GEN_T, texgen_t[state.texture.active]);
         enable(GL_LINE_STIPPLE, line_stipple);
 
         // for glDrawArrays
         proxy_enable(GL_VERTEX_ARRAY, vertex_array);
         proxy_enable(GL_NORMAL_ARRAY, normal_array);
         proxy_enable(GL_COLOR_ARRAY, color_array);
-        proxy_enable(GL_TEXTURE_COORD_ARRAY, tex_coord_array);
+        proxy_enable(GL_TEXTURE_COORD_ARRAY, tex_coord_array[state.texture.client]);
         default: next(cap); break;
     }
     #undef proxy_enable
@@ -105,9 +107,11 @@ GLboolean glIsEnabled(GLenum cap) {
         case GL_LINE_STIPPLE:
             return state.enable.line_stipple;
         case GL_TEXTURE_GEN_S:
-            return state.enable.texgen_s;
+            return state.enable.texgen_s[state.texture.active];
         case GL_TEXTURE_GEN_T:
-            return state.enable.texgen_t;
+            return state.enable.texgen_t[state.texture.active];
+        case GL_TEXTURE_COORD_ARRAY:
+            return state.enable.tex_coord_array[state.texture.client];
         default:
             return gles_glIsEnabled(cap);
     }
@@ -127,18 +131,24 @@ static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
     if (state.enable.normal_array) {
         block->normal = copy_gl_pointer(&state.pointers.normal, 3, skip, count);
     }
-    if (state.enable.tex_coord_array) {
-        block->tex = copy_gl_pointer(&state.pointers.tex_coord, 2, skip, count);
+    for (int i = 0; i < MAX_TEX; i++) {
+        if (state.enable.tex_coord_array[i]) {
+            block->tex[i] = copy_gl_pointer(&state.pointers.tex_coord[i], 2, skip, count);
+        }
     }
     return block;
 }
 
 static inline bool should_intercept_render(GLenum mode) {
+    bool texgen_enabled = false;
+    for (int i = 0; i < MAX_TEX; i++) {
+        texgen_enabled |= state.enable.texgen_s[i] || state.enable.texgen_t[i];
+    }
     return (
         (state.enable.vertex_array && ! gl_valid_vertex_type(state.pointers.vertex.type)) ||
-        state.enable.texgen_s || state.enable.texgen_t ||
+        (texgen_enabled) ||
         (mode == GL_LINES && state.enable.line_stipple) ||
-        mode == GL_QUADS
+        (mode == GL_QUADS)
     );
 }
 
@@ -228,7 +238,7 @@ void glNormalPointer(GLenum type, GLsizei stride, const GLvoid *pointer) {
 void glTexCoordPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
     LOAD_GLES(glTexCoordPointer);
-    clone_gl_pointer(state.pointers.tex_coord, size);
+    clone_gl_pointer(state.pointers.tex_coord[state.texture.client], size);
     gles_glTexCoordPointer(size, type, stride, pointer);
 }
 #undef clone_gl_pointer
@@ -237,7 +247,7 @@ void glTexCoordPointer(GLint size, GLenum type,
 void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
     uintptr_t ptr = (uintptr_t)pointer;
     // element lengths
-    GLsizei tex, color, normal, vert;
+    GLsizei tex = 0, color = 0, normal = 0, vert = 0;
     // element formats
     GLenum tf, cf, nf, vf;
     tf = cf = nf = vf = GL_FLOAT;
@@ -298,7 +308,7 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
         case GL_T4F_C4F_N3F_V4F:
             tex = 4;
             color = 4;
-            normal = 4;
+            normal = 3;
             vert = 4;
             break;
     }
@@ -396,9 +406,13 @@ void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
 }
 
 void glTexCoord2f(GLfloat s, GLfloat t) {
+    glMultiTexCoord2f(GL_TEXTURE0, s, t);
+}
+
+void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
     block_t *block = state.block.active;
     if (block) {
-        bl_tex_coord2f(block, s, t);
+        bl_multi_tex_coord2f(block, target, s, t);
     }
 }
 
@@ -424,10 +438,12 @@ void glArrayElement(GLint i) {
         v = gl_pointer_index(p, i);
         glNormal3fv(v);
     }
-    p = &state.pointers.tex_coord;
-    if (state.enable.tex_coord_array && p->pointer) {
-        v = gl_pointer_index(p, i);
-        glTexCoord2fv(v);
+    for (int i = 0; i < MAX_TEX; i++) {
+        p = &state.pointers.tex_coord[i];
+        if (state.enable.tex_coord_array[i] && p->pointer) {
+            v = gl_pointer_index(p, i);
+            glMultiTexCoord2fv(GL_TEXTURE0 + i, v);
+        }
     }
     p = &state.pointers.vertex;
     if (state.enable.vertex_array && p->pointer) {

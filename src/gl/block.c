@@ -50,7 +50,9 @@ void bl_free(block_t *block) {
     free(block->vert);
     free(block->normal);
     free(block->color);
-    free(block->tex);
+    for (int i = 0; i < MAX_TEX; i++) {
+        free(block->tex[i]);
+    }
     free(block->indices);
     free(block);
 }
@@ -62,7 +64,9 @@ static inline void bl_grow(block_t *block) {
         realloc_sublist(block->vert, 3, GL_FLOAT, block->cap);
         realloc_sublist(block->normal, 3, GL_FLOAT, block->cap);
         realloc_sublist(block->color, 4, GL_FLOAT, block->cap);
-        realloc_sublist(block->tex, 2, GL_FLOAT, block->cap);
+        for (int i = 0; i < MAX_TEX; i++) {
+            realloc_sublist(block->tex[i], 2, GL_FLOAT, block->cap);
+        }
     }
 }
 
@@ -89,15 +93,17 @@ void bl_end(block_t *block) {
         return;
 
     block->open = false;
-    // TODO: what about multitexturing?
-    gltexture_t *bound = state.texture.bound;
-    if (block->tex && bound && (bound->width != bound->nwidth || bound->height != bound->nheight)) {
-        tex_coord_npot(block->tex, block->len, bound->width, bound->height, bound->nwidth, bound->nheight);
-    }
-    // TODO: how does multitexturing affect this?
-    // GL_ARB_texture_rectangle
-    if (block->tex && state.texture.rect_arb && bound) {
-        tex_coord_rect_arb(block->tex, block->len, bound->width, bound->height);
+    for (int i = 0; i < MAX_TEX; i++) {
+        gltexture_t *bound = state.texture.bound[i];
+        if (block->tex[i] && bound) {
+            if (bound->width != bound->nwidth || bound->height != bound->nheight) {
+                tex_coord_npot(block->tex[i], block->len, bound->width, bound->height, bound->nwidth, bound->nheight);
+            }
+            // GL_ARB_texture_rectangle
+            if (state.texture.rect_arb[i]) {
+                tex_coord_rect_arb(block->tex[i], block->len, bound->width, bound->height);
+            }
+        }
     }
     switch (block->mode) {
         case GL_QUADS:
@@ -149,7 +155,9 @@ void bl_draw(block_t *block) {
     }
 
     bool stipple = false;
-    if (! block->tex) {
+    // TODO: how do I stipple with texture?
+    // TODO: what about multitexturing?
+    if (! block->tex[0]) {
         // TODO: do we need to support GL_LINE_STRIP?
         if (block->mode == GL_LINES && state.enable.line_stipple) {
             stipple = true;
@@ -157,18 +165,23 @@ void bl_draw(block_t *block) {
             glEnable(GL_BLEND);
             glEnable(GL_TEXTURE_2D);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-            block->tex = gen_stipple_tex_coords(block->vert, block->len);
+            block->tex[0] = gen_stipple_tex_coords(block->vert, block->len);
             bind_stipple_tex();
-        } else if (state.enable.texgen_s || state.enable.texgen_t) {
-            gen_tex_coords(block->vert, &block->tex, block->len);
         }
     }
+    for (int i = 0; i < MAX_TEX; i++) {
+        if (state.enable.texgen_s[i] || state.enable.texgen_t[i]) {
+            gen_tex_coords(i, block->vert, &block->tex[i], block->len);
+        }
 
-    if (block->tex) {
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glTexCoordPointer(2, GL_FLOAT, 0, block->tex);
-    } else {
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        // TODO: push/pop these?
+        glClientActiveTexture(GL_TEXTURE0 + i);
+        if (block->tex[i]) {
+            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+            glTexCoordPointer(2, GL_FLOAT, 0, block->tex[i]);
+        } else {
+            glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        }
     }
 
     GLushort *indices = block->indices;
@@ -205,9 +218,11 @@ void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
         memcpy(color, state.color, sizeof(GLfloat) * 4);
     }
 
-    if (block->tex) {
-        GLfloat *tex = block->tex + (block->len * 2);
-        memcpy(tex, block->last.tex, sizeof(GLfloat) * 2);
+    for (int i = 0; i < MAX_TEX; i++) {
+        if (block->tex[i]) {
+            GLfloat *tex = block->tex[i] + (block->len * 2);
+            memcpy(tex, block->last.tex, sizeof(GLfloat) * 2);
+        }
     }
 
     GLfloat *vert = block->vert + (block->len++ * 3);
@@ -240,20 +255,21 @@ void bl_color4f(block_t *block, GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     }
 }
 
-void bl_tex_coord2f(block_t *block, GLfloat s, GLfloat t) {
-    if (block->tex == NULL) {
-        block->tex = alloc_sublist(2, GL_FLOAT, block->cap);
+void bl_multi_tex_coord2f(block_t *block, GLenum target, GLfloat s, GLfloat t) {
+    target -= GL_TEXTURE0;
+    if (block->tex[target] == NULL) {
+        block->tex[target] = alloc_sublist(2, GL_FLOAT, block->cap);
         // catch up
-        GLfloat *tex = block->tex;
+        GLfloat *tex = block->tex[target];
         for (int i = 0; i < block->len; i++) {
             // TODO: copy_sublist(block, GL_TYPE, size)?
             // what about the globals? gl_convert(list, GL_FLOAT, GL_UNSIGNED_CHAR)?
             // also need to consider the resulting number rescale
-            memcpy(tex, block->last.tex, sizeof(GLfloat) * 2);
+            memcpy(tex, block->last.tex[target], sizeof(GLfloat) * 2);
             tex += 2;
         }
     }
-    GLfloat *tex = block->last.tex;
+    GLfloat *tex = block->last.tex[target];
     tex[0] = s;
     tex[1] = t;
 }

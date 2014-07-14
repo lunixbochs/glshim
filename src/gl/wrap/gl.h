@@ -41,7 +41,15 @@ void glTexCoord2##suffix##v(const type *t);                \
 void glTexCoord3##suffix(type s, type t, type r);          \
 void glTexCoord3##suffix##v(const type *t);                \
 void glTexCoord4##suffix(type s, type t, type r, type q);  \
-void glTexCoord4##suffix##v(const type *t);
+void glTexCoord4##suffix##v(const type *t);                \
+void glMultiTexCoord1##suffix(GLenum target, type s);                         \
+void glMultiTexCoord1##suffix##v(GLenum target, const type *v);               \
+void glMultiTexCoord2##suffix(GLenum target, type s, type t);                 \
+void glMultiTexCoord2##suffix##v(GLenum target, const type *v);               \
+void glMultiTexCoord3##suffix(GLenum target, type s, type t, type r);         \
+void glMultiTexCoord3##suffix##v(GLenum target, const type *v);               \
+void glMultiTexCoord4##suffix(GLenum target, type s, type t, type r, type q); \
+void glMultiTexCoord4##suffix##v(GLenum target, const type *v);
 
 THUNK(b, GLbyte)
 THUNK(d, GLdouble)

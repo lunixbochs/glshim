@@ -12,7 +12,7 @@ typedef struct {
     uint32_t cap;
     GLenum mode;
     struct {
-        GLfloat tex[2];
+        GLfloat tex[MAX_TEX][2];
     } last;
 
     // TODO: dynamic type support?
@@ -25,7 +25,7 @@ typedef struct {
     GLfloat *vert;
     GLfloat *normal;
     GLfloat *color;
-    GLfloat *tex;
+    GLfloat *tex[MAX_TEX];
     GLushort *indices;
     GLboolean q2t;
 
@@ -47,9 +47,9 @@ extern void bl_q2t(block_t *block);
 extern void bl_end(block_t *block);
 
 extern void bl_color4f(block_t *block, GLfloat r, GLfloat g, GLfloat b, GLfloat a);
+extern void bl_multi_tex_coord2f(block_t *block, GLenum target, GLfloat s, GLfloat t);
 extern void bl_normal3f(block_t *block, GLfloat x, GLfloat y, GLfloat z);
 extern void bl_push_call(block_t *block, packed_call_t *data);
-extern void bl_tex_coord2f(block_t *block, GLfloat s, GLfloat t);
 extern void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z);
 
 #endif

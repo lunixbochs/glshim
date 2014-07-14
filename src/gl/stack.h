@@ -29,7 +29,7 @@ typedef struct {
     // GL_CURRENT_BIT
     GLfloat color[4];
     GLfloat normal[4];
-    GLfloat tex[4];
+    GLfloat tex[MAX_TEX][4];
 
     // TODO: can only fill this via raster.c
     GLfloat raster_pos[3];
@@ -126,7 +126,7 @@ typedef struct {
     // GL_CLIENT_VERTEX_ARRAY_BIT
     GLboolean vert_enable;
     GLboolean color_enable;
-    GLboolean tex_enable;
+    GLboolean tex_enable[MAX_TEX];
     GLboolean normal_enable;
     pointer_state_t verts;
     pointer_state_t color;
