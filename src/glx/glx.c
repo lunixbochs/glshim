@@ -116,6 +116,7 @@ static Display *g_display;
 #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
 #endif
 static bool g_showfps = false;
+static bool g_fps_overlay = false;
 static bool g_usefb = false;
 static bool g_vsync = false;
 static bool g_xrefresh = false;
@@ -220,6 +221,7 @@ static void scan_env() {
     }
     env(LIBGL_FB, g_usefb, "framebuffer output enabled");
     env(LIBGL_FPS, g_showfps, "fps counter enabled");
+    env(LIBGL_FPS_OVERLAY, g_fps_overlay, "fps overlay enabled");
     env(LIBGL_VSYNC, g_vsync, "vsync enabled");
     if (g_vsync) {
         init_vsync();
@@ -432,7 +434,7 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
 
         last_frame = now;
 
-        if (fps > 0) {
+        if (g_fps_overlay && fps > 0) {
             char buf[17] = {0};
             snprintf(buf, 16, "%.2f fps\n", fps);
             text_draw(4, 17, buf);
