@@ -165,18 +165,18 @@ void bl_draw(block_t *block) {
     for (int i = 0; i < MAX_TEX; i++) {
         if ((pos = block->incomplete.tex[i]) >= 0) {
             for (int j = 0; j < block->len; j++) {
-                memcpy(block->tex[i] + (2 * j), CURRENT.tex[i], 2 * sizeof(GLfloat));
+                memcpy(block->tex[i] + (2 * j), CURRENT->tex[i], 2 * sizeof(GLfloat));
             }
         }
     }
     if ((pos = block->incomplete.color) >= 0) {
         for (int i = 0; i < pos; i++) {
-            memcpy(block->color + (4 * i), CURRENT.color, 4 * sizeof(GLfloat));
+            memcpy(block->color + (4 * i), CURRENT->color, 4 * sizeof(GLfloat));
         }
     }
     if ((pos = block->incomplete.normal) >= 0) {
         for (int i = 0; i < pos; i++) {
-            memcpy(block->normal + (3 * i), CURRENT.normal, 3 * sizeof(GLfloat));
+            memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
         }
     }
 
@@ -267,18 +267,18 @@ void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
 
     if (block->normal) {
         GLfloat *normal = block->normal + (block->len * 3);
-        memcpy(normal, CURRENT.normal, sizeof(GLfloat) * 3);
+        memcpy(normal, CURRENT->normal, sizeof(GLfloat) * 3);
     }
 
     if (block->color) {
         GLfloat *color = block->color + (block->len * 4);
-        memcpy(color, CURRENT.color, sizeof(GLfloat) * 4);
+        memcpy(color, CURRENT->color, sizeof(GLfloat) * 4);
     }
 
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i]) {
             GLfloat *tex = block->tex[i] + (block->len * 2);
-            memcpy(tex, CURRENT.tex[i], sizeof(GLfloat) * 2);
+            memcpy(tex, CURRENT->tex[i], sizeof(GLfloat) * 2);
         }
     }
 
@@ -295,7 +295,7 @@ void bl_track_color(block_t *block) {
             block->incomplete.color = block->len - 1;
         } else {
             for (int i = 0; i < block->len; i++) {
-                memcpy(block->color + (4 * i), CURRENT.color, 4 * sizeof(GLfloat));
+                memcpy(block->color + (4 * i), CURRENT->color, 4 * sizeof(GLfloat));
             }
         }
     }
@@ -308,7 +308,7 @@ void bl_track_normal(block_t *block) {
             block->incomplete.normal = block->len - 1;
         } else if (! block->normal) {
             for (int i = 0; i < block->len; i++) {
-                memcpy(block->normal + (3 * i), CURRENT.normal, 3 * sizeof(GLfloat));
+                memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
             }
         }
     }
@@ -322,7 +322,7 @@ void bl_track_tex(block_t *block, GLenum target) {
             block->incomplete.tex[target] = block->len - 1;
         } else {
             for (int j = 0; j < block->len; j++) {
-                memcpy(block->tex[target] + (2 * j), CURRENT.tex[target], 2 * sizeof(GLfloat));
+                memcpy(block->tex[target] + (2 * j), CURRENT->tex[target], 2 * sizeof(GLfloat));
             }
         }
     }

@@ -385,7 +385,7 @@ void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
         bl_track_normal(block);
     }
 
-    GLfloat *normal = CURRENT.normal;
+    GLfloat *normal = CURRENT->normal;
     normal[0] = nx;
     normal[1] = ny;
     normal[2] = nz;
@@ -403,7 +403,7 @@ void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
         bl_track_color(block);
     }
 
-    GLfloat *color = CURRENT.color;
+    GLfloat *color = CURRENT->color;
     color[0] = red;
     color[1] = green;
     color[2] = blue;
@@ -428,7 +428,7 @@ void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
         bl_track_tex(block, target);
     }
 
-    GLfloat *tex = CURRENT.tex[target - GL_TEXTURE0];
+    GLfloat *tex = CURRENT->tex[target - GL_TEXTURE0];
     tex[0] = s;
     tex[1] = t;
 
