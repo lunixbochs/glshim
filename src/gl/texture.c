@@ -54,7 +54,6 @@ static void *swizzle_texture(GLsizei width, GLsizei height,
             break;
     }
     switch (*type) {
-        case GL_FLOAT:
         case GL_UNSIGNED_BYTE:
         case GL_UNSIGNED_SHORT_5_6_5:
         case GL_UNSIGNED_SHORT_4_4_4_4:
