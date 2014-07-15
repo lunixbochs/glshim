@@ -56,7 +56,7 @@ typedef struct {
 typedef struct {
     GLfloat color[4];
     GLfloat normal[3];
-    GLfloat tex[MAX_TEX][3];
+    GLfloat tex[MAX_TEX][2];
 } current_state_t;
 
 
