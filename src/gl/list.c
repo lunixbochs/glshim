@@ -56,7 +56,7 @@ void dl_append_block(displaylist_t *dl, block_t *block) {
     block_call_t *call = malloc(sizeof(block_call_t));
     call->format = RENDER_BLOCK_FORMAT;
     call->refs = 0;
-    call->block = state.block.active;
+    call->block = block;
     dl_append(dl, (packed_call_t *)call);
 }
 
