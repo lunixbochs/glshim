@@ -52,7 +52,12 @@ void glGetIntegerv(GLenum pname, GLint *params) {
 
 static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
     #define proxy_enable(constant, name) \
-        case constant: state.enable.name = enable; next(cap); break
+        case constant: \
+            if (state.enable.name != enable) { \
+                state.enable.name = enable; \
+                next(cap); \
+            } \
+            break
     #define enable(constant, name) \
         case constant: state.enable.name = enable; break;
 
