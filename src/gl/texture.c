@@ -291,12 +291,16 @@ void glActiveTexture(GLenum texture) {
 
 void glClientActiveTexture(GLenum texture) {
     PUSH_IF_COMPILING(glClientActiveTexture);
+    GLuint new = texture - GL_TEXTURE0;
+    if (state.texture.client == new) {
+        return;
+    }
     if ((texture < GL_TEXTURE0) || (texture > GL_TEXTURE_MAX)) {
         // TODO: set the GL error flag?
         fprintf(stderr, "glClientActiveTexture: texture > GL_TEXTURE_MAX\n");
         return;
     }
-    state.texture.client = texture - GL_TEXTURE0;
+    state.texture.client = new;
     LOAD_GLES(glClientActiveTexture);
     gles_glClientActiveTexture(texture);
 }
