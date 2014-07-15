@@ -380,12 +380,17 @@ void glPopClientAttrib() {
         enable_disable(GL_VERTEX_ARRAY, cur->vert_enable);
         enable_disable(GL_NORMAL_ARRAY, cur->normal_enable);
         enable_disable(GL_COLOR_ARRAY, cur->color_enable);
-        enable_disable(GL_TEXTURE_COORD_ARRAY, cur->tex_enable);
+        for (int i = 0; i < MAX_TEX; i++) {
+            GLboolean bit = cur->tex_enable[i];
+            if (bit != state.enable.tex_coord_array[i]) {
+                enable_disable(GL_TEXTURE_COORD_ARRAY, bit);
+            }
+        }
 
         memcpy(&state.pointers.vertex, &cur->verts, sizeof(pointer_state_t));
         memcpy(&state.pointers.color, &cur->color, sizeof(pointer_state_t));
         memcpy(&state.pointers.normal, &cur->normal, sizeof(pointer_state_t));
-        memcpy(&state.pointers.tex_coord, &cur->tex, sizeof(pointer_state_t));
+        memcpy(&state.pointers.tex_coord, &cur->tex, sizeof(pointer_state_t) * MAX_TEX);
     }
 
     clientStack->len--;
