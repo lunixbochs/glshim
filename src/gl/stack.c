@@ -43,10 +43,9 @@ void glPushAttrib(GLbitfield mask) {
     if (mask & GL_CURRENT_BIT) {
         glGetFloatv(GL_CURRENT_COLOR, cur->color);
         glGetFloatv(GL_CURRENT_NORMAL, cur->normal);
-        // TODO: this won't work until I implement GL_CURRENT_TEXTURE_COORDS
-        // for (int i = 0; i < MAX_TEX; i++) {
-        //    glGetFloatv(GL_CURRENT_TEXTURE_COORDS, cur->tex[i]);
-        // }
+        for (int i = 0; i < MAX_TEX; i++) {
+            memcpy(cur->tex[i], state.current.tex[i], 2 * sizeof(GLfloat));
+        }
     }
 
     if (mask & GL_DEPTH_BUFFER_BIT) {
