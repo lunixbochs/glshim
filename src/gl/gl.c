@@ -182,7 +182,7 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindi
         GLsizei min, max;
 
         normalize_indices(indices, &max, &min, count);
-        block_t *block = block_from_arrays(mode, 0, max + 1);
+        block_t *block = block_from_arrays(mode, min, max + 1);
         block->indices = indices;
         block->len = count;
 

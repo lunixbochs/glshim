@@ -24,7 +24,7 @@ GLvoid *copy_gl_array(const GLvoid *src,
     uintptr_t in = (uintptr_t)src;
     if (from == to && to_width >= width) {
         GL_TYPE_SWITCH(out, dst, to,
-            for (int i = skip; i < count; i++) {
+            for (int i = skip; i < (skip + count); i++) {
                 memcpy(out, (GLvoid *)in, from_size);
                 for (int j = width; j < to_width; j++) {
                     out[j] = 0;
@@ -38,7 +38,7 @@ GLvoid *copy_gl_array(const GLvoid *src,
         )
     } else {
         GL_TYPE_SWITCH(out, dst, to,
-            for (int i = skip; i < count; i++) {
+            for (int i = skip; i < (skip + count); i++) {
                 GL_TYPE_SWITCH(input, in, from,
                     for (int j = 0; j < width; j++) {
                         out[j] = input[j];
