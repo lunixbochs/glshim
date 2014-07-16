@@ -13,10 +13,17 @@ static int verbose_test = 0;
 static int failed_test = 0;
 #define verbose { verbose_test = 1; }
 
-#define mock_return return failed_test;
-
 #define mock_warningf(...) { printf("WARNING: "), printf(__VA_ARGS__); }
 #define mock_errorf(...) { printf("ERROR: "); printf(__VA_ARGS__); failed_test = 1; }
+
+#define mock_return { \
+    indexed_call_t *call = NULL; \
+    while ((call = mock_shift()) != NULL) { \
+        mock_warningf("extra "); \
+        mock_print(call); \
+    } \
+    return failed_test; \
+}
 
 {% for func in functions %}
 #define pack_{{ func.name }}({{ func.args|args(0) }}) ({ \
@@ -40,7 +47,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for {{ func.name }}\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for {{ func.name }}:\n  "); \
+        mock_print(packed); \
         packed = mock_slide({{ func.name }}_INDEX); \
         if (! packed) { \
             mock_errorf("{{ func.name }} missing\n"); \

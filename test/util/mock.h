@@ -16,10 +16,17 @@ static int verbose_test = 0;
 static int failed_test = 0;
 #define verbose { verbose_test = 1; }
 
-#define mock_return return failed_test;
-
 #define mock_warningf(...) { printf("WARNING: "), printf(__VA_ARGS__); }
 #define mock_errorf(...) { printf("ERROR: "); printf(__VA_ARGS__); failed_test = 1; }
+
+#define mock_return { \
+    indexed_call_t *call = NULL; \
+    while ((call = mock_shift()) != NULL) { \
+        mock_warningf("extra "); \
+        mock_print(call); \
+    } \
+    return failed_test; \
+}
 
 #define pack_glActiveTexture(texture) ({ \
     glActiveTexture_INDEXED *packed_data = malloc(sizeof(glActiveTexture_INDEXED)); \
@@ -38,7 +45,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glActiveTexture\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glActiveTexture:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glActiveTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glActiveTexture missing\n"); \
@@ -79,7 +87,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glAlphaFunc\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glAlphaFunc:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glAlphaFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glAlphaFunc missing\n"); \
@@ -123,7 +132,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glAlphaFuncx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glAlphaFuncx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glAlphaFuncx_INDEX); \
         if (! packed) { \
             mock_errorf("glAlphaFuncx missing\n"); \
@@ -167,7 +177,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glBindBuffer\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glBindBuffer:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glBindBuffer_INDEX); \
         if (! packed) { \
             mock_errorf("glBindBuffer missing\n"); \
@@ -211,7 +222,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glBindTexture\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glBindTexture:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glBindTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glBindTexture missing\n"); \
@@ -255,7 +267,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glBlendFunc\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glBlendFunc:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glBlendFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glBlendFunc missing\n"); \
@@ -301,7 +314,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glBufferData\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glBufferData:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glBufferData_INDEX); \
         if (! packed) { \
             mock_errorf("glBufferData missing\n"); \
@@ -350,7 +364,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glBufferSubData\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glBufferSubData:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glBufferSubData_INDEX); \
         if (! packed) { \
             mock_errorf("glBufferSubData missing\n"); \
@@ -396,7 +411,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClear\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClear:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClear_INDEX); \
         if (! packed) { \
             mock_errorf("glClear missing\n"); \
@@ -439,7 +455,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClearColor\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClearColor:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClearColor_INDEX); \
         if (! packed) { \
             mock_errorf("glClearColor missing\n"); \
@@ -491,7 +508,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClearColorx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClearColorx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClearColorx_INDEX); \
         if (! packed) { \
             mock_errorf("glClearColorx missing\n"); \
@@ -540,7 +558,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClearDepthf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClearDepthf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClearDepthf_INDEX); \
         if (! packed) { \
             mock_errorf("glClearDepthf missing\n"); \
@@ -580,7 +599,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClearDepthx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClearDepthx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClearDepthx_INDEX); \
         if (! packed) { \
             mock_errorf("glClearDepthx missing\n"); \
@@ -620,7 +640,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClearStencil\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClearStencil:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClearStencil_INDEX); \
         if (! packed) { \
             mock_errorf("glClearStencil missing\n"); \
@@ -660,7 +681,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClientActiveTexture\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClientActiveTexture:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClientActiveTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glClientActiveTexture missing\n"); \
@@ -701,7 +723,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClipPlanef\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClipPlanef:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClipPlanef_INDEX); \
         if (! packed) { \
             mock_errorf("glClipPlanef missing\n"); \
@@ -742,7 +765,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glClipPlanex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glClipPlanex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glClipPlanex_INDEX); \
         if (! packed) { \
             mock_errorf("glClipPlanex missing\n"); \
@@ -785,7 +809,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glColor4f\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glColor4f:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glColor4f_INDEX); \
         if (! packed) { \
             mock_errorf("glColor4f missing\n"); \
@@ -837,7 +862,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glColor4ub\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glColor4ub:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glColor4ub_INDEX); \
         if (! packed) { \
             mock_errorf("glColor4ub missing\n"); \
@@ -889,7 +915,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glColor4x\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glColor4x:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glColor4x_INDEX); \
         if (! packed) { \
             mock_errorf("glColor4x missing\n"); \
@@ -941,7 +968,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glColorMask\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glColorMask:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glColorMask_INDEX); \
         if (! packed) { \
             mock_errorf("glColorMask missing\n"); \
@@ -993,7 +1021,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glColorPointer\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glColorPointer:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glColorPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glColorPointer missing\n"); \
@@ -1046,7 +1075,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glCompressedTexImage2D\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glCompressedTexImage2D:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glCompressedTexImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCompressedTexImage2D missing\n"); \
@@ -1112,7 +1142,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glCompressedTexSubImage2D\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glCompressedTexSubImage2D:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glCompressedTexSubImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCompressedTexSubImage2D missing\n"); \
@@ -1180,7 +1211,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glCopyTexImage2D\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glCopyTexImage2D:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glCopyTexImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCopyTexImage2D missing\n"); \
@@ -1248,7 +1280,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glCopyTexSubImage2D\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glCopyTexSubImage2D:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glCopyTexSubImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCopyTexSubImage2D missing\n"); \
@@ -1309,7 +1342,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glCullFace\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glCullFace:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glCullFace_INDEX); \
         if (! packed) { \
             mock_errorf("glCullFace missing\n"); \
@@ -1350,7 +1384,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDeleteBuffers\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDeleteBuffers:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDeleteBuffers_INDEX); \
         if (! packed) { \
             mock_errorf("glDeleteBuffers missing\n"); \
@@ -1391,7 +1426,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDeleteTextures\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDeleteTextures:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDeleteTextures_INDEX); \
         if (! packed) { \
             mock_errorf("glDeleteTextures missing\n"); \
@@ -1431,7 +1467,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDepthFunc\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDepthFunc:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDepthFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthFunc missing\n"); \
@@ -1471,7 +1508,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDepthMask\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDepthMask:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDepthMask_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthMask missing\n"); \
@@ -1512,7 +1550,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDepthRangef\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDepthRangef:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDepthRangef_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthRangef missing\n"); \
@@ -1556,7 +1595,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDepthRangex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDepthRangex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDepthRangex_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthRangex missing\n"); \
@@ -1599,7 +1639,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDisable\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDisable:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDisable_INDEX); \
         if (! packed) { \
             mock_errorf("glDisable missing\n"); \
@@ -1639,7 +1680,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDisableClientState\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDisableClientState:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDisableClientState_INDEX); \
         if (! packed) { \
             mock_errorf("glDisableClientState missing\n"); \
@@ -1681,7 +1723,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDrawArrays\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDrawArrays:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDrawArrays_INDEX); \
         if (! packed) { \
             mock_errorf("glDrawArrays missing\n"); \
@@ -1730,7 +1773,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glDrawElements\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glDrawElements:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glDrawElements_INDEX); \
         if (! packed) { \
             mock_errorf("glDrawElements missing\n"); \
@@ -1776,7 +1820,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glEnable\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glEnable:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glEnable_INDEX); \
         if (! packed) { \
             mock_errorf("glEnable missing\n"); \
@@ -1816,7 +1861,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glEnableClientState\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glEnableClientState:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glEnableClientState_INDEX); \
         if (! packed) { \
             mock_errorf("glEnableClientState missing\n"); \
@@ -1855,7 +1901,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFinish\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFinish:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFinish_INDEX); \
         if (! packed) { \
             mock_errorf("glFinish missing\n"); \
@@ -1891,7 +1938,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFlush\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFlush:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFlush_INDEX); \
         if (! packed) { \
             mock_errorf("glFlush missing\n"); \
@@ -1929,7 +1977,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFogf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFogf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFogf_INDEX); \
         if (! packed) { \
             mock_errorf("glFogf missing\n"); \
@@ -1973,7 +2022,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFogfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFogfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFogfv_INDEX); \
         if (! packed) { \
             mock_errorf("glFogfv missing\n"); \
@@ -2014,7 +2064,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFogx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFogx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFogx_INDEX); \
         if (! packed) { \
             mock_errorf("glFogx missing\n"); \
@@ -2058,7 +2109,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFogxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFogxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFogxv_INDEX); \
         if (! packed) { \
             mock_errorf("glFogxv missing\n"); \
@@ -2098,7 +2150,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFrontFace\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFrontFace:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFrontFace_INDEX); \
         if (! packed) { \
             mock_errorf("glFrontFace missing\n"); \
@@ -2143,7 +2196,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFrustumf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFrustumf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFrustumf_INDEX); \
         if (! packed) { \
             mock_errorf("glFrustumf missing\n"); \
@@ -2203,7 +2257,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glFrustumx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glFrustumx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glFrustumx_INDEX); \
         if (! packed) { \
             mock_errorf("glFrustumx missing\n"); \
@@ -2259,7 +2314,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGenBuffers\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGenBuffers:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGenBuffers_INDEX); \
         if (! packed) { \
             mock_errorf("glGenBuffers missing\n"); \
@@ -2300,7 +2356,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGenTextures\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGenTextures:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGenTextures_INDEX); \
         if (! packed) { \
             mock_errorf("glGenTextures missing\n"); \
@@ -2341,7 +2398,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetBooleanv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetBooleanv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetBooleanv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetBooleanv missing\n"); \
@@ -2383,7 +2441,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetBufferParameteriv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetBufferParameteriv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetBufferParameteriv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetBufferParameteriv missing\n"); \
@@ -2427,7 +2486,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetClipPlanef\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetClipPlanef:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetClipPlanef_INDEX); \
         if (! packed) { \
             mock_errorf("glGetClipPlanef missing\n"); \
@@ -2468,7 +2528,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetClipPlanex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetClipPlanex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetClipPlanex_INDEX); \
         if (! packed) { \
             mock_errorf("glGetClipPlanex missing\n"); \
@@ -2507,7 +2568,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetError\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetError:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetError_INDEX); \
         if (! packed) { \
             mock_errorf("glGetError missing\n"); \
@@ -2545,7 +2607,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetFixedv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetFixedv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetFixedv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetFixedv missing\n"); \
@@ -2586,7 +2649,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetFloatv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetFloatv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetFloatv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetFloatv missing\n"); \
@@ -2627,7 +2691,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetIntegerv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetIntegerv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetIntegerv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetIntegerv missing\n"); \
@@ -2669,7 +2734,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetLightfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetLightfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetLightfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetLightfv missing\n"); \
@@ -2714,7 +2780,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetLightxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetLightxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetLightxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetLightxv missing\n"); \
@@ -2759,7 +2826,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetMaterialfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetMaterialfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetMaterialfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetMaterialfv missing\n"); \
@@ -2804,7 +2872,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetMaterialxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetMaterialxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetMaterialxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetMaterialxv missing\n"); \
@@ -2848,7 +2917,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetPointerv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetPointerv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetPointerv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetPointerv missing\n"); \
@@ -2888,7 +2958,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetString\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetString:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetString_INDEX); \
         if (! packed) { \
             mock_errorf("glGetString missing\n"); \
@@ -2930,7 +3001,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetTexEnvfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetTexEnvfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetTexEnvfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexEnvfv missing\n"); \
@@ -2975,7 +3047,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetTexEnviv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetTexEnviv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetTexEnviv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexEnviv missing\n"); \
@@ -3020,7 +3093,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetTexEnvxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetTexEnvxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetTexEnvxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexEnvxv missing\n"); \
@@ -3065,7 +3139,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetTexParameterfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetTexParameterfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetTexParameterfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexParameterfv missing\n"); \
@@ -3110,7 +3185,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetTexParameteriv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetTexParameteriv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetTexParameteriv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexParameteriv missing\n"); \
@@ -3155,7 +3231,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glGetTexParameterxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glGetTexParameterxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glGetTexParameterxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexParameterxv missing\n"); \
@@ -3199,7 +3276,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glHint\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glHint:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glHint_INDEX); \
         if (! packed) { \
             mock_errorf("glHint missing\n"); \
@@ -3242,7 +3320,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glIsBuffer\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glIsBuffer:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glIsBuffer_INDEX); \
         if (! packed) { \
             mock_errorf("glIsBuffer missing\n"); \
@@ -3282,7 +3361,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glIsEnabled\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glIsEnabled:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glIsEnabled_INDEX); \
         if (! packed) { \
             mock_errorf("glIsEnabled missing\n"); \
@@ -3322,7 +3402,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glIsTexture\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glIsTexture:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glIsTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glIsTexture missing\n"); \
@@ -3363,7 +3444,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightModelf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightModelf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightModelf_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelf missing\n"); \
@@ -3407,7 +3489,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightModelfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightModelfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightModelfv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelfv missing\n"); \
@@ -3448,7 +3531,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightModelx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightModelx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightModelx_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelx missing\n"); \
@@ -3492,7 +3576,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightModelxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightModelxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightModelxv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelxv missing\n"); \
@@ -3534,7 +3619,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightf_INDEX); \
         if (! packed) { \
             mock_errorf("glLightf missing\n"); \
@@ -3582,7 +3668,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightfv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightfv missing\n"); \
@@ -3627,7 +3714,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightx_INDEX); \
         if (! packed) { \
             mock_errorf("glLightx missing\n"); \
@@ -3675,7 +3763,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLightxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLightxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLightxv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightxv missing\n"); \
@@ -3718,7 +3807,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLineWidth\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLineWidth:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLineWidth_INDEX); \
         if (! packed) { \
             mock_errorf("glLineWidth missing\n"); \
@@ -3758,7 +3848,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLineWidthx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLineWidthx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLineWidthx_INDEX); \
         if (! packed) { \
             mock_errorf("glLineWidthx missing\n"); \
@@ -3797,7 +3888,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLoadIdentity\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLoadIdentity:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLoadIdentity_INDEX); \
         if (! packed) { \
             mock_errorf("glLoadIdentity missing\n"); \
@@ -3834,7 +3926,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLoadMatrixf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLoadMatrixf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLoadMatrixf_INDEX); \
         if (! packed) { \
             mock_errorf("glLoadMatrixf missing\n"); \
@@ -3871,7 +3964,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLoadMatrixx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLoadMatrixx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLoadMatrixx_INDEX); \
         if (! packed) { \
             mock_errorf("glLoadMatrixx missing\n"); \
@@ -3908,7 +4002,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glLogicOp\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glLogicOp:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glLogicOp_INDEX); \
         if (! packed) { \
             mock_errorf("glLogicOp missing\n"); \
@@ -3950,7 +4045,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMaterialf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMaterialf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMaterialf_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialf missing\n"); \
@@ -3998,7 +4094,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMaterialfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMaterialfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMaterialfv_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialfv missing\n"); \
@@ -4043,7 +4140,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMaterialx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMaterialx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMaterialx_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialx missing\n"); \
@@ -4091,7 +4189,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMaterialxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMaterialxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMaterialxv_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialxv missing\n"); \
@@ -4134,7 +4233,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMatrixMode\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMatrixMode:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMatrixMode_INDEX); \
         if (! packed) { \
             mock_errorf("glMatrixMode missing\n"); \
@@ -4174,7 +4274,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMultMatrixf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMultMatrixf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMultMatrixf_INDEX); \
         if (! packed) { \
             mock_errorf("glMultMatrixf missing\n"); \
@@ -4211,7 +4312,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMultMatrixx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMultMatrixx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMultMatrixx_INDEX); \
         if (! packed) { \
             mock_errorf("glMultMatrixx missing\n"); \
@@ -4252,7 +4354,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMultiTexCoord4f\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMultiTexCoord4f:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMultiTexCoord4f_INDEX); \
         if (! packed) { \
             mock_errorf("glMultiTexCoord4f missing\n"); \
@@ -4308,7 +4411,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glMultiTexCoord4x\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glMultiTexCoord4x:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glMultiTexCoord4x_INDEX); \
         if (! packed) { \
             mock_errorf("glMultiTexCoord4x missing\n"); \
@@ -4362,7 +4466,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glNormal3f\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glNormal3f:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glNormal3f_INDEX); \
         if (! packed) { \
             mock_errorf("glNormal3f missing\n"); \
@@ -4410,7 +4515,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glNormal3x\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glNormal3x:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glNormal3x_INDEX); \
         if (! packed) { \
             mock_errorf("glNormal3x missing\n"); \
@@ -4458,7 +4564,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glNormalPointer\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glNormalPointer:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glNormalPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glNormalPointer missing\n"); \
@@ -4506,7 +4613,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glOrthof\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glOrthof:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glOrthof_INDEX); \
         if (! packed) { \
             mock_errorf("glOrthof missing\n"); \
@@ -4566,7 +4674,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glOrthox\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glOrthox:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glOrthox_INDEX); \
         if (! packed) { \
             mock_errorf("glOrthox missing\n"); \
@@ -4622,7 +4731,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPixelStorei\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPixelStorei:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPixelStorei_INDEX); \
         if (! packed) { \
             mock_errorf("glPixelStorei missing\n"); \
@@ -4666,7 +4776,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPointParameterf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPointParameterf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPointParameterf_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterf missing\n"); \
@@ -4710,7 +4821,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPointParameterfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPointParameterfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPointParameterfv_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterfv missing\n"); \
@@ -4751,7 +4863,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPointParameterx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPointParameterx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPointParameterx_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterx missing\n"); \
@@ -4795,7 +4908,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPointParameterxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPointParameterxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPointParameterxv_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterxv missing\n"); \
@@ -4835,7 +4949,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPointSize\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPointSize:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPointSize_INDEX); \
         if (! packed) { \
             mock_errorf("glPointSize missing\n"); \
@@ -4877,7 +4992,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPointSizePointerOES\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPointSizePointerOES:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPointSizePointerOES_INDEX); \
         if (! packed) { \
             mock_errorf("glPointSizePointerOES missing\n"); \
@@ -4920,7 +5036,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPointSizex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPointSizex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPointSizex_INDEX); \
         if (! packed) { \
             mock_errorf("glPointSizex missing\n"); \
@@ -4961,7 +5078,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPolygonOffset\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPolygonOffset:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPolygonOffset_INDEX); \
         if (! packed) { \
             mock_errorf("glPolygonOffset missing\n"); \
@@ -5005,7 +5123,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPolygonOffsetx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPolygonOffsetx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPolygonOffsetx_INDEX); \
         if (! packed) { \
             mock_errorf("glPolygonOffsetx missing\n"); \
@@ -5047,7 +5166,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPopMatrix\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPopMatrix:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPopMatrix_INDEX); \
         if (! packed) { \
             mock_errorf("glPopMatrix missing\n"); \
@@ -5083,7 +5203,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glPushMatrix\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glPushMatrix:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glPushMatrix_INDEX); \
         if (! packed) { \
             mock_errorf("glPushMatrix missing\n"); \
@@ -5126,7 +5247,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glReadPixels\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glReadPixels:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glReadPixels_INDEX); \
         if (! packed) { \
             mock_errorf("glReadPixels missing\n"); \
@@ -5184,7 +5306,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glRotatef\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glRotatef:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glRotatef_INDEX); \
         if (! packed) { \
             mock_errorf("glRotatef missing\n"); \
@@ -5236,7 +5359,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glRotatex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glRotatex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glRotatex_INDEX); \
         if (! packed) { \
             mock_errorf("glRotatex missing\n"); \
@@ -5286,7 +5410,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glSampleCoverage\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glSampleCoverage:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glSampleCoverage_INDEX); \
         if (! packed) { \
             mock_errorf("glSampleCoverage missing\n"); \
@@ -5330,7 +5455,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glSampleCoveragex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glSampleCoveragex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glSampleCoveragex_INDEX); \
         if (! packed) { \
             mock_errorf("glSampleCoveragex missing\n"); \
@@ -5375,7 +5501,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glScalef\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glScalef:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glScalef_INDEX); \
         if (! packed) { \
             mock_errorf("glScalef missing\n"); \
@@ -5423,7 +5550,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glScalex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glScalex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glScalex_INDEX); \
         if (! packed) { \
             mock_errorf("glScalex missing\n"); \
@@ -5472,7 +5600,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glScissor\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glScissor:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glScissor_INDEX); \
         if (! packed) { \
             mock_errorf("glScissor missing\n"); \
@@ -5521,7 +5650,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glShadeModel\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glShadeModel:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glShadeModel_INDEX); \
         if (! packed) { \
             mock_errorf("glShadeModel missing\n"); \
@@ -5563,7 +5693,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glStencilFunc\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glStencilFunc:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glStencilFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glStencilFunc missing\n"); \
@@ -5609,7 +5740,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glStencilMask\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glStencilMask:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glStencilMask_INDEX); \
         if (! packed) { \
             mock_errorf("glStencilMask missing\n"); \
@@ -5651,7 +5783,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glStencilOp\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glStencilOp:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glStencilOp_INDEX); \
         if (! packed) { \
             mock_errorf("glStencilOp missing\n"); \
@@ -5700,7 +5833,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexCoordPointer\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexCoordPointer:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexCoordPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glTexCoordPointer missing\n"); \
@@ -5748,7 +5882,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexEnvf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexEnvf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexEnvf_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvf missing\n"); \
@@ -5796,7 +5931,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexEnvfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexEnvfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexEnvfv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvfv missing\n"); \
@@ -5841,7 +5977,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexEnvi\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexEnvi:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexEnvi_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvi missing\n"); \
@@ -5889,7 +6026,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexEnviv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexEnviv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexEnviv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnviv missing\n"); \
@@ -5934,7 +6072,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexEnvx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexEnvx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexEnvx_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvx missing\n"); \
@@ -5982,7 +6121,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexEnvxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexEnvxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexEnvxv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvxv missing\n"); \
@@ -6033,7 +6173,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexImage2D\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexImage2D:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glTexImage2D missing\n"); \
@@ -6096,7 +6237,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexParameterf\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexParameterf:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexParameterf_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterf missing\n"); \
@@ -6144,7 +6286,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexParameterfv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexParameterfv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexParameterfv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterfv missing\n"); \
@@ -6189,7 +6332,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexParameteri\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexParameteri:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexParameteri_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameteri missing\n"); \
@@ -6237,7 +6381,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexParameteriv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexParameteriv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexParameteriv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameteriv missing\n"); \
@@ -6282,7 +6427,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexParameterx\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexParameterx:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexParameterx_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterx missing\n"); \
@@ -6330,7 +6476,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexParameterxv\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexParameterxv:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexParameterxv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterxv missing\n"); \
@@ -6381,7 +6528,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTexSubImage2D\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTexSubImage2D:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTexSubImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glTexSubImage2D missing\n"); \
@@ -6444,7 +6592,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTranslatef\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTranslatef:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTranslatef_INDEX); \
         if (! packed) { \
             mock_errorf("glTranslatef missing\n"); \
@@ -6492,7 +6641,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glTranslatex\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glTranslatex:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glTranslatex_INDEX); \
         if (! packed) { \
             mock_errorf("glTranslatex missing\n"); \
@@ -6541,7 +6691,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glVertexPointer\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glVertexPointer:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glVertexPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glVertexPointer missing\n"); \
@@ -6590,7 +6741,8 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected %s while looking for glViewport\n", mock_name(packed->func)); \
+        mock_warningf("unexpected call while looking for glViewport:\n  "); \
+        mock_print(packed); \
         packed = mock_slide(glViewport_INDEX); \
         if (! packed) { \
             mock_errorf("glViewport missing\n"); \
