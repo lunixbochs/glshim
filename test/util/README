@@ -1,0 +1,19 @@
+two kinds of unit tests
+
+1. Internal (add main.c to primary glshim sources).
+   Replace LOAD_GLES with a no-op.
+   Provide global gles functions (can I do this automatically?).
+   How do I mock existing functions? Defines? mock.h
+
+2. GL/ES reference blocks:
+
+    GL_BLOCK
+        glBegin();
+        glVertex2f();
+        glEnd();
+    GLES_BLOCK
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glDrawArrays(1, 2, 3, 4);
+        glDisableClientState(GL_VERTEX_ARRAY);
+    END_BLOCK
+

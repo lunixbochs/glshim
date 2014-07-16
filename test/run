@@ -1,0 +1,4 @@
+#!/bin/bash -u
+
+cd $(dirname "$0")
+python util/run.py --project="$(pwd)/.." --base "$(pwd)/tests" "$@"
