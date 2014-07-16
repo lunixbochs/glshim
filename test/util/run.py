@@ -26,13 +26,9 @@ def chdir(d):
 
 
 def shell(*args, **kwargs):
-    p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output = p.communicate(kwargs.get('input', ''))
-    sys.stderr.flush()
-    out = (output[0] or '').strip()
-    if p.returncode and not kwargs.get('quiet'):
-        if out:
-            print '> ' + out.replace('\n', '\n> ')
+    out = '\n'.join(((output[0] or '').strip(), (output[1] or '').strip())).strip()
     return out, p.returncode
 
 
@@ -104,14 +100,16 @@ class Test:
         with open(cmakelists, 'w') as f:
             f.write(txt)
 
-        _, status = shell('cmake', cmakelists)
+        out, status = shell('cmake', cmakelists)
         if status:
+            self.output = out
             self.build_failed = True
             return False
 
         with chdir(junk_dir):
-            _, status = shell('make')
+            out, status = shell('make')
             if status:
+                self.output = out
                 self.build_failed = True
                 return False
         return True
@@ -119,7 +117,7 @@ class Test:
     def run(self):
         bin_dir = os.path.join(TEST_ROOT, 'bin', self.name)
         with chdir(bin_dir):
-            self.output, status = shell('./test', quiet=True)
+            self.output, status = shell('./test')
             self.ran = True
             self.success = not status
         return self.success
@@ -160,15 +158,16 @@ def run(args):
     total = sum(t.ran for t in tests)
     results = '{} / {} passed, {} skipped '.format(passed, total, len(tests) - total)
 
-    percent = '{:.2f}%'.format(passed / float(total) * 100)
-    if passed == total:
-        percent = term.green('100%')
-    elif percent < 75:
-        percent = term.red(percent)
-    else:
-        percent = term.yellow(percent)
-    print term.bold((results + '[{}]').format(percent).rjust(80 + len(term.green(''))))
-    print
+    if total > 0:
+        percent = '{:.2f}%'.format(passed / float(total) * 100)
+        if passed == total:
+            percent = term.green('100%')
+        elif percent < 75:
+            percent = term.red(percent)
+        else:
+            percent = term.yellow(percent)
+        print term.bold((results + '[{}]').format(percent).rjust(80 + len(term.green(''))))
+        print
 
 
 if __name__ == '__main__':
