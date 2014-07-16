@@ -8,7 +8,7 @@ glx="yml/my_glx.yml,yml/glxext.yml"
 opengl="yml/opengl.yml"
 cats="VERSION_1_0,VERSION_1_1,VERSION_1_2,VERSION_1_3,VERSION_1_4,VERSION_1_5,glx,EXT_swap_control"
 
-./gen.py "$gles" --ifndef USE_ES2 mock.c.j2 mock.c "wrap/gles.h" > "$base/../test/util/mock.c" &
+# ./gen.py "$gles" --ifndef USE_ES2 mock.c.j2 mock.c "wrap/gles.h" > "$base/../test/util/mock.c" &
 ./gen.py "$gles" --ifndef USE_ES2 mock.h.j2 mock.h "wrap/gles.h" > "$base/../test/util/mock.h" &
 
 ./gen.py "$gles" --ifndef USE_ES2 gleswrap.c.j2 gleswrap.c gles.h > "$base/gl/wrap/gles.c" &
