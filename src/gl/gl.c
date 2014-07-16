@@ -232,7 +232,6 @@ void glVertexPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
     LOAD_GLES(glVertexPointer);
     clone_gl_pointer(state.pointers.vertex, size);
-    glGetError();
     gles_glVertexPointer(size, type, stride, pointer);
 }
 void glColorPointer(GLint size, GLenum type,
