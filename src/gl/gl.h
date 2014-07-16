@@ -28,13 +28,13 @@
 #include "../config.h"
 #include "wrap/es.h"
 
-#define checkError(code)                          \
+#define CHECK_ERROR(code)                         \
     {int error; while ((error = glGetError())) {} \
     code                                          \
     if ((error = glGetError()))                   \
         printf(#code " -> %i\n", error);}
 
-#define printError(file, line)              \
+#define PRINT_ERROR(file, line)             \
     {int error; if ((error = glGetError())) \
         printf(file ":%i -> %i\n", line, error);}
 
@@ -69,7 +69,9 @@ static const char *gles_lib[] = {
 #define MAX(a, b) (((a) > (b) ? (a) : (b)))
 #endif
 
+#ifndef WARN_NULL
 #define WARN_NULL(name) if (name == NULL) printf("libGL: warning, " #name " is NULL\n");
+#endif
 
 static void load_gles_lib() {
     if (gles) {
@@ -101,6 +103,7 @@ static void load_gles_lib() {
     WARN_NULL(gles);
 }
 
+#ifndef LOAD_GLES
 #define LOAD_GLES(name)                                   \
     static name##_PTR gles_##name;                        \
     {                                                     \
@@ -114,20 +117,27 @@ static void load_gles_lib() {
             WARN_NULL(gles_##name);                       \
         }                                                 \
     }
+#endif
 
+#ifndef PUSH_IF_COMPILING_EXT
 #define PUSH_IF_COMPILING_EXT(name, ...)             \
     if (state.list.active) {                         \
         push_##name(__VA_ARGS__);                    \
         return (name##_RETURN)0;                     \
     }
+#endif
 
+#ifndef PUSH_IF_COMPILING
 #define PUSH_IF_COMPILING(name) PUSH_IF_COMPILING_EXT(name, name##_ARG_NAMES)
+#endif
 
+#ifndef PROXY_GLES
 #define PROXY_GLES(name) \
     LOAD_GLES(name); \
     if (gles_##name != NULL) { \
         return gles_##name(name##_ARG_NAMES); \
     }
+#endif
 
 #define CURRENT (state.list.active ? &state.list.current : &state.current)
 
