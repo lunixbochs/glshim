@@ -1,12 +1,14 @@
 import argparse
 import jinja2
 import os
+import signal
 import subprocess
 import sys
 
 from blessings import Terminal
 from contextlib import contextmanager
 
+signals = dict((k, v) for v, k in signal.__dict__.iteritems() if v.startswith('SIG'))
 term = Terminal()
 TEST_ROOT = os.getcwd()
 
@@ -28,8 +30,12 @@ def chdir(d):
 def shell(*args, **kwargs):
     p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output = p.communicate(kwargs.get('input', ''))
-    out = '\n'.join(((output[0] or '').strip(), (output[1] or '').strip())).strip()
-    return out, p.returncode
+    out = '\n'.join(((output[0] or '').strip(), (output[1] or '').strip()))
+    if p.returncode < 0:
+        sig = signals.get(-p.returncode)
+        if sig is not None:
+            out += '\n' + sig
+    return out.strip(), p.returncode
 
 
 def walk(base):
@@ -119,7 +125,7 @@ class Test:
         with chdir(bin_dir):
             self.output, status = shell('./test')
             self.ran = True
-            self.success = not status
+            self.success = (status == 0)
         return self.success
 
     def __repr__(self):
