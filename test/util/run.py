@@ -135,20 +135,29 @@ def run(args):
         print 'No tests!'
         return
 
-    status_fmt = lambda test: term.bold('[' + test.status_color(test.status) + ']')
+    step_fmt = lambda step: term.bold('[' + step + ']')
+    status_fmt = lambda test: term.bold(' [' + test.status_color(test.status) + ']')
 
     for i, test in enumerate(tests):
         headline = '[{}/{}] {} ['.format(i + 1, len(tests), test.name)
         print term.bold(headline.ljust(80, '-')),
         with term.location():
-            build = test.build(args.project)
+            with term.location(x=73):
+                print step_fmt('build')
+
+            with term.location():
+                print
+                build = test.build(args.project)
+
             if build:
+                with term.location(x=73):
+                    print step_fmt(' run ')
                 success = test.run()
             if test.output:
                 print
                 print '> ' + test.output.replace('\n', '\n> ')
 
-        with term.location(x=74):
+        with term.location(x=73):
             print status_fmt(test)
         print
         if test.output:
@@ -159,10 +168,11 @@ def run(args):
     results = '{} / {} passed, {} skipped '.format(passed, total, len(tests) - total)
 
     if total > 0:
-        percent = '{:.2f}%'.format(passed / float(total) * 100)
+        pc = passed / float(total) * 100
+        percent = '{:.2f}%'.format(pc)
         if passed == total:
             percent = term.green('100%')
-        elif percent < 75:
+        elif pc < 75:
             percent = term.red(percent)
         else:
             percent = term.yellow(percent)
