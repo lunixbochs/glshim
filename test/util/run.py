@@ -113,7 +113,7 @@ class Test:
             return False
 
         with chdir(junk_dir):
-            out, status = shell('make')
+            out, status = shell('make', '-j2')
             if status:
                 self.output = out
                 self.build_failed = True

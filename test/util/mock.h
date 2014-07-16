@@ -4,6 +4,6625 @@
 #ifndef MOCK_H
 #define MOCK_H
 
+
+const char *mock_name(int func);
+indexed_call_t *mock_slide(int func);
+indexed_call_t *mock_peek();
+indexed_call_t *mock_shift();
+void mock_print(const indexed_call_t *packed);
+void mock_push(indexed_call_t *call);
+
+static int verbose_test = 0;
+static int failed_test = 0;
+#define verbose { verbose_test = 1; }
+
+#define mock_return return failed_test;
+
+#define mock_warningf(...) { printf("WARNING: "), printf(__VA_ARGS__); }
+#define mock_errorf(...) { printf("ERROR: "); printf(__VA_ARGS__); failed_test = 1; }
+
+#define pack_glActiveTexture(texture) ({ \
+    glActiveTexture_INDEXED *packed_data = malloc(sizeof(glActiveTexture_INDEXED)); \
+    packed_data->func = glActiveTexture_INDEX; \
+    packed_data->args.a1 = (GLenum)texture; \
+    packed_data; \
+})
+#define emit_glActiveTexture(texture) { \
+    mock_push(pack_glActiveTexture(texture)); \
+}
+#define test_glActiveTexture(texture) { \
+    glActiveTexture_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glActiveTexture missing (no calls left)\n"); \
+    } else if (packed->func != glActiveTexture_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glActiveTexture\n", mock_name(packed->func)); \
+        packed = mock_slide(glActiveTexture_INDEX); \
+        if (! packed) { \
+            mock_errorf("glActiveTexture missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != texture) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glActiveTexture(%u);\n", texture); \
+        } \
+    } \
+}
+#define pack_glAlphaFunc(func, ref) ({ \
+    glAlphaFunc_INDEXED *packed_data = malloc(sizeof(glAlphaFunc_INDEXED)); \
+    packed_data->func = glAlphaFunc_INDEX; \
+    packed_data->args.a1 = (GLenum)func; \
+    packed_data->args.a2 = (GLclampf)ref; \
+    packed_data; \
+})
+#define emit_glAlphaFunc(func, ref) { \
+    mock_push(pack_glAlphaFunc(func, ref)); \
+}
+#define test_glAlphaFunc(func, ref) { \
+    glAlphaFunc_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glAlphaFunc missing (no calls left)\n"); \
+    } else if (packed->func != glAlphaFunc_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glAlphaFunc\n", mock_name(packed->func)); \
+        packed = mock_slide(glAlphaFunc_INDEX); \
+        if (! packed) { \
+            mock_errorf("glAlphaFunc missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != func) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != ref) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glAlphaFunc(%u, %p);\n", func, ref); \
+        } \
+    } \
+}
+#define pack_glAlphaFuncx(func, ref) ({ \
+    glAlphaFuncx_INDEXED *packed_data = malloc(sizeof(glAlphaFuncx_INDEXED)); \
+    packed_data->func = glAlphaFuncx_INDEX; \
+    packed_data->args.a1 = (GLenum)func; \
+    packed_data->args.a2 = (GLclampx)ref; \
+    packed_data; \
+})
+#define emit_glAlphaFuncx(func, ref) { \
+    mock_push(pack_glAlphaFuncx(func, ref)); \
+}
+#define test_glAlphaFuncx(func, ref) { \
+    glAlphaFuncx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glAlphaFuncx missing (no calls left)\n"); \
+    } else if (packed->func != glAlphaFuncx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glAlphaFuncx\n", mock_name(packed->func)); \
+        packed = mock_slide(glAlphaFuncx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glAlphaFuncx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != func) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != ref) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glAlphaFuncx(%u, %p);\n", func, ref); \
+        } \
+    } \
+}
+#define pack_glBindBuffer(target, buffer) ({ \
+    glBindBuffer_INDEXED *packed_data = malloc(sizeof(glBindBuffer_INDEXED)); \
+    packed_data->func = glBindBuffer_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLuint)buffer; \
+    packed_data; \
+})
+#define emit_glBindBuffer(target, buffer) { \
+    mock_push(pack_glBindBuffer(target, buffer)); \
+}
+#define test_glBindBuffer(target, buffer) { \
+    glBindBuffer_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glBindBuffer missing (no calls left)\n"); \
+    } else if (packed->func != glBindBuffer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glBindBuffer\n", mock_name(packed->func)); \
+        packed = mock_slide(glBindBuffer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glBindBuffer missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != buffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glBindBuffer(%u, %u);\n", target, buffer); \
+        } \
+    } \
+}
+#define pack_glBindTexture(target, texture) ({ \
+    glBindTexture_INDEXED *packed_data = malloc(sizeof(glBindTexture_INDEXED)); \
+    packed_data->func = glBindTexture_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLuint)texture; \
+    packed_data; \
+})
+#define emit_glBindTexture(target, texture) { \
+    mock_push(pack_glBindTexture(target, texture)); \
+}
+#define test_glBindTexture(target, texture) { \
+    glBindTexture_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glBindTexture missing (no calls left)\n"); \
+    } else if (packed->func != glBindTexture_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glBindTexture\n", mock_name(packed->func)); \
+        packed = mock_slide(glBindTexture_INDEX); \
+        if (! packed) { \
+            mock_errorf("glBindTexture missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != texture) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glBindTexture(%u, %u);\n", target, texture); \
+        } \
+    } \
+}
+#define pack_glBlendFunc(sfactor, dfactor) ({ \
+    glBlendFunc_INDEXED *packed_data = malloc(sizeof(glBlendFunc_INDEXED)); \
+    packed_data->func = glBlendFunc_INDEX; \
+    packed_data->args.a1 = (GLenum)sfactor; \
+    packed_data->args.a2 = (GLenum)dfactor; \
+    packed_data; \
+})
+#define emit_glBlendFunc(sfactor, dfactor) { \
+    mock_push(pack_glBlendFunc(sfactor, dfactor)); \
+}
+#define test_glBlendFunc(sfactor, dfactor) { \
+    glBlendFunc_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glBlendFunc missing (no calls left)\n"); \
+    } else if (packed->func != glBlendFunc_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glBlendFunc\n", mock_name(packed->func)); \
+        packed = mock_slide(glBlendFunc_INDEX); \
+        if (! packed) { \
+            mock_errorf("glBlendFunc missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != sfactor) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != dfactor) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glBlendFunc(%u, %u);\n", sfactor, dfactor); \
+        } \
+    } \
+}
+#define pack_glBufferData(target, size, data, usage) ({ \
+    glBufferData_INDEXED *packed_data = malloc(sizeof(glBufferData_INDEXED)); \
+    packed_data->func = glBufferData_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLsizeiptr)size; \
+    packed_data->args.a3 = (GLvoid *)data; \
+    packed_data->args.a4 = (GLenum)usage; \
+    packed_data; \
+})
+#define emit_glBufferData(target, size, data, usage) { \
+    mock_push(pack_glBufferData(target, size, data, usage)); \
+}
+#define test_glBufferData(target, size, data, usage) { \
+    glBufferData_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glBufferData missing (no calls left)\n"); \
+    } else if (packed->func != glBufferData_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glBufferData\n", mock_name(packed->func)); \
+        packed = mock_slide(glBufferData_INDEX); \
+        if (! packed) { \
+            mock_errorf("glBufferData missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != size) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != usage) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glBufferData(%u, %d, %p, %u);\n", target, size, data, usage); \
+        } \
+    } \
+}
+#define pack_glBufferSubData(target, offset, size, data) ({ \
+    glBufferSubData_INDEXED *packed_data = malloc(sizeof(glBufferSubData_INDEXED)); \
+    packed_data->func = glBufferSubData_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLintptr)offset; \
+    packed_data->args.a3 = (GLsizeiptr)size; \
+    packed_data->args.a4 = (GLvoid *)data; \
+    packed_data; \
+})
+#define emit_glBufferSubData(target, offset, size, data) { \
+    mock_push(pack_glBufferSubData(target, offset, size, data)); \
+}
+#define test_glBufferSubData(target, offset, size, data) { \
+    glBufferSubData_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glBufferSubData missing (no calls left)\n"); \
+    } else if (packed->func != glBufferSubData_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glBufferSubData\n", mock_name(packed->func)); \
+        packed = mock_slide(glBufferSubData_INDEX); \
+        if (! packed) { \
+            mock_errorf("glBufferSubData missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != offset) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != size) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glBufferSubData(%u, %d, %d, %p);\n", target, offset, size, data); \
+        } \
+    } \
+}
+#define pack_glClear(mask) ({ \
+    glClear_INDEXED *packed_data = malloc(sizeof(glClear_INDEXED)); \
+    packed_data->func = glClear_INDEX; \
+    packed_data->args.a1 = (GLbitfield)mask; \
+    packed_data; \
+})
+#define emit_glClear(mask) { \
+    mock_push(pack_glClear(mask)); \
+}
+#define test_glClear(mask) { \
+    glClear_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClear missing (no calls left)\n"); \
+    } else if (packed->func != glClear_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClear\n", mock_name(packed->func)); \
+        packed = mock_slide(glClear_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClear missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mask) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClear(%d);\n", mask); \
+        } \
+    } \
+}
+#define pack_glClearColor(red, green, blue, alpha) ({ \
+    glClearColor_INDEXED *packed_data = malloc(sizeof(glClearColor_INDEXED)); \
+    packed_data->func = glClearColor_INDEX; \
+    packed_data->args.a1 = (GLclampf)red; \
+    packed_data->args.a2 = (GLclampf)green; \
+    packed_data->args.a3 = (GLclampf)blue; \
+    packed_data->args.a4 = (GLclampf)alpha; \
+    packed_data; \
+})
+#define emit_glClearColor(red, green, blue, alpha) { \
+    mock_push(pack_glClearColor(red, green, blue, alpha)); \
+}
+#define test_glClearColor(red, green, blue, alpha) { \
+    glClearColor_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClearColor missing (no calls left)\n"); \
+    } else if (packed->func != glClearColor_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClearColor\n", mock_name(packed->func)); \
+        packed = mock_slide(glClearColor_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClearColor missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != red) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != green) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != blue) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != alpha) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClearColor(%p, %p, %p, %p);\n", red, green, blue, alpha); \
+        } \
+    } \
+}
+#define pack_glClearColorx(red, green, blue, alpha) ({ \
+    glClearColorx_INDEXED *packed_data = malloc(sizeof(glClearColorx_INDEXED)); \
+    packed_data->func = glClearColorx_INDEX; \
+    packed_data->args.a1 = (GLclampx)red; \
+    packed_data->args.a2 = (GLclampx)green; \
+    packed_data->args.a3 = (GLclampx)blue; \
+    packed_data->args.a4 = (GLclampx)alpha; \
+    packed_data; \
+})
+#define emit_glClearColorx(red, green, blue, alpha) { \
+    mock_push(pack_glClearColorx(red, green, blue, alpha)); \
+}
+#define test_glClearColorx(red, green, blue, alpha) { \
+    glClearColorx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClearColorx missing (no calls left)\n"); \
+    } else if (packed->func != glClearColorx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClearColorx\n", mock_name(packed->func)); \
+        packed = mock_slide(glClearColorx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClearColorx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != red) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != green) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != blue) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != alpha) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClearColorx(%p, %p, %p, %p);\n", red, green, blue, alpha); \
+        } \
+    } \
+}
+#define pack_glClearDepthf(depth) ({ \
+    glClearDepthf_INDEXED *packed_data = malloc(sizeof(glClearDepthf_INDEXED)); \
+    packed_data->func = glClearDepthf_INDEX; \
+    packed_data->args.a1 = (GLclampf)depth; \
+    packed_data; \
+})
+#define emit_glClearDepthf(depth) { \
+    mock_push(pack_glClearDepthf(depth)); \
+}
+#define test_glClearDepthf(depth) { \
+    glClearDepthf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClearDepthf missing (no calls left)\n"); \
+    } else if (packed->func != glClearDepthf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClearDepthf\n", mock_name(packed->func)); \
+        packed = mock_slide(glClearDepthf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClearDepthf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != depth) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClearDepthf(%p);\n", depth); \
+        } \
+    } \
+}
+#define pack_glClearDepthx(depth) ({ \
+    glClearDepthx_INDEXED *packed_data = malloc(sizeof(glClearDepthx_INDEXED)); \
+    packed_data->func = glClearDepthx_INDEX; \
+    packed_data->args.a1 = (GLclampx)depth; \
+    packed_data; \
+})
+#define emit_glClearDepthx(depth) { \
+    mock_push(pack_glClearDepthx(depth)); \
+}
+#define test_glClearDepthx(depth) { \
+    glClearDepthx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClearDepthx missing (no calls left)\n"); \
+    } else if (packed->func != glClearDepthx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClearDepthx\n", mock_name(packed->func)); \
+        packed = mock_slide(glClearDepthx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClearDepthx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != depth) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClearDepthx(%p);\n", depth); \
+        } \
+    } \
+}
+#define pack_glClearStencil(s) ({ \
+    glClearStencil_INDEXED *packed_data = malloc(sizeof(glClearStencil_INDEXED)); \
+    packed_data->func = glClearStencil_INDEX; \
+    packed_data->args.a1 = (GLint)s; \
+    packed_data; \
+})
+#define emit_glClearStencil(s) { \
+    mock_push(pack_glClearStencil(s)); \
+}
+#define test_glClearStencil(s) { \
+    glClearStencil_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClearStencil missing (no calls left)\n"); \
+    } else if (packed->func != glClearStencil_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClearStencil\n", mock_name(packed->func)); \
+        packed = mock_slide(glClearStencil_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClearStencil missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != s) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClearStencil(%d);\n", s); \
+        } \
+    } \
+}
+#define pack_glClientActiveTexture(texture) ({ \
+    glClientActiveTexture_INDEXED *packed_data = malloc(sizeof(glClientActiveTexture_INDEXED)); \
+    packed_data->func = glClientActiveTexture_INDEX; \
+    packed_data->args.a1 = (GLenum)texture; \
+    packed_data; \
+})
+#define emit_glClientActiveTexture(texture) { \
+    mock_push(pack_glClientActiveTexture(texture)); \
+}
+#define test_glClientActiveTexture(texture) { \
+    glClientActiveTexture_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClientActiveTexture missing (no calls left)\n"); \
+    } else if (packed->func != glClientActiveTexture_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClientActiveTexture\n", mock_name(packed->func)); \
+        packed = mock_slide(glClientActiveTexture_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClientActiveTexture missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != texture) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClientActiveTexture(%u);\n", texture); \
+        } \
+    } \
+}
+#define pack_glClipPlanef(plane, equation) ({ \
+    glClipPlanef_INDEXED *packed_data = malloc(sizeof(glClipPlanef_INDEXED)); \
+    packed_data->func = glClipPlanef_INDEX; \
+    packed_data->args.a1 = (GLenum)plane; \
+    packed_data->args.a2 = (GLfloat *)equation; \
+    packed_data; \
+})
+#define emit_glClipPlanef(plane, equation) { \
+    mock_push(pack_glClipPlanef(plane, equation)); \
+}
+#define test_glClipPlanef(plane, equation) { \
+    glClipPlanef_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClipPlanef missing (no calls left)\n"); \
+    } else if (packed->func != glClipPlanef_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClipPlanef\n", mock_name(packed->func)); \
+        packed = mock_slide(glClipPlanef_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClipPlanef missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != plane) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClipPlanef(%u, %p);\n", plane, equation); \
+        } \
+    } \
+}
+#define pack_glClipPlanex(plane, equation) ({ \
+    glClipPlanex_INDEXED *packed_data = malloc(sizeof(glClipPlanex_INDEXED)); \
+    packed_data->func = glClipPlanex_INDEX; \
+    packed_data->args.a1 = (GLenum)plane; \
+    packed_data->args.a2 = (GLfixed *)equation; \
+    packed_data; \
+})
+#define emit_glClipPlanex(plane, equation) { \
+    mock_push(pack_glClipPlanex(plane, equation)); \
+}
+#define test_glClipPlanex(plane, equation) { \
+    glClipPlanex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glClipPlanex missing (no calls left)\n"); \
+    } else if (packed->func != glClipPlanex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glClipPlanex\n", mock_name(packed->func)); \
+        packed = mock_slide(glClipPlanex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glClipPlanex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != plane) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glClipPlanex(%u, %p);\n", plane, equation); \
+        } \
+    } \
+}
+#define pack_glColor4f(red, green, blue, alpha) ({ \
+    glColor4f_INDEXED *packed_data = malloc(sizeof(glColor4f_INDEXED)); \
+    packed_data->func = glColor4f_INDEX; \
+    packed_data->args.a1 = (GLfloat)red; \
+    packed_data->args.a2 = (GLfloat)green; \
+    packed_data->args.a3 = (GLfloat)blue; \
+    packed_data->args.a4 = (GLfloat)alpha; \
+    packed_data; \
+})
+#define emit_glColor4f(red, green, blue, alpha) { \
+    mock_push(pack_glColor4f(red, green, blue, alpha)); \
+}
+#define test_glColor4f(red, green, blue, alpha) { \
+    glColor4f_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glColor4f missing (no calls left)\n"); \
+    } else if (packed->func != glColor4f_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glColor4f\n", mock_name(packed->func)); \
+        packed = mock_slide(glColor4f_INDEX); \
+        if (! packed) { \
+            mock_errorf("glColor4f missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != red) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != green) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != blue) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != alpha) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glColor4f(%0.2f, %0.2f, %0.2f, %0.2f);\n", red, green, blue, alpha); \
+        } \
+    } \
+}
+#define pack_glColor4ub(red, green, blue, alpha) ({ \
+    glColor4ub_INDEXED *packed_data = malloc(sizeof(glColor4ub_INDEXED)); \
+    packed_data->func = glColor4ub_INDEX; \
+    packed_data->args.a1 = (GLubyte)red; \
+    packed_data->args.a2 = (GLubyte)green; \
+    packed_data->args.a3 = (GLubyte)blue; \
+    packed_data->args.a4 = (GLubyte)alpha; \
+    packed_data; \
+})
+#define emit_glColor4ub(red, green, blue, alpha) { \
+    mock_push(pack_glColor4ub(red, green, blue, alpha)); \
+}
+#define test_glColor4ub(red, green, blue, alpha) { \
+    glColor4ub_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glColor4ub missing (no calls left)\n"); \
+    } else if (packed->func != glColor4ub_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glColor4ub\n", mock_name(packed->func)); \
+        packed = mock_slide(glColor4ub_INDEX); \
+        if (! packed) { \
+            mock_errorf("glColor4ub missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != red) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != green) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != blue) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != alpha) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glColor4ub(%c, %c, %c, %c);\n", red, green, blue, alpha); \
+        } \
+    } \
+}
+#define pack_glColor4x(red, green, blue, alpha) ({ \
+    glColor4x_INDEXED *packed_data = malloc(sizeof(glColor4x_INDEXED)); \
+    packed_data->func = glColor4x_INDEX; \
+    packed_data->args.a1 = (GLfixed)red; \
+    packed_data->args.a2 = (GLfixed)green; \
+    packed_data->args.a3 = (GLfixed)blue; \
+    packed_data->args.a4 = (GLfixed)alpha; \
+    packed_data; \
+})
+#define emit_glColor4x(red, green, blue, alpha) { \
+    mock_push(pack_glColor4x(red, green, blue, alpha)); \
+}
+#define test_glColor4x(red, green, blue, alpha) { \
+    glColor4x_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glColor4x missing (no calls left)\n"); \
+    } else if (packed->func != glColor4x_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glColor4x\n", mock_name(packed->func)); \
+        packed = mock_slide(glColor4x_INDEX); \
+        if (! packed) { \
+            mock_errorf("glColor4x missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != red) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != green) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != blue) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != alpha) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glColor4x(%p, %p, %p, %p);\n", red, green, blue, alpha); \
+        } \
+    } \
+}
+#define pack_glColorMask(red, green, blue, alpha) ({ \
+    glColorMask_INDEXED *packed_data = malloc(sizeof(glColorMask_INDEXED)); \
+    packed_data->func = glColorMask_INDEX; \
+    packed_data->args.a1 = (GLboolean)red; \
+    packed_data->args.a2 = (GLboolean)green; \
+    packed_data->args.a3 = (GLboolean)blue; \
+    packed_data->args.a4 = (GLboolean)alpha; \
+    packed_data; \
+})
+#define emit_glColorMask(red, green, blue, alpha) { \
+    mock_push(pack_glColorMask(red, green, blue, alpha)); \
+}
+#define test_glColorMask(red, green, blue, alpha) { \
+    glColorMask_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glColorMask missing (no calls left)\n"); \
+    } else if (packed->func != glColorMask_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glColorMask\n", mock_name(packed->func)); \
+        packed = mock_slide(glColorMask_INDEX); \
+        if (! packed) { \
+            mock_errorf("glColorMask missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != red) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != green) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != blue) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != alpha) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glColorMask(%d, %d, %d, %d);\n", red, green, blue, alpha); \
+        } \
+    } \
+}
+#define pack_glColorPointer(size, type, stride, pointer) ({ \
+    glColorPointer_INDEXED *packed_data = malloc(sizeof(glColorPointer_INDEXED)); \
+    packed_data->func = glColorPointer_INDEX; \
+    packed_data->args.a1 = (GLint)size; \
+    packed_data->args.a2 = (GLenum)type; \
+    packed_data->args.a3 = (GLsizei)stride; \
+    packed_data->args.a4 = (GLvoid *)pointer; \
+    packed_data; \
+})
+#define emit_glColorPointer(size, type, stride, pointer) { \
+    mock_push(pack_glColorPointer(size, type, stride, pointer)); \
+}
+#define test_glColorPointer(size, type, stride, pointer) { \
+    glColorPointer_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glColorPointer missing (no calls left)\n"); \
+    } else if (packed->func != glColorPointer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glColorPointer\n", mock_name(packed->func)); \
+        packed = mock_slide(glColorPointer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glColorPointer missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != size) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != type) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != stride) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glColorPointer(%d, %u, %d, %p);\n", size, type, stride, pointer); \
+        } \
+    } \
+}
+#define pack_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) ({ \
+    glCompressedTexImage2D_INDEXED *packed_data = malloc(sizeof(glCompressedTexImage2D_INDEXED)); \
+    packed_data->func = glCompressedTexImage2D_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLint)level; \
+    packed_data->args.a3 = (GLenum)internalformat; \
+    packed_data->args.a4 = (GLsizei)width; \
+    packed_data->args.a5 = (GLsizei)height; \
+    packed_data->args.a6 = (GLint)border; \
+    packed_data->args.a7 = (GLsizei)imageSize; \
+    packed_data->args.a8 = (GLvoid *)data; \
+    packed_data; \
+})
+#define emit_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) { \
+    mock_push(pack_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data)); \
+}
+#define test_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) { \
+    glCompressedTexImage2D_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glCompressedTexImage2D missing (no calls left)\n"); \
+    } else if (packed->func != glCompressedTexImage2D_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glCompressedTexImage2D\n", mock_name(packed->func)); \
+        packed = mock_slide(glCompressedTexImage2D_INDEX); \
+        if (! packed) { \
+            mock_errorf("glCompressedTexImage2D missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != level) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != internalformat) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != height) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != border) { \
+            match = 0; \
+        } \
+        if (packed->args.a7 != imageSize) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glCompressedTexImage2D(%u, %d, %u, %d, %d, %d, %d, %p);\n", target, level, internalformat, width, height, border, imageSize, data); \
+        } \
+    } \
+}
+#define pack_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) ({ \
+    glCompressedTexSubImage2D_INDEXED *packed_data = malloc(sizeof(glCompressedTexSubImage2D_INDEXED)); \
+    packed_data->func = glCompressedTexSubImage2D_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLint)level; \
+    packed_data->args.a3 = (GLint)xoffset; \
+    packed_data->args.a4 = (GLint)yoffset; \
+    packed_data->args.a5 = (GLsizei)width; \
+    packed_data->args.a6 = (GLsizei)height; \
+    packed_data->args.a7 = (GLenum)format; \
+    packed_data->args.a8 = (GLsizei)imageSize; \
+    packed_data->args.a9 = (GLvoid *)data; \
+    packed_data; \
+})
+#define emit_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) { \
+    mock_push(pack_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data)); \
+}
+#define test_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) { \
+    glCompressedTexSubImage2D_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glCompressedTexSubImage2D missing (no calls left)\n"); \
+    } else if (packed->func != glCompressedTexSubImage2D_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glCompressedTexSubImage2D\n", mock_name(packed->func)); \
+        packed = mock_slide(glCompressedTexSubImage2D_INDEX); \
+        if (! packed) { \
+            mock_errorf("glCompressedTexSubImage2D missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != level) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != xoffset) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != yoffset) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != height) { \
+            match = 0; \
+        } \
+        if (packed->args.a7 != format) { \
+            match = 0; \
+        } \
+        if (packed->args.a8 != imageSize) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glCompressedTexSubImage2D(%u, %d, %d, %d, %d, %d, %u, %d, %p);\n", target, level, xoffset, yoffset, width, height, format, imageSize, data); \
+        } \
+    } \
+}
+#define pack_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) ({ \
+    glCopyTexImage2D_INDEXED *packed_data = malloc(sizeof(glCopyTexImage2D_INDEXED)); \
+    packed_data->func = glCopyTexImage2D_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLint)level; \
+    packed_data->args.a3 = (GLenum)internalformat; \
+    packed_data->args.a4 = (GLint)x; \
+    packed_data->args.a5 = (GLint)y; \
+    packed_data->args.a6 = (GLsizei)width; \
+    packed_data->args.a7 = (GLsizei)height; \
+    packed_data->args.a8 = (GLint)border; \
+    packed_data; \
+})
+#define emit_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) { \
+    mock_push(pack_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border)); \
+}
+#define test_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) { \
+    glCopyTexImage2D_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glCopyTexImage2D missing (no calls left)\n"); \
+    } else if (packed->func != glCopyTexImage2D_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glCopyTexImage2D\n", mock_name(packed->func)); \
+        packed = mock_slide(glCopyTexImage2D_INDEX); \
+        if (! packed) { \
+            mock_errorf("glCopyTexImage2D missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != level) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != internalformat) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a7 != height) { \
+            match = 0; \
+        } \
+        if (packed->args.a8 != border) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glCopyTexImage2D(%u, %d, %u, %d, %d, %d, %d, %d);\n", target, level, internalformat, x, y, width, height, border); \
+        } \
+    } \
+}
+#define pack_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) ({ \
+    glCopyTexSubImage2D_INDEXED *packed_data = malloc(sizeof(glCopyTexSubImage2D_INDEXED)); \
+    packed_data->func = glCopyTexSubImage2D_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLint)level; \
+    packed_data->args.a3 = (GLint)xoffset; \
+    packed_data->args.a4 = (GLint)yoffset; \
+    packed_data->args.a5 = (GLint)x; \
+    packed_data->args.a6 = (GLint)y; \
+    packed_data->args.a7 = (GLsizei)width; \
+    packed_data->args.a8 = (GLsizei)height; \
+    packed_data; \
+})
+#define emit_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) { \
+    mock_push(pack_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height)); \
+}
+#define test_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) { \
+    glCopyTexSubImage2D_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glCopyTexSubImage2D missing (no calls left)\n"); \
+    } else if (packed->func != glCopyTexSubImage2D_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glCopyTexSubImage2D\n", mock_name(packed->func)); \
+        packed = mock_slide(glCopyTexSubImage2D_INDEX); \
+        if (! packed) { \
+            mock_errorf("glCopyTexSubImage2D missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != level) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != xoffset) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != yoffset) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a7 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a8 != height) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glCopyTexSubImage2D(%u, %d, %d, %d, %d, %d, %d, %d);\n", target, level, xoffset, yoffset, x, y, width, height); \
+        } \
+    } \
+}
+#define pack_glCullFace(mode) ({ \
+    glCullFace_INDEXED *packed_data = malloc(sizeof(glCullFace_INDEXED)); \
+    packed_data->func = glCullFace_INDEX; \
+    packed_data->args.a1 = (GLenum)mode; \
+    packed_data; \
+})
+#define emit_glCullFace(mode) { \
+    mock_push(pack_glCullFace(mode)); \
+}
+#define test_glCullFace(mode) { \
+    glCullFace_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glCullFace missing (no calls left)\n"); \
+    } else if (packed->func != glCullFace_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glCullFace\n", mock_name(packed->func)); \
+        packed = mock_slide(glCullFace_INDEX); \
+        if (! packed) { \
+            mock_errorf("glCullFace missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glCullFace(%u);\n", mode); \
+        } \
+    } \
+}
+#define pack_glDeleteBuffers(n, buffers) ({ \
+    glDeleteBuffers_INDEXED *packed_data = malloc(sizeof(glDeleteBuffers_INDEXED)); \
+    packed_data->func = glDeleteBuffers_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)buffers; \
+    packed_data; \
+})
+#define emit_glDeleteBuffers(n, buffers) { \
+    mock_push(pack_glDeleteBuffers(n, buffers)); \
+}
+#define test_glDeleteBuffers(n, buffers) { \
+    glDeleteBuffers_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDeleteBuffers missing (no calls left)\n"); \
+    } else if (packed->func != glDeleteBuffers_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDeleteBuffers\n", mock_name(packed->func)); \
+        packed = mock_slide(glDeleteBuffers_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDeleteBuffers missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDeleteBuffers(%d, %p);\n", n, buffers); \
+        } \
+    } \
+}
+#define pack_glDeleteTextures(n, textures) ({ \
+    glDeleteTextures_INDEXED *packed_data = malloc(sizeof(glDeleteTextures_INDEXED)); \
+    packed_data->func = glDeleteTextures_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)textures; \
+    packed_data; \
+})
+#define emit_glDeleteTextures(n, textures) { \
+    mock_push(pack_glDeleteTextures(n, textures)); \
+}
+#define test_glDeleteTextures(n, textures) { \
+    glDeleteTextures_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDeleteTextures missing (no calls left)\n"); \
+    } else if (packed->func != glDeleteTextures_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDeleteTextures\n", mock_name(packed->func)); \
+        packed = mock_slide(glDeleteTextures_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDeleteTextures missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDeleteTextures(%d, %p);\n", n, textures); \
+        } \
+    } \
+}
+#define pack_glDepthFunc(func) ({ \
+    glDepthFunc_INDEXED *packed_data = malloc(sizeof(glDepthFunc_INDEXED)); \
+    packed_data->func = glDepthFunc_INDEX; \
+    packed_data->args.a1 = (GLenum)func; \
+    packed_data; \
+})
+#define emit_glDepthFunc(func) { \
+    mock_push(pack_glDepthFunc(func)); \
+}
+#define test_glDepthFunc(func) { \
+    glDepthFunc_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDepthFunc missing (no calls left)\n"); \
+    } else if (packed->func != glDepthFunc_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDepthFunc\n", mock_name(packed->func)); \
+        packed = mock_slide(glDepthFunc_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDepthFunc missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != func) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDepthFunc(%u);\n", func); \
+        } \
+    } \
+}
+#define pack_glDepthMask(flag) ({ \
+    glDepthMask_INDEXED *packed_data = malloc(sizeof(glDepthMask_INDEXED)); \
+    packed_data->func = glDepthMask_INDEX; \
+    packed_data->args.a1 = (GLboolean)flag; \
+    packed_data; \
+})
+#define emit_glDepthMask(flag) { \
+    mock_push(pack_glDepthMask(flag)); \
+}
+#define test_glDepthMask(flag) { \
+    glDepthMask_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDepthMask missing (no calls left)\n"); \
+    } else if (packed->func != glDepthMask_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDepthMask\n", mock_name(packed->func)); \
+        packed = mock_slide(glDepthMask_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDepthMask missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != flag) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDepthMask(%d);\n", flag); \
+        } \
+    } \
+}
+#define pack_glDepthRangef(near, far) ({ \
+    glDepthRangef_INDEXED *packed_data = malloc(sizeof(glDepthRangef_INDEXED)); \
+    packed_data->func = glDepthRangef_INDEX; \
+    packed_data->args.a1 = (GLclampf)near; \
+    packed_data->args.a2 = (GLclampf)far; \
+    packed_data; \
+})
+#define emit_glDepthRangef(near, far) { \
+    mock_push(pack_glDepthRangef(near, far)); \
+}
+#define test_glDepthRangef(near, far) { \
+    glDepthRangef_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDepthRangef missing (no calls left)\n"); \
+    } else if (packed->func != glDepthRangef_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDepthRangef\n", mock_name(packed->func)); \
+        packed = mock_slide(glDepthRangef_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDepthRangef missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != near) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != far) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDepthRangef(%p, %p);\n", near, far); \
+        } \
+    } \
+}
+#define pack_glDepthRangex(near, far) ({ \
+    glDepthRangex_INDEXED *packed_data = malloc(sizeof(glDepthRangex_INDEXED)); \
+    packed_data->func = glDepthRangex_INDEX; \
+    packed_data->args.a1 = (GLclampx)near; \
+    packed_data->args.a2 = (GLclampx)far; \
+    packed_data; \
+})
+#define emit_glDepthRangex(near, far) { \
+    mock_push(pack_glDepthRangex(near, far)); \
+}
+#define test_glDepthRangex(near, far) { \
+    glDepthRangex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDepthRangex missing (no calls left)\n"); \
+    } else if (packed->func != glDepthRangex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDepthRangex\n", mock_name(packed->func)); \
+        packed = mock_slide(glDepthRangex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDepthRangex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != near) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != far) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDepthRangex(%p, %p);\n", near, far); \
+        } \
+    } \
+}
+#define pack_glDisable(cap) ({ \
+    glDisable_INDEXED *packed_data = malloc(sizeof(glDisable_INDEXED)); \
+    packed_data->func = glDisable_INDEX; \
+    packed_data->args.a1 = (GLenum)cap; \
+    packed_data; \
+})
+#define emit_glDisable(cap) { \
+    mock_push(pack_glDisable(cap)); \
+}
+#define test_glDisable(cap) { \
+    glDisable_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDisable missing (no calls left)\n"); \
+    } else if (packed->func != glDisable_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDisable\n", mock_name(packed->func)); \
+        packed = mock_slide(glDisable_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDisable missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != cap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDisable(%u);\n", cap); \
+        } \
+    } \
+}
+#define pack_glDisableClientState(array) ({ \
+    glDisableClientState_INDEXED *packed_data = malloc(sizeof(glDisableClientState_INDEXED)); \
+    packed_data->func = glDisableClientState_INDEX; \
+    packed_data->args.a1 = (GLenum)array; \
+    packed_data; \
+})
+#define emit_glDisableClientState(array) { \
+    mock_push(pack_glDisableClientState(array)); \
+}
+#define test_glDisableClientState(array) { \
+    glDisableClientState_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDisableClientState missing (no calls left)\n"); \
+    } else if (packed->func != glDisableClientState_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDisableClientState\n", mock_name(packed->func)); \
+        packed = mock_slide(glDisableClientState_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDisableClientState missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != array) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDisableClientState(%u);\n", array); \
+        } \
+    } \
+}
+#define pack_glDrawArrays(mode, first, count) ({ \
+    glDrawArrays_INDEXED *packed_data = malloc(sizeof(glDrawArrays_INDEXED)); \
+    packed_data->func = glDrawArrays_INDEX; \
+    packed_data->args.a1 = (GLenum)mode; \
+    packed_data->args.a2 = (GLint)first; \
+    packed_data->args.a3 = (GLsizei)count; \
+    packed_data; \
+})
+#define emit_glDrawArrays(mode, first, count) { \
+    mock_push(pack_glDrawArrays(mode, first, count)); \
+}
+#define test_glDrawArrays(mode, first, count) { \
+    glDrawArrays_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDrawArrays missing (no calls left)\n"); \
+    } else if (packed->func != glDrawArrays_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDrawArrays\n", mock_name(packed->func)); \
+        packed = mock_slide(glDrawArrays_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDrawArrays missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mode) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != first) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != count) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDrawArrays(%u, %d, %d);\n", mode, first, count); \
+        } \
+    } \
+}
+#define pack_glDrawElements(mode, count, type, indices) ({ \
+    glDrawElements_INDEXED *packed_data = malloc(sizeof(glDrawElements_INDEXED)); \
+    packed_data->func = glDrawElements_INDEX; \
+    packed_data->args.a1 = (GLenum)mode; \
+    packed_data->args.a2 = (GLsizei)count; \
+    packed_data->args.a3 = (GLenum)type; \
+    packed_data->args.a4 = (GLvoid *)indices; \
+    packed_data; \
+})
+#define emit_glDrawElements(mode, count, type, indices) { \
+    mock_push(pack_glDrawElements(mode, count, type, indices)); \
+}
+#define test_glDrawElements(mode, count, type, indices) { \
+    glDrawElements_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glDrawElements missing (no calls left)\n"); \
+    } else if (packed->func != glDrawElements_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glDrawElements\n", mock_name(packed->func)); \
+        packed = mock_slide(glDrawElements_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDrawElements missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mode) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != count) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != type) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glDrawElements(%u, %d, %u, %p);\n", mode, count, type, indices); \
+        } \
+    } \
+}
+#define pack_glEnable(cap) ({ \
+    glEnable_INDEXED *packed_data = malloc(sizeof(glEnable_INDEXED)); \
+    packed_data->func = glEnable_INDEX; \
+    packed_data->args.a1 = (GLenum)cap; \
+    packed_data; \
+})
+#define emit_glEnable(cap) { \
+    mock_push(pack_glEnable(cap)); \
+}
+#define test_glEnable(cap) { \
+    glEnable_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glEnable missing (no calls left)\n"); \
+    } else if (packed->func != glEnable_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glEnable\n", mock_name(packed->func)); \
+        packed = mock_slide(glEnable_INDEX); \
+        if (! packed) { \
+            mock_errorf("glEnable missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != cap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glEnable(%u);\n", cap); \
+        } \
+    } \
+}
+#define pack_glEnableClientState(array) ({ \
+    glEnableClientState_INDEXED *packed_data = malloc(sizeof(glEnableClientState_INDEXED)); \
+    packed_data->func = glEnableClientState_INDEX; \
+    packed_data->args.a1 = (GLenum)array; \
+    packed_data; \
+})
+#define emit_glEnableClientState(array) { \
+    mock_push(pack_glEnableClientState(array)); \
+}
+#define test_glEnableClientState(array) { \
+    glEnableClientState_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glEnableClientState missing (no calls left)\n"); \
+    } else if (packed->func != glEnableClientState_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glEnableClientState\n", mock_name(packed->func)); \
+        packed = mock_slide(glEnableClientState_INDEX); \
+        if (! packed) { \
+            mock_errorf("glEnableClientState missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != array) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glEnableClientState(%u);\n", array); \
+        } \
+    } \
+}
+#define pack_glFinish() ({ \
+    glFinish_INDEXED *packed_data = malloc(sizeof(glFinish_INDEXED)); \
+    packed_data->func = glFinish_INDEX; \
+    packed_data; \
+})
+#define emit_glFinish() { \
+    mock_push(pack_glFinish()); \
+}
+#define test_glFinish() { \
+    glFinish_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFinish missing (no calls left)\n"); \
+    } else if (packed->func != glFinish_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFinish\n", mock_name(packed->func)); \
+        packed = mock_slide(glFinish_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFinish missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFinish();\n", ); \
+        } \
+    } \
+}
+#define pack_glFlush() ({ \
+    glFlush_INDEXED *packed_data = malloc(sizeof(glFlush_INDEXED)); \
+    packed_data->func = glFlush_INDEX; \
+    packed_data; \
+})
+#define emit_glFlush() { \
+    mock_push(pack_glFlush()); \
+}
+#define test_glFlush() { \
+    glFlush_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFlush missing (no calls left)\n"); \
+    } else if (packed->func != glFlush_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFlush\n", mock_name(packed->func)); \
+        packed = mock_slide(glFlush_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFlush missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFlush();\n", ); \
+        } \
+    } \
+}
+#define pack_glFogf(pname, param) ({ \
+    glFogf_INDEXED *packed_data = malloc(sizeof(glFogf_INDEXED)); \
+    packed_data->func = glFogf_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfloat)param; \
+    packed_data; \
+})
+#define emit_glFogf(pname, param) { \
+    mock_push(pack_glFogf(pname, param)); \
+}
+#define test_glFogf(pname, param) { \
+    glFogf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFogf missing (no calls left)\n"); \
+    } else if (packed->func != glFogf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFogf\n", mock_name(packed->func)); \
+        packed = mock_slide(glFogf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFogf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFogf(%u, %0.2f);\n", pname, param); \
+        } \
+    } \
+}
+#define pack_glFogfv(pname, params) ({ \
+    glFogfv_INDEXED *packed_data = malloc(sizeof(glFogfv_INDEXED)); \
+    packed_data->func = glFogfv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glFogfv(pname, params) { \
+    mock_push(pack_glFogfv(pname, params)); \
+}
+#define test_glFogfv(pname, params) { \
+    glFogfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFogfv missing (no calls left)\n"); \
+    } else if (packed->func != glFogfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFogfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glFogfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFogfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFogfv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glFogx(pname, param) ({ \
+    glFogx_INDEXED *packed_data = malloc(sizeof(glFogx_INDEXED)); \
+    packed_data->func = glFogx_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfixed)param; \
+    packed_data; \
+})
+#define emit_glFogx(pname, param) { \
+    mock_push(pack_glFogx(pname, param)); \
+}
+#define test_glFogx(pname, param) { \
+    glFogx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFogx missing (no calls left)\n"); \
+    } else if (packed->func != glFogx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFogx\n", mock_name(packed->func)); \
+        packed = mock_slide(glFogx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFogx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFogx(%u, %p);\n", pname, param); \
+        } \
+    } \
+}
+#define pack_glFogxv(pname, params) ({ \
+    glFogxv_INDEXED *packed_data = malloc(sizeof(glFogxv_INDEXED)); \
+    packed_data->func = glFogxv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glFogxv(pname, params) { \
+    mock_push(pack_glFogxv(pname, params)); \
+}
+#define test_glFogxv(pname, params) { \
+    glFogxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFogxv missing (no calls left)\n"); \
+    } else if (packed->func != glFogxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFogxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glFogxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFogxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFogxv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glFrontFace(mode) ({ \
+    glFrontFace_INDEXED *packed_data = malloc(sizeof(glFrontFace_INDEXED)); \
+    packed_data->func = glFrontFace_INDEX; \
+    packed_data->args.a1 = (GLenum)mode; \
+    packed_data; \
+})
+#define emit_glFrontFace(mode) { \
+    mock_push(pack_glFrontFace(mode)); \
+}
+#define test_glFrontFace(mode) { \
+    glFrontFace_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFrontFace missing (no calls left)\n"); \
+    } else if (packed->func != glFrontFace_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFrontFace\n", mock_name(packed->func)); \
+        packed = mock_slide(glFrontFace_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFrontFace missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFrontFace(%u);\n", mode); \
+        } \
+    } \
+}
+#define pack_glFrustumf(left, right, bottom, top, near, far) ({ \
+    glFrustumf_INDEXED *packed_data = malloc(sizeof(glFrustumf_INDEXED)); \
+    packed_data->func = glFrustumf_INDEX; \
+    packed_data->args.a1 = (GLfloat)left; \
+    packed_data->args.a2 = (GLfloat)right; \
+    packed_data->args.a3 = (GLfloat)bottom; \
+    packed_data->args.a4 = (GLfloat)top; \
+    packed_data->args.a5 = (GLfloat)near; \
+    packed_data->args.a6 = (GLfloat)far; \
+    packed_data; \
+})
+#define emit_glFrustumf(left, right, bottom, top, near, far) { \
+    mock_push(pack_glFrustumf(left, right, bottom, top, near, far)); \
+}
+#define test_glFrustumf(left, right, bottom, top, near, far) { \
+    glFrustumf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFrustumf missing (no calls left)\n"); \
+    } else if (packed->func != glFrustumf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFrustumf\n", mock_name(packed->func)); \
+        packed = mock_slide(glFrustumf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFrustumf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != left) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != right) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != bottom) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != top) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != near) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != far) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFrustumf(%0.2f, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f);\n", left, right, bottom, top, near, far); \
+        } \
+    } \
+}
+#define pack_glFrustumx(left, right, bottom, top, near, far) ({ \
+    glFrustumx_INDEXED *packed_data = malloc(sizeof(glFrustumx_INDEXED)); \
+    packed_data->func = glFrustumx_INDEX; \
+    packed_data->args.a1 = (GLfixed)left; \
+    packed_data->args.a2 = (GLfixed)right; \
+    packed_data->args.a3 = (GLfixed)bottom; \
+    packed_data->args.a4 = (GLfixed)top; \
+    packed_data->args.a5 = (GLfixed)near; \
+    packed_data->args.a6 = (GLfixed)far; \
+    packed_data; \
+})
+#define emit_glFrustumx(left, right, bottom, top, near, far) { \
+    mock_push(pack_glFrustumx(left, right, bottom, top, near, far)); \
+}
+#define test_glFrustumx(left, right, bottom, top, near, far) { \
+    glFrustumx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glFrustumx missing (no calls left)\n"); \
+    } else if (packed->func != glFrustumx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glFrustumx\n", mock_name(packed->func)); \
+        packed = mock_slide(glFrustumx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFrustumx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != left) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != right) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != bottom) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != top) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != near) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != far) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glFrustumx(%p, %p, %p, %p, %p, %p);\n", left, right, bottom, top, near, far); \
+        } \
+    } \
+}
+#define pack_glGenBuffers(n, buffers) ({ \
+    glGenBuffers_INDEXED *packed_data = malloc(sizeof(glGenBuffers_INDEXED)); \
+    packed_data->func = glGenBuffers_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)buffers; \
+    packed_data; \
+})
+#define emit_glGenBuffers(n, buffers) { \
+    mock_push(pack_glGenBuffers(n, buffers)); \
+}
+#define test_glGenBuffers(n, buffers) { \
+    glGenBuffers_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGenBuffers missing (no calls left)\n"); \
+    } else if (packed->func != glGenBuffers_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGenBuffers\n", mock_name(packed->func)); \
+        packed = mock_slide(glGenBuffers_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGenBuffers missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGenBuffers(%d, %p);\n", n, buffers); \
+        } \
+    } \
+}
+#define pack_glGenTextures(n, textures) ({ \
+    glGenTextures_INDEXED *packed_data = malloc(sizeof(glGenTextures_INDEXED)); \
+    packed_data->func = glGenTextures_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)textures; \
+    packed_data; \
+})
+#define emit_glGenTextures(n, textures) { \
+    mock_push(pack_glGenTextures(n, textures)); \
+}
+#define test_glGenTextures(n, textures) { \
+    glGenTextures_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGenTextures missing (no calls left)\n"); \
+    } else if (packed->func != glGenTextures_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGenTextures\n", mock_name(packed->func)); \
+        packed = mock_slide(glGenTextures_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGenTextures missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGenTextures(%d, %p);\n", n, textures); \
+        } \
+    } \
+}
+#define pack_glGetBooleanv(pname, params) ({ \
+    glGetBooleanv_INDEXED *packed_data = malloc(sizeof(glGetBooleanv_INDEXED)); \
+    packed_data->func = glGetBooleanv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLboolean *)params; \
+    packed_data; \
+})
+#define emit_glGetBooleanv(pname, params) { \
+    mock_push(pack_glGetBooleanv(pname, params)); \
+}
+#define test_glGetBooleanv(pname, params) { \
+    glGetBooleanv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetBooleanv missing (no calls left)\n"); \
+    } else if (packed->func != glGetBooleanv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetBooleanv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetBooleanv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetBooleanv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetBooleanv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glGetBufferParameteriv(target, pname, params) ({ \
+    glGetBufferParameteriv_INDEXED *packed_data = malloc(sizeof(glGetBufferParameteriv_INDEXED)); \
+    packed_data->func = glGetBufferParameteriv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glGetBufferParameteriv(target, pname, params) { \
+    mock_push(pack_glGetBufferParameteriv(target, pname, params)); \
+}
+#define test_glGetBufferParameteriv(target, pname, params) { \
+    glGetBufferParameteriv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetBufferParameteriv missing (no calls left)\n"); \
+    } else if (packed->func != glGetBufferParameteriv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetBufferParameteriv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetBufferParameteriv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetBufferParameteriv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetBufferParameteriv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetClipPlanef(plane, equation) ({ \
+    glGetClipPlanef_INDEXED *packed_data = malloc(sizeof(glGetClipPlanef_INDEXED)); \
+    packed_data->func = glGetClipPlanef_INDEX; \
+    packed_data->args.a1 = (GLenum)plane; \
+    packed_data->args.a2 = (GLfloat *)equation; \
+    packed_data; \
+})
+#define emit_glGetClipPlanef(plane, equation) { \
+    mock_push(pack_glGetClipPlanef(plane, equation)); \
+}
+#define test_glGetClipPlanef(plane, equation) { \
+    glGetClipPlanef_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetClipPlanef missing (no calls left)\n"); \
+    } else if (packed->func != glGetClipPlanef_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetClipPlanef\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetClipPlanef_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetClipPlanef missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != plane) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetClipPlanef(%u, %p);\n", plane, equation); \
+        } \
+    } \
+}
+#define pack_glGetClipPlanex(plane, equation) ({ \
+    glGetClipPlanex_INDEXED *packed_data = malloc(sizeof(glGetClipPlanex_INDEXED)); \
+    packed_data->func = glGetClipPlanex_INDEX; \
+    packed_data->args.a1 = (GLenum)plane; \
+    packed_data->args.a2 = (GLfixed *)equation; \
+    packed_data; \
+})
+#define emit_glGetClipPlanex(plane, equation) { \
+    mock_push(pack_glGetClipPlanex(plane, equation)); \
+}
+#define test_glGetClipPlanex(plane, equation) { \
+    glGetClipPlanex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetClipPlanex missing (no calls left)\n"); \
+    } else if (packed->func != glGetClipPlanex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetClipPlanex\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetClipPlanex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetClipPlanex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != plane) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetClipPlanex(%u, %p);\n", plane, equation); \
+        } \
+    } \
+}
+#define pack_glGetError() ({ \
+    glGetError_INDEXED *packed_data = malloc(sizeof(glGetError_INDEXED)); \
+    packed_data->func = glGetError_INDEX; \
+    packed_data; \
+})
+#define emit_glGetError() { \
+    mock_push(pack_glGetError()); \
+}
+#define test_glGetError() { \
+    glGetError_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetError missing (no calls left)\n"); \
+    } else if (packed->func != glGetError_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetError\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetError_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetError missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetError();\n", ); \
+        } \
+    } \
+}
+#define pack_glGetFixedv(pname, params) ({ \
+    glGetFixedv_INDEXED *packed_data = malloc(sizeof(glGetFixedv_INDEXED)); \
+    packed_data->func = glGetFixedv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glGetFixedv(pname, params) { \
+    mock_push(pack_glGetFixedv(pname, params)); \
+}
+#define test_glGetFixedv(pname, params) { \
+    glGetFixedv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetFixedv missing (no calls left)\n"); \
+    } else if (packed->func != glGetFixedv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetFixedv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetFixedv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetFixedv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetFixedv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glGetFloatv(pname, params) ({ \
+    glGetFloatv_INDEXED *packed_data = malloc(sizeof(glGetFloatv_INDEXED)); \
+    packed_data->func = glGetFloatv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glGetFloatv(pname, params) { \
+    mock_push(pack_glGetFloatv(pname, params)); \
+}
+#define test_glGetFloatv(pname, params) { \
+    glGetFloatv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetFloatv missing (no calls left)\n"); \
+    } else if (packed->func != glGetFloatv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetFloatv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetFloatv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetFloatv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetFloatv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glGetIntegerv(pname, params) ({ \
+    glGetIntegerv_INDEXED *packed_data = malloc(sizeof(glGetIntegerv_INDEXED)); \
+    packed_data->func = glGetIntegerv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glGetIntegerv(pname, params) { \
+    mock_push(pack_glGetIntegerv(pname, params)); \
+}
+#define test_glGetIntegerv(pname, params) { \
+    glGetIntegerv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetIntegerv missing (no calls left)\n"); \
+    } else if (packed->func != glGetIntegerv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetIntegerv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetIntegerv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetIntegerv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetIntegerv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glGetLightfv(light, pname, params) ({ \
+    glGetLightfv_INDEXED *packed_data = malloc(sizeof(glGetLightfv_INDEXED)); \
+    packed_data->func = glGetLightfv_INDEX; \
+    packed_data->args.a1 = (GLenum)light; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glGetLightfv(light, pname, params) { \
+    mock_push(pack_glGetLightfv(light, pname, params)); \
+}
+#define test_glGetLightfv(light, pname, params) { \
+    glGetLightfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetLightfv missing (no calls left)\n"); \
+    } else if (packed->func != glGetLightfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetLightfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetLightfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetLightfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != light) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetLightfv(%u, %u, %p);\n", light, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetLightxv(light, pname, params) ({ \
+    glGetLightxv_INDEXED *packed_data = malloc(sizeof(glGetLightxv_INDEXED)); \
+    packed_data->func = glGetLightxv_INDEX; \
+    packed_data->args.a1 = (GLenum)light; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glGetLightxv(light, pname, params) { \
+    mock_push(pack_glGetLightxv(light, pname, params)); \
+}
+#define test_glGetLightxv(light, pname, params) { \
+    glGetLightxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetLightxv missing (no calls left)\n"); \
+    } else if (packed->func != glGetLightxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetLightxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetLightxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetLightxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != light) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetLightxv(%u, %u, %p);\n", light, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetMaterialfv(face, pname, params) ({ \
+    glGetMaterialfv_INDEXED *packed_data = malloc(sizeof(glGetMaterialfv_INDEXED)); \
+    packed_data->func = glGetMaterialfv_INDEX; \
+    packed_data->args.a1 = (GLenum)face; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glGetMaterialfv(face, pname, params) { \
+    mock_push(pack_glGetMaterialfv(face, pname, params)); \
+}
+#define test_glGetMaterialfv(face, pname, params) { \
+    glGetMaterialfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetMaterialfv missing (no calls left)\n"); \
+    } else if (packed->func != glGetMaterialfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetMaterialfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetMaterialfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetMaterialfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != face) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetMaterialfv(%u, %u, %p);\n", face, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetMaterialxv(face, pname, params) ({ \
+    glGetMaterialxv_INDEXED *packed_data = malloc(sizeof(glGetMaterialxv_INDEXED)); \
+    packed_data->func = glGetMaterialxv_INDEX; \
+    packed_data->args.a1 = (GLenum)face; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glGetMaterialxv(face, pname, params) { \
+    mock_push(pack_glGetMaterialxv(face, pname, params)); \
+}
+#define test_glGetMaterialxv(face, pname, params) { \
+    glGetMaterialxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetMaterialxv missing (no calls left)\n"); \
+    } else if (packed->func != glGetMaterialxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetMaterialxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetMaterialxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetMaterialxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != face) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetMaterialxv(%u, %u, %p);\n", face, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetPointerv(pname, params) ({ \
+    glGetPointerv_INDEXED *packed_data = malloc(sizeof(glGetPointerv_INDEXED)); \
+    packed_data->func = glGetPointerv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLvoid **)params; \
+    packed_data; \
+})
+#define emit_glGetPointerv(pname, params) { \
+    mock_push(pack_glGetPointerv(pname, params)); \
+}
+#define test_glGetPointerv(pname, params) { \
+    glGetPointerv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetPointerv missing (no calls left)\n"); \
+    } else if (packed->func != glGetPointerv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetPointerv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetPointerv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetPointerv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetPointerv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glGetString(name) ({ \
+    glGetString_INDEXED *packed_data = malloc(sizeof(glGetString_INDEXED)); \
+    packed_data->func = glGetString_INDEX; \
+    packed_data->args.a1 = (GLenum)name; \
+    packed_data; \
+})
+#define emit_glGetString(name) { \
+    mock_push(pack_glGetString(name)); \
+}
+#define test_glGetString(name) { \
+    glGetString_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetString missing (no calls left)\n"); \
+    } else if (packed->func != glGetString_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetString\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetString_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetString missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != name) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetString(%u);\n", name); \
+        } \
+    } \
+}
+#define pack_glGetTexEnvfv(target, pname, params) ({ \
+    glGetTexEnvfv_INDEXED *packed_data = malloc(sizeof(glGetTexEnvfv_INDEXED)); \
+    packed_data->func = glGetTexEnvfv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glGetTexEnvfv(target, pname, params) { \
+    mock_push(pack_glGetTexEnvfv(target, pname, params)); \
+}
+#define test_glGetTexEnvfv(target, pname, params) { \
+    glGetTexEnvfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetTexEnvfv missing (no calls left)\n"); \
+    } else if (packed->func != glGetTexEnvfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetTexEnvfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetTexEnvfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetTexEnvfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetTexEnvfv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetTexEnviv(target, pname, params) ({ \
+    glGetTexEnviv_INDEXED *packed_data = malloc(sizeof(glGetTexEnviv_INDEXED)); \
+    packed_data->func = glGetTexEnviv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glGetTexEnviv(target, pname, params) { \
+    mock_push(pack_glGetTexEnviv(target, pname, params)); \
+}
+#define test_glGetTexEnviv(target, pname, params) { \
+    glGetTexEnviv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetTexEnviv missing (no calls left)\n"); \
+    } else if (packed->func != glGetTexEnviv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetTexEnviv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetTexEnviv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetTexEnviv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetTexEnviv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetTexEnvxv(target, pname, params) ({ \
+    glGetTexEnvxv_INDEXED *packed_data = malloc(sizeof(glGetTexEnvxv_INDEXED)); \
+    packed_data->func = glGetTexEnvxv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glGetTexEnvxv(target, pname, params) { \
+    mock_push(pack_glGetTexEnvxv(target, pname, params)); \
+}
+#define test_glGetTexEnvxv(target, pname, params) { \
+    glGetTexEnvxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetTexEnvxv missing (no calls left)\n"); \
+    } else if (packed->func != glGetTexEnvxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetTexEnvxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetTexEnvxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetTexEnvxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetTexEnvxv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetTexParameterfv(target, pname, params) ({ \
+    glGetTexParameterfv_INDEXED *packed_data = malloc(sizeof(glGetTexParameterfv_INDEXED)); \
+    packed_data->func = glGetTexParameterfv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glGetTexParameterfv(target, pname, params) { \
+    mock_push(pack_glGetTexParameterfv(target, pname, params)); \
+}
+#define test_glGetTexParameterfv(target, pname, params) { \
+    glGetTexParameterfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetTexParameterfv missing (no calls left)\n"); \
+    } else if (packed->func != glGetTexParameterfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetTexParameterfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetTexParameterfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetTexParameterfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetTexParameterfv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetTexParameteriv(target, pname, params) ({ \
+    glGetTexParameteriv_INDEXED *packed_data = malloc(sizeof(glGetTexParameteriv_INDEXED)); \
+    packed_data->func = glGetTexParameteriv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glGetTexParameteriv(target, pname, params) { \
+    mock_push(pack_glGetTexParameteriv(target, pname, params)); \
+}
+#define test_glGetTexParameteriv(target, pname, params) { \
+    glGetTexParameteriv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetTexParameteriv missing (no calls left)\n"); \
+    } else if (packed->func != glGetTexParameteriv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetTexParameteriv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetTexParameteriv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetTexParameteriv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetTexParameteriv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glGetTexParameterxv(target, pname, params) ({ \
+    glGetTexParameterxv_INDEXED *packed_data = malloc(sizeof(glGetTexParameterxv_INDEXED)); \
+    packed_data->func = glGetTexParameterxv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glGetTexParameterxv(target, pname, params) { \
+    mock_push(pack_glGetTexParameterxv(target, pname, params)); \
+}
+#define test_glGetTexParameterxv(target, pname, params) { \
+    glGetTexParameterxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetTexParameterxv missing (no calls left)\n"); \
+    } else if (packed->func != glGetTexParameterxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glGetTexParameterxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glGetTexParameterxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetTexParameterxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glGetTexParameterxv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glHint(target, mode) ({ \
+    glHint_INDEXED *packed_data = malloc(sizeof(glHint_INDEXED)); \
+    packed_data->func = glHint_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)mode; \
+    packed_data; \
+})
+#define emit_glHint(target, mode) { \
+    mock_push(pack_glHint(target, mode)); \
+}
+#define test_glHint(target, mode) { \
+    glHint_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glHint missing (no calls left)\n"); \
+    } else if (packed->func != glHint_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glHint\n", mock_name(packed->func)); \
+        packed = mock_slide(glHint_INDEX); \
+        if (! packed) { \
+            mock_errorf("glHint missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != mode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glHint(%u, %u);\n", target, mode); \
+        } \
+    } \
+}
+#define pack_glIsBuffer(buffer) ({ \
+    glIsBuffer_INDEXED *packed_data = malloc(sizeof(glIsBuffer_INDEXED)); \
+    packed_data->func = glIsBuffer_INDEX; \
+    packed_data->args.a1 = (GLuint)buffer; \
+    packed_data; \
+})
+#define emit_glIsBuffer(buffer) { \
+    mock_push(pack_glIsBuffer(buffer)); \
+}
+#define test_glIsBuffer(buffer) { \
+    glIsBuffer_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glIsBuffer missing (no calls left)\n"); \
+    } else if (packed->func != glIsBuffer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glIsBuffer\n", mock_name(packed->func)); \
+        packed = mock_slide(glIsBuffer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glIsBuffer missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != buffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glIsBuffer(%u);\n", buffer); \
+        } \
+    } \
+}
+#define pack_glIsEnabled(cap) ({ \
+    glIsEnabled_INDEXED *packed_data = malloc(sizeof(glIsEnabled_INDEXED)); \
+    packed_data->func = glIsEnabled_INDEX; \
+    packed_data->args.a1 = (GLenum)cap; \
+    packed_data; \
+})
+#define emit_glIsEnabled(cap) { \
+    mock_push(pack_glIsEnabled(cap)); \
+}
+#define test_glIsEnabled(cap) { \
+    glIsEnabled_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glIsEnabled missing (no calls left)\n"); \
+    } else if (packed->func != glIsEnabled_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glIsEnabled\n", mock_name(packed->func)); \
+        packed = mock_slide(glIsEnabled_INDEX); \
+        if (! packed) { \
+            mock_errorf("glIsEnabled missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != cap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glIsEnabled(%u);\n", cap); \
+        } \
+    } \
+}
+#define pack_glIsTexture(texture) ({ \
+    glIsTexture_INDEXED *packed_data = malloc(sizeof(glIsTexture_INDEXED)); \
+    packed_data->func = glIsTexture_INDEX; \
+    packed_data->args.a1 = (GLuint)texture; \
+    packed_data; \
+})
+#define emit_glIsTexture(texture) { \
+    mock_push(pack_glIsTexture(texture)); \
+}
+#define test_glIsTexture(texture) { \
+    glIsTexture_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glIsTexture missing (no calls left)\n"); \
+    } else if (packed->func != glIsTexture_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glIsTexture\n", mock_name(packed->func)); \
+        packed = mock_slide(glIsTexture_INDEX); \
+        if (! packed) { \
+            mock_errorf("glIsTexture missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != texture) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glIsTexture(%u);\n", texture); \
+        } \
+    } \
+}
+#define pack_glLightModelf(pname, param) ({ \
+    glLightModelf_INDEXED *packed_data = malloc(sizeof(glLightModelf_INDEXED)); \
+    packed_data->func = glLightModelf_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfloat)param; \
+    packed_data; \
+})
+#define emit_glLightModelf(pname, param) { \
+    mock_push(pack_glLightModelf(pname, param)); \
+}
+#define test_glLightModelf(pname, param) { \
+    glLightModelf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightModelf missing (no calls left)\n"); \
+    } else if (packed->func != glLightModelf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightModelf\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightModelf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightModelf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightModelf(%u, %0.2f);\n", pname, param); \
+        } \
+    } \
+}
+#define pack_glLightModelfv(pname, params) ({ \
+    glLightModelfv_INDEXED *packed_data = malloc(sizeof(glLightModelfv_INDEXED)); \
+    packed_data->func = glLightModelfv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glLightModelfv(pname, params) { \
+    mock_push(pack_glLightModelfv(pname, params)); \
+}
+#define test_glLightModelfv(pname, params) { \
+    glLightModelfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightModelfv missing (no calls left)\n"); \
+    } else if (packed->func != glLightModelfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightModelfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightModelfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightModelfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightModelfv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glLightModelx(pname, param) ({ \
+    glLightModelx_INDEXED *packed_data = malloc(sizeof(glLightModelx_INDEXED)); \
+    packed_data->func = glLightModelx_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfixed)param; \
+    packed_data; \
+})
+#define emit_glLightModelx(pname, param) { \
+    mock_push(pack_glLightModelx(pname, param)); \
+}
+#define test_glLightModelx(pname, param) { \
+    glLightModelx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightModelx missing (no calls left)\n"); \
+    } else if (packed->func != glLightModelx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightModelx\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightModelx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightModelx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightModelx(%u, %p);\n", pname, param); \
+        } \
+    } \
+}
+#define pack_glLightModelxv(pname, params) ({ \
+    glLightModelxv_INDEXED *packed_data = malloc(sizeof(glLightModelxv_INDEXED)); \
+    packed_data->func = glLightModelxv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glLightModelxv(pname, params) { \
+    mock_push(pack_glLightModelxv(pname, params)); \
+}
+#define test_glLightModelxv(pname, params) { \
+    glLightModelxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightModelxv missing (no calls left)\n"); \
+    } else if (packed->func != glLightModelxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightModelxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightModelxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightModelxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightModelxv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glLightf(light, pname, param) ({ \
+    glLightf_INDEXED *packed_data = malloc(sizeof(glLightf_INDEXED)); \
+    packed_data->func = glLightf_INDEX; \
+    packed_data->args.a1 = (GLenum)light; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat)param; \
+    packed_data; \
+})
+#define emit_glLightf(light, pname, param) { \
+    mock_push(pack_glLightf(light, pname, param)); \
+}
+#define test_glLightf(light, pname, param) { \
+    glLightf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightf missing (no calls left)\n"); \
+    } else if (packed->func != glLightf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightf\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != light) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightf(%u, %u, %0.2f);\n", light, pname, param); \
+        } \
+    } \
+}
+#define pack_glLightfv(light, pname, params) ({ \
+    glLightfv_INDEXED *packed_data = malloc(sizeof(glLightfv_INDEXED)); \
+    packed_data->func = glLightfv_INDEX; \
+    packed_data->args.a1 = (GLenum)light; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glLightfv(light, pname, params) { \
+    mock_push(pack_glLightfv(light, pname, params)); \
+}
+#define test_glLightfv(light, pname, params) { \
+    glLightfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightfv missing (no calls left)\n"); \
+    } else if (packed->func != glLightfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != light) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightfv(%u, %u, %p);\n", light, pname, params); \
+        } \
+    } \
+}
+#define pack_glLightx(light, pname, param) ({ \
+    glLightx_INDEXED *packed_data = malloc(sizeof(glLightx_INDEXED)); \
+    packed_data->func = glLightx_INDEX; \
+    packed_data->args.a1 = (GLenum)light; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed)param; \
+    packed_data; \
+})
+#define emit_glLightx(light, pname, param) { \
+    mock_push(pack_glLightx(light, pname, param)); \
+}
+#define test_glLightx(light, pname, param) { \
+    glLightx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightx missing (no calls left)\n"); \
+    } else if (packed->func != glLightx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightx\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != light) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightx(%u, %u, %p);\n", light, pname, param); \
+        } \
+    } \
+}
+#define pack_glLightxv(light, pname, params) ({ \
+    glLightxv_INDEXED *packed_data = malloc(sizeof(glLightxv_INDEXED)); \
+    packed_data->func = glLightxv_INDEX; \
+    packed_data->args.a1 = (GLenum)light; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glLightxv(light, pname, params) { \
+    mock_push(pack_glLightxv(light, pname, params)); \
+}
+#define test_glLightxv(light, pname, params) { \
+    glLightxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLightxv missing (no calls left)\n"); \
+    } else if (packed->func != glLightxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLightxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glLightxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLightxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != light) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLightxv(%u, %u, %p);\n", light, pname, params); \
+        } \
+    } \
+}
+#define pack_glLineWidth(width) ({ \
+    glLineWidth_INDEXED *packed_data = malloc(sizeof(glLineWidth_INDEXED)); \
+    packed_data->func = glLineWidth_INDEX; \
+    packed_data->args.a1 = (GLfloat)width; \
+    packed_data; \
+})
+#define emit_glLineWidth(width) { \
+    mock_push(pack_glLineWidth(width)); \
+}
+#define test_glLineWidth(width) { \
+    glLineWidth_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLineWidth missing (no calls left)\n"); \
+    } else if (packed->func != glLineWidth_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLineWidth\n", mock_name(packed->func)); \
+        packed = mock_slide(glLineWidth_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLineWidth missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != width) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLineWidth(%0.2f);\n", width); \
+        } \
+    } \
+}
+#define pack_glLineWidthx(width) ({ \
+    glLineWidthx_INDEXED *packed_data = malloc(sizeof(glLineWidthx_INDEXED)); \
+    packed_data->func = glLineWidthx_INDEX; \
+    packed_data->args.a1 = (GLfixed)width; \
+    packed_data; \
+})
+#define emit_glLineWidthx(width) { \
+    mock_push(pack_glLineWidthx(width)); \
+}
+#define test_glLineWidthx(width) { \
+    glLineWidthx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLineWidthx missing (no calls left)\n"); \
+    } else if (packed->func != glLineWidthx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLineWidthx\n", mock_name(packed->func)); \
+        packed = mock_slide(glLineWidthx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLineWidthx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != width) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLineWidthx(%p);\n", width); \
+        } \
+    } \
+}
+#define pack_glLoadIdentity() ({ \
+    glLoadIdentity_INDEXED *packed_data = malloc(sizeof(glLoadIdentity_INDEXED)); \
+    packed_data->func = glLoadIdentity_INDEX; \
+    packed_data; \
+})
+#define emit_glLoadIdentity() { \
+    mock_push(pack_glLoadIdentity()); \
+}
+#define test_glLoadIdentity() { \
+    glLoadIdentity_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLoadIdentity missing (no calls left)\n"); \
+    } else if (packed->func != glLoadIdentity_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLoadIdentity\n", mock_name(packed->func)); \
+        packed = mock_slide(glLoadIdentity_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLoadIdentity missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLoadIdentity();\n", ); \
+        } \
+    } \
+}
+#define pack_glLoadMatrixf(m) ({ \
+    glLoadMatrixf_INDEXED *packed_data = malloc(sizeof(glLoadMatrixf_INDEXED)); \
+    packed_data->func = glLoadMatrixf_INDEX; \
+    packed_data->args.a1 = (GLfloat *)m; \
+    packed_data; \
+})
+#define emit_glLoadMatrixf(m) { \
+    mock_push(pack_glLoadMatrixf(m)); \
+}
+#define test_glLoadMatrixf(m) { \
+    glLoadMatrixf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLoadMatrixf missing (no calls left)\n"); \
+    } else if (packed->func != glLoadMatrixf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLoadMatrixf\n", mock_name(packed->func)); \
+        packed = mock_slide(glLoadMatrixf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLoadMatrixf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLoadMatrixf(%p);\n", m); \
+        } \
+    } \
+}
+#define pack_glLoadMatrixx(m) ({ \
+    glLoadMatrixx_INDEXED *packed_data = malloc(sizeof(glLoadMatrixx_INDEXED)); \
+    packed_data->func = glLoadMatrixx_INDEX; \
+    packed_data->args.a1 = (GLfixed *)m; \
+    packed_data; \
+})
+#define emit_glLoadMatrixx(m) { \
+    mock_push(pack_glLoadMatrixx(m)); \
+}
+#define test_glLoadMatrixx(m) { \
+    glLoadMatrixx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLoadMatrixx missing (no calls left)\n"); \
+    } else if (packed->func != glLoadMatrixx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLoadMatrixx\n", mock_name(packed->func)); \
+        packed = mock_slide(glLoadMatrixx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLoadMatrixx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLoadMatrixx(%p);\n", m); \
+        } \
+    } \
+}
+#define pack_glLogicOp(opcode) ({ \
+    glLogicOp_INDEXED *packed_data = malloc(sizeof(glLogicOp_INDEXED)); \
+    packed_data->func = glLogicOp_INDEX; \
+    packed_data->args.a1 = (GLenum)opcode; \
+    packed_data; \
+})
+#define emit_glLogicOp(opcode) { \
+    mock_push(pack_glLogicOp(opcode)); \
+}
+#define test_glLogicOp(opcode) { \
+    glLogicOp_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glLogicOp missing (no calls left)\n"); \
+    } else if (packed->func != glLogicOp_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glLogicOp\n", mock_name(packed->func)); \
+        packed = mock_slide(glLogicOp_INDEX); \
+        if (! packed) { \
+            mock_errorf("glLogicOp missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != opcode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glLogicOp(%u);\n", opcode); \
+        } \
+    } \
+}
+#define pack_glMaterialf(face, pname, param) ({ \
+    glMaterialf_INDEXED *packed_data = malloc(sizeof(glMaterialf_INDEXED)); \
+    packed_data->func = glMaterialf_INDEX; \
+    packed_data->args.a1 = (GLenum)face; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat)param; \
+    packed_data; \
+})
+#define emit_glMaterialf(face, pname, param) { \
+    mock_push(pack_glMaterialf(face, pname, param)); \
+}
+#define test_glMaterialf(face, pname, param) { \
+    glMaterialf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMaterialf missing (no calls left)\n"); \
+    } else if (packed->func != glMaterialf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMaterialf\n", mock_name(packed->func)); \
+        packed = mock_slide(glMaterialf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMaterialf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != face) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMaterialf(%u, %u, %0.2f);\n", face, pname, param); \
+        } \
+    } \
+}
+#define pack_glMaterialfv(face, pname, params) ({ \
+    glMaterialfv_INDEXED *packed_data = malloc(sizeof(glMaterialfv_INDEXED)); \
+    packed_data->func = glMaterialfv_INDEX; \
+    packed_data->args.a1 = (GLenum)face; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glMaterialfv(face, pname, params) { \
+    mock_push(pack_glMaterialfv(face, pname, params)); \
+}
+#define test_glMaterialfv(face, pname, params) { \
+    glMaterialfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMaterialfv missing (no calls left)\n"); \
+    } else if (packed->func != glMaterialfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMaterialfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glMaterialfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMaterialfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != face) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMaterialfv(%u, %u, %p);\n", face, pname, params); \
+        } \
+    } \
+}
+#define pack_glMaterialx(face, pname, param) ({ \
+    glMaterialx_INDEXED *packed_data = malloc(sizeof(glMaterialx_INDEXED)); \
+    packed_data->func = glMaterialx_INDEX; \
+    packed_data->args.a1 = (GLenum)face; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed)param; \
+    packed_data; \
+})
+#define emit_glMaterialx(face, pname, param) { \
+    mock_push(pack_glMaterialx(face, pname, param)); \
+}
+#define test_glMaterialx(face, pname, param) { \
+    glMaterialx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMaterialx missing (no calls left)\n"); \
+    } else if (packed->func != glMaterialx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMaterialx\n", mock_name(packed->func)); \
+        packed = mock_slide(glMaterialx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMaterialx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != face) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMaterialx(%u, %u, %p);\n", face, pname, param); \
+        } \
+    } \
+}
+#define pack_glMaterialxv(face, pname, params) ({ \
+    glMaterialxv_INDEXED *packed_data = malloc(sizeof(glMaterialxv_INDEXED)); \
+    packed_data->func = glMaterialxv_INDEX; \
+    packed_data->args.a1 = (GLenum)face; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glMaterialxv(face, pname, params) { \
+    mock_push(pack_glMaterialxv(face, pname, params)); \
+}
+#define test_glMaterialxv(face, pname, params) { \
+    glMaterialxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMaterialxv missing (no calls left)\n"); \
+    } else if (packed->func != glMaterialxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMaterialxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glMaterialxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMaterialxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != face) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMaterialxv(%u, %u, %p);\n", face, pname, params); \
+        } \
+    } \
+}
+#define pack_glMatrixMode(mode) ({ \
+    glMatrixMode_INDEXED *packed_data = malloc(sizeof(glMatrixMode_INDEXED)); \
+    packed_data->func = glMatrixMode_INDEX; \
+    packed_data->args.a1 = (GLenum)mode; \
+    packed_data; \
+})
+#define emit_glMatrixMode(mode) { \
+    mock_push(pack_glMatrixMode(mode)); \
+}
+#define test_glMatrixMode(mode) { \
+    glMatrixMode_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMatrixMode missing (no calls left)\n"); \
+    } else if (packed->func != glMatrixMode_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMatrixMode\n", mock_name(packed->func)); \
+        packed = mock_slide(glMatrixMode_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMatrixMode missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMatrixMode(%u);\n", mode); \
+        } \
+    } \
+}
+#define pack_glMultMatrixf(m) ({ \
+    glMultMatrixf_INDEXED *packed_data = malloc(sizeof(glMultMatrixf_INDEXED)); \
+    packed_data->func = glMultMatrixf_INDEX; \
+    packed_data->args.a1 = (GLfloat *)m; \
+    packed_data; \
+})
+#define emit_glMultMatrixf(m) { \
+    mock_push(pack_glMultMatrixf(m)); \
+}
+#define test_glMultMatrixf(m) { \
+    glMultMatrixf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMultMatrixf missing (no calls left)\n"); \
+    } else if (packed->func != glMultMatrixf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMultMatrixf\n", mock_name(packed->func)); \
+        packed = mock_slide(glMultMatrixf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMultMatrixf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMultMatrixf(%p);\n", m); \
+        } \
+    } \
+}
+#define pack_glMultMatrixx(m) ({ \
+    glMultMatrixx_INDEXED *packed_data = malloc(sizeof(glMultMatrixx_INDEXED)); \
+    packed_data->func = glMultMatrixx_INDEX; \
+    packed_data->args.a1 = (GLfixed *)m; \
+    packed_data; \
+})
+#define emit_glMultMatrixx(m) { \
+    mock_push(pack_glMultMatrixx(m)); \
+}
+#define test_glMultMatrixx(m) { \
+    glMultMatrixx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMultMatrixx missing (no calls left)\n"); \
+    } else if (packed->func != glMultMatrixx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMultMatrixx\n", mock_name(packed->func)); \
+        packed = mock_slide(glMultMatrixx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMultMatrixx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMultMatrixx(%p);\n", m); \
+        } \
+    } \
+}
+#define pack_glMultiTexCoord4f(target, s, t, r, q) ({ \
+    glMultiTexCoord4f_INDEXED *packed_data = malloc(sizeof(glMultiTexCoord4f_INDEXED)); \
+    packed_data->func = glMultiTexCoord4f_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLfloat)s; \
+    packed_data->args.a3 = (GLfloat)t; \
+    packed_data->args.a4 = (GLfloat)r; \
+    packed_data->args.a5 = (GLfloat)q; \
+    packed_data; \
+})
+#define emit_glMultiTexCoord4f(target, s, t, r, q) { \
+    mock_push(pack_glMultiTexCoord4f(target, s, t, r, q)); \
+}
+#define test_glMultiTexCoord4f(target, s, t, r, q) { \
+    glMultiTexCoord4f_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMultiTexCoord4f missing (no calls left)\n"); \
+    } else if (packed->func != glMultiTexCoord4f_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMultiTexCoord4f\n", mock_name(packed->func)); \
+        packed = mock_slide(glMultiTexCoord4f_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMultiTexCoord4f missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != s) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != t) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != r) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != q) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMultiTexCoord4f(%u, %0.2f, %0.2f, %0.2f, %0.2f);\n", target, s, t, r, q); \
+        } \
+    } \
+}
+#define pack_glMultiTexCoord4x(target, s, t, r, q) ({ \
+    glMultiTexCoord4x_INDEXED *packed_data = malloc(sizeof(glMultiTexCoord4x_INDEXED)); \
+    packed_data->func = glMultiTexCoord4x_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLfixed)s; \
+    packed_data->args.a3 = (GLfixed)t; \
+    packed_data->args.a4 = (GLfixed)r; \
+    packed_data->args.a5 = (GLfixed)q; \
+    packed_data; \
+})
+#define emit_glMultiTexCoord4x(target, s, t, r, q) { \
+    mock_push(pack_glMultiTexCoord4x(target, s, t, r, q)); \
+}
+#define test_glMultiTexCoord4x(target, s, t, r, q) { \
+    glMultiTexCoord4x_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glMultiTexCoord4x missing (no calls left)\n"); \
+    } else if (packed->func != glMultiTexCoord4x_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glMultiTexCoord4x\n", mock_name(packed->func)); \
+        packed = mock_slide(glMultiTexCoord4x_INDEX); \
+        if (! packed) { \
+            mock_errorf("glMultiTexCoord4x missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != s) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != t) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != r) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != q) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glMultiTexCoord4x(%u, %p, %p, %p, %p);\n", target, s, t, r, q); \
+        } \
+    } \
+}
+#define pack_glNormal3f(nx, ny, nz) ({ \
+    glNormal3f_INDEXED *packed_data = malloc(sizeof(glNormal3f_INDEXED)); \
+    packed_data->func = glNormal3f_INDEX; \
+    packed_data->args.a1 = (GLfloat)nx; \
+    packed_data->args.a2 = (GLfloat)ny; \
+    packed_data->args.a3 = (GLfloat)nz; \
+    packed_data; \
+})
+#define emit_glNormal3f(nx, ny, nz) { \
+    mock_push(pack_glNormal3f(nx, ny, nz)); \
+}
+#define test_glNormal3f(nx, ny, nz) { \
+    glNormal3f_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glNormal3f missing (no calls left)\n"); \
+    } else if (packed->func != glNormal3f_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glNormal3f\n", mock_name(packed->func)); \
+        packed = mock_slide(glNormal3f_INDEX); \
+        if (! packed) { \
+            mock_errorf("glNormal3f missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != nx) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != ny) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != nz) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glNormal3f(%0.2f, %0.2f, %0.2f);\n", nx, ny, nz); \
+        } \
+    } \
+}
+#define pack_glNormal3x(nx, ny, nz) ({ \
+    glNormal3x_INDEXED *packed_data = malloc(sizeof(glNormal3x_INDEXED)); \
+    packed_data->func = glNormal3x_INDEX; \
+    packed_data->args.a1 = (GLfixed)nx; \
+    packed_data->args.a2 = (GLfixed)ny; \
+    packed_data->args.a3 = (GLfixed)nz; \
+    packed_data; \
+})
+#define emit_glNormal3x(nx, ny, nz) { \
+    mock_push(pack_glNormal3x(nx, ny, nz)); \
+}
+#define test_glNormal3x(nx, ny, nz) { \
+    glNormal3x_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glNormal3x missing (no calls left)\n"); \
+    } else if (packed->func != glNormal3x_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glNormal3x\n", mock_name(packed->func)); \
+        packed = mock_slide(glNormal3x_INDEX); \
+        if (! packed) { \
+            mock_errorf("glNormal3x missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != nx) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != ny) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != nz) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glNormal3x(%p, %p, %p);\n", nx, ny, nz); \
+        } \
+    } \
+}
+#define pack_glNormalPointer(type, stride, pointer) ({ \
+    glNormalPointer_INDEXED *packed_data = malloc(sizeof(glNormalPointer_INDEXED)); \
+    packed_data->func = glNormalPointer_INDEX; \
+    packed_data->args.a1 = (GLenum)type; \
+    packed_data->args.a2 = (GLsizei)stride; \
+    packed_data->args.a3 = (GLvoid *)pointer; \
+    packed_data; \
+})
+#define emit_glNormalPointer(type, stride, pointer) { \
+    mock_push(pack_glNormalPointer(type, stride, pointer)); \
+}
+#define test_glNormalPointer(type, stride, pointer) { \
+    glNormalPointer_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glNormalPointer missing (no calls left)\n"); \
+    } else if (packed->func != glNormalPointer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glNormalPointer\n", mock_name(packed->func)); \
+        packed = mock_slide(glNormalPointer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glNormalPointer missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != type) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != stride) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glNormalPointer(%u, %d, %p);\n", type, stride, pointer); \
+        } \
+    } \
+}
+#define pack_glOrthof(left, right, bottom, top, near, far) ({ \
+    glOrthof_INDEXED *packed_data = malloc(sizeof(glOrthof_INDEXED)); \
+    packed_data->func = glOrthof_INDEX; \
+    packed_data->args.a1 = (GLfloat)left; \
+    packed_data->args.a2 = (GLfloat)right; \
+    packed_data->args.a3 = (GLfloat)bottom; \
+    packed_data->args.a4 = (GLfloat)top; \
+    packed_data->args.a5 = (GLfloat)near; \
+    packed_data->args.a6 = (GLfloat)far; \
+    packed_data; \
+})
+#define emit_glOrthof(left, right, bottom, top, near, far) { \
+    mock_push(pack_glOrthof(left, right, bottom, top, near, far)); \
+}
+#define test_glOrthof(left, right, bottom, top, near, far) { \
+    glOrthof_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glOrthof missing (no calls left)\n"); \
+    } else if (packed->func != glOrthof_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glOrthof\n", mock_name(packed->func)); \
+        packed = mock_slide(glOrthof_INDEX); \
+        if (! packed) { \
+            mock_errorf("glOrthof missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != left) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != right) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != bottom) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != top) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != near) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != far) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glOrthof(%0.2f, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f);\n", left, right, bottom, top, near, far); \
+        } \
+    } \
+}
+#define pack_glOrthox(left, right, bottom, top, near, far) ({ \
+    glOrthox_INDEXED *packed_data = malloc(sizeof(glOrthox_INDEXED)); \
+    packed_data->func = glOrthox_INDEX; \
+    packed_data->args.a1 = (GLfixed)left; \
+    packed_data->args.a2 = (GLfixed)right; \
+    packed_data->args.a3 = (GLfixed)bottom; \
+    packed_data->args.a4 = (GLfixed)top; \
+    packed_data->args.a5 = (GLfixed)near; \
+    packed_data->args.a6 = (GLfixed)far; \
+    packed_data; \
+})
+#define emit_glOrthox(left, right, bottom, top, near, far) { \
+    mock_push(pack_glOrthox(left, right, bottom, top, near, far)); \
+}
+#define test_glOrthox(left, right, bottom, top, near, far) { \
+    glOrthox_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glOrthox missing (no calls left)\n"); \
+    } else if (packed->func != glOrthox_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glOrthox\n", mock_name(packed->func)); \
+        packed = mock_slide(glOrthox_INDEX); \
+        if (! packed) { \
+            mock_errorf("glOrthox missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != left) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != right) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != bottom) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != top) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != near) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != far) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glOrthox(%p, %p, %p, %p, %p, %p);\n", left, right, bottom, top, near, far); \
+        } \
+    } \
+}
+#define pack_glPixelStorei(pname, param) ({ \
+    glPixelStorei_INDEXED *packed_data = malloc(sizeof(glPixelStorei_INDEXED)); \
+    packed_data->func = glPixelStorei_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLint)param; \
+    packed_data; \
+})
+#define emit_glPixelStorei(pname, param) { \
+    mock_push(pack_glPixelStorei(pname, param)); \
+}
+#define test_glPixelStorei(pname, param) { \
+    glPixelStorei_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPixelStorei missing (no calls left)\n"); \
+    } else if (packed->func != glPixelStorei_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPixelStorei\n", mock_name(packed->func)); \
+        packed = mock_slide(glPixelStorei_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPixelStorei missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPixelStorei(%u, %d);\n", pname, param); \
+        } \
+    } \
+}
+#define pack_glPointParameterf(pname, param) ({ \
+    glPointParameterf_INDEXED *packed_data = malloc(sizeof(glPointParameterf_INDEXED)); \
+    packed_data->func = glPointParameterf_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfloat)param; \
+    packed_data; \
+})
+#define emit_glPointParameterf(pname, param) { \
+    mock_push(pack_glPointParameterf(pname, param)); \
+}
+#define test_glPointParameterf(pname, param) { \
+    glPointParameterf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPointParameterf missing (no calls left)\n"); \
+    } else if (packed->func != glPointParameterf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPointParameterf\n", mock_name(packed->func)); \
+        packed = mock_slide(glPointParameterf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPointParameterf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPointParameterf(%u, %0.2f);\n", pname, param); \
+        } \
+    } \
+}
+#define pack_glPointParameterfv(pname, params) ({ \
+    glPointParameterfv_INDEXED *packed_data = malloc(sizeof(glPointParameterfv_INDEXED)); \
+    packed_data->func = glPointParameterfv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glPointParameterfv(pname, params) { \
+    mock_push(pack_glPointParameterfv(pname, params)); \
+}
+#define test_glPointParameterfv(pname, params) { \
+    glPointParameterfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPointParameterfv missing (no calls left)\n"); \
+    } else if (packed->func != glPointParameterfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPointParameterfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glPointParameterfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPointParameterfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPointParameterfv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glPointParameterx(pname, param) ({ \
+    glPointParameterx_INDEXED *packed_data = malloc(sizeof(glPointParameterx_INDEXED)); \
+    packed_data->func = glPointParameterx_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfixed)param; \
+    packed_data; \
+})
+#define emit_glPointParameterx(pname, param) { \
+    mock_push(pack_glPointParameterx(pname, param)); \
+}
+#define test_glPointParameterx(pname, param) { \
+    glPointParameterx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPointParameterx missing (no calls left)\n"); \
+    } else if (packed->func != glPointParameterx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPointParameterx\n", mock_name(packed->func)); \
+        packed = mock_slide(glPointParameterx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPointParameterx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPointParameterx(%u, %p);\n", pname, param); \
+        } \
+    } \
+}
+#define pack_glPointParameterxv(pname, params) ({ \
+    glPointParameterxv_INDEXED *packed_data = malloc(sizeof(glPointParameterxv_INDEXED)); \
+    packed_data->func = glPointParameterxv_INDEX; \
+    packed_data->args.a1 = (GLenum)pname; \
+    packed_data->args.a2 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glPointParameterxv(pname, params) { \
+    mock_push(pack_glPointParameterxv(pname, params)); \
+}
+#define test_glPointParameterxv(pname, params) { \
+    glPointParameterxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPointParameterxv missing (no calls left)\n"); \
+    } else if (packed->func != glPointParameterxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPointParameterxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glPointParameterxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPointParameterxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPointParameterxv(%u, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glPointSize(size) ({ \
+    glPointSize_INDEXED *packed_data = malloc(sizeof(glPointSize_INDEXED)); \
+    packed_data->func = glPointSize_INDEX; \
+    packed_data->args.a1 = (GLfloat)size; \
+    packed_data; \
+})
+#define emit_glPointSize(size) { \
+    mock_push(pack_glPointSize(size)); \
+}
+#define test_glPointSize(size) { \
+    glPointSize_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPointSize missing (no calls left)\n"); \
+    } else if (packed->func != glPointSize_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPointSize\n", mock_name(packed->func)); \
+        packed = mock_slide(glPointSize_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPointSize missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != size) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPointSize(%0.2f);\n", size); \
+        } \
+    } \
+}
+#define pack_glPointSizePointerOES(type, stride, pointer) ({ \
+    glPointSizePointerOES_INDEXED *packed_data = malloc(sizeof(glPointSizePointerOES_INDEXED)); \
+    packed_data->func = glPointSizePointerOES_INDEX; \
+    packed_data->args.a1 = (GLenum)type; \
+    packed_data->args.a2 = (GLsizei)stride; \
+    packed_data->args.a3 = (GLvoid *)pointer; \
+    packed_data; \
+})
+#define emit_glPointSizePointerOES(type, stride, pointer) { \
+    mock_push(pack_glPointSizePointerOES(type, stride, pointer)); \
+}
+#define test_glPointSizePointerOES(type, stride, pointer) { \
+    glPointSizePointerOES_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPointSizePointerOES missing (no calls left)\n"); \
+    } else if (packed->func != glPointSizePointerOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPointSizePointerOES\n", mock_name(packed->func)); \
+        packed = mock_slide(glPointSizePointerOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPointSizePointerOES missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != type) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != stride) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPointSizePointerOES(%u, %d, %p);\n", type, stride, pointer); \
+        } \
+    } \
+}
+#define pack_glPointSizex(size) ({ \
+    glPointSizex_INDEXED *packed_data = malloc(sizeof(glPointSizex_INDEXED)); \
+    packed_data->func = glPointSizex_INDEX; \
+    packed_data->args.a1 = (GLfixed)size; \
+    packed_data; \
+})
+#define emit_glPointSizex(size) { \
+    mock_push(pack_glPointSizex(size)); \
+}
+#define test_glPointSizex(size) { \
+    glPointSizex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPointSizex missing (no calls left)\n"); \
+    } else if (packed->func != glPointSizex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPointSizex\n", mock_name(packed->func)); \
+        packed = mock_slide(glPointSizex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPointSizex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != size) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPointSizex(%p);\n", size); \
+        } \
+    } \
+}
+#define pack_glPolygonOffset(factor, units) ({ \
+    glPolygonOffset_INDEXED *packed_data = malloc(sizeof(glPolygonOffset_INDEXED)); \
+    packed_data->func = glPolygonOffset_INDEX; \
+    packed_data->args.a1 = (GLfloat)factor; \
+    packed_data->args.a2 = (GLfloat)units; \
+    packed_data; \
+})
+#define emit_glPolygonOffset(factor, units) { \
+    mock_push(pack_glPolygonOffset(factor, units)); \
+}
+#define test_glPolygonOffset(factor, units) { \
+    glPolygonOffset_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPolygonOffset missing (no calls left)\n"); \
+    } else if (packed->func != glPolygonOffset_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPolygonOffset\n", mock_name(packed->func)); \
+        packed = mock_slide(glPolygonOffset_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPolygonOffset missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != factor) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != units) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPolygonOffset(%0.2f, %0.2f);\n", factor, units); \
+        } \
+    } \
+}
+#define pack_glPolygonOffsetx(factor, units) ({ \
+    glPolygonOffsetx_INDEXED *packed_data = malloc(sizeof(glPolygonOffsetx_INDEXED)); \
+    packed_data->func = glPolygonOffsetx_INDEX; \
+    packed_data->args.a1 = (GLfixed)factor; \
+    packed_data->args.a2 = (GLfixed)units; \
+    packed_data; \
+})
+#define emit_glPolygonOffsetx(factor, units) { \
+    mock_push(pack_glPolygonOffsetx(factor, units)); \
+}
+#define test_glPolygonOffsetx(factor, units) { \
+    glPolygonOffsetx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPolygonOffsetx missing (no calls left)\n"); \
+    } else if (packed->func != glPolygonOffsetx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPolygonOffsetx\n", mock_name(packed->func)); \
+        packed = mock_slide(glPolygonOffsetx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPolygonOffsetx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != factor) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != units) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPolygonOffsetx(%p, %p);\n", factor, units); \
+        } \
+    } \
+}
+#define pack_glPopMatrix() ({ \
+    glPopMatrix_INDEXED *packed_data = malloc(sizeof(glPopMatrix_INDEXED)); \
+    packed_data->func = glPopMatrix_INDEX; \
+    packed_data; \
+})
+#define emit_glPopMatrix() { \
+    mock_push(pack_glPopMatrix()); \
+}
+#define test_glPopMatrix() { \
+    glPopMatrix_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPopMatrix missing (no calls left)\n"); \
+    } else if (packed->func != glPopMatrix_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPopMatrix\n", mock_name(packed->func)); \
+        packed = mock_slide(glPopMatrix_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPopMatrix missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPopMatrix();\n", ); \
+        } \
+    } \
+}
+#define pack_glPushMatrix() ({ \
+    glPushMatrix_INDEXED *packed_data = malloc(sizeof(glPushMatrix_INDEXED)); \
+    packed_data->func = glPushMatrix_INDEX; \
+    packed_data; \
+})
+#define emit_glPushMatrix() { \
+    mock_push(pack_glPushMatrix()); \
+}
+#define test_glPushMatrix() { \
+    glPushMatrix_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glPushMatrix missing (no calls left)\n"); \
+    } else if (packed->func != glPushMatrix_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glPushMatrix\n", mock_name(packed->func)); \
+        packed = mock_slide(glPushMatrix_INDEX); \
+        if (! packed) { \
+            mock_errorf("glPushMatrix missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glPushMatrix();\n", ); \
+        } \
+    } \
+}
+#define pack_glReadPixels(x, y, width, height, format, type, pixels) ({ \
+    glReadPixels_INDEXED *packed_data = malloc(sizeof(glReadPixels_INDEXED)); \
+    packed_data->func = glReadPixels_INDEX; \
+    packed_data->args.a1 = (GLint)x; \
+    packed_data->args.a2 = (GLint)y; \
+    packed_data->args.a3 = (GLsizei)width; \
+    packed_data->args.a4 = (GLsizei)height; \
+    packed_data->args.a5 = (GLenum)format; \
+    packed_data->args.a6 = (GLenum)type; \
+    packed_data->args.a7 = (GLvoid *)pixels; \
+    packed_data; \
+})
+#define emit_glReadPixels(x, y, width, height, format, type, pixels) { \
+    mock_push(pack_glReadPixels(x, y, width, height, format, type, pixels)); \
+}
+#define test_glReadPixels(x, y, width, height, format, type, pixels) { \
+    glReadPixels_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glReadPixels missing (no calls left)\n"); \
+    } else if (packed->func != glReadPixels_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glReadPixels\n", mock_name(packed->func)); \
+        packed = mock_slide(glReadPixels_INDEX); \
+        if (! packed) { \
+            mock_errorf("glReadPixels missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != height) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != format) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != type) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glReadPixels(%d, %d, %d, %d, %u, %u, %p);\n", x, y, width, height, format, type, pixels); \
+        } \
+    } \
+}
+#define pack_glRotatef(angle, x, y, z) ({ \
+    glRotatef_INDEXED *packed_data = malloc(sizeof(glRotatef_INDEXED)); \
+    packed_data->func = glRotatef_INDEX; \
+    packed_data->args.a1 = (GLfloat)angle; \
+    packed_data->args.a2 = (GLfloat)x; \
+    packed_data->args.a3 = (GLfloat)y; \
+    packed_data->args.a4 = (GLfloat)z; \
+    packed_data; \
+})
+#define emit_glRotatef(angle, x, y, z) { \
+    mock_push(pack_glRotatef(angle, x, y, z)); \
+}
+#define test_glRotatef(angle, x, y, z) { \
+    glRotatef_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glRotatef missing (no calls left)\n"); \
+    } else if (packed->func != glRotatef_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glRotatef\n", mock_name(packed->func)); \
+        packed = mock_slide(glRotatef_INDEX); \
+        if (! packed) { \
+            mock_errorf("glRotatef missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != angle) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != z) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glRotatef(%0.2f, %0.2f, %0.2f, %0.2f);\n", angle, x, y, z); \
+        } \
+    } \
+}
+#define pack_glRotatex(angle, x, y, z) ({ \
+    glRotatex_INDEXED *packed_data = malloc(sizeof(glRotatex_INDEXED)); \
+    packed_data->func = glRotatex_INDEX; \
+    packed_data->args.a1 = (GLfixed)angle; \
+    packed_data->args.a2 = (GLfixed)x; \
+    packed_data->args.a3 = (GLfixed)y; \
+    packed_data->args.a4 = (GLfixed)z; \
+    packed_data; \
+})
+#define emit_glRotatex(angle, x, y, z) { \
+    mock_push(pack_glRotatex(angle, x, y, z)); \
+}
+#define test_glRotatex(angle, x, y, z) { \
+    glRotatex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glRotatex missing (no calls left)\n"); \
+    } else if (packed->func != glRotatex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glRotatex\n", mock_name(packed->func)); \
+        packed = mock_slide(glRotatex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glRotatex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != angle) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != z) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glRotatex(%p, %p, %p, %p);\n", angle, x, y, z); \
+        } \
+    } \
+}
+#define pack_glSampleCoverage(value, invert) ({ \
+    glSampleCoverage_INDEXED *packed_data = malloc(sizeof(glSampleCoverage_INDEXED)); \
+    packed_data->func = glSampleCoverage_INDEX; \
+    packed_data->args.a1 = (GLclampf)value; \
+    packed_data->args.a2 = (GLboolean)invert; \
+    packed_data; \
+})
+#define emit_glSampleCoverage(value, invert) { \
+    mock_push(pack_glSampleCoverage(value, invert)); \
+}
+#define test_glSampleCoverage(value, invert) { \
+    glSampleCoverage_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glSampleCoverage missing (no calls left)\n"); \
+    } else if (packed->func != glSampleCoverage_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glSampleCoverage\n", mock_name(packed->func)); \
+        packed = mock_slide(glSampleCoverage_INDEX); \
+        if (! packed) { \
+            mock_errorf("glSampleCoverage missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != value) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != invert) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glSampleCoverage(%p, %d);\n", value, invert); \
+        } \
+    } \
+}
+#define pack_glSampleCoveragex(value, invert) ({ \
+    glSampleCoveragex_INDEXED *packed_data = malloc(sizeof(glSampleCoveragex_INDEXED)); \
+    packed_data->func = glSampleCoveragex_INDEX; \
+    packed_data->args.a1 = (GLclampx)value; \
+    packed_data->args.a2 = (GLboolean)invert; \
+    packed_data; \
+})
+#define emit_glSampleCoveragex(value, invert) { \
+    mock_push(pack_glSampleCoveragex(value, invert)); \
+}
+#define test_glSampleCoveragex(value, invert) { \
+    glSampleCoveragex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glSampleCoveragex missing (no calls left)\n"); \
+    } else if (packed->func != glSampleCoveragex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glSampleCoveragex\n", mock_name(packed->func)); \
+        packed = mock_slide(glSampleCoveragex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glSampleCoveragex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != value) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != invert) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glSampleCoveragex(%p, %d);\n", value, invert); \
+        } \
+    } \
+}
+#define pack_glScalef(x, y, z) ({ \
+    glScalef_INDEXED *packed_data = malloc(sizeof(glScalef_INDEXED)); \
+    packed_data->func = glScalef_INDEX; \
+    packed_data->args.a1 = (GLfloat)x; \
+    packed_data->args.a2 = (GLfloat)y; \
+    packed_data->args.a3 = (GLfloat)z; \
+    packed_data; \
+})
+#define emit_glScalef(x, y, z) { \
+    mock_push(pack_glScalef(x, y, z)); \
+}
+#define test_glScalef(x, y, z) { \
+    glScalef_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glScalef missing (no calls left)\n"); \
+    } else if (packed->func != glScalef_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glScalef\n", mock_name(packed->func)); \
+        packed = mock_slide(glScalef_INDEX); \
+        if (! packed) { \
+            mock_errorf("glScalef missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != z) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glScalef(%0.2f, %0.2f, %0.2f);\n", x, y, z); \
+        } \
+    } \
+}
+#define pack_glScalex(x, y, z) ({ \
+    glScalex_INDEXED *packed_data = malloc(sizeof(glScalex_INDEXED)); \
+    packed_data->func = glScalex_INDEX; \
+    packed_data->args.a1 = (GLfixed)x; \
+    packed_data->args.a2 = (GLfixed)y; \
+    packed_data->args.a3 = (GLfixed)z; \
+    packed_data; \
+})
+#define emit_glScalex(x, y, z) { \
+    mock_push(pack_glScalex(x, y, z)); \
+}
+#define test_glScalex(x, y, z) { \
+    glScalex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glScalex missing (no calls left)\n"); \
+    } else if (packed->func != glScalex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glScalex\n", mock_name(packed->func)); \
+        packed = mock_slide(glScalex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glScalex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != z) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glScalex(%p, %p, %p);\n", x, y, z); \
+        } \
+    } \
+}
+#define pack_glScissor(x, y, width, height) ({ \
+    glScissor_INDEXED *packed_data = malloc(sizeof(glScissor_INDEXED)); \
+    packed_data->func = glScissor_INDEX; \
+    packed_data->args.a1 = (GLint)x; \
+    packed_data->args.a2 = (GLint)y; \
+    packed_data->args.a3 = (GLsizei)width; \
+    packed_data->args.a4 = (GLsizei)height; \
+    packed_data; \
+})
+#define emit_glScissor(x, y, width, height) { \
+    mock_push(pack_glScissor(x, y, width, height)); \
+}
+#define test_glScissor(x, y, width, height) { \
+    glScissor_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glScissor missing (no calls left)\n"); \
+    } else if (packed->func != glScissor_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glScissor\n", mock_name(packed->func)); \
+        packed = mock_slide(glScissor_INDEX); \
+        if (! packed) { \
+            mock_errorf("glScissor missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != height) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glScissor(%d, %d, %d, %d);\n", x, y, width, height); \
+        } \
+    } \
+}
+#define pack_glShadeModel(mode) ({ \
+    glShadeModel_INDEXED *packed_data = malloc(sizeof(glShadeModel_INDEXED)); \
+    packed_data->func = glShadeModel_INDEX; \
+    packed_data->args.a1 = (GLenum)mode; \
+    packed_data; \
+})
+#define emit_glShadeModel(mode) { \
+    mock_push(pack_glShadeModel(mode)); \
+}
+#define test_glShadeModel(mode) { \
+    glShadeModel_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glShadeModel missing (no calls left)\n"); \
+    } else if (packed->func != glShadeModel_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glShadeModel\n", mock_name(packed->func)); \
+        packed = mock_slide(glShadeModel_INDEX); \
+        if (! packed) { \
+            mock_errorf("glShadeModel missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glShadeModel(%u);\n", mode); \
+        } \
+    } \
+}
+#define pack_glStencilFunc(func, ref, mask) ({ \
+    glStencilFunc_INDEXED *packed_data = malloc(sizeof(glStencilFunc_INDEXED)); \
+    packed_data->func = glStencilFunc_INDEX; \
+    packed_data->args.a1 = (GLenum)func; \
+    packed_data->args.a2 = (GLint)ref; \
+    packed_data->args.a3 = (GLuint)mask; \
+    packed_data; \
+})
+#define emit_glStencilFunc(func, ref, mask) { \
+    mock_push(pack_glStencilFunc(func, ref, mask)); \
+}
+#define test_glStencilFunc(func, ref, mask) { \
+    glStencilFunc_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glStencilFunc missing (no calls left)\n"); \
+    } else if (packed->func != glStencilFunc_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glStencilFunc\n", mock_name(packed->func)); \
+        packed = mock_slide(glStencilFunc_INDEX); \
+        if (! packed) { \
+            mock_errorf("glStencilFunc missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != func) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != ref) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != mask) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glStencilFunc(%u, %d, %u);\n", func, ref, mask); \
+        } \
+    } \
+}
+#define pack_glStencilMask(mask) ({ \
+    glStencilMask_INDEXED *packed_data = malloc(sizeof(glStencilMask_INDEXED)); \
+    packed_data->func = glStencilMask_INDEX; \
+    packed_data->args.a1 = (GLuint)mask; \
+    packed_data; \
+})
+#define emit_glStencilMask(mask) { \
+    mock_push(pack_glStencilMask(mask)); \
+}
+#define test_glStencilMask(mask) { \
+    glStencilMask_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glStencilMask missing (no calls left)\n"); \
+    } else if (packed->func != glStencilMask_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glStencilMask\n", mock_name(packed->func)); \
+        packed = mock_slide(glStencilMask_INDEX); \
+        if (! packed) { \
+            mock_errorf("glStencilMask missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != mask) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glStencilMask(%u);\n", mask); \
+        } \
+    } \
+}
+#define pack_glStencilOp(fail, zfail, zpass) ({ \
+    glStencilOp_INDEXED *packed_data = malloc(sizeof(glStencilOp_INDEXED)); \
+    packed_data->func = glStencilOp_INDEX; \
+    packed_data->args.a1 = (GLenum)fail; \
+    packed_data->args.a2 = (GLenum)zfail; \
+    packed_data->args.a3 = (GLenum)zpass; \
+    packed_data; \
+})
+#define emit_glStencilOp(fail, zfail, zpass) { \
+    mock_push(pack_glStencilOp(fail, zfail, zpass)); \
+}
+#define test_glStencilOp(fail, zfail, zpass) { \
+    glStencilOp_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glStencilOp missing (no calls left)\n"); \
+    } else if (packed->func != glStencilOp_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glStencilOp\n", mock_name(packed->func)); \
+        packed = mock_slide(glStencilOp_INDEX); \
+        if (! packed) { \
+            mock_errorf("glStencilOp missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != fail) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != zfail) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != zpass) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glStencilOp(%u, %u, %u);\n", fail, zfail, zpass); \
+        } \
+    } \
+}
+#define pack_glTexCoordPointer(size, type, stride, pointer) ({ \
+    glTexCoordPointer_INDEXED *packed_data = malloc(sizeof(glTexCoordPointer_INDEXED)); \
+    packed_data->func = glTexCoordPointer_INDEX; \
+    packed_data->args.a1 = (GLint)size; \
+    packed_data->args.a2 = (GLenum)type; \
+    packed_data->args.a3 = (GLsizei)stride; \
+    packed_data->args.a4 = (GLvoid *)pointer; \
+    packed_data; \
+})
+#define emit_glTexCoordPointer(size, type, stride, pointer) { \
+    mock_push(pack_glTexCoordPointer(size, type, stride, pointer)); \
+}
+#define test_glTexCoordPointer(size, type, stride, pointer) { \
+    glTexCoordPointer_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexCoordPointer missing (no calls left)\n"); \
+    } else if (packed->func != glTexCoordPointer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexCoordPointer\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexCoordPointer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexCoordPointer missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != size) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != type) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != stride) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexCoordPointer(%d, %u, %d, %p);\n", size, type, stride, pointer); \
+        } \
+    } \
+}
+#define pack_glTexEnvf(target, pname, param) ({ \
+    glTexEnvf_INDEXED *packed_data = malloc(sizeof(glTexEnvf_INDEXED)); \
+    packed_data->func = glTexEnvf_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat)param; \
+    packed_data; \
+})
+#define emit_glTexEnvf(target, pname, param) { \
+    mock_push(pack_glTexEnvf(target, pname, param)); \
+}
+#define test_glTexEnvf(target, pname, param) { \
+    glTexEnvf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexEnvf missing (no calls left)\n"); \
+    } else if (packed->func != glTexEnvf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexEnvf\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexEnvf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexEnvf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexEnvf(%u, %u, %0.2f);\n", target, pname, param); \
+        } \
+    } \
+}
+#define pack_glTexEnvfv(target, pname, params) ({ \
+    glTexEnvfv_INDEXED *packed_data = malloc(sizeof(glTexEnvfv_INDEXED)); \
+    packed_data->func = glTexEnvfv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glTexEnvfv(target, pname, params) { \
+    mock_push(pack_glTexEnvfv(target, pname, params)); \
+}
+#define test_glTexEnvfv(target, pname, params) { \
+    glTexEnvfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexEnvfv missing (no calls left)\n"); \
+    } else if (packed->func != glTexEnvfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexEnvfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexEnvfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexEnvfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexEnvfv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glTexEnvi(target, pname, param) ({ \
+    glTexEnvi_INDEXED *packed_data = malloc(sizeof(glTexEnvi_INDEXED)); \
+    packed_data->func = glTexEnvi_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint)param; \
+    packed_data; \
+})
+#define emit_glTexEnvi(target, pname, param) { \
+    mock_push(pack_glTexEnvi(target, pname, param)); \
+}
+#define test_glTexEnvi(target, pname, param) { \
+    glTexEnvi_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexEnvi missing (no calls left)\n"); \
+    } else if (packed->func != glTexEnvi_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexEnvi\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexEnvi_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexEnvi missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexEnvi(%u, %u, %d);\n", target, pname, param); \
+        } \
+    } \
+}
+#define pack_glTexEnviv(target, pname, params) ({ \
+    glTexEnviv_INDEXED *packed_data = malloc(sizeof(glTexEnviv_INDEXED)); \
+    packed_data->func = glTexEnviv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glTexEnviv(target, pname, params) { \
+    mock_push(pack_glTexEnviv(target, pname, params)); \
+}
+#define test_glTexEnviv(target, pname, params) { \
+    glTexEnviv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexEnviv missing (no calls left)\n"); \
+    } else if (packed->func != glTexEnviv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexEnviv\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexEnviv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexEnviv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexEnviv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glTexEnvx(target, pname, param) ({ \
+    glTexEnvx_INDEXED *packed_data = malloc(sizeof(glTexEnvx_INDEXED)); \
+    packed_data->func = glTexEnvx_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed)param; \
+    packed_data; \
+})
+#define emit_glTexEnvx(target, pname, param) { \
+    mock_push(pack_glTexEnvx(target, pname, param)); \
+}
+#define test_glTexEnvx(target, pname, param) { \
+    glTexEnvx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexEnvx missing (no calls left)\n"); \
+    } else if (packed->func != glTexEnvx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexEnvx\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexEnvx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexEnvx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexEnvx(%u, %u, %p);\n", target, pname, param); \
+        } \
+    } \
+}
+#define pack_glTexEnvxv(target, pname, params) ({ \
+    glTexEnvxv_INDEXED *packed_data = malloc(sizeof(glTexEnvxv_INDEXED)); \
+    packed_data->func = glTexEnvxv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glTexEnvxv(target, pname, params) { \
+    mock_push(pack_glTexEnvxv(target, pname, params)); \
+}
+#define test_glTexEnvxv(target, pname, params) { \
+    glTexEnvxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexEnvxv missing (no calls left)\n"); \
+    } else if (packed->func != glTexEnvxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexEnvxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexEnvxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexEnvxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexEnvxv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) ({ \
+    glTexImage2D_INDEXED *packed_data = malloc(sizeof(glTexImage2D_INDEXED)); \
+    packed_data->func = glTexImage2D_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLint)level; \
+    packed_data->args.a3 = (GLint)internalformat; \
+    packed_data->args.a4 = (GLsizei)width; \
+    packed_data->args.a5 = (GLsizei)height; \
+    packed_data->args.a6 = (GLint)border; \
+    packed_data->args.a7 = (GLenum)format; \
+    packed_data->args.a8 = (GLenum)type; \
+    packed_data->args.a9 = (GLvoid *)pixels; \
+    packed_data; \
+})
+#define emit_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) { \
+    mock_push(pack_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels)); \
+}
+#define test_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) { \
+    glTexImage2D_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexImage2D missing (no calls left)\n"); \
+    } else if (packed->func != glTexImage2D_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexImage2D\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexImage2D_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexImage2D missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != level) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != internalformat) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != height) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != border) { \
+            match = 0; \
+        } \
+        if (packed->args.a7 != format) { \
+            match = 0; \
+        } \
+        if (packed->args.a8 != type) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexImage2D(%u, %d, %d, %d, %d, %d, %u, %u, %p);\n", target, level, internalformat, width, height, border, format, type, pixels); \
+        } \
+    } \
+}
+#define pack_glTexParameterf(target, pname, param) ({ \
+    glTexParameterf_INDEXED *packed_data = malloc(sizeof(glTexParameterf_INDEXED)); \
+    packed_data->func = glTexParameterf_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat)param; \
+    packed_data; \
+})
+#define emit_glTexParameterf(target, pname, param) { \
+    mock_push(pack_glTexParameterf(target, pname, param)); \
+}
+#define test_glTexParameterf(target, pname, param) { \
+    glTexParameterf_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexParameterf missing (no calls left)\n"); \
+    } else if (packed->func != glTexParameterf_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexParameterf\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexParameterf_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexParameterf missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexParameterf(%u, %u, %0.2f);\n", target, pname, param); \
+        } \
+    } \
+}
+#define pack_glTexParameterfv(target, pname, params) ({ \
+    glTexParameterfv_INDEXED *packed_data = malloc(sizeof(glTexParameterfv_INDEXED)); \
+    packed_data->func = glTexParameterfv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfloat *)params; \
+    packed_data; \
+})
+#define emit_glTexParameterfv(target, pname, params) { \
+    mock_push(pack_glTexParameterfv(target, pname, params)); \
+}
+#define test_glTexParameterfv(target, pname, params) { \
+    glTexParameterfv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexParameterfv missing (no calls left)\n"); \
+    } else if (packed->func != glTexParameterfv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexParameterfv\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexParameterfv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexParameterfv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexParameterfv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glTexParameteri(target, pname, param) ({ \
+    glTexParameteri_INDEXED *packed_data = malloc(sizeof(glTexParameteri_INDEXED)); \
+    packed_data->func = glTexParameteri_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint)param; \
+    packed_data; \
+})
+#define emit_glTexParameteri(target, pname, param) { \
+    mock_push(pack_glTexParameteri(target, pname, param)); \
+}
+#define test_glTexParameteri(target, pname, param) { \
+    glTexParameteri_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexParameteri missing (no calls left)\n"); \
+    } else if (packed->func != glTexParameteri_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexParameteri\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexParameteri_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexParameteri missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexParameteri(%u, %u, %d);\n", target, pname, param); \
+        } \
+    } \
+}
+#define pack_glTexParameteriv(target, pname, params) ({ \
+    glTexParameteriv_INDEXED *packed_data = malloc(sizeof(glTexParameteriv_INDEXED)); \
+    packed_data->func = glTexParameteriv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glTexParameteriv(target, pname, params) { \
+    mock_push(pack_glTexParameteriv(target, pname, params)); \
+}
+#define test_glTexParameteriv(target, pname, params) { \
+    glTexParameteriv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexParameteriv missing (no calls left)\n"); \
+    } else if (packed->func != glTexParameteriv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexParameteriv\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexParameteriv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexParameteriv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexParameteriv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glTexParameterx(target, pname, param) ({ \
+    glTexParameterx_INDEXED *packed_data = malloc(sizeof(glTexParameterx_INDEXED)); \
+    packed_data->func = glTexParameterx_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed)param; \
+    packed_data; \
+})
+#define emit_glTexParameterx(target, pname, param) { \
+    mock_push(pack_glTexParameterx(target, pname, param)); \
+}
+#define test_glTexParameterx(target, pname, param) { \
+    glTexParameterx_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexParameterx missing (no calls left)\n"); \
+    } else if (packed->func != glTexParameterx_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexParameterx\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexParameterx_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexParameterx missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != param) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexParameterx(%u, %u, %p);\n", target, pname, param); \
+        } \
+    } \
+}
+#define pack_glTexParameterxv(target, pname, params) ({ \
+    glTexParameterxv_INDEXED *packed_data = malloc(sizeof(glTexParameterxv_INDEXED)); \
+    packed_data->func = glTexParameterxv_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLfixed *)params; \
+    packed_data; \
+})
+#define emit_glTexParameterxv(target, pname, params) { \
+    mock_push(pack_glTexParameterxv(target, pname, params)); \
+}
+#define test_glTexParameterxv(target, pname, params) { \
+    glTexParameterxv_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexParameterxv missing (no calls left)\n"); \
+    } else if (packed->func != glTexParameterxv_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexParameterxv\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexParameterxv_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexParameterxv missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexParameterxv(%u, %u, %p);\n", target, pname, params); \
+        } \
+    } \
+}
+#define pack_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) ({ \
+    glTexSubImage2D_INDEXED *packed_data = malloc(sizeof(glTexSubImage2D_INDEXED)); \
+    packed_data->func = glTexSubImage2D_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLint)level; \
+    packed_data->args.a3 = (GLint)xoffset; \
+    packed_data->args.a4 = (GLint)yoffset; \
+    packed_data->args.a5 = (GLsizei)width; \
+    packed_data->args.a6 = (GLsizei)height; \
+    packed_data->args.a7 = (GLenum)format; \
+    packed_data->args.a8 = (GLenum)type; \
+    packed_data->args.a9 = (GLvoid *)pixels; \
+    packed_data; \
+})
+#define emit_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) { \
+    mock_push(pack_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels)); \
+}
+#define test_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) { \
+    glTexSubImage2D_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTexSubImage2D missing (no calls left)\n"); \
+    } else if (packed->func != glTexSubImage2D_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTexSubImage2D\n", mock_name(packed->func)); \
+        packed = mock_slide(glTexSubImage2D_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTexSubImage2D missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != level) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != xoffset) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != yoffset) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a6 != height) { \
+            match = 0; \
+        } \
+        if (packed->args.a7 != format) { \
+            match = 0; \
+        } \
+        if (packed->args.a8 != type) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTexSubImage2D(%u, %d, %d, %d, %d, %d, %u, %u, %p);\n", target, level, xoffset, yoffset, width, height, format, type, pixels); \
+        } \
+    } \
+}
+#define pack_glTranslatef(x, y, z) ({ \
+    glTranslatef_INDEXED *packed_data = malloc(sizeof(glTranslatef_INDEXED)); \
+    packed_data->func = glTranslatef_INDEX; \
+    packed_data->args.a1 = (GLfloat)x; \
+    packed_data->args.a2 = (GLfloat)y; \
+    packed_data->args.a3 = (GLfloat)z; \
+    packed_data; \
+})
+#define emit_glTranslatef(x, y, z) { \
+    mock_push(pack_glTranslatef(x, y, z)); \
+}
+#define test_glTranslatef(x, y, z) { \
+    glTranslatef_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTranslatef missing (no calls left)\n"); \
+    } else if (packed->func != glTranslatef_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTranslatef\n", mock_name(packed->func)); \
+        packed = mock_slide(glTranslatef_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTranslatef missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != z) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTranslatef(%0.2f, %0.2f, %0.2f);\n", x, y, z); \
+        } \
+    } \
+}
+#define pack_glTranslatex(x, y, z) ({ \
+    glTranslatex_INDEXED *packed_data = malloc(sizeof(glTranslatex_INDEXED)); \
+    packed_data->func = glTranslatex_INDEX; \
+    packed_data->args.a1 = (GLfixed)x; \
+    packed_data->args.a2 = (GLfixed)y; \
+    packed_data->args.a3 = (GLfixed)z; \
+    packed_data; \
+})
+#define emit_glTranslatex(x, y, z) { \
+    mock_push(pack_glTranslatex(x, y, z)); \
+}
+#define test_glTranslatex(x, y, z) { \
+    glTranslatex_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glTranslatex missing (no calls left)\n"); \
+    } else if (packed->func != glTranslatex_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glTranslatex\n", mock_name(packed->func)); \
+        packed = mock_slide(glTranslatex_INDEX); \
+        if (! packed) { \
+            mock_errorf("glTranslatex missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != z) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glTranslatex(%p, %p, %p);\n", x, y, z); \
+        } \
+    } \
+}
+#define pack_glVertexPointer(size, type, stride, pointer) ({ \
+    glVertexPointer_INDEXED *packed_data = malloc(sizeof(glVertexPointer_INDEXED)); \
+    packed_data->func = glVertexPointer_INDEX; \
+    packed_data->args.a1 = (GLint)size; \
+    packed_data->args.a2 = (GLenum)type; \
+    packed_data->args.a3 = (GLsizei)stride; \
+    packed_data->args.a4 = (GLvoid *)pointer; \
+    packed_data; \
+})
+#define emit_glVertexPointer(size, type, stride, pointer) { \
+    mock_push(pack_glVertexPointer(size, type, stride, pointer)); \
+}
+#define test_glVertexPointer(size, type, stride, pointer) { \
+    glVertexPointer_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glVertexPointer missing (no calls left)\n"); \
+    } else if (packed->func != glVertexPointer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glVertexPointer\n", mock_name(packed->func)); \
+        packed = mock_slide(glVertexPointer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glVertexPointer missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != size) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != type) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != stride) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glVertexPointer(%d, %u, %d, %p);\n", size, type, stride, pointer); \
+        } \
+    } \
+}
+#define pack_glViewport(x, y, width, height) ({ \
+    glViewport_INDEXED *packed_data = malloc(sizeof(glViewport_INDEXED)); \
+    packed_data->func = glViewport_INDEX; \
+    packed_data->args.a1 = (GLint)x; \
+    packed_data->args.a2 = (GLint)y; \
+    packed_data->args.a3 = (GLsizei)width; \
+    packed_data->args.a4 = (GLsizei)height; \
+    packed_data; \
+})
+#define emit_glViewport(x, y, width, height) { \
+    mock_push(pack_glViewport(x, y, width, height)); \
+}
+#define test_glViewport(x, y, width, height) { \
+    glViewport_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("glViewport missing (no calls left)\n"); \
+    } else if (packed->func != glViewport_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for glViewport\n", mock_name(packed->func)); \
+        packed = mock_slide(glViewport_INDEX); \
+        if (! packed) { \
+            mock_errorf("glViewport missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        if (packed->args.a1 != x) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != y) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != height) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: glViewport(%d, %d, %d, %d);\n", x, y, width, height); \
+        } \
+    } \
+}
+
 #define gles_glActiveTexture_INDEX 1
 #define gles_glActiveTexture_RETURN void
 #define gles_glActiveTexture_ARG_NAMES texture

@@ -1,0 +1,109 @@
+{% extends "base/wrap.c.j2" %}
+{% block headers %}
+{{ super() }}
+typedef struct {
+    void **data;
+    int len, cap, shift;
+} _stack_t;
+
+static _stack_t mock = {0};
+
+static void stack_push(_stack_t *stack, void *data) {
+    if (stack->data == NULL) {
+        stack->cap = 64;
+        stack->data = malloc(sizeof(indexed_call_t *) * stack->cap);
+    } else if (stack->len == stack->cap) {
+        stack->cap *= 2;
+        stack->data = realloc(stack->data, sizeof(indexed_call_t *) * stack->cap);
+    }
+    stack->data[stack->len++] = data;
+}
+
+static void *stack_pop(_stack_t *stack) {
+    if (stack == NULL || stack->len == 0) {
+        return NULL;
+    }
+    return stack->data[--stack->len];
+}
+
+static void *stack_peek(_stack_t *stack) {
+    if (stack->shift >= stack->len) {
+        return NULL;
+    }
+    return stack->data[stack->shift];
+}
+
+static void *stack_shift(_stack_t *stack) {
+    if (stack->len == 0 || stack->shift >= stack->len) {
+        return NULL;
+    }
+    return stack->data[stack->shift++];
+}
+
+const char *mock_name(int func) {
+    switch (func) {
+        {% for f in functions %}
+        case {{ f.name }}_INDEX: return "{{ f.name }}";
+        {% endfor %}
+    }
+}
+
+void mock_print(const indexed_call_t *packed) {
+    if (packed == NULL) {
+        printf("NULL()\n");
+        return;
+    }
+    switch (packed->func) {
+        {% for f in functions %}
+        case {{ f.name }}_INDEX: {
+            INDEXED_{{ f.types }} *unpacked = (INDEXED_{{ f.types }} *)packed;
+            {% if f.args %}
+            ARGS_{{ f.types }} args = unpacked->args;
+            {% endif %}
+            printf("{{ f.name }}({{ f.args|printf }});\n"
+            {%- for arg in f.args %}, args.a{{ loop.index }}{% endfor -%});
+            break;
+        }
+        {% endfor %}
+    }
+}
+
+indexed_call_t *mock_peek() {
+    return stack_peek(&mock);
+}
+
+indexed_call_t *mock_shift() {
+    return stack_shift(&mock);
+}
+
+indexed_call_t *mock_slide(int func) {
+    if (mock.shift >= mock.len) {
+        return NULL;
+    }
+    indexed_call_t **stack = (indexed_call_t *)mock.data;
+    for (int i = mock.shift; i < mock.len; i++) {
+        if (stack[i]->func == func) {
+            mock.shift = i + 1;
+            return stack[i];
+        }
+    }
+    return NULL;
+}
+
+void mock_push(indexed_call_t *call) {
+    stack_push(&mock, call);
+}
+
+indexed_call_t *mock_pop() {
+    return stack_pop(&mock);
+}
+
+{% endblock %}
+
+{% block func_prefix %}gles_{% endblock %}
+{% block call %}
+    emit_{{ func.name }}({{ func.args|args(0) }});
+    {% if not func.void %}
+    return ({{ func.return }})0;
+    {% endif %}
+{% endblock %}

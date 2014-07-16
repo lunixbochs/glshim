@@ -1,0 +1,84 @@
+{% extends "base/header.j2" %}
+{% block content %}
+{{ super() }}
+
+const char *mock_name(int func);
+indexed_call_t *mock_slide(int func);
+indexed_call_t *mock_peek();
+indexed_call_t *mock_shift();
+void mock_print(const indexed_call_t *packed);
+void mock_push(indexed_call_t *call);
+
+static int verbose_test = 0;
+static int failed_test = 0;
+#define verbose { verbose_test = 1; }
+
+#define mock_return return failed_test;
+
+#define mock_warningf(...) { printf("WARNING: "), printf(__VA_ARGS__); }
+#define mock_errorf(...) { printf("ERROR: "); printf(__VA_ARGS__); failed_test = 1; }
+
+{% for func in functions %}
+#define pack_{{ func.name }}({{ func.args|args(0) }}) ({ \
+    {{ func.name }}_INDEXED *packed_data = malloc(sizeof({{ func.name }}_INDEXED)); \
+    packed_data->func = {{ func.name }}_INDEX; \
+    {% if func.args %}
+    {% for arg in func.args %}
+    packed_data->args.a{{ loop.index }} = ({{ arg.type|unconst }}){{ arg.name }}; \
+    {% endfor %}
+    {% endif %}
+    packed_data; \
+})
+#define emit_{{ func.name }}({{ func.args|args(0) }}) { \
+    mock_push(pack_{{ func.name }}({{ func.args|args(0) }})); \
+}
+#define test_{{ func.name }}({{ func.args|args(0) }}) { \
+    {{ func.name }}_INDEXED *packed = mock_peek(); \
+    if (packed == NULL) { \
+        mock_errorf("{{ func.name }} missing (no calls left)\n"); \
+    } else if (packed->func != {{ func.name }}_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_warningf("unexpected %s while looking for {{ func.name }}\n", mock_name(packed->func)); \
+        packed = mock_slide({{ func.name }}_INDEX); \
+        if (! packed) { \
+            mock_errorf("{{ func.name }} missing\n"); \
+        } \
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_peek()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        {% for arg in func.args if not '*' in arg.type %}
+        if (packed->args.a{{ loop.index }} != {{ arg.name }}) { \
+            match = 0; \
+            {# mock_errorf("{{ func.name }} -> {{ arg.name }} != {{ arg|printf }}\n", {{ arg.name }}); \ #}
+        } \
+        {% endfor %}
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print(packed); \
+            printf("  want: {{ func.name }}({{ func.args|printf }});\n", {{ func.args|args(0) }}); \
+        } \
+    } \
+}
+{% endfor %}
+
+{% for func in functions %}
+#define gles_{{ func.name }}_INDEX {{ loop.index }}
+#define gles_{{ func.name }}_RETURN {{ func.return }}
+#define gles_{{ func.name }}_ARG_NAMES {{ func.args|args(0) }}
+#define gles_{{ func.name }}_ARG_EXPAND {{ func.args|args }}
+#define gles_{{ func.name }}_PACKED PACKED_{{ func.types }}
+#define gles_{{ func.name }}_INDEXED INDEXED_{{ func.types }}
+#define gles_{{ func.name }}_FORMAT FORMAT_{{ func.types }}
+{% endfor %}
+
+{% for func in functions %}
+{{ func.return }} gles_{{ func.name }}({{ func.name }}_ARG_EXPAND);
+{% endfor %}
+{% endblock %}
