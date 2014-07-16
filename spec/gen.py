@@ -41,6 +41,9 @@ printf_lookup = {
 }
 
 def printf(args):
+    if isinstance(args, dict):
+        args = (args,)
+
     types = []
     for arg in args:
         typ = arg['type']
