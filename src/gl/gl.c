@@ -22,8 +22,10 @@ const GLubyte *glGetString(GLenum name) {
 #ifndef USE_ES2
                 // "GL_ARB_vertex_buffer_object "
                 "GL_ARB_multitexture "
+                "GL_ARB_texture_cube_map "
                 "GL_EXT_secondary_color "
                 "GL_EXT_texture_env_combine "
+                "GL_EXT_texture_env_dot3 "
 #else
                 "GL_ARB_vertex_shader "
                 "GL_ARB_fragment_shader "
