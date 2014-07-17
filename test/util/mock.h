@@ -61,7 +61,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != texture) { \
             match = 0; \
         } \
@@ -109,11 +108,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
-        /* GLclampf */ \
         if (packed->args.a2 != ref) { \
             match = 0; \
         } \
@@ -161,11 +158,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
-        /* GLclampx */ \
         if (packed->args.a2 != ref) { \
             match = 0; \
         } \
@@ -213,11 +208,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLuint */ \
         if (packed->args.a2 != buffer) { \
             match = 0; \
         } \
@@ -265,11 +258,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLuint */ \
         if (packed->args.a2 != texture) { \
             match = 0; \
         } \
@@ -317,11 +308,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != sfactor) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != dfactor) { \
             match = 0; \
         } \
@@ -371,11 +360,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLsizeiptr */ \
         if (packed->args.a2 != size) { \
             match = 0; \
         } \
@@ -384,7 +371,6 @@ static int failed_test = 0;
             ptr_error = 1; \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a4 != usage) { \
             match = 0; \
         } \
@@ -434,15 +420,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLintptr */ \
         if (packed->args.a2 != offset) { \
             match = 0; \
         } \
-        /* GLsizeiptr */ \
         if (packed->args.a3 != size) { \
             match = 0; \
         } \
@@ -494,7 +477,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLbitfield */ \
         if (packed->args.a1 != mask) { \
             match = 0; \
         } \
@@ -544,19 +526,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampf */ \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
-        /* GLclampf */ \
         if (packed->args.a2 != green) { \
             match = 0; \
         } \
-        /* GLclampf */ \
         if (packed->args.a3 != blue) { \
             match = 0; \
         } \
-        /* GLclampf */ \
         if (packed->args.a4 != alpha) { \
             match = 0; \
         } \
@@ -606,19 +584,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampx */ \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
-        /* GLclampx */ \
         if (packed->args.a2 != green) { \
             match = 0; \
         } \
-        /* GLclampx */ \
         if (packed->args.a3 != blue) { \
             match = 0; \
         } \
-        /* GLclampx */ \
         if (packed->args.a4 != alpha) { \
             match = 0; \
         } \
@@ -665,7 +639,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampf */ \
         if (packed->args.a1 != depth) { \
             match = 0; \
         } \
@@ -712,7 +685,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampx */ \
         if (packed->args.a1 != depth) { \
             match = 0; \
         } \
@@ -759,7 +731,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLint */ \
         if (packed->args.a1 != s) { \
             match = 0; \
         } \
@@ -806,7 +777,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != texture) { \
             match = 0; \
         } \
@@ -854,7 +824,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
@@ -907,7 +876,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
@@ -962,16 +930,16 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - red < 0.01) { \
+        if (packed->args.a1 - red >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - green < 0.01) { \
+        if (packed->args.a2 - green >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - blue < 0.01) { \
+        if (packed->args.a3 - blue >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a4 - alpha < 0.01) { \
+        if (packed->args.a4 - alpha >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -1020,19 +988,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLubyte */ \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
-        /* GLubyte */ \
         if (packed->args.a2 != green) { \
             match = 0; \
         } \
-        /* GLubyte */ \
         if (packed->args.a3 != blue) { \
             match = 0; \
         } \
-        /* GLubyte */ \
         if (packed->args.a4 != alpha) { \
             match = 0; \
         } \
@@ -1082,19 +1046,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != green) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != blue) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a4 != alpha) { \
             match = 0; \
         } \
@@ -1144,19 +1104,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLboolean */ \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
-        /* GLboolean */ \
         if (packed->args.a2 != green) { \
             match = 0; \
         } \
-        /* GLboolean */ \
         if (packed->args.a3 != blue) { \
             match = 0; \
         } \
-        /* GLboolean */ \
         if (packed->args.a4 != alpha) { \
             match = 0; \
         } \
@@ -1206,15 +1162,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLint */ \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != type) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a3 != stride) { \
             match = 0; \
         } \
@@ -1273,31 +1226,24 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != level) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a3 != internalformat) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a4 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a5 != height) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a6 != border) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a7 != imageSize) { \
             match = 0; \
         } \
@@ -1357,35 +1303,27 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != level) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a3 != xoffset) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a4 != yoffset) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a5 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a6 != height) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a7 != format) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a8 != imageSize) { \
             match = 0; \
         } \
@@ -1444,35 +1382,27 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != level) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a3 != internalformat) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a4 != x) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a5 != y) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a6 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a7 != height) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a8 != border) { \
             match = 0; \
         } \
@@ -1526,35 +1456,27 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != level) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a3 != xoffset) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a4 != yoffset) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a5 != x) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a6 != y) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a7 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a8 != height) { \
             match = 0; \
         } \
@@ -1601,7 +1523,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
@@ -1649,7 +1570,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLsizei */ \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
@@ -1702,7 +1622,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLsizei */ \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
@@ -1754,7 +1673,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
@@ -1801,7 +1719,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLboolean */ \
         if (packed->args.a1 != flag) { \
             match = 0; \
         } \
@@ -1849,11 +1766,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampf */ \
         if (packed->args.a1 != near) { \
             match = 0; \
         } \
-        /* GLclampf */ \
         if (packed->args.a2 != far) { \
             match = 0; \
         } \
@@ -1901,11 +1816,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampx */ \
         if (packed->args.a1 != near) { \
             match = 0; \
         } \
-        /* GLclampx */ \
         if (packed->args.a2 != far) { \
             match = 0; \
         } \
@@ -1952,7 +1865,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != cap) { \
             match = 0; \
         } \
@@ -1999,7 +1911,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != array) { \
             match = 0; \
         } \
@@ -2048,15 +1959,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != first) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a3 != count) { \
             match = 0; \
         } \
@@ -2106,15 +2014,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a2 != count) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a3 != type) { \
             match = 0; \
         } \
@@ -2166,7 +2071,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != cap) { \
             match = 0; \
         } \
@@ -2213,7 +2117,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != array) { \
             match = 0; \
         } \
@@ -2345,11 +2248,10 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        if (packed->args.a2 - param < 0.01) { \
+        if (packed->args.a2 - param >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -2396,7 +2298,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -2449,11 +2350,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != param) { \
             match = 0; \
         } \
@@ -2501,7 +2400,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -2553,7 +2451,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
@@ -2605,22 +2502,22 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - left < 0.01) { \
+        if (packed->args.a1 - left >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - right < 0.01) { \
+        if (packed->args.a2 - right >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - bottom < 0.01) { \
+        if (packed->args.a3 - bottom >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a4 - top < 0.01) { \
+        if (packed->args.a4 - top >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a5 - near < 0.01) { \
+        if (packed->args.a5 - near >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a6 - far < 0.01) { \
+        if (packed->args.a6 - far >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -2671,27 +2568,21 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != left) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != right) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != bottom) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a4 != top) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a5 != near) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a6 != far) { \
             match = 0; \
         } \
@@ -2739,7 +2630,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLsizei */ \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
@@ -2792,7 +2682,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLsizei */ \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
@@ -2845,7 +2734,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -2899,11 +2787,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -2956,7 +2842,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
@@ -3009,7 +2894,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
@@ -3104,7 +2988,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -3157,7 +3040,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -3210,7 +3092,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -3264,11 +3145,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3322,11 +3201,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3380,11 +3257,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3438,11 +3313,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3495,7 +3368,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -3547,7 +3419,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != name) { \
             match = 0; \
         } \
@@ -3596,11 +3467,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3654,11 +3523,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3712,11 +3579,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3770,11 +3635,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3828,11 +3691,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3886,11 +3747,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -3943,11 +3802,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != mode) { \
             match = 0; \
         } \
@@ -3994,7 +3851,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLuint */ \
         if (packed->args.a1 != buffer) { \
             match = 0; \
         } \
@@ -4041,7 +3897,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != cap) { \
             match = 0; \
         } \
@@ -4088,7 +3943,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLuint */ \
         if (packed->args.a1 != texture) { \
             match = 0; \
         } \
@@ -4136,11 +3990,10 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        if (packed->args.a2 - param < 0.01) { \
+        if (packed->args.a2 - param >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -4187,7 +4040,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -4240,11 +4092,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != param) { \
             match = 0; \
         } \
@@ -4292,7 +4142,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -4346,15 +4195,13 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        if (packed->args.a3 - param < 0.01) { \
+        if (packed->args.a3 - param >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -4402,11 +4249,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -4460,15 +4305,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != param) { \
             match = 0; \
         } \
@@ -4517,11 +4359,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -4573,7 +4413,7 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - width < 0.01) { \
+        if (packed->args.a1 - width >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -4619,7 +4459,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != width) { \
             match = 0; \
         } \
@@ -4804,7 +4643,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != opcode) { \
             match = 0; \
         } \
@@ -4853,15 +4691,13 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        if (packed->args.a3 - param < 0.01) { \
+        if (packed->args.a3 - param >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -4909,11 +4745,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -4967,15 +4801,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != param) { \
             match = 0; \
         } \
@@ -5024,11 +4855,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -5080,7 +4909,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
@@ -5227,20 +5055,19 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        if (packed->args.a2 - s < 0.01) { \
+        if (packed->args.a2 - s >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - t < 0.01) { \
+        if (packed->args.a3 - t >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a4 - r < 0.01) { \
+        if (packed->args.a4 - r >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a5 - q < 0.01) { \
+        if (packed->args.a5 - q >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -5290,23 +5117,18 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != s) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != t) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a4 != r) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a5 != q) { \
             match = 0; \
         } \
@@ -5355,13 +5177,13 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - nx < 0.01) { \
+        if (packed->args.a1 - nx >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - ny < 0.01) { \
+        if (packed->args.a2 - ny >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - nz < 0.01) { \
+        if (packed->args.a3 - nz >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -5409,15 +5231,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != nx) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != ny) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != nz) { \
             match = 0; \
         } \
@@ -5466,11 +5285,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != type) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a2 != stride) { \
             match = 0; \
         } \
@@ -5527,22 +5344,22 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - left < 0.01) { \
+        if (packed->args.a1 - left >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - right < 0.01) { \
+        if (packed->args.a2 - right >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - bottom < 0.01) { \
+        if (packed->args.a3 - bottom >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a4 - top < 0.01) { \
+        if (packed->args.a4 - top >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a5 - near < 0.01) { \
+        if (packed->args.a5 - near >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a6 - far < 0.01) { \
+        if (packed->args.a6 - far >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -5593,27 +5410,21 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != left) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != right) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != bottom) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a4 != top) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a5 != near) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a6 != far) { \
             match = 0; \
         } \
@@ -5661,11 +5472,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != param) { \
             match = 0; \
         } \
@@ -5713,11 +5522,10 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        if (packed->args.a2 - param < 0.01) { \
+        if (packed->args.a2 - param >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -5764,7 +5572,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -5817,11 +5624,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != param) { \
             match = 0; \
         } \
@@ -5869,7 +5674,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -5921,7 +5725,7 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - size < 0.01) { \
+        if (packed->args.a1 - size >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -5969,11 +5773,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != type) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a2 != stride) { \
             match = 0; \
         } \
@@ -6025,7 +5827,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
@@ -6073,10 +5874,10 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - factor < 0.01) { \
+        if (packed->args.a1 - factor >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - units < 0.01) { \
+        if (packed->args.a2 - units >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -6123,11 +5924,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != factor) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != units) { \
             match = 0; \
         } \
@@ -6264,27 +6063,21 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLint */ \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != y) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a3 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a4 != height) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a5 != format) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a6 != type) { \
             match = 0; \
         } \
@@ -6339,16 +6132,16 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - angle < 0.01) { \
+        if (packed->args.a1 - angle >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - x < 0.01) { \
+        if (packed->args.a2 - x >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - y < 0.01) { \
+        if (packed->args.a3 - y >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a4 - z < 0.01) { \
+        if (packed->args.a4 - z >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -6397,19 +6190,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != angle) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != x) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != y) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a4 != z) { \
             match = 0; \
         } \
@@ -6457,11 +6246,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampf */ \
         if (packed->args.a1 != value) { \
             match = 0; \
         } \
-        /* GLboolean */ \
         if (packed->args.a2 != invert) { \
             match = 0; \
         } \
@@ -6509,11 +6296,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLclampx */ \
         if (packed->args.a1 != value) { \
             match = 0; \
         } \
-        /* GLboolean */ \
         if (packed->args.a2 != invert) { \
             match = 0; \
         } \
@@ -6562,13 +6347,13 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - x < 0.01) { \
+        if (packed->args.a1 - x >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - y < 0.01) { \
+        if (packed->args.a2 - y >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - z < 0.01) { \
+        if (packed->args.a3 - z >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -6616,15 +6401,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != y) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != z) { \
             match = 0; \
         } \
@@ -6674,19 +6456,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLint */ \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != y) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a3 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a4 != height) { \
             match = 0; \
         } \
@@ -6733,7 +6511,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
@@ -6782,15 +6559,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != ref) { \
             match = 0; \
         } \
-        /* GLuint */ \
         if (packed->args.a3 != mask) { \
             match = 0; \
         } \
@@ -6837,7 +6611,6 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLuint */ \
         if (packed->args.a1 != mask) { \
             match = 0; \
         } \
@@ -6886,15 +6659,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != fail) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != zfail) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a3 != zpass) { \
             match = 0; \
         } \
@@ -6944,15 +6714,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLint */ \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != type) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a3 != stride) { \
             match = 0; \
         } \
@@ -7006,15 +6773,13 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        if (packed->args.a3 - param < 0.01) { \
+        if (packed->args.a3 - param >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -7062,11 +6827,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -7120,15 +6883,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a3 != param) { \
             match = 0; \
         } \
@@ -7177,11 +6937,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -7235,15 +6993,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != param) { \
             match = 0; \
         } \
@@ -7292,11 +7047,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -7356,35 +7109,27 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != level) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a3 != internalformat) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a4 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a5 != height) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a6 != border) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a7 != format) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a8 != type) { \
             match = 0; \
         } \
@@ -7438,15 +7183,13 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        if (packed->args.a3 - param < 0.01) { \
+        if (packed->args.a3 - param >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -7494,11 +7237,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -7552,15 +7293,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a3 != param) { \
             match = 0; \
         } \
@@ -7609,11 +7347,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -7667,15 +7403,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != param) { \
             match = 0; \
         } \
@@ -7724,11 +7457,9 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
@@ -7788,35 +7519,27 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLenum */ \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != level) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a3 != xoffset) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a4 != yoffset) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a5 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a6 != height) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a7 != format) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a8 != type) { \
             match = 0; \
         } \
@@ -7870,13 +7593,13 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        if (packed->args.a1 - x < 0.01) { \
+        if (packed->args.a1 - x >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a2 - y < 0.01) { \
+        if (packed->args.a2 - y >= 0.01) { \
             match = 0; \
         } \
-        if (packed->args.a3 - z < 0.01) { \
+        if (packed->args.a3 - z >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
@@ -7924,15 +7647,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLfixed */ \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a2 != y) { \
             match = 0; \
         } \
-        /* GLfixed */ \
         if (packed->args.a3 != z) { \
             match = 0; \
         } \
@@ -7982,15 +7702,12 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLint */ \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
-        /* GLenum */ \
         if (packed->args.a2 != type) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a3 != stride) { \
             match = 0; \
         } \
@@ -8045,19 +7762,15 @@ static int failed_test = 0;
     } \
     if (packed) { \
         int match = 1, ptr_error = 0; \
-        /* GLint */ \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
-        /* GLint */ \
         if (packed->args.a2 != y) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a3 != width) { \
             match = 0; \
         } \
-        /* GLsizei */ \
         if (packed->args.a4 != height) { \
             match = 0; \
         } \

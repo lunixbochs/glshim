@@ -69,13 +69,11 @@ static int failed_test = 0;
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof({{ arg.name }})) != 0))) { \
             ptr_error = 1; \
         {% elif 'float' in arg.type or 'double' in arg.type %}
-        if (packed->args.a{{ loop.index }} - {{ arg.name }} < 0.01) { \
+        if (packed->args.a{{ loop.index }} - {{ arg.name }} >= 0.01) { \
         {% else %}
-        /* {{ arg.type }} */ \
         if (packed->args.a{{ loop.index }} != {{ arg.name }}) { \
         {% endif %}
             match = 0; \
-            {# mock_errorf("{{ func.name }} -> {{ arg.name }} != {{ arg|printf }}\n", {{ arg.name }}); \ #}
         } \
         {% endfor %}
         if (! match) { \
