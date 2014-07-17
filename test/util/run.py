@@ -4,6 +4,7 @@ import os
 import signal
 import subprocess
 import sys
+import traceback
 
 from blessings import Terminal
 from contextlib import contextmanager
@@ -85,7 +86,7 @@ class Test:
         if self.build_failed:
             return term.red
         elif not self.ran:
-            return term.grey
+            return term.yellow
         return term.green if self.success else term.red
 
     def build(self, project):
@@ -142,32 +143,42 @@ def run(args):
         return
 
     step_fmt = lambda step: term.bold('[' + step + ']')
-    status_fmt = lambda test: term.bold(' [' + test.status_color(test.status) + ']')
+    status_fmt = lambda test: term.bold('[' + test.status_color(test.status) + ']')
+    back = lambda mult: '\b' * mult
+    out = lambda *a: (sys.stdout.write(' '.join(str(s) for s in a)), sys.stdout.flush())
 
     for i, test in enumerate(tests):
         headline = '[{}/{}] {} ['.format(i + 1, len(tests), test.name)
-        print term.bold(headline.ljust(80, '-')),
-        with term.location():
-            with term.location(x=73):
-                print step_fmt('build')
+        print term.bold(headline.ljust(79, '-')),
+        out(back(8) + ' ' + step_fmt('build'))
 
-            with term.location():
-                print
-                build = test.build(args.project)
+        try:
+            build = test.build(args.project)
+        except Exception:
+            test.build_failed = True
+            print
+            traceback.print_exc()
 
-            if build:
-                with term.location(x=73):
-                    print step_fmt(' run ')
+        out(back(7) + step_fmt(' run '))
+        if not test.build_failed:
+            try:
                 success = test.run()
-            if test.output:
+            except Exception:
+                test.ran = True
+                success = test.success = False
                 print
-                print '> ' + test.output.replace('\n', '\n> ')
+                traceback.print_exc()
 
-        with term.location(x=73):
-            print status_fmt(test)
+        out(back(max(7, len(test.status) + 2)) + ' ' + status_fmt(test))
         print
+
         if test.output:
-            print '\n' * test.output.count('\n')
+            for line in test.output.split('\n'):
+                if line.startswith('ERROR'):
+                    line = line.replace('ERROR:', term.red('ERROR:'), 1)
+                elif line.startswith('WARNING'):
+                    line = line.replace('WARNING:', term.yellow('WARNING:'), 1)
+                print '> {}'.format(line)
 
     passed = sum(t.success for t in tests if t.ran)
     total = sum(t.ran for t in tests)
