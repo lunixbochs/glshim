@@ -47,12 +47,14 @@ static int failed_test = 0;
         if (verbose_test) { \
             mock_print(mock_peek()); \
         } \
-        mock_warningf("unexpected call while looking for {{ func.name }}:\n  "); \
-        mock_print(packed); \
+        indexed_call_t *tmp = packed; \
         packed = mock_slide({{ func.name }}_INDEX); \
         if (! packed) { \
             mock_errorf("{{ func.name }} missing\n"); \
-        } \
+        } else { \
+            mock_warningf("unexpected call while looking for {{ func.name }}:\n  "); \
+            mock_print(tmp); \
+        }\
     } else { \
         if (verbose_test) { \
             mock_print(mock_peek()); \
@@ -60,15 +62,27 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1; \
-        {% for arg in func.args if not '*' in arg.type %}
+        int match = 1, ptr_error = 0; \
+        {% for arg in func.args %}
+        {% if '*' in arg.type %}
+        void *a = packed->args.a{{ loop.index }}, *b = {{ arg.name }}; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof({{ arg.name }})) != 0))) { \
+            ptr_error = 1; \
+        {% elif 'float' in arg.type or 'double' in arg.type %}
+        if (packed->args.a{{ loop.index }} - {{ arg.name }} < 0.01) { \
+        {% else %}
+        /* {{ arg.type }} */ \
         if (packed->args.a{{ loop.index }} != {{ arg.name }}) { \
+        {% endif %}
             match = 0; \
             {# mock_errorf("{{ func.name }} -> {{ arg.name }} != {{ arg|printf }}\n", {{ arg.name }}); \ #}
         } \
         {% endfor %}
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
+            if (ptr_error) { \
+                printf("  (pointer mismatch)\n"); \
+            } \
             printf("  have: "); mock_print(packed); \
             printf("  want: {{ func.name }}({{ func.args|printf }});\n", {{ func.args|args(0) }}); \
         } \
