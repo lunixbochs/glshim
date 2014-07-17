@@ -118,7 +118,6 @@ static void load_gles_lib() {
                 load_gles_lib();                          \
             }                                             \
             gles_##name = (name##_PTR)dlsym(gles, #name); \
-            WARN_NULL(gles_##name);                       \
         }                                                 \
     }
 #endif
