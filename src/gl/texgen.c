@@ -57,27 +57,11 @@ GLfloat gen_tex_coord(GLfloat *vert, GLenum type, GLfloat *params) {
 }
 
 void dot_loop(const GLfloat *verts, const GLfloat *params, GLfloat *out, GLint count) {
-#ifdef __ARM_NEON__
-    float32x2_t acc;
-    float32x2x3_t vert;
-    float32x2x3_t param = vld3_f32((const float32_t *)params);
-    for (; count != 0; count -= 1) {
-        vert = vld3_f32((const float32_t *)verts);
-        acc = vmul_f32(vert.val[0], param.val[0]);
-        acc = vmla_f32(acc, vert.val[1], param.val[1]);
-        acc = vmla_f32(acc, vert.val[2], param.val[2]);
-        vst1_f32((float32_t *)out, acc);
-
-        out += 2;
-        verts += 3;
-    }
-#else
     for (int i = 0; i < count; i++) {
         out[0] = dot(verts, params);
         out += 2;
         verts += 3;
     }
-#endif
 }
 
 static inline void tex_coord_loop(GLfloat *verts, GLfloat *out, GLint count, GLenum type, GLfloat *params) {
