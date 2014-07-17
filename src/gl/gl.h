@@ -104,7 +104,11 @@ static void load_gles_lib() {
 }
 
 #ifndef LOAD_GLES
-#define LOAD_GLES(name)                                   \
+#define LOAD_GLES(name) \
+    LOAD_GLES_SILENT(name); \
+    WARN_NULL(gles_##name);
+
+#define LOAD_GLES_SILENT(name)                            \
     static name##_PTR gles_##name;                        \
     {                                                     \
         static bool first = true;                         \
@@ -133,7 +137,7 @@ static void load_gles_lib() {
 
 #ifndef PROXY_GLES
 #define PROXY_GLES(name) \
-    LOAD_GLES(name); \
+    LOAD_GLES_SILENT(name); \
     if (gles_##name != NULL) { \
         return gles_##name(name##_ARG_NAMES); \
     }
