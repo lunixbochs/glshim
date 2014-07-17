@@ -20,24 +20,24 @@ def args(args, add_type=True):
 
 f = '0.2f'
 printf_lookup = {
-    'GLbitfield': 'd',
-    'GLboolean': 'd',
-    'GLbyte': 'c',
-    'GLubyte': 'c',
-    'GLchar': 'c',
-    'GLdouble': '0.2f',
-    'GLenum': 'u',
-    'GLfloat': '0.2f',
-    'GLint': 'd',
-    'GLintptr': 'd',
-    'GLintptrARB': 'd',
-    'GLshort': 'd',
-    'GLsizei': 'd',
-    'GLsizeiptr': 'd',
+    'GLbitfield':    'd',
+    'GLboolean':     'd',
+    'GLbyte':        'c',
+    'GLubyte':       'c',
+    'GLchar':        'c',
+    'GLdouble':      '0.2f',
+    'GLenum':        '0x%04X',
+    'GLfloat':       '0.2f',
+    'GLint':         'd',
+    'GLintptr':      'd',
+    'GLintptrARB':   'd',
+    'GLshort':       'd',
+    'GLsizei':       'd',
+    'GLsizeiptr':    'd',
     'GLsizeiptrARB': 'd',
-    'GLuint': 'u',
-    'GLushort': 'u',
-    'GLvoid': 'p',
+    'GLuint':        'u',
+    'GLushort':      'u',
+    'GLvoid':        'p',
 }
 
 def printf(args):
@@ -51,10 +51,11 @@ def printf(args):
             t = 'p'
         else:
             t = printf_lookup.get(typ, 'p')
-
+        if not '%' in t:
+            t = '%' + t
         types.append(t)
 
-    return ', '.join('%' + t for t in types)
+    return ', '.join(types)
 
 def unconst(s):
     split = s.split(' ')
