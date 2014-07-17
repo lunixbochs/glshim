@@ -213,9 +213,6 @@ void glPushClientAttrib(GLbitfield mask) {
     client_stack->len++;
 }
 
-#define maybe_free(x) \
-    if (x) free(x)
-
 #define enable_disable(pname, enabled) \
     if (enabled) glEnable(pname);      \
     else glDisable(pname)
@@ -351,10 +348,10 @@ void glPopAttrib() {
         glBindTexture(GL_TEXTURE_2D, cur->texture);
     }
 
-    maybe_free(cur->clip_planes_enabled);
-    maybe_free(cur->clip_planes);
-    maybe_free(cur->lights_enabled);
-    maybe_free(cur->lights);
+    free(cur->clip_planes_enabled);
+    free(cur->clip_planes);
+    free(cur->lights_enabled);
+    free(cur->lights);
     stack->len--;
 }
 
@@ -396,7 +393,6 @@ void glPopClientAttrib() {
     client_stack->len--;
 }
 
-#undef maybe_free
 #undef enable_disable
 #undef v2
 #undef v3
