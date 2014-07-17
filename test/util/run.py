@@ -169,7 +169,7 @@ def run(args):
                 print
                 traceback.print_exc()
 
-        out(back(max(7, len(test.status) + 2)) + ' ' + status_fmt(test))
+        out(back(max(7, len(test.status) + 3)) + '  ' + status_fmt(test))
         print
 
         if test.output:
