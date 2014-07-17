@@ -3,3 +3,5 @@
 
 #include "gl.h"
 #include "mock.h"
+
+#define free(...) {}
