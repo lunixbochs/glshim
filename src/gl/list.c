@@ -26,7 +26,7 @@ void dl_incref(packed_call_t *call) {
 
 void dl_decref(packed_call_t *call) {
     // TODO: thread safety?
-    if (--call->refs) {
+    if (--call->refs == 0) {
         if (call->format == RENDER_BLOCK_FORMAT) {
             block_call_t *bcall = (block_call_t *)call;
             bl_free(bcall->block);
