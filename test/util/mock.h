@@ -70,7 +70,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glActiveTexture(%u);\n", texture); \
+            printf("  want: glActiveTexture(0x%04X);\n", texture); \
         } \
     } \
 }
@@ -120,7 +120,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glAlphaFunc(%u, %p);\n", func, ref); \
+            printf("  want: glAlphaFunc(0x%04X, %p);\n", func, ref); \
         } \
     } \
 }
@@ -170,7 +170,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glAlphaFuncx(%u, %p);\n", func, ref); \
+            printf("  want: glAlphaFuncx(0x%04X, %p);\n", func, ref); \
         } \
     } \
 }
@@ -220,7 +220,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glBindBuffer(%u, %u);\n", target, buffer); \
+            printf("  want: glBindBuffer(0x%04X, %u);\n", target, buffer); \
         } \
     } \
 }
@@ -270,7 +270,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glBindTexture(%u, %u);\n", target, texture); \
+            printf("  want: glBindTexture(0x%04X, %u);\n", target, texture); \
         } \
     } \
 }
@@ -320,7 +320,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glBlendFunc(%u, %u);\n", sfactor, dfactor); \
+            printf("  want: glBlendFunc(0x%04X, 0x%04X);\n", sfactor, dfactor); \
         } \
     } \
 }
@@ -380,7 +380,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glBufferData(%u, %d, %p, %u);\n", target, size, data, usage); \
+            printf("  want: glBufferData(0x%04X, %d, %p, 0x%04X);\n", target, size, data, usage); \
         } \
     } \
 }
@@ -440,7 +440,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glBufferSubData(%u, %d, %d, %p);\n", target, offset, size, data); \
+            printf("  want: glBufferSubData(0x%04X, %d, %d, %p);\n", target, offset, size, data); \
         } \
     } \
 }
@@ -786,7 +786,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glClientActiveTexture(%u);\n", texture); \
+            printf("  want: glClientActiveTexture(0x%04X);\n", texture); \
         } \
     } \
 }
@@ -838,7 +838,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glClipPlanef(%u, %p);\n", plane, equation); \
+            printf("  want: glClipPlanef(0x%04X, %p);\n", plane, equation); \
         } \
     } \
 }
@@ -890,7 +890,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glClipPlanex(%u, %p);\n", plane, equation); \
+            printf("  want: glClipPlanex(0x%04X, %p);\n", plane, equation); \
         } \
     } \
 }
@@ -1182,7 +1182,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glColorPointer(%d, %u, %d, %p);\n", size, type, stride, pointer); \
+            printf("  want: glColorPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
     } \
 }
@@ -1258,7 +1258,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glCompressedTexImage2D(%u, %d, %u, %d, %d, %d, %d, %p);\n", target, level, internalformat, width, height, border, imageSize, data); \
+            printf("  want: glCompressedTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %p);\n", target, level, internalformat, width, height, border, imageSize, data); \
         } \
     } \
 }
@@ -1338,7 +1338,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glCompressedTexSubImage2D(%u, %d, %d, %d, %d, %d, %u, %d, %p);\n", target, level, xoffset, yoffset, width, height, format, imageSize, data); \
+            printf("  want: glCompressedTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, %d, %p);\n", target, level, xoffset, yoffset, width, height, format, imageSize, data); \
         } \
     } \
 }
@@ -1412,7 +1412,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glCopyTexImage2D(%u, %d, %u, %d, %d, %d, %d, %d);\n", target, level, internalformat, x, y, width, height, border); \
+            printf("  want: glCopyTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %d);\n", target, level, internalformat, x, y, width, height, border); \
         } \
     } \
 }
@@ -1486,7 +1486,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glCopyTexSubImage2D(%u, %d, %d, %d, %d, %d, %d, %d);\n", target, level, xoffset, yoffset, x, y, width, height); \
+            printf("  want: glCopyTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, %d, %d);\n", target, level, xoffset, yoffset, x, y, width, height); \
         } \
     } \
 }
@@ -1532,7 +1532,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glCullFace(%u);\n", mode); \
+            printf("  want: glCullFace(0x%04X);\n", mode); \
         } \
     } \
 }
@@ -1682,7 +1682,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glDepthFunc(%u);\n", func); \
+            printf("  want: glDepthFunc(0x%04X);\n", func); \
         } \
     } \
 }
@@ -1874,7 +1874,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glDisable(%u);\n", cap); \
+            printf("  want: glDisable(0x%04X);\n", cap); \
         } \
     } \
 }
@@ -1920,7 +1920,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glDisableClientState(%u);\n", array); \
+            printf("  want: glDisableClientState(0x%04X);\n", array); \
         } \
     } \
 }
@@ -1974,7 +1974,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glDrawArrays(%u, %d, %d);\n", mode, first, count); \
+            printf("  want: glDrawArrays(0x%04X, %d, %d);\n", mode, first, count); \
         } \
     } \
 }
@@ -2034,7 +2034,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glDrawElements(%u, %d, %u, %p);\n", mode, count, type, indices); \
+            printf("  want: glDrawElements(0x%04X, %d, 0x%04X, %p);\n", mode, count, type, indices); \
         } \
     } \
 }
@@ -2080,7 +2080,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glEnable(%u);\n", cap); \
+            printf("  want: glEnable(0x%04X);\n", cap); \
         } \
     } \
 }
@@ -2126,7 +2126,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glEnableClientState(%u);\n", array); \
+            printf("  want: glEnableClientState(0x%04X);\n", array); \
         } \
     } \
 }
@@ -2260,7 +2260,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glFogf(%u, %0.2f);\n", pname, param); \
+            printf("  want: glFogf(0x%04X, %0.2f);\n", pname, param); \
         } \
     } \
 }
@@ -2312,7 +2312,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glFogfv(%u, %p);\n", pname, params); \
+            printf("  want: glFogfv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -2362,7 +2362,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glFogx(%u, %p);\n", pname, param); \
+            printf("  want: glFogx(0x%04X, %p);\n", pname, param); \
         } \
     } \
 }
@@ -2414,7 +2414,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glFogxv(%u, %p);\n", pname, params); \
+            printf("  want: glFogxv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -2460,7 +2460,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glFrontFace(%u);\n", mode); \
+            printf("  want: glFrontFace(0x%04X);\n", mode); \
         } \
     } \
 }
@@ -2748,7 +2748,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetBooleanv(%u, %p);\n", pname, params); \
+            printf("  want: glGetBooleanv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -2804,7 +2804,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetBufferParameteriv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glGetBufferParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -2856,7 +2856,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetClipPlanef(%u, %p);\n", plane, equation); \
+            printf("  want: glGetClipPlanef(0x%04X, %p);\n", plane, equation); \
         } \
     } \
 }
@@ -2908,7 +2908,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetClipPlanex(%u, %p);\n", plane, equation); \
+            printf("  want: glGetClipPlanex(0x%04X, %p);\n", plane, equation); \
         } \
     } \
 }
@@ -3002,7 +3002,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetFixedv(%u, %p);\n", pname, params); \
+            printf("  want: glGetFixedv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -3054,7 +3054,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetFloatv(%u, %p);\n", pname, params); \
+            printf("  want: glGetFloatv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -3106,7 +3106,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetIntegerv(%u, %p);\n", pname, params); \
+            printf("  want: glGetIntegerv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -3162,7 +3162,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetLightfv(%u, %u, %p);\n", light, pname, params); \
+            printf("  want: glGetLightfv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
 }
@@ -3218,7 +3218,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetLightxv(%u, %u, %p);\n", light, pname, params); \
+            printf("  want: glGetLightxv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
 }
@@ -3274,7 +3274,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetMaterialfv(%u, %u, %p);\n", face, pname, params); \
+            printf("  want: glGetMaterialfv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
 }
@@ -3330,7 +3330,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetMaterialxv(%u, %u, %p);\n", face, pname, params); \
+            printf("  want: glGetMaterialxv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
 }
@@ -3382,7 +3382,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetPointerv(%u, %p);\n", pname, params); \
+            printf("  want: glGetPointerv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -3428,7 +3428,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetString(%u);\n", name); \
+            printf("  want: glGetString(0x%04X);\n", name); \
         } \
     } \
 }
@@ -3484,7 +3484,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetTexEnvfv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glGetTexEnvfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -3540,7 +3540,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetTexEnviv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glGetTexEnviv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -3596,7 +3596,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetTexEnvxv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glGetTexEnvxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -3652,7 +3652,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetTexParameterfv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glGetTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -3708,7 +3708,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetTexParameteriv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glGetTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -3764,7 +3764,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glGetTexParameterxv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glGetTexParameterxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -3814,7 +3814,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glHint(%u, %u);\n", target, mode); \
+            printf("  want: glHint(0x%04X, 0x%04X);\n", target, mode); \
         } \
     } \
 }
@@ -3906,7 +3906,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glIsEnabled(%u);\n", cap); \
+            printf("  want: glIsEnabled(0x%04X);\n", cap); \
         } \
     } \
 }
@@ -4002,7 +4002,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightModelf(%u, %0.2f);\n", pname, param); \
+            printf("  want: glLightModelf(0x%04X, %0.2f);\n", pname, param); \
         } \
     } \
 }
@@ -4054,7 +4054,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightModelfv(%u, %p);\n", pname, params); \
+            printf("  want: glLightModelfv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -4104,7 +4104,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightModelx(%u, %p);\n", pname, param); \
+            printf("  want: glLightModelx(0x%04X, %p);\n", pname, param); \
         } \
     } \
 }
@@ -4156,7 +4156,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightModelxv(%u, %p);\n", pname, params); \
+            printf("  want: glLightModelxv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -4210,7 +4210,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightf(%u, %u, %0.2f);\n", light, pname, param); \
+            printf("  want: glLightf(0x%04X, 0x%04X, %0.2f);\n", light, pname, param); \
         } \
     } \
 }
@@ -4266,7 +4266,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightfv(%u, %u, %p);\n", light, pname, params); \
+            printf("  want: glLightfv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
 }
@@ -4320,7 +4320,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightx(%u, %u, %p);\n", light, pname, param); \
+            printf("  want: glLightx(0x%04X, 0x%04X, %p);\n", light, pname, param); \
         } \
     } \
 }
@@ -4376,7 +4376,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLightxv(%u, %u, %p);\n", light, pname, params); \
+            printf("  want: glLightxv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
 }
@@ -4652,7 +4652,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glLogicOp(%u);\n", opcode); \
+            printf("  want: glLogicOp(0x%04X);\n", opcode); \
         } \
     } \
 }
@@ -4706,7 +4706,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glMaterialf(%u, %u, %0.2f);\n", face, pname, param); \
+            printf("  want: glMaterialf(0x%04X, 0x%04X, %0.2f);\n", face, pname, param); \
         } \
     } \
 }
@@ -4762,7 +4762,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glMaterialfv(%u, %u, %p);\n", face, pname, params); \
+            printf("  want: glMaterialfv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
 }
@@ -4816,7 +4816,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glMaterialx(%u, %u, %p);\n", face, pname, param); \
+            printf("  want: glMaterialx(0x%04X, 0x%04X, %p);\n", face, pname, param); \
         } \
     } \
 }
@@ -4872,7 +4872,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glMaterialxv(%u, %u, %p);\n", face, pname, params); \
+            printf("  want: glMaterialxv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
 }
@@ -4918,7 +4918,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glMatrixMode(%u);\n", mode); \
+            printf("  want: glMatrixMode(0x%04X);\n", mode); \
         } \
     } \
 }
@@ -5076,7 +5076,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glMultiTexCoord4f(%u, %0.2f, %0.2f, %0.2f, %0.2f);\n", target, s, t, r, q); \
+            printf("  want: glMultiTexCoord4f(0x%04X, %0.2f, %0.2f, %0.2f, %0.2f);\n", target, s, t, r, q); \
         } \
     } \
 }
@@ -5138,7 +5138,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glMultiTexCoord4x(%u, %p, %p, %p, %p);\n", target, s, t, r, q); \
+            printf("  want: glMultiTexCoord4x(0x%04X, %p, %p, %p, %p);\n", target, s, t, r, q); \
         } \
     } \
 }
@@ -5302,7 +5302,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glNormalPointer(%u, %d, %p);\n", type, stride, pointer); \
+            printf("  want: glNormalPointer(0x%04X, %d, %p);\n", type, stride, pointer); \
         } \
     } \
 }
@@ -5484,7 +5484,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glPixelStorei(%u, %d);\n", pname, param); \
+            printf("  want: glPixelStorei(0x%04X, %d);\n", pname, param); \
         } \
     } \
 }
@@ -5534,7 +5534,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glPointParameterf(%u, %0.2f);\n", pname, param); \
+            printf("  want: glPointParameterf(0x%04X, %0.2f);\n", pname, param); \
         } \
     } \
 }
@@ -5586,7 +5586,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glPointParameterfv(%u, %p);\n", pname, params); \
+            printf("  want: glPointParameterfv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -5636,7 +5636,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glPointParameterx(%u, %p);\n", pname, param); \
+            printf("  want: glPointParameterx(0x%04X, %p);\n", pname, param); \
         } \
     } \
 }
@@ -5688,7 +5688,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glPointParameterxv(%u, %p);\n", pname, params); \
+            printf("  want: glPointParameterxv(0x%04X, %p);\n", pname, params); \
         } \
     } \
 }
@@ -5790,7 +5790,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glPointSizePointerOES(%u, %d, %p);\n", type, stride, pointer); \
+            printf("  want: glPointSizePointerOES(0x%04X, %d, %p);\n", type, stride, pointer); \
         } \
     } \
 }
@@ -6092,7 +6092,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glReadPixels(%d, %d, %d, %d, %u, %u, %p);\n", x, y, width, height, format, type, pixels); \
+            printf("  want: glReadPixels(%d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", x, y, width, height, format, type, pixels); \
         } \
     } \
 }
@@ -6520,7 +6520,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glShadeModel(%u);\n", mode); \
+            printf("  want: glShadeModel(0x%04X);\n", mode); \
         } \
     } \
 }
@@ -6574,7 +6574,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glStencilFunc(%u, %d, %u);\n", func, ref, mask); \
+            printf("  want: glStencilFunc(0x%04X, %d, %u);\n", func, ref, mask); \
         } \
     } \
 }
@@ -6674,7 +6674,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glStencilOp(%u, %u, %u);\n", fail, zfail, zpass); \
+            printf("  want: glStencilOp(0x%04X, 0x%04X, 0x%04X);\n", fail, zfail, zpass); \
         } \
     } \
 }
@@ -6734,7 +6734,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexCoordPointer(%d, %u, %d, %p);\n", size, type, stride, pointer); \
+            printf("  want: glTexCoordPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
     } \
 }
@@ -6788,7 +6788,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexEnvf(%u, %u, %0.2f);\n", target, pname, param); \
+            printf("  want: glTexEnvf(0x%04X, 0x%04X, %0.2f);\n", target, pname, param); \
         } \
     } \
 }
@@ -6844,7 +6844,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexEnvfv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glTexEnvfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -6898,7 +6898,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexEnvi(%u, %u, %d);\n", target, pname, param); \
+            printf("  want: glTexEnvi(0x%04X, 0x%04X, %d);\n", target, pname, param); \
         } \
     } \
 }
@@ -6954,7 +6954,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexEnviv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glTexEnviv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -7008,7 +7008,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexEnvx(%u, %u, %p);\n", target, pname, param); \
+            printf("  want: glTexEnvx(0x%04X, 0x%04X, %p);\n", target, pname, param); \
         } \
     } \
 }
@@ -7064,7 +7064,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexEnvxv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glTexEnvxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -7144,7 +7144,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexImage2D(%u, %d, %d, %d, %d, %d, %u, %u, %p);\n", target, level, internalformat, width, height, border, format, type, pixels); \
+            printf("  want: glTexImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, internalformat, width, height, border, format, type, pixels); \
         } \
     } \
 }
@@ -7198,7 +7198,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexParameterf(%u, %u, %0.2f);\n", target, pname, param); \
+            printf("  want: glTexParameterf(0x%04X, 0x%04X, %0.2f);\n", target, pname, param); \
         } \
     } \
 }
@@ -7254,7 +7254,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexParameterfv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -7308,7 +7308,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexParameteri(%u, %u, %d);\n", target, pname, param); \
+            printf("  want: glTexParameteri(0x%04X, 0x%04X, %d);\n", target, pname, param); \
         } \
     } \
 }
@@ -7364,7 +7364,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexParameteriv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -7418,7 +7418,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexParameterx(%u, %u, %p);\n", target, pname, param); \
+            printf("  want: glTexParameterx(0x%04X, 0x%04X, %p);\n", target, pname, param); \
         } \
     } \
 }
@@ -7474,7 +7474,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexParameterxv(%u, %u, %p);\n", target, pname, params); \
+            printf("  want: glTexParameterxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -7554,7 +7554,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glTexSubImage2D(%u, %d, %d, %d, %d, %d, %u, %u, %p);\n", target, level, xoffset, yoffset, width, height, format, type, pixels); \
+            printf("  want: glTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, xoffset, yoffset, width, height, format, type, pixels); \
         } \
     } \
 }
@@ -7722,7 +7722,7 @@ static int failed_test = 0;
                 printf("  (pointer mismatch)\n"); \
             } \
             printf("  have: "); mock_print(packed); \
-            printf("  want: glVertexPointer(%d, %u, %d, %p);\n", size, type, stride, pointer); \
+            printf("  want: glVertexPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
     } \
 }

@@ -198,49 +198,49 @@ void mock_print(const indexed_call_t *packed) {
         case glActiveTexture_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glActiveTexture(%u);\n", args.a1);
+            printf("glActiveTexture(0x%04X);\n", args.a1);
             break;
         }
         case glAlphaFunc_INDEX: {
             INDEXED_void_GLenum_GLclampf *unpacked = (INDEXED_void_GLenum_GLclampf *)packed;
             ARGS_void_GLenum_GLclampf args = unpacked->args;
-            printf("glAlphaFunc(%u, %p);\n", args.a1, args.a2);
+            printf("glAlphaFunc(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glAlphaFuncx_INDEX: {
             INDEXED_void_GLenum_GLclampx *unpacked = (INDEXED_void_GLenum_GLclampx *)packed;
             ARGS_void_GLenum_GLclampx args = unpacked->args;
-            printf("glAlphaFuncx(%u, %p);\n", args.a1, args.a2);
+            printf("glAlphaFuncx(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glBindBuffer_INDEX: {
             INDEXED_void_GLenum_GLuint *unpacked = (INDEXED_void_GLenum_GLuint *)packed;
             ARGS_void_GLenum_GLuint args = unpacked->args;
-            printf("glBindBuffer(%u, %u);\n", args.a1, args.a2);
+            printf("glBindBuffer(0x%04X, %u);\n", args.a1, args.a2);
             break;
         }
         case glBindTexture_INDEX: {
             INDEXED_void_GLenum_GLuint *unpacked = (INDEXED_void_GLenum_GLuint *)packed;
             ARGS_void_GLenum_GLuint args = unpacked->args;
-            printf("glBindTexture(%u, %u);\n", args.a1, args.a2);
+            printf("glBindTexture(0x%04X, %u);\n", args.a1, args.a2);
             break;
         }
         case glBlendFunc_INDEX: {
             INDEXED_void_GLenum_GLenum *unpacked = (INDEXED_void_GLenum_GLenum *)packed;
             ARGS_void_GLenum_GLenum args = unpacked->args;
-            printf("glBlendFunc(%u, %u);\n", args.a1, args.a2);
+            printf("glBlendFunc(0x%04X, 0x%04X);\n", args.a1, args.a2);
             break;
         }
         case glBufferData_INDEX: {
             INDEXED_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum *unpacked = (INDEXED_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum *)packed;
             ARGS_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum args = unpacked->args;
-            printf("glBufferData(%u, %d, %p, %u);\n", args.a1, args.a2, args.a3, args.a4);
+            printf("glBufferData(0x%04X, %d, %p, 0x%04X);\n", args.a1, args.a2, args.a3, args.a4);
             break;
         }
         case glBufferSubData_INDEX: {
             INDEXED_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glBufferSubData(%u, %d, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            printf("glBufferSubData(0x%04X, %d, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
             break;
         }
         case glClear_INDEX: {
@@ -282,19 +282,19 @@ void mock_print(const indexed_call_t *packed) {
         case glClientActiveTexture_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glClientActiveTexture(%u);\n", args.a1);
+            printf("glClientActiveTexture(0x%04X);\n", args.a1);
             break;
         }
         case glClipPlanef_INDEX: {
             INDEXED_void_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glClipPlanef(%u, %p);\n", args.a1, args.a2);
+            printf("glClipPlanef(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glClipPlanex_INDEX: {
             INDEXED_void_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glClipPlanex(%u, %p);\n", args.a1, args.a2);
+            printf("glClipPlanex(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glColor4f_INDEX: {
@@ -324,37 +324,37 @@ void mock_print(const indexed_call_t *packed) {
         case glColorPointer_INDEX: {
             INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glColorPointer(%d, %u, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            printf("glColorPointer(%d, 0x%04X, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
             break;
         }
         case glCompressedTexImage2D_INDEX: {
             INDEXED_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glCompressedTexImage2D(%u, %d, %u, %d, %d, %d, %d, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8);
+            printf("glCompressedTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8);
             break;
         }
         case glCompressedTexSubImage2D_INDEX: {
             INDEXED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glCompressedTexSubImage2D(%u, %d, %d, %d, %d, %d, %u, %d, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8, args.a9);
+            printf("glCompressedTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, %d, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8, args.a9);
             break;
         }
         case glCopyTexImage2D_INDEX: {
             INDEXED_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint *unpacked = (INDEXED_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint *)packed;
             ARGS_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint args = unpacked->args;
-            printf("glCopyTexImage2D(%u, %d, %u, %d, %d, %d, %d, %d);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8);
+            printf("glCopyTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %d);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8);
             break;
         }
         case glCopyTexSubImage2D_INDEX: {
             INDEXED_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei *unpacked = (INDEXED_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei *)packed;
             ARGS_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei args = unpacked->args;
-            printf("glCopyTexSubImage2D(%u, %d, %d, %d, %d, %d, %d, %d);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8);
+            printf("glCopyTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, %d, %d);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8);
             break;
         }
         case glCullFace_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glCullFace(%u);\n", args.a1);
+            printf("glCullFace(0x%04X);\n", args.a1);
             break;
         }
         case glDeleteBuffers_INDEX: {
@@ -372,7 +372,7 @@ void mock_print(const indexed_call_t *packed) {
         case glDepthFunc_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glDepthFunc(%u);\n", args.a1);
+            printf("glDepthFunc(0x%04X);\n", args.a1);
             break;
         }
         case glDepthMask_INDEX: {
@@ -396,37 +396,37 @@ void mock_print(const indexed_call_t *packed) {
         case glDisable_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glDisable(%u);\n", args.a1);
+            printf("glDisable(0x%04X);\n", args.a1);
             break;
         }
         case glDisableClientState_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glDisableClientState(%u);\n", args.a1);
+            printf("glDisableClientState(0x%04X);\n", args.a1);
             break;
         }
         case glDrawArrays_INDEX: {
             INDEXED_void_GLenum_GLint_GLsizei *unpacked = (INDEXED_void_GLenum_GLint_GLsizei *)packed;
             ARGS_void_GLenum_GLint_GLsizei args = unpacked->args;
-            printf("glDrawArrays(%u, %d, %d);\n", args.a1, args.a2, args.a3);
+            printf("glDrawArrays(0x%04X, %d, %d);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glDrawElements_INDEX: {
             INDEXED_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glDrawElements(%u, %d, %u, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            printf("glDrawElements(0x%04X, %d, 0x%04X, %p);\n", args.a1, args.a2, args.a3, args.a4);
             break;
         }
         case glEnable_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glEnable(%u);\n", args.a1);
+            printf("glEnable(0x%04X);\n", args.a1);
             break;
         }
         case glEnableClientState_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glEnableClientState(%u);\n", args.a1);
+            printf("glEnableClientState(0x%04X);\n", args.a1);
             break;
         }
         case glFinish_INDEX: {
@@ -442,31 +442,31 @@ void mock_print(const indexed_call_t *packed) {
         case glFogf_INDEX: {
             INDEXED_void_GLenum_GLfloat *unpacked = (INDEXED_void_GLenum_GLfloat *)packed;
             ARGS_void_GLenum_GLfloat args = unpacked->args;
-            printf("glFogf(%u, %0.2f);\n", args.a1, args.a2);
+            printf("glFogf(0x%04X, %0.2f);\n", args.a1, args.a2);
             break;
         }
         case glFogfv_INDEX: {
             INDEXED_void_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glFogfv(%u, %p);\n", args.a1, args.a2);
+            printf("glFogfv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glFogx_INDEX: {
             INDEXED_void_GLenum_GLfixed *unpacked = (INDEXED_void_GLenum_GLfixed *)packed;
             ARGS_void_GLenum_GLfixed args = unpacked->args;
-            printf("glFogx(%u, %p);\n", args.a1, args.a2);
+            printf("glFogx(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glFogxv_INDEX: {
             INDEXED_void_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glFogxv(%u, %p);\n", args.a1, args.a2);
+            printf("glFogxv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glFrontFace_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glFrontFace(%u);\n", args.a1);
+            printf("glFrontFace(0x%04X);\n", args.a1);
             break;
         }
         case glFrustumf_INDEX: {
@@ -496,25 +496,25 @@ void mock_print(const indexed_call_t *packed) {
         case glGetBooleanv_INDEX: {
             INDEXED_void_GLenum_GLboolean___GENPT__ *unpacked = (INDEXED_void_GLenum_GLboolean___GENPT__ *)packed;
             ARGS_void_GLenum_GLboolean___GENPT__ args = unpacked->args;
-            printf("glGetBooleanv(%u, %p);\n", args.a1, args.a2);
+            printf("glGetBooleanv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glGetBufferParameteriv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLint___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLint___GENPT__ args = unpacked->args;
-            printf("glGetBufferParameteriv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetBufferParameteriv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetClipPlanef_INDEX: {
             INDEXED_void_GLenum_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLfloat___GENPT__ args = unpacked->args;
-            printf("glGetClipPlanef(%u, %p);\n", args.a1, args.a2);
+            printf("glGetClipPlanef(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glGetClipPlanex_INDEX: {
             INDEXED_void_GLenum_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLfixed___GENPT__ args = unpacked->args;
-            printf("glGetClipPlanex(%u, %p);\n", args.a1, args.a2);
+            printf("glGetClipPlanex(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glGetError_INDEX: {
@@ -525,97 +525,97 @@ void mock_print(const indexed_call_t *packed) {
         case glGetFixedv_INDEX: {
             INDEXED_void_GLenum_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLfixed___GENPT__ args = unpacked->args;
-            printf("glGetFixedv(%u, %p);\n", args.a1, args.a2);
+            printf("glGetFixedv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glGetFloatv_INDEX: {
             INDEXED_void_GLenum_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLfloat___GENPT__ args = unpacked->args;
-            printf("glGetFloatv(%u, %p);\n", args.a1, args.a2);
+            printf("glGetFloatv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glGetIntegerv_INDEX: {
             INDEXED_void_GLenum_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLint___GENPT__ *)packed;
             ARGS_void_GLenum_GLint___GENPT__ args = unpacked->args;
-            printf("glGetIntegerv(%u, %p);\n", args.a1, args.a2);
+            printf("glGetIntegerv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glGetLightfv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfloat___GENPT__ args = unpacked->args;
-            printf("glGetLightfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetLightfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetLightxv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfixed___GENPT__ args = unpacked->args;
-            printf("glGetLightxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetLightxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetMaterialfv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfloat___GENPT__ args = unpacked->args;
-            printf("glGetMaterialfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetMaterialfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetMaterialxv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfixed___GENPT__ args = unpacked->args;
-            printf("glGetMaterialxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetMaterialxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetPointerv_INDEX: {
             INDEXED_void_GLenum_GLvoid___GENPT____GENPT__ *unpacked = (INDEXED_void_GLenum_GLvoid___GENPT____GENPT__ *)packed;
             ARGS_void_GLenum_GLvoid___GENPT____GENPT__ args = unpacked->args;
-            printf("glGetPointerv(%u, %p);\n", args.a1, args.a2);
+            printf("glGetPointerv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glGetString_INDEX: {
             INDEXED_const_GLubyte___GENPT___GLenum *unpacked = (INDEXED_const_GLubyte___GENPT___GLenum *)packed;
             ARGS_const_GLubyte___GENPT___GLenum args = unpacked->args;
-            printf("glGetString(%u);\n", args.a1);
+            printf("glGetString(0x%04X);\n", args.a1);
             break;
         }
         case glGetTexEnvfv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfloat___GENPT__ args = unpacked->args;
-            printf("glGetTexEnvfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetTexEnvfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetTexEnviv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLint___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLint___GENPT__ args = unpacked->args;
-            printf("glGetTexEnviv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetTexEnviv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetTexEnvxv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfixed___GENPT__ args = unpacked->args;
-            printf("glGetTexEnvxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetTexEnvxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetTexParameterfv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfloat___GENPT__ args = unpacked->args;
-            printf("glGetTexParameterfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetTexParameterfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetTexParameteriv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLint___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLint___GENPT__ args = unpacked->args;
-            printf("glGetTexParameteriv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetTexParameteriv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetTexParameterxv_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_GLfixed___GENPT__ args = unpacked->args;
-            printf("glGetTexParameterxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glGetTexParameterxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glHint_INDEX: {
             INDEXED_void_GLenum_GLenum *unpacked = (INDEXED_void_GLenum_GLenum *)packed;
             ARGS_void_GLenum_GLenum args = unpacked->args;
-            printf("glHint(%u, %u);\n", args.a1, args.a2);
+            printf("glHint(0x%04X, 0x%04X);\n", args.a1, args.a2);
             break;
         }
         case glIsBuffer_INDEX: {
@@ -627,7 +627,7 @@ void mock_print(const indexed_call_t *packed) {
         case glIsEnabled_INDEX: {
             INDEXED_GLboolean_GLenum *unpacked = (INDEXED_GLboolean_GLenum *)packed;
             ARGS_GLboolean_GLenum args = unpacked->args;
-            printf("glIsEnabled(%u);\n", args.a1);
+            printf("glIsEnabled(0x%04X);\n", args.a1);
             break;
         }
         case glIsTexture_INDEX: {
@@ -639,49 +639,49 @@ void mock_print(const indexed_call_t *packed) {
         case glLightModelf_INDEX: {
             INDEXED_void_GLenum_GLfloat *unpacked = (INDEXED_void_GLenum_GLfloat *)packed;
             ARGS_void_GLenum_GLfloat args = unpacked->args;
-            printf("glLightModelf(%u, %0.2f);\n", args.a1, args.a2);
+            printf("glLightModelf(0x%04X, %0.2f);\n", args.a1, args.a2);
             break;
         }
         case glLightModelfv_INDEX: {
             INDEXED_void_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glLightModelfv(%u, %p);\n", args.a1, args.a2);
+            printf("glLightModelfv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glLightModelx_INDEX: {
             INDEXED_void_GLenum_GLfixed *unpacked = (INDEXED_void_GLenum_GLfixed *)packed;
             ARGS_void_GLenum_GLfixed args = unpacked->args;
-            printf("glLightModelx(%u, %p);\n", args.a1, args.a2);
+            printf("glLightModelx(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glLightModelxv_INDEX: {
             INDEXED_void_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glLightModelxv(%u, %p);\n", args.a1, args.a2);
+            printf("glLightModelxv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glLightf_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat *)packed;
             ARGS_void_GLenum_GLenum_GLfloat args = unpacked->args;
-            printf("glLightf(%u, %u, %0.2f);\n", args.a1, args.a2, args.a3);
+            printf("glLightf(0x%04X, 0x%04X, %0.2f);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glLightfv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glLightfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glLightfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glLightx_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed *)packed;
             ARGS_void_GLenum_GLenum_GLfixed args = unpacked->args;
-            printf("glLightx(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glLightx(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glLightxv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glLightxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glLightxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glLineWidth_INDEX: {
@@ -716,37 +716,37 @@ void mock_print(const indexed_call_t *packed) {
         case glLogicOp_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glLogicOp(%u);\n", args.a1);
+            printf("glLogicOp(0x%04X);\n", args.a1);
             break;
         }
         case glMaterialf_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat *)packed;
             ARGS_void_GLenum_GLenum_GLfloat args = unpacked->args;
-            printf("glMaterialf(%u, %u, %0.2f);\n", args.a1, args.a2, args.a3);
+            printf("glMaterialf(0x%04X, 0x%04X, %0.2f);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glMaterialfv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glMaterialfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glMaterialfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glMaterialx_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed *)packed;
             ARGS_void_GLenum_GLenum_GLfixed args = unpacked->args;
-            printf("glMaterialx(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glMaterialx(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glMaterialxv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glMaterialxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glMaterialxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glMatrixMode_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glMatrixMode(%u);\n", args.a1);
+            printf("glMatrixMode(0x%04X);\n", args.a1);
             break;
         }
         case glMultMatrixf_INDEX: {
@@ -764,13 +764,13 @@ void mock_print(const indexed_call_t *packed) {
         case glMultiTexCoord4f_INDEX: {
             INDEXED_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat *unpacked = (INDEXED_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat *)packed;
             ARGS_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat args = unpacked->args;
-            printf("glMultiTexCoord4f(%u, %0.2f, %0.2f, %0.2f, %0.2f);\n", args.a1, args.a2, args.a3, args.a4, args.a5);
+            printf("glMultiTexCoord4f(0x%04X, %0.2f, %0.2f, %0.2f, %0.2f);\n", args.a1, args.a2, args.a3, args.a4, args.a5);
             break;
         }
         case glMultiTexCoord4x_INDEX: {
             INDEXED_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed *unpacked = (INDEXED_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed *)packed;
             ARGS_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed args = unpacked->args;
-            printf("glMultiTexCoord4x(%u, %p, %p, %p, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5);
+            printf("glMultiTexCoord4x(0x%04X, %p, %p, %p, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5);
             break;
         }
         case glNormal3f_INDEX: {
@@ -788,7 +788,7 @@ void mock_print(const indexed_call_t *packed) {
         case glNormalPointer_INDEX: {
             INDEXED_void_GLenum_GLsizei_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLsizei_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLsizei_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glNormalPointer(%u, %d, %p);\n", args.a1, args.a2, args.a3);
+            printf("glNormalPointer(0x%04X, %d, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glOrthof_INDEX: {
@@ -806,31 +806,31 @@ void mock_print(const indexed_call_t *packed) {
         case glPixelStorei_INDEX: {
             INDEXED_void_GLenum_GLint *unpacked = (INDEXED_void_GLenum_GLint *)packed;
             ARGS_void_GLenum_GLint args = unpacked->args;
-            printf("glPixelStorei(%u, %d);\n", args.a1, args.a2);
+            printf("glPixelStorei(0x%04X, %d);\n", args.a1, args.a2);
             break;
         }
         case glPointParameterf_INDEX: {
             INDEXED_void_GLenum_GLfloat *unpacked = (INDEXED_void_GLenum_GLfloat *)packed;
             ARGS_void_GLenum_GLfloat args = unpacked->args;
-            printf("glPointParameterf(%u, %0.2f);\n", args.a1, args.a2);
+            printf("glPointParameterf(0x%04X, %0.2f);\n", args.a1, args.a2);
             break;
         }
         case glPointParameterfv_INDEX: {
             INDEXED_void_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glPointParameterfv(%u, %p);\n", args.a1, args.a2);
+            printf("glPointParameterfv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glPointParameterx_INDEX: {
             INDEXED_void_GLenum_GLfixed *unpacked = (INDEXED_void_GLenum_GLfixed *)packed;
             ARGS_void_GLenum_GLfixed args = unpacked->args;
-            printf("glPointParameterx(%u, %p);\n", args.a1, args.a2);
+            printf("glPointParameterx(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glPointParameterxv_INDEX: {
             INDEXED_void_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glPointParameterxv(%u, %p);\n", args.a1, args.a2);
+            printf("glPointParameterxv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
         case glPointSize_INDEX: {
@@ -842,7 +842,7 @@ void mock_print(const indexed_call_t *packed) {
         case glPointSizePointerOES_INDEX: {
             INDEXED_void_GLenum_GLsizei_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLsizei_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLsizei_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glPointSizePointerOES(%u, %d, %p);\n", args.a1, args.a2, args.a3);
+            printf("glPointSizePointerOES(0x%04X, %d, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glPointSizex_INDEX: {
@@ -876,7 +876,7 @@ void mock_print(const indexed_call_t *packed) {
         case glReadPixels_INDEX: {
             INDEXED_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__ *)packed;
             ARGS_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__ args = unpacked->args;
-            printf("glReadPixels(%d, %d, %d, %d, %u, %u, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7);
+            printf("glReadPixels(%d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7);
             break;
         }
         case glRotatef_INDEX: {
@@ -924,13 +924,13 @@ void mock_print(const indexed_call_t *packed) {
         case glShadeModel_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
-            printf("glShadeModel(%u);\n", args.a1);
+            printf("glShadeModel(0x%04X);\n", args.a1);
             break;
         }
         case glStencilFunc_INDEX: {
             INDEXED_void_GLenum_GLint_GLuint *unpacked = (INDEXED_void_GLenum_GLint_GLuint *)packed;
             ARGS_void_GLenum_GLint_GLuint args = unpacked->args;
-            printf("glStencilFunc(%u, %d, %u);\n", args.a1, args.a2, args.a3);
+            printf("glStencilFunc(0x%04X, %d, %u);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glStencilMask_INDEX: {
@@ -942,97 +942,97 @@ void mock_print(const indexed_call_t *packed) {
         case glStencilOp_INDEX: {
             INDEXED_void_GLenum_GLenum_GLenum *unpacked = (INDEXED_void_GLenum_GLenum_GLenum *)packed;
             ARGS_void_GLenum_GLenum_GLenum args = unpacked->args;
-            printf("glStencilOp(%u, %u, %u);\n", args.a1, args.a2, args.a3);
+            printf("glStencilOp(0x%04X, 0x%04X, 0x%04X);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexCoordPointer_INDEX: {
             INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glTexCoordPointer(%d, %u, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            printf("glTexCoordPointer(%d, 0x%04X, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
             break;
         }
         case glTexEnvf_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat *)packed;
             ARGS_void_GLenum_GLenum_GLfloat args = unpacked->args;
-            printf("glTexEnvf(%u, %u, %0.2f);\n", args.a1, args.a2, args.a3);
+            printf("glTexEnvf(0x%04X, 0x%04X, %0.2f);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexEnvfv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glTexEnvfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexEnvfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexEnvi_INDEX: {
             INDEXED_void_GLenum_GLenum_GLint *unpacked = (INDEXED_void_GLenum_GLenum_GLint *)packed;
             ARGS_void_GLenum_GLenum_GLint args = unpacked->args;
-            printf("glTexEnvi(%u, %u, %d);\n", args.a1, args.a2, args.a3);
+            printf("glTexEnvi(0x%04X, 0x%04X, %d);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexEnviv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLint___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLint___GENPT__ args = unpacked->args;
-            printf("glTexEnviv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexEnviv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexEnvx_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed *)packed;
             ARGS_void_GLenum_GLenum_GLfixed args = unpacked->args;
-            printf("glTexEnvx(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexEnvx(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexEnvxv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glTexEnvxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexEnvxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexImage2D_INDEX: {
             INDEXED_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glTexImage2D(%u, %d, %d, %d, %d, %d, %u, %u, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8, args.a9);
+            printf("glTexImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8, args.a9);
             break;
         }
         case glTexParameterf_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfloat *unpacked = (INDEXED_void_GLenum_GLenum_GLfloat *)packed;
             ARGS_void_GLenum_GLenum_GLfloat args = unpacked->args;
-            printf("glTexParameterf(%u, %u, %0.2f);\n", args.a1, args.a2, args.a3);
+            printf("glTexParameterf(0x%04X, 0x%04X, %0.2f);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexParameterfv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfloat___GENPT__ args = unpacked->args;
-            printf("glTexParameterfv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexParameterfv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexParameteri_INDEX: {
             INDEXED_void_GLenum_GLenum_GLint *unpacked = (INDEXED_void_GLenum_GLenum_GLint *)packed;
             ARGS_void_GLenum_GLenum_GLint args = unpacked->args;
-            printf("glTexParameteri(%u, %u, %d);\n", args.a1, args.a2, args.a3);
+            printf("glTexParameteri(0x%04X, 0x%04X, %d);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexParameteriv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLint___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLint___GENPT__ args = unpacked->args;
-            printf("glTexParameteriv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexParameteriv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexParameterx_INDEX: {
             INDEXED_void_GLenum_GLenum_GLfixed *unpacked = (INDEXED_void_GLenum_GLenum_GLfixed *)packed;
             ARGS_void_GLenum_GLenum_GLfixed args = unpacked->args;
-            printf("glTexParameterx(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexParameterx(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexParameterxv_INDEX: {
             INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__ *)packed;
             ARGS_void_GLenum_GLenum_const_GLfixed___GENPT__ args = unpacked->args;
-            printf("glTexParameterxv(%u, %u, %p);\n", args.a1, args.a2, args.a3);
+            printf("glTexParameterxv(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glTexSubImage2D_INDEX: {
             INDEXED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glTexSubImage2D(%u, %d, %d, %d, %d, %d, %u, %u, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8, args.a9);
+            printf("glTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8, args.a9);
             break;
         }
         case glTranslatef_INDEX: {
@@ -1050,7 +1050,7 @@ void mock_print(const indexed_call_t *packed) {
         case glVertexPointer_INDEX: {
             INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__ args = unpacked->args;
-            printf("glVertexPointer(%d, %u, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            printf("glVertexPointer(%d, 0x%04X, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
             break;
         }
         case glViewport_INDEX: {
