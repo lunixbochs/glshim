@@ -131,7 +131,7 @@ typedef struct {
     pointer_state_t verts;
     pointer_state_t color;
     pointer_state_t normal;
-    pointer_state_t tex;
+    pointer_state_t tex[MAX_TEX];
 
     unsigned int len;
     unsigned int cap;
