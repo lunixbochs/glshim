@@ -584,6 +584,14 @@ Bool glXIsDirect(Display *dpy, GLXContext ctx) {
     return true;
 }
 
+GLXWindow glXCreateWindow(Display *dpy, GLXFBConfig config, Window win, const int *attrib_list) {
+    PROXY_GLES(glXCreateWindow);
+}
+
+void glXDestroyWindow(Display *dpy, GLXWindow win) {
+    PROXY_GLES(glXDestroyWindow);
+}
+
 void glXUseXFont(Font font, int first, int count, int list) {
     PROXY_GLES(glXUseXFont);
 }

@@ -29,19 +29,30 @@ void *glXGetProcAddressARB(const GLubyte *name) {
 #endif
 
     // glX calls
+    EX(glXChooseFBConfig);
     EX(glXChooseVisual);
     EX(glXCopyContext);
     EX(glXCreateContext);
+    EX(glXCreateContextAttribsARB);
     EX(glXCreateGLXPixmap);
+    EX(glXCreateWindow);
     EX(glXDestroyContext);
     EX(glXDestroyGLXPixmap);
+    EX(glXDestroyWindow);
+    EX(glXGetClientString);
     EX(glXGetConfig);
+    EX(glXGetCurrentContext);
     EX(glXGetCurrentDisplay);
     EX(glXGetCurrentDrawable);
+    EX(glXGetFBConfigAttrib);
+    EX(glXGetFBConfigs);
+    EX(glXGetVisualFromFBConfig);
     EX(glXIsDirect);
     EX(glXMakeCurrent);
+    EX(glXQueryExtension);
     EX(glXQueryExtensionsString);
     EX(glXQueryServerString);
+    EX(glXQueryVersion);
     EX(glXSwapBuffers);
     EX(glXSwapIntervalEXT);
     EX(glXSwapIntervalMESA);
