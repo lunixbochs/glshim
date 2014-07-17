@@ -596,6 +596,9 @@ void glCallLists(GLsizei n, GLenum type, const GLvoid *lists) {
 void glDeleteList(GLuint list) {
     displaylist_t *l = get_list(list);
     if (l) {
+        if (state.list.active == l) {
+            state.list.active = NULL;
+        }
         dl_free(l);
         state.lists[list-1] = NULL;
     }
