@@ -1,7 +1,7 @@
 #include "stack.h"
 
-glstack_t *stack = NULL;
-glclientstack_t *clientStack = NULL;
+static glstack_t *stack = NULL;
+static glclientstack_t *client_stack = NULL;
 
 void glPushAttrib(GLbitfield mask) {
     if (stack == NULL) {
@@ -178,16 +178,16 @@ void glPushAttrib(GLbitfield mask) {
 }
 
 void glPushClientAttrib(GLbitfield mask) {
-    if (clientStack == NULL) {
-        clientStack = (glclientstack_t *)malloc(STACK_SIZE * sizeof(glclientstack_t));
-        clientStack->len = 0;
-        clientStack->cap = STACK_SIZE;
-    } else if (clientStack->len == clientStack->cap) {
-        clientStack->cap += STACK_SIZE;
-        clientStack = (glclientstack_t *)realloc(clientStack, clientStack->cap * sizeof(glclientstack_t));
+    if (client_stack == NULL) {
+        client_stack = (glclientstack_t *)malloc(STACK_SIZE * sizeof(glclientstack_t));
+        client_stack->len = 0;
+        client_stack->cap = STACK_SIZE;
+    } else if (client_stack->len == client_stack->cap) {
+        client_stack->cap += STACK_SIZE;
+        client_stack = (glclientstack_t *)realloc(client_stack, client_stack->cap * sizeof(glclientstack_t));
     }
 
-    glclientstack_t *cur = clientStack + clientStack->len;
+    glclientstack_t *cur = client_stack + client_stack->len;
     cur->mask = mask;
 
     if (mask & GL_CLIENT_PIXEL_STORE_BIT) {
@@ -210,7 +210,7 @@ void glPushClientAttrib(GLbitfield mask) {
         memcpy(&cur->tex, &state.pointers.tex_coord, sizeof(pointer_state_t) * MAX_TEX);
     }
 
-    clientStack->len++;
+    client_stack->len++;
 }
 
 #define maybe_free(x) \
@@ -364,10 +364,10 @@ void glPopAttrib() {
     else glDisableClientState(pname)
 
 void glPopClientAttrib() {
-    if (clientStack == NULL || clientStack->len == 0)
+    if (client_stack == NULL || client_stack->len == 0)
         return;
 
-    glclientstack_t *cur = clientStack + clientStack->len-1;
+    glclientstack_t *cur = client_stack + client_stack->len-1;
     if (cur->mask & GL_CLIENT_PIXEL_STORE_BIT) {
         glPixelStorei(GL_PACK_ALIGNMENT, cur->pack_align);
         glPixelStorei(GL_UNPACK_ALIGNMENT, cur->unpack_align);
@@ -393,7 +393,7 @@ void glPopClientAttrib() {
         memcpy(&state.pointers.tex_coord, &cur->tex, sizeof(pointer_state_t) * MAX_TEX);
     }
 
-    clientStack->len--;
+    client_stack->len--;
 }
 
 #undef maybe_free
