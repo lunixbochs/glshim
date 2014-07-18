@@ -607,5 +607,5 @@ void glListBase(GLuint base) {
 }
 
 GLboolean glIsList(GLuint list) {
-    return tack_get(&state.list, list) ? true : false;
+    return tack_get(&state.lists, list) ? true : false;
 }
