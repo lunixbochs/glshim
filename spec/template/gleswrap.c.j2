@@ -14,7 +14,7 @@
 {% endblock %}
 {% block call %}
 #ifndef direct_{{ func.name }}
-    PUSH_IF_COMPILING({{ func.name }})
+    PUSH_IF_COMPILING({{ func.name }});
 #endif
     {{ super() }}
 {% endblock %}
