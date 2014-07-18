@@ -1,7 +1,8 @@
 #include <stdio.h>
 
-#include "list.h"
+#include "block.h"
 #include "gl.h"
+#include "list.h"
 
 displaylist_t *dl_alloc() {
     displaylist_t *dl = calloc(1, sizeof(displaylist_t));

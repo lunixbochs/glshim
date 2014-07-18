@@ -1,5 +1,5 @@
-#include "gl.h"
 #include <limits.h>
+#include "extra.h"
 
 #define constDoubleToFloat(a, size) \
     GLfloat s[size];                \

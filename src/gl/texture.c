@@ -1,4 +1,11 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#include "gl_helpers.h"
+#include "loader.h"
+#include "pixel.h"
 #include "texture.h"
+#include "types.h"
 
 // expand non-power-of-two sizes
 // TODO: what does this do to repeating textures?

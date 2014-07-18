@@ -1,7 +1,8 @@
-#include "gl.h"
-
 #ifndef PIXEL_H
 #define PIXEL_H
+
+#include <GL/gl.h>
+#include <stdbool.h>
 
 typedef struct {
     GLenum type;

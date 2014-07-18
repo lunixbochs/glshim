@@ -1,49 +1,10 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include <stdint.h>
-#include "gl.h"
+#include "types.h"
 
 #define DEFAULT_BLOCK_CAPACITY 16
 #define RENDER_BLOCK_FORMAT -1
-
-typedef struct {
-    uint32_t len;
-    uint32_t cap;
-    GLenum mode;
-    struct {
-        GLfloat tex[MAX_TEX][2];
-    } last;
-
-    // TODO: dynamic type support?
-    /*
-    struct {
-        GLenum vert, normal, color, tex;
-    } type;
-    */
-
-    GLfloat *vert;
-    GLfloat *normal;
-    GLfloat *color;
-    GLfloat *tex[MAX_TEX];
-    GLushort *indices;
-    GLboolean q2t;
-
-    struct {
-        int tex[MAX_TEX], color, normal;
-    } incomplete;
-
-    GLboolean open;
-    GLboolean artificial;
-} block_t;
-
-void (*block_draw_t)(block_t *block);
-
-typedef struct {
-    int format;
-    block_t *block;
-    int refs;
-} block_call_t;
 
 extern block_t *bl_new(GLenum mode);
 extern void bl_free(block_t *block);

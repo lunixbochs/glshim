@@ -1,20 +1,8 @@
 #ifndef USE_ES2
-#include "../gl.h"
+#include "../types.h"
 
 #ifndef GLESWRAP_H
 #define GLESWRAP_H
-
-typedef struct {
-    int format;
-    void *func;
-    int refs;
-    void *args;
-} packed_call_t;
-
-typedef struct {
-    int func;
-    void *args;
-} indexed_call_t;
 
 enum FORMAT {
     FORMAT_int_Display___GENPT___int,

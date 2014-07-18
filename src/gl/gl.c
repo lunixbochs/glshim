@@ -1,5 +1,9 @@
-#include "gl.h"
-#include "tack.h"
+#include "array.h"
+#include "block.h"
+#include "list.h"
+#include "loader.h"
+#include "texture.h"
+#include "types.h"
 
 void *gles = NULL;
 glstate_t state = {

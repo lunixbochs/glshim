@@ -1,4 +1,7 @@
+#include "loader.h"
+#include "pixel.h"
 #include "raster.h"
+#include "texture.h"
 
 rasterpos_t rPos = {0, 0, 0};
 viewport_t viewport = {0, 0, 0, 0};
@@ -29,7 +32,7 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
 
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     PUSH_IF_COMPILING(glViewport);
-    PROXY_GLES(glViewport)
+    PROXY_GLES(glViewport);
     if (raster) {
         render_raster();
     }

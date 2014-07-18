@@ -1,17 +1,10 @@
-#include "gl.h"
-
 #ifndef DISPLAYLIST_H
 #define DISPLAYLIST_H
 
-#include "tack.h"
-
+#include <GL/gl.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-typedef struct {
-    bool open;
-    tack_t calls;
-} displaylist_t;
+#include "types.h"
 
 extern displaylist_t *dl_alloc();
 extern void dl_append(displaylist_t *dl, packed_call_t *call);

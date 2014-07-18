@@ -1,4 +1,7 @@
-#include "gl.h"
+#include <GL/gl.h>
+
+#include "loader.h"
+#include "matrix.h"
 
 // config functions
 const GLubyte *glGetString(GLenum name) {
@@ -42,5 +45,22 @@ void glGetIntegerv(GLenum pname, GLint *params) {
             break;
         default:
             gles_glGetIntegerv(pname, params);
+    }
+}
+
+void glGetFloatv(GLenum pname, GLfloat *params) {
+    LOAD_GLES(glGetFloatv);
+    switch (pname) {
+        case GL_MODELVIEW_MATRIX:
+            gl_get_matrix(GL_MODELVIEW, params);
+            break;
+        case GL_PROJECTION_MATRIX:
+            gl_get_matrix(GL_PROJECTION, params);
+            break;
+        case GL_TEXTURE_MATRIX:
+            gl_get_matrix(GL_TEXTURE, params);
+            break;
+        default:
+            gles_glGetFloatv(pname, params);
     }
 }

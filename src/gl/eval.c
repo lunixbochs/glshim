@@ -1,6 +1,7 @@
 // TODO: glIsEnabled(), glGetMap()
 // TODO: GL_AUTO_NORMAL
 
+#include "array.h"
 #include "eval.h"
 #include "math/eval.h"
 

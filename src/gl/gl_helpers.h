@@ -1,4 +1,5 @@
 #include <GL/gl.h>
+#include <stdio.h>
 
 #ifndef GL_HELPERS_H
 #define GL_HELPERS_H

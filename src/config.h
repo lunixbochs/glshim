@@ -11,10 +11,26 @@
 #define skip_glColor4f
 #define skip_glDisable
 #define skip_glEnable
-#define skip_glGetIntegerv
-#define skip_glGetString
 #define skip_glIsEnabled
 #define skip_glNormal3f
+
+// get.c
+#define skip_glGetFloatv
+#define skip_glGetIntegerv
+#define skip_glGetString
+
+// matrix.cpp
+#define skip_glFrustumf
+#define skip_glLoadIdentity
+#define skip_glLoadMatrixf
+#define skip_glMatrixMode
+#define skip_glMultMatrixf
+#define skip_glOrthof
+#define skip_glPopMatrix
+#define skip_glPushMatrix
+#define skip_glRotatef
+#define skip_glScalef
+#define skip_glTransformf
 
 // light.c
 #define skip_glLightModelf

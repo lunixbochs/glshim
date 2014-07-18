@@ -1,99 +1,210 @@
 #ifndef GL_TYPES_H
 #define GL_TYPES_H
 
+#include <GL/gl.h>
+#include <stdbool.h>
 #include <stdint.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 
-// gles
+#include "../config.h"
+#include "extypes.h"
+#include "khash.h"
+#include "tack.h"
+#include "wrap/types.h"
 
-typedef void *GLDEBUGPROC;
-typedef int32_t GLclampx;
-typedef int32_t GLfixed;
+// block.h
+typedef struct {
+    uint32_t len;
+    uint32_t cap;
+    GLenum mode;
+    struct {
+        GLfloat tex[MAX_TEX][2];
+    } last;
 
-// glx + x11
+    // TODO: dynamic type support?
+    /*
+    struct {
+        GLenum vert, normal, color, tex;
+    } type;
+    */
 
-typedef void *DMbuffer;
-typedef void *GLXContextID;
-typedef int GLXDrawable;
-typedef void *GLXFBConfigSGIX;
-typedef void *GLXHyperpipeConfigSGIX;
-typedef void *GLXHyperpipeNetworkSGIX;
-typedef void *GLXPbuffer;
-typedef void *GLXPbufferSGIX;
-typedef void *GLXPixmap;
-typedef void *GLXVideoCaptureDeviceNV;
-typedef void *GLXVideoDeviceNV;
-typedef void *GLXVideoSourceSGIX;
-typedef void *GLXWindow;
-typedef void *VLNode;
-typedef void *VLPath;
-typedef void *VLServer;
-typedef void *__GLXextFuncPtr;
-typedef void DMparams;
+    GLfloat *vert;
+    GLfloat *normal;
+    GLfloat *color;
+    GLfloat *tex[MAX_TEX];
+    GLushort *indices;
+    GLboolean q2t;
 
-struct __GLXContextRec {
-    Display *display;
-    unsigned char direct;
-    int currentWritable;
-    int currentReadable;
-    XID xid;
-};
-typedef struct __GLXContextRec *GLXContext;
+    struct {
+        int tex[MAX_TEX], color, normal;
+    } incomplete;
 
-struct __GLXFBConfigRec {
-    int visualType;
-    int transparentType;
-                                /*    colors are floats scaled to ints */
-    int transparentRed, transparentGreen, transparentBlue, transparentAlpha;
-    int transparentIndex;
+    GLboolean open;
+    GLboolean artificial;
+} block_t;
 
-    int visualCaveat;
+void (*block_draw_t)(block_t *block);
 
-    int associatedVisualId;
-    int screen;
+typedef struct {
+    int format;
+    block_t *block;
+    int refs;
+} block_call_t;
 
-    int drawableType;
-    int renderType;
+// eval.h
+typedef struct {
+    GLenum type;
+} map_state_t;
 
-    int maxPbufferWidth, maxPbufferHeight, maxPbufferPixels;
-    int optimalPbufferWidth, optimalPbufferHeight;  /* for SGIX_pbuffer */
+typedef struct {
+    GLdouble _1, _2, n, d;
+    GLint stride, order;
+} mapcoordd_t;
 
-    int visualSelectGroup;  /* visuals grouped by select priority */
+typedef struct {
+    GLdouble _1, _2, n, d;
+    GLint stride, order;
+} mapcoordf_t;
 
-    unsigned int id;
+typedef struct {
+    GLenum type;
+    GLint dims, width;
+    mapcoordd_t u, v;
+    GLboolean free;
+    const GLdouble *points;
+} map_stated_t;
 
-    unsigned char rgbMode;
-    unsigned char colorIndexMode;
-    unsigned char doubleBufferMode;
-    unsigned char stereoMode;
-    unsigned char haveAccumBuffer;
-    unsigned char haveDepthBuffer;
-    unsigned char haveStencilBuffer;
+typedef struct {
+    GLenum type;
+    GLint dims, width;
+    mapcoordf_t u, v;
+    GLboolean free;
+    const GLfloat *points;
+} map_statef_t;
 
-    /* The number of bits present in various buffers */
-    int accumRedBits, accumGreenBits, accumBlueBits, accumAlphaBits;
-    int depthBits;
-    int stencilBits;
-    int indexBits;
-    int redBits, greenBits, blueBits, alphaBits;
-    unsigned int redMask, greenMask, blueMask, alphaMask;
+// list.h
+typedef struct {
+    bool open;
+    tack_t calls;
+} displaylist_t;
 
-    unsigned int multiSampleSize; /* Number of samples per pixel (0 if no ms) */
+// texture.h
+typedef struct {
+    GLuint texture;
+    GLenum target;
+    GLsizei width;
+    GLsizei height;
+    GLsizei nwidth;
+    GLsizei nheight;
+    GLboolean uploaded;
+} gltexture_t;
 
-    unsigned int nMultiSampleBuffers; /* Number of availble ms buffers */
-    int maxAuxBuffers;
+KHASH_MAP_INIT_INT(tex, gltexture_t *)
 
-    /* frame buffer level */
-    int level;
+// state.h
+typedef struct {
+    GLboolean line_stipple,
+              blend,
+              color_array,
+              normal_array,
+              tex_coord_array[MAX_TEX],
+              texgen_s[MAX_TEX],
+              texgen_t[MAX_TEX],
+              texture_2d[MAX_TEX],
+              vertex_array;
+} enable_state_t;
 
-    /* color ranges (for SGI_color_range) */
-    unsigned char extendedRange;
-    double minRed, maxRed;
-    double minGreen, maxGreen;
-    double minBlue, maxBlue;
-    double minAlpha, maxAlpha;
-};
-typedef struct __GLXFBConfigRec *GLXFBConfig;
+typedef struct {
+    GLenum S;
+    GLenum T;
+    GLfloat Sv[4];
+    GLfloat Tv[4];
+} texgen_state_t;
+
+typedef struct {
+    GLuint unpack_row_length,
+           unpack_skip_pixels,
+           unpack_skip_rows;
+    GLboolean unpack_lsb_first;
+    // TODO: do we only need to worry about GL_TEXTURE_2D?
+    GLboolean rect_arb[MAX_TEX];
+    gltexture_t *bound[MAX_TEX];
+    khash_t(tex) *list;
+    // active textures
+    GLuint active;
+    GLuint client;
+} texture_state_t;
+
+typedef struct {
+    GLint size;
+    GLenum type;
+    GLsizei stride;
+    const GLvoid *pointer;
+} pointer_state_t;
+
+typedef struct {
+    pointer_state_t vertex, color, normal, tex_coord[MAX_TEX];
+} pointer_states_t;
+
+typedef struct {
+    GLfloat color[4];
+    GLfloat normal[3];
+    GLfloat tex[MAX_TEX][2];
+} current_state_t;
+
+typedef struct {
+    displaylist_t *active;
+    current_state_t current;
+
+    GLuint base;
+    GLuint name;
+    GLenum mode;
+} displaylist_state_t;
+
+typedef struct {
+    block_t *active;
+    GLboolean locked;
+} block_state_t;
+
+typedef struct {
+    map_state_t *vertex3,
+                *vertex4,
+                *index,
+                *color4,
+                *normal,
+                *texture1,
+                *texture2,
+                *texture3,
+                *texture4;
+} map_states_t;
+
+// matrix structs
+typedef struct {
+    void *matrix;
+    tack_t stack;
+} matrix_state_t;
+
+typedef struct {
+    GLenum mode;
+    matrix_state_t model, projection, texture, color;
+} matrix_states_t;
+
+// global state struct
+typedef struct {
+    displaylist_state_t list;
+    tack_t lists;
+
+    block_state_t block;
+    current_state_t current;
+    enable_state_t enable;
+    map_state_t *map_grid;
+    map_states_t map1, map2;
+    matrix_states_t matrix;
+    pointer_states_t pointers;
+    texgen_state_t texgen[MAX_TEX];
+    texture_state_t texture;
+} glstate_t;
+
+extern glstate_t state;
+#define CURRENT (state.list.active ? &state.list.current : &state.current)
 
 #endif

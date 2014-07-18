@@ -1,8 +1,7 @@
-#include "gl.h"
-#include "state.h"
-
 #ifndef GL_STACK_H
 #define GL_STACK_H
+
+#include "types.h"
 
 typedef struct {
     GLbitfield mask;

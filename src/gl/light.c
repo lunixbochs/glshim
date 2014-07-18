@@ -1,4 +1,5 @@
 #include "light.h"
+#include "loader.h"
 
 #ifndef USE_ES2
 void glLightModelf(GLenum pname, GLfloat param) {

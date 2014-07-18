@@ -1,20 +1,7 @@
 #ifdef USE_ES2
-#include "../gl.h"
 
 #ifndef GLES2WRAP_H
 #define GLES2WRAP_H
-
-typedef struct {
-    int format;
-    void *func;
-    int refs;
-    void *args;
-} packed_call_t;
-
-typedef struct {
-    int func;
-    void *args;
-} indexed_call_t;
 
 enum FORMAT {
     FORMAT_void_GLenum,

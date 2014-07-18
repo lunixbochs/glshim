@@ -11,13 +11,13 @@ cats="VERSION_1_0,VERSION_1_1,VERSION_1_2,VERSION_1_3,VERSION_1_4,VERSION_1_5,gl
 ./gen.py "$gles" mock.c.j2 mock.c mock.h > "$base/../test/util/mock.c" &
 ./gen.py "$gles" --ifndef USE_ES2 mock.h.j2 mock.h "wrap/gles.h" > "$base/../test/util/mock.h" &
 
-./gen.py "$gles" --ifndef USE_ES2 gleswrap.c.j2 gleswrap.c gles.h > "$base/gl/wrap/gles.c" &
-./gen.py --deep "$glx,$opengl,$gles" --ifndef USE_ES2 glwrap.h.j2 gleswrap.h ../gl.h > "$base/gl/wrap/gles.h" &
-./gen.py "$gles" --ifndef USE_ES2 glxfuncs.j2 glxfuncs.inc ../gl/gl.h > "$base/glx/glesfuncs.inc" &
+./gen.py "$gles" --ifndef USE_ES2 gleswrap.c.j2 gleswrap.c gles.h ../loader.h > "$base/gl/wrap/gles.c" &
+./gen.py --deep "$glx,$opengl,$gles" --ifndef USE_ES2 glwrap.h.j2 gleswrap.h ../types.h > "$base/gl/wrap/gles.h" &
+./gen.py "$gles" --ifndef USE_ES2 glxfuncs.j2 glxfuncs.inc > "$base/glx/glesfuncs.inc" &
 
-./gen.py "$gles2" --ifdef USE_ES2 gleswrap.c.j2 gles2wrap.c gles2.h > "$base/gl/wrap/gles2.c" &
-./gen.py "$gles2" --ifdef USE_ES2 glwrap.h.j2 gles2wrap.h ../gl.h > "$base/gl/wrap/gles2.h" &
-./gen.py "$gles2" --ifdef USE_ES2 glxfuncs.j2 gles2funcs.inc ../gl/gl.h > "$base/glx/gles2funcs.inc" &
+./gen.py "$gles2" --ifdef USE_ES2 gleswrap.c.j2 gles2wrap.c gles2.h ../loader.h > "$base/gl/wrap/gles2.c" &
+./gen.py "$gles2" --ifdef USE_ES2 glwrap.h.j2 gles2wrap.h > "$base/gl/wrap/gles2.h" &
+./gen.py "$gles2" --ifdef USE_ES2 glxfuncs.j2 gles2funcs.inc > "$base/glx/gles2funcs.inc" &
 
 # ./gen.py "yml/egl.yml" eglwrap.c.j2 eglwrap.c "<GLES/egl.h>" > "$base/gl/wrap/egl.c" &
 

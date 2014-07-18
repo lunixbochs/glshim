@@ -1,4 +1,5 @@
 #include "array.h"
+#include "eval.h"
 
 GLvoid *copy_gl_array(const GLvoid *src,
                       GLenum from, GLsizei width, GLsizei stride,
