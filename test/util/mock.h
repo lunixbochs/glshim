@@ -6,11 +6,13 @@
 
 
 const char *mock_name(int func);
-indexed_call_t *mock_slide(int func);
-indexed_call_t *mock_peek();
-indexed_call_t *mock_shift();
+void *mock_cur();
+void *mock_first();
+void *mock_peek();
+void *mock_shift();
+void *mock_slide(int func);
 void mock_print(const indexed_call_t *packed);
-void mock_push(indexed_call_t *call);
+void mock_push(void *call);
 
 static int verbose_test = 0;
 static int failed_test = 0;
@@ -38,14 +40,14 @@ static int failed_test = 0;
     mock_push(pack_glActiveTexture(texture)); \
 }
 #define test_glActiveTexture(texture) { \
-    glActiveTexture_INDEXED *packed = mock_peek(); \
+    glActiveTexture_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glActiveTexture missing (no calls left)\n"); \
     } else if (packed->func != glActiveTexture_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glActiveTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glActiveTexture missing\n"); \
@@ -55,7 +57,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -69,7 +71,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glActiveTexture(0x%04X);\n", texture); \
         } \
     } \
@@ -85,14 +87,14 @@ static int failed_test = 0;
     mock_push(pack_glAlphaFunc(func, ref)); \
 }
 #define test_glAlphaFunc(func, ref) { \
-    glAlphaFunc_INDEXED *packed = mock_peek(); \
+    glAlphaFunc_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glAlphaFunc missing (no calls left)\n"); \
     } else if (packed->func != glAlphaFunc_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glAlphaFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glAlphaFunc missing\n"); \
@@ -102,7 +104,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -119,7 +121,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glAlphaFunc(0x%04X, %p);\n", func, ref); \
         } \
     } \
@@ -135,14 +137,14 @@ static int failed_test = 0;
     mock_push(pack_glAlphaFuncx(func, ref)); \
 }
 #define test_glAlphaFuncx(func, ref) { \
-    glAlphaFuncx_INDEXED *packed = mock_peek(); \
+    glAlphaFuncx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glAlphaFuncx missing (no calls left)\n"); \
     } else if (packed->func != glAlphaFuncx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glAlphaFuncx_INDEX); \
         if (! packed) { \
             mock_errorf("glAlphaFuncx missing\n"); \
@@ -152,7 +154,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -169,7 +171,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glAlphaFuncx(0x%04X, %p);\n", func, ref); \
         } \
     } \
@@ -185,14 +187,14 @@ static int failed_test = 0;
     mock_push(pack_glBindBuffer(target, buffer)); \
 }
 #define test_glBindBuffer(target, buffer) { \
-    glBindBuffer_INDEXED *packed = mock_peek(); \
+    glBindBuffer_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glBindBuffer missing (no calls left)\n"); \
     } else if (packed->func != glBindBuffer_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glBindBuffer_INDEX); \
         if (! packed) { \
             mock_errorf("glBindBuffer missing\n"); \
@@ -202,7 +204,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -219,7 +221,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBindBuffer(0x%04X, %u);\n", target, buffer); \
         } \
     } \
@@ -235,14 +237,14 @@ static int failed_test = 0;
     mock_push(pack_glBindTexture(target, texture)); \
 }
 #define test_glBindTexture(target, texture) { \
-    glBindTexture_INDEXED *packed = mock_peek(); \
+    glBindTexture_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glBindTexture missing (no calls left)\n"); \
     } else if (packed->func != glBindTexture_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glBindTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glBindTexture missing\n"); \
@@ -252,7 +254,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -269,7 +271,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBindTexture(0x%04X, %u);\n", target, texture); \
         } \
     } \
@@ -285,14 +287,14 @@ static int failed_test = 0;
     mock_push(pack_glBlendFunc(sfactor, dfactor)); \
 }
 #define test_glBlendFunc(sfactor, dfactor) { \
-    glBlendFunc_INDEXED *packed = mock_peek(); \
+    glBlendFunc_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glBlendFunc missing (no calls left)\n"); \
     } else if (packed->func != glBlendFunc_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glBlendFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glBlendFunc missing\n"); \
@@ -302,7 +304,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -319,7 +321,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBlendFunc(0x%04X, 0x%04X);\n", sfactor, dfactor); \
         } \
     } \
@@ -337,14 +339,14 @@ static int failed_test = 0;
     mock_push(pack_glBufferData(target, size, data, usage)); \
 }
 #define test_glBufferData(target, size, data, usage) { \
-    glBufferData_INDEXED *packed = mock_peek(); \
+    glBufferData_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glBufferData missing (no calls left)\n"); \
     } else if (packed->func != glBufferData_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glBufferData_INDEX); \
         if (! packed) { \
             mock_errorf("glBufferData missing\n"); \
@@ -354,7 +356,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -379,7 +381,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBufferData(0x%04X, %d, %p, 0x%04X);\n", target, size, data, usage); \
         } \
     } \
@@ -397,14 +399,14 @@ static int failed_test = 0;
     mock_push(pack_glBufferSubData(target, offset, size, data)); \
 }
 #define test_glBufferSubData(target, offset, size, data) { \
-    glBufferSubData_INDEXED *packed = mock_peek(); \
+    glBufferSubData_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glBufferSubData missing (no calls left)\n"); \
     } else if (packed->func != glBufferSubData_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glBufferSubData_INDEX); \
         if (! packed) { \
             mock_errorf("glBufferSubData missing\n"); \
@@ -414,7 +416,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -439,7 +441,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBufferSubData(0x%04X, %d, %d, %p);\n", target, offset, size, data); \
         } \
     } \
@@ -454,14 +456,14 @@ static int failed_test = 0;
     mock_push(pack_glClear(mask)); \
 }
 #define test_glClear(mask) { \
-    glClear_INDEXED *packed = mock_peek(); \
+    glClear_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClear missing (no calls left)\n"); \
     } else if (packed->func != glClear_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClear_INDEX); \
         if (! packed) { \
             mock_errorf("glClear missing\n"); \
@@ -471,7 +473,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -485,7 +487,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClear(%d);\n", mask); \
         } \
     } \
@@ -503,14 +505,14 @@ static int failed_test = 0;
     mock_push(pack_glClearColor(red, green, blue, alpha)); \
 }
 #define test_glClearColor(red, green, blue, alpha) { \
-    glClearColor_INDEXED *packed = mock_peek(); \
+    glClearColor_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClearColor missing (no calls left)\n"); \
     } else if (packed->func != glClearColor_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClearColor_INDEX); \
         if (! packed) { \
             mock_errorf("glClearColor missing\n"); \
@@ -520,7 +522,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -543,7 +545,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearColor(%p, %p, %p, %p);\n", red, green, blue, alpha); \
         } \
     } \
@@ -561,14 +563,14 @@ static int failed_test = 0;
     mock_push(pack_glClearColorx(red, green, blue, alpha)); \
 }
 #define test_glClearColorx(red, green, blue, alpha) { \
-    glClearColorx_INDEXED *packed = mock_peek(); \
+    glClearColorx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClearColorx missing (no calls left)\n"); \
     } else if (packed->func != glClearColorx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClearColorx_INDEX); \
         if (! packed) { \
             mock_errorf("glClearColorx missing\n"); \
@@ -578,7 +580,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -601,7 +603,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearColorx(%p, %p, %p, %p);\n", red, green, blue, alpha); \
         } \
     } \
@@ -616,14 +618,14 @@ static int failed_test = 0;
     mock_push(pack_glClearDepthf(depth)); \
 }
 #define test_glClearDepthf(depth) { \
-    glClearDepthf_INDEXED *packed = mock_peek(); \
+    glClearDepthf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClearDepthf missing (no calls left)\n"); \
     } else if (packed->func != glClearDepthf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClearDepthf_INDEX); \
         if (! packed) { \
             mock_errorf("glClearDepthf missing\n"); \
@@ -633,7 +635,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -647,7 +649,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearDepthf(%p);\n", depth); \
         } \
     } \
@@ -662,14 +664,14 @@ static int failed_test = 0;
     mock_push(pack_glClearDepthx(depth)); \
 }
 #define test_glClearDepthx(depth) { \
-    glClearDepthx_INDEXED *packed = mock_peek(); \
+    glClearDepthx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClearDepthx missing (no calls left)\n"); \
     } else if (packed->func != glClearDepthx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClearDepthx_INDEX); \
         if (! packed) { \
             mock_errorf("glClearDepthx missing\n"); \
@@ -679,7 +681,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -693,7 +695,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearDepthx(%p);\n", depth); \
         } \
     } \
@@ -708,14 +710,14 @@ static int failed_test = 0;
     mock_push(pack_glClearStencil(s)); \
 }
 #define test_glClearStencil(s) { \
-    glClearStencil_INDEXED *packed = mock_peek(); \
+    glClearStencil_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClearStencil missing (no calls left)\n"); \
     } else if (packed->func != glClearStencil_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClearStencil_INDEX); \
         if (! packed) { \
             mock_errorf("glClearStencil missing\n"); \
@@ -725,7 +727,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -739,7 +741,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearStencil(%d);\n", s); \
         } \
     } \
@@ -754,14 +756,14 @@ static int failed_test = 0;
     mock_push(pack_glClientActiveTexture(texture)); \
 }
 #define test_glClientActiveTexture(texture) { \
-    glClientActiveTexture_INDEXED *packed = mock_peek(); \
+    glClientActiveTexture_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClientActiveTexture missing (no calls left)\n"); \
     } else if (packed->func != glClientActiveTexture_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClientActiveTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glClientActiveTexture missing\n"); \
@@ -771,7 +773,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -785,7 +787,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClientActiveTexture(0x%04X);\n", texture); \
         } \
     } \
@@ -801,14 +803,14 @@ static int failed_test = 0;
     mock_push(pack_glClipPlanef(plane, equation)); \
 }
 #define test_glClipPlanef(plane, equation) { \
-    glClipPlanef_INDEXED *packed = mock_peek(); \
+    glClipPlanef_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClipPlanef missing (no calls left)\n"); \
     } else if (packed->func != glClipPlanef_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClipPlanef_INDEX); \
         if (! packed) { \
             mock_errorf("glClipPlanef missing\n"); \
@@ -818,7 +820,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -837,7 +839,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClipPlanef(0x%04X, %p);\n", plane, equation); \
         } \
     } \
@@ -853,14 +855,14 @@ static int failed_test = 0;
     mock_push(pack_glClipPlanex(plane, equation)); \
 }
 #define test_glClipPlanex(plane, equation) { \
-    glClipPlanex_INDEXED *packed = mock_peek(); \
+    glClipPlanex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glClipPlanex missing (no calls left)\n"); \
     } else if (packed->func != glClipPlanex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glClipPlanex_INDEX); \
         if (! packed) { \
             mock_errorf("glClipPlanex missing\n"); \
@@ -870,7 +872,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -889,7 +891,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClipPlanex(0x%04X, %p);\n", plane, equation); \
         } \
     } \
@@ -907,14 +909,14 @@ static int failed_test = 0;
     mock_push(pack_glColor4f(red, green, blue, alpha)); \
 }
 #define test_glColor4f(red, green, blue, alpha) { \
-    glColor4f_INDEXED *packed = mock_peek(); \
+    glColor4f_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glColor4f missing (no calls left)\n"); \
     } else if (packed->func != glColor4f_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glColor4f_INDEX); \
         if (! packed) { \
             mock_errorf("glColor4f missing\n"); \
@@ -924,7 +926,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -947,7 +949,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColor4f(%0.2f, %0.2f, %0.2f, %0.2f);\n", red, green, blue, alpha); \
         } \
     } \
@@ -965,14 +967,14 @@ static int failed_test = 0;
     mock_push(pack_glColor4ub(red, green, blue, alpha)); \
 }
 #define test_glColor4ub(red, green, blue, alpha) { \
-    glColor4ub_INDEXED *packed = mock_peek(); \
+    glColor4ub_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glColor4ub missing (no calls left)\n"); \
     } else if (packed->func != glColor4ub_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glColor4ub_INDEX); \
         if (! packed) { \
             mock_errorf("glColor4ub missing\n"); \
@@ -982,7 +984,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1005,7 +1007,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColor4ub(%c, %c, %c, %c);\n", red, green, blue, alpha); \
         } \
     } \
@@ -1023,14 +1025,14 @@ static int failed_test = 0;
     mock_push(pack_glColor4x(red, green, blue, alpha)); \
 }
 #define test_glColor4x(red, green, blue, alpha) { \
-    glColor4x_INDEXED *packed = mock_peek(); \
+    glColor4x_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glColor4x missing (no calls left)\n"); \
     } else if (packed->func != glColor4x_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glColor4x_INDEX); \
         if (! packed) { \
             mock_errorf("glColor4x missing\n"); \
@@ -1040,7 +1042,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1063,7 +1065,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColor4x(%p, %p, %p, %p);\n", red, green, blue, alpha); \
         } \
     } \
@@ -1081,14 +1083,14 @@ static int failed_test = 0;
     mock_push(pack_glColorMask(red, green, blue, alpha)); \
 }
 #define test_glColorMask(red, green, blue, alpha) { \
-    glColorMask_INDEXED *packed = mock_peek(); \
+    glColorMask_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glColorMask missing (no calls left)\n"); \
     } else if (packed->func != glColorMask_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glColorMask_INDEX); \
         if (! packed) { \
             mock_errorf("glColorMask missing\n"); \
@@ -1098,7 +1100,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1121,7 +1123,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColorMask(%d, %d, %d, %d);\n", red, green, blue, alpha); \
         } \
     } \
@@ -1139,14 +1141,14 @@ static int failed_test = 0;
     mock_push(pack_glColorPointer(size, type, stride, pointer)); \
 }
 #define test_glColorPointer(size, type, stride, pointer) { \
-    glColorPointer_INDEXED *packed = mock_peek(); \
+    glColorPointer_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glColorPointer missing (no calls left)\n"); \
     } else if (packed->func != glColorPointer_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glColorPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glColorPointer missing\n"); \
@@ -1156,7 +1158,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1181,7 +1183,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColorPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
     } \
@@ -1203,14 +1205,14 @@ static int failed_test = 0;
     mock_push(pack_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data)); \
 }
 #define test_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) { \
-    glCompressedTexImage2D_INDEXED *packed = mock_peek(); \
+    glCompressedTexImage2D_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glCompressedTexImage2D missing (no calls left)\n"); \
     } else if (packed->func != glCompressedTexImage2D_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glCompressedTexImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCompressedTexImage2D missing\n"); \
@@ -1220,7 +1222,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1257,7 +1259,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCompressedTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %p);\n", target, level, internalformat, width, height, border, imageSize, data); \
         } \
     } \
@@ -1280,14 +1282,14 @@ static int failed_test = 0;
     mock_push(pack_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data)); \
 }
 #define test_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) { \
-    glCompressedTexSubImage2D_INDEXED *packed = mock_peek(); \
+    glCompressedTexSubImage2D_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glCompressedTexSubImage2D missing (no calls left)\n"); \
     } else if (packed->func != glCompressedTexSubImage2D_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glCompressedTexSubImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCompressedTexSubImage2D missing\n"); \
@@ -1297,7 +1299,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1337,7 +1339,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCompressedTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, %d, %p);\n", target, level, xoffset, yoffset, width, height, format, imageSize, data); \
         } \
     } \
@@ -1359,14 +1361,14 @@ static int failed_test = 0;
     mock_push(pack_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border)); \
 }
 #define test_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) { \
-    glCopyTexImage2D_INDEXED *packed = mock_peek(); \
+    glCopyTexImage2D_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glCopyTexImage2D missing (no calls left)\n"); \
     } else if (packed->func != glCopyTexImage2D_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glCopyTexImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCopyTexImage2D missing\n"); \
@@ -1376,7 +1378,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1411,7 +1413,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCopyTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %d);\n", target, level, internalformat, x, y, width, height, border); \
         } \
     } \
@@ -1433,14 +1435,14 @@ static int failed_test = 0;
     mock_push(pack_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height)); \
 }
 #define test_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) { \
-    glCopyTexSubImage2D_INDEXED *packed = mock_peek(); \
+    glCopyTexSubImage2D_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glCopyTexSubImage2D missing (no calls left)\n"); \
     } else if (packed->func != glCopyTexSubImage2D_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glCopyTexSubImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glCopyTexSubImage2D missing\n"); \
@@ -1450,7 +1452,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1485,7 +1487,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCopyTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, %d, %d);\n", target, level, xoffset, yoffset, x, y, width, height); \
         } \
     } \
@@ -1500,14 +1502,14 @@ static int failed_test = 0;
     mock_push(pack_glCullFace(mode)); \
 }
 #define test_glCullFace(mode) { \
-    glCullFace_INDEXED *packed = mock_peek(); \
+    glCullFace_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glCullFace missing (no calls left)\n"); \
     } else if (packed->func != glCullFace_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glCullFace_INDEX); \
         if (! packed) { \
             mock_errorf("glCullFace missing\n"); \
@@ -1517,7 +1519,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1531,7 +1533,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCullFace(0x%04X);\n", mode); \
         } \
     } \
@@ -1547,14 +1549,14 @@ static int failed_test = 0;
     mock_push(pack_glDeleteBuffers(n, buffers)); \
 }
 #define test_glDeleteBuffers(n, buffers) { \
-    glDeleteBuffers_INDEXED *packed = mock_peek(); \
+    glDeleteBuffers_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDeleteBuffers missing (no calls left)\n"); \
     } else if (packed->func != glDeleteBuffers_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDeleteBuffers_INDEX); \
         if (! packed) { \
             mock_errorf("glDeleteBuffers missing\n"); \
@@ -1564,7 +1566,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1583,7 +1585,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDeleteBuffers(%d, %p);\n", n, buffers); \
         } \
     } \
@@ -1599,14 +1601,14 @@ static int failed_test = 0;
     mock_push(pack_glDeleteTextures(n, textures)); \
 }
 #define test_glDeleteTextures(n, textures) { \
-    glDeleteTextures_INDEXED *packed = mock_peek(); \
+    glDeleteTextures_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDeleteTextures missing (no calls left)\n"); \
     } else if (packed->func != glDeleteTextures_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDeleteTextures_INDEX); \
         if (! packed) { \
             mock_errorf("glDeleteTextures missing\n"); \
@@ -1616,7 +1618,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1635,7 +1637,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDeleteTextures(%d, %p);\n", n, textures); \
         } \
     } \
@@ -1650,14 +1652,14 @@ static int failed_test = 0;
     mock_push(pack_glDepthFunc(func)); \
 }
 #define test_glDepthFunc(func) { \
-    glDepthFunc_INDEXED *packed = mock_peek(); \
+    glDepthFunc_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDepthFunc missing (no calls left)\n"); \
     } else if (packed->func != glDepthFunc_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDepthFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthFunc missing\n"); \
@@ -1667,7 +1669,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1681,7 +1683,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthFunc(0x%04X);\n", func); \
         } \
     } \
@@ -1696,14 +1698,14 @@ static int failed_test = 0;
     mock_push(pack_glDepthMask(flag)); \
 }
 #define test_glDepthMask(flag) { \
-    glDepthMask_INDEXED *packed = mock_peek(); \
+    glDepthMask_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDepthMask missing (no calls left)\n"); \
     } else if (packed->func != glDepthMask_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDepthMask_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthMask missing\n"); \
@@ -1713,7 +1715,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1727,7 +1729,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthMask(%d);\n", flag); \
         } \
     } \
@@ -1743,14 +1745,14 @@ static int failed_test = 0;
     mock_push(pack_glDepthRangef(near, far)); \
 }
 #define test_glDepthRangef(near, far) { \
-    glDepthRangef_INDEXED *packed = mock_peek(); \
+    glDepthRangef_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDepthRangef missing (no calls left)\n"); \
     } else if (packed->func != glDepthRangef_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDepthRangef_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthRangef missing\n"); \
@@ -1760,7 +1762,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1777,7 +1779,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthRangef(%p, %p);\n", near, far); \
         } \
     } \
@@ -1793,14 +1795,14 @@ static int failed_test = 0;
     mock_push(pack_glDepthRangex(near, far)); \
 }
 #define test_glDepthRangex(near, far) { \
-    glDepthRangex_INDEXED *packed = mock_peek(); \
+    glDepthRangex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDepthRangex missing (no calls left)\n"); \
     } else if (packed->func != glDepthRangex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDepthRangex_INDEX); \
         if (! packed) { \
             mock_errorf("glDepthRangex missing\n"); \
@@ -1810,7 +1812,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1827,7 +1829,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthRangex(%p, %p);\n", near, far); \
         } \
     } \
@@ -1842,14 +1844,14 @@ static int failed_test = 0;
     mock_push(pack_glDisable(cap)); \
 }
 #define test_glDisable(cap) { \
-    glDisable_INDEXED *packed = mock_peek(); \
+    glDisable_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDisable missing (no calls left)\n"); \
     } else if (packed->func != glDisable_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDisable_INDEX); \
         if (! packed) { \
             mock_errorf("glDisable missing\n"); \
@@ -1859,7 +1861,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1873,7 +1875,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDisable(0x%04X);\n", cap); \
         } \
     } \
@@ -1888,14 +1890,14 @@ static int failed_test = 0;
     mock_push(pack_glDisableClientState(array)); \
 }
 #define test_glDisableClientState(array) { \
-    glDisableClientState_INDEXED *packed = mock_peek(); \
+    glDisableClientState_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDisableClientState missing (no calls left)\n"); \
     } else if (packed->func != glDisableClientState_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDisableClientState_INDEX); \
         if (! packed) { \
             mock_errorf("glDisableClientState missing\n"); \
@@ -1905,7 +1907,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1919,7 +1921,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDisableClientState(0x%04X);\n", array); \
         } \
     } \
@@ -1936,14 +1938,14 @@ static int failed_test = 0;
     mock_push(pack_glDrawArrays(mode, first, count)); \
 }
 #define test_glDrawArrays(mode, first, count) { \
-    glDrawArrays_INDEXED *packed = mock_peek(); \
+    glDrawArrays_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDrawArrays missing (no calls left)\n"); \
     } else if (packed->func != glDrawArrays_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDrawArrays_INDEX); \
         if (! packed) { \
             mock_errorf("glDrawArrays missing\n"); \
@@ -1953,7 +1955,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -1973,7 +1975,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDrawArrays(0x%04X, %d, %d);\n", mode, first, count); \
         } \
     } \
@@ -1991,14 +1993,14 @@ static int failed_test = 0;
     mock_push(pack_glDrawElements(mode, count, type, indices)); \
 }
 #define test_glDrawElements(mode, count, type, indices) { \
-    glDrawElements_INDEXED *packed = mock_peek(); \
+    glDrawElements_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glDrawElements missing (no calls left)\n"); \
     } else if (packed->func != glDrawElements_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glDrawElements_INDEX); \
         if (! packed) { \
             mock_errorf("glDrawElements missing\n"); \
@@ -2008,7 +2010,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2033,7 +2035,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDrawElements(0x%04X, %d, 0x%04X, %p);\n", mode, count, type, indices); \
         } \
     } \
@@ -2048,14 +2050,14 @@ static int failed_test = 0;
     mock_push(pack_glEnable(cap)); \
 }
 #define test_glEnable(cap) { \
-    glEnable_INDEXED *packed = mock_peek(); \
+    glEnable_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glEnable missing (no calls left)\n"); \
     } else if (packed->func != glEnable_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glEnable_INDEX); \
         if (! packed) { \
             mock_errorf("glEnable missing\n"); \
@@ -2065,7 +2067,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2079,7 +2081,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glEnable(0x%04X);\n", cap); \
         } \
     } \
@@ -2094,14 +2096,14 @@ static int failed_test = 0;
     mock_push(pack_glEnableClientState(array)); \
 }
 #define test_glEnableClientState(array) { \
-    glEnableClientState_INDEXED *packed = mock_peek(); \
+    glEnableClientState_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glEnableClientState missing (no calls left)\n"); \
     } else if (packed->func != glEnableClientState_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glEnableClientState_INDEX); \
         if (! packed) { \
             mock_errorf("glEnableClientState missing\n"); \
@@ -2111,7 +2113,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2125,7 +2127,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glEnableClientState(0x%04X);\n", array); \
         } \
     } \
@@ -2139,14 +2141,14 @@ static int failed_test = 0;
     mock_push(pack_glFinish()); \
 }
 #define test_glFinish() { \
-    glFinish_INDEXED *packed = mock_peek(); \
+    glFinish_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFinish missing (no calls left)\n"); \
     } else if (packed->func != glFinish_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFinish_INDEX); \
         if (! packed) { \
             mock_errorf("glFinish missing\n"); \
@@ -2156,7 +2158,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2167,7 +2169,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFinish();\n", ); \
         } \
     } \
@@ -2181,14 +2183,14 @@ static int failed_test = 0;
     mock_push(pack_glFlush()); \
 }
 #define test_glFlush() { \
-    glFlush_INDEXED *packed = mock_peek(); \
+    glFlush_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFlush missing (no calls left)\n"); \
     } else if (packed->func != glFlush_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFlush_INDEX); \
         if (! packed) { \
             mock_errorf("glFlush missing\n"); \
@@ -2198,7 +2200,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2209,7 +2211,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFlush();\n", ); \
         } \
     } \
@@ -2225,14 +2227,14 @@ static int failed_test = 0;
     mock_push(pack_glFogf(pname, param)); \
 }
 #define test_glFogf(pname, param) { \
-    glFogf_INDEXED *packed = mock_peek(); \
+    glFogf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFogf missing (no calls left)\n"); \
     } else if (packed->func != glFogf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFogf_INDEX); \
         if (! packed) { \
             mock_errorf("glFogf missing\n"); \
@@ -2242,7 +2244,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2259,7 +2261,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogf(0x%04X, %0.2f);\n", pname, param); \
         } \
     } \
@@ -2275,14 +2277,14 @@ static int failed_test = 0;
     mock_push(pack_glFogfv(pname, params)); \
 }
 #define test_glFogfv(pname, params) { \
-    glFogfv_INDEXED *packed = mock_peek(); \
+    glFogfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFogfv missing (no calls left)\n"); \
     } else if (packed->func != glFogfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFogfv_INDEX); \
         if (! packed) { \
             mock_errorf("glFogfv missing\n"); \
@@ -2292,7 +2294,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2311,7 +2313,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogfv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -2327,14 +2329,14 @@ static int failed_test = 0;
     mock_push(pack_glFogx(pname, param)); \
 }
 #define test_glFogx(pname, param) { \
-    glFogx_INDEXED *packed = mock_peek(); \
+    glFogx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFogx missing (no calls left)\n"); \
     } else if (packed->func != glFogx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFogx_INDEX); \
         if (! packed) { \
             mock_errorf("glFogx missing\n"); \
@@ -2344,7 +2346,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2361,7 +2363,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogx(0x%04X, %p);\n", pname, param); \
         } \
     } \
@@ -2377,14 +2379,14 @@ static int failed_test = 0;
     mock_push(pack_glFogxv(pname, params)); \
 }
 #define test_glFogxv(pname, params) { \
-    glFogxv_INDEXED *packed = mock_peek(); \
+    glFogxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFogxv missing (no calls left)\n"); \
     } else if (packed->func != glFogxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFogxv_INDEX); \
         if (! packed) { \
             mock_errorf("glFogxv missing\n"); \
@@ -2394,7 +2396,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2413,7 +2415,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogxv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -2428,14 +2430,14 @@ static int failed_test = 0;
     mock_push(pack_glFrontFace(mode)); \
 }
 #define test_glFrontFace(mode) { \
-    glFrontFace_INDEXED *packed = mock_peek(); \
+    glFrontFace_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFrontFace missing (no calls left)\n"); \
     } else if (packed->func != glFrontFace_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFrontFace_INDEX); \
         if (! packed) { \
             mock_errorf("glFrontFace missing\n"); \
@@ -2445,7 +2447,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2459,7 +2461,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFrontFace(0x%04X);\n", mode); \
         } \
     } \
@@ -2479,14 +2481,14 @@ static int failed_test = 0;
     mock_push(pack_glFrustumf(left, right, bottom, top, near, far)); \
 }
 #define test_glFrustumf(left, right, bottom, top, near, far) { \
-    glFrustumf_INDEXED *packed = mock_peek(); \
+    glFrustumf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFrustumf missing (no calls left)\n"); \
     } else if (packed->func != glFrustumf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFrustumf_INDEX); \
         if (! packed) { \
             mock_errorf("glFrustumf missing\n"); \
@@ -2496,7 +2498,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2525,7 +2527,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFrustumf(%0.2f, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f);\n", left, right, bottom, top, near, far); \
         } \
     } \
@@ -2545,14 +2547,14 @@ static int failed_test = 0;
     mock_push(pack_glFrustumx(left, right, bottom, top, near, far)); \
 }
 #define test_glFrustumx(left, right, bottom, top, near, far) { \
-    glFrustumx_INDEXED *packed = mock_peek(); \
+    glFrustumx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glFrustumx missing (no calls left)\n"); \
     } else if (packed->func != glFrustumx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glFrustumx_INDEX); \
         if (! packed) { \
             mock_errorf("glFrustumx missing\n"); \
@@ -2562,7 +2564,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2591,7 +2593,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFrustumx(%p, %p, %p, %p, %p, %p);\n", left, right, bottom, top, near, far); \
         } \
     } \
@@ -2607,14 +2609,14 @@ static int failed_test = 0;
     mock_push(pack_glGenBuffers(n, buffers)); \
 }
 #define test_glGenBuffers(n, buffers) { \
-    glGenBuffers_INDEXED *packed = mock_peek(); \
+    glGenBuffers_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGenBuffers missing (no calls left)\n"); \
     } else if (packed->func != glGenBuffers_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGenBuffers_INDEX); \
         if (! packed) { \
             mock_errorf("glGenBuffers missing\n"); \
@@ -2624,7 +2626,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2643,7 +2645,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGenBuffers(%d, %p);\n", n, buffers); \
         } \
     } \
@@ -2659,14 +2661,14 @@ static int failed_test = 0;
     mock_push(pack_glGenTextures(n, textures)); \
 }
 #define test_glGenTextures(n, textures) { \
-    glGenTextures_INDEXED *packed = mock_peek(); \
+    glGenTextures_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGenTextures missing (no calls left)\n"); \
     } else if (packed->func != glGenTextures_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGenTextures_INDEX); \
         if (! packed) { \
             mock_errorf("glGenTextures missing\n"); \
@@ -2676,7 +2678,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2695,7 +2697,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGenTextures(%d, %p);\n", n, textures); \
         } \
     } \
@@ -2711,14 +2713,14 @@ static int failed_test = 0;
     mock_push(pack_glGetBooleanv(pname, params)); \
 }
 #define test_glGetBooleanv(pname, params) { \
-    glGetBooleanv_INDEXED *packed = mock_peek(); \
+    glGetBooleanv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetBooleanv missing (no calls left)\n"); \
     } else if (packed->func != glGetBooleanv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetBooleanv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetBooleanv missing\n"); \
@@ -2728,7 +2730,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2747,7 +2749,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetBooleanv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -2764,14 +2766,14 @@ static int failed_test = 0;
     mock_push(pack_glGetBufferParameteriv(target, pname, params)); \
 }
 #define test_glGetBufferParameteriv(target, pname, params) { \
-    glGetBufferParameteriv_INDEXED *packed = mock_peek(); \
+    glGetBufferParameteriv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetBufferParameteriv missing (no calls left)\n"); \
     } else if (packed->func != glGetBufferParameteriv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetBufferParameteriv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetBufferParameteriv missing\n"); \
@@ -2781,7 +2783,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2803,7 +2805,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetBufferParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -2819,14 +2821,14 @@ static int failed_test = 0;
     mock_push(pack_glGetClipPlanef(plane, equation)); \
 }
 #define test_glGetClipPlanef(plane, equation) { \
-    glGetClipPlanef_INDEXED *packed = mock_peek(); \
+    glGetClipPlanef_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetClipPlanef missing (no calls left)\n"); \
     } else if (packed->func != glGetClipPlanef_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetClipPlanef_INDEX); \
         if (! packed) { \
             mock_errorf("glGetClipPlanef missing\n"); \
@@ -2836,7 +2838,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2855,7 +2857,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetClipPlanef(0x%04X, %p);\n", plane, equation); \
         } \
     } \
@@ -2871,14 +2873,14 @@ static int failed_test = 0;
     mock_push(pack_glGetClipPlanex(plane, equation)); \
 }
 #define test_glGetClipPlanex(plane, equation) { \
-    glGetClipPlanex_INDEXED *packed = mock_peek(); \
+    glGetClipPlanex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetClipPlanex missing (no calls left)\n"); \
     } else if (packed->func != glGetClipPlanex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetClipPlanex_INDEX); \
         if (! packed) { \
             mock_errorf("glGetClipPlanex missing\n"); \
@@ -2888,7 +2890,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2907,7 +2909,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetClipPlanex(0x%04X, %p);\n", plane, equation); \
         } \
     } \
@@ -2921,14 +2923,14 @@ static int failed_test = 0;
     mock_push(pack_glGetError()); \
 }
 #define test_glGetError() { \
-    glGetError_INDEXED *packed = mock_peek(); \
+    glGetError_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetError missing (no calls left)\n"); \
     } else if (packed->func != glGetError_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetError_INDEX); \
         if (! packed) { \
             mock_errorf("glGetError missing\n"); \
@@ -2938,7 +2940,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -2949,7 +2951,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetError();\n", ); \
         } \
     } \
@@ -2965,14 +2967,14 @@ static int failed_test = 0;
     mock_push(pack_glGetFixedv(pname, params)); \
 }
 #define test_glGetFixedv(pname, params) { \
-    glGetFixedv_INDEXED *packed = mock_peek(); \
+    glGetFixedv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetFixedv missing (no calls left)\n"); \
     } else if (packed->func != glGetFixedv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetFixedv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetFixedv missing\n"); \
@@ -2982,7 +2984,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3001,7 +3003,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetFixedv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -3017,14 +3019,14 @@ static int failed_test = 0;
     mock_push(pack_glGetFloatv(pname, params)); \
 }
 #define test_glGetFloatv(pname, params) { \
-    glGetFloatv_INDEXED *packed = mock_peek(); \
+    glGetFloatv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetFloatv missing (no calls left)\n"); \
     } else if (packed->func != glGetFloatv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetFloatv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetFloatv missing\n"); \
@@ -3034,7 +3036,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3053,7 +3055,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetFloatv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -3069,14 +3071,14 @@ static int failed_test = 0;
     mock_push(pack_glGetIntegerv(pname, params)); \
 }
 #define test_glGetIntegerv(pname, params) { \
-    glGetIntegerv_INDEXED *packed = mock_peek(); \
+    glGetIntegerv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetIntegerv missing (no calls left)\n"); \
     } else if (packed->func != glGetIntegerv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetIntegerv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetIntegerv missing\n"); \
@@ -3086,7 +3088,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3105,7 +3107,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetIntegerv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -3122,14 +3124,14 @@ static int failed_test = 0;
     mock_push(pack_glGetLightfv(light, pname, params)); \
 }
 #define test_glGetLightfv(light, pname, params) { \
-    glGetLightfv_INDEXED *packed = mock_peek(); \
+    glGetLightfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetLightfv missing (no calls left)\n"); \
     } else if (packed->func != glGetLightfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetLightfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetLightfv missing\n"); \
@@ -3139,7 +3141,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3161,7 +3163,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetLightfv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
@@ -3178,14 +3180,14 @@ static int failed_test = 0;
     mock_push(pack_glGetLightxv(light, pname, params)); \
 }
 #define test_glGetLightxv(light, pname, params) { \
-    glGetLightxv_INDEXED *packed = mock_peek(); \
+    glGetLightxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetLightxv missing (no calls left)\n"); \
     } else if (packed->func != glGetLightxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetLightxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetLightxv missing\n"); \
@@ -3195,7 +3197,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3217,7 +3219,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetLightxv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
@@ -3234,14 +3236,14 @@ static int failed_test = 0;
     mock_push(pack_glGetMaterialfv(face, pname, params)); \
 }
 #define test_glGetMaterialfv(face, pname, params) { \
-    glGetMaterialfv_INDEXED *packed = mock_peek(); \
+    glGetMaterialfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetMaterialfv missing (no calls left)\n"); \
     } else if (packed->func != glGetMaterialfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetMaterialfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetMaterialfv missing\n"); \
@@ -3251,7 +3253,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3273,7 +3275,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetMaterialfv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
@@ -3290,14 +3292,14 @@ static int failed_test = 0;
     mock_push(pack_glGetMaterialxv(face, pname, params)); \
 }
 #define test_glGetMaterialxv(face, pname, params) { \
-    glGetMaterialxv_INDEXED *packed = mock_peek(); \
+    glGetMaterialxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetMaterialxv missing (no calls left)\n"); \
     } else if (packed->func != glGetMaterialxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetMaterialxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetMaterialxv missing\n"); \
@@ -3307,7 +3309,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3329,7 +3331,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetMaterialxv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
@@ -3345,14 +3347,14 @@ static int failed_test = 0;
     mock_push(pack_glGetPointerv(pname, params)); \
 }
 #define test_glGetPointerv(pname, params) { \
-    glGetPointerv_INDEXED *packed = mock_peek(); \
+    glGetPointerv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetPointerv missing (no calls left)\n"); \
     } else if (packed->func != glGetPointerv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetPointerv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetPointerv missing\n"); \
@@ -3362,7 +3364,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3381,7 +3383,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetPointerv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -3396,14 +3398,14 @@ static int failed_test = 0;
     mock_push(pack_glGetString(name)); \
 }
 #define test_glGetString(name) { \
-    glGetString_INDEXED *packed = mock_peek(); \
+    glGetString_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetString missing (no calls left)\n"); \
     } else if (packed->func != glGetString_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetString_INDEX); \
         if (! packed) { \
             mock_errorf("glGetString missing\n"); \
@@ -3413,7 +3415,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3427,7 +3429,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetString(0x%04X);\n", name); \
         } \
     } \
@@ -3444,14 +3446,14 @@ static int failed_test = 0;
     mock_push(pack_glGetTexEnvfv(target, pname, params)); \
 }
 #define test_glGetTexEnvfv(target, pname, params) { \
-    glGetTexEnvfv_INDEXED *packed = mock_peek(); \
+    glGetTexEnvfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetTexEnvfv missing (no calls left)\n"); \
     } else if (packed->func != glGetTexEnvfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetTexEnvfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexEnvfv missing\n"); \
@@ -3461,7 +3463,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3483,7 +3485,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexEnvfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -3500,14 +3502,14 @@ static int failed_test = 0;
     mock_push(pack_glGetTexEnviv(target, pname, params)); \
 }
 #define test_glGetTexEnviv(target, pname, params) { \
-    glGetTexEnviv_INDEXED *packed = mock_peek(); \
+    glGetTexEnviv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetTexEnviv missing (no calls left)\n"); \
     } else if (packed->func != glGetTexEnviv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetTexEnviv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexEnviv missing\n"); \
@@ -3517,7 +3519,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3539,7 +3541,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexEnviv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -3556,14 +3558,14 @@ static int failed_test = 0;
     mock_push(pack_glGetTexEnvxv(target, pname, params)); \
 }
 #define test_glGetTexEnvxv(target, pname, params) { \
-    glGetTexEnvxv_INDEXED *packed = mock_peek(); \
+    glGetTexEnvxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetTexEnvxv missing (no calls left)\n"); \
     } else if (packed->func != glGetTexEnvxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetTexEnvxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexEnvxv missing\n"); \
@@ -3573,7 +3575,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3595,7 +3597,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexEnvxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -3612,14 +3614,14 @@ static int failed_test = 0;
     mock_push(pack_glGetTexParameterfv(target, pname, params)); \
 }
 #define test_glGetTexParameterfv(target, pname, params) { \
-    glGetTexParameterfv_INDEXED *packed = mock_peek(); \
+    glGetTexParameterfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetTexParameterfv missing (no calls left)\n"); \
     } else if (packed->func != glGetTexParameterfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetTexParameterfv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexParameterfv missing\n"); \
@@ -3629,7 +3631,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3651,7 +3653,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -3668,14 +3670,14 @@ static int failed_test = 0;
     mock_push(pack_glGetTexParameteriv(target, pname, params)); \
 }
 #define test_glGetTexParameteriv(target, pname, params) { \
-    glGetTexParameteriv_INDEXED *packed = mock_peek(); \
+    glGetTexParameteriv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetTexParameteriv missing (no calls left)\n"); \
     } else if (packed->func != glGetTexParameteriv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetTexParameteriv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexParameteriv missing\n"); \
@@ -3685,7 +3687,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3707,7 +3709,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -3724,14 +3726,14 @@ static int failed_test = 0;
     mock_push(pack_glGetTexParameterxv(target, pname, params)); \
 }
 #define test_glGetTexParameterxv(target, pname, params) { \
-    glGetTexParameterxv_INDEXED *packed = mock_peek(); \
+    glGetTexParameterxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glGetTexParameterxv missing (no calls left)\n"); \
     } else if (packed->func != glGetTexParameterxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glGetTexParameterxv_INDEX); \
         if (! packed) { \
             mock_errorf("glGetTexParameterxv missing\n"); \
@@ -3741,7 +3743,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3763,7 +3765,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexParameterxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -3779,14 +3781,14 @@ static int failed_test = 0;
     mock_push(pack_glHint(target, mode)); \
 }
 #define test_glHint(target, mode) { \
-    glHint_INDEXED *packed = mock_peek(); \
+    glHint_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glHint missing (no calls left)\n"); \
     } else if (packed->func != glHint_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glHint_INDEX); \
         if (! packed) { \
             mock_errorf("glHint missing\n"); \
@@ -3796,7 +3798,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3813,7 +3815,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glHint(0x%04X, 0x%04X);\n", target, mode); \
         } \
     } \
@@ -3828,14 +3830,14 @@ static int failed_test = 0;
     mock_push(pack_glIsBuffer(buffer)); \
 }
 #define test_glIsBuffer(buffer) { \
-    glIsBuffer_INDEXED *packed = mock_peek(); \
+    glIsBuffer_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glIsBuffer missing (no calls left)\n"); \
     } else if (packed->func != glIsBuffer_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glIsBuffer_INDEX); \
         if (! packed) { \
             mock_errorf("glIsBuffer missing\n"); \
@@ -3845,7 +3847,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3859,7 +3861,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glIsBuffer(%u);\n", buffer); \
         } \
     } \
@@ -3874,14 +3876,14 @@ static int failed_test = 0;
     mock_push(pack_glIsEnabled(cap)); \
 }
 #define test_glIsEnabled(cap) { \
-    glIsEnabled_INDEXED *packed = mock_peek(); \
+    glIsEnabled_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glIsEnabled missing (no calls left)\n"); \
     } else if (packed->func != glIsEnabled_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glIsEnabled_INDEX); \
         if (! packed) { \
             mock_errorf("glIsEnabled missing\n"); \
@@ -3891,7 +3893,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3905,7 +3907,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glIsEnabled(0x%04X);\n", cap); \
         } \
     } \
@@ -3920,14 +3922,14 @@ static int failed_test = 0;
     mock_push(pack_glIsTexture(texture)); \
 }
 #define test_glIsTexture(texture) { \
-    glIsTexture_INDEXED *packed = mock_peek(); \
+    glIsTexture_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glIsTexture missing (no calls left)\n"); \
     } else if (packed->func != glIsTexture_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glIsTexture_INDEX); \
         if (! packed) { \
             mock_errorf("glIsTexture missing\n"); \
@@ -3937,7 +3939,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -3951,7 +3953,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glIsTexture(%u);\n", texture); \
         } \
     } \
@@ -3967,14 +3969,14 @@ static int failed_test = 0;
     mock_push(pack_glLightModelf(pname, param)); \
 }
 #define test_glLightModelf(pname, param) { \
-    glLightModelf_INDEXED *packed = mock_peek(); \
+    glLightModelf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightModelf missing (no calls left)\n"); \
     } else if (packed->func != glLightModelf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightModelf_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelf missing\n"); \
@@ -3984,7 +3986,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4001,7 +4003,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelf(0x%04X, %0.2f);\n", pname, param); \
         } \
     } \
@@ -4017,14 +4019,14 @@ static int failed_test = 0;
     mock_push(pack_glLightModelfv(pname, params)); \
 }
 #define test_glLightModelfv(pname, params) { \
-    glLightModelfv_INDEXED *packed = mock_peek(); \
+    glLightModelfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightModelfv missing (no calls left)\n"); \
     } else if (packed->func != glLightModelfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightModelfv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelfv missing\n"); \
@@ -4034,7 +4036,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4053,7 +4055,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelfv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -4069,14 +4071,14 @@ static int failed_test = 0;
     mock_push(pack_glLightModelx(pname, param)); \
 }
 #define test_glLightModelx(pname, param) { \
-    glLightModelx_INDEXED *packed = mock_peek(); \
+    glLightModelx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightModelx missing (no calls left)\n"); \
     } else if (packed->func != glLightModelx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightModelx_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelx missing\n"); \
@@ -4086,7 +4088,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4103,7 +4105,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelx(0x%04X, %p);\n", pname, param); \
         } \
     } \
@@ -4119,14 +4121,14 @@ static int failed_test = 0;
     mock_push(pack_glLightModelxv(pname, params)); \
 }
 #define test_glLightModelxv(pname, params) { \
-    glLightModelxv_INDEXED *packed = mock_peek(); \
+    glLightModelxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightModelxv missing (no calls left)\n"); \
     } else if (packed->func != glLightModelxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightModelxv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightModelxv missing\n"); \
@@ -4136,7 +4138,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4155,7 +4157,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelxv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -4172,14 +4174,14 @@ static int failed_test = 0;
     mock_push(pack_glLightf(light, pname, param)); \
 }
 #define test_glLightf(light, pname, param) { \
-    glLightf_INDEXED *packed = mock_peek(); \
+    glLightf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightf missing (no calls left)\n"); \
     } else if (packed->func != glLightf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightf_INDEX); \
         if (! packed) { \
             mock_errorf("glLightf missing\n"); \
@@ -4189,7 +4191,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4209,7 +4211,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightf(0x%04X, 0x%04X, %0.2f);\n", light, pname, param); \
         } \
     } \
@@ -4226,14 +4228,14 @@ static int failed_test = 0;
     mock_push(pack_glLightfv(light, pname, params)); \
 }
 #define test_glLightfv(light, pname, params) { \
-    glLightfv_INDEXED *packed = mock_peek(); \
+    glLightfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightfv missing (no calls left)\n"); \
     } else if (packed->func != glLightfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightfv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightfv missing\n"); \
@@ -4243,7 +4245,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4265,7 +4267,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightfv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
@@ -4282,14 +4284,14 @@ static int failed_test = 0;
     mock_push(pack_glLightx(light, pname, param)); \
 }
 #define test_glLightx(light, pname, param) { \
-    glLightx_INDEXED *packed = mock_peek(); \
+    glLightx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightx missing (no calls left)\n"); \
     } else if (packed->func != glLightx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightx_INDEX); \
         if (! packed) { \
             mock_errorf("glLightx missing\n"); \
@@ -4299,7 +4301,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4319,7 +4321,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightx(0x%04X, 0x%04X, %p);\n", light, pname, param); \
         } \
     } \
@@ -4336,14 +4338,14 @@ static int failed_test = 0;
     mock_push(pack_glLightxv(light, pname, params)); \
 }
 #define test_glLightxv(light, pname, params) { \
-    glLightxv_INDEXED *packed = mock_peek(); \
+    glLightxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLightxv missing (no calls left)\n"); \
     } else if (packed->func != glLightxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLightxv_INDEX); \
         if (! packed) { \
             mock_errorf("glLightxv missing\n"); \
@@ -4353,7 +4355,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4375,7 +4377,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightxv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
     } \
@@ -4390,14 +4392,14 @@ static int failed_test = 0;
     mock_push(pack_glLineWidth(width)); \
 }
 #define test_glLineWidth(width) { \
-    glLineWidth_INDEXED *packed = mock_peek(); \
+    glLineWidth_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLineWidth missing (no calls left)\n"); \
     } else if (packed->func != glLineWidth_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLineWidth_INDEX); \
         if (! packed) { \
             mock_errorf("glLineWidth missing\n"); \
@@ -4407,7 +4409,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4421,7 +4423,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLineWidth(%0.2f);\n", width); \
         } \
     } \
@@ -4436,14 +4438,14 @@ static int failed_test = 0;
     mock_push(pack_glLineWidthx(width)); \
 }
 #define test_glLineWidthx(width) { \
-    glLineWidthx_INDEXED *packed = mock_peek(); \
+    glLineWidthx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLineWidthx missing (no calls left)\n"); \
     } else if (packed->func != glLineWidthx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLineWidthx_INDEX); \
         if (! packed) { \
             mock_errorf("glLineWidthx missing\n"); \
@@ -4453,7 +4455,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4467,7 +4469,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLineWidthx(%p);\n", width); \
         } \
     } \
@@ -4481,14 +4483,14 @@ static int failed_test = 0;
     mock_push(pack_glLoadIdentity()); \
 }
 #define test_glLoadIdentity() { \
-    glLoadIdentity_INDEXED *packed = mock_peek(); \
+    glLoadIdentity_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLoadIdentity missing (no calls left)\n"); \
     } else if (packed->func != glLoadIdentity_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLoadIdentity_INDEX); \
         if (! packed) { \
             mock_errorf("glLoadIdentity missing\n"); \
@@ -4498,7 +4500,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4509,7 +4511,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLoadIdentity();\n", ); \
         } \
     } \
@@ -4524,14 +4526,14 @@ static int failed_test = 0;
     mock_push(pack_glLoadMatrixf(m)); \
 }
 #define test_glLoadMatrixf(m) { \
-    glLoadMatrixf_INDEXED *packed = mock_peek(); \
+    glLoadMatrixf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLoadMatrixf missing (no calls left)\n"); \
     } else if (packed->func != glLoadMatrixf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLoadMatrixf_INDEX); \
         if (! packed) { \
             mock_errorf("glLoadMatrixf missing\n"); \
@@ -4541,7 +4543,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4557,7 +4559,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLoadMatrixf(%p);\n", m); \
         } \
     } \
@@ -4572,14 +4574,14 @@ static int failed_test = 0;
     mock_push(pack_glLoadMatrixx(m)); \
 }
 #define test_glLoadMatrixx(m) { \
-    glLoadMatrixx_INDEXED *packed = mock_peek(); \
+    glLoadMatrixx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLoadMatrixx missing (no calls left)\n"); \
     } else if (packed->func != glLoadMatrixx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLoadMatrixx_INDEX); \
         if (! packed) { \
             mock_errorf("glLoadMatrixx missing\n"); \
@@ -4589,7 +4591,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4605,7 +4607,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLoadMatrixx(%p);\n", m); \
         } \
     } \
@@ -4620,14 +4622,14 @@ static int failed_test = 0;
     mock_push(pack_glLogicOp(opcode)); \
 }
 #define test_glLogicOp(opcode) { \
-    glLogicOp_INDEXED *packed = mock_peek(); \
+    glLogicOp_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glLogicOp missing (no calls left)\n"); \
     } else if (packed->func != glLogicOp_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glLogicOp_INDEX); \
         if (! packed) { \
             mock_errorf("glLogicOp missing\n"); \
@@ -4637,7 +4639,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4651,7 +4653,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLogicOp(0x%04X);\n", opcode); \
         } \
     } \
@@ -4668,14 +4670,14 @@ static int failed_test = 0;
     mock_push(pack_glMaterialf(face, pname, param)); \
 }
 #define test_glMaterialf(face, pname, param) { \
-    glMaterialf_INDEXED *packed = mock_peek(); \
+    glMaterialf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMaterialf missing (no calls left)\n"); \
     } else if (packed->func != glMaterialf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMaterialf_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialf missing\n"); \
@@ -4685,7 +4687,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4705,7 +4707,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialf(0x%04X, 0x%04X, %0.2f);\n", face, pname, param); \
         } \
     } \
@@ -4722,14 +4724,14 @@ static int failed_test = 0;
     mock_push(pack_glMaterialfv(face, pname, params)); \
 }
 #define test_glMaterialfv(face, pname, params) { \
-    glMaterialfv_INDEXED *packed = mock_peek(); \
+    glMaterialfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMaterialfv missing (no calls left)\n"); \
     } else if (packed->func != glMaterialfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMaterialfv_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialfv missing\n"); \
@@ -4739,7 +4741,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4761,7 +4763,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialfv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
@@ -4778,14 +4780,14 @@ static int failed_test = 0;
     mock_push(pack_glMaterialx(face, pname, param)); \
 }
 #define test_glMaterialx(face, pname, param) { \
-    glMaterialx_INDEXED *packed = mock_peek(); \
+    glMaterialx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMaterialx missing (no calls left)\n"); \
     } else if (packed->func != glMaterialx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMaterialx_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialx missing\n"); \
@@ -4795,7 +4797,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4815,7 +4817,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialx(0x%04X, 0x%04X, %p);\n", face, pname, param); \
         } \
     } \
@@ -4832,14 +4834,14 @@ static int failed_test = 0;
     mock_push(pack_glMaterialxv(face, pname, params)); \
 }
 #define test_glMaterialxv(face, pname, params) { \
-    glMaterialxv_INDEXED *packed = mock_peek(); \
+    glMaterialxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMaterialxv missing (no calls left)\n"); \
     } else if (packed->func != glMaterialxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMaterialxv_INDEX); \
         if (! packed) { \
             mock_errorf("glMaterialxv missing\n"); \
@@ -4849,7 +4851,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4871,7 +4873,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialxv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
     } \
@@ -4886,14 +4888,14 @@ static int failed_test = 0;
     mock_push(pack_glMatrixMode(mode)); \
 }
 #define test_glMatrixMode(mode) { \
-    glMatrixMode_INDEXED *packed = mock_peek(); \
+    glMatrixMode_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMatrixMode missing (no calls left)\n"); \
     } else if (packed->func != glMatrixMode_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMatrixMode_INDEX); \
         if (! packed) { \
             mock_errorf("glMatrixMode missing\n"); \
@@ -4903,7 +4905,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4917,7 +4919,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMatrixMode(0x%04X);\n", mode); \
         } \
     } \
@@ -4932,14 +4934,14 @@ static int failed_test = 0;
     mock_push(pack_glMultMatrixf(m)); \
 }
 #define test_glMultMatrixf(m) { \
-    glMultMatrixf_INDEXED *packed = mock_peek(); \
+    glMultMatrixf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMultMatrixf missing (no calls left)\n"); \
     } else if (packed->func != glMultMatrixf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMultMatrixf_INDEX); \
         if (! packed) { \
             mock_errorf("glMultMatrixf missing\n"); \
@@ -4949,7 +4951,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -4965,7 +4967,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultMatrixf(%p);\n", m); \
         } \
     } \
@@ -4980,14 +4982,14 @@ static int failed_test = 0;
     mock_push(pack_glMultMatrixx(m)); \
 }
 #define test_glMultMatrixx(m) { \
-    glMultMatrixx_INDEXED *packed = mock_peek(); \
+    glMultMatrixx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMultMatrixx missing (no calls left)\n"); \
     } else if (packed->func != glMultMatrixx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMultMatrixx_INDEX); \
         if (! packed) { \
             mock_errorf("glMultMatrixx missing\n"); \
@@ -4997,7 +4999,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5013,7 +5015,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultMatrixx(%p);\n", m); \
         } \
     } \
@@ -5032,14 +5034,14 @@ static int failed_test = 0;
     mock_push(pack_glMultiTexCoord4f(target, s, t, r, q)); \
 }
 #define test_glMultiTexCoord4f(target, s, t, r, q) { \
-    glMultiTexCoord4f_INDEXED *packed = mock_peek(); \
+    glMultiTexCoord4f_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMultiTexCoord4f missing (no calls left)\n"); \
     } else if (packed->func != glMultiTexCoord4f_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMultiTexCoord4f_INDEX); \
         if (! packed) { \
             mock_errorf("glMultiTexCoord4f missing\n"); \
@@ -5049,7 +5051,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5075,7 +5077,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultiTexCoord4f(0x%04X, %0.2f, %0.2f, %0.2f, %0.2f);\n", target, s, t, r, q); \
         } \
     } \
@@ -5094,14 +5096,14 @@ static int failed_test = 0;
     mock_push(pack_glMultiTexCoord4x(target, s, t, r, q)); \
 }
 #define test_glMultiTexCoord4x(target, s, t, r, q) { \
-    glMultiTexCoord4x_INDEXED *packed = mock_peek(); \
+    glMultiTexCoord4x_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glMultiTexCoord4x missing (no calls left)\n"); \
     } else if (packed->func != glMultiTexCoord4x_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glMultiTexCoord4x_INDEX); \
         if (! packed) { \
             mock_errorf("glMultiTexCoord4x missing\n"); \
@@ -5111,7 +5113,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5137,7 +5139,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultiTexCoord4x(0x%04X, %p, %p, %p, %p);\n", target, s, t, r, q); \
         } \
     } \
@@ -5154,14 +5156,14 @@ static int failed_test = 0;
     mock_push(pack_glNormal3f(nx, ny, nz)); \
 }
 #define test_glNormal3f(nx, ny, nz) { \
-    glNormal3f_INDEXED *packed = mock_peek(); \
+    glNormal3f_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glNormal3f missing (no calls left)\n"); \
     } else if (packed->func != glNormal3f_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glNormal3f_INDEX); \
         if (! packed) { \
             mock_errorf("glNormal3f missing\n"); \
@@ -5171,7 +5173,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5191,7 +5193,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glNormal3f(%0.2f, %0.2f, %0.2f);\n", nx, ny, nz); \
         } \
     } \
@@ -5208,14 +5210,14 @@ static int failed_test = 0;
     mock_push(pack_glNormal3x(nx, ny, nz)); \
 }
 #define test_glNormal3x(nx, ny, nz) { \
-    glNormal3x_INDEXED *packed = mock_peek(); \
+    glNormal3x_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glNormal3x missing (no calls left)\n"); \
     } else if (packed->func != glNormal3x_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glNormal3x_INDEX); \
         if (! packed) { \
             mock_errorf("glNormal3x missing\n"); \
@@ -5225,7 +5227,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5245,7 +5247,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glNormal3x(%p, %p, %p);\n", nx, ny, nz); \
         } \
     } \
@@ -5262,14 +5264,14 @@ static int failed_test = 0;
     mock_push(pack_glNormalPointer(type, stride, pointer)); \
 }
 #define test_glNormalPointer(type, stride, pointer) { \
-    glNormalPointer_INDEXED *packed = mock_peek(); \
+    glNormalPointer_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glNormalPointer missing (no calls left)\n"); \
     } else if (packed->func != glNormalPointer_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glNormalPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glNormalPointer missing\n"); \
@@ -5279,7 +5281,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5301,7 +5303,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glNormalPointer(0x%04X, %d, %p);\n", type, stride, pointer); \
         } \
     } \
@@ -5321,14 +5323,14 @@ static int failed_test = 0;
     mock_push(pack_glOrthof(left, right, bottom, top, near, far)); \
 }
 #define test_glOrthof(left, right, bottom, top, near, far) { \
-    glOrthof_INDEXED *packed = mock_peek(); \
+    glOrthof_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glOrthof missing (no calls left)\n"); \
     } else if (packed->func != glOrthof_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glOrthof_INDEX); \
         if (! packed) { \
             mock_errorf("glOrthof missing\n"); \
@@ -5338,7 +5340,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5367,7 +5369,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glOrthof(%0.2f, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f);\n", left, right, bottom, top, near, far); \
         } \
     } \
@@ -5387,14 +5389,14 @@ static int failed_test = 0;
     mock_push(pack_glOrthox(left, right, bottom, top, near, far)); \
 }
 #define test_glOrthox(left, right, bottom, top, near, far) { \
-    glOrthox_INDEXED *packed = mock_peek(); \
+    glOrthox_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glOrthox missing (no calls left)\n"); \
     } else if (packed->func != glOrthox_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glOrthox_INDEX); \
         if (! packed) { \
             mock_errorf("glOrthox missing\n"); \
@@ -5404,7 +5406,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5433,7 +5435,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glOrthox(%p, %p, %p, %p, %p, %p);\n", left, right, bottom, top, near, far); \
         } \
     } \
@@ -5449,14 +5451,14 @@ static int failed_test = 0;
     mock_push(pack_glPixelStorei(pname, param)); \
 }
 #define test_glPixelStorei(pname, param) { \
-    glPixelStorei_INDEXED *packed = mock_peek(); \
+    glPixelStorei_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPixelStorei missing (no calls left)\n"); \
     } else if (packed->func != glPixelStorei_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPixelStorei_INDEX); \
         if (! packed) { \
             mock_errorf("glPixelStorei missing\n"); \
@@ -5466,7 +5468,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5483,7 +5485,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPixelStorei(0x%04X, %d);\n", pname, param); \
         } \
     } \
@@ -5499,14 +5501,14 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterf(pname, param)); \
 }
 #define test_glPointParameterf(pname, param) { \
-    glPointParameterf_INDEXED *packed = mock_peek(); \
+    glPointParameterf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPointParameterf missing (no calls left)\n"); \
     } else if (packed->func != glPointParameterf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPointParameterf_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterf missing\n"); \
@@ -5516,7 +5518,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5533,7 +5535,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterf(0x%04X, %0.2f);\n", pname, param); \
         } \
     } \
@@ -5549,14 +5551,14 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterfv(pname, params)); \
 }
 #define test_glPointParameterfv(pname, params) { \
-    glPointParameterfv_INDEXED *packed = mock_peek(); \
+    glPointParameterfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPointParameterfv missing (no calls left)\n"); \
     } else if (packed->func != glPointParameterfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPointParameterfv_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterfv missing\n"); \
@@ -5566,7 +5568,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5585,7 +5587,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterfv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -5601,14 +5603,14 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterx(pname, param)); \
 }
 #define test_glPointParameterx(pname, param) { \
-    glPointParameterx_INDEXED *packed = mock_peek(); \
+    glPointParameterx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPointParameterx missing (no calls left)\n"); \
     } else if (packed->func != glPointParameterx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPointParameterx_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterx missing\n"); \
@@ -5618,7 +5620,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5635,7 +5637,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterx(0x%04X, %p);\n", pname, param); \
         } \
     } \
@@ -5651,14 +5653,14 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterxv(pname, params)); \
 }
 #define test_glPointParameterxv(pname, params) { \
-    glPointParameterxv_INDEXED *packed = mock_peek(); \
+    glPointParameterxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPointParameterxv missing (no calls left)\n"); \
     } else if (packed->func != glPointParameterxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPointParameterxv_INDEX); \
         if (! packed) { \
             mock_errorf("glPointParameterxv missing\n"); \
@@ -5668,7 +5670,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5687,7 +5689,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterxv(0x%04X, %p);\n", pname, params); \
         } \
     } \
@@ -5702,14 +5704,14 @@ static int failed_test = 0;
     mock_push(pack_glPointSize(size)); \
 }
 #define test_glPointSize(size) { \
-    glPointSize_INDEXED *packed = mock_peek(); \
+    glPointSize_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPointSize missing (no calls left)\n"); \
     } else if (packed->func != glPointSize_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPointSize_INDEX); \
         if (! packed) { \
             mock_errorf("glPointSize missing\n"); \
@@ -5719,7 +5721,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5733,7 +5735,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointSize(%0.2f);\n", size); \
         } \
     } \
@@ -5750,14 +5752,14 @@ static int failed_test = 0;
     mock_push(pack_glPointSizePointerOES(type, stride, pointer)); \
 }
 #define test_glPointSizePointerOES(type, stride, pointer) { \
-    glPointSizePointerOES_INDEXED *packed = mock_peek(); \
+    glPointSizePointerOES_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPointSizePointerOES missing (no calls left)\n"); \
     } else if (packed->func != glPointSizePointerOES_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPointSizePointerOES_INDEX); \
         if (! packed) { \
             mock_errorf("glPointSizePointerOES missing\n"); \
@@ -5767,7 +5769,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5789,7 +5791,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointSizePointerOES(0x%04X, %d, %p);\n", type, stride, pointer); \
         } \
     } \
@@ -5804,14 +5806,14 @@ static int failed_test = 0;
     mock_push(pack_glPointSizex(size)); \
 }
 #define test_glPointSizex(size) { \
-    glPointSizex_INDEXED *packed = mock_peek(); \
+    glPointSizex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPointSizex missing (no calls left)\n"); \
     } else if (packed->func != glPointSizex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPointSizex_INDEX); \
         if (! packed) { \
             mock_errorf("glPointSizex missing\n"); \
@@ -5821,7 +5823,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5835,7 +5837,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointSizex(%p);\n", size); \
         } \
     } \
@@ -5851,14 +5853,14 @@ static int failed_test = 0;
     mock_push(pack_glPolygonOffset(factor, units)); \
 }
 #define test_glPolygonOffset(factor, units) { \
-    glPolygonOffset_INDEXED *packed = mock_peek(); \
+    glPolygonOffset_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPolygonOffset missing (no calls left)\n"); \
     } else if (packed->func != glPolygonOffset_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPolygonOffset_INDEX); \
         if (! packed) { \
             mock_errorf("glPolygonOffset missing\n"); \
@@ -5868,7 +5870,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5885,7 +5887,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPolygonOffset(%0.2f, %0.2f);\n", factor, units); \
         } \
     } \
@@ -5901,14 +5903,14 @@ static int failed_test = 0;
     mock_push(pack_glPolygonOffsetx(factor, units)); \
 }
 #define test_glPolygonOffsetx(factor, units) { \
-    glPolygonOffsetx_INDEXED *packed = mock_peek(); \
+    glPolygonOffsetx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPolygonOffsetx missing (no calls left)\n"); \
     } else if (packed->func != glPolygonOffsetx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPolygonOffsetx_INDEX); \
         if (! packed) { \
             mock_errorf("glPolygonOffsetx missing\n"); \
@@ -5918,7 +5920,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5935,7 +5937,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPolygonOffsetx(%p, %p);\n", factor, units); \
         } \
     } \
@@ -5949,14 +5951,14 @@ static int failed_test = 0;
     mock_push(pack_glPopMatrix()); \
 }
 #define test_glPopMatrix() { \
-    glPopMatrix_INDEXED *packed = mock_peek(); \
+    glPopMatrix_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPopMatrix missing (no calls left)\n"); \
     } else if (packed->func != glPopMatrix_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPopMatrix_INDEX); \
         if (! packed) { \
             mock_errorf("glPopMatrix missing\n"); \
@@ -5966,7 +5968,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -5977,7 +5979,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPopMatrix();\n", ); \
         } \
     } \
@@ -5991,14 +5993,14 @@ static int failed_test = 0;
     mock_push(pack_glPushMatrix()); \
 }
 #define test_glPushMatrix() { \
-    glPushMatrix_INDEXED *packed = mock_peek(); \
+    glPushMatrix_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glPushMatrix missing (no calls left)\n"); \
     } else if (packed->func != glPushMatrix_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glPushMatrix_INDEX); \
         if (! packed) { \
             mock_errorf("glPushMatrix missing\n"); \
@@ -6008,7 +6010,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6019,7 +6021,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPushMatrix();\n", ); \
         } \
     } \
@@ -6040,14 +6042,14 @@ static int failed_test = 0;
     mock_push(pack_glReadPixels(x, y, width, height, format, type, pixels)); \
 }
 #define test_glReadPixels(x, y, width, height, format, type, pixels) { \
-    glReadPixels_INDEXED *packed = mock_peek(); \
+    glReadPixels_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glReadPixels missing (no calls left)\n"); \
     } else if (packed->func != glReadPixels_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glReadPixels_INDEX); \
         if (! packed) { \
             mock_errorf("glReadPixels missing\n"); \
@@ -6057,7 +6059,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6091,7 +6093,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glReadPixels(%d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", x, y, width, height, format, type, pixels); \
         } \
     } \
@@ -6109,14 +6111,14 @@ static int failed_test = 0;
     mock_push(pack_glRotatef(angle, x, y, z)); \
 }
 #define test_glRotatef(angle, x, y, z) { \
-    glRotatef_INDEXED *packed = mock_peek(); \
+    glRotatef_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glRotatef missing (no calls left)\n"); \
     } else if (packed->func != glRotatef_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glRotatef_INDEX); \
         if (! packed) { \
             mock_errorf("glRotatef missing\n"); \
@@ -6126,7 +6128,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6149,7 +6151,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glRotatef(%0.2f, %0.2f, %0.2f, %0.2f);\n", angle, x, y, z); \
         } \
     } \
@@ -6167,14 +6169,14 @@ static int failed_test = 0;
     mock_push(pack_glRotatex(angle, x, y, z)); \
 }
 #define test_glRotatex(angle, x, y, z) { \
-    glRotatex_INDEXED *packed = mock_peek(); \
+    glRotatex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glRotatex missing (no calls left)\n"); \
     } else if (packed->func != glRotatex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glRotatex_INDEX); \
         if (! packed) { \
             mock_errorf("glRotatex missing\n"); \
@@ -6184,7 +6186,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6207,7 +6209,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glRotatex(%p, %p, %p, %p);\n", angle, x, y, z); \
         } \
     } \
@@ -6223,14 +6225,14 @@ static int failed_test = 0;
     mock_push(pack_glSampleCoverage(value, invert)); \
 }
 #define test_glSampleCoverage(value, invert) { \
-    glSampleCoverage_INDEXED *packed = mock_peek(); \
+    glSampleCoverage_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glSampleCoverage missing (no calls left)\n"); \
     } else if (packed->func != glSampleCoverage_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glSampleCoverage_INDEX); \
         if (! packed) { \
             mock_errorf("glSampleCoverage missing\n"); \
@@ -6240,7 +6242,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6257,7 +6259,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glSampleCoverage(%p, %d);\n", value, invert); \
         } \
     } \
@@ -6273,14 +6275,14 @@ static int failed_test = 0;
     mock_push(pack_glSampleCoveragex(value, invert)); \
 }
 #define test_glSampleCoveragex(value, invert) { \
-    glSampleCoveragex_INDEXED *packed = mock_peek(); \
+    glSampleCoveragex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glSampleCoveragex missing (no calls left)\n"); \
     } else if (packed->func != glSampleCoveragex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glSampleCoveragex_INDEX); \
         if (! packed) { \
             mock_errorf("glSampleCoveragex missing\n"); \
@@ -6290,7 +6292,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6307,7 +6309,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glSampleCoveragex(%p, %d);\n", value, invert); \
         } \
     } \
@@ -6324,14 +6326,14 @@ static int failed_test = 0;
     mock_push(pack_glScalef(x, y, z)); \
 }
 #define test_glScalef(x, y, z) { \
-    glScalef_INDEXED *packed = mock_peek(); \
+    glScalef_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glScalef missing (no calls left)\n"); \
     } else if (packed->func != glScalef_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glScalef_INDEX); \
         if (! packed) { \
             mock_errorf("glScalef missing\n"); \
@@ -6341,7 +6343,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6361,7 +6363,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glScalef(%0.2f, %0.2f, %0.2f);\n", x, y, z); \
         } \
     } \
@@ -6378,14 +6380,14 @@ static int failed_test = 0;
     mock_push(pack_glScalex(x, y, z)); \
 }
 #define test_glScalex(x, y, z) { \
-    glScalex_INDEXED *packed = mock_peek(); \
+    glScalex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glScalex missing (no calls left)\n"); \
     } else if (packed->func != glScalex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glScalex_INDEX); \
         if (! packed) { \
             mock_errorf("glScalex missing\n"); \
@@ -6395,7 +6397,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6415,7 +6417,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glScalex(%p, %p, %p);\n", x, y, z); \
         } \
     } \
@@ -6433,14 +6435,14 @@ static int failed_test = 0;
     mock_push(pack_glScissor(x, y, width, height)); \
 }
 #define test_glScissor(x, y, width, height) { \
-    glScissor_INDEXED *packed = mock_peek(); \
+    glScissor_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glScissor missing (no calls left)\n"); \
     } else if (packed->func != glScissor_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glScissor_INDEX); \
         if (! packed) { \
             mock_errorf("glScissor missing\n"); \
@@ -6450,7 +6452,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6473,7 +6475,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glScissor(%d, %d, %d, %d);\n", x, y, width, height); \
         } \
     } \
@@ -6488,14 +6490,14 @@ static int failed_test = 0;
     mock_push(pack_glShadeModel(mode)); \
 }
 #define test_glShadeModel(mode) { \
-    glShadeModel_INDEXED *packed = mock_peek(); \
+    glShadeModel_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glShadeModel missing (no calls left)\n"); \
     } else if (packed->func != glShadeModel_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glShadeModel_INDEX); \
         if (! packed) { \
             mock_errorf("glShadeModel missing\n"); \
@@ -6505,7 +6507,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6519,7 +6521,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glShadeModel(0x%04X);\n", mode); \
         } \
     } \
@@ -6536,14 +6538,14 @@ static int failed_test = 0;
     mock_push(pack_glStencilFunc(func, ref, mask)); \
 }
 #define test_glStencilFunc(func, ref, mask) { \
-    glStencilFunc_INDEXED *packed = mock_peek(); \
+    glStencilFunc_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glStencilFunc missing (no calls left)\n"); \
     } else if (packed->func != glStencilFunc_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glStencilFunc_INDEX); \
         if (! packed) { \
             mock_errorf("glStencilFunc missing\n"); \
@@ -6553,7 +6555,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6573,7 +6575,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glStencilFunc(0x%04X, %d, %u);\n", func, ref, mask); \
         } \
     } \
@@ -6588,14 +6590,14 @@ static int failed_test = 0;
     mock_push(pack_glStencilMask(mask)); \
 }
 #define test_glStencilMask(mask) { \
-    glStencilMask_INDEXED *packed = mock_peek(); \
+    glStencilMask_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glStencilMask missing (no calls left)\n"); \
     } else if (packed->func != glStencilMask_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glStencilMask_INDEX); \
         if (! packed) { \
             mock_errorf("glStencilMask missing\n"); \
@@ -6605,7 +6607,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6619,7 +6621,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glStencilMask(%u);\n", mask); \
         } \
     } \
@@ -6636,14 +6638,14 @@ static int failed_test = 0;
     mock_push(pack_glStencilOp(fail, zfail, zpass)); \
 }
 #define test_glStencilOp(fail, zfail, zpass) { \
-    glStencilOp_INDEXED *packed = mock_peek(); \
+    glStencilOp_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glStencilOp missing (no calls left)\n"); \
     } else if (packed->func != glStencilOp_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glStencilOp_INDEX); \
         if (! packed) { \
             mock_errorf("glStencilOp missing\n"); \
@@ -6653,7 +6655,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6673,7 +6675,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glStencilOp(0x%04X, 0x%04X, 0x%04X);\n", fail, zfail, zpass); \
         } \
     } \
@@ -6691,14 +6693,14 @@ static int failed_test = 0;
     mock_push(pack_glTexCoordPointer(size, type, stride, pointer)); \
 }
 #define test_glTexCoordPointer(size, type, stride, pointer) { \
-    glTexCoordPointer_INDEXED *packed = mock_peek(); \
+    glTexCoordPointer_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexCoordPointer missing (no calls left)\n"); \
     } else if (packed->func != glTexCoordPointer_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexCoordPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glTexCoordPointer missing\n"); \
@@ -6708,7 +6710,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6733,7 +6735,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexCoordPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
     } \
@@ -6750,14 +6752,14 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvf(target, pname, param)); \
 }
 #define test_glTexEnvf(target, pname, param) { \
-    glTexEnvf_INDEXED *packed = mock_peek(); \
+    glTexEnvf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexEnvf missing (no calls left)\n"); \
     } else if (packed->func != glTexEnvf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexEnvf_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvf missing\n"); \
@@ -6767,7 +6769,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6787,7 +6789,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvf(0x%04X, 0x%04X, %0.2f);\n", target, pname, param); \
         } \
     } \
@@ -6804,14 +6806,14 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvfv(target, pname, params)); \
 }
 #define test_glTexEnvfv(target, pname, params) { \
-    glTexEnvfv_INDEXED *packed = mock_peek(); \
+    glTexEnvfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexEnvfv missing (no calls left)\n"); \
     } else if (packed->func != glTexEnvfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexEnvfv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvfv missing\n"); \
@@ -6821,7 +6823,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6843,7 +6845,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -6860,14 +6862,14 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvi(target, pname, param)); \
 }
 #define test_glTexEnvi(target, pname, param) { \
-    glTexEnvi_INDEXED *packed = mock_peek(); \
+    glTexEnvi_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexEnvi missing (no calls left)\n"); \
     } else if (packed->func != glTexEnvi_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexEnvi_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvi missing\n"); \
@@ -6877,7 +6879,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6897,7 +6899,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvi(0x%04X, 0x%04X, %d);\n", target, pname, param); \
         } \
     } \
@@ -6914,14 +6916,14 @@ static int failed_test = 0;
     mock_push(pack_glTexEnviv(target, pname, params)); \
 }
 #define test_glTexEnviv(target, pname, params) { \
-    glTexEnviv_INDEXED *packed = mock_peek(); \
+    glTexEnviv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexEnviv missing (no calls left)\n"); \
     } else if (packed->func != glTexEnviv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexEnviv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnviv missing\n"); \
@@ -6931,7 +6933,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -6953,7 +6955,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnviv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -6970,14 +6972,14 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvx(target, pname, param)); \
 }
 #define test_glTexEnvx(target, pname, param) { \
-    glTexEnvx_INDEXED *packed = mock_peek(); \
+    glTexEnvx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexEnvx missing (no calls left)\n"); \
     } else if (packed->func != glTexEnvx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexEnvx_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvx missing\n"); \
@@ -6987,7 +6989,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7007,7 +7009,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvx(0x%04X, 0x%04X, %p);\n", target, pname, param); \
         } \
     } \
@@ -7024,14 +7026,14 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvxv(target, pname, params)); \
 }
 #define test_glTexEnvxv(target, pname, params) { \
-    glTexEnvxv_INDEXED *packed = mock_peek(); \
+    glTexEnvxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexEnvxv missing (no calls left)\n"); \
     } else if (packed->func != glTexEnvxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexEnvxv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexEnvxv missing\n"); \
@@ -7041,7 +7043,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7063,7 +7065,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -7086,14 +7088,14 @@ static int failed_test = 0;
     mock_push(pack_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels)); \
 }
 #define test_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) { \
-    glTexImage2D_INDEXED *packed = mock_peek(); \
+    glTexImage2D_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexImage2D missing (no calls left)\n"); \
     } else if (packed->func != glTexImage2D_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glTexImage2D missing\n"); \
@@ -7103,7 +7105,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7143,7 +7145,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, internalformat, width, height, border, format, type, pixels); \
         } \
     } \
@@ -7160,14 +7162,14 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterf(target, pname, param)); \
 }
 #define test_glTexParameterf(target, pname, param) { \
-    glTexParameterf_INDEXED *packed = mock_peek(); \
+    glTexParameterf_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexParameterf missing (no calls left)\n"); \
     } else if (packed->func != glTexParameterf_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexParameterf_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterf missing\n"); \
@@ -7177,7 +7179,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7197,7 +7199,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterf(0x%04X, 0x%04X, %0.2f);\n", target, pname, param); \
         } \
     } \
@@ -7214,14 +7216,14 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterfv(target, pname, params)); \
 }
 #define test_glTexParameterfv(target, pname, params) { \
-    glTexParameterfv_INDEXED *packed = mock_peek(); \
+    glTexParameterfv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexParameterfv missing (no calls left)\n"); \
     } else if (packed->func != glTexParameterfv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexParameterfv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterfv missing\n"); \
@@ -7231,7 +7233,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7253,7 +7255,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -7270,14 +7272,14 @@ static int failed_test = 0;
     mock_push(pack_glTexParameteri(target, pname, param)); \
 }
 #define test_glTexParameteri(target, pname, param) { \
-    glTexParameteri_INDEXED *packed = mock_peek(); \
+    glTexParameteri_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexParameteri missing (no calls left)\n"); \
     } else if (packed->func != glTexParameteri_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexParameteri_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameteri missing\n"); \
@@ -7287,7 +7289,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7307,7 +7309,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameteri(0x%04X, 0x%04X, %d);\n", target, pname, param); \
         } \
     } \
@@ -7324,14 +7326,14 @@ static int failed_test = 0;
     mock_push(pack_glTexParameteriv(target, pname, params)); \
 }
 #define test_glTexParameteriv(target, pname, params) { \
-    glTexParameteriv_INDEXED *packed = mock_peek(); \
+    glTexParameteriv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexParameteriv missing (no calls left)\n"); \
     } else if (packed->func != glTexParameteriv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexParameteriv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameteriv missing\n"); \
@@ -7341,7 +7343,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7363,7 +7365,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -7380,14 +7382,14 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterx(target, pname, param)); \
 }
 #define test_glTexParameterx(target, pname, param) { \
-    glTexParameterx_INDEXED *packed = mock_peek(); \
+    glTexParameterx_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexParameterx missing (no calls left)\n"); \
     } else if (packed->func != glTexParameterx_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexParameterx_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterx missing\n"); \
@@ -7397,7 +7399,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7417,7 +7419,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterx(0x%04X, 0x%04X, %p);\n", target, pname, param); \
         } \
     } \
@@ -7434,14 +7436,14 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterxv(target, pname, params)); \
 }
 #define test_glTexParameterxv(target, pname, params) { \
-    glTexParameterxv_INDEXED *packed = mock_peek(); \
+    glTexParameterxv_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexParameterxv missing (no calls left)\n"); \
     } else if (packed->func != glTexParameterxv_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexParameterxv_INDEX); \
         if (! packed) { \
             mock_errorf("glTexParameterxv missing\n"); \
@@ -7451,7 +7453,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7473,7 +7475,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
@@ -7496,14 +7498,14 @@ static int failed_test = 0;
     mock_push(pack_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels)); \
 }
 #define test_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) { \
-    glTexSubImage2D_INDEXED *packed = mock_peek(); \
+    glTexSubImage2D_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTexSubImage2D missing (no calls left)\n"); \
     } else if (packed->func != glTexSubImage2D_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTexSubImage2D_INDEX); \
         if (! packed) { \
             mock_errorf("glTexSubImage2D missing\n"); \
@@ -7513,7 +7515,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7553,7 +7555,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, xoffset, yoffset, width, height, format, type, pixels); \
         } \
     } \
@@ -7570,14 +7572,14 @@ static int failed_test = 0;
     mock_push(pack_glTranslatef(x, y, z)); \
 }
 #define test_glTranslatef(x, y, z) { \
-    glTranslatef_INDEXED *packed = mock_peek(); \
+    glTranslatef_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTranslatef missing (no calls left)\n"); \
     } else if (packed->func != glTranslatef_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTranslatef_INDEX); \
         if (! packed) { \
             mock_errorf("glTranslatef missing\n"); \
@@ -7587,7 +7589,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7607,7 +7609,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTranslatef(%0.2f, %0.2f, %0.2f);\n", x, y, z); \
         } \
     } \
@@ -7624,14 +7626,14 @@ static int failed_test = 0;
     mock_push(pack_glTranslatex(x, y, z)); \
 }
 #define test_glTranslatex(x, y, z) { \
-    glTranslatex_INDEXED *packed = mock_peek(); \
+    glTranslatex_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glTranslatex missing (no calls left)\n"); \
     } else if (packed->func != glTranslatex_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glTranslatex_INDEX); \
         if (! packed) { \
             mock_errorf("glTranslatex missing\n"); \
@@ -7641,7 +7643,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7661,7 +7663,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTranslatex(%p, %p, %p);\n", x, y, z); \
         } \
     } \
@@ -7679,14 +7681,14 @@ static int failed_test = 0;
     mock_push(pack_glVertexPointer(size, type, stride, pointer)); \
 }
 #define test_glVertexPointer(size, type, stride, pointer) { \
-    glVertexPointer_INDEXED *packed = mock_peek(); \
+    glVertexPointer_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glVertexPointer missing (no calls left)\n"); \
     } else if (packed->func != glVertexPointer_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glVertexPointer_INDEX); \
         if (! packed) { \
             mock_errorf("glVertexPointer missing\n"); \
@@ -7696,7 +7698,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7721,7 +7723,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glVertexPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
     } \
@@ -7739,14 +7741,14 @@ static int failed_test = 0;
     mock_push(pack_glViewport(x, y, width, height)); \
 }
 #define test_glViewport(x, y, width, height) { \
-    glViewport_INDEXED *packed = mock_peek(); \
+    glViewport_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("glViewport missing (no calls left)\n"); \
     } else if (packed->func != glViewport_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide(glViewport_INDEX); \
         if (! packed) { \
             mock_errorf("glViewport missing\n"); \
@@ -7756,7 +7758,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -7779,7 +7781,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glViewport(%d, %d, %d, %d);\n", x, y, width, height); \
         } \
     } \

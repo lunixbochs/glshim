@@ -3,11 +3,13 @@
 {{ super() }}
 
 const char *mock_name(int func);
-indexed_call_t *mock_slide(int func);
-indexed_call_t *mock_peek();
-indexed_call_t *mock_shift();
+void *mock_cur();
+void *mock_first();
+void *mock_peek();
+void *mock_shift();
+void *mock_slide(int func);
 void mock_print(const indexed_call_t *packed);
-void mock_push(indexed_call_t *call);
+void mock_push(void *call);
 
 static int verbose_test = 0;
 static int failed_test = 0;
@@ -40,14 +42,14 @@ static int failed_test = 0;
     mock_push(pack_{{ func.name }}({{ func.args|args(0) }})); \
 }
 #define test_{{ func.name }}({{ func.args|args(0) }}) { \
-    {{ func.name }}_INDEXED *packed = mock_peek(); \
+    {{ func.name }}_INDEXED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("{{ func.name }} missing (no calls left)\n"); \
     } else if (packed->func != {{ func.name }}_INDEX) { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = packed; \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
         packed = mock_slide({{ func.name }}_INDEX); \
         if (! packed) { \
             mock_errorf("{{ func.name }} missing\n"); \
@@ -57,7 +59,7 @@ static int failed_test = 0;
         }\
     } else { \
         if (verbose_test) { \
-            mock_print(mock_peek()); \
+            mock_print(mock_cur()); \
         } \
         mock_shift(); \
     } \
@@ -81,7 +83,7 @@ static int failed_test = 0;
             if (ptr_error) { \
                 printf("  (pointer mismatch)\n"); \
             } \
-            printf("  have: "); mock_print(packed); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: {{ func.name }}({{ func.args|printf }});\n", {{ func.args|args(0) }}); \
         } \
     } \

@@ -8,7 +8,10 @@ include_directories({{ project }}/include)
 include_directories({{ project }}/src/gl)
 include_directories({{ project }}/src/util)
 
-add_definitions(-g -w -std=c99 -O2 -include test.h)
+add_definitions(-g -std=gnu99 -include test.h)
 
 file(GLOB_RECURSE GL_SOURCES {{ project }}/src/gl/*.c)
+file(GLOB UTIL_SOURCES {{ project }}/src/util/*.c)
+set(GL_SOURCES ${GL_SOURCES} ${UTIL_SOURCES})
+
 add_executable(test ${GL_SOURCES} {{ sources }} {{ util }}/mock.c)
