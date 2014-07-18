@@ -4808,14 +4808,14 @@ void glXCreateGLXPixmapWithConfigSGIX(uint32_t config, uint32_t pixmap, uint32_t
 }
 #endif
 #if !defined(skip_client_glXCreateGLXVideoSourceSGIX) && !defined(skip_index_glXCreateGLXVideoSourceSGIX)
-void glXCreateGLXVideoSourceSGIX(Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t class, uint32_t node) {
+void glXCreateGLXVideoSourceSGIX(Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t cls, uint32_t node) {
     glXCreateGLXVideoSourceSGIX_INDEXED packed_data;
     packed_data.func = glXCreateGLXVideoSourceSGIX_INDEX;
     packed_data.args.a1 = (Display *)dpy;
     packed_data.args.a2 = (uint32_t)screen;
     packed_data.args.a3 = (uint32_t)server;
     packed_data.args.a4 = (uint32_t)path;
-    packed_data.args.a5 = (uint32_t)class;
+    packed_data.args.a5 = (uint32_t)cls;
     packed_data.args.a6 = (uint32_t)node;
     syscall(SYS_proxy, (void *)&packed_data, NULL);
 }

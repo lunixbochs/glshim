@@ -9,18 +9,6 @@
 #ifndef PROXY_H
 #define PROXY_H
 
-typedef struct {
-    int format;
-    void *func;
-    int refs;
-    void *args;
-} packed_call_t;
-
-typedef struct {
-    int func;
-    void *args;
-} indexed_call_t;
-
 enum FORMAT {
     FORMAT_void_GLenum_GLfloat,
     FORMAT_void_GLenum,
@@ -3864,7 +3852,7 @@ typedef struct {
     int func;
     ARGS_void_uint32_t_uint32_t_uint32_t args;
 } INDEXED_void_uint32_t_uint32_t_uint32_t;
-typedef void (*FUNC_void_Display___GENPT___uint32_t_uint32_t_uint32_t_uint32_t_uint32_t)(Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t class, uint32_t node);
+typedef void (*FUNC_void_Display___GENPT___uint32_t_uint32_t_uint32_t_uint32_t_uint32_t)(Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t cls, uint32_t node);
 typedef struct {
     Display * a1;
     uint32_t a2;
@@ -18201,8 +18189,8 @@ void glIndexedCall(const indexed_call_t *packed, void *ret_v);
 #define glXCreateGLXPixmapWithConfigSGIX_FORMAT FORMAT_void_uint32_t_uint32_t_uint32_t
 #define glXCreateGLXVideoSourceSGIX_INDEX 499
 #define glXCreateGLXVideoSourceSGIX_RETURN void
-#define glXCreateGLXVideoSourceSGIX_ARG_NAMES dpy, screen, server, path, class, node
-#define glXCreateGLXVideoSourceSGIX_ARG_EXPAND Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t class, uint32_t node
+#define glXCreateGLXVideoSourceSGIX_ARG_NAMES dpy, screen, server, path, cls, node
+#define glXCreateGLXVideoSourceSGIX_ARG_EXPAND Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t cls, uint32_t node
 #define glXCreateGLXVideoSourceSGIX_PACKED PACKED_void_Display___GENPT___uint32_t_uint32_t_uint32_t_uint32_t_uint32_t
 #define glXCreateGLXVideoSourceSGIX_INDEXED INDEXED_void_Display___GENPT___uint32_t_uint32_t_uint32_t_uint32_t_uint32_t
 #define glXCreateGLXVideoSourceSGIX_FORMAT FORMAT_void_Display___GENPT___uint32_t_uint32_t_uint32_t_uint32_t_uint32_t
