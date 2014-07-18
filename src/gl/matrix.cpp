@@ -60,7 +60,7 @@ void glLoadIdentity() {
 
 void glLoadMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glLoadMatrixf);
-    *get_current_matrix() = glm::transpose(glm::make_mat4(m));
+    *get_current_matrix() = glm::make_mat4(m);
 }
 
 void glMatrixMode(GLenum mode) {
@@ -70,7 +70,7 @@ void glMatrixMode(GLenum mode) {
 
 void glMultMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glMultMatrixf);
-    *get_current_matrix() *= glm::transpose(glm::make_mat4(m));
+    *get_current_matrix() *= glm::make_mat4(m);
 }
 
 void glPopMatrix() {
@@ -124,7 +124,7 @@ void glFrustumf(GLfloat left, GLfloat right,
 }
 
 void gl_get_matrix(GLenum mode, GLfloat *out) {
-    memcpy(out, glm::value_ptr(glm::transpose(*get_matrix(mode))), sizeof(GLfloat) * 16);
+    memcpy(out, glm::value_ptr(*get_matrix(mode)), sizeof(GLfloat) * 16);
 }
 
 void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
