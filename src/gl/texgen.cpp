@@ -62,6 +62,9 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
     glm::vec4 plane = glm::vec4(P[0], P[1], P[2], P[3]);
     for (int i = 0; i < block->len; i++) {
         glm::vec4 v = glm::vec4(vert[0], vert[1], vert[2], 1);
+        if (! block->normal) {
+            normal = CURRENT->normal;
+        }
         switch (type) {
             case GL_OBJECT_LINEAR: {
                 out[0] = glm::dot(v, plane);
