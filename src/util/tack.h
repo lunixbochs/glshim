@@ -13,6 +13,7 @@ extern void *tack_get(tack_t *stack, int idx);
 extern void *tack_peek(tack_t *stack);
 extern void *tack_pop(tack_t *stack);
 extern void *tack_shift(tack_t *stack);
+extern void tack_clear(tack_t *stack);
 extern void tack_push(tack_t *stack, void *data);
 extern void tack_set(tack_t *stack, int idx, void *data);
 

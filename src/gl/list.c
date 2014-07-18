@@ -15,6 +15,7 @@ void dl_free(displaylist_t *dl) {
         dl_decref(tack_get(&dl->calls, i));
     }
     free(dl);
+    tack_clear(&dl->calls);
 }
 
 void dl_incref(packed_call_t *call) {

@@ -27,6 +27,13 @@ static void tack_grow(tack_t *stack, int idx) {
     }
 }
 
+void tack_clear(tack_t *stack) {
+    free(stack->data);
+    stack->data = NULL;
+    stack->cap = 0;
+    stack->len = 0;
+}
+
 int tack_len(tack_t *stack) {
     return stack->len;
 }
