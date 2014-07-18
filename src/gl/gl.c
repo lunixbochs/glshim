@@ -515,7 +515,12 @@ void glNewList(GLuint list, GLenum mode) {
 void glEndList() {
     GLuint list = state.list.name;
     displaylist_t *dl = state.list.active;
-    if (state.list.active) {
+    if (dl) {
+        displaylist_t *old = get_list(list);
+        if (old) {
+            dl_free(old);
+        }
+
         tack_set(&state.lists, list - 1, dl);
         state.list.active = NULL;
         if (state.list.mode == GL_COMPILE_AND_EXECUTE) {
