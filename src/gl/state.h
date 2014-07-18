@@ -5,6 +5,7 @@
 
 #include "eval.h"
 #include "texture.h"
+#include "tack.h"
 
 typedef struct {
     GLboolean line_stipple,
@@ -69,7 +70,6 @@ typedef struct {
     GLenum mode;
 
     GLuint count;
-    GLuint cap;
 } displaylist_state_t;
 
 
@@ -94,12 +94,12 @@ typedef struct {
 
 typedef struct {
     displaylist_state_t list;
+    tack_t lists;
     block_state_t block;
     enable_state_t enable;
     map_state_t *map_grid;
     map_states_t map1, map2;
     pointer_states_t pointers;
-    displaylist_t **lists;
     texgen_state_t texgen[MAX_TEX];
     texture_state_t texture;
     current_state_t current;

@@ -1,4 +1,5 @@
 #include "gl.h"
+#include "tack.h"
 
 void *gles = NULL;
 glstate_t state = {
@@ -492,26 +493,15 @@ void glUnlockArraysEXT() {
 // display lists
 
 static displaylist_t *get_list(GLuint list) {
-    if (glIsList(list))
-        return state.lists[list - 1];
-
-    return NULL;
+    return tack_get(&state.lists, list - 1);
 }
 
 GLuint glGenLists(GLsizei range) {
     int start = state.list.count;
-    if (state.lists == NULL) {
-        state.list.cap += range + 100;
-        state.lists = malloc(state.list.cap * sizeof(uintptr_t));
-    } else if (state.list.count + range > state.list.cap) {
-        state.list.cap += range + 100;
-        state.lists = realloc(state.lists, state.list.cap * sizeof(uintptr_t));
+    for (int i = 0; i < range; i++) {
+        tack_set(&state.lists, start + i, NULL);
     }
     state.list.count += range;
-
-    for (int i = 0; i < range; i++) {
-        state.lists[start+i] = NULL;
-    }
     return start + 1;
 }
 
@@ -529,7 +519,7 @@ void glEndList() {
     GLuint list = state.list.name;
     displaylist_t *dl = state.list.active;
     if (state.list.active) {
-        state.lists[list - 1] = dl;
+        tack_set(&state.lists, list - 1, dl);
         state.list.active = NULL;
         if (state.list.mode == GL_COMPILE_AND_EXECUTE) {
             glCallList(list);
@@ -600,7 +590,7 @@ void glDeleteList(GLuint list) {
             state.list.active = NULL;
         }
         dl_free(l);
-        state.lists[list-1] = NULL;
+        tack_set(&state.lists, list - 1, NULL);
     }
 
     // lists just grow upwards, maybe use a better storage mechanism?
@@ -617,8 +607,5 @@ void glListBase(GLuint base) {
 }
 
 GLboolean glIsList(GLuint list) {
-    if (list - 1 < state.list.count) {
-        return true;
-    }
-    return false;
+    return tack_get(&state.list, list) ? true : false;
 }
