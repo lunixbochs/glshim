@@ -242,7 +242,7 @@ void bl_draw(block_t *block) {
     }
     for (int i = 0; i < MAX_TEX; i++) {
         if (state.enable.texgen_s[i] || state.enable.texgen_t[i]) {
-            gen_tex_coords(i, vert, &block->tex[i], block->len);
+            gen_tex_coords(block, i);
         }
 
         GLuint old = state.texture.client + GL_TEXTURE0;

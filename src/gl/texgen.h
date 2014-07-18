@@ -1,4 +1,4 @@
-#include "gl.h"
-#include <math.h>
+#include <GL/gl.h>
+#include "block.h"
 
-extern void gen_tex_coords(GLuint texture, GLfloat *verts, GLfloat **coords, GLint count);
+extern void gen_tex_coords(block_t *block, GLuint texture);
