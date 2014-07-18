@@ -12,6 +12,7 @@ extern "C" {
 
 #define CURRENT_MATRIX_MODE state.matrix.mode ? state.matrix.mode : GL_MODELVIEW
 
+#ifdef LOCAL_MATRIX
 // helper functions
 static matrix_state_t *get_matrix_state(GLenum mode) {
     matrix_state_t *m;
@@ -135,5 +136,7 @@ void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
     vert = (*projection) * (*model) * vert;
     memcpy(out, glm::value_ptr(vert), sizeof(GLfloat) * 3);
 }
+
+#endif
 
 } // extern "C"

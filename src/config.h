@@ -20,6 +20,7 @@
 #define skip_glGetString
 
 // matrix.cpp
+#ifdef LOCAL_MATRIX
 #define skip_glFrustumf
 #define skip_glLoadIdentity
 #define skip_glLoadMatrixf
@@ -31,6 +32,7 @@
 #define skip_glRotatef
 #define skip_glScalef
 #define skip_glTranslatef
+#endif
 
 // light.c
 #define skip_glLightModelf

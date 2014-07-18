@@ -184,10 +184,14 @@ void bl_draw(block_t *block) {
             memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
         }
     }
+#ifdef LOCAL_MATRIX
     GLfloat *vert = malloc(block->len * 3 * sizeof(GLfloat));
     for (int i = 0; i < block->len; i++) {
         gl_transform_vertex(&vert[i * 3], &block->vert[i * 3]);
     }
+#else
+    GLfloat *vert = block->vert;
+#endif
 
     LOAD_GLES(glDrawArrays);
     LOAD_GLES(glDrawElements);
@@ -269,7 +273,9 @@ void bl_draw(block_t *block) {
     }
 #endif
     glPopClientAttrib();
+#ifdef LOCAL_MATRIX
     free(vert);
+#endif
 }
 
 void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
