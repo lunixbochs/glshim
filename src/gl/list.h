@@ -8,8 +8,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define DEFAULT_DISPLAYLIST_CAPACITY 16
-
 typedef struct {
     bool open;
     tack_t calls;
