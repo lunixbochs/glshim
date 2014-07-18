@@ -54,22 +54,27 @@ static matrix_state_t *get_current_state() {
 
 // GL matrix functions
 void glLoadIdentity() {
+    PUSH_IF_COMPILING(glLoadIdentity);
     *get_current_matrix() = glm::mat4();
 }
 
 void glLoadMatrixf(const GLfloat *m) {
+    PUSH_IF_COMPILING(glLoadMatrixf);
     *get_current_matrix() = glm::transpose(glm::make_mat4(m));
 }
 
 void glMatrixMode(GLenum mode) {
+    PUSH_IF_COMPILING(glMatrixMode);
     state.matrix.mode = mode;
 }
 
 void glMultMatrixf(const GLfloat *m) {
+    PUSH_IF_COMPILING(glMultMatrixf);
     *get_current_matrix() *= glm::transpose(glm::make_mat4(m));
 }
 
 void glPopMatrix() {
+    PUSH_IF_COMPILING(glPopMatrix);
     matrix_state_t *m = get_current_state();
     void *top = tack_pop(&m->stack);
     if (top != NULL) {
@@ -79,6 +84,7 @@ void glPopMatrix() {
 }
 
 void glPushMatrix() {
+    PUSH_IF_COMPILING(glPushMatrix);
     matrix_state_t *m = get_current_state();
     glm::mat4 *matrix = new glm::mat4(*static_cast<glm::mat4 *>(m->matrix));
     tack_push(&m->stack, static_cast<void *>(matrix));
@@ -86,16 +92,19 @@ void glPushMatrix() {
 
 // GL transform functions
 void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
+    PUSH_IF_COMPILING(glRotatef);
     glm::mat4 *m = get_current_matrix();
     *m = glm::rotate(*m, glm::radians(angle), glm::vec3(x, y, z));
 }
 
 void glScalef(GLfloat x, GLfloat y, GLfloat z) {
+    PUSH_IF_COMPILING(glScalef);
     glm::mat4 *m = get_current_matrix();
     *m = glm::scale(*m, glm::vec3(x, y, z));
 }
 
 void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
+    PUSH_IF_COMPILING(glTranslatef);
     glm::mat4 *m = get_current_matrix();
     *m = glm::translate(*m, glm::vec3(x, y, z));
 }
@@ -103,12 +112,14 @@ void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
 void glOrthof(GLfloat left, GLfloat right,
               GLfloat bottom, GLfloat top,
               GLfloat near, GLfloat far) {
+    PUSH_IF_COMPILING(glOrthof);
     *get_current_matrix() *= glm::ortho(left, right, bottom, top, near, far);
 }
 
 void glFrustumf(GLfloat left, GLfloat right,
                 GLfloat bottom, GLfloat top,
                 GLfloat near, GLfloat far) {
+    PUSH_IF_COMPILING(glFrustumf);
     *get_current_matrix() *= glm::frustum(left, right, bottom, top, near, far);
 }
 
