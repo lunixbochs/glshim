@@ -42,8 +42,6 @@ typedef struct {
     GLboolean artificial;
 } block_t;
 
-void (*block_draw_t)(block_t *block);
-
 typedef struct {
     int format;
     block_t *block;
