@@ -1139,7 +1139,7 @@ typedef struct {
     int func;
     ARGS_void_uint32_t_uint32_t_uint32_t args;
 } INDEXED_void_uint32_t_uint32_t_uint32_t;
-typedef void (*FUNC_void_Display___GENPT___uint32_t_uint32_t_uint32_t_uint32_t_uint32_t)(Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t class, uint32_t node);
+typedef void (*FUNC_void_Display___GENPT___uint32_t_uint32_t_uint32_t_uint32_t_uint32_t)(Display * dpy, uint32_t screen, uint32_t server, uint32_t path, uint32_t cls, uint32_t node);
 typedef struct {
     Display * a1;
     uint32_t a2;
