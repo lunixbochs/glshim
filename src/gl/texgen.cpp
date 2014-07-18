@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
 
 extern "C" {
 
@@ -80,7 +81,7 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                 glm::vec3 norm = glm::vec3(normal[0], normal[1], normal[2]);
                 glm::vec3 eye = glm::vec3(matrix * v);
                 eye = glm::normalize(eye);
-                glm::vec3 eye_normal = norm * glm::mat3(matrix);
+                glm::vec3 eye_normal = norm * glm::inverseTranspose(glm::mat3(matrix));
                 glm::vec3 reflection = eye - eye_normal * glm::vec3(2.0 * glm::dot(eye, eye_normal));
                 reflection.z += 1.0;
                 GLfloat m = 1.0 / (2.0 * sqrt(glm::dot(reflection, reflection)));
@@ -94,7 +95,7 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                 glm::vec3 norm = glm::vec3(normal[0], normal[1], normal[2]);
                 glm::vec3 eye = glm::vec3(matrix * v);
                 eye = glm::normalize(eye);
-                glm::vec3 eye_normal = norm * glm::mat3(matrix);
+                glm::vec3 eye_normal = norm * glm::inverseTranspose(glm::mat3(matrix));
                 GLfloat dot = 2.0 * glm::dot(eye, eye_normal);
                 out[0] = eye.x - eye_normal.x * dot;
                 // out[1] = eye.x - eye_normal.y * dot;
