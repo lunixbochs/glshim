@@ -9,8 +9,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../gl/gl.h"
-
 // defines yoinked from Mesa glx.h
 #define GLX_VERSION_1_1     1
 #define GLX_VERSION_1_2     1

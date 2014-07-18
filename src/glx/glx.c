@@ -9,6 +9,8 @@
 
 #include "glx.h"
 
+#include "../gl/loader.h"
+#include "../gl/raster.h"
 #include "../gl/text.h"
 
 #include <EGL/egl.h>

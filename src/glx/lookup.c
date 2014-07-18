@@ -1,4 +1,8 @@
+#include <GL/gl.h>
+
 #include "glx.h"
+#include "../gl/loader.h"
+#include "../gl/wrap/extra.h"
 
 #define MAP(func_name, func) \
     if (strcmp(name, func_name) == 0) return (void *)func;
