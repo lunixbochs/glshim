@@ -1027,8 +1027,8 @@ void mock_print(const indexed_call_t *packed) {
     }
 }
 
-void *mock_first() {
-    return tack_first(&mock);
+void *mock_get(int idx) {
+    return tack_get(&mock, idx);
 }
 
 void *mock_peek() {

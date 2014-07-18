@@ -5,14 +5,18 @@
 
 #define TACK_DEFAULT_SIZE 8
 
-void tack_push(tack_t *stack, void *data) {
+static void tack_grow(tack_t *stack, int idx) {
     if (stack->data == NULL) {
         stack->cap = TACK_DEFAULT_SIZE;
         stack->data = malloc(sizeof(void *) * stack->cap);
-    } else if (stack->len == stack->cap) {
-        stack->cap *= 2;
+    } else if (stack->len + idx >= stack->cap) {
+        stack->cap = MAX(stack->cap * 2, stack->len + idx);
         stack->data = realloc(stack->data, sizeof(void *) * stack->cap);
     }
+}
+
+void tack_push(tack_t *stack, void *data) {
+    tack_grow(stack, 0);
     stack->data[stack->len++] = data;
 }
 
@@ -36,10 +40,15 @@ void *tack_peek(tack_t *stack) {
     return stack->data[stack->len - 1];
 }
 
-void *tack_first(tack_t *stack) {
-    if (tack_pop_bad(stack))
+void *tack_get(tack_t *stack, int idx) {
+    if (stack == NULL || idx < 0 || idx >= stack->len)
         return NULL;
-    return stack->data[0];
+    return stack->data[idx];
+}
+
+void tack_set(tack_t *stack, int idx, void *data) {
+    tack_grow(stack, idx);
+    stack->data[idx] = data;
 }
 
 void *tack_cur(tack_t *stack) {
