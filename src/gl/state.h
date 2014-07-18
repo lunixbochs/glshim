@@ -68,8 +68,6 @@ typedef struct {
     GLuint base;
     GLuint name;
     GLenum mode;
-
-    GLuint count;
 } displaylist_state_t;
 
 

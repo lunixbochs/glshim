@@ -497,11 +497,10 @@ static displaylist_t *get_list(GLuint list) {
 }
 
 GLuint glGenLists(GLsizei range) {
-    int start = state.list.count;
+    int start = tack_len(&state.lists);
     for (int i = 0; i < range; i++) {
         tack_set(&state.lists, start + i, NULL);
     }
-    state.list.count += range;
     return start + 1;
 }
 
