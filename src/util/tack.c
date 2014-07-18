@@ -64,7 +64,7 @@ void *tack_get(tack_t *stack, int idx) {
 void tack_set(tack_t *stack, int idx, void *data) {
     tack_grow(stack, idx);
     stack->data[idx] = data;
-    stack->len = MAX(stack->len, idx);
+    stack->len = MAX(stack->len, idx + 1);
 }
 
 void *tack_cur(tack_t *stack) {
