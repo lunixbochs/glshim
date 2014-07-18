@@ -1,19 +1,11 @@
 #include "stack.h"
 
-static glstack_t *stack = NULL;
-static glclientstack_t *client_stack = NULL;
+static tack_t stack = {0};
+static tack_t client_stack = {0};
 
 void glPushAttrib(GLbitfield mask) {
-    if (stack == NULL) {
-        stack = (glstack_t *)malloc(STACK_SIZE * sizeof(glstack_t));
-        stack->len = 0;
-        stack->cap = STACK_SIZE;
-    } else if (stack->len == stack->cap) {
-        stack->cap += STACK_SIZE;
-        stack = (glstack_t *)realloc(stack, stack->cap * sizeof(glstack_t));
-    }
+    glstack_t *cur = malloc(sizeof(glstack_t));
 
-    glstack_t *cur = stack + stack->len;
     cur->mask = mask;
     cur->clip_planes_enabled = NULL;
     cur->clip_planes = NULL;
@@ -174,20 +166,11 @@ void glPushAttrib(GLbitfield mask) {
     // TODO: GL_TRANSFORM_BIT
     // TODO: GL_VIEWPORT_BIT
 
-    stack->len++;
+    tack_push(&stack, cur);
 }
 
 void glPushClientAttrib(GLbitfield mask) {
-    if (client_stack == NULL) {
-        client_stack = (glclientstack_t *)malloc(STACK_SIZE * sizeof(glclientstack_t));
-        client_stack->len = 0;
-        client_stack->cap = STACK_SIZE;
-    } else if (client_stack->len == client_stack->cap) {
-        client_stack->cap += STACK_SIZE;
-        client_stack = (glclientstack_t *)realloc(client_stack, client_stack->cap * sizeof(glclientstack_t));
-    }
-
-    glclientstack_t *cur = client_stack + client_stack->len;
+    glclientstack_t *cur = malloc(sizeof(glclientstack_t));
     cur->mask = mask;
 
     if (mask & GL_CLIENT_PIXEL_STORE_BIT) {
@@ -209,8 +192,7 @@ void glPushClientAttrib(GLbitfield mask) {
         memcpy(&cur->normal, &state.pointers.normal, sizeof(pointer_state_t));
         memcpy(&cur->tex, &state.pointers.tex_coord, sizeof(pointer_state_t) * MAX_TEX);
     }
-
-    client_stack->len++;
+    tack_push(&client_stack, cur);
 }
 
 #define enable_disable(pname, enabled) \
@@ -222,10 +204,10 @@ void glPushClientAttrib(GLbitfield mask) {
 #define v4(c) v3(c), c[3]
 
 void glPopAttrib() {
-    if (stack == NULL || stack->len == 0)
+    glstack_t *cur = tack_pop(&stack);
+    if (cur == NULL) {
         return;
-
-    glstack_t *cur = stack + stack->len-1;
+    }
 
     if (cur->mask & GL_COLOR_BUFFER_BIT) {
 #ifndef USE_ES2
@@ -352,7 +334,7 @@ void glPopAttrib() {
     free(cur->clip_planes);
     free(cur->lights_enabled);
     free(cur->lights);
-    stack->len--;
+    free(cur);
 }
 
 #undef enable_disable
@@ -361,10 +343,11 @@ void glPopAttrib() {
     else glDisableClientState(pname)
 
 void glPopClientAttrib() {
-    if (client_stack == NULL || client_stack->len == 0)
+    glclientstack_t *cur = tack_pop(&client_stack);
+    if (cur == NULL) {
         return;
+    }
 
-    glclientstack_t *cur = client_stack + client_stack->len-1;
     if (cur->mask & GL_CLIENT_PIXEL_STORE_BIT) {
         glPixelStorei(GL_PACK_ALIGNMENT, cur->pack_align);
         glPixelStorei(GL_UNPACK_ALIGNMENT, cur->unpack_align);
@@ -389,8 +372,7 @@ void glPopClientAttrib() {
         memcpy(&state.pointers.normal, &cur->normal, sizeof(pointer_state_t));
         memcpy(&state.pointers.tex_coord, &cur->tex, sizeof(pointer_state_t) * MAX_TEX);
     }
-
-    client_stack->len--;
+    free(cur);
 }
 
 #undef enable_disable

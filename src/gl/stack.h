@@ -4,8 +4,6 @@
 #ifndef GL_STACK_H
 #define GL_STACK_H
 
-#define STACK_SIZE 16
-
 typedef struct {
     GLbitfield mask;
 
@@ -107,10 +105,6 @@ typedef struct {
     // dynamically-sized shenanigans
     GLboolean *clip_planes_enabled;
     GLfloat *clip_planes;
-
-    // misc
-    unsigned int len;
-    unsigned int cap;
 } glstack_t;
 
 typedef struct {
@@ -132,9 +126,6 @@ typedef struct {
     pointer_state_t color;
     pointer_state_t normal;
     pointer_state_t tex[MAX_TEX];
-
-    unsigned int len;
-    unsigned int cap;
 } glclientstack_t;
 
 void glPushClientAttrib(GLbitfield mask);
