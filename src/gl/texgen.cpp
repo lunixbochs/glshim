@@ -51,7 +51,7 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
     */
 }
 
-static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *P) {
+static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *Sp, GLfloat *Tp) {
     GLfloat *vert = block->vert;
     GLfloat *normal = block->normal;
     // if we get sphere map and no normal, just barf and return?
@@ -60,7 +60,11 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
     if (type != GL_OBJECT_LINEAR) {
         glGetFloatv(GL_MODELVIEW_MATRIX, glm::value_ptr(matrix));
     }
-    glm::vec4 plane = glm::vec4(P[0], P[1], P[2], P[3]);
+    glm::vec4 s_plane = glm::vec4(Sp[0], Sp[1], Sp[2], Sp[3]);
+    glm::vec4 t_plane;
+    if (Tp != NULL) {
+        t_plane = glm::vec4(Tp[0], Tp[1], Tp[2], Tp[3]);
+    }
     for (int i = 0; i < block->len; i++) {
         glm::vec4 v = glm::vec4(vert[0], vert[1], vert[2], 1);
         if (! block->normal) {
@@ -68,16 +72,21 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         }
         switch (type) {
             case GL_OBJECT_LINEAR: {
-                out[0] = glm::dot(v, plane);
+                out[0] = glm::dot(v, s_plane);
+                if (Tp) {
+                    out[1] = glm::dot(v, t_plane);
+                }
                 break;
             }
             case GL_EYE_LINEAR: {
                 glm::vec4 eye = matrix * v;
-                out[0] = glm::dot(eye, plane);
+                out[0] = glm::dot(eye, s_plane);
+                if (Tp) {
+                    out[1] = glm::dot(eye, t_plane);
+                }
                 break;
             }
             case GL_SPHERE_MAP: {
-                // TODO: process S and T at the same time?
                 glm::vec3 norm = glm::vec3(normal[0], normal[1], normal[2]);
                 glm::vec3 eye = glm::vec3(matrix * v);
                 eye = glm::normalize(eye);
@@ -86,7 +95,7 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                 reflection.z += 1.0;
                 GLfloat m = 1.0 / (2.0 * sqrt(glm::dot(reflection, reflection)));
                 out[0] = reflection.x * m + 0.5;
-                // t = reflection.y * m + 0.5;
+                out[1] = reflection.y * m + 0.5;
 
                 normal += 3;
                 break;
@@ -98,7 +107,7 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                 glm::vec3 eye_normal = norm * glm::inverseTranspose(glm::mat3(matrix));
                 GLfloat dot = 2.0 * glm::dot(eye, eye_normal);
                 out[0] = eye.x - eye_normal.x * dot;
-                // out[1] = eye.x - eye_normal.y * dot;
+                out[1] = eye.x - eye_normal.y * dot;
                 // out[2] = eye.x - eye_normal.z * dot;
                 break;
             }
@@ -113,10 +122,16 @@ void gen_tex_coords(block_t *block, GLuint texture) {
 
     block->tex[texture] = (GLfloat *)malloc(block->len * 2 * sizeof(GLfloat));
     texgen_state_t *texgen = &state.texgen[texture];
-    if (state.enable.texgen_s[texture])
-        tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv);
-    if (state.enable.texgen_t[texture])
-        tex_coord_loop(block, block->tex[texture] + 1, texgen->T, texgen->Tv);
+    if (state.enable.texgen_s[texture]) {
+        if (texgen->S == texgen->T) {
+            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, texgen->Tv);
+        } else {
+            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, NULL);
+        }
+    }
+    if (state.enable.texgen_t[texture]) {
+        tex_coord_loop(block, block->tex[texture] + 1, texgen->T, texgen->Tv, NULL);
+    }
 }
 
 }
