@@ -21,7 +21,7 @@ static void tack_grow(tack_t *stack, int idx) {
     if (stack->data == NULL) {
         stack->cap = TACK_DEFAULT_SIZE;
         stack->data = malloc(sizeof(void *) * stack->cap);
-    } else if (stack->len + idx >= stack->cap) {
+    } else if (MAX(stack->len, idx) >= stack->cap) {
         stack->cap = MAX(stack->cap * 2, stack->len + idx);
         stack->data = realloc(stack->data, sizeof(void *) * stack->cap);
     }
