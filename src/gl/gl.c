@@ -112,6 +112,9 @@ static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
 }
 
 static inline bool should_intercept_render(GLenum mode) {
+    // gotta force this for matrix stack
+    return true;
+
     bool texgen_enabled = false;
     for (int i = 0; i < MAX_TEX; i++) {
         texgen_enabled |= state.enable.texgen_s[i] || state.enable.texgen_t[i];

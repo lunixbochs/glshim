@@ -2,6 +2,7 @@
 #include "gl_helpers.h"
 #include "line.h"
 #include "loader.h"
+#include "matrix.h"
 #include "texgen.h"
 #include "texture.h"
 
@@ -132,6 +133,10 @@ void bl_end(block_t *block) {
     }
 
     block->open = false;
+    for (int i = 0; i < block->len; i++) {
+        GLfloat *v = &block->vert[i * 3];
+        gl_transform_vertex(v);
+    }
     for (int i = 0; i < MAX_TEX; i++) {
         gltexture_t *bound = state.texture.bound[i];
         if (block->tex[i] && bound) {
