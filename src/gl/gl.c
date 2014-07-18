@@ -506,6 +506,9 @@ void glNewList(GLuint list, GLenum mode) {
     if (list - 1 >= tack_len(&state.lists))
         return;
 
+    if (state.list.active) {
+        dl_free(state.list.active);
+    }
     state.list.name = list;
     state.list.mode = mode;
     // TODO: if state.list.active is already defined, we probably need to clean up here
