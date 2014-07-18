@@ -506,7 +506,7 @@ GLuint glGenLists(GLsizei range) {
 }
 
 void glNewList(GLuint list, GLenum mode) {
-    if (! glIsList(list))
+    if (list - 1 >= tack_len(&state.lists))
         return;
 
     state.list.name = list;
@@ -607,5 +607,5 @@ void glListBase(GLuint base) {
 }
 
 GLboolean glIsList(GLuint list) {
-    return tack_get(&state.lists, list) ? true : false;
+    return get_list(list) ? true : false;
 }
