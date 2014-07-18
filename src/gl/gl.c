@@ -221,8 +221,6 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
         bl_draw(block);
         bl_free(block);
     } else {
-        // TODO: some draw states require us to use the full pipeline here
-        // like texgen, stipple, npot
         LOAD_GLES(glDrawArrays);
         gles_glDrawArrays(mode, first, count);
     }
@@ -527,7 +525,6 @@ void glEndList() {
 }
 
 void glCallList(GLuint list) {
-    // TODO: the output of this call can be compiled into another display list
     displaylist_t *l = get_list(list);
     displaylist_t *active = state.list.active;
     if (l) {
