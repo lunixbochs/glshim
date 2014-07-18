@@ -35,7 +35,7 @@ void glGetIntegerv(GLenum pname, GLint *params) {
     LOAD_GLES(glGetIntegerv);
     switch (pname) {
         case GL_MAX_ELEMENTS_INDICES:
-            *params = 1024;
+            *params = 65535;
             break;
         case GL_AUX_BUFFERS:
             *params = 0;
