@@ -3,6 +3,10 @@
 
 #include "tack.h"
 
+#ifndef MAX
+# define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#endif
+
 #define TACK_DEFAULT_SIZE 8
 
 static bool tack_pop_bad(tack_t *stack) {
