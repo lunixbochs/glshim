@@ -5,6 +5,14 @@
 
 #define TACK_DEFAULT_SIZE 8
 
+static bool tack_pop_bad(tack_t *stack) {
+    return (stack == NULL || stack->len <= 0);
+}
+
+static bool tack_shift_bad(tack_t *stack) {
+    return (stack == NULL || stack->pos >= stack->len);
+}
+
 static void tack_grow(tack_t *stack, int idx) {
     if (stack->data == NULL) {
         stack->cap = TACK_DEFAULT_SIZE;
@@ -15,17 +23,13 @@ static void tack_grow(tack_t *stack, int idx) {
     }
 }
 
+int tack_len(tack_t *stack) {
+    return stack->len;
+}
+
 void tack_push(tack_t *stack, void *data) {
     tack_grow(stack, 0);
     stack->data[stack->len++] = data;
-}
-
-static bool tack_pop_bad(tack_t *stack) { 
-    return (stack == NULL || stack->len <= 0);
-}
-
-static bool tack_shift_bad(tack_t *stack) {
-    return (stack == NULL || stack->pos >= stack->len);
 }
 
 void *tack_pop(tack_t *stack) { 

@@ -3,16 +3,16 @@
 #ifndef DISPLAYLIST_H
 #define DISPLAYLIST_H
 
+#include "tack.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 
 #define DEFAULT_DISPLAYLIST_CAPACITY 16
 
 typedef struct {
-    uint32_t len;
-    uint32_t cap;
     bool open;
-    packed_call_t **calls;
+    tack_t calls;
 } displaylist_t;
 
 extern displaylist_t *dl_alloc();

@@ -4,19 +4,16 @@
 #include "gl.h"
 
 displaylist_t *dl_alloc() {
-    displaylist_t *dl = malloc(sizeof(displaylist_t));
-    dl->cap = 0;
-    dl->len = 0;
-    dl->calls = NULL;
+    displaylist_t *dl = calloc(1, sizeof(displaylist_t));
     dl->open = true;
     return dl;
 }
 
 void dl_free(displaylist_t *dl) {
-    for (int i = 0; i < dl->len; i++) {
-        dl_decref(dl->calls[i]);
+    int len = tack_len(&dl->calls);
+    for (int i = 0; i < len; i++) {
+        dl_decref(tack_get(&dl->calls, i));
     }
-    free(dl->calls);
     free(dl);
 }
 
@@ -40,15 +37,7 @@ void dl_append(displaylist_t *dl, packed_call_t *call) {
         printf("libGL: warning: trying to append to closed display list\n");
         return;
     }
-    if (! dl->calls) {
-        dl->cap = DEFAULT_DISPLAYLIST_CAPACITY;
-        dl->calls = malloc(dl->cap * sizeof(uintptr_t));
-    } else if (dl->len == dl->cap) {
-        dl->cap *= 2;
-        // TODO: check this
-        dl->calls = realloc(dl->calls, dl->cap * sizeof(uintptr_t));
-    }
-    dl->calls[dl->len++] = call;
+    tack_push(&dl->calls, call);
     dl_incref(call);
 }
 
@@ -61,9 +50,10 @@ void dl_append_block(displaylist_t *dl, block_t *block) {
 }
 
 void dl_extend(displaylist_t *dl, displaylist_t *append) {
-    for (int i = 0; i < append->len; i++) {
+    int len = tack_len(&append->calls);
+    for (int i = 0; i < len; i++) {
         // TODO: reference count
-        dl_append(dl, append->calls[i]);
+        dl_append(dl, tack_get(&append->calls, i));
     }
 }
 
@@ -72,8 +62,9 @@ void dl_close(displaylist_t *dl) {
 }
 
 void dl_call(displaylist_t *dl) {
-    for (int i = 0; i < dl->len; i++) {
-        packed_call_t *call = dl->calls[i];
+    int len = tack_len(&dl->calls);
+    for (int i = 0; i < len; i++) {
+        packed_call_t *call = tack_get(&dl->calls, i);
         switch (call->format) {
             case RENDER_BLOCK_FORMAT: {
                 block_t *block = ((block_call_t *)call)->block;
@@ -82,7 +73,7 @@ void dl_call(displaylist_t *dl) {
                 break;
             }
             default:
-                glPackedCall(dl->calls[i]);
+                glPackedCall(call);
                 break;
         }
     }
