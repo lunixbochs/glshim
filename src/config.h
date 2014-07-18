@@ -30,7 +30,7 @@
 #define skip_glPushMatrix
 #define skip_glRotatef
 #define skip_glScalef
-#define skip_glTransformf
+#define skip_glTranslatef
 
 // light.c
 #define skip_glLightModelf

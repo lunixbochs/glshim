@@ -57,18 +57,16 @@ void glLoadIdentity() {
     *get_current_matrix() = glm::mat4();
 }
 
-void glLoadMatrixf(const GLfloat *load) {
-    *get_current_matrix() = glm::make_mat4(load);
+void glLoadMatrixf(const GLfloat *m) {
+    *get_current_matrix() = glm::transpose(glm::make_mat4(m));
 }
 
 void glMatrixMode(GLenum mode) {
     state.matrix.mode = mode;
-    LOAD_GLES(glMatrixMode);
-    gles_glMatrixMode(state.matrix.mode);
 }
 
-void glMultMatrixf(const GLfloat *mult) {
-    *get_current_matrix() *= glm::make_mat4(mult);
+void glMultMatrixf(const GLfloat *m) {
+    *get_current_matrix() *= glm::transpose(glm::make_mat4(m));
 }
 
 void glPopMatrix() {
@@ -97,7 +95,7 @@ void glScalef(GLfloat x, GLfloat y, GLfloat z) {
     *m = glm::scale(*m, glm::vec3(x, y, z));
 }
 
-void glTransformf(GLfloat x, GLfloat y, GLfloat z) {
+void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
     glm::mat4 *m = get_current_matrix();
     *m = glm::translate(*m, glm::vec3(x, y, z));
 }
@@ -115,16 +113,16 @@ void glFrustumf(GLfloat left, GLfloat right,
 }
 
 void gl_get_matrix(GLenum mode, GLfloat *out) {
-    memcpy(out, glm::value_ptr(*get_matrix(mode)), sizeof(GLfloat) * 16);
+    memcpy(out, glm::value_ptr(glm::transpose(*get_matrix(mode))), sizeof(GLfloat) * 16);
 }
 
-void gl_transform_vertex(GLfloat v[3]) {
+void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
     glm::mat4 *model = get_matrix(GL_MODELVIEW);
     glm::mat4 *projection = get_matrix(GL_PROJECTION);
 
-    glm::vec4 vert = glm::vec4(v[0], v[1], v[2], 1);
+    glm::vec4 vert = glm::vec4(in[0], in[1], in[2], 1);
     vert = (*projection) * (*model) * vert;
-    memcpy(v, glm::value_ptr(vert), sizeof(GLfloat) * 3);
+    memcpy(out, glm::value_ptr(vert), sizeof(GLfloat) * 3);
 }
 
 } // extern "C"

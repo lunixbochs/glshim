@@ -133,10 +133,6 @@ void bl_end(block_t *block) {
     }
 
     block->open = false;
-    for (int i = 0; i < block->len; i++) {
-        GLfloat *v = &block->vert[i * 3];
-        gl_transform_vertex(v);
-    }
     for (int i = 0; i < MAX_TEX; i++) {
         gltexture_t *bound = state.texture.bound[i];
         if (block->tex[i] && bound) {
@@ -188,6 +184,10 @@ void bl_draw(block_t *block) {
             memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
         }
     }
+    GLfloat *vert = malloc(block->len * 3 * sizeof(GLfloat));
+    for (int i = 0; i < block->len; i++) {
+        gl_transform_vertex(&vert[i * 3], &block->vert[i * 3]);
+    }
 
     LOAD_GLES(glDrawArrays);
     LOAD_GLES(glDrawElements);
@@ -200,9 +200,9 @@ void bl_draw(block_t *block) {
     }
     gles_glDrawArrays(block->mode, 0, block->len);
 #else
-    if (block->vert) {
+    if (vert) {
         glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(3, GL_FLOAT, 0, block->vert);
+        glVertexPointer(3, GL_FLOAT, 0, vert);
     } else {
         glDisableClientState(GL_VERTEX_ARRAY);
     }
@@ -232,13 +232,13 @@ void bl_draw(block_t *block) {
             glEnable(GL_BLEND);
             glEnable(GL_TEXTURE_2D);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-            block->tex[0] = gen_stipple_tex_coords(block->vert, block->len);
+            block->tex[0] = gen_stipple_tex_coords(vert, block->len);
             bind_stipple_tex();
         }
     }
     for (int i = 0; i < MAX_TEX; i++) {
         if (state.enable.texgen_s[i] || state.enable.texgen_t[i]) {
-            gen_tex_coords(i, block->vert, &block->tex[i], block->len);
+            gen_tex_coords(i, vert, &block->tex[i], block->len);
         }
 
         GLuint old = state.texture.client + GL_TEXTURE0;
@@ -269,6 +269,7 @@ void bl_draw(block_t *block) {
     }
 #endif
     glPopClientAttrib();
+    free(vert);
 }
 
 void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
