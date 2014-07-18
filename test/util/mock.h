@@ -1,9 +1,11 @@
 #ifndef USE_ES2
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "wrap/gles.h"
 
 #ifndef MOCK_H
 #define MOCK_H
-
 
 const char *mock_name(int func);
 void *mock_cur();
@@ -8949,5 +8951,9 @@ void gles_glTranslatef(glTranslatef_ARG_EXPAND);
 void gles_glTranslatex(glTranslatex_ARG_EXPAND);
 void gles_glVertexPointer(glVertexPointer_ARG_EXPAND);
 void gles_glViewport(glViewport_ARG_EXPAND);
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif
 #endif

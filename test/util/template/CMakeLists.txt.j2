@@ -8,9 +8,10 @@ include_directories({{ project }}/include)
 include_directories({{ project }}/src/gl)
 include_directories({{ project }}/src/util)
 
-add_definitions(-g -std=gnu99 -include test.h)
+add_definitions(-include test.h)
+include({{ project }}/flags.cmake)
 
-file(GLOB_RECURSE GL_SOURCES {{ project }}/src/gl/*.c)
+file(GLOB_RECURSE GL_SOURCES {{ project }}/src/gl/*.c {{ project }}/src/gl/*.cpp)
 file(GLOB UTIL_SOURCES {{ project }}/src/util/*.c)
 set(GL_SOURCES ${GL_SOURCES} ${UTIL_SOURCES})
 

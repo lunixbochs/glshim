@@ -1,7 +1,16 @@
 {% extends "base/header.j2" %}
+{% block main %}
+#ifdef __cplusplus
+extern "C" {
+#endif
+{{ super() }}
+#ifdef __cplusplus
+} // extern "C"
+#endif
+{% endblock %}
+
 {% block content %}
 {{ super() }}
-
 const char *mock_name(int func);
 void *mock_cur();
 void *mock_get(int idx);

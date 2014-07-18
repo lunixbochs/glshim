@@ -1,5 +1,6 @@
 #include "mock.h"
 
+#include <stdio.h>
 #include "tack.h"
 
 static tack_t mock = {0};

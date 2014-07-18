@@ -1,6 +1,7 @@
 {% extends "base/wrap.c.j2" %}
 {% block headers %}
 {{ super() }}
+#include <stdio.h>
 #include "tack.h"
 
 static tack_t mock = {0};
