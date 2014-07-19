@@ -35,7 +35,7 @@ static matrix_state_t *get_matrix_state(GLenum mode) {
 }
 
 static simd4x4f *get_matrix(GLenum mode) {
-    return get_matrix_state(mode)->matrix;
+    return &get_matrix_state(mode)->matrix;
 }
 
 static simd4x4f *get_current_matrix() {
@@ -64,18 +64,18 @@ void glMatrixMode(GLenum mode) {
 
 void glMultMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glMultMatrixf);
-    simd4x4f out, load, *m = get_current_matrix();
+    simd4x4f out, load, *cur = get_current_matrix();
     simd4x4f_uload(&load, m);
-    simd4x4f_matrix_mul(m, load, out);
-    *m = out;
+    simd4x4f_matrix_mul(cur, &load, &out);
+    *cur = out;
 }
 
 void glPopMatrix() {
     PUSH_IF_COMPILING(glPopMatrix);
     matrix_state_t *m = get_current_state();
-    void *top = tack_pop(&m->stack);
+    simd4x4f *top = tack_pop(&m->stack);
     if (top != NULL) {
-        m->matrix = top;
+        m->matrix = *top;
         free(top);
     }
 }
@@ -91,7 +91,7 @@ void glPushMatrix() {
 // GL transform functions
 void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glRotatef);
-    float radians = angle * 180 / VECTORIAL_PI;
+    float radians = angle * VECTORIAL_PI / 180;
     simd4x4f *m = get_current_matrix(), rotate, out;
     simd4x4f_axis_rotation(&rotate, radians, simd4f_create(x, y, z, 1.0f));
     simd4x4f_matrix_mul(m, &rotate, &out);
@@ -135,11 +135,10 @@ void glFrustumf(GLfloat left, GLfloat right,
 }
 
 void gl_get_matrix(GLenum mode, GLfloat *out) {
-    simd4x4f_ustore(out, get_matrix(mode));
+    simd4x4f_ustore(get_matrix(mode), out);
 }
 
 void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
-    simd4x4f out;
     simd4x4f *model = get_matrix(GL_MODELVIEW);
     simd4x4f *projection = get_matrix(GL_PROJECTION);
     simd4x4f mvp;
@@ -148,8 +147,8 @@ void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
     simd4f vert = simd4f_create(in[0], in[1], in[2], 1);
     simd4f tmp;
 
-    simd4x4f_matrix_vector_mul(mvp, vert, &tmp);
-    simd4f_ustore4(&tmp, out);
+    simd4x4f_matrix_vector_mul(&mvp, &vert, &tmp);
+    simd4f_ustore3(tmp, out);
 }
 
 #endif
