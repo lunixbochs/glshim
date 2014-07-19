@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +27,14 @@ static bool tack_grow(tack_t *stack, int idx) {
             return true;
         }
     } else if (MAX(stack->len, idx) >= stack->cap) {
-        stack->cap = MAX(stack->cap * 2, stack->len + idx);
+        if (stack->cap > INT_MAX >> 1) {
+            stack->cap = INT_MAX;
+            if (stack->len == INT_MAX) {
+                return false;
+            }
+        } else {
+            stack->cap = MAX(stack->cap * 2, stack->len + idx);
+        }
         void **new = realloc(stack->data, sizeof(void *) * stack->cap);
         if (new != NULL) {
             stack->data = new;
@@ -79,9 +87,10 @@ void *tack_get(tack_t *stack, int idx) {
 }
 
 void tack_set(tack_t *stack, int idx, void *data) {
-    tack_grow(stack, idx);
-    stack->data[idx] = data;
-    stack->len = MAX(stack->len, idx + 1);
+    if (tack_grow(stack, idx)) {
+        stack->data[idx] = data;
+        stack->len = MAX(stack->len, idx + 1);
+    }
 }
 
 void *tack_cur(tack_t *stack) {
