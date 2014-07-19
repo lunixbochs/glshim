@@ -24,6 +24,7 @@ GLvoid *copy_gl_array(const GLvoid *src,
     // if stride is weird, we need to be able to arbitrarily shift src
     // so we leave it in a uintptr_t and cast after incrementing
     uintptr_t in = (uintptr_t)src;
+    in += stride * skip;
     if (from == to && to_width >= width) {
         GL_TYPE_SWITCH(out, dst, to,
             for (int i = skip; i < (skip + count); i++) {
