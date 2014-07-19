@@ -96,7 +96,7 @@ void glLightiv(GLenum light, GLenum pname, const GLint *iparams) {
             break;
         }
         case GL_SPOT_DIRECTION: {
-            GLfloat params[3];
+            GLfloat params[4];
             for (int i = 0; i < 4; i++) {
                 params[i] = iparams[i];
             }
