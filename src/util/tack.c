@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "tack.h"
 
@@ -103,4 +104,38 @@ void *tack_shift(tack_t *stack) {
     if (tack_shift_bad(stack))
         return NULL;
     return stack->data[stack->pos++];
+}
+
+char *tack_str_join(tack_t *stack, const char *sep) {
+    if (stack->len == 0) {
+        return NULL;
+    }
+    size_t sep_len = strlen(sep);
+    size_t len = 0;
+    char * const*array = (char **)stack->data;
+    // a length-encoded string library would be really nice here
+    for (int i = 0; i < stack->len; i++) {
+        if (array[i] != NULL) {
+            len += strlen(array[i]);
+            if (i < stack->len - 1) {
+                len += sep_len;
+            }
+        }
+    }
+    len -= sep_len;
+    char *out = malloc(len * sizeof(char) + 1);
+    out[len] = '\0';
+    char *pos = out;
+    for (int i = 0; i < stack->len; i++) {
+        if (array[i] != NULL) {
+            int slen = strlen(array[i]);
+            memcpy(pos, array[i], slen);
+            pos += slen;
+            if (i < stack->len - 1) {
+                memcpy(pos, sep, sep_len);
+                pos += sep_len;
+            }
+        }
+    }
+    return out;
 }

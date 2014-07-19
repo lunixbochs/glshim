@@ -6,6 +6,7 @@ typedef struct {
     int len, cap, pos;
 } tack_t;
 
+extern char *tack_str_join(tack_t *stack, const char *sep);
 extern int tack_len(tack_t *stack);
 extern void **tack_raw(tack_t *stack);
 extern void *tack_cur(tack_t *stack);
