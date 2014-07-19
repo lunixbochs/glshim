@@ -97,7 +97,7 @@ class Test:
 
     def build(self, project):
         junk_dir = os.path.join(TEST_ROOT, 'build')
-        bin_dir = os.path.join(TEST_ROOT, 'bin', self.name)
+        bin_dir = os.path.join(TEST_ROOT, 'bin', self.dir)
         if not os.path.exists(junk_dir):
             os.makedirs(junk_dir)
 
@@ -125,12 +125,18 @@ class Test:
                 self.output = out
                 self.build_failed = True
                 return False
+
+        tmp = os.path.join(bin_dir, 'tmp')
+        out = os.path.join(bin_dir, self.exe)
+        if os.path.exists(out):
+            os.unlink(out)
+        os.rename(tmp, out)
         return True
 
     def run(self):
-        bin_dir = os.path.join(TEST_ROOT, 'bin', self.name)
+        bin_dir = os.path.join(TEST_ROOT, 'bin', self.dir)
         with chdir(bin_dir):
-            self.output, status = shell('./test')
+            self.output, status = shell('./' + self.exe)
             self.ran = True
             self.success = (status == 0)
         return self.success

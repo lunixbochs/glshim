@@ -15,4 +15,4 @@ file(GLOB_RECURSE GL_SOURCES {{ project }}/src/gl/*.c {{ project }}/src/gl/*.cpp
 file(GLOB UTIL_SOURCES {{ project }}/src/util/*.c)
 set(GL_SOURCES ${GL_SOURCES} ${UTIL_SOURCES})
 
-add_executable(test ${GL_SOURCES} {{ sources }} {{ util }}/mock.c)
+add_executable(tmp ${GL_SOURCES} {{ sources }} {{ util }}/mock.c)
