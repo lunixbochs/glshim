@@ -42,10 +42,15 @@ GLvoid *copy_gl_array(const GLvoid *src,
             for (int i = skip; i < (skip + count); i++) {
                 GL_TYPE_SWITCH(input, in, from,
                     for (int j = 0; j < width; j++) {
-                        out[j] = input[j];
+                        if (from != to) {
+                            out[j] = input[j] * gl_max_value(to) / gl_max_value(from);
+                        } else {
+                            out[j] = input[j];
+                        }
                     }
                     for (int j = width; j < to_width; j++) {
-                        out[j] = 0;
+                        if (j == 3) out[j] = 1;
+                        else out[j] = 0;
                     }
                     out += to_width;
                     in += stride;
