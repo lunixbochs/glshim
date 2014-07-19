@@ -46,6 +46,14 @@ vectorial_inline void simd4x4f_uload(simd4x4f* m, const float *f) {
 }
 
 
+vectorial_inline void simd4x4f_ustore(simd4x4f* m, float *f) {
+
+    simd4f_ustore4(m->x, f + 0);
+    simd4f_ustore4(m->y, f + 4);
+    simd4f_ustore4(m->z, f + 8);
+    simd4f_ustore4(m->w, f + 12);
+
+}
 
 
 
@@ -203,6 +211,27 @@ vectorial_inline void simd4x4f_ortho(simd4x4f *m, float left, float right, float
 }
 
 
+vectorial_inline void simd4x4f_frustum(simd4x4f *m, float left, float right, float bottom, float top, float znear, float zfar) {
+
+    float deltax = right - left;
+    float deltay = top - bottom;
+    float deltaz = zfar - znear;
+
+    float a =  (right + left) / (right - left);
+    float b =  (top + bottom) / (top - bottom);
+    float c = -(zfar + znear) / (zfar - znear);
+    float d = -(2 * zfar * znear) / (zfar - znear);
+    float e =  (2 * znear) / (right - left);
+    float f =  (znear * znear) / (top - bottom);
+
+    m->x = simd4f_create( e, 0, 0, 0);
+    m->y = simd4f_create( 0, f, 0, 0);
+    m->z = simd4f_create( a, b, c, d);
+    m->w = simd4f_create( 0, 0, d, 1);
+
+}
+
+
 vectorial_inline void simd4x4f_lookat(simd4x4f *m, simd4f eye, simd4f center, simd4f up) {
     
     simd4f zaxis = simd4f_normalize3( simd4f_sub(center, eye) );
@@ -223,6 +252,14 @@ vectorial_inline void simd4x4f_lookat(simd4x4f *m, simd4f eye, simd4f center, si
     simd4x4f_transpose_inplace(m);
     m->w = simd4f_create( x,y,z,1);
 
+}
+
+
+vectorial_inline void simd4x4f_scaling(simd4x4f* m, float x, float y, float z) {
+    *m = simd4x4f_create( simd4f_create(   x, 0.0f, 0.0f, 0.0f),
+                          simd4f_create(0.0f,    y, 0.0f, 0.0f),
+                          simd4f_create(0.0f, 0.0f,    z, 0.0f),
+                          simd4f_create(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 
