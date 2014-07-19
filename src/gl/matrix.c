@@ -1,6 +1,8 @@
 #include "loader.h"
 #include "matrix.h"
 #include "types.h"
+#include "vectorial/simd4f.h"
+#include "vectorial/simd4x4f.h"
 
 #define CURRENT_MATRIX_MODE state.matrix.mode ? state.matrix.mode : GL_MODELVIEW
 
@@ -25,19 +27,18 @@ static matrix_state_t *get_matrix_state(GLenum mode) {
     */
     }
 
-    if (! m->matrix) {
-        glm::mat4 *matrix = new glm::mat4();
-        m->matrix = static_cast<void *>(matrix);
+    if (! m->init) {
+        simd4x4f_identity(&m->matrix);
+        m->init = true;
     }
     return m;
 }
 
-static glm::mat4 *get_matrix(GLenum mode) {
-    matrix_state_t *state = get_matrix_state(mode);
-    return static_cast<glm::mat4 *>(state->matrix);
+static simd4x4f *get_matrix(GLenum mode) {
+    return get_matrix_state(mode)->matrix;
 }
 
-static glm::mat4 *get_current_matrix() {
+static simd4x4f *get_current_matrix() {
     return get_matrix(CURRENT_MATRIX_MODE);
 }
 
@@ -48,12 +49,12 @@ static matrix_state_t *get_current_state() {
 // GL matrix functions
 void glLoadIdentity() {
     PUSH_IF_COMPILING(glLoadIdentity);
-    *get_current_matrix() = glm::mat4();
+    simd4x4f_identity(get_current_matrix());
 }
 
 void glLoadMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glLoadMatrixf);
-    *get_current_matrix() = glm::make_mat4(m);
+    simd4x4f_uload(get_current_matrix(), m);
 }
 
 void glMatrixMode(GLenum mode) {
@@ -63,7 +64,10 @@ void glMatrixMode(GLenum mode) {
 
 void glMultMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glMultMatrixf);
-    *get_current_matrix() *= glm::make_mat4(m);
+    simd4x4f out, load, *m = get_current_matrix();
+    simd4x4f_uload(&load, m);
+    simd4x4f_matrix_mul(m, load, out);
+    *m = out;
 }
 
 void glPopMatrix() {
@@ -71,62 +75,81 @@ void glPopMatrix() {
     matrix_state_t *m = get_current_state();
     void *top = tack_pop(&m->stack);
     if (top != NULL) {
-        delete static_cast<glm::mat4 *>(m->matrix);
         m->matrix = top;
+        free(top);
     }
 }
 
 void glPushMatrix() {
     PUSH_IF_COMPILING(glPushMatrix);
     matrix_state_t *m = get_current_state();
-    glm::mat4 *matrix = new glm::mat4(*static_cast<glm::mat4 *>(m->matrix));
-    tack_push(&m->stack, static_cast<void *>(matrix));
+    simd4x4f *push = malloc(sizeof(simd4x4f));
+    *push = m->matrix;
+    tack_push(&m->stack, push);
 }
 
 // GL transform functions
 void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glRotatef);
-    glm::mat4 *m = get_current_matrix();
-    *m = glm::rotate(*m, glm::radians(angle), glm::vec3(x, y, z));
+    float radians = angle * 180 / VECTORIAL_PI;
+    simd4x4f *m = get_current_matrix(), rotate, out;
+    simd4x4f_axis_rotation(&rotate, radians, simd4f_create(x, y, z, 1.0f));
+    simd4x4f_matrix_mul(m, &rotate, &out);
+    *m = out;
 }
 
 void glScalef(GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glScalef);
-    glm::mat4 *m = get_current_matrix();
-    *m = glm::scale(*m, glm::vec3(x, y, z));
+    simd4x4f *m = get_current_matrix(), scale, out;
+    simd4x4f_scaling(&scale, x, y, z);
+    simd4x4f_matrix_mul(m, &scale, &out);
+    *m = out;
 }
 
 void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glTranslatef);
-    glm::mat4 *m = get_current_matrix();
-    *m = glm::translate(*m, glm::vec3(x, y, z));
+    simd4x4f *m = get_current_matrix(), translate, out;
+    simd4x4f_translation(&translate, x, y, z);
+    simd4x4f_matrix_mul(m, &translate, &out);
+    *m = out;
 }
 
 void glOrthof(GLfloat left, GLfloat right,
               GLfloat bottom, GLfloat top,
               GLfloat near, GLfloat far) {
     PUSH_IF_COMPILING(glOrthof);
-    *get_current_matrix() *= glm::ortho(left, right, bottom, top, near, far);
+    simd4x4f *m = get_current_matrix(), ortho, out;
+    simd4x4f_ortho(&ortho, left, right, bottom, top, near, far);
+    simd4x4f_matrix_mul(m, &ortho, &out);
+    *m = out;
 }
 
 void glFrustumf(GLfloat left, GLfloat right,
                 GLfloat bottom, GLfloat top,
                 GLfloat near, GLfloat far) {
     PUSH_IF_COMPILING(glFrustumf);
-    *get_current_matrix() *= glm::frustum(left, right, bottom, top, near, far);
+    simd4x4f *m = get_current_matrix(), frustum, out;
+    simd4x4f_frustum(&frustum, left, right, bottom, top, near, far);
+    simd4x4f_matrix_mul(m, &frustum, &out);
+    *m = out;
 }
 
 void gl_get_matrix(GLenum mode, GLfloat *out) {
-    memcpy(out, glm::value_ptr(*get_matrix(mode)), sizeof(GLfloat) * 16);
+    simd4x4f_ustore(out, get_matrix(mode));
 }
 
 void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
-    glm::mat4 *model = get_matrix(GL_MODELVIEW);
-    glm::mat4 *projection = get_matrix(GL_PROJECTION);
+    simd4x4f out;
+    simd4x4f *model = get_matrix(GL_MODELVIEW);
+    simd4x4f *projection = get_matrix(GL_PROJECTION);
+    simd4x4f mvp;
 
-    glm::vec4 vert = glm::vec4(in[0], in[1], in[2], 1);
-    vert = (*projection) * (*model) * vert;
-    memcpy(out, glm::value_ptr(vert), sizeof(GLfloat) * 3);
+    simd4x4f_matrix_mul(projection, model, &mvp);
+    simd4f vert = simd4f_create(in[0], in[1], in[2], 1);
+    simd4f tmp;
+
+    simd4x4f_matrix_vector_mul(mvp, vert, &tmp);
+    simd4f_ustore4(&tmp, out);
 }
 
 #endif
