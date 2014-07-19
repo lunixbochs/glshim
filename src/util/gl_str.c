@@ -2184,4 +2184,5 @@ const char *gl_str(int value) {
         case 0x9154: return "GL_VERTEX_ARRAY_OBJECT_AMD";
         case 0x9155: return "GL_SAMPLER_OBJECT_AMD";
     }
+    return NULL;
 }
