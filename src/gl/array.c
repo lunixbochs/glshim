@@ -1,5 +1,6 @@
 #include "array.h"
 #include "eval.h"
+#include "gl_str.h"
 
 GLvoid *copy_gl_array(const GLvoid *src,
                       GLenum from, GLsizei width, GLsizei stride,
@@ -10,7 +11,7 @@ GLvoid *copy_gl_array(const GLvoid *src,
     if (! stride)
         stride = width * gl_sizeof(from);
 
-    const char *unknown_str = "libGL: copy_gl_array -> unknown type: %x\n";
+    const char *unknown_str = "libGL: copy_gl_array -> unsupported type %s\n";
     GLvoid *dst = malloc(count * to_width * gl_sizeof(to));
     GLsizei from_size = gl_sizeof(from) * width;
     GLsizei to_size = gl_sizeof(to) * to_width;
@@ -34,7 +35,7 @@ GLvoid *copy_gl_array(const GLvoid *src,
                 in += stride;
             },
             default:
-                printf(unknown_str, from);
+                printf(unknown_str, gl_str(from));
                 return NULL;
         )
     } else {
@@ -56,12 +57,12 @@ GLvoid *copy_gl_array(const GLvoid *src,
                     in += stride;
                 ,
                     default:
-                        printf(unknown_str, from);
+                        printf(unknown_str, gl_str(from));
                         return NULL;
                 )
             },
             default:
-                printf(unknown_str, to);
+                printf(unknown_str, gl_str(to));
                 return NULL;
         )
     }
@@ -89,7 +90,7 @@ GLfloat *gl_pointer_index(pointer_state_t *p, GLint index) {
             buf[i] = 0;
         },
         default:
-            printf("libGL: unknown pointer type: 0x%x\n", p->type);
+            printf("libGL: unsupported pointer type: %s\n", gl_str(p->type));
     )
     return buf;
 }

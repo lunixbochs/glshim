@@ -4,6 +4,7 @@
 
 #include "pixel.h"
 #include "gl_helpers.h"
+#include "gl_str.h"
 
 static const colorlayout_t *get_color_map(GLenum format) {
     #define map(fmt, ...)                               \
@@ -21,7 +22,7 @@ static const colorlayout_t *get_color_map(GLenum format) {
         map(GL_RGB, 0, 1, 2, -1);
         map(GL_RGBA, 0, 1, 2, 3);
         default:
-            printf("get_color_map(): Unknown pixel format 0x%x\n", format);
+            printf("get_color_map(): Unsupported pixel format %s\n", gl_str(format));
             break;
     }
     static colorlayout_t null = {0};
@@ -81,7 +82,7 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
         )
         default:
             // TODO: add glSetError?
-            printf("remap_pixel(): Unsupported source data type: %i\n", src_type);
+            printf("remap_pixel(): Unsupported source data type: %s\n", gl_str(src_type));
             return false;
             break;
     }
@@ -112,7 +113,7 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
                  ((GLuint)(color[3] * 1)  & 0x01 << 15);
         )
         default:
-            printf("remap_pixel(): Unsupported target data type: 0x%x\n", dst_type);
+            printf("remap_pixel(): Unsupported target data type: %s\n", gl_str(dst_type));
             return false;
             break;
     }
