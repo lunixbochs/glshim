@@ -45,7 +45,8 @@ GLvoid *copy_gl_array(const GLvoid *src,
                 GL_TYPE_SWITCH(input, in, from,
                     for (int j = 0; j < width; j++) {
                         if (from != to) {
-                            out[j] = input[j] * gl_max_value(to) / gl_max_value(from);
+                            out[j] = input[j] * gl_max_value(to);
+                            out[j] /= gl_max_value(from);
                         } else {
                             out[j] = input[j];
                         }
