@@ -164,6 +164,8 @@ def run(args):
     back = lambda mult: '\b' * mult
     out = lambda *a: (sys.stdout.write(' '.join(str(s) for s in a)), sys.stdout.flush())
 
+    duplicate_errors = set()
+
     for i, test in enumerate(tests):
         headline = '[{}/{}] {} ['.format(i + 1, len(tests), test.name)
         print term.bold(headline.ljust(79, '-')),
@@ -190,6 +192,12 @@ def run(args):
         print
 
         if test.output:
+            if test.build_failed:
+                if test.output in duplicate_errors:
+                    continue
+                else:
+                    duplicate_errors.add(test.output)
+
             for line in test.output.split('\n'):
                 if line.startswith('ERROR'):
                     line = line.replace('ERROR:', term.red('ERROR:'), 1)
