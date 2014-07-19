@@ -8,7 +8,9 @@
 void *gles = NULL;
 glstate_t state = {
     .current = {
-        .color = {1.0f, 1.0f, 1.0f, 1.0f}
+        .color = {1.0f, 1.0f, 1.0f, 1.0f},
+        .normal = {0.0f, 0.0f, 1.0f},
+        .tex = {{0.0f, 0.0f}},
     },
 };
 
