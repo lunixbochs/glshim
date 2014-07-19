@@ -21,5 +21,10 @@ int main() {
     for (int i = 0; i < 10000; i++) {
         assert(tack_shift(&stack) == i);
     }
+
+    tack_clear(&stack);
+    tack_set(&stack, 1, "test");
+    assert(tack_get(&stack, 0) == NULL);
+    assert(strcmp(tack_get(&stack, 1), "test") == 0);
     mock_return;
 }
