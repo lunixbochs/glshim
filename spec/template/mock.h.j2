@@ -27,6 +27,7 @@ static int failed_test = 0;
 #define mock_warningf(...) { printf("WARNING: "), printf(__VA_ARGS__); }
 #define mock_errorf(...) { printf("ERROR: "); printf(__VA_ARGS__); failed_test = 1; }
 #define mock_assert(cond, ...) { if (!(cond)) { mock_errorf(__VA_ARGS__); }}
+#define assert(cond) mock_assert(cond, "%s\n", #cond)
 
 #define mock_return { \
     indexed_call_t *call = NULL; \
