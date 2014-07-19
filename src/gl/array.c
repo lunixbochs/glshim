@@ -2,22 +2,23 @@
 #include "eval.h"
 #include "gl_str.h"
 
-GLvoid *copy_gl_array(const GLvoid *src,
+GLvoid *gl_copy_array(const GLvoid *src,
                       GLenum from, GLsizei width, GLsizei stride,
-                      GLenum to, GLsizei to_width, GLsizei skip, GLsizei count) {
+                      GLenum to, GLsizei to_width, GLsizei skip, GLsizei count,
+                      GLboolean normalize) {
     if (! src || !count)
         return NULL;
 
     if (! stride)
         stride = width * gl_sizeof(from);
 
-    const char *unknown_str = "libGL: copy_gl_array -> unsupported type %s\n";
+    const char *unknown_str = "libGL: gl_copy_array -> unsupported type %s\n";
     GLvoid *dst = malloc(count * to_width * gl_sizeof(to));
     GLsizei from_size = gl_sizeof(from) * width;
     GLsizei to_size = gl_sizeof(to) * to_width;
 
     if (to_width < width) {
-        printf("Warning: copy_gl_array: %i < %i\n", to_width, width);
+        printf("Warning: gl_copy_array: %i < %i\n", to_width, width);
         return NULL;
     }
 
@@ -44,7 +45,7 @@ GLvoid *copy_gl_array(const GLvoid *src,
             for (int i = skip; i < (skip + count); i++) {
                 GL_TYPE_SWITCH(input, in, from,
                     for (int j = 0; j < width; j++) {
-                        if (from != to) {
+                        if (from != to && normalize) {
                             out[j] = input[j] * gl_max_value(to);
                             out[j] /= gl_max_value(from);
                         } else {
@@ -72,9 +73,8 @@ GLvoid *copy_gl_array(const GLvoid *src,
     return dst;
 }
 
-GLvoid *copy_gl_pointer(pointer_state_t *ptr, GLsizei width, GLsizei skip, GLsizei count) {
-    return copy_gl_array(ptr->pointer, ptr->type, ptr->size, ptr->stride,
-                         GL_FLOAT, width, skip, count);
+GLvoid *gl_copy_pointer(pointer_state_t *ptr, GLsizei width, GLsizei skip, GLsizei count, GLboolean normalize) {
+    return gl_copy_array(ptr->pointer, ptr->type, ptr->size, ptr->stride, GL_FLOAT, width, skip, count, normalize);
 }
 
 GLfloat *gl_pointer_index(pointer_state_t *p, GLint index) {

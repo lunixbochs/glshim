@@ -97,17 +97,17 @@ static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
     block->len = count;
     block->cap = count;
     if (state.enable.vertex_array) {
-        block->vert = copy_gl_pointer(&state.pointers.vertex, 3, skip, count);
+        block->vert = gl_copy_pointer(&state.pointers.vertex, 3, skip, count, false);
     }
     if (state.enable.color_array) {
-        block->color = copy_gl_pointer(&state.pointers.color, 4, skip, count);
+        block->color = gl_copy_pointer(&state.pointers.color, 4, skip, count, true);
     }
     if (state.enable.normal_array) {
-        block->normal = copy_gl_pointer(&state.pointers.normal, 3, skip, count);
+        block->normal = gl_copy_pointer(&state.pointers.normal, 3, skip, count, false);
     }
     for (int i = 0; i < MAX_TEX; i++) {
         if (state.enable.tex_coord_array[i]) {
-            block->tex[i] = copy_gl_pointer(&state.pointers.tex_coord[i], 2, skip, count);
+            block->tex[i] = gl_copy_pointer(&state.pointers.tex_coord[i], 2, skip, count, false);
         }
     }
     return block;
@@ -133,7 +133,7 @@ static inline bool should_intercept_render(GLenum mode) {
 
 void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindices) {
     // TODO: split for count > 65535?
-    GLushort *indices = copy_gl_array(uindices, type, 1, 0, GL_UNSIGNED_SHORT, 1, 0, count);
+    GLushort *indices = gl_copy_array(uindices, type, 1, 0, GL_UNSIGNED_SHORT, 1, 0, count, false);
     // TODO: do this in a more direct fashion.
     if (should_intercept_render(mode)) {
         glBegin(mode);
