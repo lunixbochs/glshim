@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "tack.h"
@@ -17,14 +18,25 @@ static bool tack_shift_bad(tack_t *stack) {
     return (stack == NULL || stack->pos >= stack->len);
 }
 
-static void tack_grow(tack_t *stack, int idx) {
+static bool tack_grow(tack_t *stack, int idx) {
     if (stack->data == NULL) {
         stack->cap = TACK_DEFAULT_SIZE;
         stack->data = malloc(sizeof(void *) * stack->cap);
+        if (stack->data != NULL) {
+            return true;
+        }
     } else if (MAX(stack->len, idx) >= stack->cap) {
         stack->cap = MAX(stack->cap * 2, stack->len + idx);
-        stack->data = realloc(stack->data, sizeof(void *) * stack->cap);
+        void **new = realloc(stack->data, sizeof(void *) * stack->cap);
+        if (new != NULL) {
+            stack->data = new;
+            return true;
+        }
+    } else {
+        return true;
     }
+    fprintf(stderr, "warning: tack_grow() to %d failed\n", stack->cap);
+    return false;
 }
 
 void tack_clear(tack_t *stack) {
@@ -39,8 +51,9 @@ int tack_len(tack_t *stack) {
 }
 
 void tack_push(tack_t *stack, void *data) {
-    tack_grow(stack, 0);
-    stack->data[stack->len++] = data;
+    if (tack_grow(stack, 0)) {
+        stack->data[stack->len++] = data;
+    }
 }
 
 void *tack_pop(tack_t *stack) { 
