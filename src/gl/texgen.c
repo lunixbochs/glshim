@@ -1,5 +1,7 @@
 #include "block.h"
 #include "texgen.h"
+#include "vectorial/simd4f.h"
+#include "vectorial/simd4x4f.h"
 
 void glTexGeni(GLenum coord, GLenum pname, GLint param) {
     // coord is in: GL_S, GL_T, GL_R, GL_Q
@@ -44,63 +46,85 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
 }
 
 static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *Sp, GLfloat *Tp) {
-#if 0
     GLfloat *vert = block->vert;
     GLfloat *normal = block->normal;
     // if we get sphere map and no normal, just barf and return?
 
-    glm::mat4 matrix;
+    simd4x4f matrix;
     if (type != GL_OBJECT_LINEAR) {
-        glGetFloatv(GL_MODELVIEW_MATRIX, glm::value_ptr(matrix));
+        // TODO: make sure this loads it properly
+        glGetFloatv(GL_MODELVIEW_MATRIX, (float *)&matrix);
     }
-    glm::vec4 s_plane = glm::vec4(Sp[0], Sp[1], Sp[2], Sp[3]);
-    glm::vec4 t_plane;
+    simd4f s_plane, t_plane;
+    s_plane = simd4f_uload4(Sp);
     if (Tp != NULL) {
-        t_plane = glm::vec4(Tp[0], Tp[1], Tp[2], Tp[3]);
+        t_plane = simd4f_uload4(Tp);
     }
     for (int i = 0; i < block->len; i++) {
-        glm::vec4 v = glm::vec4(vert[0], vert[1], vert[2], 1);
         if (! block->normal) {
             normal = CURRENT->normal;
         }
+        simd4f v = simd4f_create(vert[0], vert[1], vert[2], 1);
         switch (type) {
-            case GL_OBJECT_LINEAR: {
-                out[0] = glm::dot(v, s_plane);
+            case GL_OBJECT_LINEAR:
+                simd4f_ustore4(simd4f_dot4(v, s_plane), out + 0);
                 if (Tp) {
-                    out[1] = glm::dot(v, t_plane);
+                    simd4f_ustore4(simd4f_dot4(v, t_plane), out + 1);
                 }
                 break;
-            }
             case GL_EYE_LINEAR: {
-                glm::vec4 eye = matrix * v;
-                out[0] = glm::dot(eye, s_plane);
+                simd4f eye;
+                simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
+                simd4f_ustore4(simd4f_dot4(eye, s_plane), out + 0);
                 if (Tp) {
-                    out[1] = glm::dot(eye, t_plane);
+                    simd4f_ustore4(simd4f_dot4(eye, t_plane), out + 1);
                 }
                 break;
             }
             case GL_SPHERE_MAP: {
-                glm::vec3 norm = glm::vec3(normal[0], normal[1], normal[2]);
-                glm::vec3 eye = glm::vec3(matrix * v);
-                eye = glm::normalize(eye);
-                glm::vec3 eye_normal = norm * glm::inverseTranspose(glm::mat3(matrix));
-                glm::vec3 reflection = eye - eye_normal * glm::vec3(2.0 * glm::dot(eye, eye_normal));
-                reflection.z += 1.0;
-                GLfloat m = 1.0 / (2.0 * sqrt(glm::dot(reflection, reflection)));
-                out[0] = reflection.x * m + 0.5;
-                out[1] = reflection.y * m + 0.5;
+                simd4f norm = simd4f_create(normal[0], normal[1], normal[2], 1.0f);
+                simd4f eye;
+                simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
+                eye = simd4f_normalize3(eye);
+                simd4f eye_normal;
+
+                simd4x4f inverse;
+                simd4x4f_inverse(&matrix, &inverse);
+                // TODO: better to use new registers to prevent stall?
+                simd4x4f_transpose_inplace(&inverse);
+                // TODO: is normal multiplied wrong here?
+                simd4x4f_matrix_vector_mul(&inverse, &norm, &eye_normal);
+                simd4f result = simd4f_mul(simd4f_dot4(eye, eye_normal), simd4f_create(2.0f, 2.0f, 2.0f, 2.0f));
+                simd4f reflection = simd4f_sub(eye, simd4f_mul(eye_normal, result));
+                reflection = simd4f_add(reflection, simd4f_create(0.0f, 0.0f, 1.0f, 0.0f));
+                float ref[4], dot[2];
+                simd4f_ustore2(reflection, ref);
+                simd4f_ustore2(simd4f_dot4(reflection, reflection), dot);
+                float m = 1.0 / (2.0 * sqrt(dot[0]));
+                out[0] = ref[0] * m + 0.5;
+                out[1] = ref[1] * m + 0.5;
 
                 normal += 3;
                 break;
             }
             case GL_REFLECTION_MAP: {
-                glm::vec3 norm = glm::vec3(normal[0], normal[1], normal[2]);
-                glm::vec3 eye = glm::vec3(matrix * v);
-                eye = glm::normalize(eye);
-                glm::vec3 eye_normal = norm * glm::inverseTranspose(glm::mat3(matrix));
-                GLfloat dot = 2.0 * glm::dot(eye, eye_normal);
-                out[0] = eye.x - eye_normal.x * dot;
-                out[1] = eye.x - eye_normal.y * dot;
+                float eye_[2], eye_normal_[2], dot[2];
+                simd4f norm = simd4f_create(normal[0], normal[1], normal[2], 1.0f);
+                simd4f eye;
+                simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
+                eye = simd4f_normalize3(eye);
+                simd4f_ustore2(eye, eye_);
+
+                simd4f eye_normal;
+                simd4x4f inverse;
+                simd4x4f_inverse(&matrix, &inverse);
+                simd4x4f_transpose_inplace(&inverse);
+                simd4x4f_matrix_vector_mul(&inverse, &norm, &eye_normal);
+                simd4f_ustore2(eye_normal, eye_);
+
+                simd4f_ustore2(simd4f_dot4(eye, eye_normal), dot);
+                out[0] = eye_[0] - eye_normal_[0] * dot[0] * 2.0f;
+                out[1] = eye_[1] - eye_normal_[1] * dot[0] * 2.0f;
                 // out[2] = eye.x - eye_normal.z * dot;
                 break;
             }
@@ -108,7 +132,6 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         out += 2;
         vert += 3;
     }
-#endif
 }
 
 void gen_tex_coords(block_t *block, GLuint texture) {
