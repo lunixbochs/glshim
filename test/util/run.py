@@ -61,16 +61,22 @@ class Test:
         tests = []
         for path in walk(base):
             tail = path.replace(base, '', 1)
+            test = None
             if path.endswith('.c'):
                 test = Test(path, tail)
-                if filt:
-                    for f in filt:
-                        if test.name.startswith(f):
-                            break
-                    else:
-                        continue
+            elif path.endswith('.py'):
+                test = PythonTest(path, tail)
+            else:
+                continue
 
-                tests.append(test)
+            if test and filt:
+                for f in filt:
+                    if test.name.startswith(f):
+                        break
+                else:
+                    continue
+
+            tests.append(test)
         return tests
 
     @property
@@ -135,6 +141,17 @@ class Test:
         else:
             return '<Test: {}>'.format(self.name)
 
+
+class PythonTest(Test):
+    def build(self, project):
+        return True
+
+    def run(self):
+        with chdir(TEST_ROOT):
+            self.output, status = shell('python', self.path)
+            self.ran = True
+            self.success = (status == 0)
+            return False
 
 def run(args):
     tests = Test.find(args.base, args.tests)
