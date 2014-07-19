@@ -474,7 +474,6 @@ void glNewList(GLuint list, GLenum mode) {
     }
     state.list.name = list;
     state.list.mode = mode;
-    // TODO: if state.list.active is already defined, we probably need to clean up here
     state.list.active = dl_alloc();
 }
 
