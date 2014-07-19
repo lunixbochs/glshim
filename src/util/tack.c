@@ -50,6 +50,10 @@ int tack_len(tack_t *stack) {
     return stack->len;
 }
 
+void **tack_raw(tack_t *stack) {
+    return stack->data;
+}
+
 void tack_push(tack_t *stack, void *data) {
     if (tack_grow(stack, 0)) {
         stack->data[stack->len++] = data;

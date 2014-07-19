@@ -7,6 +7,7 @@ typedef struct {
 } tack_t;
 
 extern int tack_len(tack_t *stack);
+extern void **tack_raw(tack_t *stack);
 extern void *tack_cur(tack_t *stack);
 extern void *tack_first(tack_t *stack);
 extern void *tack_get(tack_t *stack, int idx);
