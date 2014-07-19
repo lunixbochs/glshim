@@ -1,11 +1,3 @@
-#define GLM_FORCE_RADIANS
-
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/matrix_inverse.hpp>
-
-extern "C" {
-
 #include "block.h"
 #include "texgen.h"
 
@@ -52,6 +44,7 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
 }
 
 static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *Sp, GLfloat *Tp) {
+#if 0
     GLfloat *vert = block->vert;
     GLfloat *normal = block->normal;
     // if we get sphere map and no normal, just barf and return?
@@ -115,6 +108,7 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         out += 2;
         vert += 3;
     }
+#endif
 }
 
 void gen_tex_coords(block_t *block, GLuint texture) {
@@ -132,6 +126,4 @@ void gen_tex_coords(block_t *block, GLuint texture) {
     if (state.enable.texgen_t[texture]) {
         tex_coord_loop(block, block->tex[texture] + 1, texgen->T, texgen->Tv, NULL);
     }
-}
-
 }

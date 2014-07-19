@@ -1,11 +1,3 @@
-#define GLM_FORCE_RADIANS
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-extern "C" {
-
 #include "loader.h"
 #include "matrix.h"
 #include "types.h"
@@ -138,5 +130,3 @@ void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
 }
 
 #endif
-
-} // extern "C"
