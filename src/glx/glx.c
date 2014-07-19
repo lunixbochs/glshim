@@ -12,6 +12,7 @@
 #include "../gl/loader.h"
 #include "../gl/raster.h"
 #include "../gl/text.h"
+#include "liveinfo.h"
 
 #include <EGL/egl.h>
 
@@ -118,6 +119,7 @@ static Display *g_display;
 #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
 #endif
 static bool g_showfps = false;
+static bool g_liveinfo = true;
 static bool g_fps_overlay = false;
 static bool g_usefb = false;
 static bool g_vsync = false;
@@ -406,7 +408,7 @@ Bool glXMakeContextCurrent(Display *dpy, GLXDrawable draw, int read, GLXContext 
 
 void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
     static int frames = 0;
-    if (g_showfps) {
+    if (g_showfps || g_liveinfo) {
         // framerate counter
         static float avg, fps = 0;
         static int frame1, last_frame, frame, now, current_frames;
@@ -430,16 +432,27 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
                 current_frames = 0;
 
                 avg = frame / (float)(now - frame1);
-                printf("libGL fps: %.2f, avg: %.2f\n", fps, avg);
+                if (g_showfps) {
+                    printf("libGL fps: %.2f, avg: %.2f\n", fps, avg);
+                }
             }
         }
 
         last_frame = now;
 
-        if (g_fps_overlay && fps > 0) {
+        if (fps > 0) {
             char buf[17] = {0};
-            snprintf(buf, 16, "%.2f fps\n", fps);
-            text_draw(4, 17, buf);
+            if (g_fps_overlay) {
+                snprintf(buf, 16, "%.2f fps\n", fps);
+                text_draw(4, 17, buf);
+            }
+            // this shows the framerate on notaz' live system info overlay
+            if (g_liveinfo) {
+                snprintf(buf, 16, "fps:%.2f", fps);
+                if (liveinfo_send(buf) < 0) {
+                    g_liveinfo = false;
+                }
+            }
         }
     }
 
