@@ -7,11 +7,15 @@
 
 void *gles = NULL;
 glstate_t state = {
+    0,
     .current = {
         .color = {1.0f, 1.0f, 1.0f, 1.0f},
         .normal = {0.0f, 0.0f, 1.0f},
         .tex = {{0.0f, 0.0f}},
     },
+    .matrix = {
+        .mode = GL_MODELVIEW,
+    }
 };
 
 static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {

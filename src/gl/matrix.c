@@ -4,8 +4,6 @@
 #include "vectorial/simd4f.h"
 #include "vectorial/simd4x4f.h"
 
-#define CURRENT_MATRIX_MODE state.matrix.mode ? state.matrix.mode : GL_MODELVIEW
-
 #ifdef LOCAL_MATRIX
 // helper functions
 static matrix_state_t *get_matrix_state(GLenum mode) {
@@ -39,11 +37,11 @@ static simd4x4f *get_matrix(GLenum mode) {
 }
 
 static simd4x4f *get_current_matrix() {
-    return get_matrix(CURRENT_MATRIX_MODE);
+    return get_matrix(state.matrix.mode);
 }
 
 static matrix_state_t *get_current_state() {
-    return get_matrix_state(CURRENT_MATRIX_MODE);
+    return get_matrix_state(state.matrix.mode);
 }
 
 // GL matrix functions
