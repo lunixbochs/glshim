@@ -16,7 +16,7 @@ static matrix_state_t *get_matrix_state(GLenum mode) {
             m = &state.matrix.projection;
             break;
         case GL_TEXTURE:
-            m = &state.matrix.texture;
+            m = &state.matrix.texture[state.texture.client];
             break;
     /* defined in ARB_imaging extension
         case GL_COLOR:
@@ -134,6 +134,19 @@ void glFrustumf(GLfloat left, GLfloat right,
 
 void gl_get_matrix(GLenum mode, GLfloat *out) {
     simd4x4f_ustore(get_matrix(mode), out);
+}
+
+void gl_transform_texture(GLenum texture, GLfloat out[2], const GLfloat in[2]) {
+    matrix_state_t *unit = &state.matrix.texture[texture - GL_TEXTURE0];
+    if (! unit->init) {
+        out[0] = in[0];
+        out[1] = in[1];
+    } else {
+        simd4f coord = simd4f_create(in[0], in[1], 0.0f, 1.0f);
+        simd4f tmp;
+        simd4x4f_matrix_vector_mul(&unit->matrix, &coord, &tmp);
+        simd4f_ustore2(coord, out);
+    }
 }
 
 void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {

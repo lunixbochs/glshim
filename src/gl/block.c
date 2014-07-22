@@ -184,13 +184,34 @@ void bl_draw(block_t *block) {
             memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
         }
     }
+
+    // glTexGen
+    for (int i = 0; i < MAX_TEX; i++) {
+        if (state.enable.texgen_s[i] || state.enable.texgen_t[i]) {
+            gen_tex_coords(block, i);
+        }
+    }
+
+    // copy vertex data for local matrix calculations
+    GLfloat *vert, *tex[MAX_TEX] = {0};
 #ifdef LOCAL_MATRIX
-    GLfloat *vert = malloc(block->len * 3 * sizeof(GLfloat));
+    vert = malloc(block->len * 3 * sizeof(GLfloat));
     for (int i = 0; i < block->len; i++) {
         gl_transform_vertex(&vert[i * 3], &block->vert[i * 3]);
     }
+    for (int t = 0; t < MAX_TEX; t++) {
+        if (block->tex[t]) {
+            tex[t] = malloc(block->len * 2 * sizeof(GLfloat));
+            for (int i = 0; i < block->len; i++) {
+                gl_transform_texture(GL_TEXTURE0 + t, &tex[t][i * 2], &block->tex[t][i * 2]);
+            }
+        }
+    }
 #else
-    GLfloat *vert = block->vert;
+    vert = block->vert;
+    for (int i = 0; i < MAX_TEX; i++) {
+        tex[i] = block->tex[i];
+    }
 #endif
 
     LOAD_GLES(glDrawArrays);
@@ -228,7 +249,7 @@ void bl_draw(block_t *block) {
     bool stipple = false;
     // TODO: how do I stipple with texture?
     // TODO: what about multitexturing?
-    if (! block->tex[0]) {
+    if (! tex[0]) {
         // TODO: do we need to support GL_LINE_STRIP?
         if (block->mode == GL_LINES && state.enable.line_stipple) {
             stipple = true;
@@ -236,20 +257,16 @@ void bl_draw(block_t *block) {
             glEnable(GL_BLEND);
             glEnable(GL_TEXTURE_2D);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-            block->tex[0] = gen_stipple_tex_coords(vert, block->len);
+            tex[0] = gen_stipple_tex_coords(vert, block->len);
             bind_stipple_tex();
         }
     }
     for (int i = 0; i < MAX_TEX; i++) {
-        if (state.enable.texgen_s[i] || state.enable.texgen_t[i]) {
-            gen_tex_coords(block, i);
-        }
-
         GLuint old = state.texture.client + GL_TEXTURE0;
-        if (block->tex[i]) {
+        if (tex[i]) {
             glClientActiveTexture(GL_TEXTURE0 + i);
             glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glTexCoordPointer(2, GL_FLOAT, 0, block->tex[i]);
+            glTexCoordPointer(2, GL_FLOAT, 0, tex[i]);
             glClientActiveTexture(old);
         } else if (state.enable.tex_coord_array[i]) {
             glClientActiveTexture(GL_TEXTURE0 + i);
@@ -270,11 +287,15 @@ void bl_draw(block_t *block) {
     }
     if (stipple) {
         glPopAttrib();
+        free(tex[0]);
     }
 #endif
     glPopClientAttrib();
 #ifdef LOCAL_MATRIX
     free(vert);
+    for (int i = 0; i < MAX_TEX; i++) {
+        free(tex[i]);
+    }
 #endif
 }
 
