@@ -12,7 +12,7 @@ link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 if(BCMHOST)
     include_directories(/opt/vc/include /opt/vc/include/interface/vcos/pthreads /opt/vc/include/interface/vmcs_host/linux)
     link_directories(/opt/vc/lib)
-    add_definitions(-DBCMHOST)
+    add_definitions(-DBCMHOST -D_GNU_SOURCE)
 endif()
 
 link_directories(${CMAKE_BINARY_DIR}/lib)
