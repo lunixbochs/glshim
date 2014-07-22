@@ -32,6 +32,9 @@ static matrix_state_t *get_matrix_state(GLenum mode) {
     return m;
 }
 
+static bool mvp_dirty = true;
+static simd4x4f mvp;
+
 static simd4x4f *get_matrix(GLenum mode) {
     return &get_matrix_state(mode)->matrix;
 }
@@ -44,15 +47,24 @@ static matrix_state_t *get_current_state() {
     return get_matrix_state(state.matrix.mode);
 }
 
+static void update_mvp() {
+    simd4x4f *model = get_matrix(GL_MODELVIEW);
+    simd4x4f *projection = get_matrix(GL_PROJECTION);
+    simd4x4f_matrix_mul(projection, model, &mvp);
+    mvp_dirty = false;
+}
+
 // GL matrix functions
 void glLoadIdentity() {
     PUSH_IF_COMPILING(glLoadIdentity);
     simd4x4f_identity(get_current_matrix());
+    mvp_dirty = true;
 }
 
 void glLoadMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glLoadMatrixf);
     simd4x4f_uload(get_current_matrix(), m);
+    mvp_dirty = true;
 }
 
 void glMatrixMode(GLenum mode) {
@@ -66,6 +78,7 @@ void glMultMatrixf(const GLfloat *m) {
     simd4x4f_uload(&load, m);
     simd4x4f_matrix_mul(cur, &load, &out);
     *cur = out;
+    mvp_dirty = true;
 }
 
 void glPopMatrix() {
@@ -75,6 +88,7 @@ void glPopMatrix() {
     if (top != NULL) {
         m->matrix = *top;
         free(top);
+        mvp_dirty = true;
     }
 }
 
@@ -84,6 +98,7 @@ void glPushMatrix() {
     simd4x4f *push = malloc(sizeof(simd4x4f));
     *push = m->matrix;
     tack_push(&m->stack, push);
+    mvp_dirty = true;
 }
 
 // GL transform functions
@@ -94,6 +109,7 @@ void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     simd4x4f_axis_rotation(&rotate, radians, simd4f_create(x, y, z, 1.0f));
     simd4x4f_matrix_mul(m, &rotate, &out);
     *m = out;
+    mvp_dirty = true;
 }
 
 void glScalef(GLfloat x, GLfloat y, GLfloat z) {
@@ -102,6 +118,7 @@ void glScalef(GLfloat x, GLfloat y, GLfloat z) {
     simd4x4f_scaling(&scale, x, y, z);
     simd4x4f_matrix_mul(m, &scale, &out);
     *m = out;
+    mvp_dirty = true;
 }
 
 void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
@@ -110,6 +127,7 @@ void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
     simd4x4f_translation(&translate, x, y, z);
     simd4x4f_matrix_mul(m, &translate, &out);
     *m = out;
+    mvp_dirty = true;
 }
 
 void glOrthof(GLfloat left, GLfloat right,
@@ -120,6 +138,7 @@ void glOrthof(GLfloat left, GLfloat right,
     simd4x4f_ortho(&ortho, left, right, bottom, top, near, far);
     simd4x4f_matrix_mul(m, &ortho, &out);
     *m = out;
+    mvp_dirty = true;
 }
 
 void glFrustumf(GLfloat left, GLfloat right,
@@ -130,6 +149,7 @@ void glFrustumf(GLfloat left, GLfloat right,
     simd4x4f_frustum(&frustum, left, right, bottom, top, near, far);
     simd4x4f_matrix_mul(m, &frustum, &out);
     *m = out;
+    mvp_dirty = true;
 }
 
 void gl_get_matrix(GLenum mode, GLfloat *out) {
@@ -158,15 +178,12 @@ void gl_transform_texture(GLenum texture, GLfloat out[2], const GLfloat in[2]) {
 }
 
 void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
-    simd4x4f *model = get_matrix(GL_MODELVIEW);
-    simd4x4f *projection = get_matrix(GL_PROJECTION);
-    simd4x4f mvp;
-
-    simd4x4f_matrix_mul(projection, model, &mvp);
-    simd4f vert = simd4f_create(in[0], in[1], in[2], 1);
-    simd4f tmp;
-
+    if (mvp_dirty) {
+        update_mvp();
+    }
+    simd4f tmp, vert = simd4f_create(in[0], in[1], in[2], 1);
     simd4x4f_matrix_vector_mul(&mvp, &vert, &tmp);
+    tmp = simd4f_div(tmp, simd4f_splat_w(tmp));
     simd4f_ustore3(tmp, out);
 }
 
