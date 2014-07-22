@@ -55,7 +55,6 @@ block_t *bl_new(GLenum mode) {
         block->incomplete.tex[i] = -1;
     }
 
-    block->vert = alloc_sublist(3, GL_FLOAT, block->cap);
     return block;
 }
 
@@ -71,6 +70,9 @@ void bl_free(block_t *block) {
 }
 
 static inline void bl_grow(block_t *block) {
+    if (! block->vert) {
+        block->vert = alloc_sublist(3, GL_FLOAT, block->cap);
+    }
     if (block->len >= block->cap) {
         block->cap += DEFAULT_BLOCK_CAPACITY;
         // TODO: store list types on block and use block->types.vert, etc directly?
