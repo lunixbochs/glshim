@@ -36,6 +36,9 @@
 
 // light.c
 #define skip_glLightModelf
+#ifdef LOCAL_MATRIX
+#define skip_glLightfv
+#endif
 
 // raster.c
 #define skip_glViewport

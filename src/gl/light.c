@@ -1,6 +1,7 @@
 #include "gl_str.h"
 #include "light.h"
 #include "loader.h"
+#include "matrix.h"
 
 #ifndef USE_ES2
 void glLightModelf(GLenum pname, GLfloat param) {
@@ -14,4 +15,19 @@ void glLightModelf(GLenum pname, GLfloat param) {
             break;
     }
 }
+
+#ifdef LOCAL_MATRIX
+void glLightfv(GLenum light, GLenum pname, const GLfloat *params) {
+    LOAD_GLES(glLightfv);
+    GLfloat tmp[4];
+    switch (pname) {
+        case GL_POSITION:
+            gl_transform_light(tmp, params);
+            params = tmp;
+        default:
+            gles_glLightfv(light, pname, params);
+            break;
+    }
+}
+#endif
 #endif

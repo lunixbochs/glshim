@@ -136,6 +136,14 @@ void gl_get_matrix(GLenum mode, GLfloat *out) {
     simd4x4f_ustore(get_matrix(mode), out);
 }
 
+void gl_transform_light(GLfloat out[4], const GLfloat in[4]) {
+    simd4x4f *model = get_matrix(GL_MODELVIEW);
+    simd4f coord = simd4f_create(in[0], in[1], in[2], in[3]);
+    simd4f tmp;
+    simd4x4f_matrix_vector_mul(model, &coord, &tmp);
+    simd4f_ustore4(coord, out);
+}
+
 void gl_transform_texture(GLenum texture, GLfloat out[2], const GLfloat in[2]) {
     matrix_state_t *unit = &state.matrix.texture[texture - GL_TEXTURE0];
     if (! unit->init) {
