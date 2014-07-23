@@ -5,6 +5,11 @@
 #include "vectorial/simd4x4f.h"
 
 #ifdef LOCAL_MATRIX
+#define PROXY_MATRIX(name)
+#else
+#define PROXY_MATRIX(name) PROXY_GLES(name)
+#endif
+
 // helper functions
 static matrix_state_t *get_matrix_state(GLenum mode) {
     matrix_state_t *m;
@@ -54,41 +59,53 @@ static void update_mvp() {
     mvp_dirty = false;
 }
 
+static void upload_matrix() {
+    LOAD_GLES(glLoadMatrixf);
+    GLfloat tmp[16];
+    simd4x4f_ustore(get_current_matrix(), tmp);
+    gles_glLoadMatrixf(tmp);
+}
+
 // GL matrix functions
 void glLoadIdentity() {
     PUSH_IF_COMPILING(glLoadIdentity);
-    simd4x4f_identity(get_current_matrix());
     mvp_dirty = true;
+    simd4x4f_identity(get_current_matrix());
+    upload_matrix();
 }
 
 void glLoadMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glLoadMatrixf);
-    simd4x4f_uload(get_current_matrix(), m);
     mvp_dirty = true;
+    simd4x4f_uload(get_current_matrix(), m);
+    PROXY_MATRIX(glLoadMatrixf);
 }
 
 void glMatrixMode(GLenum mode) {
     PUSH_IF_COMPILING(glMatrixMode);
     state.matrix.mode = mode;
+    PROXY_MATRIX(glMatrixMode);
 }
 
 void glMultMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glMultMatrixf);
+    mvp_dirty = true;
     simd4x4f out, load, *cur = get_current_matrix();
     simd4x4f_uload(&load, m);
     simd4x4f_matrix_mul(cur, &load, &out);
     *cur = out;
-    mvp_dirty = true;
+    upload_matrix();
 }
 
 void glPopMatrix() {
     PUSH_IF_COMPILING(glPopMatrix);
+    mvp_dirty = true;
     matrix_state_t *m = get_current_state();
     simd4x4f *top = tack_pop(&m->stack);
     if (top != NULL) {
         m->matrix = *top;
         free(top);
-        mvp_dirty = true;
+        upload_matrix();
     }
 }
 
@@ -98,58 +115,62 @@ void glPushMatrix() {
     simd4x4f *push = malloc(sizeof(simd4x4f));
     *push = m->matrix;
     tack_push(&m->stack, push);
-    mvp_dirty = true;
 }
 
 // GL transform functions
 void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glRotatef);
+    mvp_dirty = true;
     float radians = angle * VECTORIAL_PI / 180;
     simd4x4f *m = get_current_matrix(), rotate, out;
     simd4x4f_axis_rotation(&rotate, radians, simd4f_create(x, y, z, 1.0f));
     simd4x4f_matrix_mul(m, &rotate, &out);
     *m = out;
-    mvp_dirty = true;
+    upload_matrix();
 }
 
 void glScalef(GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glScalef);
+    mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), scale, out;
     simd4x4f_scaling(&scale, x, y, z);
     simd4x4f_matrix_mul(m, &scale, &out);
     *m = out;
-    mvp_dirty = true;
+    upload_matrix();
 }
 
 void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glTranslatef);
+    mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), translate, out;
     simd4x4f_translation(&translate, x, y, z);
     simd4x4f_matrix_mul(m, &translate, &out);
     *m = out;
-    mvp_dirty = true;
+    upload_matrix();
 }
 
 void glOrthof(GLfloat left, GLfloat right,
               GLfloat bottom, GLfloat top,
               GLfloat near, GLfloat far) {
     PUSH_IF_COMPILING(glOrthof);
+    mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), ortho, out;
     simd4x4f_ortho(&ortho, left, right, bottom, top, near, far);
     simd4x4f_matrix_mul(m, &ortho, &out);
     *m = out;
-    mvp_dirty = true;
+    upload_matrix();
 }
 
 void glFrustumf(GLfloat left, GLfloat right,
                 GLfloat bottom, GLfloat top,
                 GLfloat near, GLfloat far) {
     PUSH_IF_COMPILING(glFrustumf);
+    mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), frustum, out;
     simd4x4f_frustum(&frustum, left, right, bottom, top, near, far);
     simd4x4f_matrix_mul(m, &frustum, &out);
     *m = out;
-    mvp_dirty = true;
+    upload_matrix();
 }
 
 void gl_get_matrix(GLenum mode, GLfloat *out) {
@@ -186,5 +207,3 @@ void gl_transform_vertex(GLfloat out[3], GLfloat in[3]) {
     tmp = simd4f_div(tmp, simd4f_splat_w(tmp));
     simd4f_ustore3(tmp, out);
 }
-
-#endif

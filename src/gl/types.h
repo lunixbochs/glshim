@@ -188,6 +188,23 @@ typedef struct {
     matrix_state_t model, projection, texture[MAX_TEX], color;
 } matrix_states_t;
 
+typedef struct {
+    GLint count;
+    GLsizei size;
+    GLuint *buffer;
+    tack_t names;
+} select_state_t;
+
+typedef struct {
+    GLenum type;
+    GLfloat *buffer;
+    GLint count;
+} feedback_state_t;
+
+typedef struct {
+    GLenum mode;
+} render_state_t;
+
 // global state struct
 typedef struct {
     displaylist_state_t list;
@@ -196,10 +213,13 @@ typedef struct {
     block_state_t block;
     current_state_t current;
     enable_state_t enable;
+    feedback_state_t feedback;
     map_state_t *map_grid;
     map_states_t map1, map2;
     matrix_states_t matrix;
     pointer_states_t pointers;
+    render_state_t render;
+    select_state_t select;
     texgen_state_t texgen[MAX_TEX];
     texture_state_t texture;
 } glstate_t;

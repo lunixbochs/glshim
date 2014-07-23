@@ -51,7 +51,6 @@ void glGetIntegerv(GLenum pname, GLint *params) {
 void glGetFloatv(GLenum pname, GLfloat *params) {
     LOAD_GLES(glGetFloatv);
     switch (pname) {
-#ifdef LOCAL_MATRIX
         case GL_MODELVIEW_MATRIX:
             gl_get_matrix(GL_MODELVIEW, params);
             break;
@@ -61,7 +60,6 @@ void glGetFloatv(GLenum pname, GLfloat *params) {
         case GL_TEXTURE_MATRIX:
             gl_get_matrix(GL_TEXTURE, params);
             break;
-#endif
         default:
             gles_glGetFloatv(pname, params);
     }

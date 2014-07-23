@@ -15,7 +15,10 @@ glstate_t state = {
     },
     .matrix = {
         .mode = GL_MODELVIEW,
-    }
+    },
+    .render = {
+        .mode = GL_RENDER,
+    },
 };
 
 static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {

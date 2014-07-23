@@ -26,14 +26,6 @@
 #include "../config.h"
 #include "wrap/es.h"
 
-#ifndef MIN
-#define MIN(a, b) (((a) < (b) ? (a) : (b)))
-#endif
-
-#ifndef MAX
-#define MAX(a, b) (((a) > (b) ? (a) : (b)))
-#endif
-
 #define CURRENT (state.list.active ? &state.list.current : &state.current)
 
 #include "gl_helpers.h"
