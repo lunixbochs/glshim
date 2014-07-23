@@ -88,7 +88,7 @@ static int get_config_default(int attribute, int *value) {
             *value = 0;
             break;
         case GLX_RENDER_TYPE:
-            *value = GLX_RGBA_BIT | GLX_COLOR_INDEX_BIT;
+            *value = GLX_RGBA_BIT;
             break;
         case GLX_VISUAL_ID:
             *value = 1;
