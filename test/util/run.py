@@ -205,10 +205,15 @@ def run(args):
                     duplicate_errors.add(test.output)
 
             for line in test.output.split('\n'):
+                ERROR = term.bold(term.red('ERROR:'))
+                WARNING = term.bold(term.yellow('WARNING:'))
                 if line.startswith('ERROR'):
-                    line = line.replace('ERROR:', term.red('ERROR:'), 1)
+                    line = line.replace('ERROR:', ERROR, 1)
                 elif line.startswith('WARNING'):
-                    line = line.replace('WARNING:', term.yellow('WARNING:'), 1)
+                    line = line.replace('WARNING:', WARNING, 1)
+                if test.build_failed:
+                    line = line.replace('error:', ERROR)
+                    line = line.replace('warning:', WARNING)
                 print '> {}'.format(line)
 
     passed = sum(t.success for t in tests if t.ran)
