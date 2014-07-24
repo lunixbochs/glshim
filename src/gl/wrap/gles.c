@@ -1,6 +1,7 @@
 #ifndef USE_ES2
 #include "gles.h"
 #include "../loader.h"
+#include "../skip.h"
 
 void glPackedCall(const packed_call_t *packed) {
     switch (packed->format) {
