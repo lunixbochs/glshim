@@ -134,7 +134,8 @@ static inline bool should_intercept_render(GLenum mode) {
         (state.enable.vertex_array && ! gl_valid_vertex_type(state.pointers.vertex.type)) ||
         (texgen_enabled) ||
         (mode == GL_LINES && state.enable.line_stipple) ||
-        (mode == GL_QUADS)
+        (mode == GL_QUADS) ||
+        (state.render.mode == GL_FEEDBACK || state.render.mode == GL_SELECT)
     );
 }
 

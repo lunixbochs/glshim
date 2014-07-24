@@ -170,7 +170,7 @@ static void select_match(block_t *block, GLfloat zmin, GLfloat zmax, int i) {
 #undef push
 }
 
-void select_check(block_t *block) {
+void gl_select_block(block_t *block) {
     if (block->len == 0) {
         return;
     }
@@ -331,7 +331,7 @@ static void feedback_vertex(block_t *block, int i) {
     }
 }
 
-void feedback_block(block_t *block) {
+void gl_feedback_block(block_t *block) {
     if (block->len == 0) {
         return;
     }

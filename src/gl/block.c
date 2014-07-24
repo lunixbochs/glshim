@@ -1,4 +1,5 @@
 #include "block.h"
+#include "render.h"
 #include "gl_helpers.h"
 #include "line.h"
 #include "loader.h"
@@ -185,6 +186,11 @@ void bl_draw(block_t *block) {
         for (int i = 0; i < pos; i++) {
             memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
         }
+    }
+    if (state.render.mode == GL_SELECT) {
+        return gl_select_block(block);
+    } else if (state.render.mode == GL_FEEDBACK) {
+        return gl_feedback_block(block);
     }
 
     // glTexGen
