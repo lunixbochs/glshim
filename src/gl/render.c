@@ -4,6 +4,7 @@
 #include "types.h"
 
 GLint glRenderMode(GLenum mode) {
+    // If the feedback data required more room than was available in buffer, glRenderMode returns a negative value
     int ret = 0;
     if (state.render.mode == GL_SELECT) {
         ret = state.select.count / 4;
@@ -52,6 +53,25 @@ void glLoadName(GLuint name) {
     int len = tack_len(&state.select.names);
     if (len > 0) {
         tack_set(&state.select.names, len - 1, name);
+    }
+}
+
+void glFeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffer) {
+    state.feedback.buffer = buffer;
+    state.feedback.size = size;
+    state.feedback.type = type;
+    switch (type) {
+        case GL_2D:
+        case GL_3D:
+            break;
+        case GL_3D_COLOR:
+        case GL_3D_COLOR_TEXTURE:
+        case GL_4D_COLOR_TEXTURE:
+            printf("warning: GL_FEEDBACK does not transform color]n");
+            break;
+        default:
+            printf("unknown glFeedbackBuffer type: %s\n", gl_str(type));
+            break;
     }
 }
 
@@ -116,18 +136,22 @@ static bool test_tri(GLfloat a[3], GLfloat b[3], GLfloat c[3]) {
 #undef sign
 }
 
-static inline GLfloat *vert(block_t *block, int i) {
+static inline int _index(block_t *block, int i) {
     if (block->indices) {
         i = block->indices[i];
     }
-    return &block->vert[i * 3];
+    return i;
+}
+
+static inline GLfloat *_vert(block_t *block, int i) {
+    return &block->vert[_index(block, i) * 3];
 }
 
 static void select_match(block_t *block, GLfloat zmin, GLfloat zmax, int i) {
 #define push(val) state.select.buffer[state.select.count++] = val;
     GLfloat cur[3];
     for (; i < block->len; i++) {
-        gl_transform_vertex(cur, vert(block, i));
+        gl_transform_vertex(cur, _vert(block, i));
         zmin = MIN(zmin, cur[2]);
         zmax = MAX(zmax, cur[2]);
     }
@@ -157,13 +181,13 @@ void select_check(block_t *block) {
 #define test_tri(a, b, c) test(tri, a, b, c)
     GLfloat data[3][3], first[3], *tmp;
     GLfloat *a = data[0], *b = data[1], *c = data[2];
-    gl_transform_vertex(first, vert(block, 0));
+    gl_transform_vertex(first, _vert(block, 0));
     for (int i = 0; i < block->len; i++) {
         tmp = c;
         c = b;
         b = a;
         a = tmp;
-        gl_transform_vertex(a, vert(block, i));
+        gl_transform_vertex(a, _vert(block, i));
         zmin = MIN(zmin, a[2]);
         zmax = MAX(zmax, a[2]);
         switch (block->mode) {
@@ -219,6 +243,7 @@ void select_check(block_t *block) {
                 break;
             case GL_POINTS:
                 test_point(a);
+                break;
             default:
                 printf("warning: unsupported GL_SELECT mode: %s\n", gl_str(block->mode));
                 return;
@@ -227,4 +252,161 @@ void select_check(block_t *block) {
 #undef test_point
 #undef test_line
 #undef test_tri
+}
+
+static bool feedback_overflow(int n) {
+    if (state.feedback.count + n > state.feedback.count) {
+        return true;
+    }
+    return false;
+}
+
+static void feedback_push(GLfloat value) {
+    if (state.render.mode != GL_FEEDBACK || !state.feedback.buffer || feedback_overflow(1)) {
+        return;
+    }
+    state.feedback.buffer[state.feedback.size++] = value;
+}
+
+static void feedback_push_n(GLfloat *values, int length) {
+    for (int i = 0; i < length; i++) {
+        feedback_push(values[i]);
+    }
+}
+
+static void feedback_polygon(int n, int length) {
+    feedback_push(GL_POLYGON_TOKEN);
+    feedback_push(n);
+}
+
+static int feedback_sizeof(GLenum type) {
+    switch (type) {
+        case GL_2D: return 2;
+        case GL_3D: return 3;
+        case GL_3D_COLOR: return 7;
+        case GL_3D_COLOR_TEXTURE: return 11;
+        case GL_4D_COLOR_TEXTURE: return 12;
+        default:
+            printf("warning: unknown feedback_sizeof(%s)\n", gl_str(type));
+            return 0;
+    }
+}
+
+static void feedback_vertex(block_t *block, int i) {
+    static const GLfloat color[] = {0, 0, 0, 1};
+    static const GLfloat tex[] = {0, 0, 0, 0};
+    GLfloat v[4], *c, *t;
+    c = block->color ?: color;
+    // glFeedbackBuffer returns only the texture coordinate of texture unit GL_TEXTURE0.
+    t = block->tex[0] ?: tex;
+
+    // TODO: this will be called extra times on stuff like triangle strips
+    gl_transform_vertex(v, &block->vert[i * 3]);
+    switch (state.feedback.type) {
+        case GL_2D:
+            feedback_push_n(v, 2);
+            break;
+        case GL_3D:
+            feedback_push_n(v, 3);
+            break;
+        case GL_3D_COLOR:
+            feedback_push_n(v, 3);
+            feedback_push_n(c, 4);
+            break;
+        case GL_3D_COLOR_TEXTURE:
+            feedback_push_n(v, 3);
+            feedback_push_n(c, 4);
+            feedback_push_n(t, 2);
+            // we only store 2d texture coordinates for now
+            feedback_push(0.0f);
+            feedback_push(0.0f);
+            break;
+        case GL_4D_COLOR_TEXTURE:
+            feedback_push_n(v, 3);
+            // our vertices are already normalized, so W is redundant here
+            feedback_push(1.0f);
+            feedback_push_n(c, 4);
+            feedback_push_n(t, 4);
+            break;
+    }
+}
+
+void feedback_block(block_t *block) {
+    if (block->len == 0) {
+        return;
+    }
+    int size = feedback_sizeof(state.feedback.type);
+
+    GLfloat data[3][3], first[3], *tmp;
+    gl_transform_vertex(first, _vert(block, 0));
+    GLfloat *v, *c, *t;
+    int v1, v2, v3;
+    for (int j = 0; j < block->len; j++) {
+        int i = _index(block, j);
+        v2 = v1;
+        v3 = v2;
+        v1 = i;
+
+        // TODO: overflow'd feedback returns -1 in glRenderMode
+#define polygon(n) if (feedback_overflow(size * n)) return; feedback_push(GL_POLYGON_TOKEN);
+        switch (block->mode) {
+            case GL_LINES:
+                if (i % 2 == 1) {
+                    polygon(2);
+                    feedback_vertex(block, v2);
+                    feedback_vertex(block, v1);
+                }
+                break;
+            case GL_LINE_LOOP:
+                // catch the loop segment
+                if (i == block->len - 1) {
+                    polygon(2);
+                    feedback_vertex(block, v1);
+                    feedback_vertex(block, first);
+                }
+            case GL_LINE_STRIP:
+                if (i > 0) {
+                    polygon(2);
+                    feedback_vertex(block, v2);
+                    feedback_vertex(block, v1);
+                }
+                break;
+            case GL_TRIANGLES:
+                if (i % 3 == 2) {
+                    polygon(3);
+                    feedback_vertex(block, v3);
+                    feedback_vertex(block, v2);
+                    feedback_vertex(block, v1);
+                }
+            case GL_TRIANGLE_FAN:
+                if (i > 1) {
+                    polygon(3);
+                    feedback_vertex(block, v2);
+                    feedback_vertex(block, v1);
+                    feedback_vertex(block, first);
+                }
+                break;
+            case GL_TRIANGLE_STRIP:
+                if (i > 1) {
+                    polygon(3);
+                    feedback_vertex(block, v3);
+                    feedback_vertex(block, v2);
+                    feedback_vertex(block, v1);
+                }
+                break;
+            case GL_POINTS:
+                polygon(1);
+                feedback_vertex(block, v1);
+                break;
+            default:
+                printf("warning: unsupported GL_SELECT mode: %s\n", gl_str(block->mode));
+                return;
+        }
+    }
+}
+
+void glPassThrough(GLfloat token) {
+    if (feedback_overflow(2)) return;
+    feedback_push(GL_PASS_THROUGH_TOKEN);
+    feedback_push(token);
 }

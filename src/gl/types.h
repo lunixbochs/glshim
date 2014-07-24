@@ -199,6 +199,7 @@ typedef struct {
     GLenum type;
     GLfloat *buffer;
     GLint count;
+    GLsizei size;
 } feedback_state_t;
 
 typedef struct {
