@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "defines.h"
 #include "gl_str.h"
 #include "matrix.h"
@@ -7,9 +9,9 @@ GLint glRenderMode(GLenum mode) {
     // If the feedback data required more room than was available in buffer, glRenderMode returns a negative value
     int ret = 0;
     if (state.render.mode == GL_SELECT) {
-        ret = state.select.count / 4;
+        ret = state.select.overflow ? -1 : state.select.count / 4;
     } else if (state.render.mode == GL_FEEDBACK) {
-        ret = state.feedback.count / 4;
+        ret = state.feedback.overflow ? -1 : state.feedback.values;
     }
     if (mode == GL_SELECT) {
         // TODO: glSetError
@@ -56,26 +58,8 @@ void glLoadName(GLuint name) {
     }
 }
 
-void glFeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffer) {
-    state.feedback.buffer = buffer;
-    state.feedback.size = size;
-    state.feedback.type = type;
-    switch (type) {
-        case GL_2D:
-        case GL_3D:
-            break;
-        case GL_3D_COLOR:
-        case GL_3D_COLOR_TEXTURE:
-        case GL_4D_COLOR_TEXTURE:
-            printf("warning: GL_FEEDBACK does not transform color]n");
-            break;
-        default:
-            printf("unknown glFeedbackBuffer type: %s\n", gl_str(type));
-            break;
-    }
-}
-
 void glSelectBuffer(GLsizei size, GLuint *buffer) {
+    state.feedback.overflow = false;
     state.select.buffer = buffer;
     state.select.size = size;
 }
@@ -254,8 +238,30 @@ void gl_select_block(block_t *block) {
 #undef test_tri
 }
 
+void glFeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffer) {
+    state.feedback.buffer = buffer;
+    state.feedback.overflow = false;
+    state.feedback.size = size;
+    state.feedback.type = type;
+    state.feedback.values = 0;
+    switch (type) {
+        case GL_2D:
+        case GL_3D:
+            break;
+        case GL_3D_COLOR:
+        case GL_3D_COLOR_TEXTURE:
+        case GL_4D_COLOR_TEXTURE:
+            printf("warning: GL_FEEDBACK does not transform color]n");
+            break;
+        default:
+            printf("unknown glFeedbackBuffer type: %s\n", gl_str(type));
+            break;
+    }
+}
+
 static bool feedback_overflow(int n) {
-    if (state.feedback.count + n > state.feedback.count) {
+    if (state.feedback.count + n > state.feedback.size) {
+        state.feedback.overflow = true;
         return true;
     }
     return false;
@@ -265,7 +271,8 @@ static void feedback_push(GLfloat value) {
     if (state.render.mode != GL_FEEDBACK || !state.feedback.buffer || feedback_overflow(1)) {
         return;
     }
-    state.feedback.buffer[state.feedback.size++] = value;
+    state.feedback.values += 1;
+    state.feedback.buffer[state.feedback.count++] = value;
 }
 
 static void feedback_push_n(GLfloat *values, int length) {
@@ -274,7 +281,7 @@ static void feedback_push_n(GLfloat *values, int length) {
     }
 }
 
-static void feedback_polygon(int n, int length) {
+static void feedback_polygon(int n) {
     feedback_push(GL_POLYGON_TOKEN);
     feedback_push(n);
 }
@@ -293,8 +300,8 @@ static int feedback_sizeof(GLenum type) {
 }
 
 static void feedback_vertex(block_t *block, int i) {
-    static const GLfloat color[] = {0, 0, 0, 1};
-    static const GLfloat tex[] = {0, 0, 0, 0};
+    static GLfloat color[] = {0, 0, 0, 1};
+    static GLfloat tex[] = {0, 0, 0, 0};
     GLfloat v[4], *c, *t;
     c = block->color ?: color;
     // glFeedbackBuffer returns only the texture coordinate of texture unit GL_TEXTURE0.
@@ -337,10 +344,9 @@ void gl_feedback_block(block_t *block) {
     }
     int size = feedback_sizeof(state.feedback.type);
 
-    GLfloat data[3][3], first[3], *tmp;
-    gl_transform_vertex(first, _vert(block, 0));
     GLfloat *v, *c, *t;
     int v1, v2, v3;
+    int first = _index(block, 0);
     for (int j = 0; j < block->len; j++) {
         int i = _index(block, j);
         v2 = v1;
@@ -348,7 +354,7 @@ void gl_feedback_block(block_t *block) {
         v1 = i;
 
         // TODO: overflow'd feedback returns -1 in glRenderMode
-#define polygon(n) if (feedback_overflow(size * n)) return; feedback_push(GL_POLYGON_TOKEN);
+#define polygon(n) { if (feedback_overflow(size * n)) return; feedback_polygon(n); state.feedback.values -= 1; }
         switch (block->mode) {
             case GL_LINES:
                 if (i % 2 == 1) {
@@ -409,4 +415,5 @@ void glPassThrough(GLfloat token) {
     if (feedback_overflow(2)) return;
     feedback_push(GL_PASS_THROUGH_TOKEN);
     feedback_push(token);
+    state.feedback.values -= 1;
 }

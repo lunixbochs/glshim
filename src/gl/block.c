@@ -1,9 +1,9 @@
 #include "block.h"
-#include "render.h"
 #include "gl_helpers.h"
 #include "line.h"
 #include "loader.h"
 #include "matrix.h"
+#include "render.h"
 #include "texgen.h"
 #include "texture.h"
 

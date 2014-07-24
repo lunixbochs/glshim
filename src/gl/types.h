@@ -189,6 +189,7 @@ typedef struct {
 } matrix_states_t;
 
 typedef struct {
+    GLboolean overflow;
     GLint count;
     GLsizei size;
     GLuint *buffer;
@@ -196,9 +197,10 @@ typedef struct {
 } select_state_t;
 
 typedef struct {
+    GLboolean overflow;
     GLenum type;
     GLfloat *buffer;
-    GLint count;
+    GLint count, values;
     GLsizei size;
 } feedback_state_t;
 
