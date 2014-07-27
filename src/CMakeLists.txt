@@ -13,8 +13,10 @@ else()
 endif()
 
 add_library(GL SHARED ${GL_SOURCES})
-set_target_properties(GL PROPERTIES VERSION 1.2.0 SOVERSION 1.2.0)
-target_link_libraries(GL EGL)
+set_target_properties(GL PROPERTIES VERSION 1 SOVERSION 1.2.0)
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    target_link_libraries(GL EGL X11)
+endif()
 
 add_library(GL_static STATIC EXCLUDE_FROM_ALL ${GL_SOURCES})
 set_target_properties(GL_static PROPERTIES OUTPUT_NAME GL)
