@@ -64,20 +64,25 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         if (! block->normal) {
             normal = CURRENT->normal;
         }
+        GLfloat tmp[2];
         simd4f v = simd4f_create(vert[0], vert[1], vert[2], 1);
         switch (type) {
             case GL_OBJECT_LINEAR:
-                simd4f_ustore4(simd4f_dot4(v, s_plane), out + 0);
+                simd4f_ustore2(simd4f_dot4(v, s_plane), tmp);
+                out[0] = tmp[0];
                 if (Tp) {
-                    simd4f_ustore4(simd4f_dot4(v, t_plane), out + 1);
+                    simd4f_ustore2(simd4f_dot4(v, t_plane), tmp);
+                    out[1] = tmp[0];
                 }
                 break;
             case GL_EYE_LINEAR: {
                 simd4f eye;
                 simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
-                simd4f_ustore4(simd4f_dot4(eye, s_plane), out + 0);
+                simd4f_ustore2(simd4f_dot4(eye, s_plane), tmp);
+                out[0] = tmp[0];
                 if (Tp) {
-                    simd4f_ustore4(simd4f_dot4(eye, t_plane), out + 1);
+                    simd4f_ustore2(simd4f_dot4(eye, t_plane), tmp);
+                    out[1] = tmp[0];
                 }
                 break;
             }
