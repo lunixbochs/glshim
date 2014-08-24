@@ -257,13 +257,13 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         default:
             switch (type) {
                 case GL_BOOL:
-                    glGetBooleanv(pname, params);
+                    gles_glGetBooleanv(pname, params);
                     break;
                 case GL_FLOAT:
-                    glGetFloatv(pname, params);
+                    gles_glGetFloatv(pname, params);
                     break;
                 case GL_INT:
-                    glGetIntegerv(pname, params);
+                    gles_glGetIntegerv(pname, params);
                     break;
             }
             if (gl_get_error() == GL_INVALID_ENUM) {
