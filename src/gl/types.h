@@ -215,6 +215,7 @@ typedef struct {
     } pos;
     GLfloat color[4];
     GLuint pixel;
+    GLboolean valid;
 } raster_state_t;
 
 typedef struct {

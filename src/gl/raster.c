@@ -10,13 +10,18 @@
     then let the other function do their thing
 */
 
+
+// TODO: glWindowPos
+
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     PROXY_GLES(glRasterPos3f);
     raster_state_t *raster = &state.raster;
     // TODO: glRasterPos4f?
+    // TODO: actually project, and clear the valid bit if we end up outside the viewport
     raster->pos.x = x;
     raster->pos.y = y;
     raster->pos.z = z;
+    raster->valid = 1;
 
     GLuint *dst = NULL;
     GLfloat *color = &raster->color;
@@ -63,7 +68,9 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
               GLfloat xmove, GLfloat ymove, const GLubyte *bitmap) {
     PROXY_GLES(glBitmap);
     raster_state_t *raster = &state.raster;
-    // TODO: shouldn't be drawn if the raster pos is outside the viewport?
+    if (! raster->valid) {
+        return;
+    }
     // TODO: negative width/height mirrors bitmap?
     if (!width && !height) {
         raster->pos.x += xmove;
@@ -99,6 +106,9 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
 void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
                   GLenum type, const GLvoid *data) {
     raster_state_t *raster = &state.raster;
+    if (! raster->valid) {
+        return;
+    }
     const GLubyte *from, *pixels = data;
     GLubyte *to;
     GLvoid *dst = NULL;

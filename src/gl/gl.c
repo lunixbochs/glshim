@@ -24,6 +24,7 @@ glstate_t state = {
         .pos = {0.0f, 0.0f, 0.0f, 1.0f},
         .color = {1.0f, 1.0f, 1.0f, 1.0f},
         .pixel = 0xFFFFFFFF,
+        .valid = 1,
     },
 };
 
