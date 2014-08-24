@@ -255,6 +255,8 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             break;
         }
         default:
+        {
+            GLenum saved = glGetError();
             switch (type) {
                 case GL_BOOL:
                     gles_glGetBooleanv(pname, params);
@@ -266,10 +268,14 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     gles_glGetIntegerv(pname, params);
                     break;
             }
-            if (gl_get_error() == GL_INVALID_ENUM) {
+            GLenum error = gl_get_error();
+            if (error == GL_INVALID_ENUM) {
                 fprintf(stderr, "libGL: GL_INVALID_ENUM when calling glGet<%s>(%s)\n", gl_str(type), gl_str(pname));
+            } else if (! error) {
+                gl_set_error(saved);
             }
             break;
+         }
     }
 }
 
