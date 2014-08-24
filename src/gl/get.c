@@ -77,7 +77,7 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_TEXTURE_MATRIX:
         {
             bool scale = false;
-            GLfloat tmp[4] = {0};
+            GLfloat tmp[4];
             GLfloat *out = tmp;
             if (type == GL_FLOAT) {
                 out = params;
@@ -125,7 +125,7 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_AUX_BUFFERS:
         case GL_MAX_ELEMENTS_INDICES:
         {
-            GLint tmp[4] = {0};
+            GLint tmp[4];
             GLint *out = tmp;
             if (type == GL_INT) {
                 out = params;
