@@ -1,6 +1,7 @@
 #include <GL/gl.h>
 
 #include "gl_helpers.h"
+#include "gl_str.h"
 #include "loader.h"
 #include "matrix.h"
 
@@ -256,11 +257,17 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         default:
             switch (type) {
                 case GL_BOOL:
-                    return glGetBooleanv(pname, params);
+                    glGetBooleanv(pname, params);
+                    break;
                 case GL_FLOAT:
-                    return glGetFloatv(pname, params);
+                    glGetFloatv(pname, params);
+                    break;
                 case GL_INT:
-                    return glGetIntegerv(pname, params);
+                    glGetIntegerv(pname, params);
+                    break;
+            }
+            if (gl_get_error() == GL_INVALID_ENUM) {
+                fprintf(stderr, "libGL: GL_INVALID_ENUM when calling glGet<%s>(%s)\n", gl_str(type), gl_str(pname));
             }
             break;
     }
