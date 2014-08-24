@@ -106,6 +106,8 @@ typedef struct {
               color_array,
               normal_array,
               tex_coord_array[MAX_TEX],
+              texgen_q[MAX_TEX],
+              texgen_r[MAX_TEX],
               texgen_s[MAX_TEX],
               texgen_t[MAX_TEX],
               texture_2d[MAX_TEX],

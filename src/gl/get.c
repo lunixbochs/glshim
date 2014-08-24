@@ -45,7 +45,12 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
     switch (pname) {
         // GL_BOOL
         case GL_CURRENT_RASTER_POSITION_VALID:
+        case GL_TEXTURE_GEN_Q:
+        case GL_TEXTURE_GEN_R:
+        case GL_TEXTURE_GEN_S:
+        case GL_TEXTURE_GEN_T:
         {
+            enable_state_t *enable = &state.enable;
             GLboolean tmp[4];
             GLboolean *out = tmp;
             if (type == GL_BOOL) {
@@ -54,6 +59,18 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             switch (pname) {
                 case GL_CURRENT_RASTER_POSITION_VALID:
                     *out = state.raster.valid;
+                    break;
+                case GL_TEXTURE_GEN_Q:
+                    *out = enable->texgen_q[state.texture.active];
+                    break;
+                case GL_TEXTURE_GEN_R:
+                    *out = enable->texgen_r[state.texture.active];
+                    break;
+                case GL_TEXTURE_GEN_S:
+                    *out = enable->texgen_s[state.texture.active];
+                    break;
+                case GL_TEXTURE_GEN_T:
+                    *out = enable->texgen_t[state.texture.active];
                     break;
             }
             if (type != GL_BOOL) {
@@ -140,8 +157,22 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             break;
         }
         // GL_INT
+        case GL_ATTRIB_STACK_DEPTH:
         case GL_AUX_BUFFERS:
+        case GL_CLIENT_ATTRIB_STACK_DEPTH:
+        case GL_MAX_ATTRIB_STACK_DEPTH:
+        case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
         case GL_MAX_ELEMENTS_INDICES:
+        case GL_MAX_NAME_STACK_DEPTH:
+        case GL_NAME_STACK_DEPTH:
+#ifdef LOCAL_MATRIX
+        case GL_MAX_MODELVIEW_STACK_DEPTH:
+        case GL_MAX_PROJECTION_STACK_DEPTH:
+        case GL_MAX_TEXTURE_STACK_DEPTH:
+        case GL_MODELVIEW_STACK_DEPTH:
+        case GL_PROJECTION_STACK_DEPTH:
+        case GL_TEXTURE_STACK_DEPTH:
+#endif
         {
             GLint tmp[4];
             GLint *out = tmp;
@@ -149,12 +180,41 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 out = params;
             }
             switch (pname) {
-                case GL_MAX_ELEMENTS_INDICES:
-                    *out = 65535;
+                case GL_ATTRIB_STACK_DEPTH:
+                    *out = tack_len(&state.stack.attrib);
                     break;
                 case GL_AUX_BUFFERS:
                     *out = 0;
                     break;
+                case GL_CLIENT_ATTRIB_STACK_DEPTH:
+                    *out = tack_len(&state.stack.client);
+                    break;
+                case GL_MAX_ATTRIB_STACK_DEPTH:
+                case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
+                case GL_MAX_ELEMENTS_INDICES:
+                    // NOTE: this one is *actually* 65535, the others in this group are arbitrary
+                case GL_MAX_NAME_STACK_DEPTH:
+#ifdef LOCAL_MATRIX
+                case GL_MAX_MODELVIEW_STACK_DEPTH:
+                case GL_MAX_PROJECTION_STACK_DEPTH:
+                case GL_MAX_TEXTURE_STACK_DEPTH:
+#endif
+                    *out = 65535;
+                    break;
+                case GL_NAME_STACK_DEPTH:
+                    *out = tack_len(&state.select.names);
+                    break;
+#ifdef LOCAL_MATRIX
+                case GL_MODELVIEW_STACK_DEPTH:
+                    *out = tack_len(&state.matrix.model);
+                    break;
+                case GL_PROJECTION_STACK_DEPTH:
+                    *out = tack_len(&state.matrix.projection);
+                    break;
+                case GL_TEXTURE_STACK_DEPTH:
+                    *out = tack_len(&state.matrix.texture);
+                    break;
+#endif
             }
             if (type != GL_INT) {
                 for (int i = 0; i < width; i++) {
