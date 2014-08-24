@@ -4,6 +4,30 @@
 #include "loader.h"
 #include "matrix.h"
 
+void gl_set_error(GLenum error) {
+    LOAD_GLES(glGetError);
+    // call upstream glGetError to clear the driver's error flag
+    gles_glGetError();
+    state.error = error;
+}
+
+// calls upstream glGetError and saves the flag for the next caller
+GLenum gl_get_error() {
+    LOAD_GLES(glGetError);
+    state.error = gles_glGetError();
+    return state.error;
+}
+
+GLenum glGetError() {
+    LOAD_GLES(glGetError);
+    GLenum error = gles_glGetError();
+    if (error == GL_NO_ERROR) {
+        error = state.error;
+    }
+    state.error = GL_NO_ERROR;
+    return error;
+}
+
 // config functions
 const GLubyte *glGetString(GLenum name) {
     LOAD_GLES(glGetString);

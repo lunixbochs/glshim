@@ -233,6 +233,7 @@ typedef struct {
     displaylist_state_t list;
     tack_t lists;
 
+    GLenum error;
     block_state_t block;
     current_state_t current;
     enable_state_t enable;

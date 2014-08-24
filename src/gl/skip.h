@@ -10,6 +10,7 @@
 
 // get.c
 #define skip_glGetBooleanv
+#define skip_glGetError
 #define skip_glGetFloatv
 #define skip_glGetIntegerv
 #define skip_glGetString
