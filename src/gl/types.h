@@ -208,6 +208,19 @@ typedef struct {
     GLenum mode;
 } render_state_t;
 
+typedef struct {
+    GLfloat *buf;
+    struct {
+        GLfloat x, y, z, w;
+    } pos;
+    GLfloat color[4];
+    GLuint pixel;
+} raster_state_t;
+
+typedef struct {
+    GLfloat x, y, width, height, nwidth, nheight;
+} viewport_state_t;
+
 // global state struct
 typedef struct {
     displaylist_state_t list;
@@ -221,10 +234,12 @@ typedef struct {
     map_states_t map1, map2;
     matrix_states_t matrix;
     pointer_states_t pointers;
+    raster_state_t raster;
     render_state_t render;
     select_state_t select;
     texgen_state_t texgen[MAX_TEX];
     texture_state_t texture;
+    viewport_state_t viewport;
 } glstate_t;
 
 extern glstate_t state;

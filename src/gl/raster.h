@@ -3,15 +3,6 @@
 #ifndef RASTER_H
 #define RASTER_H
 
-typedef struct {
-    GLfloat x, y, z;
-} rasterpos_t;
-
-typedef struct {
-    GLint x, y;
-    GLsizei width, height, nwidth, nheight;
-} viewport_t;
-
 extern void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
                      GLfloat xmove, GLfloat ymove, const GLubyte *bitmap);
 extern void glDrawPixels(GLsizei width, GLsizei height, GLenum format,

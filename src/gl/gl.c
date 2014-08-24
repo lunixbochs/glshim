@@ -19,6 +19,12 @@ glstate_t state = {
     .render = {
         .mode = GL_RENDER,
     },
+    .raster = {
+        .buf = NULL,
+        .pos = {0.0f, 0.0f, 0.0f, 1.0f},
+        .color = {1.0f, 1.0f, 1.0f, 1.0f},
+        .pixel = 0xFFFFFFFF,
+    },
 };
 
 static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
