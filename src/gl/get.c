@@ -1,5 +1,6 @@
 #include <GL/gl.h>
 
+#include "gl_helpers.h"
 #include "loader.h"
 #include "matrix.h"
 
@@ -34,33 +35,140 @@ const GLubyte *glGetString(GLenum name) {
     }
 }
 
-void glGetIntegerv(GLenum pname, GLint *params) {
+static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
+    LOAD_GLES(glGetBooleanv);
+    LOAD_GLES(glGetFloatv);
     LOAD_GLES(glGetIntegerv);
+
+
+    int width = 1;
     switch (pname) {
-        case GL_MAX_ELEMENTS_INDICES:
-            *params = 65535;
+        /*
+         * don't have any GL_BOOL local types yet
+        // GL_BOOL
+        case GL_BOOL:
+        {
+            GLboolean tmp[4];
+            GLboolean *out = tmp;
+            if (type == GL_BOOL) {
+                out = params;
+            }
+            switch (pname) {
+
+            }
+            if (type != GL_BOOL) {
+                for (int i = 0; i < 4; i++) {
+                    if (type == GL_INT) {
+                        GLint *ret = params;
+                        ret[i] = out[i];
+                    } else if (type == GL_FLOAT) {
+                        GLfloat *ret = params;
+                        ret[i] = out[i];
+                    }
+                }
+            }
             break;
+        }
+        */
+        // GL_FLOAT
+        case GL_MODELVIEW_MATRIX:
+        case GL_PROJECTION_MATRIX:
+        case GL_TEXTURE_MATRIX:
+        {
+            bool scale = false;
+            GLfloat tmp[4] = {0};
+            GLfloat *out = tmp;
+            if (type == GL_FLOAT) {
+                out = params;
+            }
+            switch (pname) {
+                case GL_MODELVIEW_MATRIX:
+                    width = 4;
+                    gl_get_matrix(GL_MODELVIEW, out);
+                    break;
+                case GL_PROJECTION_MATRIX:
+                    width = 4;
+                    gl_get_matrix(GL_PROJECTION, out);
+                    break;
+                case GL_TEXTURE_MATRIX:
+                    width = 4;
+                    gl_get_matrix(GL_TEXTURE, out);
+                    break;
+            }
+            if (type != GL_FLOAT) {
+                for (int i = 0; i < width; i++) {
+                    if (type == GL_INT) {
+                        GLint *ret = params;
+                        if (scale) {
+                            ret[i] = out[i] * gl_max_value(type);
+                        } else {
+                            ret[i] = out[i];
+                        }
+                    } else if (type == GL_BOOL) {
+                        GLboolean *ret = params;
+                        ret[i] = !! out[i];
+                    }
+                }
+            }
+            break;
+        }
+        // GL_INT
         case GL_AUX_BUFFERS:
-            *params = 0;
+        case GL_MAX_ELEMENTS_INDICES:
+        {
+            GLint tmp[4] = {0};
+            GLint *out = tmp;
+            if (type == GL_INT) {
+                out = params;
+            }
+            switch (pname) {
+                case GL_MAX_ELEMENTS_INDICES:
+                    *out = 65535;
+                    break;
+                case GL_AUX_BUFFERS:
+                    *out = 0;
+                    break;
+            }
+            if (type != GL_INT) {
+                for (int i = 0; i < width; i++) {
+                    if (type == GL_FLOAT) {
+                        GLfloat *ret = params;
+                        ret[i] = out[i];
+                    } else if (type == GL_BOOL) {
+                        GLboolean *ret = params;
+                        ret[i] = !! out[i];
+                    }
+                }
+            }
             break;
+        }
         default:
-            gles_glGetIntegerv(pname, params);
+            switch (type) {
+                case GL_BOOL:
+                    return glGetBooleanv(pname, params);
+                case GL_FLOAT:
+                    return glGetFloatv(pname, params);
+                case GL_INT:
+                    return glGetIntegerv(pname, params);
+            }
+            break;
     }
 }
 
-void glGetFloatv(GLenum pname, GLfloat *params) {
-    LOAD_GLES(glGetFloatv);
-    switch (pname) {
-        case GL_MODELVIEW_MATRIX:
-            gl_get_matrix(GL_MODELVIEW, params);
-            break;
-        case GL_PROJECTION_MATRIX:
-            gl_get_matrix(GL_PROJECTION, params);
-            break;
-        case GL_TEXTURE_MATRIX:
-            gl_get_matrix(GL_TEXTURE, params);
-            break;
-        default:
-            gles_glGetFloatv(pname, params);
-    }
+void glGetBooleanv(GLenum pname, GLboolean *params) {
+    gl_get(pname, GL_BOOL, params);
 }
+
+void glGetFloatv(GLenum pname, GLfloat *params) {
+    gl_get(pname, GL_FLOAT, params);
+}
+
+void glGetIntegerv(GLenum pname, GLint *params) {
+    gl_get(pname, GL_INT, params);
+}
+
+/*
+void glGetFixedv(GLenum pname, GLfloat *params) {
+    // meh
+}
+*/

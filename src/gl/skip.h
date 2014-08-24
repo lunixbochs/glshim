@@ -9,6 +9,7 @@
 #define skip_glNormal3f
 
 // get.c
+#define skip_glGetBooleanv
 #define skip_glGetFloatv
 #define skip_glGetIntegerv
 #define skip_glGetString
