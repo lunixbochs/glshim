@@ -43,10 +43,8 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
 
     int width = 1;
     switch (pname) {
-        /*
-         * don't have any GL_BOOL local types yet
         // GL_BOOL
-        case GL_BOOL:
+        case GL_CURRENT_RASTER_POSITION_VALID:
         {
             GLboolean tmp[4];
             GLboolean *out = tmp;
@@ -54,10 +52,12 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 out = params;
             }
             switch (pname) {
-
+                case GL_CURRENT_RASTER_POSITION_VALID:
+                    *out = state.raster.valid;
+                    break;
             }
             if (type != GL_BOOL) {
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < width; i++) {
                     if (type == GL_INT) {
                         GLint *ret = params;
                         ret[i] = out[i];
@@ -69,8 +69,9 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             }
             break;
         }
-        */
         // GL_FLOAT
+        case GL_CURRENT_RASTER_COLOR:
+        case GL_CURRENT_RASTER_POSITION:
         case GL_MODELVIEW_MATRIX:
         case GL_PROJECTION_MATRIX:
         case GL_TEXTURE_MATRIX:
@@ -82,6 +83,14 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 out = params;
             }
             switch (pname) {
+                case GL_CURRENT_RASTER_COLOR:
+                    width = 4;
+                    memcpy(out, &state.raster.color, sizeof(GLfloat) * 4);
+                    break;
+                case GL_CURRENT_RASTER_POSITION:
+                    width = 4;
+                    memcpy(out, &state.raster.pos, sizeof(GLfloat) * 4);
+                    break;
                 case GL_MODELVIEW_MATRIX:
                     width = 4;
                     gl_get_matrix(GL_MODELVIEW, out);
