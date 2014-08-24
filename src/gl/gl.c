@@ -26,6 +26,7 @@ glstate_t state = {
         .pixel = 0xFFFFFFFF,
         .valid = 1,
     },
+    .stack = {0},
 };
 
 static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {

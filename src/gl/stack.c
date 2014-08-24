@@ -1,8 +1,5 @@
 #include "stack.h"
 
-static tack_t stack = {0};
-static tack_t client_stack = {0};
-
 void glPushAttrib(GLbitfield mask) {
     glstack_t *cur = malloc(sizeof(glstack_t));
 
@@ -166,7 +163,7 @@ void glPushAttrib(GLbitfield mask) {
     // TODO: GL_TRANSFORM_BIT
     // TODO: GL_VIEWPORT_BIT
 
-    tack_push(&stack, cur);
+    tack_push(&state.stack.attrib, cur);
 }
 
 void glPushClientAttrib(GLbitfield mask) {
@@ -192,7 +189,7 @@ void glPushClientAttrib(GLbitfield mask) {
         memcpy(&cur->normal, &state.pointers.normal, sizeof(pointer_state_t));
         memcpy(&cur->tex, &state.pointers.tex_coord, sizeof(pointer_state_t) * MAX_TEX);
     }
-    tack_push(&client_stack, cur);
+    tack_push(&state.stack.client, cur);
 }
 
 #define enable_disable(pname, enabled) \
@@ -204,7 +201,7 @@ void glPushClientAttrib(GLbitfield mask) {
 #define v4(c) v3(c), c[3]
 
 void glPopAttrib() {
-    glstack_t *cur = tack_pop(&stack);
+    glstack_t *cur = tack_pop(&state.stack.attrib);
     if (cur == NULL) {
         return;
     }
@@ -343,7 +340,7 @@ void glPopAttrib() {
     else glDisableClientState(pname)
 
 void glPopClientAttrib() {
-    glclientstack_t *cur = tack_pop(&client_stack);
+    glclientstack_t *cur = tack_pop(&state.stack.client);
     if (cur == NULL) {
         return;
     }

@@ -222,6 +222,10 @@ typedef struct {
     GLfloat x, y, width, height, nwidth, nheight;
 } viewport_state_t;
 
+typedef struct {
+    tack_t attrib, client;
+} stack_state_t;
+
 // global state struct
 typedef struct {
     displaylist_state_t list;
@@ -238,6 +242,7 @@ typedef struct {
     raster_state_t raster;
     render_state_t render;
     select_state_t select;
+    stack_state_t stack;
     texgen_state_t texgen[MAX_TEX];
     texture_state_t texture;
     viewport_state_t viewport;
