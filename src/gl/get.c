@@ -70,8 +70,11 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             break;
         }
         // GL_FLOAT
+        case GL_CURRENT_COLOR:
+        case GL_CURRENT_NORMAL:
         case GL_CURRENT_RASTER_COLOR:
         case GL_CURRENT_RASTER_POSITION:
+        case GL_CURRENT_TEXTURE_COORDS:
         case GL_MODELVIEW_MATRIX:
         case GL_PROJECTION_MATRIX:
         case GL_TEXTURE_MATRIX:
@@ -83,6 +86,14 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 out = params;
             }
             switch (pname) {
+                case GL_CURRENT_COLOR:
+                    width = 4;
+                    memcpy(out, &CURRENT->color, sizeof(GLfloat) * 4);
+                    break;
+                case GL_CURRENT_NORMAL:
+                    width = 3;
+                    memcpy(out, &CURRENT->normal, sizeof(GLfloat) * 3);
+                    break;
                 case GL_CURRENT_RASTER_COLOR:
                     width = 4;
                     memcpy(out, &state.raster.color, sizeof(GLfloat) * 4);
@@ -90,6 +101,13 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 case GL_CURRENT_RASTER_POSITION:
                     width = 4;
                     memcpy(out, &state.raster.pos, sizeof(GLfloat) * 4);
+                    break;
+                case GL_CURRENT_TEXTURE_COORDS:
+                    width = 4;
+                    memcpy(out, &CURRENT->tex, sizeof(GLfloat) * 2);
+                    // TODO: need to update this when I track 4d texture coordinates
+                    out[3] = 0;
+                    out[4] = 0;
                     break;
                 case GL_MODELVIEW_MATRIX:
                     width = 4;
