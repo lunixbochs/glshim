@@ -213,21 +213,18 @@ vectorial_inline void simd4x4f_ortho(simd4x4f *m, float left, float right, float
 
 vectorial_inline void simd4x4f_frustum(simd4x4f *m, float left, float right, float bottom, float top, float znear, float zfar) {
 
-    float deltax = right - left;
-    float deltay = top - bottom;
-    float deltaz = zfar - znear;
+    float x = (2 * znear) / (right - left);
+    float y = (2 * znear) / (top - bottom);
 
-    float a =  (right + left) / (right - left);
-    float b =  (top + bottom) / (top - bottom);
-    float c = -(zfar + znear) / (zfar - znear);
-    float d = -(2 * zfar * znear) / (zfar - znear);
-    float e =  (2 * znear) / (right - left);
-    float f =  (znear * znear) / (top - bottom);
+    float A = (right + left) / (right - left);
+    float B = (top + bottom) / (top - bottom);
+    float C = -(zfar + znear) / (zfar - znear);
+    float D = -(2 * zfar * znear) / (zfar - znear);
 
-    m->x = simd4f_create( e, 0, 0, 0);
-    m->y = simd4f_create( 0, f, 0, 0);
-    m->z = simd4f_create( a, b, c, d);
-    m->w = simd4f_create( 0, 0, d, 1);
+    m->x = simd4f_create( x, 0, 0, 0);
+    m->y = simd4f_create( 0, y, 0, 0);
+    m->z = simd4f_create( A, B, C, -1);
+    m->w = simd4f_create( 0, 0, D, 0);
 
 }
 
