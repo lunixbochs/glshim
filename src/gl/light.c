@@ -16,6 +16,12 @@ void glLightModelf(GLenum pname, GLfloat param) {
     }
 }
 
+void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
+    PUSH_IF_COMPILING(glMaterialfv);
+    LOAD_GLES(glMaterialfv);
+    gles_glMaterialfv(GL_FRONT_AND_BACK, pname, params);
+}
+
 #ifdef LOCAL_MATRIX
 void glLightfv(GLenum light, GLenum pname, const GLfloat *params) {
     LOAD_GLES(glLightfv);

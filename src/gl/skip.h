@@ -33,6 +33,7 @@
 #ifdef LOCAL_MATRIX
 #define skip_glLightfv
 #endif
+#define skip_glMaterialfv
 
 // raster.c
 #define skip_glViewport
