@@ -27,6 +27,16 @@ glstate_t state = {
         .valid = 1,
     },
     .stack = {0},
+    .texgen = {{
+        .R = GL_EYE_LINEAR,
+        .Q = GL_EYE_LINEAR,
+        .S = GL_EYE_LINEAR,
+        .T = GL_EYE_LINEAR,
+        .Rv = {0, 0, 0, 0},
+        .Qv = {0, 0, 0, 0},
+        .Sv = {1, 0, 0, 0},
+        .Tv = {0, 1, 0, 0},
+    }},
 };
 
 static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {

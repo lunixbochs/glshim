@@ -115,10 +115,8 @@ typedef struct {
 } enable_state_t;
 
 typedef struct {
-    GLenum S;
-    GLenum T;
-    GLfloat Sv[4];
-    GLfloat Tv[4];
+    GLenum R, Q, S, T;
+    GLfloat Rv[4], Qv[4], Sv[4], Tv[4];
 } texgen_state_t;
 
 typedef struct {
