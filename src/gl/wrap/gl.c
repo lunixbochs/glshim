@@ -1,7 +1,7 @@
 #include <limits.h>
 #include "extra.h"
 
-#define constDoubleToFloat(a, size) \
+#define constArrayToFloat(a, size) \
     GLfloat s[size];                \
     int i;                          \
     for (i = 0; i < size; i++) {    \
@@ -47,7 +47,7 @@ void glClientActiveTextureARB(GLenum texture) {
 #endif
 }
 void glClipPlane(GLenum plane, const GLdouble *equation) {
-    constDoubleToFloat(equation, 4);
+    constArrayToFloat(equation, 4);
     glClipPlanef(plane, s);
 }
 void glDepthRange(GLdouble nearVal, GLdouble farVal) {
@@ -515,11 +515,11 @@ void glMapGrid2d(GLint un, GLdouble u1, GLdouble u2,
 
 // matrix
 void glLoadMatrixd(const GLdouble *m) {
-    constDoubleToFloat(m, 16);
+    constArrayToFloat(m, 16);
     glLoadMatrixf(s);
 }
 void glMultMatrixd(const GLdouble *m) {
-    constDoubleToFloat(m, 16);
+    constArrayToFloat(m, 16);
     glMultMatrixf(s);
 }
 
@@ -560,12 +560,22 @@ void glTexGenf(GLenum coord, GLenum pname, GLfloat param) {
     glTexGeni(coord, pname, param);
 }
 void glTexGendv(GLenum coord, GLenum pname, const GLdouble *params) {
-    // TODO: stub
-    // glTexGenfv(coord, pname, thunked_params);
+    if (pname == GL_TEXTURE_GEN_MODE) {
+        GLfloat tmp = *params;
+        glTexGenfv(coord, pname, &tmp);
+    } else {
+        constArrayToFloat(params, 4);
+        glTexGenfv(coord, pname, s);
+    }
 }
 void glTexGeniv(GLenum coord, GLenum pname, const GLint *params) {
-    // TODO: stub
-    // glTexGenfv(coord, pname, thunked_params);
+    if (pname == GL_TEXTURE_GEN_MODE) {
+        GLfloat tmp = *params;
+        glTexGenfv(coord, pname, &tmp);
+    } else {
+        constArrayToFloat(params, 4);
+        glTexGenfv(coord, pname, s);
+    }
 }
 
 // transforms
@@ -596,4 +606,4 @@ void glVertex4fv(const GLfloat *v) {
     glVertex3f(v[0]/v[3], v[1]/v[3], v[2]/v[3]);
 }
 
-#undef constDoubleToFloat
+#undef constArrayToFloat
