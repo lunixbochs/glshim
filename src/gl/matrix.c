@@ -37,6 +37,13 @@ static matrix_state_t *get_matrix_state(GLenum mode) {
     return m;
 }
 
+static void transpose(GLfloat *out, const GLfloat *m) {
+    simd4x4f tmp;
+    simd4x4f_uload(&tmp, m);
+    simd4x4f_transpose_inplace(&tmp);
+    simd4x4f_ustore(&tmp, out);
+}
+
 static bool mvp_dirty = true;
 static simd4x4f mvp;
 
@@ -81,6 +88,13 @@ void glLoadMatrixf(const GLfloat *m) {
     PROXY_MATRIX(glLoadMatrixf);
 }
 
+void glLoadTransposeMatrixf(const GLfloat *m) {
+    PUSH_IF_COMPILING(glLoadTransposeMatrixf);
+    GLfloat tmp[16];
+    transpose(tmp, m);
+    glLoadMatrixf(tmp);
+}
+
 void glMatrixMode(GLenum mode) {
     PUSH_IF_COMPILING(glMatrixMode);
     state.matrix.mode = mode;
@@ -95,6 +109,13 @@ void glMultMatrixf(const GLfloat *m) {
     simd4x4f_matrix_mul(cur, &load, &out);
     *cur = out;
     upload_matrix();
+}
+
+void glMultTransposeMatrixf(const GLfloat *m) {
+    PUSH_IF_COMPILING(glMultTransposeMatrixf);
+    GLfloat tmp[16];
+    transpose(tmp, m);
+    glMultMatrixf(tmp);
 }
 
 void glPopMatrix() {

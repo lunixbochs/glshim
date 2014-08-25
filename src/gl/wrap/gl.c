@@ -522,6 +522,14 @@ void glMultMatrixd(const GLdouble *m) {
     constArrayToFloat(m, 16);
     glMultMatrixf(s);
 }
+void glLoadTransposeMatrixd(const GLdouble *m) {
+    constArrayToFloat(m, 16);
+    glLoadTransposeMatrixf(s);
+}
+void glMultTransposeMatrixd(const GLdouble *m) {
+    constArrayToFloat(m, 16);
+    glMultTransposeMatrixf(s);
+}
 
 // normal
 void glNormal3fv(const GLfloat *v) {
