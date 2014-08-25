@@ -78,7 +78,7 @@ void glLoadIdentity() {
     PUSH_IF_COMPILING(glLoadIdentity);
     mvp_dirty = true;
     simd4x4f_identity(get_current_matrix());
-    upload_matrix();
+    PROXY_MATRIX(glLoadIdentity);
 }
 
 void glLoadMatrixf(const GLfloat *m) {
