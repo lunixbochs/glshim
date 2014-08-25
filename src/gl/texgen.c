@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "block.h"
 #include "texgen.h"
 #include "vectorial/simd4f.h"
@@ -19,20 +21,34 @@ void glTexGeni(GLenum coord, GLenum pname, GLint param) {
 void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
     // pname is in: GL_TEXTURE_GEN_MODE, GL_OBJECT_PLANE, GL_EYE_PLANE
 
+    texgen_state_t *texgen = &state.texgen[state.texture.active];
     if (pname == GL_TEXTURE_GEN_MODE) {
         switch (coord) {
-            case GL_S: state.texgen[state.texture.active].S = *param; break;
-            case GL_T: state.texgen[state.texture.active].T = *param; break;
+            case GL_R: texgen->R = *param; break;
+            case GL_Q: texgen->Q = *param; break;
+            case GL_S: texgen->S = *param; break;
+            case GL_T: texgen->T = *param; break;
         }
     } else {
+        GLfloat *target = NULL;
         switch (coord) {
+            case GL_R:
+                target = texgen->Rv;
+                break;
+            case GL_Q:
+                target = texgen->Qv;
+                break;
             case GL_S:
-                memcpy(state.texgen[state.texture.active].Sv, param, 4 * sizeof(GLfloat));
+                target = texgen->Sv;
                 break;
             case GL_T:
-                memcpy(state.texgen[state.texture.active].Tv, param, 4 * sizeof(GLfloat));
+                target = texgen->Tv;
                 break;
+            default:
+                printf("unknown glTexGenfv pname: 0x%04x\n", pname);
+                return;
         }
+        memcpy(target, param, 4 * sizeof(GLfloat));
     }
 
     /*

@@ -60,6 +60,8 @@ static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
     switch (cap) {
         proxy_enable(GL_BLEND, blend);
         proxy_enable(GL_TEXTURE_2D, texture_2d[state.texture.active]);
+        enable(GL_TEXTURE_GEN_R, texgen_r[state.texture.active]);
+        enable(GL_TEXTURE_GEN_Q, texgen_q[state.texture.active]);
         enable(GL_TEXTURE_GEN_S, texgen_s[state.texture.active]);
         enable(GL_TEXTURE_GEN_T, texgen_t[state.texture.active]);
         enable(GL_LINE_STIPPLE, line_stipple);
