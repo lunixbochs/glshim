@@ -11,7 +11,7 @@ glstate_t state = {
     .current = {
         .color = {1.0f, 1.0f, 1.0f, 1.0f},
         .normal = {0.0f, 0.0f, 1.0f},
-        .tex = {{0.0f, 0.0f}},
+        .tex = {[0 ... MAX_TEX - 1] = {0.0f, 0.0f}},
     },
     .matrix = {
         .mode = GL_MODELVIEW,
@@ -27,7 +27,7 @@ glstate_t state = {
         .valid = 1,
     },
     .stack = {0},
-    .texgen = {{
+    .texgen = {[0 ... MAX_TEX - 1] = {
         .R = GL_EYE_LINEAR,
         .Q = GL_EYE_LINEAR,
         .S = GL_EYE_LINEAR,
