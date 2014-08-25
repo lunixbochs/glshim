@@ -223,16 +223,16 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     *out = 65535;
                     break;
                 case GL_MODELVIEW_STACK_DEPTH:
-                    *out = tack_len(&state.matrix.model);
+                    *out = tack_len(&state.matrix.model.stack);
                     break;
                 case GL_NAME_STACK_DEPTH:
                     *out = tack_len(&state.select.names);
                     break;
                 case GL_PROJECTION_STACK_DEPTH:
-                    *out = tack_len(&state.matrix.projection);
+                    *out = tack_len(&state.matrix.projection.stack);
                     break;
                 case GL_TEXTURE_STACK_DEPTH:
-                    *out = tack_len(&state.matrix.texture);
+                    *out = tack_len(&state.matrix.texture[state.texture.active].stack);
                     break;
             }
             if (type != GL_INT) {
