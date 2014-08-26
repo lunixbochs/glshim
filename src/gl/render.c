@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "defines.h"
+#include "error.h"
 #include "gl_str.h"
 #include "matrix.h"
 #include "types.h"
@@ -8,19 +9,28 @@
 GLint glRenderMode(GLenum mode) {
     // If the feedback data required more room than was available in buffer, glRenderMode returns a negative value
     int ret = 0;
+    if (mode != GL_SELECT && mode != GL_FEEDBACK && mode != GL_RENDER) {
+        gl_set_error(GL_INVALID_ENUM);
+        return 0;
+    }
+    if (state.block.active) {
+        gl_set_error(GL_INVALID_OPERATION);
+        return 0;
+    }
     if (state.render.mode == GL_SELECT) {
         ret = state.select.overflow ? -1 : state.select.count / 4;
     } else if (state.render.mode == GL_FEEDBACK) {
         ret = state.feedback.overflow ? -1 : state.feedback.values;
     }
     if (mode == GL_SELECT) {
-        // TODO: glSetError
         if (state.select.buffer == NULL) {
+            gl_set_error(GL_INVALID_OPERATION);
             return 0;
         }
         state.select.count = 0;
     } else if (mode == GL_FEEDBACK) {
         if (state.feedback.buffer == NULL) {
+            gl_set_error(GL_INVALID_OPERATION);
             return 0;
         }
         state.feedback.count = 0;
@@ -30,6 +40,7 @@ GLint glRenderMode(GLenum mode) {
 }
 
 void glInitNames() {
+    ERROR_IN_BLOCK();
     tack_clear(&state.select.names);
 }
 
@@ -59,6 +70,12 @@ void glLoadName(GLuint name) {
 }
 
 void glSelectBuffer(GLsizei size, GLuint *buffer) {
+    if (size < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
+    if (state.block.active || state.render.mode == GL_SELECT) {
+        ERROR(GL_INVALID_OPERATION);
+    }
     state.feedback.overflow = false;
     state.select.buffer = buffer;
     state.select.size = size;
@@ -239,6 +256,12 @@ void gl_select_block(block_t *block) {
 }
 
 void glFeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffer) {
+    if (size < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
+    if (state.block.active || state.render.mode == GL_FEEDBACK) {
+        ERROR(GL_INVALID_OPERATION);
+    }
     state.feedback.buffer = buffer;
     state.feedback.overflow = false;
     state.feedback.size = size;
@@ -254,7 +277,7 @@ void glFeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffer) {
             printf("warning: GL_FEEDBACK does not transform color]n");
             break;
         default:
-            printf("unknown glFeedbackBuffer type: %s\n", gl_str(type));
+            ERROR(GL_INVALID_ENUM);
             break;
     }
 }

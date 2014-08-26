@@ -77,6 +77,7 @@ static void upload_matrix() {
 // GL matrix functions
 void glLoadIdentity() {
     PUSH_IF_COMPILING(glLoadIdentity);
+    ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f_identity(get_current_matrix());
     PROXY_MATRIX(glLoadIdentity);
@@ -84,6 +85,7 @@ void glLoadIdentity() {
 
 void glLoadMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glLoadMatrixf);
+    ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f_uload(get_current_matrix(), m);
     PROXY_MATRIX(glLoadMatrixf);
@@ -91,6 +93,7 @@ void glLoadMatrixf(const GLfloat *m) {
 
 void glLoadTransposeMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glLoadTransposeMatrixf);
+    ERROR_IN_BLOCK();
     GLfloat tmp[16];
     transpose(tmp, m);
     glLoadMatrixf(tmp);
@@ -98,12 +101,23 @@ void glLoadTransposeMatrixf(const GLfloat *m) {
 
 void glMatrixMode(GLenum mode) {
     PUSH_IF_COMPILING(glMatrixMode);
+    ERROR_IN_BLOCK();
+    switch (mode) {
+        case GL_MODELVIEW:
+        case GL_PROJECTION:
+        case GL_TEXTURE:
+        case GL_COLOR:
+            break;
+        default:
+            ERROR(GL_INVALID_ENUM);
+    }
     state.matrix.mode = mode;
     PROXY_MATRIX(glMatrixMode);
 }
 
 void glMultMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glMultMatrixf);
+    ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f out, load, *cur = get_current_matrix();
     simd4x4f_uload(&load, m);
@@ -114,6 +128,7 @@ void glMultMatrixf(const GLfloat *m) {
 
 void glMultTransposeMatrixf(const GLfloat *m) {
     PUSH_IF_COMPILING(glMultTransposeMatrixf);
+    ERROR_IN_BLOCK();
     GLfloat tmp[16];
     transpose(tmp, m);
     glMultMatrixf(tmp);
@@ -121,18 +136,21 @@ void glMultTransposeMatrixf(const GLfloat *m) {
 
 void glPopMatrix() {
     PUSH_IF_COMPILING(glPopMatrix);
+    ERROR_IN_BLOCK();
     mvp_dirty = true;
     matrix_state_t *m = get_current_state();
     simd4x4f *top = tack_pop(&m->stack);
-    if (top != NULL) {
-        m->matrix = *top;
-        free(top);
-        upload_matrix();
+    if (top == NULL) {
+       ERROR(GL_STACK_UNDERFLOW);
     }
+    m->matrix = *top;
+    free(top);
+    upload_matrix();
 }
 
 void glPushMatrix() {
     PUSH_IF_COMPILING(glPushMatrix);
+    ERROR_IN_BLOCK();
     matrix_state_t *m = get_current_state();
     simd4x4f *push = malloc(sizeof(simd4x4f));
     *push = m->matrix;
@@ -142,6 +160,7 @@ void glPushMatrix() {
 // GL transform functions
 void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glRotatef);
+    ERROR_IN_BLOCK();
     mvp_dirty = true;
     float radians = angle * VECTORIAL_PI / 180;
     simd4x4f *m = get_current_matrix(), rotate, out;
@@ -153,6 +172,7 @@ void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
 
 void glScalef(GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glScalef);
+    ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), scale, out;
     simd4x4f_scaling(&scale, x, y, z);
@@ -163,6 +183,7 @@ void glScalef(GLfloat x, GLfloat y, GLfloat z) {
 
 void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
     PUSH_IF_COMPILING(glTranslatef);
+    ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), translate, out;
     simd4x4f_translation(&translate, x, y, z);
@@ -175,6 +196,10 @@ void glOrthof(GLfloat left, GLfloat right,
               GLfloat bottom, GLfloat top,
               GLfloat near, GLfloat far) {
     PUSH_IF_COMPILING(glOrthof);
+    ERROR_IN_BLOCK();
+    if (left == right || bottom == top || near == far) {
+        ERROR(GL_INVALID_VALUE);
+    }
     mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), ortho, out;
     simd4x4f_ortho(&ortho, left, right, bottom, top, near, far);
@@ -187,11 +212,9 @@ void glFrustumf(GLfloat left, GLfloat right,
                 GLfloat bottom, GLfloat top,
                 GLfloat near, GLfloat far) {
     PUSH_IF_COMPILING(glFrustumf);
+    ERROR_IN_BLOCK();
     if (near < 0 || far < 0 || left == right || bottom == top || near == far) {
         ERROR(GL_INVALID_VALUE);
-    }
-    if (state.block.active) {
-        ERROR(GL_INVALID_OPERATION);
     }
     mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), frustum, out;

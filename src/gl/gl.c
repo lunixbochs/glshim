@@ -81,11 +81,13 @@ static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
 void glEnable(GLenum cap) {
     PUSH_IF_COMPILING(glEnable);
     LOAD_GLES(glEnable);
+    ERROR_IN_BLOCK();
     proxy_glEnable(cap, true, gles_glEnable);
 }
 
 void glDisable(GLenum cap) {
     PUSH_IF_COMPILING(glDisable);
+    ERROR_IN_BLOCK();
     LOAD_GLES(glDisable);
     proxy_glEnable(cap, false, gles_glDisable);
 }
@@ -93,17 +95,23 @@ void glDisable(GLenum cap) {
 #ifndef USE_ES2
 void glEnableClientState(GLenum cap) {
     LOAD_GLES(glEnableClientState);
+    ERROR_IN_BLOCK();
     proxy_glEnable(cap, true, gles_glEnableClientState);
 }
 
 void glDisableClientState(GLenum cap) {
     LOAD_GLES(glDisableClientState);
+    ERROR_IN_BLOCK();
     proxy_glEnable(cap, false, gles_glDisableClientState);
 }
 #endif
 
 GLboolean glIsEnabled(GLenum cap) {
     LOAD_GLES(glIsEnabled);
+    if (state.block.active) {
+        gl_set_error(GL_INVALID_OPERATION);
+        return 0;
+    }
     switch (cap) {
         case GL_LINE_STIPPLE:
             return state.enable.line_stipple;
@@ -345,24 +353,19 @@ void glBegin(GLenum mode) {
     if (! gl_valid_mode(mode)) {
         ERROR(GL_INVALID_ENUM);
     }
-    if (state.block.active) {
-        ERROR(GL_INVALID_OPERATION);
-    }
-    if (state.block.active) {
-        printf("libGL: undefined behavior: nested glBegin()\n");
-    } else {
-        block_t *block = state.block.active = bl_new(mode);
-        displaylist_t *list = state.list.active;
-        if (list) {
-            dl_append_block(list, block);
-        }
+    ERROR_IN_BLOCK();
+    block_t *block = state.block.active = bl_new(mode);
+    displaylist_t *list = state.list.active;
+    if (list) {
+        dl_append_block(list, block);
     }
 }
 
 void glEnd() {
     block_t *block = state.block.active;
-    if (! block)
-        return;
+    if (! block) {
+        ERROR(GL_INVALID_OPERATION);
+    }
 
     state.block.active = NULL;
     bl_end(block);
@@ -497,10 +500,12 @@ static displaylist_t *get_list(GLuint list) {
 
 GLuint glGenLists(GLsizei range) {
     if (range < 0) {
-        ERROR(GL_INVALID_VALUE);
+        gl_set_error(GL_INVALID_VALUE);
+        return 0;
     }
     if (state.block.active) {
-        ERROR(GL_INVALID_OPERATION);
+        gl_set_error(GL_INVALID_OPERATION);
+        return 0;
     }
     int start = tack_len(&state.lists);
     for (int i = 0; i < range; i++) {
@@ -523,11 +528,10 @@ void glNewList(GLuint list, GLenum mode) {
     displaylist_t *dl = dl_alloc();
     if (dl == NULL) {
         ERROR(GL_OUT_OF_MEMORY);
-    } else {
-        state.list.name = list;
-        state.list.mode = mode;
-        state.list.active = dl;
     }
+    state.list.name = list;
+    state.list.mode = mode;
+    state.list.active = dl;
 }
 
 void glEndList() {
@@ -535,17 +539,17 @@ void glEndList() {
     displaylist_t *dl = state.list.active;
     if (!dl || state.block.active) {
         ERROR(GL_INVALID_OPERATION);
-    } else {
-        displaylist_t *old = get_list(list);
-        if (old) {
-            dl_free(old);
-        }
+    }
 
-        tack_set(&state.lists, list - 1, dl);
-        state.list.active = NULL;
-        if (state.list.mode == GL_COMPILE_AND_EXECUTE) {
-            glCallList(list);
-        }
+    displaylist_t *old = get_list(list);
+    if (old) {
+        dl_free(old);
+    }
+
+    tack_set(&state.lists, list - 1, dl);
+    state.list.active = NULL;
+    if (state.list.mode == GL_COMPILE_AND_EXECUTE) {
+        glCallList(list);
     }
 }
 
@@ -583,6 +587,9 @@ void glCallLists(GLsizei n, GLenum type, const GLvoid *lists) {
             glCallList(list + state.list.base);                  \
             break
 
+    if (n < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
     unsigned int i, j;
     GLuint list;
     GLubyte *l;
@@ -598,6 +605,8 @@ void glCallLists(GLsizei n, GLenum type, const GLvoid *lists) {
             call_bytes(GL_2_BYTES, 2);
             call_bytes(GL_3_BYTES, 3);
             call_bytes(GL_4_BYTES, 4);
+            default:
+                ERROR(GL_INVALID_ENUM);
         }
     }
     #undef call
@@ -618,6 +627,10 @@ void glDeleteList(GLuint list) {
 }
 
 void glDeleteLists(GLuint list, GLsizei range) {
+    if (range < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
+    ERROR_IN_BLOCK();
     for (int i = 0; i < range; i++) {
         glDeleteList(list + i);
     }
@@ -628,5 +641,9 @@ void glListBase(GLuint base) {
 }
 
 GLboolean glIsList(GLuint list) {
+    if (state.block.active) {
+        gl_set_error(GL_INVALID_OPERATION);
+        return 0;
+    }
     return get_list(list) ? true : false;
 }

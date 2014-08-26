@@ -37,7 +37,8 @@ GLenum glGetError() {
 const GLubyte *glGetString(GLenum name) {
     LOAD_GLES(glGetString);
     if (state.block.active) {
-        ERROR(GL_INVALID_OPERATION);
+        gl_set_error(GL_INVALID_OPERATION);
+        return NULL;
     }
     switch (name) {
         case GL_VERSION:
@@ -71,9 +72,7 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
     LOAD_GLES(glGetBooleanv);
     LOAD_GLES(glGetFloatv);
     LOAD_GLES(glGetIntegerv);
-    if (state.block.active) {
-        ERROR(GL_INVALID_OPERATION);
-    }
+    ERROR_IN_BLOCK();
 
     int width = 1;
     switch (pname) {

@@ -1,4 +1,5 @@
 #include <limits.h>
+#include "../error.h"
 #include "extra.h"
 
 #define constArrayToFloat(a, size) \
@@ -237,6 +238,7 @@ void glOrthofOES(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLflo
 
 #define GL_RECT(suffix, type)                                 \
     void glRect##suffix(type x1, type y1, type x2, type y2) { \
+        ERROR_IN_BLOCK();                                     \
         glBegin(GL_POLYGON);                                  \
         glVertex2##suffix(x1, y1);                            \
         glVertex2##suffix(x2, y1);                            \
