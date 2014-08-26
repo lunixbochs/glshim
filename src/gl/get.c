@@ -224,11 +224,12 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 case GL_MAX_ATTRIB_STACK_DEPTH:
                 case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
                 case GL_MAX_ELEMENTS_INDICES:
-                    // NOTE: this one is *actually* 65535, the others in this group are arbitrary
+                case GL_MAX_LIST_NESTING:
                 case GL_MAX_MODELVIEW_STACK_DEPTH:
                 case GL_MAX_NAME_STACK_DEPTH:
                 case GL_MAX_PROJECTION_STACK_DEPTH:
                 case GL_MAX_TEXTURE_STACK_DEPTH:
+                    // NOTE: GL_MAX_ELEMENTS_INDICES is *actually* 65535, the others in this group are arbitrary
                     *out = 65535;
                     break;
                 case GL_MODELVIEW_STACK_DEPTH:
