@@ -28,7 +28,7 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     raster->valid = 1;
 
     GLuint *dst = NULL;
-    GLfloat *color = &raster->color;
+    GLfloat *color = raster->color;
     if (pixel_convert(CURRENT->color, (GLvoid **)&dst, 1, 1, GL_RGBA, GL_FLOAT, GL_RGBA, GL_UNSIGNED_BYTE)) {
         memcpy(color, CURRENT->color, sizeof(GLfloat) * 4);
         raster->pixel = *dst;

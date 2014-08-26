@@ -209,7 +209,7 @@ typedef struct {
 } render_state_t;
 
 typedef struct {
-    GLfloat *buf;
+    GLubyte *buf;
     struct {
         GLfloat x, y, z, w;
     } pos;
