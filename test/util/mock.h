@@ -2,6 +2,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "gl_str.h"
 #include "wrap/gles.h"
 
 #ifndef MOCK_H
@@ -30,6 +31,9 @@ static int failed_test = 0;
     while ((call = mock_shift()) != NULL) { \
         mock_warningf("extra "); \
         mock_print(call); \
+    } \
+    if (state.error) { \
+        mock_warningf("Ended with GL error flag: %s\n", gl_str(state.error)); \
     } \
     return failed_test; \
 }

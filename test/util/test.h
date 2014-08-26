@@ -5,3 +5,4 @@
 #include "mock.h"
 
 #define free(...) {}
+#define emit_glGetError(...) {}
