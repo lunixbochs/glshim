@@ -1,5 +1,6 @@
 #include <GL/gl.h>
 
+#include "error.h"
 #include "gl_helpers.h"
 #include "gl_str.h"
 #include "loader.h"
@@ -21,6 +22,9 @@ GLenum gl_get_error() {
 
 GLenum glGetError() {
     LOAD_GLES(glGetError);
+    if (state.block.active) {
+        return GL_INVALID_OPERATION;
+    }
     GLenum error = gles_glGetError();
     if (error == GL_NO_ERROR) {
         error = state.error;
@@ -32,6 +36,9 @@ GLenum glGetError() {
 // config functions
 const GLubyte *glGetString(GLenum name) {
     LOAD_GLES(glGetString);
+    if (state.block.active) {
+        ERROR(GL_INVALID_OPERATION);
+    }
     switch (name) {
         case GL_VERSION:
 #ifdef USE_ES2
@@ -64,7 +71,9 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
     LOAD_GLES(glGetBooleanv);
     LOAD_GLES(glGetFloatv);
     LOAD_GLES(glGetIntegerv);
-
+    if (state.block.active) {
+        ERROR(GL_INVALID_OPERATION);
+    }
 
     int width = 1;
     switch (pname) {

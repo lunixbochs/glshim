@@ -1,3 +1,4 @@
+#include "error.h"
 #include "loader.h"
 #include "pixel.h"
 #include "raster.h"
@@ -14,6 +15,9 @@
 // TODO: glWindowPos
 
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
+    if (state.block.active) {
+        ERROR(GL_INVALID_OPERATION);
+    }
     PROXY_GLES(glRasterPos3f);
     raster_state_t *raster = &state.raster;
     // TODO: glRasterPos4f?

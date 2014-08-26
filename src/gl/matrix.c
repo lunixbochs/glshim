@@ -1,3 +1,4 @@
+#include "error.h"
 #include "loader.h"
 #include "matrix.h"
 #include "types.h"
@@ -186,6 +187,12 @@ void glFrustumf(GLfloat left, GLfloat right,
                 GLfloat bottom, GLfloat top,
                 GLfloat near, GLfloat far) {
     PUSH_IF_COMPILING(glFrustumf);
+    if (near < 0 || far < 0 || left == right || bottom == top || near == far) {
+        ERROR(GL_INVALID_VALUE);
+    }
+    if (state.block.active) {
+        ERROR(GL_INVALID_OPERATION);
+    }
     mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), frustum, out;
     simd4x4f_frustum(&frustum, left, right, bottom, top, near, far);

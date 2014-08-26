@@ -1,5 +1,6 @@
 #include "array.h"
 #include "block.h"
+#include "error.h"
 #include "list.h"
 #include "loader.h"
 #include "texture.h"
@@ -341,6 +342,12 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
 // immediate mode functions
 
 void glBegin(GLenum mode) {
+    if (! gl_valid_mode(mode)) {
+        ERROR(GL_INVALID_ENUM);
+    }
+    if (state.block.active) {
+        ERROR(GL_INVALID_OPERATION);
+    }
     if (state.block.active) {
         printf("libGL: undefined behavior: nested glBegin()\n");
     } else {
@@ -489,6 +496,12 @@ static displaylist_t *get_list(GLuint list) {
 }
 
 GLuint glGenLists(GLsizei range) {
+    if (range < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
+    if (state.block.active) {
+        ERROR(GL_INVALID_OPERATION);
+    }
     int start = tack_len(&state.lists);
     for (int i = 0; i < range; i++) {
         tack_set(&state.lists, start + i, NULL);
@@ -497,18 +510,32 @@ GLuint glGenLists(GLsizei range) {
 }
 
 void glNewList(GLuint list, GLenum mode) {
-    if (state.list.active) {
-        dl_free(state.list.active);
+    // TODO: make sure this doesn't break anything
+    if (list == 0) {
+        ERROR(GL_INVALID_VALUE);
     }
-    state.list.name = list;
-    state.list.mode = mode;
-    state.list.active = dl_alloc();
+    if (mode != GL_COMPILE && mode != GL_COMPILE_AND_EXECUTE) {
+        ERROR(GL_INVALID_ENUM);
+    }
+    if (state.block.active || state.list.active) {
+        ERROR(GL_INVALID_OPERATION);
+    }
+    displaylist_t *dl = dl_alloc();
+    if (dl == NULL) {
+        ERROR(GL_OUT_OF_MEMORY);
+    } else {
+        state.list.name = list;
+        state.list.mode = mode;
+        state.list.active = dl;
+    }
 }
 
 void glEndList() {
     GLuint list = state.list.name;
     displaylist_t *dl = state.list.active;
-    if (dl) {
+    if (!dl || state.block.active) {
+        ERROR(GL_INVALID_OPERATION);
+    } else {
         displaylist_t *old = get_list(list);
         if (old) {
             dl_free(old);

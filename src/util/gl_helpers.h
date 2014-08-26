@@ -79,7 +79,7 @@ static const GLuint gl_max_value(GLenum type) {
     return 0;
 }
 
-static const GLboolean gl_is_type_packed(GLenum type) {
+static const bool gl_is_type_packed(GLenum type) {
     switch (type) {
         case GL_4_BYTES:
         case GL_UNSIGNED_BYTE_2_3_3_REV:
@@ -130,12 +130,30 @@ static const GLsizei gl_pixel_sizeof(GLenum format, GLenum type) {
     return width * gl_sizeof(type);
 }
 
-static inline const GLboolean gl_valid_vertex_type(GLenum type) {
+static inline const bool gl_valid_vertex_type(GLenum type) {
     switch (type) {
         case GL_BYTE:
         case GL_FIXED:
         case GL_FLOAT:
         case GL_SHORT:
+            return true;
+        default:
+            return false;
+    }
+}
+
+static inline const bool gl_valid_mode(GLenum mode) {
+    switch (mode) {
+        case GL_POINTS:
+        case GL_LINES:
+        case GL_LINE_STRIP:
+        case GL_LINE_LOOP:
+        case GL_TRIANGLES:
+        case GL_TRIANGLE_STRIP:
+        case GL_TRIANGLE_FAN:
+        case GL_QUADS:
+        case GL_QUAD_STRIP:
+        case GL_POLYGON:
             return true;
         default:
             return false;
