@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "block.h"
+#include "error.h"
 #include "texgen.h"
 #include "vectorial/simd4f.h"
 #include "vectorial/simd4x4f.h"
@@ -12,14 +13,13 @@ void glTexGeni(GLenum coord, GLenum pname, GLint param) {
         GL_OBJECT_LINEAR, GL_EYE_LINEAR,
         GL_SPHERE_MAP, GL_NORMAL_MAP, or GL_REFLECTION_MAP
     */
-    switch (coord) {
-        case GL_S: state.texgen[state.texture.active].S = param; break;
-        case GL_T: state.texgen[state.texture.active].T = param; break;
-    }
+    GLfloat fp = param;
+    glTexGenfv(coord, pname, &fp);
 }
 
 void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
     // pname is in: GL_TEXTURE_GEN_MODE, GL_OBJECT_PLANE, GL_EYE_PLANE
+    ERROR_IN_BLOCK();
 
     texgen_state_t *texgen = &state.texgen[state.texture.active];
     if (pname == GL_TEXTURE_GEN_MODE) {

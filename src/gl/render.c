@@ -45,14 +45,17 @@ void glInitNames() {
 }
 
 void glPopName() {
-    // TODO: glGet - GL_NAME_STACK_DEPTH, GL_MAX_NAME_STACK_DEPTH
+    ERROR_IN_BLOCK();
     if (state.render.mode != GL_SELECT) {
         return;
     }
-    tack_pop(&state.select.names);
+    if (tack_pop(&state.select.names) == NULL) {
+        ERROR(GL_STACK_UNDERFLOW);
+    }
 }
 
 void glPushName(GLuint name) {
+    ERROR_IN_BLOCK();
     if (state.render.mode != GL_SELECT) {
         return;
     }
@@ -63,9 +66,12 @@ void glLoadName(GLuint name) {
     if (state.render.mode != GL_SELECT) {
         return;
     }
+    ERROR_IN_BLOCK();
     int len = tack_len(&state.select.names);
     if (len > 0) {
         tack_set(&state.select.names, len - 1, name);
+    } else {
+        ERROR(GL_INVALID_OPERATION);
     }
 }
 
@@ -435,6 +441,7 @@ void gl_feedback_block(block_t *block) {
 }
 
 void glPassThrough(GLfloat token) {
+    ERROR_IN_BLOCK();
     if (feedback_overflow(2)) return;
     feedback_push(GL_PASS_THROUGH_TOKEN);
     feedback_push(token);

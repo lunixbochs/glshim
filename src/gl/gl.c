@@ -259,6 +259,9 @@ void glTexCoordPointer(GLint size, GLenum type,
 #endif
 
 void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
+    if (stride < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
     uintptr_t ptr = (uintptr_t)pointer;
     // element lengths
     GLsizei tex = 0, color = 0, normal = 0, vert = 0;
@@ -325,6 +328,8 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
             normal = 3;
             vert = 4;
             break;
+        default:
+            ERROR(GL_INVALID_ENUM);
     }
     if (! stride)
         stride = tex * gl_sizeof(tf) +
@@ -442,6 +447,9 @@ void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
 }
 
 void glArrayElement(GLint i) {
+    if (i < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
     GLfloat *v;
     pointer_state_t *p;
     p = &state.pointers.color;

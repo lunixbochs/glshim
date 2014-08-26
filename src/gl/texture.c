@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "error.h"
 #include "gl_helpers.h"
 #include "gl_str.h"
 #include "loader.h"
@@ -94,6 +95,7 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
                   GLsizei width, GLsizei height, GLint border,
                   GLenum format, GLenum type, const GLvoid *data) {
 
+    ERROR_IN_BLOCK();
     gltexture_t *bound = state.texture.bound[state.texture.active];
     GLvoid *pixels = (GLvoid *)data;
     if (data) {
@@ -187,6 +189,7 @@ void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
                      GLsizei width, GLsizei height, GLenum format, GLenum type,
                      const GLvoid *data) {
     LOAD_GLES(glTexSubImage2D);
+    ERROR_IN_BLOCK();
     target = map_tex_target(target);
     const GLvoid *pixels = swizzle_texture(width, height, &format, &type, data);
     gles_glTexSubImage2D(target, level, xoffset, yoffset,
@@ -250,6 +253,7 @@ void glPixelStorei(GLenum pname, GLint param) {
 
 void glBindTexture(GLenum target, GLuint texture) {
     PUSH_IF_COMPILING(glBindTexture);
+    ERROR_IN_BLOCK();
     GLuint active = state.texture.active;
     if (texture) {
         int ret;
@@ -320,6 +324,7 @@ void glClientActiveTexture(GLenum texture) {
 void glTexParameteri(GLenum target, GLenum pname, GLint param) {
     PUSH_IF_COMPILING(glTexParameteri);
     LOAD_GLES(glTexParameteri);
+    ERROR_IN_BLOCK();
     target = map_tex_target(target);
     switch (param) {
         case GL_CLAMP:
@@ -354,5 +359,20 @@ void glDeleteTextures(GLsizei n, const GLuint *textures) {
 }
 
 GLboolean glAreTexturesResident(GLsizei n, const GLuint *textures, GLboolean *residences) {
+    if (state.block.active) {
+        gl_set_error(GL_INVALID_OPERATION);
+        return 0;
+    }
+    if (n < 0) {
+        gl_set_error(GL_INVALID_VALUE);
+        return 0;
+    }
     return true;
+}
+
+void glPrioritizeTextures(GLsizei n, const GLuint *textures, const GLclampf *priorities) {
+    ERROR_IN_BLOCK();
+    if (n < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
 }

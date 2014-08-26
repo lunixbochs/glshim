@@ -1,6 +1,8 @@
+#include "error.h"
 #include "stack.h"
 
 void glPushAttrib(GLbitfield mask) {
+    ERROR_IN_BLOCK();
     glstack_t *cur = malloc(sizeof(glstack_t));
 
     cur->mask = mask;
@@ -201,9 +203,10 @@ void glPushClientAttrib(GLbitfield mask) {
 #define v4(c) v3(c), c[3]
 
 void glPopAttrib() {
+    ERROR_IN_BLOCK();
     glstack_t *cur = tack_pop(&state.stack.attrib);
     if (cur == NULL) {
-        return;
+        ERROR(GL_STACK_UNDERFLOW);
     }
 
     if (cur->mask & GL_COLOR_BUFFER_BIT) {
@@ -342,7 +345,7 @@ void glPopAttrib() {
 void glPopClientAttrib() {
     glclientstack_t *cur = tack_pop(&state.stack.client);
     if (cur == NULL) {
-        return;
+        ERROR(GL_STACK_UNDERFLOW);
     }
 
     if (cur->mask & GL_CLIENT_PIXEL_STORE_BIT) {

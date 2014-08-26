@@ -27,6 +27,7 @@ void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
 #ifdef LOCAL_MATRIX
 void glLightfv(GLenum light, GLenum pname, const GLfloat *params) {
     LOAD_GLES(glLightfv);
+    ERROR_IN_BLOCK();
     GLfloat tmp[4];
     switch (pname) {
         case GL_POSITION:
