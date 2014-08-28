@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <alsa/asoundlib.h>
 #include "../gl/defines.h"
+#include "../gl/wrap/types.h"
 #include "../config.h"
 #include "config.h"
 
