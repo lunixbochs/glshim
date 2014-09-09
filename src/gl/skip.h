@@ -7,6 +7,11 @@
 #define skip_glClearDepthf
 #define skip_glClearStencil
 
+// depth.c
+#define skip_glDepthFunc
+#define skip_glDepthMask
+#define skip_glDepthRangef
+
 // gl.c
 #define skip_glColor4f
 #define skip_glDisable
