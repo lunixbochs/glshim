@@ -320,6 +320,12 @@ void glClientActiveTexture(GLenum texture) {
     gles_glClientActiveTexture(texture);
 }
 
+void glTexEnvf(GLenum target, GLenum pname, GLfloat param) {
+    ERROR_IN_BLOCK();
+    PUSH_IF_COMPILING(glTexEnvf);
+    PROXY_GLES(glTexEnvf);
+}
+
 // TODO: also glTexParameterf(v)?
 void glTexParameteri(GLenum target, GLenum pname, GLint param) {
     PUSH_IF_COMPILING(glTexParameteri);

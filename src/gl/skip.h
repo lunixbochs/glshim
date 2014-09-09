@@ -56,6 +56,7 @@
 #define skip_glDeleteTextures
 #define skip_glMultiTexCoord4f
 #define skip_glPixelStorei
+#define skip_glTexEnvf
 #define skip_glTexImage2D
 #define skip_glTexParameteri
 #define skip_glTexSubImage2D
