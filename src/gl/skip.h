@@ -1,6 +1,12 @@
 // don't auto-wrap these functions
 #define skip_glColor4ub
 
+// clear.c
+#define skip_glClear
+#define skip_glClearColor
+#define skip_glClearDepthf
+#define skip_glClearStencil
+
 // gl.c
 #define skip_glColor4f
 #define skip_glDisable
