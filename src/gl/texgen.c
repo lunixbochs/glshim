@@ -7,12 +7,6 @@
 #include "vectorial/simd4x4f.h"
 
 void glTexGeni(GLenum coord, GLenum pname, GLint param) {
-    // coord is in: GL_S, GL_T, GL_R, GL_Q
-    // pname == GL_TEXTURE_GEN_MODE
-    /* param is in:
-        GL_OBJECT_LINEAR, GL_EYE_LINEAR,
-        GL_SPHERE_MAP, GL_NORMAL_MAP, or GL_REFLECTION_MAP
-    */
     GLfloat fp = param;
     glTexGenfv(coord, pname, &fp);
 }
@@ -23,6 +17,21 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
 
     texgen_state_t *texgen = &state.texgen[state.texture.active];
     if (pname == GL_TEXTURE_GEN_MODE) {
+
+        switch (param) {
+            case GL_SPHERE_MAP:
+                if (coord == GL_R || coord == GL_Q) {
+                    ERROR(GL_INVALID_ENUM);
+                }
+            case GL_OBJECT_LINEAR:
+            case GL_EYE_LINEAR:
+            // TODO: missing GL_NORMAL_MAP implementation
+            case GL_NORMAL_MAP:
+            case GL_REFLECTION_MAP:
+                break;
+            default:
+                ERROR(GL_INVALID_ENUM);
+        }
         switch (coord) {
             case GL_R: texgen->R = *param; break;
             case GL_Q: texgen->Q = *param; break;
@@ -45,20 +54,11 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
                 target = texgen->Tv;
                 break;
             default:
-                printf("unknown glTexGenfv pname: 0x%04x\n", pname);
+                ERROR(GL_INVALID_ENUM);
                 return;
         }
         memcpy(target, param, 4 * sizeof(GLfloat));
     }
-
-    /*
-    If pname is GL_TEXTURE_GEN_MODE, then the array must contain
-    a single symbolic constant, one of
-    GL_OBJECT_LINEAR, GL_EYE_LINEAR, GL_SPHERE_MAP, GL_NORMAL_MAP,
-    or GL_REFLECTION_MAP.
-    Otherwise, params holds the coefficients for the texture-coordinate
-    generation function specified by pname.
-    */
 }
 
 static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *Sp, GLfloat *Tp) {
