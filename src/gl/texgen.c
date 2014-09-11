@@ -17,8 +17,7 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
 
     texgen_state_t *texgen = &state.texgen[state.texture.active];
     if (pname == GL_TEXTURE_GEN_MODE) {
-
-        switch (param) {
+        switch ((GLenum)*param) {
             case GL_SPHERE_MAP:
                 if (coord == GL_R || coord == GL_Q) {
                     ERROR(GL_INVALID_ENUM);
