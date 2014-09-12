@@ -43,7 +43,8 @@ extern void load_egl_lib();
 #define WARN_NULL(name) if (name == NULL) printf("libGL: warning, " #name " is NULL\n");
 #endif
 
-#define LOAD(lib, name) \
+#ifndef LOAD_RAW
+#define LOAD_RAW(lib, name, ...) \
     static name##_PTR lib##_##name; \
     { \
         static bool first = true; \
@@ -52,21 +53,24 @@ extern void load_egl_lib();
             if (lib == NULL) { \
                 load_##lib##_lib(); \
             } \
-            lib##_##name = (name##_PTR)dlsym(lib, #name); \
+            if (lib != NULL) { \
+                lib##_##name = (name##_PTR)__VA_ARGS__; \
+            } \
         } \
     }
+#endif
 
-#ifndef LOAD_GLES
+#define LOAD_LIB(lib, name) LOAD_RAW(lib, name, dlsym(lib, #name))
+
 #define LOAD_GLES(name) \
     LOAD_GLES_SILENT(name); \
     WARN_NULL(gles_##name);
 
-#define LOAD_GLES_SILENT(name) LOAD(gles, name)
-#endif
-
-#ifndef LOAD_EGL
-#define LOAD_EGL(name) LOAD(egl, name)
-#endif
+#define LOAD_GLES_SILENT(name) LOAD_LIB(gles, name)
+#define LOAD_EGL(name) LOAD_LIB(egl, name)
+#define LOAD_OES(name) \
+    LOAD_EGL(eglGetProcAddress); \
+    LOAD_RAW(egl, name, egl_eglGetProcAddress(#name));
 
 #ifndef PUSH_IF_COMPILING_EXT
 #define PUSH_IF_COMPILING_EXT(name, ...)             \
@@ -80,12 +84,16 @@ extern void load_egl_lib();
 #define PUSH_IF_COMPILING(name) PUSH_IF_COMPILING_EXT(name, name##_ARG_NAMES)
 #endif
 
-#ifndef PROXY_GLES
-#define PROXY_GLES(name) \
-    LOAD_GLES_SILENT(name); \
-    if (gles_##name != NULL) { \
-        return gles_##name(name##_ARG_NAMES); \
+#ifndef PROXY
+#define PROXY(load_name, lib, name) \
+    LOAD_##load_name(name); \
+    if (lib##_##name != NULL) { \
+        return lib##_##name(name##_ARG_NAMES); \
     }
 #endif
+
+#define PROXY_GLES(name) PROXY(GLES_SILENT, gles, name)
+#define PROXY_EGL(name) PROXY(EGL, egl, name)
+#define PROXY_OES(name) PROXY(OES, egl, name)
 
 #endif
