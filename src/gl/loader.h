@@ -9,10 +9,10 @@
 #include "const.h"
 #include "wrap/gles.h"
 
-// will become a reference to dlopen'd gles
-extern void *gles;
+// will become references to dlopen'd gles and egl
+extern void *gles, *egl;
 
-static const char *gles_ext[] = {
+static const char *lib_ext[] = {
     "so",
     "dylib",
     "dll",
@@ -30,57 +30,42 @@ static const char *gles_lib[] = {
     NULL
 };
 
+static const char *egl_lib[] = {
+    "libEGL",
+    NULL
+};
+
+extern void *open_lib(const char **names, const char *override);
+extern void load_gles_lib();
+extern void load_egl_lib();
+
 #ifndef WARN_NULL
 #define WARN_NULL(name) if (name == NULL) printf("libGL: warning, " #name " is NULL\n");
 #endif
 
-static void load_gles_lib() {
-    if (gles) {
-        return;
+#define LOAD(lib, name) \
+    static name##_PTR lib##_##name; \
+    { \
+        static bool first = true; \
+        if (first) { \
+            first = false; \
+            if (lib == NULL) { \
+                load_##lib##_lib(); \
+            } \
+            lib##_##name = (name##_PTR)dlsym(lib, #name); \
+        } \
     }
-    char gles_name[PATH_MAX + 1];
-    char *override = getenv("LIBGL_GLES");
-    int flags = RTLD_LOCAL | RTLD_NOW;
-#ifdef RTLD_DEEPBIND
-    flags |= RTLD_DEEPBIND;
-#endif
-    if (override) {
-        if ((gles = dlopen(override, flags))) {
-            strncpy(gles_name, override, PATH_MAX);
-            printf("libGL backend: %s\n", gles_name);
-            return;
-        }
-    }
-    for (int i = 0; gles_lib[i]; i++) {
-        for (int e = 0; gles_ext[e]; e++) {
-            snprintf(gles_name, PATH_MAX, "%s.%s", gles_lib[i], gles_ext[e]);
-            gles = dlopen(gles_name, flags);
-            if (gles) {
-                printf("libGL backend: %s\n", gles_name);
-                return;
-            }
-        }
-    }
-    WARN_NULL(gles);
-}
 
 #ifndef LOAD_GLES
 #define LOAD_GLES(name) \
     LOAD_GLES_SILENT(name); \
     WARN_NULL(gles_##name);
 
-#define LOAD_GLES_SILENT(name)                            \
-    static name##_PTR gles_##name;                        \
-    {                                                     \
-        static bool first = true;                         \
-        if (first) {                                      \
-            first = false;                                \
-            if (gles == NULL) {                           \
-                load_gles_lib();                          \
-            }                                             \
-            gles_##name = (name##_PTR)dlsym(gles, #name); \
-        }                                                 \
-    }
+#define LOAD_GLES_SILENT(name) LOAD(gles, name)
+#endif
+
+#ifndef LOAD_EGL
+#define LOAD_EGL(name) LOAD(egl, name)
 #endif
 
 #ifndef PUSH_IF_COMPILING_EXT

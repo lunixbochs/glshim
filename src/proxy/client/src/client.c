@@ -1,4 +1,3 @@
-#define _GNU_SOURCE
 #include <sys/syscall.h>
 #include <unistd.h>
 #include <string.h>

@@ -6,13 +6,14 @@ gles="yml/gles-1.1.yml"
 gles2="yml/gles-2.0.yml"
 glx="yml/my_glx.yml,yml/glxext.yml"
 opengl="yml/opengl.yml"
+egl="yml/egl.yml"
 cats="VERSION_1_0,VERSION_1_1,VERSION_1_2,VERSION_1_3,VERSION_1_4,VERSION_1_5,glx,EXT_swap_control"
 
 ./gen.py "$gles" mock.c.j2 mock.c mock.h > "$base/../test/util/mock.c" &
 ./gen.py "$gles" --ifndef USE_ES2 mock.h.j2 mock.h "gl_str.h" "wrap/gles.h" > "$base/../test/util/mock.h" &
 
 ./gen.py "$gles" --ifndef USE_ES2 gleswrap.c.j2 gleswrap.c gles.h ../loader.h ../skip.h > "$base/gl/wrap/gles.c" &
-./gen.py --deep "$glx,$opengl,$gles" --ifndef USE_ES2 glwrap.h.j2 gleswrap.h ../types.h > "$base/gl/wrap/gles.h" &
+./gen.py --deep "$glx,$opengl,$gles,$egl" --ifndef USE_ES2 glwrap.h.j2 gleswrap.h ../types.h > "$base/gl/wrap/gles.h" &
 ./gen.py "$gles" --ifndef USE_ES2 glxfuncs.j2 glxfuncs.inc > "$base/glx/glesfuncs.inc" &
 
 ./gen.py "$gles2" --ifdef USE_ES2 gleswrap.c.j2 gles2wrap.c gles2.h ../loader.h > "$base/gl/wrap/gles2.c" &

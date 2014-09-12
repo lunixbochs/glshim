@@ -14,18 +14,17 @@
 #include "../gl/text.h"
 #include "liveinfo.h"
 
-#include <EGL/egl.h>
-
 bool eglInitialized = false;
 EGLDisplay eglDisplay;
 EGLSurface eglSurface;
 EGLConfig eglConfigs[1];
 
 int8_t CheckEGLErrors() {
+    LOAD_EGL(eglGetError);
     EGLenum error;
     char *errortext;
 
-    error = eglGetError();
+    error = egl_eglGetError();
 
     if (error != EGL_SUCCESS && error != 0) {
         switch (error) {
@@ -136,13 +135,14 @@ static int fbdev = -1;
 static int swap_interval = 1;
 
 static void init_display(Display *display) {
+    LOAD_EGL(eglGetDisplay);
     if (! g_display) {
         g_display = XOpenDisplay(NULL);
     }
     if (g_usefb) {
-        eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+        eglDisplay = egl_eglGetDisplay(EGL_DEFAULT_DISPLAY);
     } else {
-        eglDisplay = eglGetDisplay(g_display);
+        eglDisplay = egl_eglGetDisplay(g_display);
     }
 }
 
@@ -235,6 +235,14 @@ static void scan_env() {
 GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct) {
     scan_env();
     PROXY_GLES(glXCreateContext);
+    LOAD_EGL(eglBindAPI);
+    LOAD_EGL(eglChooseConfig);
+    LOAD_EGL(eglCreateContext);
+    LOAD_EGL(eglDestroyContext);
+    LOAD_EGL(eglDestroySurface);
+    LOAD_EGL(eglInitialize);
+    LOAD_EGL(eglMakeCurrent);
+
     EGLint configAttribs[] = {
 #ifdef PANDORA
         EGL_RED_SIZE, 5,
@@ -271,13 +279,13 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
 
     GLXContext fake = malloc(sizeof(struct __GLXContextRec));
     if (eglDisplay != NULL) {
-        eglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
+        egl_eglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
         if (eglContext != NULL) {
-            eglDestroyContext(eglDisplay, eglContext);
+            egl_eglDestroyContext(eglDisplay, eglContext);
             eglContext = NULL;
         }
         if (eglSurface != NULL) {
-            eglDestroySurface(eglDisplay, eglSurface);
+            egl_eglDestroySurface(eglDisplay, eglSurface);
             eglSurface = NULL;
         }
     }
@@ -294,8 +302,8 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
 
     // first time?
     if (eglInitialized == false) {
-        eglBindAPI(EGL_OPENGL_ES_API);
-        result = eglInitialize(eglDisplay, NULL, NULL);
+        egl_eglBindAPI(EGL_OPENGL_ES_API);
+        result = egl_eglInitialize(eglDisplay, NULL, NULL);
         if (result != EGL_TRUE) {
             printf("Unable to initialize EGL display.\n");
             return fake;
@@ -304,13 +312,13 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
     }
 
     int configsFound;
-    result = eglChooseConfig(eglDisplay, configAttribs, eglConfigs, 1, &configsFound);
+    result = egl_eglChooseConfig(eglDisplay, configAttribs, eglConfigs, 1, &configsFound);
     CheckEGLErrors();
     if (result != EGL_TRUE || configsFound == 0) {
         printf("No EGL configs found.\n");
         return fake;
     }
-    eglContext = eglCreateContext(eglDisplay, eglConfigs[0], EGL_NO_CONTEXT, attrib_list);
+    eglContext = egl_eglCreateContext(eglDisplay, eglConfigs[0], EGL_NO_CONTEXT, attrib_list);
     CheckEGLErrors();
 
     // need to return a glx context pointing at it
@@ -327,10 +335,12 @@ GLXContext glXCreateContextAttribsARB(Display *dpy, GLXFBConfig config, GLXConte
 
 void glXDestroyContext(Display *dpy, GLXContext ctx) {
     PROXY_GLES(glXDestroyContext);
+    LOAD_EGL(eglDestroyContext);
+    LOAD_EGL(eglDestroySurface);
     if (eglContext) {
-        EGLBoolean result = eglDestroyContext(eglDisplay, eglContext);
+        EGLBoolean result = egl_eglDestroyContext(eglDisplay, eglContext);
         if (eglSurface != NULL) {
-            eglDestroySurface(eglDisplay, eglSurface);
+            egl_eglDestroySurface(eglDisplay, eglSurface);
         }
 
         if (result != EGL_TRUE) {
@@ -374,10 +384,13 @@ not set to EGL_NO_CONTEXT.
 
 Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
     PROXY_GLES(glXMakeCurrent);
+    LOAD_EGL(eglCreateWindowSurface);
+    LOAD_EGL(eglDestroySurface);
+    LOAD_EGL(eglMakeCurrent);
     if (eglDisplay != NULL) {
-        eglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
+        egl_eglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
         if (eglSurface != NULL) {
-            eglDestroySurface(eglDisplay, eglSurface);
+            egl_eglDestroySurface(eglDisplay, eglSurface);
         }
     }
     // call with NULL to just destroy old stuff.
@@ -390,10 +403,10 @@ Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
 
     if (g_usefb)
         drawable = 0;
-    eglSurface = eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, NULL);
+    eglSurface = egl_eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, NULL);
     CheckEGLErrors();
 
-    EGLBoolean result = eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
+    EGLBoolean result = egl_eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
     CheckEGLErrors();
     if (result) {
         return true;
@@ -457,6 +470,7 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
     }
 
     PROXY_GLES(glXSwapBuffers);
+    LOAD_EGL(eglSwapBuffers);
     render_raster();
     if (g_vsync && fbdev >= 0) {
         // TODO: can I just return if I don't meet vsync over multiple frames?
@@ -466,7 +480,7 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
             ioctl(fbdev, FBIO_WAITFORVSYNC, &arg);
         }
     }
-    eglSwapBuffers(eglDisplay, eglSurface);
+    egl_eglSwapBuffers(eglDisplay, eglSurface);
     CheckEGLErrors();
 }
 

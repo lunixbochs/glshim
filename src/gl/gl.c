@@ -6,7 +6,6 @@
 #include "texture.h"
 #include "types.h"
 
-void *gles = NULL;
 glstate_t state = {
     0,
     .current = {

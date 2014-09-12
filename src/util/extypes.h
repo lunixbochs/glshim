@@ -96,4 +96,14 @@ struct __GLXFBConfigRec {
 };
 typedef struct __GLXFBConfigRec *GLXFBConfig;
 
+// egl
+#if !defined(__unix__) && defined(__APPLE__) && defined(__MACH__)
+#define __unix__
+#include <EGL/egl.h>
+#include <EGL/eglext.h>
+#undef __unix__
+#else
+#include <EGL/egl.h>
+#include <EGL/eglext.h>
+#endif
 #endif
