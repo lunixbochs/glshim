@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 
 base=../src/
-gles="yml/gles-1.1.yml"
+gles="yml/gles-1.1.yml,yml/oes.yml"
 gles2="yml/gles-2.0.yml"
 glx="yml/my_glx.yml,yml/glxext.yml"
 opengl="yml/opengl.yml"

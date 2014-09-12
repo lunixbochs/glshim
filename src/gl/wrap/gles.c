@@ -453,6 +453,12 @@ void glPackedCall(const packed_call_t *packed) {
             unpacked->func(args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7, args.a8, args.a9);
             break;
         }
+        case FORMAT_void_GLenum_GLenum_GLenum_GLenum: {
+            PACKED_void_GLenum_GLenum_GLenum_GLenum *unpacked = (PACKED_void_GLenum_GLenum_GLenum_GLenum *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLenum args = unpacked->args;
+            unpacked->func(args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
     }
 }
 #ifndef skip_glActiveTexture
@@ -500,6 +506,33 @@ void glBindTexture(GLenum target, GLuint texture) {
     gles_glBindTexture(target, texture);
 }
 #endif
+#ifndef skip_glBlendColorOES
+void glBlendColorOES(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
+    LOAD_GLES(glBlendColorOES);
+#ifndef direct_glBlendColorOES
+    PUSH_IF_COMPILING(glBlendColorOES);
+#endif
+    gles_glBlendColorOES(red, green, blue, alpha);
+}
+#endif
+#ifndef skip_glBlendEquationOES
+void glBlendEquationOES(GLenum mode) {
+    LOAD_GLES(glBlendEquationOES);
+#ifndef direct_glBlendEquationOES
+    PUSH_IF_COMPILING(glBlendEquationOES);
+#endif
+    gles_glBlendEquationOES(mode);
+}
+#endif
+#ifndef skip_glBlendEquationSeparateOES
+void glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha) {
+    LOAD_GLES(glBlendEquationSeparateOES);
+#ifndef direct_glBlendEquationSeparateOES
+    PUSH_IF_COMPILING(glBlendEquationSeparateOES);
+#endif
+    gles_glBlendEquationSeparateOES(modeRGB, modeAlpha);
+}
+#endif
 #ifndef skip_glBlendFunc
 void glBlendFunc(GLenum sfactor, GLenum dfactor) {
     LOAD_GLES(glBlendFunc);
@@ -507,6 +540,15 @@ void glBlendFunc(GLenum sfactor, GLenum dfactor) {
     PUSH_IF_COMPILING(glBlendFunc);
 #endif
     gles_glBlendFunc(sfactor, dfactor);
+}
+#endif
+#ifndef skip_glBlendFuncSeparateOES
+void glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha) {
+    LOAD_GLES(glBlendFuncSeparateOES);
+#ifndef direct_glBlendFuncSeparateOES
+    PUSH_IF_COMPILING(glBlendFuncSeparateOES);
+#endif
+    gles_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
 }
 #endif
 #ifndef skip_glBufferData

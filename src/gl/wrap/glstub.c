@@ -43,14 +43,6 @@ STUB(void glTranslatef(GLfloat x, GLfloat y, GLfloat z));
 
 // STUB(void glMultiTexCoord());
 // STUB(void glVertexAttrib());
-#ifndef USE_ES2
-STUB(void glBlendEquationSeparate(GLenum modeRGB, GLenum modeAlpha))
-#endif
-STUB(void glBlendEquationSeparatei(GLuint buf, GLenum modeRGB, GLenum modeAlpha))
-#ifndef USE_ES2
-STUB(void glBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha))
-#endif
-STUB(void glBlendFuncSeparatei(GLuint buf, GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha))
 STUB(void glClearAccum(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha))
 STUB(void glColorMaterial(GLenum face, GLenum mode))
 STUB(void glCopyPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum type))

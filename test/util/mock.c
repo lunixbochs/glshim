@@ -12,7 +12,11 @@ const char *mock_name(int func) {
         case glAlphaFuncx_INDEX: return "glAlphaFuncx";
         case glBindBuffer_INDEX: return "glBindBuffer";
         case glBindTexture_INDEX: return "glBindTexture";
+        case glBlendColorOES_INDEX: return "glBlendColorOES";
+        case glBlendEquationOES_INDEX: return "glBlendEquationOES";
+        case glBlendEquationSeparateOES_INDEX: return "glBlendEquationSeparateOES";
         case glBlendFunc_INDEX: return "glBlendFunc";
+        case glBlendFuncSeparateOES_INDEX: return "glBlendFuncSeparateOES";
         case glBufferData_INDEX: return "glBufferData";
         case glBufferSubData_INDEX: return "glBufferSubData";
         case glClear_INDEX: return "glClear";
@@ -191,10 +195,34 @@ void mock_print(const indexed_call_t *packed) {
             printf("glBindTexture(0x%04X, %u);\n", args.a1, args.a2);
             break;
         }
+        case glBlendColorOES_INDEX: {
+            INDEXED_void_GLclampf_GLclampf_GLclampf_GLclampf *unpacked = (INDEXED_void_GLclampf_GLclampf_GLclampf_GLclampf *)packed;
+            ARGS_void_GLclampf_GLclampf_GLclampf_GLclampf args = unpacked->args;
+            printf("glBlendColorOES(%p, %p, %p, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
+        case glBlendEquationOES_INDEX: {
+            INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
+            ARGS_void_GLenum args = unpacked->args;
+            printf("glBlendEquationOES(0x%04X);\n", args.a1);
+            break;
+        }
+        case glBlendEquationSeparateOES_INDEX: {
+            INDEXED_void_GLenum_GLenum *unpacked = (INDEXED_void_GLenum_GLenum *)packed;
+            ARGS_void_GLenum_GLenum args = unpacked->args;
+            printf("glBlendEquationSeparateOES(0x%04X, 0x%04X);\n", args.a1, args.a2);
+            break;
+        }
         case glBlendFunc_INDEX: {
             INDEXED_void_GLenum_GLenum *unpacked = (INDEXED_void_GLenum_GLenum *)packed;
             ARGS_void_GLenum_GLenum args = unpacked->args;
             printf("glBlendFunc(0x%04X, 0x%04X);\n", args.a1, args.a2);
+            break;
+        }
+        case glBlendFuncSeparateOES_INDEX: {
+            INDEXED_void_GLenum_GLenum_GLenum_GLenum *unpacked = (INDEXED_void_GLenum_GLenum_GLenum_GLenum *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLenum args = unpacked->args;
+            printf("glBlendFuncSeparateOES(0x%04X, 0x%04X, 0x%04X, 0x%04X);\n", args.a1, args.a2, args.a3, args.a4);
             break;
         }
         case glBufferData_INDEX: {
@@ -1081,8 +1109,20 @@ void gles_glBindBuffer(GLenum target, GLuint buffer) {
 void gles_glBindTexture(GLenum target, GLuint texture) {
     emit_glBindTexture(target, texture);
 }
+void gles_glBlendColorOES(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
+    emit_glBlendColorOES(red, green, blue, alpha);
+}
+void gles_glBlendEquationOES(GLenum mode) {
+    emit_glBlendEquationOES(mode);
+}
+void gles_glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha) {
+    emit_glBlendEquationSeparateOES(modeRGB, modeAlpha);
+}
 void gles_glBlendFunc(GLenum sfactor, GLenum dfactor) {
     emit_glBlendFunc(sfactor, dfactor);
+}
+void gles_glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha) {
+    emit_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
 }
 void gles_glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage) {
     emit_glBufferData(target, size, data, usage);
