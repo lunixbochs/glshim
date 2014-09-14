@@ -100,7 +100,7 @@ void bl_q2t(block_t *block) {
         block->indices = indices;
     }
     block->q2t = true;
-    block->len *= 1.5;
+    block->count = block->len * 1.5;
     return;
 }
 
@@ -289,7 +289,7 @@ void bl_draw(block_t *block) {
         indices = q2t.cache;
 
     if (indices) {
-        gles_glDrawElements(block->mode, block->len, GL_UNSIGNED_SHORT, indices);
+        gles_glDrawElements(block->mode, block->count, GL_UNSIGNED_SHORT, indices);
     } else {
         gles_glDrawArrays(block->mode, 0, block->len);
     }

@@ -14,8 +14,7 @@
 
 // block.h
 typedef struct {
-    uint32_t len;
-    uint32_t cap;
+    uint32_t len, count, cap;
     GLenum mode;
     struct {
         GLfloat tex[MAX_TEX][2];

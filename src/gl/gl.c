@@ -129,8 +129,7 @@ static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
     block_t *block = bl_new(mode);
     block->artificial = true;
 
-    block->len = count;
-    block->cap = count;
+    block->len = block->cap = count;
     if (state.enable.vertex_array) {
         block->vert = gl_copy_pointer(&state.pointers.vertex, 3, skip, count, false);
     }
@@ -189,7 +188,7 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindi
         normalize_indices(indices, &max, &min, count);
         block_t *block = block_from_arrays(mode, min, max + 1);
         block->indices = indices;
-        block->len = count;
+        block->count = count;
 
         bl_end(block);
         if (list) {
