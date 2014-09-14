@@ -59,9 +59,10 @@ const GLubyte *glGetString(GLenum name) {
 
                 // blending extensions
                 "GL_EXT_blend_color "
-                "GL_EXT_blend_subtract "
-                "GL_EXT_blend_logic_op "
+                "GL_EXT_blend_equation_separate "
                 "GL_EXT_blend_func_separate "
+                "GL_EXT_blend_logic_op "
+                "GL_EXT_blend_subtract "
 #else
                 "GL_ARB_vertex_shader "
                 "GL_ARB_fragment_shader "
