@@ -14,6 +14,8 @@ extern void *gles, *egl;
 
 static const char *lib_ext[] = {
     "so",
+    "so.1",
+    "so.2",
     "dylib",
     "dll",
     NULL,
