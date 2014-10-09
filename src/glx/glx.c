@@ -120,7 +120,11 @@ static Display *g_display;
 static bool g_showfps = false;
 static bool g_liveinfo = true;
 static bool g_fps_overlay = false;
+#ifdef BCMHOST
+static bool g_usefb = true;
+#else
 static bool g_usefb = false;
+#endif
 static bool g_vsync = false;
 static bool g_xrefresh = false;
 static bool g_stacktrace = false;
@@ -202,6 +206,10 @@ static void scan_env() {
         if (env_##name && strcmp(env_##name, "1") == 0) { \
             printf("libGL: " message "\n");               \
             global = true;                                \
+        }                                                 \
+        if (env_##name && strcmp(env_##name, "0") == 0) { \
+            printf("libGL: " message " (REVERTED)\n");    \
+            global = false;                               \
         }
 
     env(LIBGL_XREFRESH, g_xrefresh, "xrefresh will be called on cleanup");
