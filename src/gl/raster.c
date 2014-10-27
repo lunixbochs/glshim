@@ -93,7 +93,7 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
         to = (GLuint *)raster->buf + (GLuint)(raster->pos.x + ((raster->pos.y - y) * state.viewport.nwidth));
         from = bitmap + (y * 2);
         for (x = 0; x < width; x += 8) {
-            if (raster->pos.x + x > state.viewport.width || raster->pos.y + y > state.viewport.height)
+            if (raster->pos.x + x > state.viewport.width || raster->pos.y - y > state.viewport.height)
                 continue;
 
             GLubyte b = *from++;
@@ -128,7 +128,7 @@ void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
 
     // shrink our pixel ranges to stay inside the viewport
     int ystart = MAX(0, -raster->pos.y);
-    height = MIN(state.viewport.height - raster->pos.y, height);
+    height = MIN(raster->pos.y, height);
 
     int xstart = MAX(0, -raster->pos.x);
     int screen_width = MIN(state.viewport.width - raster->pos.x, width);
