@@ -156,8 +156,6 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
     */
 
     LOAD_GLES(glTexImage2D);
-    LOAD_GLES(glTexSubImage2D);
-
     switch (target) {
         case GL_PROXY_TEXTURE_2D:
             break;
@@ -170,6 +168,7 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
                 bound->nheight = nheight;
             }
             if (false && (height != nheight || width != nwidth)) {
+                LOAD_GLES(glTexSubImage2D);
                 gles_glTexImage2D(target, level, format, nwidth, nheight, border,
                                   format, type, NULL);
                 gles_glTexSubImage2D(target, level, 0, 0, width, height,
