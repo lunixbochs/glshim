@@ -13,15 +13,17 @@ void *open_lib(const char **names, const char *override) {
     if (override) {
         if ((lib = dlopen(override, flags))) {
             strncpy(path_name, override, PATH_MAX);
-            printf("loaded library: %s\n", path_name);
+            printf("libGL:loaded: %s\n", path_name);
             return lib;
+        } else {
+            printf("LIBGL_GLES override failed: %s\n", dlerror());
         }
     }
     for (int i = 0; names[i]; i++) {
         for (int e = 0; lib_ext[e]; e++) {
             snprintf(path_name, PATH_MAX, "%s.%s", names[i], lib_ext[e]);
             if ((lib = dlopen(path_name, flags))) {
-                printf("loaded library: %s\n", path_name);
+                printf("libGL:loaded: %s\n", path_name);
                 return lib;
             }
         }
