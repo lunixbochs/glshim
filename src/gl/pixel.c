@@ -137,6 +137,28 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
     #undef write_each
 }
 
+bool pixel_convert_direct(const GLvoid *src, GLvoid *dst, GLuint width,
+                          GLenum src_format, GLenum src_type, GLsizei src_stride,
+                          GLenum dst_format, GLenum dst_type, GLsizei dst_stride) {
+    const colorlayout_t *src_color, *dst_color;
+    src_color = get_color_map(src_format);
+    dst_color = get_color_map(dst_format);
+
+    uintptr_t src_pos = (uintptr_t)src;
+    uintptr_t dst_pos = (uintptr_t)dst;
+    for (int i = 0; i < width; i++) {
+        if (! remap_pixel((const GLvoid *)src_pos, (GLvoid *)dst_pos,
+                          src_color, src_type, dst_color, dst_type)) {
+            // checking a boolean for each pixel like this might be a slowdown?
+            // probably depends on how well branch prediction performs
+            return false;
+        }
+        src_pos += src_stride;
+        dst_pos += dst_stride;
+    }
+    return true;
+}
+
 bool pixel_convert(const GLvoid *src, GLvoid **dst,
                    GLuint width, GLuint height,
                    GLenum src_format, GLenum src_type,
@@ -162,19 +184,10 @@ bool pixel_convert(const GLvoid *src, GLvoid **dst,
         GLsizei src_stride = gl_pixel_sizeof(src_format, src_type);
         GLsizei dst_stride = gl_pixel_sizeof(dst_format, dst_type);
         *dst = malloc(dst_size);
-        uintptr_t src_pos = (uintptr_t)src;
-        uintptr_t dst_pos = (uintptr_t)*dst;
-        for (int i = 0; i < pixels; i++) {
-            if (! remap_pixel((const GLvoid *)src_pos, (GLvoid *)dst_pos,
-                              src_color, src_type, dst_color, dst_type)) {
-                // checking a boolean for each pixel like this might be a slowdown?
-                // probably depends on how well branch prediction performs
-                return false;
-            }
-            src_pos += src_stride;
-            dst_pos += dst_stride;
-        }
-        return true;
+        return pixel_convert_direct(
+            src, *dst, pixels,
+            src_format, src_type, src_stride,
+            dst_format, dst_type, dst_stride);
     }
     return false;
 }
