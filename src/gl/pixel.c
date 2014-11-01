@@ -74,9 +74,9 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
         type_case(GL_UNSIGNED_SHORT_1_5_5_5_REV, GLushort,
             s = (GLushort[]){
                 v & 31,
-                (v & 0x03e0 >> 5),
-                (v & 0x7c00 >> 10),
-                (v & 0x8000 >> 15)* 31,
+                ((v & 0x03e0) >> 5),
+                ((v & 0x7c00) >> 10),
+                ((v & 0x8000) >> 15)* 31,
             };
             read_each(, / 31.0f);
         )
@@ -96,9 +96,9 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
             color[dst_color->red] = pixel.r;
             color[dst_color->green] = pixel.g;
             color[dst_color->blue] = pixel.b;
-            *d = ((GLuint)(color[0] * 31) & 0x1f << 11) |
-                 ((GLuint)(color[1] * 63) & 0x3f << 5) |
-                 ((GLuint)(color[2] * 31) & 0x1f);
+            *d = (((GLuint)(color[0] * 31) & 0x1f) << 11) |
+                 (((GLuint)(color[1] * 63) & 0x3f) << 5) |
+                 (((GLuint)(color[2] * 31) & 0x1f));
         )
         type_case(GL_UNSIGNED_SHORT_5_5_5_1, GLushort,
             GLfloat color[4];
@@ -107,10 +107,10 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
             color[dst_color->blue] = pixel.b;
             color[dst_color->alpha] = pixel.a;
             // TODO: can I macro this or something? it follows a pretty strict form.
-            *d = ((GLuint)(color[0] * 31) & 0x1f << 0) |
-                 ((GLuint)(color[1] * 31) & 0x1f << 5) |
-                 ((GLuint)(color[2] * 31) & 0x1f << 10)  |
-                 ((GLuint)(color[3] * 1)  & 0x01 << 15);
+            *d = (((GLuint)(color[0] * 31) & 0x1f) << 0) |
+                 (((GLuint)(color[1] * 31) & 0x1f) << 5) |
+                 (((GLuint)(color[2] * 31) & 0x1f) << 10)  |
+                 (((GLuint)(color[3] * 1)  & 0x01) << 15);
         )
        type_case(GL_UNSIGNED_SHORT_4_4_4_4, GLushort,
             GLfloat color[4];
@@ -118,10 +118,10 @@ bool remap_pixel(const GLvoid *src, GLvoid *dst,
             color[dst_color->green] = pixel.g;
             color[dst_color->blue] = pixel.b;
             color[dst_color->alpha] = pixel.a;
-            *d = ((GLushort)(color[0] * 15) & 0x0f << 12) |
-                 ((GLushort)(color[1] * 15) & 0x0f << 8) |
-                 ((GLushort)(color[2] * 15) & 0x0f << 4) |
-                 ((GLushort)(color[3] * 15) & 0x0f);
+            *d = (((GLushort)(color[0] * 15) & 0x0f) << 12) |
+                 (((GLushort)(color[1] * 15) & 0x0f) << 8) |
+                 (((GLushort)(color[2] * 15) & 0x0f) << 4) |
+                 (((GLushort)(color[3] * 15) & 0x0f));
         )
         default:
             printf("remap_pixel(): Unsupported target data type: %s\n", gl_str(dst_type));
