@@ -161,6 +161,7 @@ class PythonTest(Test):
 
 def run(args):
     tests = Test.find(args.base, args.tests)
+    tests.sort(key=lambda t: t.name)
     if not tests:
         print 'No tests!'
         return
@@ -207,6 +208,7 @@ def run(args):
             for line in test.output.split('\n'):
                 ERROR = term.bold(term.red('ERROR:'))
                 WARNING = term.bold(term.yellow('WARNING:'))
+                line = line.decode('utf8', 'replace')
                 if line.startswith('ERROR'):
                     line = line.replace('ERROR:', ERROR, 1)
                 elif line.startswith('WARNING'):
@@ -214,7 +216,7 @@ def run(args):
                 if test.build_failed:
                     line = line.replace('error:', ERROR)
                     line = line.replace('warning:', WARNING)
-                print '> {}'.format(line)
+                print '> {}'.format(line.encode('utf8', 'replace'))
 
     passed = sum(t.success for t in tests if t.ran)
     total = sum(t.ran for t in tests)
@@ -231,6 +233,9 @@ def run(args):
             percent = term.yellow(percent)
         print term.bold((results + '[{}]').format(percent).rjust(80 + len(term.green(''))))
         print
+
+    if passed < len(tests):
+        return sys.exit(1)
 
 
 if __name__ == '__main__':
