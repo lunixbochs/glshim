@@ -29,6 +29,18 @@ static int failed_test = 0;
 #define mock_assert(cond, ...) { if (!(cond)) { mock_errorf(__VA_ARGS__); }}
 #define assert(cond) mock_assert(cond, "%s\n", #cond)
 
+#define mock_print_ptr(prefix, ptr, size) \
+    printf("%s ", prefix); \
+    if (ptr == NULL) { \
+        printf("NULL"); \
+    } else { \
+        for (size_t i = 0; i < size; i++) { \
+            if (i > 0 && i % 4 == 0) printf(" "); \
+            printf("%02X", *(uint8_t *)(ptr+i)); \
+        } \
+    } \
+    printf("\n");
+
 #define mock_return { \
     indexed_call_t *call = NULL; \
     while ((call = mock_shift()) != NULL) { \
@@ -78,12 +90,15 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         {% for arg in func.args %}
         {% if '*' in arg.type %}
-        void *a = packed->args.a{{ loop.index }}, *b = {{ arg.name }}; \
+        a = packed->args.a{{ loop.index }}, b = {{ arg.name }}; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof({{ arg.name }})) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: {{ arg.name }}\n"); \
+            mock_print_ptr("  expected:", b, sizeof({{ arg.name }})); \
+            mock_print_ptr("     found:", a, sizeof({{ arg.name }})); \
         {% elif 'float' in arg.type or 'double' in arg.type %}
         if (packed->args.a{{ loop.index }} - {{ arg.name }} >= 0.01) { \
         {% else %}
@@ -94,9 +109,6 @@ static int failed_test = 0;
         {% endfor %}
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: {{ func.name }}({{ func.args|printf }});\n", {{ func.args|args(0) }}); \
         } \

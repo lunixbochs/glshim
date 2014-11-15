@@ -26,6 +26,18 @@ static int failed_test = 0;
 #define mock_assert(cond, ...) { if (!(cond)) { mock_errorf(__VA_ARGS__); }}
 #define assert(cond) mock_assert(cond, "%s\n", #cond)
 
+#define mock_print_ptr(prefix, ptr, size) \
+    printf("%s ", prefix); \
+    if (ptr == NULL) { \
+        printf("NULL"); \
+    } else { \
+        for (size_t i = 0; i < size; i++) { \
+            if (i > 0 && i % 4 == 0) printf(" "); \
+            printf("%02X", *(uint8_t *)(ptr+i)); \
+        } \
+    } \
+    printf("\n");
+
 #define mock_return { \
     indexed_call_t *call = NULL; \
     while ((call = mock_shift()) != NULL) { \
@@ -70,15 +82,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != texture) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glActiveTexture(0x%04X);\n", texture); \
         } \
@@ -117,7 +127,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
@@ -126,9 +137,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glAlphaFunc(0x%04X, %p);\n", func, ref); \
         } \
@@ -167,7 +175,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
@@ -176,9 +185,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glAlphaFuncx(0x%04X, %p);\n", func, ref); \
         } \
@@ -217,7 +223,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -226,9 +233,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBindBuffer(0x%04X, %u);\n", target, buffer); \
         } \
@@ -267,7 +271,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -276,9 +281,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBindTexture(0x%04X, %u);\n", target, texture); \
         } \
@@ -319,7 +321,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
@@ -334,9 +337,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBlendColorOES(%p, %p, %p, %p);\n", red, green, blue, alpha); \
         } \
@@ -374,15 +374,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBlendEquationOES(0x%04X);\n", mode); \
         } \
@@ -421,7 +419,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != modeRGB) { \
             match = 0; \
         } \
@@ -430,9 +429,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBlendEquationSeparateOES(0x%04X, 0x%04X);\n", modeRGB, modeAlpha); \
         } \
@@ -471,7 +467,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != sfactor) { \
             match = 0; \
         } \
@@ -480,9 +477,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBlendFunc(0x%04X, 0x%04X);\n", sfactor, dfactor); \
         } \
@@ -523,7 +517,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != sfactorRGB) { \
             match = 0; \
         } \
@@ -538,9 +533,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBlendFuncSeparateOES(0x%04X, 0x%04X, 0x%04X, 0x%04X);\n", sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha); \
         } \
@@ -581,16 +573,19 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != size) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = data; \
+        a = packed->args.a3, b = data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(data)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: data\n"); \
+            mock_print_ptr("  expected:", b, sizeof(data)); \
+            mock_print_ptr("     found:", a, sizeof(data)); \
             match = 0; \
         } \
         if (packed->args.a4 != usage) { \
@@ -598,9 +593,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBufferData(0x%04X, %d, %p, 0x%04X);\n", target, size, data, usage); \
         } \
@@ -641,7 +633,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -651,16 +644,15 @@ static int failed_test = 0;
         if (packed->args.a3 != size) { \
             match = 0; \
         } \
-        void *a = packed->args.a4, *b = data; \
+        a = packed->args.a4, b = data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(data)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: data\n"); \
+            mock_print_ptr("  expected:", b, sizeof(data)); \
+            mock_print_ptr("     found:", a, sizeof(data)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBufferSubData(0x%04X, %d, %d, %p);\n", target, offset, size, data); \
         } \
@@ -698,15 +690,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mask) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClear(%d);\n", mask); \
         } \
@@ -747,7 +737,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
@@ -762,9 +753,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearColor(%p, %p, %p, %p);\n", red, green, blue, alpha); \
         } \
@@ -805,7 +793,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
@@ -820,9 +809,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearColorx(%p, %p, %p, %p);\n", red, green, blue, alpha); \
         } \
@@ -860,15 +846,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != depth) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearDepthf(%p);\n", depth); \
         } \
@@ -906,15 +890,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != depth) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearDepthx(%p);\n", depth); \
         } \
@@ -952,15 +934,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != s) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClearStencil(%d);\n", s); \
         } \
@@ -998,15 +978,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != texture) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClientActiveTexture(0x%04X);\n", texture); \
         } \
@@ -1045,20 +1023,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = equation; \
+        a = packed->args.a2, b = equation; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(equation)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: equation\n"); \
+            mock_print_ptr("  expected:", b, sizeof(equation)); \
+            mock_print_ptr("     found:", a, sizeof(equation)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClipPlanef(0x%04X, %p);\n", plane, equation); \
         } \
@@ -1097,20 +1075,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = equation; \
+        a = packed->args.a2, b = equation; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(equation)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: equation\n"); \
+            mock_print_ptr("  expected:", b, sizeof(equation)); \
+            mock_print_ptr("     found:", a, sizeof(equation)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glClipPlanex(0x%04X, %p);\n", plane, equation); \
         } \
@@ -1151,7 +1129,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - red >= 0.01) { \
             match = 0; \
         } \
@@ -1166,9 +1145,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColor4f(%0.2f, %0.2f, %0.2f, %0.2f);\n", red, green, blue, alpha); \
         } \
@@ -1209,7 +1185,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
@@ -1224,9 +1201,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColor4ub(%c, %c, %c, %c);\n", red, green, blue, alpha); \
         } \
@@ -1267,7 +1241,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
@@ -1282,9 +1257,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColor4x(%p, %p, %p, %p);\n", red, green, blue, alpha); \
         } \
@@ -1325,7 +1297,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != red) { \
             match = 0; \
         } \
@@ -1340,9 +1313,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColorMask(%d, %d, %d, %d);\n", red, green, blue, alpha); \
         } \
@@ -1383,7 +1353,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
@@ -1393,16 +1364,15 @@ static int failed_test = 0;
         if (packed->args.a3 != stride) { \
             match = 0; \
         } \
-        void *a = packed->args.a4, *b = pointer; \
+        a = packed->args.a4, b = pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pointer)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pointer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pointer)); \
+            mock_print_ptr("     found:", a, sizeof(pointer)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glColorPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
@@ -1447,7 +1417,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -1469,16 +1440,15 @@ static int failed_test = 0;
         if (packed->args.a7 != imageSize) { \
             match = 0; \
         } \
-        void *a = packed->args.a8, *b = data; \
+        a = packed->args.a8, b = data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(data)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: data\n"); \
+            mock_print_ptr("  expected:", b, sizeof(data)); \
+            mock_print_ptr("     found:", a, sizeof(data)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCompressedTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %p);\n", target, level, internalformat, width, height, border, imageSize, data); \
         } \
@@ -1524,7 +1494,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -1549,16 +1520,15 @@ static int failed_test = 0;
         if (packed->args.a8 != imageSize) { \
             match = 0; \
         } \
-        void *a = packed->args.a9, *b = data; \
+        a = packed->args.a9, b = data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(data)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: data\n"); \
+            mock_print_ptr("  expected:", b, sizeof(data)); \
+            mock_print_ptr("     found:", a, sizeof(data)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCompressedTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, %d, %p);\n", target, level, xoffset, yoffset, width, height, format, imageSize, data); \
         } \
@@ -1603,7 +1573,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -1630,9 +1601,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCopyTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %d);\n", target, level, internalformat, x, y, width, height, border); \
         } \
@@ -1677,7 +1645,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -1704,9 +1673,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCopyTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, %d, %d);\n", target, level, xoffset, yoffset, x, y, width, height); \
         } \
@@ -1744,15 +1710,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glCullFace(0x%04X);\n", mode); \
         } \
@@ -1791,20 +1755,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = buffers; \
+        a = packed->args.a2, b = buffers; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(buffers)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: buffers\n"); \
+            mock_print_ptr("  expected:", b, sizeof(buffers)); \
+            mock_print_ptr("     found:", a, sizeof(buffers)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDeleteBuffers(%d, %p);\n", n, buffers); \
         } \
@@ -1843,20 +1807,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = textures; \
+        a = packed->args.a2, b = textures; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(textures)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: textures\n"); \
+            mock_print_ptr("  expected:", b, sizeof(textures)); \
+            mock_print_ptr("     found:", a, sizeof(textures)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDeleteTextures(%d, %p);\n", n, textures); \
         } \
@@ -1894,15 +1858,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthFunc(0x%04X);\n", func); \
         } \
@@ -1940,15 +1902,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != flag) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthMask(%d);\n", flag); \
         } \
@@ -1987,7 +1947,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != near) { \
             match = 0; \
         } \
@@ -1996,9 +1957,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthRangef(%p, %p);\n", near, far); \
         } \
@@ -2037,7 +1995,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != near) { \
             match = 0; \
         } \
@@ -2046,9 +2005,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDepthRangex(%p, %p);\n", near, far); \
         } \
@@ -2086,15 +2042,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != cap) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDisable(0x%04X);\n", cap); \
         } \
@@ -2132,15 +2086,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != array) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDisableClientState(0x%04X);\n", array); \
         } \
@@ -2180,7 +2132,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
@@ -2192,9 +2145,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDrawArrays(0x%04X, %d, %d);\n", mode, first, count); \
         } \
@@ -2235,7 +2185,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
@@ -2245,16 +2196,15 @@ static int failed_test = 0;
         if (packed->args.a3 != type) { \
             match = 0; \
         } \
-        void *a = packed->args.a4, *b = indices; \
+        a = packed->args.a4, b = indices; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(indices)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: indices\n"); \
+            mock_print_ptr("  expected:", b, sizeof(indices)); \
+            mock_print_ptr("     found:", a, sizeof(indices)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glDrawElements(0x%04X, %d, 0x%04X, %p);\n", mode, count, type, indices); \
         } \
@@ -2292,15 +2242,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != cap) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glEnable(0x%04X);\n", cap); \
         } \
@@ -2338,15 +2286,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != array) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glEnableClientState(0x%04X);\n", array); \
         } \
@@ -2383,12 +2329,10 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFinish();\n", ); \
         } \
@@ -2425,12 +2369,10 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFlush();\n", ); \
         } \
@@ -2469,7 +2411,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -2478,9 +2421,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogf(0x%04X, %0.2f);\n", pname, param); \
         } \
@@ -2519,20 +2459,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogfv(0x%04X, %p);\n", pname, params); \
         } \
@@ -2571,7 +2511,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -2580,9 +2521,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogx(0x%04X, %p);\n", pname, param); \
         } \
@@ -2621,20 +2559,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFogxv(0x%04X, %p);\n", pname, params); \
         } \
@@ -2672,15 +2610,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFrontFace(0x%04X);\n", mode); \
         } \
@@ -2723,7 +2659,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - left >= 0.01) { \
             match = 0; \
         } \
@@ -2744,9 +2681,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFrustumf(%0.2f, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f);\n", left, right, bottom, top, near, far); \
         } \
@@ -2789,7 +2723,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != left) { \
             match = 0; \
         } \
@@ -2810,9 +2745,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glFrustumx(%p, %p, %p, %p, %p, %p);\n", left, right, bottom, top, near, far); \
         } \
@@ -2851,20 +2783,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = buffers; \
+        a = packed->args.a2, b = buffers; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(buffers)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: buffers\n"); \
+            mock_print_ptr("  expected:", b, sizeof(buffers)); \
+            mock_print_ptr("     found:", a, sizeof(buffers)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGenBuffers(%d, %p);\n", n, buffers); \
         } \
@@ -2903,20 +2835,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != n) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = textures; \
+        a = packed->args.a2, b = textures; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(textures)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: textures\n"); \
+            mock_print_ptr("  expected:", b, sizeof(textures)); \
+            mock_print_ptr("     found:", a, sizeof(textures)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGenTextures(%d, %p);\n", n, textures); \
         } \
@@ -2955,20 +2887,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetBooleanv(0x%04X, %p);\n", pname, params); \
         } \
@@ -3008,23 +2940,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetBufferParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -3063,20 +2995,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = equation; \
+        a = packed->args.a2, b = equation; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(equation)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: equation\n"); \
+            mock_print_ptr("  expected:", b, sizeof(equation)); \
+            mock_print_ptr("     found:", a, sizeof(equation)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetClipPlanef(0x%04X, %p);\n", plane, equation); \
         } \
@@ -3115,20 +3047,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != plane) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = equation; \
+        a = packed->args.a2, b = equation; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(equation)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: equation\n"); \
+            mock_print_ptr("  expected:", b, sizeof(equation)); \
+            mock_print_ptr("     found:", a, sizeof(equation)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetClipPlanex(0x%04X, %p);\n", plane, equation); \
         } \
@@ -3165,12 +3097,10 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetError();\n", ); \
         } \
@@ -3209,20 +3139,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetFixedv(0x%04X, %p);\n", pname, params); \
         } \
@@ -3261,20 +3191,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetFloatv(0x%04X, %p);\n", pname, params); \
         } \
@@ -3313,20 +3243,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetIntegerv(0x%04X, %p);\n", pname, params); \
         } \
@@ -3366,23 +3296,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetLightfv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
@@ -3422,23 +3352,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetLightxv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
@@ -3478,23 +3408,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetMaterialfv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
@@ -3534,23 +3464,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetMaterialxv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
@@ -3589,20 +3519,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetPointerv(0x%04X, %p);\n", pname, params); \
         } \
@@ -3640,15 +3570,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != name) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetString(0x%04X);\n", name); \
         } \
@@ -3688,23 +3616,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexEnvfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -3744,23 +3672,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexEnviv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -3800,23 +3728,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexEnvxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -3856,23 +3784,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -3912,23 +3840,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -3968,23 +3896,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetTexParameterxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -4023,7 +3951,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -4032,9 +3961,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glHint(0x%04X, 0x%04X);\n", target, mode); \
         } \
@@ -4072,15 +3998,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != buffer) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glIsBuffer(%u);\n", buffer); \
         } \
@@ -4118,15 +4042,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != cap) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glIsEnabled(0x%04X);\n", cap); \
         } \
@@ -4164,15 +4086,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != texture) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glIsTexture(%u);\n", texture); \
         } \
@@ -4211,7 +4131,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -4220,9 +4141,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelf(0x%04X, %0.2f);\n", pname, param); \
         } \
@@ -4261,20 +4179,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelfv(0x%04X, %p);\n", pname, params); \
         } \
@@ -4313,7 +4231,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -4322,9 +4241,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelx(0x%04X, %p);\n", pname, param); \
         } \
@@ -4363,20 +4279,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightModelxv(0x%04X, %p);\n", pname, params); \
         } \
@@ -4416,7 +4332,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
@@ -4428,9 +4345,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightf(0x%04X, 0x%04X, %0.2f);\n", light, pname, param); \
         } \
@@ -4470,23 +4384,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightfv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
@@ -4526,7 +4440,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
@@ -4538,9 +4453,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightx(0x%04X, 0x%04X, %p);\n", light, pname, param); \
         } \
@@ -4580,23 +4492,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != light) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLightxv(0x%04X, 0x%04X, %p);\n", light, pname, params); \
         } \
@@ -4634,15 +4546,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - width >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLineWidth(%0.2f);\n", width); \
         } \
@@ -4680,15 +4590,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != width) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLineWidthx(%p);\n", width); \
         } \
@@ -4725,12 +4633,10 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLoadIdentity();\n", ); \
         } \
@@ -4768,17 +4674,17 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
-        void *a = packed->args.a1, *b = m; \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.a1, b = m; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(m)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: m\n"); \
+            mock_print_ptr("  expected:", b, sizeof(m)); \
+            mock_print_ptr("     found:", a, sizeof(m)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLoadMatrixf(%p);\n", m); \
         } \
@@ -4816,17 +4722,17 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
-        void *a = packed->args.a1, *b = m; \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.a1, b = m; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(m)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: m\n"); \
+            mock_print_ptr("  expected:", b, sizeof(m)); \
+            mock_print_ptr("     found:", a, sizeof(m)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLoadMatrixx(%p);\n", m); \
         } \
@@ -4864,15 +4770,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != opcode) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glLogicOp(0x%04X);\n", opcode); \
         } \
@@ -4912,7 +4816,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
@@ -4924,9 +4829,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialf(0x%04X, 0x%04X, %0.2f);\n", face, pname, param); \
         } \
@@ -4966,23 +4868,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialfv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
@@ -5022,7 +4924,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
@@ -5034,9 +4937,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialx(0x%04X, 0x%04X, %p);\n", face, pname, param); \
         } \
@@ -5076,23 +4976,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != face) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMaterialxv(0x%04X, 0x%04X, %p);\n", face, pname, params); \
         } \
@@ -5130,15 +5030,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMatrixMode(0x%04X);\n", mode); \
         } \
@@ -5176,17 +5074,17 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
-        void *a = packed->args.a1, *b = m; \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.a1, b = m; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(m)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: m\n"); \
+            mock_print_ptr("  expected:", b, sizeof(m)); \
+            mock_print_ptr("     found:", a, sizeof(m)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultMatrixf(%p);\n", m); \
         } \
@@ -5224,17 +5122,17 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
-        void *a = packed->args.a1, *b = m; \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.a1, b = m; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(m)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: m\n"); \
+            mock_print_ptr("  expected:", b, sizeof(m)); \
+            mock_print_ptr("     found:", a, sizeof(m)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultMatrixx(%p);\n", m); \
         } \
@@ -5276,7 +5174,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -5294,9 +5193,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultiTexCoord4f(0x%04X, %0.2f, %0.2f, %0.2f, %0.2f);\n", target, s, t, r, q); \
         } \
@@ -5338,7 +5234,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -5356,9 +5253,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glMultiTexCoord4x(0x%04X, %p, %p, %p, %p);\n", target, s, t, r, q); \
         } \
@@ -5398,7 +5292,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - nx >= 0.01) { \
             match = 0; \
         } \
@@ -5410,9 +5305,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glNormal3f(%0.2f, %0.2f, %0.2f);\n", nx, ny, nz); \
         } \
@@ -5452,7 +5344,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != nx) { \
             match = 0; \
         } \
@@ -5464,9 +5357,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glNormal3x(%p, %p, %p);\n", nx, ny, nz); \
         } \
@@ -5506,23 +5396,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != type) { \
             match = 0; \
         } \
         if (packed->args.a2 != stride) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = pointer; \
+        a = packed->args.a3, b = pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pointer)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pointer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pointer)); \
+            mock_print_ptr("     found:", a, sizeof(pointer)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glNormalPointer(0x%04X, %d, %p);\n", type, stride, pointer); \
         } \
@@ -5565,7 +5455,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - left >= 0.01) { \
             match = 0; \
         } \
@@ -5586,9 +5477,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glOrthof(%0.2f, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f);\n", left, right, bottom, top, near, far); \
         } \
@@ -5631,7 +5519,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != left) { \
             match = 0; \
         } \
@@ -5652,9 +5541,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glOrthox(%p, %p, %p, %p, %p, %p);\n", left, right, bottom, top, near, far); \
         } \
@@ -5693,7 +5579,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -5702,9 +5589,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPixelStorei(0x%04X, %d);\n", pname, param); \
         } \
@@ -5743,7 +5627,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -5752,9 +5637,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterf(0x%04X, %0.2f);\n", pname, param); \
         } \
@@ -5793,20 +5675,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterfv(0x%04X, %p);\n", pname, params); \
         } \
@@ -5845,7 +5727,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
@@ -5854,9 +5737,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterx(0x%04X, %p);\n", pname, param); \
         } \
@@ -5895,20 +5775,20 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a2, *b = params; \
+        a = packed->args.a2, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointParameterxv(0x%04X, %p);\n", pname, params); \
         } \
@@ -5946,15 +5826,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - size >= 0.01) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointSize(%0.2f);\n", size); \
         } \
@@ -5994,23 +5872,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != type) { \
             match = 0; \
         } \
         if (packed->args.a2 != stride) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = pointer; \
+        a = packed->args.a3, b = pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pointer)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pointer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pointer)); \
+            mock_print_ptr("     found:", a, sizeof(pointer)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointSizePointerOES(0x%04X, %d, %p);\n", type, stride, pointer); \
         } \
@@ -6048,15 +5926,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPointSizex(%p);\n", size); \
         } \
@@ -6095,7 +5971,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - factor >= 0.01) { \
             match = 0; \
         } \
@@ -6104,9 +5981,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPolygonOffset(%0.2f, %0.2f);\n", factor, units); \
         } \
@@ -6145,7 +6019,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != factor) { \
             match = 0; \
         } \
@@ -6154,9 +6029,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPolygonOffsetx(%p, %p);\n", factor, units); \
         } \
@@ -6193,12 +6065,10 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPopMatrix();\n", ); \
         } \
@@ -6235,12 +6105,10 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glPushMatrix();\n", ); \
         } \
@@ -6284,7 +6152,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
@@ -6303,16 +6172,15 @@ static int failed_test = 0;
         if (packed->args.a6 != type) { \
             match = 0; \
         } \
-        void *a = packed->args.a7, *b = pixels; \
+        a = packed->args.a7, b = pixels; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pixels)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pixels\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pixels)); \
+            mock_print_ptr("     found:", a, sizeof(pixels)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glReadPixels(%d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", x, y, width, height, format, type, pixels); \
         } \
@@ -6353,7 +6221,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - angle >= 0.01) { \
             match = 0; \
         } \
@@ -6368,9 +6237,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glRotatef(%0.2f, %0.2f, %0.2f, %0.2f);\n", angle, x, y, z); \
         } \
@@ -6411,7 +6277,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != angle) { \
             match = 0; \
         } \
@@ -6426,9 +6293,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glRotatex(%p, %p, %p, %p);\n", angle, x, y, z); \
         } \
@@ -6467,7 +6331,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != value) { \
             match = 0; \
         } \
@@ -6476,9 +6341,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glSampleCoverage(%p, %d);\n", value, invert); \
         } \
@@ -6517,7 +6379,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != value) { \
             match = 0; \
         } \
@@ -6526,9 +6389,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glSampleCoveragex(%p, %d);\n", value, invert); \
         } \
@@ -6568,7 +6428,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - x >= 0.01) { \
             match = 0; \
         } \
@@ -6580,9 +6441,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glScalef(%0.2f, %0.2f, %0.2f);\n", x, y, z); \
         } \
@@ -6622,7 +6480,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
@@ -6634,9 +6493,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glScalex(%p, %p, %p);\n", x, y, z); \
         } \
@@ -6677,7 +6533,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
@@ -6692,9 +6549,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glScissor(%d, %d, %d, %d);\n", x, y, width, height); \
         } \
@@ -6732,15 +6586,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mode) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glShadeModel(0x%04X);\n", mode); \
         } \
@@ -6780,7 +6632,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != func) { \
             match = 0; \
         } \
@@ -6792,9 +6645,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glStencilFunc(0x%04X, %d, %u);\n", func, ref, mask); \
         } \
@@ -6832,15 +6682,13 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != mask) { \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glStencilMask(%u);\n", mask); \
         } \
@@ -6880,7 +6728,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != fail) { \
             match = 0; \
         } \
@@ -6892,9 +6741,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glStencilOp(0x%04X, 0x%04X, 0x%04X);\n", fail, zfail, zpass); \
         } \
@@ -6935,7 +6781,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
@@ -6945,16 +6792,15 @@ static int failed_test = 0;
         if (packed->args.a3 != stride) { \
             match = 0; \
         } \
-        void *a = packed->args.a4, *b = pointer; \
+        a = packed->args.a4, b = pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pointer)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pointer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pointer)); \
+            mock_print_ptr("     found:", a, sizeof(pointer)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexCoordPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
@@ -6994,7 +6840,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7006,9 +6853,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvf(0x%04X, 0x%04X, %0.2f);\n", target, pname, param); \
         } \
@@ -7048,23 +6892,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -7104,7 +6948,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7116,9 +6961,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvi(0x%04X, 0x%04X, %d);\n", target, pname, param); \
         } \
@@ -7158,23 +7000,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnviv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -7214,7 +7056,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7226,9 +7069,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvx(0x%04X, 0x%04X, %p);\n", target, pname, param); \
         } \
@@ -7268,23 +7108,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexEnvxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -7330,7 +7170,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7355,16 +7196,15 @@ static int failed_test = 0;
         if (packed->args.a8 != type) { \
             match = 0; \
         } \
-        void *a = packed->args.a9, *b = pixels; \
+        a = packed->args.a9, b = pixels; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pixels)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pixels\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pixels)); \
+            mock_print_ptr("     found:", a, sizeof(pixels)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, internalformat, width, height, border, format, type, pixels); \
         } \
@@ -7404,7 +7244,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7416,9 +7257,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterf(0x%04X, 0x%04X, %0.2f);\n", target, pname, param); \
         } \
@@ -7458,23 +7296,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -7514,7 +7352,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7526,9 +7365,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameteri(0x%04X, 0x%04X, %d);\n", target, pname, param); \
         } \
@@ -7568,23 +7404,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -7624,7 +7460,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7636,9 +7473,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterx(0x%04X, 0x%04X, %p);\n", target, pname, param); \
         } \
@@ -7678,23 +7512,23 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
         if (packed->args.a2 != pname) { \
             match = 0; \
         } \
-        void *a = packed->args.a3, *b = params; \
+        a = packed->args.a3, b = params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexParameterxv(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
@@ -7740,7 +7574,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != target) { \
             match = 0; \
         } \
@@ -7765,16 +7600,15 @@ static int failed_test = 0;
         if (packed->args.a8 != type) { \
             match = 0; \
         } \
-        void *a = packed->args.a9, *b = pixels; \
+        a = packed->args.a9, b = pixels; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pixels)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pixels\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pixels)); \
+            mock_print_ptr("     found:", a, sizeof(pixels)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, xoffset, yoffset, width, height, format, type, pixels); \
         } \
@@ -7814,7 +7648,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 - x >= 0.01) { \
             match = 0; \
         } \
@@ -7826,9 +7661,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTranslatef(%0.2f, %0.2f, %0.2f);\n", x, y, z); \
         } \
@@ -7868,7 +7700,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
@@ -7880,9 +7713,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glTranslatex(%p, %p, %p);\n", x, y, z); \
         } \
@@ -7923,7 +7753,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != size) { \
             match = 0; \
         } \
@@ -7933,16 +7764,15 @@ static int failed_test = 0;
         if (packed->args.a3 != stride) { \
             match = 0; \
         } \
-        void *a = packed->args.a4, *b = pointer; \
+        a = packed->args.a4, b = pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(pointer)) != 0))) { \
-            ptr_error = 1; \
+            printf("  ERROR: arg mismatch: pointer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(pointer)); \
+            mock_print_ptr("     found:", a, sizeof(pointer)); \
             match = 0; \
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glVertexPointer(%d, 0x%04X, %d, %p);\n", size, type, stride, pointer); \
         } \
@@ -7983,7 +7813,8 @@ static int failed_test = 0;
         mock_shift(); \
     } \
     if (packed) { \
-        int match = 1, ptr_error = 0; \
+        int match = 1; \
+        void *a, *b; \
         if (packed->args.a1 != x) { \
             match = 0; \
         } \
@@ -7998,9 +7829,6 @@ static int failed_test = 0;
         } \
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            if (ptr_error) { \
-                printf("  (pointer mismatch)\n"); \
-            } \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glViewport(%d, %d, %d, %d);\n", x, y, width, height); \
         } \
