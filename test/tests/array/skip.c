@@ -9,7 +9,7 @@ int main() {
         5, 5, 5, STRIDE,
     };
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 12 * 4, vert);
+    glVertexPointer(3, GL_FLOAT, 12 * sizeof(GLfloat), vert);
     glDrawArrays(GL_QUADS, 2, 4);
 
     GLfloat vert_out[] = {
