@@ -13,7 +13,7 @@ GLvoid *gl_copy_array(const GLvoid *src,
         stride = width * gl_sizeof(from);
 
     const char *unknown_str = "libGL: gl_copy_array -> unsupported type %s\n";
-    GLvoid *dst = malloc((count - skip + 1) * to_width * gl_sizeof(to));
+    GLvoid *dst = malloc(count * to_width * gl_sizeof(to));
     GLsizei from_size = gl_sizeof(from) * width;
     GLsizei to_size = gl_sizeof(to) * to_width;
 
