@@ -15,6 +15,8 @@ Compiling
 *or for the Raspberry Pi*
 
     cmake . -DBCMHOST=1; make GL
+    use was: LD_LIBRARY_PATH=/path/to/glshim/lib LIBGL_FB=1 ./glcode
+    use now: LD_LIBRARY_PATH=/path/to/glshim/lib            ./glcode
 
 ----
 
