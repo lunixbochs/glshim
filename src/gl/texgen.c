@@ -76,6 +76,9 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         t_plane = simd4f_uload4(Tp);
     }
     for (int i = 0; i < block->len; i++) {
+        if (block->indices) {
+            vert = block->vert + (block->indices[i]) * 3;
+        }
         if (! block->normal) {
             normal = CURRENT->normal;
         }
