@@ -364,6 +364,11 @@ Display *glXGetCurrentDisplay() {
 
 XVisualInfo *glXChooseVisual(Display *dpy, int screen, int *attribList) {
     PROXY_GLES(glXChooseVisual);
+    scan_env();
+    if (g_usefb) {
+        static XVisualInfo fake = {0};
+        return &fake;
+    }
 
     // apparently can't trust the Display I'm passed?
     if (g_display == NULL) {
@@ -566,6 +571,10 @@ int glXGetFBConfigAttrib(Display *dpy, GLXFBConfig config, int attribute, int *v
 
 XVisualInfo *glXGetVisualFromFBConfig(Display *dpy, GLXFBConfig config) {
     PROXY_GLES(glXGetVisualFromFBConfig);
+    if (g_usefb) {
+        static XVisualInfo fake = {0};
+        return &fake;
+    }
     if (g_display == NULL) {
         g_display = XOpenDisplay(NULL);
     }
