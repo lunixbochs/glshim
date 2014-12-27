@@ -560,14 +560,11 @@ void glEndList() {
 }
 
 void glCallList(GLuint list) {
+    PUSH_IF_COMPILING(glCallList);
     displaylist_t *l = get_list(list);
     displaylist_t *active = state.list.active;
     if (l) {
-        if (active) {
-            dl_extend(active, l);
-        } else {
-            dl_call(l);
-        }
+        dl_call(l);
     }
 }
 
