@@ -403,7 +403,11 @@ Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
 
     if (g_usefb)
         drawable = 0;
-    eglSurface = egl_eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, NULL);
+    static EGLint const window_attribute_list[] = {
+        EGL_RENDER_BUFFER, EGL_BACK_BUFFER,
+        EGL_NONE,
+    };
+    eglSurface = egl_eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, window_attribute_list);
     CheckEGLErrors();
 
     EGLBoolean result = egl_eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
