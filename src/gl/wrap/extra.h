@@ -4,13 +4,6 @@
 #ifndef GL_WRAP_H
 #define GL_WRAP_H
 
-#ifdef USE_ES2
-void glCompileShaderARB(GLuint shader);
-GLuint glCreateShaderObjectARB(GLenum shaderType);
-void glGetObjectParameterivARB(GLuint shader, GLenum pname, GLint *params);
-void glShaderSourceARB(GLuint shader, GLsizei count, const GLchar **string, const GLint *length);
-#endif
-
 #define THUNK(suffix, type)                                \
 void glColor3##suffix##v(const type *v);                   \
 void glColor3##suffix(type r, type g, type b);             \

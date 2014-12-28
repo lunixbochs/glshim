@@ -240,26 +240,34 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
     t.size = s; t.type = type; t.stride = stride; t.pointer = pointer;
 void glVertexPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
+#ifndef USE_ES2
     LOAD_GLES(glVertexPointer);
     clone_gl_pointer(state.pointers.vertex, size);
     gles_glVertexPointer(size, type, stride, pointer);
+#endif
 }
 void glColorPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
+#ifndef USE_ES2
     LOAD_GLES(glColorPointer);
     clone_gl_pointer(state.pointers.color, size);
     gles_glColorPointer(size, type, stride, pointer);
+#endif
 }
 void glNormalPointer(GLenum type, GLsizei stride, const GLvoid *pointer) {
+#ifndef USE_ES2
     LOAD_GLES(glNormalPointer);
     clone_gl_pointer(state.pointers.normal, 3);
     gles_glNormalPointer(type, stride, pointer);
+#endif
 }
 void glTexCoordPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
+#ifndef USE_ES2
     LOAD_GLES(glTexCoordPointer);
     clone_gl_pointer(state.pointers.tex_coord[state.texture.client], size);
     gles_glTexCoordPointer(size, type, stride, pointer);
+#endif
 }
 #undef clone_gl_pointer
 #endif
@@ -342,6 +350,7 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
                  color * gl_sizeof(cf) +
                  normal * gl_sizeof(nf) +
                  vert * gl_sizeof(vf);
+#ifndef USE_ES2
     if (tex) {
         glTexCoordPointer(tex, tf, stride, (GLvoid *)ptr);
         ptr += tex * gl_sizeof(tf);
@@ -354,8 +363,10 @@ void glInterleavedArrays(GLenum format, GLsizei stride, const GLvoid *pointer) {
         glNormalPointer(nf, stride, (GLvoid *)ptr);
         ptr += normal * gl_sizeof(nf);
     }
-    if (vert)
+    if (vert) {
         glVertexPointer(vert, vf, stride, (GLvoid *)ptr);
+    }
+#endif
 }
 
 // immediate mode functions
@@ -405,11 +416,13 @@ void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
     normal[1] = ny;
     normal[2] = nz;
 
+#ifndef USE_ES2
     if (! block) {
         PUSH_IF_COMPILING(glNormal3f);
         LOAD_GLES(glNormal3f);
         gles_glNormal3f(nx, ny, nz);
     }
+#endif
 }
 
 void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
@@ -447,9 +460,11 @@ void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
     tex[0] = s;
     tex[1] = t;
 
+#ifndef USE_ES2
     if (! block) {
         PUSH_IF_COMPILING(glMultiTexCoord2f);
     }
+#endif
 }
 
 void glArrayElement(GLint i) {
@@ -568,7 +583,9 @@ void glEndList() {
 }
 
 void glCallList(GLuint list) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glCallList);
+#endif
     displaylist_t *l = get_list(list);
     displaylist_t *active = state.list.active;
     if (l) {

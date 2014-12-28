@@ -776,7 +776,7 @@ enum FORMAT {
     FORMAT_void_GLenum_GLuint_GLuint_GLuint,
     FORMAT_void_GLenum_GLuint_GLuint_GLuint_GLuint,
     FORMAT_void_GLuint_GLsizei_GLchar__GENPT__const___GENPT___const_GLint___GENPT__,
-    FORMAT_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__,
+    FORMAT_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__,
     FORMAT_void_GLsizei_GLuint,
     FORMAT_void_GLsizei_GLenum_const_GLvoid___GENPT___GLuint_GLenum_GLuint_GLenum_const_GLfloat___GENPT__,
     FORMAT_void_GLuint_GLenum_GLuint,
@@ -14217,23 +14217,23 @@ typedef struct {
     int func;
     ARGS_void_GLuint_GLsizei_GLchar__GENPT__const___GENPT___const_GLint___GENPT__ args;
 } INDEXED_void_GLuint_GLsizei_GLchar__GENPT__const___GENPT___const_GLint___GENPT__;
-typedef void (*FUNC_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__)(GLhandleARB shaderObj, GLsizei count, const GLcharARB * string, const GLint * length);
+typedef void (*FUNC_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__)(GLhandleARB shaderObj, GLsizei count, const GLcharARB ** string, const GLint * lengths);
 typedef struct {
     GLhandleARB a1;
     GLsizei a2;
-    GLcharARB * a3;
+    GLcharARB ** a3;
     GLint * a4;
-} ARGS_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__;
+} ARGS_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__;
 typedef struct {
     int format;
-    FUNC_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__ func;
+    FUNC_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__ func;
     int refs;
-    ARGS_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__ args;
-} PACKED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__;
+    ARGS_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__ args;
+} PACKED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__;
 typedef struct {
     int func;
-    ARGS_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__ args;
-} INDEXED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__;
+    ARGS_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__ args;
+} INDEXED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__;
 typedef void (*FUNC_void_GLsizei_GLuint)(GLsizei stencilTagBits, GLuint stencilClearTag);
 typedef struct {
     GLsizei a1;
@@ -31889,11 +31889,11 @@ void glIndexedCall(const indexed_call_t *packed, void *ret_v);
 #define glShaderSource_FORMAT FORMAT_void_GLuint_GLsizei_GLchar__GENPT__const___GENPT___const_GLint___GENPT__
 #define glShaderSourceARB_INDEX 1931
 #define glShaderSourceARB_RETURN void
-#define glShaderSourceARB_ARG_NAMES shaderObj, count, string, length
-#define glShaderSourceARB_ARG_EXPAND GLhandleARB shaderObj, GLsizei count, const GLcharARB * string, const GLint * length
-#define glShaderSourceARB_PACKED PACKED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__
-#define glShaderSourceARB_INDEXED INDEXED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__
-#define glShaderSourceARB_FORMAT FORMAT_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT___const_GLint___GENPT__
+#define glShaderSourceARB_ARG_NAMES shaderObj, count, string, lengths
+#define glShaderSourceARB_ARG_EXPAND GLhandleARB shaderObj, GLsizei count, const GLcharARB ** string, const GLint * lengths
+#define glShaderSourceARB_PACKED PACKED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__
+#define glShaderSourceARB_INDEXED INDEXED_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__
+#define glShaderSourceARB_FORMAT FORMAT_void_GLhandleARB_GLsizei_const_GLcharARB___GENPT____GENPT___const_GLint___GENPT__
 #define glShaderStorageBlockBinding_INDEX 1932
 #define glShaderStorageBlockBinding_RETURN void
 #define glShaderStorageBlockBinding_ARG_NAMES program, storageBlockIndex, storageBlockBinding
@@ -67411,15 +67411,15 @@ typedef void (*glXWaitX_PTR)(glXWaitX_ARG_EXPAND);
 }
 #endif
 #ifndef direct_glShaderSourceARB
-#define push_glShaderSourceARB(shaderObj, count, string, length) { \
+#define push_glShaderSourceARB(shaderObj, count, string, lengths) { \
     glShaderSourceARB_PACKED *packed_data = malloc(sizeof(glShaderSourceARB_PACKED)); \
     packed_data->format = glShaderSourceARB_FORMAT; \
     packed_data->func = glShaderSourceARB; \
     packed_data->refs = 0; \
     packed_data->args.a1 = (GLhandleARB)shaderObj; \
     packed_data->args.a2 = (GLsizei)count; \
-    packed_data->args.a3 = (GLcharARB *)string; \
-    packed_data->args.a4 = (GLint *)length; \
+    packed_data->args.a3 = (GLcharARB **)string; \
+    packed_data->args.a4 = (GLint *)lengths; \
     glPushCall((void *)packed_data); \
 }
 #endif

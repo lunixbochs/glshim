@@ -156,9 +156,7 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     EX(glArrayElement);
     EX(glBegin);
     EX(glBitmap);
-    EX(glBlendEquationSeparatei);
     EX(glBlendFuncSeparate);
-    EX(glBlendFuncSeparatei);
     EX(glCallList);
     EX(glCallLists);
     EX(glClearDepth);
@@ -202,10 +200,13 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     EX(glInterleavedArrays);
     EX(glIsList);
 #ifndef USE_ES2
-    EX(glLighti);
-    EX(glLightiv);
+    EX(glBlendEquationSeparatei);
+    EX(glBlendFuncSeparatei);
     EX(glLightModeli);
     EX(glLightModeliv);
+    EX(glLighti);
+    EX(glLightiv);
+    EX(glMateriali);
 #endif
     EX(glLineStipple);
     EX(glListBase);
@@ -220,7 +221,6 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     EX(glMapGrid1f);
     EX(glMapGrid2d);
     EX(glMapGrid2f);
-    EX(glMateriali);
     EX(glMultiTexCoord2f);
     EX(glMultiTexCoord2fARB);
     EX(glMultiTexCoord2fv);

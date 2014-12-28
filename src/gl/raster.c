@@ -18,7 +18,9 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     if (state.block.active) {
         ERROR(GL_INVALID_OPERATION);
     }
+#ifndef USE_ES2
     PROXY_GLES(glRasterPos3f);
+#endif
     raster_state_t *raster = &state.raster;
     // TODO: glRasterPos4f?
     // TODO: actually project, and clear the valid bit if we end up outside the viewport
@@ -70,7 +72,9 @@ void init_raster() {
 
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
               GLfloat xmove, GLfloat ymove, const GLubyte *bitmap) {
+#ifndef USE_ES2
     PROXY_GLES(glBitmap);
+#endif
     raster_state_t *raster = &state.raster;
     if (! raster->valid) {
         return;
@@ -117,7 +121,9 @@ void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
     GLubyte *to;
     GLvoid *dst = NULL;
 
+#ifndef USE_ES2
     PROXY_GLES(glDrawPixels);
+#endif
 
     init_raster();
     if (! pixel_convert(data, &dst, width, height,

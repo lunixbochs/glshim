@@ -28,8 +28,8 @@ void glCompileShaderARB(GLuint shader) {
 GLuint glCreateShaderObjectARB(GLenum shaderType) {
     return glCreateShader(shaderType);
 }
-void glShaderSourceARB(GLuint shader, GLsizei count, const GLchar **string, const GLint *length) {
-    glShaderSource(shader, count, string, length);
+void glShaderSourceARB(GLhandleARB shaderObj, GLsizei count, const GLcharARB *string, const GLint *length) {
+    glShaderSource(shaderObj, count, string, length);
 }
 void glGetObjectParameterivARB(GLuint shader, GLenum pname, GLint *params) {
     glGetShaderiv(shader, pname, params);
@@ -135,7 +135,6 @@ void glLightModeliv(GLenum pname, const GLint *iparams) {
         }
     }
 }
-#endif
 void glMateriali(GLenum face, GLenum pname, GLint param) {
     glMaterialf(face, pname, param);
 }
@@ -175,6 +174,7 @@ void glGetMaterialiv(GLenum face, GLenum pname, GLint *param) {
             break;
     }
 }
+#endif
 void glMultiTexCoord1f(GLenum target, GLfloat s) {
     glMultiTexCoord2f(target, s, 0);
 }

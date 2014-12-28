@@ -551,7 +551,7 @@ ARB_shader_objects:
   glGetUniformivARB: [void, GLhandleARB programObj, GLint location, GLint *params]
   glLinkProgramARB: [void, GLhandleARB programObj]
   glShaderSourceARB: [void, GLhandleARB shaderObj, GLsizei count, const GLcharARB
-      *string, const GLint *length]
+      **string, const GLint *lengths]
   glUniform1fARB: [void, GLint location, GLfloat v0]
   glUniform1fvARB: [void, GLint location, GLsizei count, const GLfloat *value]
   glUniform1iARB: [void, GLint location, GLint v0]

@@ -7,7 +7,11 @@
 #include <string.h>
 
 #include "const.h"
+#ifdef USE_ES2
+#include "wrap/gles2.h"
+#else
 #include "wrap/gles.h"
+#endif
 
 // will become references to dlopen'd gles and egl
 extern void *gles, *egl;

@@ -304,7 +304,9 @@ void glActiveTexture(GLenum texture) {
 }
 
 void glClientActiveTexture(GLenum texture) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glClientActiveTexture);
+#endif
     GLuint new = texture - GL_TEXTURE0;
     if (state.texture.client == new) {
         return;
@@ -315,14 +317,18 @@ void glClientActiveTexture(GLenum texture) {
         return;
     }
     state.texture.client = new;
+#ifndef USE_ES2
     LOAD_GLES(glClientActiveTexture);
     gles_glClientActiveTexture(texture);
+#endif
 }
 
 void glTexEnvf(GLenum target, GLenum pname, GLfloat param) {
     ERROR_IN_BLOCK();
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glTexEnvf);
     PROXY_GLES(glTexEnvf);
+#endif
 }
 
 // TODO: also glTexParameterf(v)?

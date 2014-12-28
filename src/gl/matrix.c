@@ -68,31 +68,39 @@ static void update_mvp() {
 }
 
 static void upload_matrix() {
-    LOAD_GLES(glLoadMatrixf);
     GLfloat tmp[16];
     simd4x4f_ustore(get_current_matrix(), tmp);
+#ifndef USE_ES2
+    LOAD_GLES(glLoadMatrixf);
     gles_glLoadMatrixf(tmp);
+#endif
 }
 
 // GL matrix functions
 void glLoadIdentity() {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glLoadIdentity);
+    PROXY_MATRIX(glLoadIdentity);
+#endif
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f_identity(get_current_matrix());
-    PROXY_MATRIX(glLoadIdentity);
 }
 
 void glLoadMatrixf(const GLfloat *m) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glLoadMatrixf);
+    PROXY_MATRIX(glLoadMatrixf);
+#endif
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f_uload(get_current_matrix(), m);
-    PROXY_MATRIX(glLoadMatrixf);
 }
 
 void glLoadTransposeMatrixf(const GLfloat *m) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glLoadTransposeMatrixf);
+#endif
     ERROR_IN_BLOCK();
     GLfloat tmp[16];
     transpose(tmp, m);
@@ -100,7 +108,10 @@ void glLoadTransposeMatrixf(const GLfloat *m) {
 }
 
 void glMatrixMode(GLenum mode) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glMatrixMode);
+    PROXY_MATRIX(glMatrixMode);
+#endif
     ERROR_IN_BLOCK();
     switch (mode) {
         case GL_MODELVIEW:
@@ -112,11 +123,12 @@ void glMatrixMode(GLenum mode) {
             ERROR(GL_INVALID_ENUM);
     }
     state.matrix.mode = mode;
-    PROXY_MATRIX(glMatrixMode);
 }
 
 void glMultMatrixf(const GLfloat *m) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glMultMatrixf);
+#endif
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f out, load, *cur = get_current_matrix();
@@ -127,7 +139,9 @@ void glMultMatrixf(const GLfloat *m) {
 }
 
 void glMultTransposeMatrixf(const GLfloat *m) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glMultTransposeMatrixf);
+#endif
     ERROR_IN_BLOCK();
     GLfloat tmp[16];
     transpose(tmp, m);
@@ -135,7 +149,9 @@ void glMultTransposeMatrixf(const GLfloat *m) {
 }
 
 void glPopMatrix() {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glPopMatrix);
+#endif
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     matrix_state_t *m = get_current_state();
@@ -149,7 +165,9 @@ void glPopMatrix() {
 }
 
 void glPushMatrix() {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glPushMatrix);
+#endif
     ERROR_IN_BLOCK();
     matrix_state_t *m = get_current_state();
     simd4x4f *push = malloc(sizeof(simd4x4f));
@@ -159,7 +177,9 @@ void glPushMatrix() {
 
 // GL transform functions
 void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glRotatef);
+#endif
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     float radians = angle * VECTORIAL_PI / 180;
@@ -171,7 +191,9 @@ void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
 }
 
 void glScalef(GLfloat x, GLfloat y, GLfloat z) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glScalef);
+#endif
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), scale, out;
@@ -182,7 +204,9 @@ void glScalef(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glTranslatef);
+#endif
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     simd4x4f *m = get_current_matrix(), translate, out;
@@ -195,7 +219,9 @@ void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
 void glOrthof(GLfloat left, GLfloat right,
               GLfloat bottom, GLfloat top,
               GLfloat near, GLfloat far) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glOrthof);
+#endif
     ERROR_IN_BLOCK();
     if (left == right || bottom == top || near == far) {
         ERROR(GL_INVALID_VALUE);
@@ -211,7 +237,9 @@ void glOrthof(GLfloat left, GLfloat right,
 void glFrustumf(GLfloat left, GLfloat right,
                 GLfloat bottom, GLfloat top,
                 GLfloat near, GLfloat far) {
+#ifndef USE_ES2
     PUSH_IF_COMPILING(glFrustumf);
+#endif
     ERROR_IN_BLOCK();
     if (near < 0 || far < 0 || left == right || bottom == top || near == far) {
         ERROR(GL_INVALID_VALUE);
