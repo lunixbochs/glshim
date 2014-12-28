@@ -1,6 +1,9 @@
+#ifdef __linux__
+#include <linux/fb.h>
+#endif
+
 #include <execinfo.h>
 #include <fcntl.h>
-#include <linux/fb.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <sys/ioctl.h>
@@ -114,8 +117,10 @@ static EGLContext eglContext;
 static GLXContext glxContext;
 static Display *g_display;
 
+#ifdef __linux__
 #ifndef FBIO_WAITFORVSYNC
 #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
+#endif
 #endif
 static bool g_showfps = false;
 static bool g_liveinfo = true;
@@ -476,6 +481,7 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
     PROXY_GLES(glXSwapBuffers);
     LOAD_EGL(eglSwapBuffers);
     render_raster();
+#ifdef __linux__
     if (g_vsync && fbdev >= 0) {
         // TODO: can I just return if I don't meet vsync over multiple frames?
         // this will just block otherwise.
@@ -484,6 +490,7 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
             ioctl(fbdev, FBIO_WAITFORVSYNC, &arg);
         }
     }
+#endif
     egl_eglSwapBuffers(eglDisplay, eglSurface);
     CheckEGLErrors();
 }

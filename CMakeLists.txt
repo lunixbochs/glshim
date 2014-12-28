@@ -15,6 +15,10 @@ if(BCMHOST)
     add_definitions(-DBCMHOST -D_GNU_SOURCE)
 endif()
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    link_directories(/opt/X11/lib)
+endif()
+
 link_directories(${CMAKE_BINARY_DIR}/lib)
 add_definitions(-O2)
 include(flags.cmake)
