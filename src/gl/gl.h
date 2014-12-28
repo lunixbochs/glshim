@@ -26,8 +26,6 @@
 #include "../config.h"
 #include "wrap/es.h"
 
-#define CURRENT (state.list.active ? &state.list.current : &state.current)
-
 #include "gl_helpers.h"
 #include "defines.h"
 
