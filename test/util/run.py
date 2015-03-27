@@ -176,7 +176,7 @@ def run(args):
     for i, test in enumerate(tests):
         headline = '[{}/{}] {} ['.format(i + 1, len(tests), test.name)
         print term.bold(headline.ljust(79, '-')),
-        out(back(8) + ' ' + step_fmt('build'))
+        out(back(8) + term.bold('-') + step_fmt('build'))
 
         try:
             build = test.build(args.project)
@@ -195,7 +195,7 @@ def run(args):
                 print
                 traceback.print_exc()
 
-        out(back(max(7, len(test.status) + 3)) + '  ' + status_fmt(test))
+        out(back(max(7, len(test.status) + 3)) + term.bold('--') + status_fmt(test))
         print
 
         if test.output:
