@@ -53,6 +53,7 @@
 #define skip_glActiveTexture
 #define skip_glBindTexture
 #define skip_glClientActiveTexture
+#define skip_glCompressedTexImage2D
 #define skip_glDeleteTextures
 #define skip_glMultiTexCoord4f
 #define skip_glPixelStorei

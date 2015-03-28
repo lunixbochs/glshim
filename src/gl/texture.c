@@ -381,3 +381,25 @@ void glPrioritizeTextures(GLsizei n, const GLuint *textures, const GLclampf *pri
         ERROR(GL_INVALID_VALUE);
     }
 }
+
+
+void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalFormat,
+                            GLsizei width, GLsizei height, GLint border,
+                            GLsizei imageSize, const GLvoid *data) {
+    LOAD_GLES(glGetIntegerv);
+    GLint num;
+    gles_glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &num);
+    if (num > 0) {
+        GLint *formats = malloc(num * sizeof(GLint));
+        gles_glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, formats);
+        free(formats);
+        for (GLint i = 0; i < num; i++) {
+            if (formats[i] == internalFormat) {
+                PROXY_GLES(glCompressedTexImage2D);
+            }
+        }
+    }
+    switch (internalFormat) {
+        default: ERROR(GL_INVALID_ENUM);
+    }
+}
