@@ -129,12 +129,12 @@ static bool g_usefb = false;
 static bool g_vsync = false;
 static bool g_xrefresh = false;
 static bool g_stacktrace = false;
+// raspberry pi globals
 static bool g_bcm_active = false;
-#ifndef BCMHOST
 static bool g_bcmhost = false;
-#else
-static bool g_bcmhost = true;
-#endif
+
+void (*bcm_host_init)();
+void (*bcm_host_deinit)();
 
 static int fbdev = -1;
 static int swap_interval = 1;
@@ -166,12 +166,10 @@ static void signal_handler(int sig) {
     if (g_xrefresh)
         xrefresh();
 
-#ifdef BCMHOST
-    if (g_bcm_active) {
+    if (g_bcmhost && g_bcm_active) {
         g_bcm_active = false;
         bcm_host_deinit();
     }
-#endif
 
     if (g_stacktrace) {
         switch (sig) {
@@ -211,6 +209,10 @@ static void scan_env() {
 
     env(LIBGL_XREFRESH, g_xrefresh, "xrefresh will be called on cleanup");
     env(LIBGL_STACKTRACE, g_stacktrace, "stacktrace will be printed on crash");
+    bcm_host_init = dlsym(RTLD_NEXT, "bcm_host_init");
+    bcm_host_deinit = dlsym(RTLD_NEXT, "bcm_host_deinit");
+    if (bcm_host_init && bcm_host_deinit)
+        g_bcmhost = true;
     if (g_xrefresh || g_stacktrace || g_bcmhost) {
         // TODO: a bit gross. Maybe look at this: http://stackoverflow.com/a/13290134/293352
         signal(SIGBUS, signal_handler);
@@ -224,9 +226,8 @@ static void scan_env() {
         }
         if (g_xrefresh)
             atexit(xrefresh);
-#ifdef BCMHOST
+        if (g_bcmhost && g_bcm_active)
             atexit(bcm_host_deinit);
-#endif
     }
     env(LIBGL_FB, g_usefb, "framebuffer output enabled");
     env(LIBGL_FPS, g_showfps, "fps counter enabled");
@@ -275,12 +276,10 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
 #endif
 
 
-#ifdef BCMHOST
-    if (! g_bcm_active) {
+    if (g_bcmhost && !g_bcm_active) {
         g_bcm_active = true;
         bcm_host_init();
     }
-#endif
 
     GLXContext fake = malloc(sizeof(struct __GLXContextRec));
     if (eglDisplay != NULL) {
