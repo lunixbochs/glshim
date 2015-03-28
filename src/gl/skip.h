@@ -26,7 +26,7 @@
 #define skip_glGetIntegerv
 #define skip_glGetString
 
-// matrix.cpp
+// matrix.c
 #define skip_glFrustumf
 #define skip_glLoadIdentity
 #define skip_glLoadMatrixf
