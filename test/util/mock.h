@@ -238,6 +238,102 @@ static int failed_test = 0;
         } \
     } \
 }
+#define pack_glBindFramebufferOES(target, framebuffer) ({ \
+    glBindFramebufferOES_INDEXED *packed_data = malloc(sizeof(glBindFramebufferOES_INDEXED)); \
+    packed_data->func = glBindFramebufferOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLuint)framebuffer; \
+    packed_data; \
+})
+#define emit_glBindFramebufferOES(target, framebuffer) { \
+    mock_push(pack_glBindFramebufferOES(target, framebuffer)); \
+}
+#define test_glBindFramebufferOES(target, framebuffer) { \
+    glBindFramebufferOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glBindFramebufferOES missing (no calls left)\n"); \
+    } else if (packed->func != glBindFramebufferOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glBindFramebufferOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glBindFramebufferOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glBindFramebufferOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != framebuffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glBindFramebufferOES(0x%04X, %u);\n", target, framebuffer); \
+        } \
+    } \
+}
+#define pack_glBindRenderbufferOES(target, renderbuffer) ({ \
+    glBindRenderbufferOES_INDEXED *packed_data = malloc(sizeof(glBindRenderbufferOES_INDEXED)); \
+    packed_data->func = glBindRenderbufferOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLuint)renderbuffer; \
+    packed_data; \
+})
+#define emit_glBindRenderbufferOES(target, renderbuffer) { \
+    mock_push(pack_glBindRenderbufferOES(target, renderbuffer)); \
+}
+#define test_glBindRenderbufferOES(target, renderbuffer) { \
+    glBindRenderbufferOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glBindRenderbufferOES missing (no calls left)\n"); \
+    } else if (packed->func != glBindRenderbufferOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glBindRenderbufferOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glBindRenderbufferOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glBindRenderbufferOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != renderbuffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glBindRenderbufferOES(0x%04X, %u);\n", target, renderbuffer); \
+        } \
+    } \
+}
 #define pack_glBindTexture(target, texture) ({ \
     glBindTexture_INDEXED *packed_data = malloc(sizeof(glBindTexture_INDEXED)); \
     packed_data->func = glBindTexture_INDEX; \
@@ -655,6 +751,50 @@ static int failed_test = 0;
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glBufferSubData(0x%04X, %d, %d, %p);\n", target, offset, size, data); \
+        } \
+    } \
+}
+#define pack_glCheckFramebufferStatusOES(target) ({ \
+    glCheckFramebufferStatusOES_INDEXED *packed_data = malloc(sizeof(glCheckFramebufferStatusOES_INDEXED)); \
+    packed_data->func = glCheckFramebufferStatusOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data; \
+})
+#define emit_glCheckFramebufferStatusOES(target) { \
+    mock_push(pack_glCheckFramebufferStatusOES(target)); \
+}
+#define test_glCheckFramebufferStatusOES(target) { \
+    glCheckFramebufferStatusOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glCheckFramebufferStatusOES missing (no calls left)\n"); \
+    } else if (packed->func != glCheckFramebufferStatusOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glCheckFramebufferStatusOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glCheckFramebufferStatusOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glCheckFramebufferStatusOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glCheckFramebufferStatusOES(0x%04X);\n", target); \
         } \
     } \
 }
@@ -1774,6 +1914,110 @@ static int failed_test = 0;
         } \
     } \
 }
+#define pack_glDeleteFramebuffersOES(n, framebuffers) ({ \
+    glDeleteFramebuffersOES_INDEXED *packed_data = malloc(sizeof(glDeleteFramebuffersOES_INDEXED)); \
+    packed_data->func = glDeleteFramebuffersOES_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)framebuffers; \
+    packed_data; \
+})
+#define emit_glDeleteFramebuffersOES(n, framebuffers) { \
+    mock_push(pack_glDeleteFramebuffersOES(n, framebuffers)); \
+}
+#define test_glDeleteFramebuffersOES(n, framebuffers) { \
+    glDeleteFramebuffersOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glDeleteFramebuffersOES missing (no calls left)\n"); \
+    } else if (packed->func != glDeleteFramebuffersOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glDeleteFramebuffersOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDeleteFramebuffersOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glDeleteFramebuffersOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        a = packed->args.a2, b = framebuffers; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(framebuffers)) != 0))) { \
+            printf("  ERROR: arg mismatch: framebuffers\n"); \
+            mock_print_ptr("  expected:", b, sizeof(framebuffers)); \
+            mock_print_ptr("     found:", a, sizeof(framebuffers)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glDeleteFramebuffersOES(%d, %p);\n", n, framebuffers); \
+        } \
+    } \
+}
+#define pack_glDeleteRenderbuffersOES(n, renderbuffers) ({ \
+    glDeleteRenderbuffersOES_INDEXED *packed_data = malloc(sizeof(glDeleteRenderbuffersOES_INDEXED)); \
+    packed_data->func = glDeleteRenderbuffersOES_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)renderbuffers; \
+    packed_data; \
+})
+#define emit_glDeleteRenderbuffersOES(n, renderbuffers) { \
+    mock_push(pack_glDeleteRenderbuffersOES(n, renderbuffers)); \
+}
+#define test_glDeleteRenderbuffersOES(n, renderbuffers) { \
+    glDeleteRenderbuffersOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glDeleteRenderbuffersOES missing (no calls left)\n"); \
+    } else if (packed->func != glDeleteRenderbuffersOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glDeleteRenderbuffersOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glDeleteRenderbuffersOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glDeleteRenderbuffersOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        a = packed->args.a2, b = renderbuffers; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(renderbuffers)) != 0))) { \
+            printf("  ERROR: arg mismatch: renderbuffers\n"); \
+            mock_print_ptr("  expected:", b, sizeof(renderbuffers)); \
+            mock_print_ptr("     found:", a, sizeof(renderbuffers)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glDeleteRenderbuffersOES(%d, %p);\n", n, renderbuffers); \
+        } \
+    } \
+}
 #define pack_glDeleteTextures(n, textures) ({ \
     glDeleteTextures_INDEXED *packed_data = malloc(sizeof(glDeleteTextures_INDEXED)); \
     packed_data->func = glDeleteTextures_INDEX; \
@@ -2578,6 +2822,122 @@ static int failed_test = 0;
         } \
     } \
 }
+#define pack_glFramebufferRenderbufferOES(target, attachment, renderbuffertarget, renderbuffer) ({ \
+    glFramebufferRenderbufferOES_INDEXED *packed_data = malloc(sizeof(glFramebufferRenderbufferOES_INDEXED)); \
+    packed_data->func = glFramebufferRenderbufferOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)attachment; \
+    packed_data->args.a3 = (GLenum)renderbuffertarget; \
+    packed_data->args.a4 = (GLuint)renderbuffer; \
+    packed_data; \
+})
+#define emit_glFramebufferRenderbufferOES(target, attachment, renderbuffertarget, renderbuffer) { \
+    mock_push(pack_glFramebufferRenderbufferOES(target, attachment, renderbuffertarget, renderbuffer)); \
+}
+#define test_glFramebufferRenderbufferOES(target, attachment, renderbuffertarget, renderbuffer) { \
+    glFramebufferRenderbufferOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glFramebufferRenderbufferOES missing (no calls left)\n"); \
+    } else if (packed->func != glFramebufferRenderbufferOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glFramebufferRenderbufferOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFramebufferRenderbufferOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glFramebufferRenderbufferOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != attachment) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != renderbuffertarget) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != renderbuffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glFramebufferRenderbufferOES(0x%04X, 0x%04X, 0x%04X, %u);\n", target, attachment, renderbuffertarget, renderbuffer); \
+        } \
+    } \
+}
+#define pack_glFramebufferTexture2DOES(target, attachment, textarget, texture, level) ({ \
+    glFramebufferTexture2DOES_INDEXED *packed_data = malloc(sizeof(glFramebufferTexture2DOES_INDEXED)); \
+    packed_data->func = glFramebufferTexture2DOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)attachment; \
+    packed_data->args.a3 = (GLenum)textarget; \
+    packed_data->args.a4 = (GLuint)texture; \
+    packed_data->args.a5 = (GLint)level; \
+    packed_data; \
+})
+#define emit_glFramebufferTexture2DOES(target, attachment, textarget, texture, level) { \
+    mock_push(pack_glFramebufferTexture2DOES(target, attachment, textarget, texture, level)); \
+}
+#define test_glFramebufferTexture2DOES(target, attachment, textarget, texture, level) { \
+    glFramebufferTexture2DOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glFramebufferTexture2DOES missing (no calls left)\n"); \
+    } else if (packed->func != glFramebufferTexture2DOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glFramebufferTexture2DOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glFramebufferTexture2DOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glFramebufferTexture2DOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != attachment) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != textarget) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != texture) { \
+            match = 0; \
+        } \
+        if (packed->args.a5 != level) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glFramebufferTexture2DOES(0x%04X, 0x%04X, 0x%04X, %u, %d);\n", target, attachment, textarget, texture, level); \
+        } \
+    } \
+}
 #define pack_glFrontFace(mode) ({ \
     glFrontFace_INDEXED *packed_data = malloc(sizeof(glFrontFace_INDEXED)); \
     packed_data->func = glFrontFace_INDEX; \
@@ -2802,6 +3162,110 @@ static int failed_test = 0;
         } \
     } \
 }
+#define pack_glGenFramebuffersOES(n, framebuffers) ({ \
+    glGenFramebuffersOES_INDEXED *packed_data = malloc(sizeof(glGenFramebuffersOES_INDEXED)); \
+    packed_data->func = glGenFramebuffersOES_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)framebuffers; \
+    packed_data; \
+})
+#define emit_glGenFramebuffersOES(n, framebuffers) { \
+    mock_push(pack_glGenFramebuffersOES(n, framebuffers)); \
+}
+#define test_glGenFramebuffersOES(n, framebuffers) { \
+    glGenFramebuffersOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glGenFramebuffersOES missing (no calls left)\n"); \
+    } else if (packed->func != glGenFramebuffersOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glGenFramebuffersOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGenFramebuffersOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glGenFramebuffersOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        a = packed->args.a2, b = framebuffers; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(framebuffers)) != 0))) { \
+            printf("  ERROR: arg mismatch: framebuffers\n"); \
+            mock_print_ptr("  expected:", b, sizeof(framebuffers)); \
+            mock_print_ptr("     found:", a, sizeof(framebuffers)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glGenFramebuffersOES(%d, %p);\n", n, framebuffers); \
+        } \
+    } \
+}
+#define pack_glGenRenderbuffersOES(n, renderbuffers) ({ \
+    glGenRenderbuffersOES_INDEXED *packed_data = malloc(sizeof(glGenRenderbuffersOES_INDEXED)); \
+    packed_data->func = glGenRenderbuffersOES_INDEX; \
+    packed_data->args.a1 = (GLsizei)n; \
+    packed_data->args.a2 = (GLuint *)renderbuffers; \
+    packed_data; \
+})
+#define emit_glGenRenderbuffersOES(n, renderbuffers) { \
+    mock_push(pack_glGenRenderbuffersOES(n, renderbuffers)); \
+}
+#define test_glGenRenderbuffersOES(n, renderbuffers) { \
+    glGenRenderbuffersOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glGenRenderbuffersOES missing (no calls left)\n"); \
+    } else if (packed->func != glGenRenderbuffersOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glGenRenderbuffersOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGenRenderbuffersOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glGenRenderbuffersOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != n) { \
+            match = 0; \
+        } \
+        a = packed->args.a2, b = renderbuffers; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(renderbuffers)) != 0))) { \
+            printf("  ERROR: arg mismatch: renderbuffers\n"); \
+            mock_print_ptr("  expected:", b, sizeof(renderbuffers)); \
+            mock_print_ptr("     found:", a, sizeof(renderbuffers)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glGenRenderbuffersOES(%d, %p);\n", n, renderbuffers); \
+        } \
+    } \
+}
 #define pack_glGenTextures(n, textures) ({ \
     glGenTextures_INDEXED *packed_data = malloc(sizeof(glGenTextures_INDEXED)); \
     packed_data->func = glGenTextures_INDEX; \
@@ -2851,6 +3315,50 @@ static int failed_test = 0;
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGenTextures(%d, %p);\n", n, textures); \
+        } \
+    } \
+}
+#define pack_glGenerateMipmapOES(target) ({ \
+    glGenerateMipmapOES_INDEXED *packed_data = malloc(sizeof(glGenerateMipmapOES_INDEXED)); \
+    packed_data->func = glGenerateMipmapOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data; \
+})
+#define emit_glGenerateMipmapOES(target) { \
+    mock_push(pack_glGenerateMipmapOES(target)); \
+}
+#define test_glGenerateMipmapOES(target) { \
+    glGenerateMipmapOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glGenerateMipmapOES missing (no calls left)\n"); \
+    } else if (packed->func != glGenerateMipmapOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glGenerateMipmapOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGenerateMipmapOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glGenerateMipmapOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glGenerateMipmapOES(0x%04X);\n", target); \
         } \
     } \
 }
@@ -3210,6 +3718,66 @@ static int failed_test = 0;
         } \
     } \
 }
+#define pack_glGetFramebufferAttachmentParameterivOES(target, attachment, pname, params) ({ \
+    glGetFramebufferAttachmentParameterivOES_INDEXED *packed_data = malloc(sizeof(glGetFramebufferAttachmentParameterivOES_INDEXED)); \
+    packed_data->func = glGetFramebufferAttachmentParameterivOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)attachment; \
+    packed_data->args.a3 = (GLenum)pname; \
+    packed_data->args.a4 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glGetFramebufferAttachmentParameterivOES(target, attachment, pname, params) { \
+    mock_push(pack_glGetFramebufferAttachmentParameterivOES(target, attachment, pname, params)); \
+}
+#define test_glGetFramebufferAttachmentParameterivOES(target, attachment, pname, params) { \
+    glGetFramebufferAttachmentParameterivOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetFramebufferAttachmentParameterivOES missing (no calls left)\n"); \
+    } else if (packed->func != glGetFramebufferAttachmentParameterivOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glGetFramebufferAttachmentParameterivOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetFramebufferAttachmentParameterivOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glGetFramebufferAttachmentParameterivOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != attachment) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != pname) { \
+            match = 0; \
+        } \
+        a = packed->args.a4, b = params; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glGetFramebufferAttachmentParameterivOES(0x%04X, 0x%04X, 0x%04X, %p);\n", target, attachment, pname, params); \
+        } \
+    } \
+}
 #define pack_glGetIntegerv(pname, params) ({ \
     glGetIntegerv_INDEXED *packed_data = malloc(sizeof(glGetIntegerv_INDEXED)); \
     packed_data->func = glGetIntegerv_INDEX; \
@@ -3535,6 +4103,62 @@ static int failed_test = 0;
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glGetPointerv(0x%04X, %p);\n", pname, params); \
+        } \
+    } \
+}
+#define pack_glGetRenderbufferParameterivOES(target, pname, params) ({ \
+    glGetRenderbufferParameterivOES_INDEXED *packed_data = malloc(sizeof(glGetRenderbufferParameterivOES_INDEXED)); \
+    packed_data->func = glGetRenderbufferParameterivOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)pname; \
+    packed_data->args.a3 = (GLint *)params; \
+    packed_data; \
+})
+#define emit_glGetRenderbufferParameterivOES(target, pname, params) { \
+    mock_push(pack_glGetRenderbufferParameterivOES(target, pname, params)); \
+}
+#define test_glGetRenderbufferParameterivOES(target, pname, params) { \
+    glGetRenderbufferParameterivOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glGetRenderbufferParameterivOES missing (no calls left)\n"); \
+    } else if (packed->func != glGetRenderbufferParameterivOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glGetRenderbufferParameterivOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glGetRenderbufferParameterivOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glGetRenderbufferParameterivOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != pname) { \
+            match = 0; \
+        } \
+        a = packed->args.a3, b = params; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(params)) != 0))) { \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(params)); \
+            mock_print_ptr("     found:", a, sizeof(params)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glGetRenderbufferParameterivOES(0x%04X, 0x%04X, %p);\n", target, pname, params); \
         } \
     } \
 }
@@ -4051,6 +4675,94 @@ static int failed_test = 0;
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const indexed_call_t *)packed); \
             printf("  want: glIsEnabled(0x%04X);\n", cap); \
+        } \
+    } \
+}
+#define pack_glIsFramebufferOES(framebuffer) ({ \
+    glIsFramebufferOES_INDEXED *packed_data = malloc(sizeof(glIsFramebufferOES_INDEXED)); \
+    packed_data->func = glIsFramebufferOES_INDEX; \
+    packed_data->args.a1 = (GLuint)framebuffer; \
+    packed_data; \
+})
+#define emit_glIsFramebufferOES(framebuffer) { \
+    mock_push(pack_glIsFramebufferOES(framebuffer)); \
+}
+#define test_glIsFramebufferOES(framebuffer) { \
+    glIsFramebufferOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glIsFramebufferOES missing (no calls left)\n"); \
+    } else if (packed->func != glIsFramebufferOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glIsFramebufferOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glIsFramebufferOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glIsFramebufferOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != framebuffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glIsFramebufferOES(%u);\n", framebuffer); \
+        } \
+    } \
+}
+#define pack_glIsRenderbufferOES(renderbuffer) ({ \
+    glIsRenderbufferOES_INDEXED *packed_data = malloc(sizeof(glIsRenderbufferOES_INDEXED)); \
+    packed_data->func = glIsRenderbufferOES_INDEX; \
+    packed_data->args.a1 = (GLuint)renderbuffer; \
+    packed_data; \
+})
+#define emit_glIsRenderbufferOES(renderbuffer) { \
+    mock_push(pack_glIsRenderbufferOES(renderbuffer)); \
+}
+#define test_glIsRenderbufferOES(renderbuffer) { \
+    glIsRenderbufferOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glIsRenderbufferOES missing (no calls left)\n"); \
+    } else if (packed->func != glIsRenderbufferOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glIsRenderbufferOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glIsRenderbufferOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glIsRenderbufferOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != renderbuffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glIsRenderbufferOES(%u);\n", renderbuffer); \
         } \
     } \
 }
@@ -6186,6 +6898,62 @@ static int failed_test = 0;
         } \
     } \
 }
+#define pack_glRenderbufferStorageOES(target, internalformat, width, height) ({ \
+    glRenderbufferStorageOES_INDEXED *packed_data = malloc(sizeof(glRenderbufferStorageOES_INDEXED)); \
+    packed_data->func = glRenderbufferStorageOES_INDEX; \
+    packed_data->args.a1 = (GLenum)target; \
+    packed_data->args.a2 = (GLenum)internalformat; \
+    packed_data->args.a3 = (GLsizei)width; \
+    packed_data->args.a4 = (GLsizei)height; \
+    packed_data; \
+})
+#define emit_glRenderbufferStorageOES(target, internalformat, width, height) { \
+    mock_push(pack_glRenderbufferStorageOES(target, internalformat, width, height)); \
+}
+#define test_glRenderbufferStorageOES(target, internalformat, width, height) { \
+    glRenderbufferStorageOES_INDEXED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glRenderbufferStorageOES missing (no calls left)\n"); \
+    } else if (packed->func != glRenderbufferStorageOES_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed = mock_slide(glRenderbufferStorageOES_INDEX); \
+        if (! packed) { \
+            mock_errorf("glRenderbufferStorageOES missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glRenderbufferStorageOES:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.a1 != target) { \
+            match = 0; \
+        } \
+        if (packed->args.a2 != internalformat) { \
+            match = 0; \
+        } \
+        if (packed->args.a3 != width) { \
+            match = 0; \
+        } \
+        if (packed->args.a4 != height) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  want: glRenderbufferStorageOES(0x%04X, 0x%04X, %d, %d);\n", target, internalformat, width, height); \
+        } \
+    } \
+}
 #define pack_glRotatef(angle, x, y, z) ({ \
     glRotatef_INDEXED *packed_data = malloc(sizeof(glRotatef_INDEXED)); \
     packed_data->func = glRotatef_INDEX; \
@@ -7863,1015 +8631,1120 @@ static int failed_test = 0;
 #define gles_glBindBuffer_PACKED PACKED_void_GLenum_GLuint
 #define gles_glBindBuffer_INDEXED INDEXED_void_GLenum_GLuint
 #define gles_glBindBuffer_FORMAT FORMAT_void_GLenum_GLuint
-#define gles_glBindTexture_INDEX 5
+#define gles_glBindFramebufferOES_INDEX 5
+#define gles_glBindFramebufferOES_RETURN void
+#define gles_glBindFramebufferOES_ARG_NAMES target, framebuffer
+#define gles_glBindFramebufferOES_ARG_EXPAND GLenum target, GLuint framebuffer
+#define gles_glBindFramebufferOES_PACKED PACKED_void_GLenum_GLuint
+#define gles_glBindFramebufferOES_INDEXED INDEXED_void_GLenum_GLuint
+#define gles_glBindFramebufferOES_FORMAT FORMAT_void_GLenum_GLuint
+#define gles_glBindRenderbufferOES_INDEX 6
+#define gles_glBindRenderbufferOES_RETURN void
+#define gles_glBindRenderbufferOES_ARG_NAMES target, renderbuffer
+#define gles_glBindRenderbufferOES_ARG_EXPAND GLenum target, GLuint renderbuffer
+#define gles_glBindRenderbufferOES_PACKED PACKED_void_GLenum_GLuint
+#define gles_glBindRenderbufferOES_INDEXED INDEXED_void_GLenum_GLuint
+#define gles_glBindRenderbufferOES_FORMAT FORMAT_void_GLenum_GLuint
+#define gles_glBindTexture_INDEX 7
 #define gles_glBindTexture_RETURN void
 #define gles_glBindTexture_ARG_NAMES target, texture
 #define gles_glBindTexture_ARG_EXPAND GLenum target, GLuint texture
 #define gles_glBindTexture_PACKED PACKED_void_GLenum_GLuint
 #define gles_glBindTexture_INDEXED INDEXED_void_GLenum_GLuint
 #define gles_glBindTexture_FORMAT FORMAT_void_GLenum_GLuint
-#define gles_glBlendColorOES_INDEX 6
+#define gles_glBlendColorOES_INDEX 8
 #define gles_glBlendColorOES_RETURN void
 #define gles_glBlendColorOES_ARG_NAMES red, green, blue, alpha
 #define gles_glBlendColorOES_ARG_EXPAND GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha
 #define gles_glBlendColorOES_PACKED PACKED_void_GLclampf_GLclampf_GLclampf_GLclampf
 #define gles_glBlendColorOES_INDEXED INDEXED_void_GLclampf_GLclampf_GLclampf_GLclampf
 #define gles_glBlendColorOES_FORMAT FORMAT_void_GLclampf_GLclampf_GLclampf_GLclampf
-#define gles_glBlendEquationOES_INDEX 7
+#define gles_glBlendEquationOES_INDEX 9
 #define gles_glBlendEquationOES_RETURN void
 #define gles_glBlendEquationOES_ARG_NAMES mode
 #define gles_glBlendEquationOES_ARG_EXPAND GLenum mode
 #define gles_glBlendEquationOES_PACKED PACKED_void_GLenum
 #define gles_glBlendEquationOES_INDEXED INDEXED_void_GLenum
 #define gles_glBlendEquationOES_FORMAT FORMAT_void_GLenum
-#define gles_glBlendEquationSeparateOES_INDEX 8
+#define gles_glBlendEquationSeparateOES_INDEX 10
 #define gles_glBlendEquationSeparateOES_RETURN void
 #define gles_glBlendEquationSeparateOES_ARG_NAMES modeRGB, modeAlpha
 #define gles_glBlendEquationSeparateOES_ARG_EXPAND GLenum modeRGB, GLenum modeAlpha
 #define gles_glBlendEquationSeparateOES_PACKED PACKED_void_GLenum_GLenum
 #define gles_glBlendEquationSeparateOES_INDEXED INDEXED_void_GLenum_GLenum
 #define gles_glBlendEquationSeparateOES_FORMAT FORMAT_void_GLenum_GLenum
-#define gles_glBlendFunc_INDEX 9
+#define gles_glBlendFunc_INDEX 11
 #define gles_glBlendFunc_RETURN void
 #define gles_glBlendFunc_ARG_NAMES sfactor, dfactor
 #define gles_glBlendFunc_ARG_EXPAND GLenum sfactor, GLenum dfactor
 #define gles_glBlendFunc_PACKED PACKED_void_GLenum_GLenum
 #define gles_glBlendFunc_INDEXED INDEXED_void_GLenum_GLenum
 #define gles_glBlendFunc_FORMAT FORMAT_void_GLenum_GLenum
-#define gles_glBlendFuncSeparateOES_INDEX 10
+#define gles_glBlendFuncSeparateOES_INDEX 12
 #define gles_glBlendFuncSeparateOES_RETURN void
 #define gles_glBlendFuncSeparateOES_ARG_NAMES sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha
 #define gles_glBlendFuncSeparateOES_ARG_EXPAND GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha
 #define gles_glBlendFuncSeparateOES_PACKED PACKED_void_GLenum_GLenum_GLenum_GLenum
 #define gles_glBlendFuncSeparateOES_INDEXED INDEXED_void_GLenum_GLenum_GLenum_GLenum
 #define gles_glBlendFuncSeparateOES_FORMAT FORMAT_void_GLenum_GLenum_GLenum_GLenum
-#define gles_glBufferData_INDEX 11
+#define gles_glBufferData_INDEX 13
 #define gles_glBufferData_RETURN void
 #define gles_glBufferData_ARG_NAMES target, size, data, usage
 #define gles_glBufferData_ARG_EXPAND GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage
 #define gles_glBufferData_PACKED PACKED_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum
 #define gles_glBufferData_INDEXED INDEXED_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum
 #define gles_glBufferData_FORMAT FORMAT_void_GLenum_GLsizeiptr_const_GLvoid___GENPT___GLenum
-#define gles_glBufferSubData_INDEX 12
+#define gles_glBufferSubData_INDEX 14
 #define gles_glBufferSubData_RETURN void
 #define gles_glBufferSubData_ARG_NAMES target, offset, size, data
 #define gles_glBufferSubData_ARG_EXPAND GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid * data
 #define gles_glBufferSubData_PACKED PACKED_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__
 #define gles_glBufferSubData_INDEXED INDEXED_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__
 #define gles_glBufferSubData_FORMAT FORMAT_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__
-#define gles_glClear_INDEX 13
+#define gles_glCheckFramebufferStatusOES_INDEX 15
+#define gles_glCheckFramebufferStatusOES_RETURN GLenum
+#define gles_glCheckFramebufferStatusOES_ARG_NAMES target
+#define gles_glCheckFramebufferStatusOES_ARG_EXPAND GLenum target
+#define gles_glCheckFramebufferStatusOES_PACKED PACKED_GLenum_GLenum
+#define gles_glCheckFramebufferStatusOES_INDEXED INDEXED_GLenum_GLenum
+#define gles_glCheckFramebufferStatusOES_FORMAT FORMAT_GLenum_GLenum
+#define gles_glClear_INDEX 16
 #define gles_glClear_RETURN void
 #define gles_glClear_ARG_NAMES mask
 #define gles_glClear_ARG_EXPAND GLbitfield mask
 #define gles_glClear_PACKED PACKED_void_GLbitfield
 #define gles_glClear_INDEXED INDEXED_void_GLbitfield
 #define gles_glClear_FORMAT FORMAT_void_GLbitfield
-#define gles_glClearColor_INDEX 14
+#define gles_glClearColor_INDEX 17
 #define gles_glClearColor_RETURN void
 #define gles_glClearColor_ARG_NAMES red, green, blue, alpha
 #define gles_glClearColor_ARG_EXPAND GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha
 #define gles_glClearColor_PACKED PACKED_void_GLclampf_GLclampf_GLclampf_GLclampf
 #define gles_glClearColor_INDEXED INDEXED_void_GLclampf_GLclampf_GLclampf_GLclampf
 #define gles_glClearColor_FORMAT FORMAT_void_GLclampf_GLclampf_GLclampf_GLclampf
-#define gles_glClearColorx_INDEX 15
+#define gles_glClearColorx_INDEX 18
 #define gles_glClearColorx_RETURN void
 #define gles_glClearColorx_ARG_NAMES red, green, blue, alpha
 #define gles_glClearColorx_ARG_EXPAND GLclampx red, GLclampx green, GLclampx blue, GLclampx alpha
 #define gles_glClearColorx_PACKED PACKED_void_GLclampx_GLclampx_GLclampx_GLclampx
 #define gles_glClearColorx_INDEXED INDEXED_void_GLclampx_GLclampx_GLclampx_GLclampx
 #define gles_glClearColorx_FORMAT FORMAT_void_GLclampx_GLclampx_GLclampx_GLclampx
-#define gles_glClearDepthf_INDEX 16
+#define gles_glClearDepthf_INDEX 19
 #define gles_glClearDepthf_RETURN void
 #define gles_glClearDepthf_ARG_NAMES depth
 #define gles_glClearDepthf_ARG_EXPAND GLclampf depth
 #define gles_glClearDepthf_PACKED PACKED_void_GLclampf
 #define gles_glClearDepthf_INDEXED INDEXED_void_GLclampf
 #define gles_glClearDepthf_FORMAT FORMAT_void_GLclampf
-#define gles_glClearDepthx_INDEX 17
+#define gles_glClearDepthx_INDEX 20
 #define gles_glClearDepthx_RETURN void
 #define gles_glClearDepthx_ARG_NAMES depth
 #define gles_glClearDepthx_ARG_EXPAND GLclampx depth
 #define gles_glClearDepthx_PACKED PACKED_void_GLclampx
 #define gles_glClearDepthx_INDEXED INDEXED_void_GLclampx
 #define gles_glClearDepthx_FORMAT FORMAT_void_GLclampx
-#define gles_glClearStencil_INDEX 18
+#define gles_glClearStencil_INDEX 21
 #define gles_glClearStencil_RETURN void
 #define gles_glClearStencil_ARG_NAMES s
 #define gles_glClearStencil_ARG_EXPAND GLint s
 #define gles_glClearStencil_PACKED PACKED_void_GLint
 #define gles_glClearStencil_INDEXED INDEXED_void_GLint
 #define gles_glClearStencil_FORMAT FORMAT_void_GLint
-#define gles_glClientActiveTexture_INDEX 19
+#define gles_glClientActiveTexture_INDEX 22
 #define gles_glClientActiveTexture_RETURN void
 #define gles_glClientActiveTexture_ARG_NAMES texture
 #define gles_glClientActiveTexture_ARG_EXPAND GLenum texture
 #define gles_glClientActiveTexture_PACKED PACKED_void_GLenum
 #define gles_glClientActiveTexture_INDEXED INDEXED_void_GLenum
 #define gles_glClientActiveTexture_FORMAT FORMAT_void_GLenum
-#define gles_glClipPlanef_INDEX 20
+#define gles_glClipPlanef_INDEX 23
 #define gles_glClipPlanef_RETURN void
 #define gles_glClipPlanef_ARG_NAMES plane, equation
 #define gles_glClipPlanef_ARG_EXPAND GLenum plane, const GLfloat * equation
 #define gles_glClipPlanef_PACKED PACKED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glClipPlanef_INDEXED INDEXED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glClipPlanef_FORMAT FORMAT_void_GLenum_const_GLfloat___GENPT__
-#define gles_glClipPlanex_INDEX 21
+#define gles_glClipPlanex_INDEX 24
 #define gles_glClipPlanex_RETURN void
 #define gles_glClipPlanex_ARG_NAMES plane, equation
 #define gles_glClipPlanex_ARG_EXPAND GLenum plane, const GLfixed * equation
 #define gles_glClipPlanex_PACKED PACKED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glClipPlanex_INDEXED INDEXED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glClipPlanex_FORMAT FORMAT_void_GLenum_const_GLfixed___GENPT__
-#define gles_glColor4f_INDEX 22
+#define gles_glColor4f_INDEX 25
 #define gles_glColor4f_RETURN void
 #define gles_glColor4f_ARG_NAMES red, green, blue, alpha
 #define gles_glColor4f_ARG_EXPAND GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha
 #define gles_glColor4f_PACKED PACKED_void_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glColor4f_INDEXED INDEXED_void_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glColor4f_FORMAT FORMAT_void_GLfloat_GLfloat_GLfloat_GLfloat
-#define gles_glColor4ub_INDEX 23
+#define gles_glColor4ub_INDEX 26
 #define gles_glColor4ub_RETURN void
 #define gles_glColor4ub_ARG_NAMES red, green, blue, alpha
 #define gles_glColor4ub_ARG_EXPAND GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha
 #define gles_glColor4ub_PACKED PACKED_void_GLubyte_GLubyte_GLubyte_GLubyte
 #define gles_glColor4ub_INDEXED INDEXED_void_GLubyte_GLubyte_GLubyte_GLubyte
 #define gles_glColor4ub_FORMAT FORMAT_void_GLubyte_GLubyte_GLubyte_GLubyte
-#define gles_glColor4x_INDEX 24
+#define gles_glColor4x_INDEX 27
 #define gles_glColor4x_RETURN void
 #define gles_glColor4x_ARG_NAMES red, green, blue, alpha
 #define gles_glColor4x_ARG_EXPAND GLfixed red, GLfixed green, GLfixed blue, GLfixed alpha
 #define gles_glColor4x_PACKED PACKED_void_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glColor4x_INDEXED INDEXED_void_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glColor4x_FORMAT FORMAT_void_GLfixed_GLfixed_GLfixed_GLfixed
-#define gles_glColorMask_INDEX 25
+#define gles_glColorMask_INDEX 28
 #define gles_glColorMask_RETURN void
 #define gles_glColorMask_ARG_NAMES red, green, blue, alpha
 #define gles_glColorMask_ARG_EXPAND GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha
 #define gles_glColorMask_PACKED PACKED_void_GLboolean_GLboolean_GLboolean_GLboolean
 #define gles_glColorMask_INDEXED INDEXED_void_GLboolean_GLboolean_GLboolean_GLboolean
 #define gles_glColorMask_FORMAT FORMAT_void_GLboolean_GLboolean_GLboolean_GLboolean
-#define gles_glColorPointer_INDEX 26
+#define gles_glColorPointer_INDEX 29
 #define gles_glColorPointer_RETURN void
 #define gles_glColorPointer_ARG_NAMES size, type, stride, pointer
 #define gles_glColorPointer_ARG_EXPAND GLint size, GLenum type, GLsizei stride, const GLvoid * pointer
 #define gles_glColorPointer_PACKED PACKED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glColorPointer_INDEXED INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glColorPointer_FORMAT FORMAT_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
-#define gles_glCompressedTexImage2D_INDEX 27
+#define gles_glCompressedTexImage2D_INDEX 30
 #define gles_glCompressedTexImage2D_RETURN void
 #define gles_glCompressedTexImage2D_ARG_NAMES target, level, internalformat, width, height, border, imageSize, data
 #define gles_glCompressedTexImage2D_ARG_EXPAND GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const GLvoid * data
 #define gles_glCompressedTexImage2D_PACKED PACKED_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__
 #define gles_glCompressedTexImage2D_INDEXED INDEXED_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__
 #define gles_glCompressedTexImage2D_FORMAT FORMAT_void_GLenum_GLint_GLenum_GLsizei_GLsizei_GLint_GLsizei_const_GLvoid___GENPT__
-#define gles_glCompressedTexSubImage2D_INDEX 28
+#define gles_glCompressedTexSubImage2D_INDEX 31
 #define gles_glCompressedTexSubImage2D_RETURN void
 #define gles_glCompressedTexSubImage2D_ARG_NAMES target, level, xoffset, yoffset, width, height, format, imageSize, data
 #define gles_glCompressedTexSubImage2D_ARG_EXPAND GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid * data
 #define gles_glCompressedTexSubImage2D_PACKED PACKED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glCompressedTexSubImage2D_INDEXED INDEXED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glCompressedTexSubImage2D_FORMAT FORMAT_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLsizei_const_GLvoid___GENPT__
-#define gles_glCopyTexImage2D_INDEX 29
+#define gles_glCopyTexImage2D_INDEX 32
 #define gles_glCopyTexImage2D_RETURN void
 #define gles_glCopyTexImage2D_ARG_NAMES target, level, internalformat, x, y, width, height, border
 #define gles_glCopyTexImage2D_ARG_EXPAND GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border
 #define gles_glCopyTexImage2D_PACKED PACKED_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint
 #define gles_glCopyTexImage2D_INDEXED INDEXED_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint
 #define gles_glCopyTexImage2D_FORMAT FORMAT_void_GLenum_GLint_GLenum_GLint_GLint_GLsizei_GLsizei_GLint
-#define gles_glCopyTexSubImage2D_INDEX 30
+#define gles_glCopyTexSubImage2D_INDEX 33
 #define gles_glCopyTexSubImage2D_RETURN void
 #define gles_glCopyTexSubImage2D_ARG_NAMES target, level, xoffset, yoffset, x, y, width, height
 #define gles_glCopyTexSubImage2D_ARG_EXPAND GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height
 #define gles_glCopyTexSubImage2D_PACKED PACKED_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei
 #define gles_glCopyTexSubImage2D_INDEXED INDEXED_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei
 #define gles_glCopyTexSubImage2D_FORMAT FORMAT_void_GLenum_GLint_GLint_GLint_GLint_GLint_GLsizei_GLsizei
-#define gles_glCullFace_INDEX 31
+#define gles_glCullFace_INDEX 34
 #define gles_glCullFace_RETURN void
 #define gles_glCullFace_ARG_NAMES mode
 #define gles_glCullFace_ARG_EXPAND GLenum mode
 #define gles_glCullFace_PACKED PACKED_void_GLenum
 #define gles_glCullFace_INDEXED INDEXED_void_GLenum
 #define gles_glCullFace_FORMAT FORMAT_void_GLenum
-#define gles_glDeleteBuffers_INDEX 32
+#define gles_glDeleteBuffers_INDEX 35
 #define gles_glDeleteBuffers_RETURN void
 #define gles_glDeleteBuffers_ARG_NAMES n, buffers
 #define gles_glDeleteBuffers_ARG_EXPAND GLsizei n, const GLuint * buffers
 #define gles_glDeleteBuffers_PACKED PACKED_void_GLsizei_const_GLuint___GENPT__
 #define gles_glDeleteBuffers_INDEXED INDEXED_void_GLsizei_const_GLuint___GENPT__
 #define gles_glDeleteBuffers_FORMAT FORMAT_void_GLsizei_const_GLuint___GENPT__
-#define gles_glDeleteTextures_INDEX 33
+#define gles_glDeleteFramebuffersOES_INDEX 36
+#define gles_glDeleteFramebuffersOES_RETURN void
+#define gles_glDeleteFramebuffersOES_ARG_NAMES n, framebuffers
+#define gles_glDeleteFramebuffersOES_ARG_EXPAND GLsizei n, const GLuint * framebuffers
+#define gles_glDeleteFramebuffersOES_PACKED PACKED_void_GLsizei_const_GLuint___GENPT__
+#define gles_glDeleteFramebuffersOES_INDEXED INDEXED_void_GLsizei_const_GLuint___GENPT__
+#define gles_glDeleteFramebuffersOES_FORMAT FORMAT_void_GLsizei_const_GLuint___GENPT__
+#define gles_glDeleteRenderbuffersOES_INDEX 37
+#define gles_glDeleteRenderbuffersOES_RETURN void
+#define gles_glDeleteRenderbuffersOES_ARG_NAMES n, renderbuffers
+#define gles_glDeleteRenderbuffersOES_ARG_EXPAND GLsizei n, const GLuint * renderbuffers
+#define gles_glDeleteRenderbuffersOES_PACKED PACKED_void_GLsizei_const_GLuint___GENPT__
+#define gles_glDeleteRenderbuffersOES_INDEXED INDEXED_void_GLsizei_const_GLuint___GENPT__
+#define gles_glDeleteRenderbuffersOES_FORMAT FORMAT_void_GLsizei_const_GLuint___GENPT__
+#define gles_glDeleteTextures_INDEX 38
 #define gles_glDeleteTextures_RETURN void
 #define gles_glDeleteTextures_ARG_NAMES n, textures
 #define gles_glDeleteTextures_ARG_EXPAND GLsizei n, const GLuint * textures
 #define gles_glDeleteTextures_PACKED PACKED_void_GLsizei_const_GLuint___GENPT__
 #define gles_glDeleteTextures_INDEXED INDEXED_void_GLsizei_const_GLuint___GENPT__
 #define gles_glDeleteTextures_FORMAT FORMAT_void_GLsizei_const_GLuint___GENPT__
-#define gles_glDepthFunc_INDEX 34
+#define gles_glDepthFunc_INDEX 39
 #define gles_glDepthFunc_RETURN void
 #define gles_glDepthFunc_ARG_NAMES func
 #define gles_glDepthFunc_ARG_EXPAND GLenum func
 #define gles_glDepthFunc_PACKED PACKED_void_GLenum
 #define gles_glDepthFunc_INDEXED INDEXED_void_GLenum
 #define gles_glDepthFunc_FORMAT FORMAT_void_GLenum
-#define gles_glDepthMask_INDEX 35
+#define gles_glDepthMask_INDEX 40
 #define gles_glDepthMask_RETURN void
 #define gles_glDepthMask_ARG_NAMES flag
 #define gles_glDepthMask_ARG_EXPAND GLboolean flag
 #define gles_glDepthMask_PACKED PACKED_void_GLboolean
 #define gles_glDepthMask_INDEXED INDEXED_void_GLboolean
 #define gles_glDepthMask_FORMAT FORMAT_void_GLboolean
-#define gles_glDepthRangef_INDEX 36
+#define gles_glDepthRangef_INDEX 41
 #define gles_glDepthRangef_RETURN void
 #define gles_glDepthRangef_ARG_NAMES near, far
 #define gles_glDepthRangef_ARG_EXPAND GLclampf near, GLclampf far
 #define gles_glDepthRangef_PACKED PACKED_void_GLclampf_GLclampf
 #define gles_glDepthRangef_INDEXED INDEXED_void_GLclampf_GLclampf
 #define gles_glDepthRangef_FORMAT FORMAT_void_GLclampf_GLclampf
-#define gles_glDepthRangex_INDEX 37
+#define gles_glDepthRangex_INDEX 42
 #define gles_glDepthRangex_RETURN void
 #define gles_glDepthRangex_ARG_NAMES near, far
 #define gles_glDepthRangex_ARG_EXPAND GLclampx near, GLclampx far
 #define gles_glDepthRangex_PACKED PACKED_void_GLclampx_GLclampx
 #define gles_glDepthRangex_INDEXED INDEXED_void_GLclampx_GLclampx
 #define gles_glDepthRangex_FORMAT FORMAT_void_GLclampx_GLclampx
-#define gles_glDisable_INDEX 38
+#define gles_glDisable_INDEX 43
 #define gles_glDisable_RETURN void
 #define gles_glDisable_ARG_NAMES cap
 #define gles_glDisable_ARG_EXPAND GLenum cap
 #define gles_glDisable_PACKED PACKED_void_GLenum
 #define gles_glDisable_INDEXED INDEXED_void_GLenum
 #define gles_glDisable_FORMAT FORMAT_void_GLenum
-#define gles_glDisableClientState_INDEX 39
+#define gles_glDisableClientState_INDEX 44
 #define gles_glDisableClientState_RETURN void
 #define gles_glDisableClientState_ARG_NAMES array
 #define gles_glDisableClientState_ARG_EXPAND GLenum array
 #define gles_glDisableClientState_PACKED PACKED_void_GLenum
 #define gles_glDisableClientState_INDEXED INDEXED_void_GLenum
 #define gles_glDisableClientState_FORMAT FORMAT_void_GLenum
-#define gles_glDrawArrays_INDEX 40
+#define gles_glDrawArrays_INDEX 45
 #define gles_glDrawArrays_RETURN void
 #define gles_glDrawArrays_ARG_NAMES mode, first, count
 #define gles_glDrawArrays_ARG_EXPAND GLenum mode, GLint first, GLsizei count
 #define gles_glDrawArrays_PACKED PACKED_void_GLenum_GLint_GLsizei
 #define gles_glDrawArrays_INDEXED INDEXED_void_GLenum_GLint_GLsizei
 #define gles_glDrawArrays_FORMAT FORMAT_void_GLenum_GLint_GLsizei
-#define gles_glDrawElements_INDEX 41
+#define gles_glDrawElements_INDEX 46
 #define gles_glDrawElements_RETURN void
 #define gles_glDrawElements_ARG_NAMES mode, count, type, indices
 #define gles_glDrawElements_ARG_EXPAND GLenum mode, GLsizei count, GLenum type, const GLvoid * indices
 #define gles_glDrawElements_PACKED PACKED_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__
 #define gles_glDrawElements_INDEXED INDEXED_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__
 #define gles_glDrawElements_FORMAT FORMAT_void_GLenum_GLsizei_GLenum_const_GLvoid___GENPT__
-#define gles_glEnable_INDEX 42
+#define gles_glEnable_INDEX 47
 #define gles_glEnable_RETURN void
 #define gles_glEnable_ARG_NAMES cap
 #define gles_glEnable_ARG_EXPAND GLenum cap
 #define gles_glEnable_PACKED PACKED_void_GLenum
 #define gles_glEnable_INDEXED INDEXED_void_GLenum
 #define gles_glEnable_FORMAT FORMAT_void_GLenum
-#define gles_glEnableClientState_INDEX 43
+#define gles_glEnableClientState_INDEX 48
 #define gles_glEnableClientState_RETURN void
 #define gles_glEnableClientState_ARG_NAMES array
 #define gles_glEnableClientState_ARG_EXPAND GLenum array
 #define gles_glEnableClientState_PACKED PACKED_void_GLenum
 #define gles_glEnableClientState_INDEXED INDEXED_void_GLenum
 #define gles_glEnableClientState_FORMAT FORMAT_void_GLenum
-#define gles_glFinish_INDEX 44
+#define gles_glFinish_INDEX 49
 #define gles_glFinish_RETURN void
 #define gles_glFinish_ARG_NAMES 
 #define gles_glFinish_ARG_EXPAND 
 #define gles_glFinish_PACKED PACKED_void
 #define gles_glFinish_INDEXED INDEXED_void
 #define gles_glFinish_FORMAT FORMAT_void
-#define gles_glFlush_INDEX 45
+#define gles_glFlush_INDEX 50
 #define gles_glFlush_RETURN void
 #define gles_glFlush_ARG_NAMES 
 #define gles_glFlush_ARG_EXPAND 
 #define gles_glFlush_PACKED PACKED_void
 #define gles_glFlush_INDEXED INDEXED_void
 #define gles_glFlush_FORMAT FORMAT_void
-#define gles_glFogf_INDEX 46
+#define gles_glFogf_INDEX 51
 #define gles_glFogf_RETURN void
 #define gles_glFogf_ARG_NAMES pname, param
 #define gles_glFogf_ARG_EXPAND GLenum pname, GLfloat param
 #define gles_glFogf_PACKED PACKED_void_GLenum_GLfloat
 #define gles_glFogf_INDEXED INDEXED_void_GLenum_GLfloat
 #define gles_glFogf_FORMAT FORMAT_void_GLenum_GLfloat
-#define gles_glFogfv_INDEX 47
+#define gles_glFogfv_INDEX 52
 #define gles_glFogfv_RETURN void
 #define gles_glFogfv_ARG_NAMES pname, params
 #define gles_glFogfv_ARG_EXPAND GLenum pname, const GLfloat * params
 #define gles_glFogfv_PACKED PACKED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glFogfv_INDEXED INDEXED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glFogfv_FORMAT FORMAT_void_GLenum_const_GLfloat___GENPT__
-#define gles_glFogx_INDEX 48
+#define gles_glFogx_INDEX 53
 #define gles_glFogx_RETURN void
 #define gles_glFogx_ARG_NAMES pname, param
 #define gles_glFogx_ARG_EXPAND GLenum pname, GLfixed param
 #define gles_glFogx_PACKED PACKED_void_GLenum_GLfixed
 #define gles_glFogx_INDEXED INDEXED_void_GLenum_GLfixed
 #define gles_glFogx_FORMAT FORMAT_void_GLenum_GLfixed
-#define gles_glFogxv_INDEX 49
+#define gles_glFogxv_INDEX 54
 #define gles_glFogxv_RETURN void
 #define gles_glFogxv_ARG_NAMES pname, params
 #define gles_glFogxv_ARG_EXPAND GLenum pname, const GLfixed * params
 #define gles_glFogxv_PACKED PACKED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glFogxv_INDEXED INDEXED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glFogxv_FORMAT FORMAT_void_GLenum_const_GLfixed___GENPT__
-#define gles_glFrontFace_INDEX 50
+#define gles_glFramebufferRenderbufferOES_INDEX 55
+#define gles_glFramebufferRenderbufferOES_RETURN void
+#define gles_glFramebufferRenderbufferOES_ARG_NAMES target, attachment, renderbuffertarget, renderbuffer
+#define gles_glFramebufferRenderbufferOES_ARG_EXPAND GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer
+#define gles_glFramebufferRenderbufferOES_PACKED PACKED_void_GLenum_GLenum_GLenum_GLuint
+#define gles_glFramebufferRenderbufferOES_INDEXED INDEXED_void_GLenum_GLenum_GLenum_GLuint
+#define gles_glFramebufferRenderbufferOES_FORMAT FORMAT_void_GLenum_GLenum_GLenum_GLuint
+#define gles_glFramebufferTexture2DOES_INDEX 56
+#define gles_glFramebufferTexture2DOES_RETURN void
+#define gles_glFramebufferTexture2DOES_ARG_NAMES target, attachment, textarget, texture, level
+#define gles_glFramebufferTexture2DOES_ARG_EXPAND GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level
+#define gles_glFramebufferTexture2DOES_PACKED PACKED_void_GLenum_GLenum_GLenum_GLuint_GLint
+#define gles_glFramebufferTexture2DOES_INDEXED INDEXED_void_GLenum_GLenum_GLenum_GLuint_GLint
+#define gles_glFramebufferTexture2DOES_FORMAT FORMAT_void_GLenum_GLenum_GLenum_GLuint_GLint
+#define gles_glFrontFace_INDEX 57
 #define gles_glFrontFace_RETURN void
 #define gles_glFrontFace_ARG_NAMES mode
 #define gles_glFrontFace_ARG_EXPAND GLenum mode
 #define gles_glFrontFace_PACKED PACKED_void_GLenum
 #define gles_glFrontFace_INDEXED INDEXED_void_GLenum
 #define gles_glFrontFace_FORMAT FORMAT_void_GLenum
-#define gles_glFrustumf_INDEX 51
+#define gles_glFrustumf_INDEX 58
 #define gles_glFrustumf_RETURN void
 #define gles_glFrustumf_ARG_NAMES left, right, bottom, top, near, far
 #define gles_glFrustumf_ARG_EXPAND GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far
 #define gles_glFrustumf_PACKED PACKED_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glFrustumf_INDEXED INDEXED_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glFrustumf_FORMAT FORMAT_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat
-#define gles_glFrustumx_INDEX 52
+#define gles_glFrustumx_INDEX 59
 #define gles_glFrustumx_RETURN void
 #define gles_glFrustumx_ARG_NAMES left, right, bottom, top, near, far
 #define gles_glFrustumx_ARG_EXPAND GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed near, GLfixed far
 #define gles_glFrustumx_PACKED PACKED_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glFrustumx_INDEXED INDEXED_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glFrustumx_FORMAT FORMAT_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed
-#define gles_glGenBuffers_INDEX 53
+#define gles_glGenBuffers_INDEX 60
 #define gles_glGenBuffers_RETURN void
 #define gles_glGenBuffers_ARG_NAMES n, buffers
 #define gles_glGenBuffers_ARG_EXPAND GLsizei n, GLuint * buffers
 #define gles_glGenBuffers_PACKED PACKED_void_GLsizei_GLuint___GENPT__
 #define gles_glGenBuffers_INDEXED INDEXED_void_GLsizei_GLuint___GENPT__
 #define gles_glGenBuffers_FORMAT FORMAT_void_GLsizei_GLuint___GENPT__
-#define gles_glGenTextures_INDEX 54
+#define gles_glGenFramebuffersOES_INDEX 61
+#define gles_glGenFramebuffersOES_RETURN void
+#define gles_glGenFramebuffersOES_ARG_NAMES n, framebuffers
+#define gles_glGenFramebuffersOES_ARG_EXPAND GLsizei n, GLuint * framebuffers
+#define gles_glGenFramebuffersOES_PACKED PACKED_void_GLsizei_GLuint___GENPT__
+#define gles_glGenFramebuffersOES_INDEXED INDEXED_void_GLsizei_GLuint___GENPT__
+#define gles_glGenFramebuffersOES_FORMAT FORMAT_void_GLsizei_GLuint___GENPT__
+#define gles_glGenRenderbuffersOES_INDEX 62
+#define gles_glGenRenderbuffersOES_RETURN void
+#define gles_glGenRenderbuffersOES_ARG_NAMES n, renderbuffers
+#define gles_glGenRenderbuffersOES_ARG_EXPAND GLsizei n, GLuint * renderbuffers
+#define gles_glGenRenderbuffersOES_PACKED PACKED_void_GLsizei_GLuint___GENPT__
+#define gles_glGenRenderbuffersOES_INDEXED INDEXED_void_GLsizei_GLuint___GENPT__
+#define gles_glGenRenderbuffersOES_FORMAT FORMAT_void_GLsizei_GLuint___GENPT__
+#define gles_glGenTextures_INDEX 63
 #define gles_glGenTextures_RETURN void
 #define gles_glGenTextures_ARG_NAMES n, textures
 #define gles_glGenTextures_ARG_EXPAND GLsizei n, GLuint * textures
 #define gles_glGenTextures_PACKED PACKED_void_GLsizei_GLuint___GENPT__
 #define gles_glGenTextures_INDEXED INDEXED_void_GLsizei_GLuint___GENPT__
 #define gles_glGenTextures_FORMAT FORMAT_void_GLsizei_GLuint___GENPT__
-#define gles_glGetBooleanv_INDEX 55
+#define gles_glGenerateMipmapOES_INDEX 64
+#define gles_glGenerateMipmapOES_RETURN void
+#define gles_glGenerateMipmapOES_ARG_NAMES target
+#define gles_glGenerateMipmapOES_ARG_EXPAND GLenum target
+#define gles_glGenerateMipmapOES_PACKED PACKED_void_GLenum
+#define gles_glGenerateMipmapOES_INDEXED INDEXED_void_GLenum
+#define gles_glGenerateMipmapOES_FORMAT FORMAT_void_GLenum
+#define gles_glGetBooleanv_INDEX 65
 #define gles_glGetBooleanv_RETURN void
 #define gles_glGetBooleanv_ARG_NAMES pname, params
 #define gles_glGetBooleanv_ARG_EXPAND GLenum pname, GLboolean * params
 #define gles_glGetBooleanv_PACKED PACKED_void_GLenum_GLboolean___GENPT__
 #define gles_glGetBooleanv_INDEXED INDEXED_void_GLenum_GLboolean___GENPT__
 #define gles_glGetBooleanv_FORMAT FORMAT_void_GLenum_GLboolean___GENPT__
-#define gles_glGetBufferParameteriv_INDEX 56
+#define gles_glGetBufferParameteriv_INDEX 66
 #define gles_glGetBufferParameteriv_RETURN void
 #define gles_glGetBufferParameteriv_ARG_NAMES target, pname, params
 #define gles_glGetBufferParameteriv_ARG_EXPAND GLenum target, GLenum pname, GLint * params
 #define gles_glGetBufferParameteriv_PACKED PACKED_void_GLenum_GLenum_GLint___GENPT__
 #define gles_glGetBufferParameteriv_INDEXED INDEXED_void_GLenum_GLenum_GLint___GENPT__
 #define gles_glGetBufferParameteriv_FORMAT FORMAT_void_GLenum_GLenum_GLint___GENPT__
-#define gles_glGetClipPlanef_INDEX 57
+#define gles_glGetClipPlanef_INDEX 67
 #define gles_glGetClipPlanef_RETURN void
 #define gles_glGetClipPlanef_ARG_NAMES plane, equation
 #define gles_glGetClipPlanef_ARG_EXPAND GLenum plane, GLfloat * equation
 #define gles_glGetClipPlanef_PACKED PACKED_void_GLenum_GLfloat___GENPT__
 #define gles_glGetClipPlanef_INDEXED INDEXED_void_GLenum_GLfloat___GENPT__
 #define gles_glGetClipPlanef_FORMAT FORMAT_void_GLenum_GLfloat___GENPT__
-#define gles_glGetClipPlanex_INDEX 58
+#define gles_glGetClipPlanex_INDEX 68
 #define gles_glGetClipPlanex_RETURN void
 #define gles_glGetClipPlanex_ARG_NAMES plane, equation
 #define gles_glGetClipPlanex_ARG_EXPAND GLenum plane, GLfixed * equation
 #define gles_glGetClipPlanex_PACKED PACKED_void_GLenum_GLfixed___GENPT__
 #define gles_glGetClipPlanex_INDEXED INDEXED_void_GLenum_GLfixed___GENPT__
 #define gles_glGetClipPlanex_FORMAT FORMAT_void_GLenum_GLfixed___GENPT__
-#define gles_glGetError_INDEX 59
+#define gles_glGetError_INDEX 69
 #define gles_glGetError_RETURN GLenum
 #define gles_glGetError_ARG_NAMES 
 #define gles_glGetError_ARG_EXPAND 
 #define gles_glGetError_PACKED PACKED_GLenum
 #define gles_glGetError_INDEXED INDEXED_GLenum
 #define gles_glGetError_FORMAT FORMAT_GLenum
-#define gles_glGetFixedv_INDEX 60
+#define gles_glGetFixedv_INDEX 70
 #define gles_glGetFixedv_RETURN void
 #define gles_glGetFixedv_ARG_NAMES pname, params
 #define gles_glGetFixedv_ARG_EXPAND GLenum pname, GLfixed * params
 #define gles_glGetFixedv_PACKED PACKED_void_GLenum_GLfixed___GENPT__
 #define gles_glGetFixedv_INDEXED INDEXED_void_GLenum_GLfixed___GENPT__
 #define gles_glGetFixedv_FORMAT FORMAT_void_GLenum_GLfixed___GENPT__
-#define gles_glGetFloatv_INDEX 61
+#define gles_glGetFloatv_INDEX 71
 #define gles_glGetFloatv_RETURN void
 #define gles_glGetFloatv_ARG_NAMES pname, params
 #define gles_glGetFloatv_ARG_EXPAND GLenum pname, GLfloat * params
 #define gles_glGetFloatv_PACKED PACKED_void_GLenum_GLfloat___GENPT__
 #define gles_glGetFloatv_INDEXED INDEXED_void_GLenum_GLfloat___GENPT__
 #define gles_glGetFloatv_FORMAT FORMAT_void_GLenum_GLfloat___GENPT__
-#define gles_glGetIntegerv_INDEX 62
+#define gles_glGetFramebufferAttachmentParameterivOES_INDEX 72
+#define gles_glGetFramebufferAttachmentParameterivOES_RETURN void
+#define gles_glGetFramebufferAttachmentParameterivOES_ARG_NAMES target, attachment, pname, params
+#define gles_glGetFramebufferAttachmentParameterivOES_ARG_EXPAND GLenum target, GLenum attachment, GLenum pname, GLint * params
+#define gles_glGetFramebufferAttachmentParameterivOES_PACKED PACKED_void_GLenum_GLenum_GLenum_GLint___GENPT__
+#define gles_glGetFramebufferAttachmentParameterivOES_INDEXED INDEXED_void_GLenum_GLenum_GLenum_GLint___GENPT__
+#define gles_glGetFramebufferAttachmentParameterivOES_FORMAT FORMAT_void_GLenum_GLenum_GLenum_GLint___GENPT__
+#define gles_glGetIntegerv_INDEX 73
 #define gles_glGetIntegerv_RETURN void
 #define gles_glGetIntegerv_ARG_NAMES pname, params
 #define gles_glGetIntegerv_ARG_EXPAND GLenum pname, GLint * params
 #define gles_glGetIntegerv_PACKED PACKED_void_GLenum_GLint___GENPT__
 #define gles_glGetIntegerv_INDEXED INDEXED_void_GLenum_GLint___GENPT__
 #define gles_glGetIntegerv_FORMAT FORMAT_void_GLenum_GLint___GENPT__
-#define gles_glGetLightfv_INDEX 63
+#define gles_glGetLightfv_INDEX 74
 #define gles_glGetLightfv_RETURN void
 #define gles_glGetLightfv_ARG_NAMES light, pname, params
 #define gles_glGetLightfv_ARG_EXPAND GLenum light, GLenum pname, GLfloat * params
 #define gles_glGetLightfv_PACKED PACKED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetLightfv_INDEXED INDEXED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetLightfv_FORMAT FORMAT_void_GLenum_GLenum_GLfloat___GENPT__
-#define gles_glGetLightxv_INDEX 64
+#define gles_glGetLightxv_INDEX 75
 #define gles_glGetLightxv_RETURN void
 #define gles_glGetLightxv_ARG_NAMES light, pname, params
 #define gles_glGetLightxv_ARG_EXPAND GLenum light, GLenum pname, GLfixed * params
 #define gles_glGetLightxv_PACKED PACKED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetLightxv_INDEXED INDEXED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetLightxv_FORMAT FORMAT_void_GLenum_GLenum_GLfixed___GENPT__
-#define gles_glGetMaterialfv_INDEX 65
+#define gles_glGetMaterialfv_INDEX 76
 #define gles_glGetMaterialfv_RETURN void
 #define gles_glGetMaterialfv_ARG_NAMES face, pname, params
 #define gles_glGetMaterialfv_ARG_EXPAND GLenum face, GLenum pname, GLfloat * params
 #define gles_glGetMaterialfv_PACKED PACKED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetMaterialfv_INDEXED INDEXED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetMaterialfv_FORMAT FORMAT_void_GLenum_GLenum_GLfloat___GENPT__
-#define gles_glGetMaterialxv_INDEX 66
+#define gles_glGetMaterialxv_INDEX 77
 #define gles_glGetMaterialxv_RETURN void
 #define gles_glGetMaterialxv_ARG_NAMES face, pname, params
 #define gles_glGetMaterialxv_ARG_EXPAND GLenum face, GLenum pname, GLfixed * params
 #define gles_glGetMaterialxv_PACKED PACKED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetMaterialxv_INDEXED INDEXED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetMaterialxv_FORMAT FORMAT_void_GLenum_GLenum_GLfixed___GENPT__
-#define gles_glGetPointerv_INDEX 67
+#define gles_glGetPointerv_INDEX 78
 #define gles_glGetPointerv_RETURN void
 #define gles_glGetPointerv_ARG_NAMES pname, params
 #define gles_glGetPointerv_ARG_EXPAND GLenum pname, GLvoid ** params
 #define gles_glGetPointerv_PACKED PACKED_void_GLenum_GLvoid___GENPT____GENPT__
 #define gles_glGetPointerv_INDEXED INDEXED_void_GLenum_GLvoid___GENPT____GENPT__
 #define gles_glGetPointerv_FORMAT FORMAT_void_GLenum_GLvoid___GENPT____GENPT__
-#define gles_glGetString_INDEX 68
+#define gles_glGetRenderbufferParameterivOES_INDEX 79
+#define gles_glGetRenderbufferParameterivOES_RETURN void
+#define gles_glGetRenderbufferParameterivOES_ARG_NAMES target, pname, params
+#define gles_glGetRenderbufferParameterivOES_ARG_EXPAND GLenum target, GLenum pname, GLint * params
+#define gles_glGetRenderbufferParameterivOES_PACKED PACKED_void_GLenum_GLenum_GLint___GENPT__
+#define gles_glGetRenderbufferParameterivOES_INDEXED INDEXED_void_GLenum_GLenum_GLint___GENPT__
+#define gles_glGetRenderbufferParameterivOES_FORMAT FORMAT_void_GLenum_GLenum_GLint___GENPT__
+#define gles_glGetString_INDEX 80
 #define gles_glGetString_RETURN const GLubyte *
 #define gles_glGetString_ARG_NAMES name
 #define gles_glGetString_ARG_EXPAND GLenum name
 #define gles_glGetString_PACKED PACKED_const_GLubyte___GENPT___GLenum
 #define gles_glGetString_INDEXED INDEXED_const_GLubyte___GENPT___GLenum
 #define gles_glGetString_FORMAT FORMAT_const_GLubyte___GENPT___GLenum
-#define gles_glGetTexEnvfv_INDEX 69
+#define gles_glGetTexEnvfv_INDEX 81
 #define gles_glGetTexEnvfv_RETURN void
 #define gles_glGetTexEnvfv_ARG_NAMES target, pname, params
 #define gles_glGetTexEnvfv_ARG_EXPAND GLenum target, GLenum pname, GLfloat * params
 #define gles_glGetTexEnvfv_PACKED PACKED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetTexEnvfv_INDEXED INDEXED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetTexEnvfv_FORMAT FORMAT_void_GLenum_GLenum_GLfloat___GENPT__
-#define gles_glGetTexEnviv_INDEX 70
+#define gles_glGetTexEnviv_INDEX 82
 #define gles_glGetTexEnviv_RETURN void
 #define gles_glGetTexEnviv_ARG_NAMES target, pname, params
 #define gles_glGetTexEnviv_ARG_EXPAND GLenum target, GLenum pname, GLint * params
 #define gles_glGetTexEnviv_PACKED PACKED_void_GLenum_GLenum_GLint___GENPT__
 #define gles_glGetTexEnviv_INDEXED INDEXED_void_GLenum_GLenum_GLint___GENPT__
 #define gles_glGetTexEnviv_FORMAT FORMAT_void_GLenum_GLenum_GLint___GENPT__
-#define gles_glGetTexEnvxv_INDEX 71
+#define gles_glGetTexEnvxv_INDEX 83
 #define gles_glGetTexEnvxv_RETURN void
 #define gles_glGetTexEnvxv_ARG_NAMES target, pname, params
 #define gles_glGetTexEnvxv_ARG_EXPAND GLenum target, GLenum pname, GLfixed * params
 #define gles_glGetTexEnvxv_PACKED PACKED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetTexEnvxv_INDEXED INDEXED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetTexEnvxv_FORMAT FORMAT_void_GLenum_GLenum_GLfixed___GENPT__
-#define gles_glGetTexParameterfv_INDEX 72
+#define gles_glGetTexParameterfv_INDEX 84
 #define gles_glGetTexParameterfv_RETURN void
 #define gles_glGetTexParameterfv_ARG_NAMES target, pname, params
 #define gles_glGetTexParameterfv_ARG_EXPAND GLenum target, GLenum pname, GLfloat * params
 #define gles_glGetTexParameterfv_PACKED PACKED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetTexParameterfv_INDEXED INDEXED_void_GLenum_GLenum_GLfloat___GENPT__
 #define gles_glGetTexParameterfv_FORMAT FORMAT_void_GLenum_GLenum_GLfloat___GENPT__
-#define gles_glGetTexParameteriv_INDEX 73
+#define gles_glGetTexParameteriv_INDEX 85
 #define gles_glGetTexParameteriv_RETURN void
 #define gles_glGetTexParameteriv_ARG_NAMES target, pname, params
 #define gles_glGetTexParameteriv_ARG_EXPAND GLenum target, GLenum pname, GLint * params
 #define gles_glGetTexParameteriv_PACKED PACKED_void_GLenum_GLenum_GLint___GENPT__
 #define gles_glGetTexParameteriv_INDEXED INDEXED_void_GLenum_GLenum_GLint___GENPT__
 #define gles_glGetTexParameteriv_FORMAT FORMAT_void_GLenum_GLenum_GLint___GENPT__
-#define gles_glGetTexParameterxv_INDEX 74
+#define gles_glGetTexParameterxv_INDEX 86
 #define gles_glGetTexParameterxv_RETURN void
 #define gles_glGetTexParameterxv_ARG_NAMES target, pname, params
 #define gles_glGetTexParameterxv_ARG_EXPAND GLenum target, GLenum pname, GLfixed * params
 #define gles_glGetTexParameterxv_PACKED PACKED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetTexParameterxv_INDEXED INDEXED_void_GLenum_GLenum_GLfixed___GENPT__
 #define gles_glGetTexParameterxv_FORMAT FORMAT_void_GLenum_GLenum_GLfixed___GENPT__
-#define gles_glHint_INDEX 75
+#define gles_glHint_INDEX 87
 #define gles_glHint_RETURN void
 #define gles_glHint_ARG_NAMES target, mode
 #define gles_glHint_ARG_EXPAND GLenum target, GLenum mode
 #define gles_glHint_PACKED PACKED_void_GLenum_GLenum
 #define gles_glHint_INDEXED INDEXED_void_GLenum_GLenum
 #define gles_glHint_FORMAT FORMAT_void_GLenum_GLenum
-#define gles_glIsBuffer_INDEX 76
+#define gles_glIsBuffer_INDEX 88
 #define gles_glIsBuffer_RETURN GLboolean
 #define gles_glIsBuffer_ARG_NAMES buffer
 #define gles_glIsBuffer_ARG_EXPAND GLuint buffer
 #define gles_glIsBuffer_PACKED PACKED_GLboolean_GLuint
 #define gles_glIsBuffer_INDEXED INDEXED_GLboolean_GLuint
 #define gles_glIsBuffer_FORMAT FORMAT_GLboolean_GLuint
-#define gles_glIsEnabled_INDEX 77
+#define gles_glIsEnabled_INDEX 89
 #define gles_glIsEnabled_RETURN GLboolean
 #define gles_glIsEnabled_ARG_NAMES cap
 #define gles_glIsEnabled_ARG_EXPAND GLenum cap
 #define gles_glIsEnabled_PACKED PACKED_GLboolean_GLenum
 #define gles_glIsEnabled_INDEXED INDEXED_GLboolean_GLenum
 #define gles_glIsEnabled_FORMAT FORMAT_GLboolean_GLenum
-#define gles_glIsTexture_INDEX 78
+#define gles_glIsFramebufferOES_INDEX 90
+#define gles_glIsFramebufferOES_RETURN GLboolean
+#define gles_glIsFramebufferOES_ARG_NAMES framebuffer
+#define gles_glIsFramebufferOES_ARG_EXPAND GLuint framebuffer
+#define gles_glIsFramebufferOES_PACKED PACKED_GLboolean_GLuint
+#define gles_glIsFramebufferOES_INDEXED INDEXED_GLboolean_GLuint
+#define gles_glIsFramebufferOES_FORMAT FORMAT_GLboolean_GLuint
+#define gles_glIsRenderbufferOES_INDEX 91
+#define gles_glIsRenderbufferOES_RETURN GLboolean
+#define gles_glIsRenderbufferOES_ARG_NAMES renderbuffer
+#define gles_glIsRenderbufferOES_ARG_EXPAND GLuint renderbuffer
+#define gles_glIsRenderbufferOES_PACKED PACKED_GLboolean_GLuint
+#define gles_glIsRenderbufferOES_INDEXED INDEXED_GLboolean_GLuint
+#define gles_glIsRenderbufferOES_FORMAT FORMAT_GLboolean_GLuint
+#define gles_glIsTexture_INDEX 92
 #define gles_glIsTexture_RETURN GLboolean
 #define gles_glIsTexture_ARG_NAMES texture
 #define gles_glIsTexture_ARG_EXPAND GLuint texture
 #define gles_glIsTexture_PACKED PACKED_GLboolean_GLuint
 #define gles_glIsTexture_INDEXED INDEXED_GLboolean_GLuint
 #define gles_glIsTexture_FORMAT FORMAT_GLboolean_GLuint
-#define gles_glLightModelf_INDEX 79
+#define gles_glLightModelf_INDEX 93
 #define gles_glLightModelf_RETURN void
 #define gles_glLightModelf_ARG_NAMES pname, param
 #define gles_glLightModelf_ARG_EXPAND GLenum pname, GLfloat param
 #define gles_glLightModelf_PACKED PACKED_void_GLenum_GLfloat
 #define gles_glLightModelf_INDEXED INDEXED_void_GLenum_GLfloat
 #define gles_glLightModelf_FORMAT FORMAT_void_GLenum_GLfloat
-#define gles_glLightModelfv_INDEX 80
+#define gles_glLightModelfv_INDEX 94
 #define gles_glLightModelfv_RETURN void
 #define gles_glLightModelfv_ARG_NAMES pname, params
 #define gles_glLightModelfv_ARG_EXPAND GLenum pname, const GLfloat * params
 #define gles_glLightModelfv_PACKED PACKED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glLightModelfv_INDEXED INDEXED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glLightModelfv_FORMAT FORMAT_void_GLenum_const_GLfloat___GENPT__
-#define gles_glLightModelx_INDEX 81
+#define gles_glLightModelx_INDEX 95
 #define gles_glLightModelx_RETURN void
 #define gles_glLightModelx_ARG_NAMES pname, param
 #define gles_glLightModelx_ARG_EXPAND GLenum pname, GLfixed param
 #define gles_glLightModelx_PACKED PACKED_void_GLenum_GLfixed
 #define gles_glLightModelx_INDEXED INDEXED_void_GLenum_GLfixed
 #define gles_glLightModelx_FORMAT FORMAT_void_GLenum_GLfixed
-#define gles_glLightModelxv_INDEX 82
+#define gles_glLightModelxv_INDEX 96
 #define gles_glLightModelxv_RETURN void
 #define gles_glLightModelxv_ARG_NAMES pname, params
 #define gles_glLightModelxv_ARG_EXPAND GLenum pname, const GLfixed * params
 #define gles_glLightModelxv_PACKED PACKED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glLightModelxv_INDEXED INDEXED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glLightModelxv_FORMAT FORMAT_void_GLenum_const_GLfixed___GENPT__
-#define gles_glLightf_INDEX 83
+#define gles_glLightf_INDEX 97
 #define gles_glLightf_RETURN void
 #define gles_glLightf_ARG_NAMES light, pname, param
 #define gles_glLightf_ARG_EXPAND GLenum light, GLenum pname, GLfloat param
 #define gles_glLightf_PACKED PACKED_void_GLenum_GLenum_GLfloat
 #define gles_glLightf_INDEXED INDEXED_void_GLenum_GLenum_GLfloat
 #define gles_glLightf_FORMAT FORMAT_void_GLenum_GLenum_GLfloat
-#define gles_glLightfv_INDEX 84
+#define gles_glLightfv_INDEX 98
 #define gles_glLightfv_RETURN void
 #define gles_glLightfv_ARG_NAMES light, pname, params
 #define gles_glLightfv_ARG_EXPAND GLenum light, GLenum pname, const GLfloat * params
 #define gles_glLightfv_PACKED PACKED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glLightfv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glLightfv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfloat___GENPT__
-#define gles_glLightx_INDEX 85
+#define gles_glLightx_INDEX 99
 #define gles_glLightx_RETURN void
 #define gles_glLightx_ARG_NAMES light, pname, param
 #define gles_glLightx_ARG_EXPAND GLenum light, GLenum pname, GLfixed param
 #define gles_glLightx_PACKED PACKED_void_GLenum_GLenum_GLfixed
 #define gles_glLightx_INDEXED INDEXED_void_GLenum_GLenum_GLfixed
 #define gles_glLightx_FORMAT FORMAT_void_GLenum_GLenum_GLfixed
-#define gles_glLightxv_INDEX 86
+#define gles_glLightxv_INDEX 100
 #define gles_glLightxv_RETURN void
 #define gles_glLightxv_ARG_NAMES light, pname, params
 #define gles_glLightxv_ARG_EXPAND GLenum light, GLenum pname, const GLfixed * params
 #define gles_glLightxv_PACKED PACKED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glLightxv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glLightxv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfixed___GENPT__
-#define gles_glLineWidth_INDEX 87
+#define gles_glLineWidth_INDEX 101
 #define gles_glLineWidth_RETURN void
 #define gles_glLineWidth_ARG_NAMES width
 #define gles_glLineWidth_ARG_EXPAND GLfloat width
 #define gles_glLineWidth_PACKED PACKED_void_GLfloat
 #define gles_glLineWidth_INDEXED INDEXED_void_GLfloat
 #define gles_glLineWidth_FORMAT FORMAT_void_GLfloat
-#define gles_glLineWidthx_INDEX 88
+#define gles_glLineWidthx_INDEX 102
 #define gles_glLineWidthx_RETURN void
 #define gles_glLineWidthx_ARG_NAMES width
 #define gles_glLineWidthx_ARG_EXPAND GLfixed width
 #define gles_glLineWidthx_PACKED PACKED_void_GLfixed
 #define gles_glLineWidthx_INDEXED INDEXED_void_GLfixed
 #define gles_glLineWidthx_FORMAT FORMAT_void_GLfixed
-#define gles_glLoadIdentity_INDEX 89
+#define gles_glLoadIdentity_INDEX 103
 #define gles_glLoadIdentity_RETURN void
 #define gles_glLoadIdentity_ARG_NAMES 
 #define gles_glLoadIdentity_ARG_EXPAND 
 #define gles_glLoadIdentity_PACKED PACKED_void
 #define gles_glLoadIdentity_INDEXED INDEXED_void
 #define gles_glLoadIdentity_FORMAT FORMAT_void
-#define gles_glLoadMatrixf_INDEX 90
+#define gles_glLoadMatrixf_INDEX 104
 #define gles_glLoadMatrixf_RETURN void
 #define gles_glLoadMatrixf_ARG_NAMES m
 #define gles_glLoadMatrixf_ARG_EXPAND const GLfloat * m
 #define gles_glLoadMatrixf_PACKED PACKED_void_const_GLfloat___GENPT__
 #define gles_glLoadMatrixf_INDEXED INDEXED_void_const_GLfloat___GENPT__
 #define gles_glLoadMatrixf_FORMAT FORMAT_void_const_GLfloat___GENPT__
-#define gles_glLoadMatrixx_INDEX 91
+#define gles_glLoadMatrixx_INDEX 105
 #define gles_glLoadMatrixx_RETURN void
 #define gles_glLoadMatrixx_ARG_NAMES m
 #define gles_glLoadMatrixx_ARG_EXPAND const GLfixed * m
 #define gles_glLoadMatrixx_PACKED PACKED_void_const_GLfixed___GENPT__
 #define gles_glLoadMatrixx_INDEXED INDEXED_void_const_GLfixed___GENPT__
 #define gles_glLoadMatrixx_FORMAT FORMAT_void_const_GLfixed___GENPT__
-#define gles_glLogicOp_INDEX 92
+#define gles_glLogicOp_INDEX 106
 #define gles_glLogicOp_RETURN void
 #define gles_glLogicOp_ARG_NAMES opcode
 #define gles_glLogicOp_ARG_EXPAND GLenum opcode
 #define gles_glLogicOp_PACKED PACKED_void_GLenum
 #define gles_glLogicOp_INDEXED INDEXED_void_GLenum
 #define gles_glLogicOp_FORMAT FORMAT_void_GLenum
-#define gles_glMaterialf_INDEX 93
+#define gles_glMaterialf_INDEX 107
 #define gles_glMaterialf_RETURN void
 #define gles_glMaterialf_ARG_NAMES face, pname, param
 #define gles_glMaterialf_ARG_EXPAND GLenum face, GLenum pname, GLfloat param
 #define gles_glMaterialf_PACKED PACKED_void_GLenum_GLenum_GLfloat
 #define gles_glMaterialf_INDEXED INDEXED_void_GLenum_GLenum_GLfloat
 #define gles_glMaterialf_FORMAT FORMAT_void_GLenum_GLenum_GLfloat
-#define gles_glMaterialfv_INDEX 94
+#define gles_glMaterialfv_INDEX 108
 #define gles_glMaterialfv_RETURN void
 #define gles_glMaterialfv_ARG_NAMES face, pname, params
 #define gles_glMaterialfv_ARG_EXPAND GLenum face, GLenum pname, const GLfloat * params
 #define gles_glMaterialfv_PACKED PACKED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glMaterialfv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glMaterialfv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfloat___GENPT__
-#define gles_glMaterialx_INDEX 95
+#define gles_glMaterialx_INDEX 109
 #define gles_glMaterialx_RETURN void
 #define gles_glMaterialx_ARG_NAMES face, pname, param
 #define gles_glMaterialx_ARG_EXPAND GLenum face, GLenum pname, GLfixed param
 #define gles_glMaterialx_PACKED PACKED_void_GLenum_GLenum_GLfixed
 #define gles_glMaterialx_INDEXED INDEXED_void_GLenum_GLenum_GLfixed
 #define gles_glMaterialx_FORMAT FORMAT_void_GLenum_GLenum_GLfixed
-#define gles_glMaterialxv_INDEX 96
+#define gles_glMaterialxv_INDEX 110
 #define gles_glMaterialxv_RETURN void
 #define gles_glMaterialxv_ARG_NAMES face, pname, params
 #define gles_glMaterialxv_ARG_EXPAND GLenum face, GLenum pname, const GLfixed * params
 #define gles_glMaterialxv_PACKED PACKED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glMaterialxv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glMaterialxv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfixed___GENPT__
-#define gles_glMatrixMode_INDEX 97
+#define gles_glMatrixMode_INDEX 111
 #define gles_glMatrixMode_RETURN void
 #define gles_glMatrixMode_ARG_NAMES mode
 #define gles_glMatrixMode_ARG_EXPAND GLenum mode
 #define gles_glMatrixMode_PACKED PACKED_void_GLenum
 #define gles_glMatrixMode_INDEXED INDEXED_void_GLenum
 #define gles_glMatrixMode_FORMAT FORMAT_void_GLenum
-#define gles_glMultMatrixf_INDEX 98
+#define gles_glMultMatrixf_INDEX 112
 #define gles_glMultMatrixf_RETURN void
 #define gles_glMultMatrixf_ARG_NAMES m
 #define gles_glMultMatrixf_ARG_EXPAND const GLfloat * m
 #define gles_glMultMatrixf_PACKED PACKED_void_const_GLfloat___GENPT__
 #define gles_glMultMatrixf_INDEXED INDEXED_void_const_GLfloat___GENPT__
 #define gles_glMultMatrixf_FORMAT FORMAT_void_const_GLfloat___GENPT__
-#define gles_glMultMatrixx_INDEX 99
+#define gles_glMultMatrixx_INDEX 113
 #define gles_glMultMatrixx_RETURN void
 #define gles_glMultMatrixx_ARG_NAMES m
 #define gles_glMultMatrixx_ARG_EXPAND const GLfixed * m
 #define gles_glMultMatrixx_PACKED PACKED_void_const_GLfixed___GENPT__
 #define gles_glMultMatrixx_INDEXED INDEXED_void_const_GLfixed___GENPT__
 #define gles_glMultMatrixx_FORMAT FORMAT_void_const_GLfixed___GENPT__
-#define gles_glMultiTexCoord4f_INDEX 100
+#define gles_glMultiTexCoord4f_INDEX 114
 #define gles_glMultiTexCoord4f_RETURN void
 #define gles_glMultiTexCoord4f_ARG_NAMES target, s, t, r, q
 #define gles_glMultiTexCoord4f_ARG_EXPAND GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q
 #define gles_glMultiTexCoord4f_PACKED PACKED_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glMultiTexCoord4f_INDEXED INDEXED_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glMultiTexCoord4f_FORMAT FORMAT_void_GLenum_GLfloat_GLfloat_GLfloat_GLfloat
-#define gles_glMultiTexCoord4x_INDEX 101
+#define gles_glMultiTexCoord4x_INDEX 115
 #define gles_glMultiTexCoord4x_RETURN void
 #define gles_glMultiTexCoord4x_ARG_NAMES target, s, t, r, q
 #define gles_glMultiTexCoord4x_ARG_EXPAND GLenum target, GLfixed s, GLfixed t, GLfixed r, GLfixed q
 #define gles_glMultiTexCoord4x_PACKED PACKED_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glMultiTexCoord4x_INDEXED INDEXED_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glMultiTexCoord4x_FORMAT FORMAT_void_GLenum_GLfixed_GLfixed_GLfixed_GLfixed
-#define gles_glNormal3f_INDEX 102
+#define gles_glNormal3f_INDEX 116
 #define gles_glNormal3f_RETURN void
 #define gles_glNormal3f_ARG_NAMES nx, ny, nz
 #define gles_glNormal3f_ARG_EXPAND GLfloat nx, GLfloat ny, GLfloat nz
 #define gles_glNormal3f_PACKED PACKED_void_GLfloat_GLfloat_GLfloat
 #define gles_glNormal3f_INDEXED INDEXED_void_GLfloat_GLfloat_GLfloat
 #define gles_glNormal3f_FORMAT FORMAT_void_GLfloat_GLfloat_GLfloat
-#define gles_glNormal3x_INDEX 103
+#define gles_glNormal3x_INDEX 117
 #define gles_glNormal3x_RETURN void
 #define gles_glNormal3x_ARG_NAMES nx, ny, nz
 #define gles_glNormal3x_ARG_EXPAND GLfixed nx, GLfixed ny, GLfixed nz
 #define gles_glNormal3x_PACKED PACKED_void_GLfixed_GLfixed_GLfixed
 #define gles_glNormal3x_INDEXED INDEXED_void_GLfixed_GLfixed_GLfixed
 #define gles_glNormal3x_FORMAT FORMAT_void_GLfixed_GLfixed_GLfixed
-#define gles_glNormalPointer_INDEX 104
+#define gles_glNormalPointer_INDEX 118
 #define gles_glNormalPointer_RETURN void
 #define gles_glNormalPointer_ARG_NAMES type, stride, pointer
 #define gles_glNormalPointer_ARG_EXPAND GLenum type, GLsizei stride, const GLvoid * pointer
 #define gles_glNormalPointer_PACKED PACKED_void_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glNormalPointer_INDEXED INDEXED_void_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glNormalPointer_FORMAT FORMAT_void_GLenum_GLsizei_const_GLvoid___GENPT__
-#define gles_glOrthof_INDEX 105
+#define gles_glOrthof_INDEX 119
 #define gles_glOrthof_RETURN void
 #define gles_glOrthof_ARG_NAMES left, right, bottom, top, near, far
 #define gles_glOrthof_ARG_EXPAND GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far
 #define gles_glOrthof_PACKED PACKED_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glOrthof_INDEXED INDEXED_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glOrthof_FORMAT FORMAT_void_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat_GLfloat
-#define gles_glOrthox_INDEX 106
+#define gles_glOrthox_INDEX 120
 #define gles_glOrthox_RETURN void
 #define gles_glOrthox_ARG_NAMES left, right, bottom, top, near, far
 #define gles_glOrthox_ARG_EXPAND GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed near, GLfixed far
 #define gles_glOrthox_PACKED PACKED_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glOrthox_INDEXED INDEXED_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glOrthox_FORMAT FORMAT_void_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed_GLfixed
-#define gles_glPixelStorei_INDEX 107
+#define gles_glPixelStorei_INDEX 121
 #define gles_glPixelStorei_RETURN void
 #define gles_glPixelStorei_ARG_NAMES pname, param
 #define gles_glPixelStorei_ARG_EXPAND GLenum pname, GLint param
 #define gles_glPixelStorei_PACKED PACKED_void_GLenum_GLint
 #define gles_glPixelStorei_INDEXED INDEXED_void_GLenum_GLint
 #define gles_glPixelStorei_FORMAT FORMAT_void_GLenum_GLint
-#define gles_glPointParameterf_INDEX 108
+#define gles_glPointParameterf_INDEX 122
 #define gles_glPointParameterf_RETURN void
 #define gles_glPointParameterf_ARG_NAMES pname, param
 #define gles_glPointParameterf_ARG_EXPAND GLenum pname, GLfloat param
 #define gles_glPointParameterf_PACKED PACKED_void_GLenum_GLfloat
 #define gles_glPointParameterf_INDEXED INDEXED_void_GLenum_GLfloat
 #define gles_glPointParameterf_FORMAT FORMAT_void_GLenum_GLfloat
-#define gles_glPointParameterfv_INDEX 109
+#define gles_glPointParameterfv_INDEX 123
 #define gles_glPointParameterfv_RETURN void
 #define gles_glPointParameterfv_ARG_NAMES pname, params
 #define gles_glPointParameterfv_ARG_EXPAND GLenum pname, const GLfloat * params
 #define gles_glPointParameterfv_PACKED PACKED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glPointParameterfv_INDEXED INDEXED_void_GLenum_const_GLfloat___GENPT__
 #define gles_glPointParameterfv_FORMAT FORMAT_void_GLenum_const_GLfloat___GENPT__
-#define gles_glPointParameterx_INDEX 110
+#define gles_glPointParameterx_INDEX 124
 #define gles_glPointParameterx_RETURN void
 #define gles_glPointParameterx_ARG_NAMES pname, param
 #define gles_glPointParameterx_ARG_EXPAND GLenum pname, GLfixed param
 #define gles_glPointParameterx_PACKED PACKED_void_GLenum_GLfixed
 #define gles_glPointParameterx_INDEXED INDEXED_void_GLenum_GLfixed
 #define gles_glPointParameterx_FORMAT FORMAT_void_GLenum_GLfixed
-#define gles_glPointParameterxv_INDEX 111
+#define gles_glPointParameterxv_INDEX 125
 #define gles_glPointParameterxv_RETURN void
 #define gles_glPointParameterxv_ARG_NAMES pname, params
 #define gles_glPointParameterxv_ARG_EXPAND GLenum pname, const GLfixed * params
 #define gles_glPointParameterxv_PACKED PACKED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glPointParameterxv_INDEXED INDEXED_void_GLenum_const_GLfixed___GENPT__
 #define gles_glPointParameterxv_FORMAT FORMAT_void_GLenum_const_GLfixed___GENPT__
-#define gles_glPointSize_INDEX 112
+#define gles_glPointSize_INDEX 126
 #define gles_glPointSize_RETURN void
 #define gles_glPointSize_ARG_NAMES size
 #define gles_glPointSize_ARG_EXPAND GLfloat size
 #define gles_glPointSize_PACKED PACKED_void_GLfloat
 #define gles_glPointSize_INDEXED INDEXED_void_GLfloat
 #define gles_glPointSize_FORMAT FORMAT_void_GLfloat
-#define gles_glPointSizePointerOES_INDEX 113
+#define gles_glPointSizePointerOES_INDEX 127
 #define gles_glPointSizePointerOES_RETURN void
 #define gles_glPointSizePointerOES_ARG_NAMES type, stride, pointer
 #define gles_glPointSizePointerOES_ARG_EXPAND GLenum type, GLsizei stride, const GLvoid * pointer
 #define gles_glPointSizePointerOES_PACKED PACKED_void_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glPointSizePointerOES_INDEXED INDEXED_void_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glPointSizePointerOES_FORMAT FORMAT_void_GLenum_GLsizei_const_GLvoid___GENPT__
-#define gles_glPointSizex_INDEX 114
+#define gles_glPointSizex_INDEX 128
 #define gles_glPointSizex_RETURN void
 #define gles_glPointSizex_ARG_NAMES size
 #define gles_glPointSizex_ARG_EXPAND GLfixed size
 #define gles_glPointSizex_PACKED PACKED_void_GLfixed
 #define gles_glPointSizex_INDEXED INDEXED_void_GLfixed
 #define gles_glPointSizex_FORMAT FORMAT_void_GLfixed
-#define gles_glPolygonOffset_INDEX 115
+#define gles_glPolygonOffset_INDEX 129
 #define gles_glPolygonOffset_RETURN void
 #define gles_glPolygonOffset_ARG_NAMES factor, units
 #define gles_glPolygonOffset_ARG_EXPAND GLfloat factor, GLfloat units
 #define gles_glPolygonOffset_PACKED PACKED_void_GLfloat_GLfloat
 #define gles_glPolygonOffset_INDEXED INDEXED_void_GLfloat_GLfloat
 #define gles_glPolygonOffset_FORMAT FORMAT_void_GLfloat_GLfloat
-#define gles_glPolygonOffsetx_INDEX 116
+#define gles_glPolygonOffsetx_INDEX 130
 #define gles_glPolygonOffsetx_RETURN void
 #define gles_glPolygonOffsetx_ARG_NAMES factor, units
 #define gles_glPolygonOffsetx_ARG_EXPAND GLfixed factor, GLfixed units
 #define gles_glPolygonOffsetx_PACKED PACKED_void_GLfixed_GLfixed
 #define gles_glPolygonOffsetx_INDEXED INDEXED_void_GLfixed_GLfixed
 #define gles_glPolygonOffsetx_FORMAT FORMAT_void_GLfixed_GLfixed
-#define gles_glPopMatrix_INDEX 117
+#define gles_glPopMatrix_INDEX 131
 #define gles_glPopMatrix_RETURN void
 #define gles_glPopMatrix_ARG_NAMES 
 #define gles_glPopMatrix_ARG_EXPAND 
 #define gles_glPopMatrix_PACKED PACKED_void
 #define gles_glPopMatrix_INDEXED INDEXED_void
 #define gles_glPopMatrix_FORMAT FORMAT_void
-#define gles_glPushMatrix_INDEX 118
+#define gles_glPushMatrix_INDEX 132
 #define gles_glPushMatrix_RETURN void
 #define gles_glPushMatrix_ARG_NAMES 
 #define gles_glPushMatrix_ARG_EXPAND 
 #define gles_glPushMatrix_PACKED PACKED_void
 #define gles_glPushMatrix_INDEXED INDEXED_void
 #define gles_glPushMatrix_FORMAT FORMAT_void
-#define gles_glReadPixels_INDEX 119
+#define gles_glReadPixels_INDEX 133
 #define gles_glReadPixels_RETURN void
 #define gles_glReadPixels_ARG_NAMES x, y, width, height, format, type, pixels
 #define gles_glReadPixels_ARG_EXPAND GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid * pixels
 #define gles_glReadPixels_PACKED PACKED_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__
 #define gles_glReadPixels_INDEXED INDEXED_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__
 #define gles_glReadPixels_FORMAT FORMAT_void_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_GLvoid___GENPT__
-#define gles_glRotatef_INDEX 120
+#define gles_glRenderbufferStorageOES_INDEX 134
+#define gles_glRenderbufferStorageOES_RETURN void
+#define gles_glRenderbufferStorageOES_ARG_NAMES target, internalformat, width, height
+#define gles_glRenderbufferStorageOES_ARG_EXPAND GLenum target, GLenum internalformat, GLsizei width, GLsizei height
+#define gles_glRenderbufferStorageOES_PACKED PACKED_void_GLenum_GLenum_GLsizei_GLsizei
+#define gles_glRenderbufferStorageOES_INDEXED INDEXED_void_GLenum_GLenum_GLsizei_GLsizei
+#define gles_glRenderbufferStorageOES_FORMAT FORMAT_void_GLenum_GLenum_GLsizei_GLsizei
+#define gles_glRotatef_INDEX 135
 #define gles_glRotatef_RETURN void
 #define gles_glRotatef_ARG_NAMES angle, x, y, z
 #define gles_glRotatef_ARG_EXPAND GLfloat angle, GLfloat x, GLfloat y, GLfloat z
 #define gles_glRotatef_PACKED PACKED_void_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glRotatef_INDEXED INDEXED_void_GLfloat_GLfloat_GLfloat_GLfloat
 #define gles_glRotatef_FORMAT FORMAT_void_GLfloat_GLfloat_GLfloat_GLfloat
-#define gles_glRotatex_INDEX 121
+#define gles_glRotatex_INDEX 136
 #define gles_glRotatex_RETURN void
 #define gles_glRotatex_ARG_NAMES angle, x, y, z
 #define gles_glRotatex_ARG_EXPAND GLfixed angle, GLfixed x, GLfixed y, GLfixed z
 #define gles_glRotatex_PACKED PACKED_void_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glRotatex_INDEXED INDEXED_void_GLfixed_GLfixed_GLfixed_GLfixed
 #define gles_glRotatex_FORMAT FORMAT_void_GLfixed_GLfixed_GLfixed_GLfixed
-#define gles_glSampleCoverage_INDEX 122
+#define gles_glSampleCoverage_INDEX 137
 #define gles_glSampleCoverage_RETURN void
 #define gles_glSampleCoverage_ARG_NAMES value, invert
 #define gles_glSampleCoverage_ARG_EXPAND GLclampf value, GLboolean invert
 #define gles_glSampleCoverage_PACKED PACKED_void_GLclampf_GLboolean
 #define gles_glSampleCoverage_INDEXED INDEXED_void_GLclampf_GLboolean
 #define gles_glSampleCoverage_FORMAT FORMAT_void_GLclampf_GLboolean
-#define gles_glSampleCoveragex_INDEX 123
+#define gles_glSampleCoveragex_INDEX 138
 #define gles_glSampleCoveragex_RETURN void
 #define gles_glSampleCoveragex_ARG_NAMES value, invert
 #define gles_glSampleCoveragex_ARG_EXPAND GLclampx value, GLboolean invert
 #define gles_glSampleCoveragex_PACKED PACKED_void_GLclampx_GLboolean
 #define gles_glSampleCoveragex_INDEXED INDEXED_void_GLclampx_GLboolean
 #define gles_glSampleCoveragex_FORMAT FORMAT_void_GLclampx_GLboolean
-#define gles_glScalef_INDEX 124
+#define gles_glScalef_INDEX 139
 #define gles_glScalef_RETURN void
 #define gles_glScalef_ARG_NAMES x, y, z
 #define gles_glScalef_ARG_EXPAND GLfloat x, GLfloat y, GLfloat z
 #define gles_glScalef_PACKED PACKED_void_GLfloat_GLfloat_GLfloat
 #define gles_glScalef_INDEXED INDEXED_void_GLfloat_GLfloat_GLfloat
 #define gles_glScalef_FORMAT FORMAT_void_GLfloat_GLfloat_GLfloat
-#define gles_glScalex_INDEX 125
+#define gles_glScalex_INDEX 140
 #define gles_glScalex_RETURN void
 #define gles_glScalex_ARG_NAMES x, y, z
 #define gles_glScalex_ARG_EXPAND GLfixed x, GLfixed y, GLfixed z
 #define gles_glScalex_PACKED PACKED_void_GLfixed_GLfixed_GLfixed
 #define gles_glScalex_INDEXED INDEXED_void_GLfixed_GLfixed_GLfixed
 #define gles_glScalex_FORMAT FORMAT_void_GLfixed_GLfixed_GLfixed
-#define gles_glScissor_INDEX 126
+#define gles_glScissor_INDEX 141
 #define gles_glScissor_RETURN void
 #define gles_glScissor_ARG_NAMES x, y, width, height
 #define gles_glScissor_ARG_EXPAND GLint x, GLint y, GLsizei width, GLsizei height
 #define gles_glScissor_PACKED PACKED_void_GLint_GLint_GLsizei_GLsizei
 #define gles_glScissor_INDEXED INDEXED_void_GLint_GLint_GLsizei_GLsizei
 #define gles_glScissor_FORMAT FORMAT_void_GLint_GLint_GLsizei_GLsizei
-#define gles_glShadeModel_INDEX 127
+#define gles_glShadeModel_INDEX 142
 #define gles_glShadeModel_RETURN void
 #define gles_glShadeModel_ARG_NAMES mode
 #define gles_glShadeModel_ARG_EXPAND GLenum mode
 #define gles_glShadeModel_PACKED PACKED_void_GLenum
 #define gles_glShadeModel_INDEXED INDEXED_void_GLenum
 #define gles_glShadeModel_FORMAT FORMAT_void_GLenum
-#define gles_glStencilFunc_INDEX 128
+#define gles_glStencilFunc_INDEX 143
 #define gles_glStencilFunc_RETURN void
 #define gles_glStencilFunc_ARG_NAMES func, ref, mask
 #define gles_glStencilFunc_ARG_EXPAND GLenum func, GLint ref, GLuint mask
 #define gles_glStencilFunc_PACKED PACKED_void_GLenum_GLint_GLuint
 #define gles_glStencilFunc_INDEXED INDEXED_void_GLenum_GLint_GLuint
 #define gles_glStencilFunc_FORMAT FORMAT_void_GLenum_GLint_GLuint
-#define gles_glStencilMask_INDEX 129
+#define gles_glStencilMask_INDEX 144
 #define gles_glStencilMask_RETURN void
 #define gles_glStencilMask_ARG_NAMES mask
 #define gles_glStencilMask_ARG_EXPAND GLuint mask
 #define gles_glStencilMask_PACKED PACKED_void_GLuint
 #define gles_glStencilMask_INDEXED INDEXED_void_GLuint
 #define gles_glStencilMask_FORMAT FORMAT_void_GLuint
-#define gles_glStencilOp_INDEX 130
+#define gles_glStencilOp_INDEX 145
 #define gles_glStencilOp_RETURN void
 #define gles_glStencilOp_ARG_NAMES fail, zfail, zpass
 #define gles_glStencilOp_ARG_EXPAND GLenum fail, GLenum zfail, GLenum zpass
 #define gles_glStencilOp_PACKED PACKED_void_GLenum_GLenum_GLenum
 #define gles_glStencilOp_INDEXED INDEXED_void_GLenum_GLenum_GLenum
 #define gles_glStencilOp_FORMAT FORMAT_void_GLenum_GLenum_GLenum
-#define gles_glTexCoordPointer_INDEX 131
+#define gles_glTexCoordPointer_INDEX 146
 #define gles_glTexCoordPointer_RETURN void
 #define gles_glTexCoordPointer_ARG_NAMES size, type, stride, pointer
 #define gles_glTexCoordPointer_ARG_EXPAND GLint size, GLenum type, GLsizei stride, const GLvoid * pointer
 #define gles_glTexCoordPointer_PACKED PACKED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glTexCoordPointer_INDEXED INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glTexCoordPointer_FORMAT FORMAT_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
-#define gles_glTexEnvf_INDEX 132
+#define gles_glTexEnvf_INDEX 147
 #define gles_glTexEnvf_RETURN void
 #define gles_glTexEnvf_ARG_NAMES target, pname, param
 #define gles_glTexEnvf_ARG_EXPAND GLenum target, GLenum pname, GLfloat param
 #define gles_glTexEnvf_PACKED PACKED_void_GLenum_GLenum_GLfloat
 #define gles_glTexEnvf_INDEXED INDEXED_void_GLenum_GLenum_GLfloat
 #define gles_glTexEnvf_FORMAT FORMAT_void_GLenum_GLenum_GLfloat
-#define gles_glTexEnvfv_INDEX 133
+#define gles_glTexEnvfv_INDEX 148
 #define gles_glTexEnvfv_RETURN void
 #define gles_glTexEnvfv_ARG_NAMES target, pname, params
 #define gles_glTexEnvfv_ARG_EXPAND GLenum target, GLenum pname, const GLfloat * params
 #define gles_glTexEnvfv_PACKED PACKED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glTexEnvfv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glTexEnvfv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfloat___GENPT__
-#define gles_glTexEnvi_INDEX 134
+#define gles_glTexEnvi_INDEX 149
 #define gles_glTexEnvi_RETURN void
 #define gles_glTexEnvi_ARG_NAMES target, pname, param
 #define gles_glTexEnvi_ARG_EXPAND GLenum target, GLenum pname, GLint param
 #define gles_glTexEnvi_PACKED PACKED_void_GLenum_GLenum_GLint
 #define gles_glTexEnvi_INDEXED INDEXED_void_GLenum_GLenum_GLint
 #define gles_glTexEnvi_FORMAT FORMAT_void_GLenum_GLenum_GLint
-#define gles_glTexEnviv_INDEX 135
+#define gles_glTexEnviv_INDEX 150
 #define gles_glTexEnviv_RETURN void
 #define gles_glTexEnviv_ARG_NAMES target, pname, params
 #define gles_glTexEnviv_ARG_EXPAND GLenum target, GLenum pname, const GLint * params
 #define gles_glTexEnviv_PACKED PACKED_void_GLenum_GLenum_const_GLint___GENPT__
 #define gles_glTexEnviv_INDEXED INDEXED_void_GLenum_GLenum_const_GLint___GENPT__
 #define gles_glTexEnviv_FORMAT FORMAT_void_GLenum_GLenum_const_GLint___GENPT__
-#define gles_glTexEnvx_INDEX 136
+#define gles_glTexEnvx_INDEX 151
 #define gles_glTexEnvx_RETURN void
 #define gles_glTexEnvx_ARG_NAMES target, pname, param
 #define gles_glTexEnvx_ARG_EXPAND GLenum target, GLenum pname, GLfixed param
 #define gles_glTexEnvx_PACKED PACKED_void_GLenum_GLenum_GLfixed
 #define gles_glTexEnvx_INDEXED INDEXED_void_GLenum_GLenum_GLfixed
 #define gles_glTexEnvx_FORMAT FORMAT_void_GLenum_GLenum_GLfixed
-#define gles_glTexEnvxv_INDEX 137
+#define gles_glTexEnvxv_INDEX 152
 #define gles_glTexEnvxv_RETURN void
 #define gles_glTexEnvxv_ARG_NAMES target, pname, params
 #define gles_glTexEnvxv_ARG_EXPAND GLenum target, GLenum pname, const GLfixed * params
 #define gles_glTexEnvxv_PACKED PACKED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glTexEnvxv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glTexEnvxv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfixed___GENPT__
-#define gles_glTexImage2D_INDEX 138
+#define gles_glTexImage2D_INDEX 153
 #define gles_glTexImage2D_RETURN void
 #define gles_glTexImage2D_ARG_NAMES target, level, internalformat, width, height, border, format, type, pixels
 #define gles_glTexImage2D_ARG_EXPAND GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * pixels
 #define gles_glTexImage2D_PACKED PACKED_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__
 #define gles_glTexImage2D_INDEXED INDEXED_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__
 #define gles_glTexImage2D_FORMAT FORMAT_void_GLenum_GLint_GLint_GLsizei_GLsizei_GLint_GLenum_GLenum_const_GLvoid___GENPT__
-#define gles_glTexParameterf_INDEX 139
+#define gles_glTexParameterf_INDEX 154
 #define gles_glTexParameterf_RETURN void
 #define gles_glTexParameterf_ARG_NAMES target, pname, param
 #define gles_glTexParameterf_ARG_EXPAND GLenum target, GLenum pname, GLfloat param
 #define gles_glTexParameterf_PACKED PACKED_void_GLenum_GLenum_GLfloat
 #define gles_glTexParameterf_INDEXED INDEXED_void_GLenum_GLenum_GLfloat
 #define gles_glTexParameterf_FORMAT FORMAT_void_GLenum_GLenum_GLfloat
-#define gles_glTexParameterfv_INDEX 140
+#define gles_glTexParameterfv_INDEX 155
 #define gles_glTexParameterfv_RETURN void
 #define gles_glTexParameterfv_ARG_NAMES target, pname, params
 #define gles_glTexParameterfv_ARG_EXPAND GLenum target, GLenum pname, const GLfloat * params
 #define gles_glTexParameterfv_PACKED PACKED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glTexParameterfv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfloat___GENPT__
 #define gles_glTexParameterfv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfloat___GENPT__
-#define gles_glTexParameteri_INDEX 141
+#define gles_glTexParameteri_INDEX 156
 #define gles_glTexParameteri_RETURN void
 #define gles_glTexParameteri_ARG_NAMES target, pname, param
 #define gles_glTexParameteri_ARG_EXPAND GLenum target, GLenum pname, GLint param
 #define gles_glTexParameteri_PACKED PACKED_void_GLenum_GLenum_GLint
 #define gles_glTexParameteri_INDEXED INDEXED_void_GLenum_GLenum_GLint
 #define gles_glTexParameteri_FORMAT FORMAT_void_GLenum_GLenum_GLint
-#define gles_glTexParameteriv_INDEX 142
+#define gles_glTexParameteriv_INDEX 157
 #define gles_glTexParameteriv_RETURN void
 #define gles_glTexParameteriv_ARG_NAMES target, pname, params
 #define gles_glTexParameteriv_ARG_EXPAND GLenum target, GLenum pname, const GLint * params
 #define gles_glTexParameteriv_PACKED PACKED_void_GLenum_GLenum_const_GLint___GENPT__
 #define gles_glTexParameteriv_INDEXED INDEXED_void_GLenum_GLenum_const_GLint___GENPT__
 #define gles_glTexParameteriv_FORMAT FORMAT_void_GLenum_GLenum_const_GLint___GENPT__
-#define gles_glTexParameterx_INDEX 143
+#define gles_glTexParameterx_INDEX 158
 #define gles_glTexParameterx_RETURN void
 #define gles_glTexParameterx_ARG_NAMES target, pname, param
 #define gles_glTexParameterx_ARG_EXPAND GLenum target, GLenum pname, GLfixed param
 #define gles_glTexParameterx_PACKED PACKED_void_GLenum_GLenum_GLfixed
 #define gles_glTexParameterx_INDEXED INDEXED_void_GLenum_GLenum_GLfixed
 #define gles_glTexParameterx_FORMAT FORMAT_void_GLenum_GLenum_GLfixed
-#define gles_glTexParameterxv_INDEX 144
+#define gles_glTexParameterxv_INDEX 159
 #define gles_glTexParameterxv_RETURN void
 #define gles_glTexParameterxv_ARG_NAMES target, pname, params
 #define gles_glTexParameterxv_ARG_EXPAND GLenum target, GLenum pname, const GLfixed * params
 #define gles_glTexParameterxv_PACKED PACKED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glTexParameterxv_INDEXED INDEXED_void_GLenum_GLenum_const_GLfixed___GENPT__
 #define gles_glTexParameterxv_FORMAT FORMAT_void_GLenum_GLenum_const_GLfixed___GENPT__
-#define gles_glTexSubImage2D_INDEX 145
+#define gles_glTexSubImage2D_INDEX 160
 #define gles_glTexSubImage2D_RETURN void
 #define gles_glTexSubImage2D_ARG_NAMES target, level, xoffset, yoffset, width, height, format, type, pixels
 #define gles_glTexSubImage2D_ARG_EXPAND GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid * pixels
 #define gles_glTexSubImage2D_PACKED PACKED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__
 #define gles_glTexSubImage2D_INDEXED INDEXED_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__
 #define gles_glTexSubImage2D_FORMAT FORMAT_void_GLenum_GLint_GLint_GLint_GLsizei_GLsizei_GLenum_GLenum_const_GLvoid___GENPT__
-#define gles_glTranslatef_INDEX 146
+#define gles_glTranslatef_INDEX 161
 #define gles_glTranslatef_RETURN void
 #define gles_glTranslatef_ARG_NAMES x, y, z
 #define gles_glTranslatef_ARG_EXPAND GLfloat x, GLfloat y, GLfloat z
 #define gles_glTranslatef_PACKED PACKED_void_GLfloat_GLfloat_GLfloat
 #define gles_glTranslatef_INDEXED INDEXED_void_GLfloat_GLfloat_GLfloat
 #define gles_glTranslatef_FORMAT FORMAT_void_GLfloat_GLfloat_GLfloat
-#define gles_glTranslatex_INDEX 147
+#define gles_glTranslatex_INDEX 162
 #define gles_glTranslatex_RETURN void
 #define gles_glTranslatex_ARG_NAMES x, y, z
 #define gles_glTranslatex_ARG_EXPAND GLfixed x, GLfixed y, GLfixed z
 #define gles_glTranslatex_PACKED PACKED_void_GLfixed_GLfixed_GLfixed
 #define gles_glTranslatex_INDEXED INDEXED_void_GLfixed_GLfixed_GLfixed
 #define gles_glTranslatex_FORMAT FORMAT_void_GLfixed_GLfixed_GLfixed
-#define gles_glVertexPointer_INDEX 148
+#define gles_glVertexPointer_INDEX 163
 #define gles_glVertexPointer_RETURN void
 #define gles_glVertexPointer_ARG_NAMES size, type, stride, pointer
 #define gles_glVertexPointer_ARG_EXPAND GLint size, GLenum type, GLsizei stride, const GLvoid * pointer
 #define gles_glVertexPointer_PACKED PACKED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glVertexPointer_INDEXED INDEXED_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
 #define gles_glVertexPointer_FORMAT FORMAT_void_GLint_GLenum_GLsizei_const_GLvoid___GENPT__
-#define gles_glViewport_INDEX 149
+#define gles_glViewport_INDEX 164
 #define gles_glViewport_RETURN void
 #define gles_glViewport_ARG_NAMES x, y, width, height
 #define gles_glViewport_ARG_EXPAND GLint x, GLint y, GLsizei width, GLsizei height
@@ -8883,6 +9756,8 @@ void gles_glActiveTexture(glActiveTexture_ARG_EXPAND);
 void gles_glAlphaFunc(glAlphaFunc_ARG_EXPAND);
 void gles_glAlphaFuncx(glAlphaFuncx_ARG_EXPAND);
 void gles_glBindBuffer(glBindBuffer_ARG_EXPAND);
+void gles_glBindFramebufferOES(glBindFramebufferOES_ARG_EXPAND);
+void gles_glBindRenderbufferOES(glBindRenderbufferOES_ARG_EXPAND);
 void gles_glBindTexture(glBindTexture_ARG_EXPAND);
 void gles_glBlendColorOES(glBlendColorOES_ARG_EXPAND);
 void gles_glBlendEquationOES(glBlendEquationOES_ARG_EXPAND);
@@ -8891,6 +9766,7 @@ void gles_glBlendFunc(glBlendFunc_ARG_EXPAND);
 void gles_glBlendFuncSeparateOES(glBlendFuncSeparateOES_ARG_EXPAND);
 void gles_glBufferData(glBufferData_ARG_EXPAND);
 void gles_glBufferSubData(glBufferSubData_ARG_EXPAND);
+GLenum gles_glCheckFramebufferStatusOES(glCheckFramebufferStatusOES_ARG_EXPAND);
 void gles_glClear(glClear_ARG_EXPAND);
 void gles_glClearColor(glClearColor_ARG_EXPAND);
 void gles_glClearColorx(glClearColorx_ARG_EXPAND);
@@ -8911,6 +9787,8 @@ void gles_glCopyTexImage2D(glCopyTexImage2D_ARG_EXPAND);
 void gles_glCopyTexSubImage2D(glCopyTexSubImage2D_ARG_EXPAND);
 void gles_glCullFace(glCullFace_ARG_EXPAND);
 void gles_glDeleteBuffers(glDeleteBuffers_ARG_EXPAND);
+void gles_glDeleteFramebuffersOES(glDeleteFramebuffersOES_ARG_EXPAND);
+void gles_glDeleteRenderbuffersOES(glDeleteRenderbuffersOES_ARG_EXPAND);
 void gles_glDeleteTextures(glDeleteTextures_ARG_EXPAND);
 void gles_glDepthFunc(glDepthFunc_ARG_EXPAND);
 void gles_glDepthMask(glDepthMask_ARG_EXPAND);
@@ -8928,11 +9806,16 @@ void gles_glFogf(glFogf_ARG_EXPAND);
 void gles_glFogfv(glFogfv_ARG_EXPAND);
 void gles_glFogx(glFogx_ARG_EXPAND);
 void gles_glFogxv(glFogxv_ARG_EXPAND);
+void gles_glFramebufferRenderbufferOES(glFramebufferRenderbufferOES_ARG_EXPAND);
+void gles_glFramebufferTexture2DOES(glFramebufferTexture2DOES_ARG_EXPAND);
 void gles_glFrontFace(glFrontFace_ARG_EXPAND);
 void gles_glFrustumf(glFrustumf_ARG_EXPAND);
 void gles_glFrustumx(glFrustumx_ARG_EXPAND);
 void gles_glGenBuffers(glGenBuffers_ARG_EXPAND);
+void gles_glGenFramebuffersOES(glGenFramebuffersOES_ARG_EXPAND);
+void gles_glGenRenderbuffersOES(glGenRenderbuffersOES_ARG_EXPAND);
 void gles_glGenTextures(glGenTextures_ARG_EXPAND);
+void gles_glGenerateMipmapOES(glGenerateMipmapOES_ARG_EXPAND);
 void gles_glGetBooleanv(glGetBooleanv_ARG_EXPAND);
 void gles_glGetBufferParameteriv(glGetBufferParameteriv_ARG_EXPAND);
 void gles_glGetClipPlanef(glGetClipPlanef_ARG_EXPAND);
@@ -8940,12 +9823,14 @@ void gles_glGetClipPlanex(glGetClipPlanex_ARG_EXPAND);
 GLenum gles_glGetError(glGetError_ARG_EXPAND);
 void gles_glGetFixedv(glGetFixedv_ARG_EXPAND);
 void gles_glGetFloatv(glGetFloatv_ARG_EXPAND);
+void gles_glGetFramebufferAttachmentParameterivOES(glGetFramebufferAttachmentParameterivOES_ARG_EXPAND);
 void gles_glGetIntegerv(glGetIntegerv_ARG_EXPAND);
 void gles_glGetLightfv(glGetLightfv_ARG_EXPAND);
 void gles_glGetLightxv(glGetLightxv_ARG_EXPAND);
 void gles_glGetMaterialfv(glGetMaterialfv_ARG_EXPAND);
 void gles_glGetMaterialxv(glGetMaterialxv_ARG_EXPAND);
 void gles_glGetPointerv(glGetPointerv_ARG_EXPAND);
+void gles_glGetRenderbufferParameterivOES(glGetRenderbufferParameterivOES_ARG_EXPAND);
 const GLubyte * gles_glGetString(glGetString_ARG_EXPAND);
 void gles_glGetTexEnvfv(glGetTexEnvfv_ARG_EXPAND);
 void gles_glGetTexEnviv(glGetTexEnviv_ARG_EXPAND);
@@ -8956,6 +9841,8 @@ void gles_glGetTexParameterxv(glGetTexParameterxv_ARG_EXPAND);
 void gles_glHint(glHint_ARG_EXPAND);
 GLboolean gles_glIsBuffer(glIsBuffer_ARG_EXPAND);
 GLboolean gles_glIsEnabled(glIsEnabled_ARG_EXPAND);
+GLboolean gles_glIsFramebufferOES(glIsFramebufferOES_ARG_EXPAND);
+GLboolean gles_glIsRenderbufferOES(glIsRenderbufferOES_ARG_EXPAND);
 GLboolean gles_glIsTexture(glIsTexture_ARG_EXPAND);
 void gles_glLightModelf(glLightModelf_ARG_EXPAND);
 void gles_glLightModelfv(glLightModelfv_ARG_EXPAND);
@@ -8998,6 +9885,7 @@ void gles_glPolygonOffsetx(glPolygonOffsetx_ARG_EXPAND);
 void gles_glPopMatrix(glPopMatrix_ARG_EXPAND);
 void gles_glPushMatrix(glPushMatrix_ARG_EXPAND);
 void gles_glReadPixels(glReadPixels_ARG_EXPAND);
+void gles_glRenderbufferStorageOES(glRenderbufferStorageOES_ARG_EXPAND);
 void gles_glRotatef(glRotatef_ARG_EXPAND);
 void gles_glRotatex(glRotatex_ARG_EXPAND);
 void gles_glSampleCoverage(glSampleCoverage_ARG_EXPAND);

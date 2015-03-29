@@ -11,6 +11,8 @@ const char *mock_name(int func) {
         case glAlphaFunc_INDEX: return "glAlphaFunc";
         case glAlphaFuncx_INDEX: return "glAlphaFuncx";
         case glBindBuffer_INDEX: return "glBindBuffer";
+        case glBindFramebufferOES_INDEX: return "glBindFramebufferOES";
+        case glBindRenderbufferOES_INDEX: return "glBindRenderbufferOES";
         case glBindTexture_INDEX: return "glBindTexture";
         case glBlendColorOES_INDEX: return "glBlendColorOES";
         case glBlendEquationOES_INDEX: return "glBlendEquationOES";
@@ -19,6 +21,7 @@ const char *mock_name(int func) {
         case glBlendFuncSeparateOES_INDEX: return "glBlendFuncSeparateOES";
         case glBufferData_INDEX: return "glBufferData";
         case glBufferSubData_INDEX: return "glBufferSubData";
+        case glCheckFramebufferStatusOES_INDEX: return "glCheckFramebufferStatusOES";
         case glClear_INDEX: return "glClear";
         case glClearColor_INDEX: return "glClearColor";
         case glClearColorx_INDEX: return "glClearColorx";
@@ -39,6 +42,8 @@ const char *mock_name(int func) {
         case glCopyTexSubImage2D_INDEX: return "glCopyTexSubImage2D";
         case glCullFace_INDEX: return "glCullFace";
         case glDeleteBuffers_INDEX: return "glDeleteBuffers";
+        case glDeleteFramebuffersOES_INDEX: return "glDeleteFramebuffersOES";
+        case glDeleteRenderbuffersOES_INDEX: return "glDeleteRenderbuffersOES";
         case glDeleteTextures_INDEX: return "glDeleteTextures";
         case glDepthFunc_INDEX: return "glDepthFunc";
         case glDepthMask_INDEX: return "glDepthMask";
@@ -56,11 +61,16 @@ const char *mock_name(int func) {
         case glFogfv_INDEX: return "glFogfv";
         case glFogx_INDEX: return "glFogx";
         case glFogxv_INDEX: return "glFogxv";
+        case glFramebufferRenderbufferOES_INDEX: return "glFramebufferRenderbufferOES";
+        case glFramebufferTexture2DOES_INDEX: return "glFramebufferTexture2DOES";
         case glFrontFace_INDEX: return "glFrontFace";
         case glFrustumf_INDEX: return "glFrustumf";
         case glFrustumx_INDEX: return "glFrustumx";
         case glGenBuffers_INDEX: return "glGenBuffers";
+        case glGenFramebuffersOES_INDEX: return "glGenFramebuffersOES";
+        case glGenRenderbuffersOES_INDEX: return "glGenRenderbuffersOES";
         case glGenTextures_INDEX: return "glGenTextures";
+        case glGenerateMipmapOES_INDEX: return "glGenerateMipmapOES";
         case glGetBooleanv_INDEX: return "glGetBooleanv";
         case glGetBufferParameteriv_INDEX: return "glGetBufferParameteriv";
         case glGetClipPlanef_INDEX: return "glGetClipPlanef";
@@ -68,12 +78,14 @@ const char *mock_name(int func) {
         case glGetError_INDEX: return "glGetError";
         case glGetFixedv_INDEX: return "glGetFixedv";
         case glGetFloatv_INDEX: return "glGetFloatv";
+        case glGetFramebufferAttachmentParameterivOES_INDEX: return "glGetFramebufferAttachmentParameterivOES";
         case glGetIntegerv_INDEX: return "glGetIntegerv";
         case glGetLightfv_INDEX: return "glGetLightfv";
         case glGetLightxv_INDEX: return "glGetLightxv";
         case glGetMaterialfv_INDEX: return "glGetMaterialfv";
         case glGetMaterialxv_INDEX: return "glGetMaterialxv";
         case glGetPointerv_INDEX: return "glGetPointerv";
+        case glGetRenderbufferParameterivOES_INDEX: return "glGetRenderbufferParameterivOES";
         case glGetString_INDEX: return "glGetString";
         case glGetTexEnvfv_INDEX: return "glGetTexEnvfv";
         case glGetTexEnviv_INDEX: return "glGetTexEnviv";
@@ -84,6 +96,8 @@ const char *mock_name(int func) {
         case glHint_INDEX: return "glHint";
         case glIsBuffer_INDEX: return "glIsBuffer";
         case glIsEnabled_INDEX: return "glIsEnabled";
+        case glIsFramebufferOES_INDEX: return "glIsFramebufferOES";
+        case glIsRenderbufferOES_INDEX: return "glIsRenderbufferOES";
         case glIsTexture_INDEX: return "glIsTexture";
         case glLightModelf_INDEX: return "glLightModelf";
         case glLightModelfv_INDEX: return "glLightModelfv";
@@ -126,6 +140,7 @@ const char *mock_name(int func) {
         case glPopMatrix_INDEX: return "glPopMatrix";
         case glPushMatrix_INDEX: return "glPushMatrix";
         case glReadPixels_INDEX: return "glReadPixels";
+        case glRenderbufferStorageOES_INDEX: return "glRenderbufferStorageOES";
         case glRotatef_INDEX: return "glRotatef";
         case glRotatex_INDEX: return "glRotatex";
         case glSampleCoverage_INDEX: return "glSampleCoverage";
@@ -189,6 +204,18 @@ void mock_print(const indexed_call_t *packed) {
             printf("glBindBuffer(0x%04X, %u);\n", args.a1, args.a2);
             break;
         }
+        case glBindFramebufferOES_INDEX: {
+            INDEXED_void_GLenum_GLuint *unpacked = (INDEXED_void_GLenum_GLuint *)packed;
+            ARGS_void_GLenum_GLuint args = unpacked->args;
+            printf("glBindFramebufferOES(0x%04X, %u);\n", args.a1, args.a2);
+            break;
+        }
+        case glBindRenderbufferOES_INDEX: {
+            INDEXED_void_GLenum_GLuint *unpacked = (INDEXED_void_GLenum_GLuint *)packed;
+            ARGS_void_GLenum_GLuint args = unpacked->args;
+            printf("glBindRenderbufferOES(0x%04X, %u);\n", args.a1, args.a2);
+            break;
+        }
         case glBindTexture_INDEX: {
             INDEXED_void_GLenum_GLuint *unpacked = (INDEXED_void_GLenum_GLuint *)packed;
             ARGS_void_GLenum_GLuint args = unpacked->args;
@@ -235,6 +262,12 @@ void mock_print(const indexed_call_t *packed) {
             INDEXED_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ *unpacked = (INDEXED_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ *)packed;
             ARGS_void_GLenum_GLintptr_GLsizeiptr_const_GLvoid___GENPT__ args = unpacked->args;
             printf("glBufferSubData(0x%04X, %d, %d, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
+        case glCheckFramebufferStatusOES_INDEX: {
+            INDEXED_GLenum_GLenum *unpacked = (INDEXED_GLenum_GLenum *)packed;
+            ARGS_GLenum_GLenum args = unpacked->args;
+            printf("glCheckFramebufferStatusOES(0x%04X);\n", args.a1);
             break;
         }
         case glClear_INDEX: {
@@ -357,6 +390,18 @@ void mock_print(const indexed_call_t *packed) {
             printf("glDeleteBuffers(%d, %p);\n", args.a1, args.a2);
             break;
         }
+        case glDeleteFramebuffersOES_INDEX: {
+            INDEXED_void_GLsizei_const_GLuint___GENPT__ *unpacked = (INDEXED_void_GLsizei_const_GLuint___GENPT__ *)packed;
+            ARGS_void_GLsizei_const_GLuint___GENPT__ args = unpacked->args;
+            printf("glDeleteFramebuffersOES(%d, %p);\n", args.a1, args.a2);
+            break;
+        }
+        case glDeleteRenderbuffersOES_INDEX: {
+            INDEXED_void_GLsizei_const_GLuint___GENPT__ *unpacked = (INDEXED_void_GLsizei_const_GLuint___GENPT__ *)packed;
+            ARGS_void_GLsizei_const_GLuint___GENPT__ args = unpacked->args;
+            printf("glDeleteRenderbuffersOES(%d, %p);\n", args.a1, args.a2);
+            break;
+        }
         case glDeleteTextures_INDEX: {
             INDEXED_void_GLsizei_const_GLuint___GENPT__ *unpacked = (INDEXED_void_GLsizei_const_GLuint___GENPT__ *)packed;
             ARGS_void_GLsizei_const_GLuint___GENPT__ args = unpacked->args;
@@ -457,6 +502,18 @@ void mock_print(const indexed_call_t *packed) {
             printf("glFogxv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
+        case glFramebufferRenderbufferOES_INDEX: {
+            INDEXED_void_GLenum_GLenum_GLenum_GLuint *unpacked = (INDEXED_void_GLenum_GLenum_GLenum_GLuint *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLuint args = unpacked->args;
+            printf("glFramebufferRenderbufferOES(0x%04X, 0x%04X, 0x%04X, %u);\n", args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
+        case glFramebufferTexture2DOES_INDEX: {
+            INDEXED_void_GLenum_GLenum_GLenum_GLuint_GLint *unpacked = (INDEXED_void_GLenum_GLenum_GLenum_GLuint_GLint *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLuint_GLint args = unpacked->args;
+            printf("glFramebufferTexture2DOES(0x%04X, 0x%04X, 0x%04X, %u, %d);\n", args.a1, args.a2, args.a3, args.a4, args.a5);
+            break;
+        }
         case glFrontFace_INDEX: {
             INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
             ARGS_void_GLenum args = unpacked->args;
@@ -481,10 +538,28 @@ void mock_print(const indexed_call_t *packed) {
             printf("glGenBuffers(%d, %p);\n", args.a1, args.a2);
             break;
         }
+        case glGenFramebuffersOES_INDEX: {
+            INDEXED_void_GLsizei_GLuint___GENPT__ *unpacked = (INDEXED_void_GLsizei_GLuint___GENPT__ *)packed;
+            ARGS_void_GLsizei_GLuint___GENPT__ args = unpacked->args;
+            printf("glGenFramebuffersOES(%d, %p);\n", args.a1, args.a2);
+            break;
+        }
+        case glGenRenderbuffersOES_INDEX: {
+            INDEXED_void_GLsizei_GLuint___GENPT__ *unpacked = (INDEXED_void_GLsizei_GLuint___GENPT__ *)packed;
+            ARGS_void_GLsizei_GLuint___GENPT__ args = unpacked->args;
+            printf("glGenRenderbuffersOES(%d, %p);\n", args.a1, args.a2);
+            break;
+        }
         case glGenTextures_INDEX: {
             INDEXED_void_GLsizei_GLuint___GENPT__ *unpacked = (INDEXED_void_GLsizei_GLuint___GENPT__ *)packed;
             ARGS_void_GLsizei_GLuint___GENPT__ args = unpacked->args;
             printf("glGenTextures(%d, %p);\n", args.a1, args.a2);
+            break;
+        }
+        case glGenerateMipmapOES_INDEX: {
+            INDEXED_void_GLenum *unpacked = (INDEXED_void_GLenum *)packed;
+            ARGS_void_GLenum args = unpacked->args;
+            printf("glGenerateMipmapOES(0x%04X);\n", args.a1);
             break;
         }
         case glGetBooleanv_INDEX: {
@@ -528,6 +603,12 @@ void mock_print(const indexed_call_t *packed) {
             printf("glGetFloatv(0x%04X, %p);\n", args.a1, args.a2);
             break;
         }
+        case glGetFramebufferAttachmentParameterivOES_INDEX: {
+            INDEXED_void_GLenum_GLenum_GLenum_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLenum_GLint___GENPT__ *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLint___GENPT__ args = unpacked->args;
+            printf("glGetFramebufferAttachmentParameterivOES(0x%04X, 0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
         case glGetIntegerv_INDEX: {
             INDEXED_void_GLenum_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLint___GENPT__ *)packed;
             ARGS_void_GLenum_GLint___GENPT__ args = unpacked->args;
@@ -562,6 +643,12 @@ void mock_print(const indexed_call_t *packed) {
             INDEXED_void_GLenum_GLvoid___GENPT____GENPT__ *unpacked = (INDEXED_void_GLenum_GLvoid___GENPT____GENPT__ *)packed;
             ARGS_void_GLenum_GLvoid___GENPT____GENPT__ args = unpacked->args;
             printf("glGetPointerv(0x%04X, %p);\n", args.a1, args.a2);
+            break;
+        }
+        case glGetRenderbufferParameterivOES_INDEX: {
+            INDEXED_void_GLenum_GLenum_GLint___GENPT__ *unpacked = (INDEXED_void_GLenum_GLenum_GLint___GENPT__ *)packed;
+            ARGS_void_GLenum_GLenum_GLint___GENPT__ args = unpacked->args;
+            printf("glGetRenderbufferParameterivOES(0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3);
             break;
         }
         case glGetString_INDEX: {
@@ -622,6 +709,18 @@ void mock_print(const indexed_call_t *packed) {
             INDEXED_GLboolean_GLenum *unpacked = (INDEXED_GLboolean_GLenum *)packed;
             ARGS_GLboolean_GLenum args = unpacked->args;
             printf("glIsEnabled(0x%04X);\n", args.a1);
+            break;
+        }
+        case glIsFramebufferOES_INDEX: {
+            INDEXED_GLboolean_GLuint *unpacked = (INDEXED_GLboolean_GLuint *)packed;
+            ARGS_GLboolean_GLuint args = unpacked->args;
+            printf("glIsFramebufferOES(%u);\n", args.a1);
+            break;
+        }
+        case glIsRenderbufferOES_INDEX: {
+            INDEXED_GLboolean_GLuint *unpacked = (INDEXED_GLboolean_GLuint *)packed;
+            ARGS_GLboolean_GLuint args = unpacked->args;
+            printf("glIsRenderbufferOES(%u);\n", args.a1);
             break;
         }
         case glIsTexture_INDEX: {
@@ -873,6 +972,12 @@ void mock_print(const indexed_call_t *packed) {
             printf("glReadPixels(%d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", args.a1, args.a2, args.a3, args.a4, args.a5, args.a6, args.a7);
             break;
         }
+        case glRenderbufferStorageOES_INDEX: {
+            INDEXED_void_GLenum_GLenum_GLsizei_GLsizei *unpacked = (INDEXED_void_GLenum_GLenum_GLsizei_GLsizei *)packed;
+            ARGS_void_GLenum_GLenum_GLsizei_GLsizei args = unpacked->args;
+            printf("glRenderbufferStorageOES(0x%04X, 0x%04X, %d, %d);\n", args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
         case glRotatef_INDEX: {
             INDEXED_void_GLfloat_GLfloat_GLfloat_GLfloat *unpacked = (INDEXED_void_GLfloat_GLfloat_GLfloat_GLfloat *)packed;
             ARGS_void_GLfloat_GLfloat_GLfloat_GLfloat args = unpacked->args;
@@ -1106,6 +1211,12 @@ void gles_glAlphaFuncx(GLenum func, GLclampx ref) {
 void gles_glBindBuffer(GLenum target, GLuint buffer) {
     emit_glBindBuffer(target, buffer);
 }
+void gles_glBindFramebufferOES(GLenum target, GLuint framebuffer) {
+    emit_glBindFramebufferOES(target, framebuffer);
+}
+void gles_glBindRenderbufferOES(GLenum target, GLuint renderbuffer) {
+    emit_glBindRenderbufferOES(target, renderbuffer);
+}
 void gles_glBindTexture(GLenum target, GLuint texture) {
     emit_glBindTexture(target, texture);
 }
@@ -1129,6 +1240,10 @@ void gles_glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLen
 }
 void gles_glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid * data) {
     emit_glBufferSubData(target, offset, size, data);
+}
+GLenum gles_glCheckFramebufferStatusOES(GLenum target) {
+    emit_glCheckFramebufferStatusOES(target);
+    return (GLenum)0;
 }
 void gles_glClear(GLbitfield mask) {
     emit_glClear(mask);
@@ -1190,6 +1305,12 @@ void gles_glCullFace(GLenum mode) {
 void gles_glDeleteBuffers(GLsizei n, const GLuint * buffers) {
     emit_glDeleteBuffers(n, buffers);
 }
+void gles_glDeleteFramebuffersOES(GLsizei n, const GLuint * framebuffers) {
+    emit_glDeleteFramebuffersOES(n, framebuffers);
+}
+void gles_glDeleteRenderbuffersOES(GLsizei n, const GLuint * renderbuffers) {
+    emit_glDeleteRenderbuffersOES(n, renderbuffers);
+}
 void gles_glDeleteTextures(GLsizei n, const GLuint * textures) {
     emit_glDeleteTextures(n, textures);
 }
@@ -1241,6 +1362,12 @@ void gles_glFogx(GLenum pname, GLfixed param) {
 void gles_glFogxv(GLenum pname, const GLfixed * params) {
     emit_glFogxv(pname, params);
 }
+void gles_glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+    emit_glFramebufferRenderbufferOES(target, attachment, renderbuffertarget, renderbuffer);
+}
+void gles_glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
+    emit_glFramebufferTexture2DOES(target, attachment, textarget, texture, level);
+}
 void gles_glFrontFace(GLenum mode) {
     emit_glFrontFace(mode);
 }
@@ -1253,8 +1380,17 @@ void gles_glFrustumx(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, G
 void gles_glGenBuffers(GLsizei n, GLuint * buffers) {
     emit_glGenBuffers(n, buffers);
 }
+void gles_glGenFramebuffersOES(GLsizei n, GLuint * framebuffers) {
+    emit_glGenFramebuffersOES(n, framebuffers);
+}
+void gles_glGenRenderbuffersOES(GLsizei n, GLuint * renderbuffers) {
+    emit_glGenRenderbuffersOES(n, renderbuffers);
+}
 void gles_glGenTextures(GLsizei n, GLuint * textures) {
     emit_glGenTextures(n, textures);
+}
+void gles_glGenerateMipmapOES(GLenum target) {
+    emit_glGenerateMipmapOES(target);
 }
 void gles_glGetBooleanv(GLenum pname, GLboolean * params) {
     emit_glGetBooleanv(pname, params);
@@ -1278,6 +1414,9 @@ void gles_glGetFixedv(GLenum pname, GLfixed * params) {
 void gles_glGetFloatv(GLenum pname, GLfloat * params) {
     emit_glGetFloatv(pname, params);
 }
+void gles_glGetFramebufferAttachmentParameterivOES(GLenum target, GLenum attachment, GLenum pname, GLint * params) {
+    emit_glGetFramebufferAttachmentParameterivOES(target, attachment, pname, params);
+}
 void gles_glGetIntegerv(GLenum pname, GLint * params) {
     emit_glGetIntegerv(pname, params);
 }
@@ -1295,6 +1434,9 @@ void gles_glGetMaterialxv(GLenum face, GLenum pname, GLfixed * params) {
 }
 void gles_glGetPointerv(GLenum pname, GLvoid ** params) {
     emit_glGetPointerv(pname, params);
+}
+void gles_glGetRenderbufferParameterivOES(GLenum target, GLenum pname, GLint * params) {
+    emit_glGetRenderbufferParameterivOES(target, pname, params);
 }
 const GLubyte * gles_glGetString(GLenum name) {
     emit_glGetString(name);
@@ -1327,6 +1469,14 @@ GLboolean gles_glIsBuffer(GLuint buffer) {
 }
 GLboolean gles_glIsEnabled(GLenum cap) {
     emit_glIsEnabled(cap);
+    return (GLboolean)0;
+}
+GLboolean gles_glIsFramebufferOES(GLuint framebuffer) {
+    emit_glIsFramebufferOES(framebuffer);
+    return (GLboolean)0;
+}
+GLboolean gles_glIsRenderbufferOES(GLuint renderbuffer) {
+    emit_glIsRenderbufferOES(renderbuffer);
     return (GLboolean)0;
 }
 GLboolean gles_glIsTexture(GLuint texture) {
@@ -1455,6 +1605,9 @@ void gles_glPushMatrix() {
 }
 void gles_glReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid * pixels) {
     emit_glReadPixels(x, y, width, height, format, type, pixels);
+}
+void gles_glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+    emit_glRenderbufferStorageOES(target, internalformat, width, height);
 }
 void gles_glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     emit_glRotatef(angle, x, y, z);

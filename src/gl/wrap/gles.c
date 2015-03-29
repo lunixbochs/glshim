@@ -459,6 +459,36 @@ void glPackedCall(const packed_call_t *packed) {
             unpacked->func(args.a1, args.a2, args.a3, args.a4);
             break;
         }
+        case FORMAT_GLenum_GLenum: {
+            PACKED_GLenum_GLenum *unpacked = (PACKED_GLenum_GLenum *)packed;
+            ARGS_GLenum_GLenum args = unpacked->args;
+            unpacked->func(args.a1);
+            break;
+        }
+        case FORMAT_void_GLenum_GLenum_GLenum_GLuint: {
+            PACKED_void_GLenum_GLenum_GLenum_GLuint *unpacked = (PACKED_void_GLenum_GLenum_GLenum_GLuint *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLuint args = unpacked->args;
+            unpacked->func(args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
+        case FORMAT_void_GLenum_GLenum_GLenum_GLuint_GLint: {
+            PACKED_void_GLenum_GLenum_GLenum_GLuint_GLint *unpacked = (PACKED_void_GLenum_GLenum_GLenum_GLuint_GLint *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLuint_GLint args = unpacked->args;
+            unpacked->func(args.a1, args.a2, args.a3, args.a4, args.a5);
+            break;
+        }
+        case FORMAT_void_GLenum_GLenum_GLenum_GLint___GENPT__: {
+            PACKED_void_GLenum_GLenum_GLenum_GLint___GENPT__ *unpacked = (PACKED_void_GLenum_GLenum_GLenum_GLint___GENPT__ *)packed;
+            ARGS_void_GLenum_GLenum_GLenum_GLint___GENPT__ args = unpacked->args;
+            unpacked->func(args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
+        case FORMAT_void_GLenum_GLenum_GLsizei_GLsizei: {
+            PACKED_void_GLenum_GLenum_GLsizei_GLsizei *unpacked = (PACKED_void_GLenum_GLenum_GLsizei_GLsizei *)packed;
+            ARGS_void_GLenum_GLenum_GLsizei_GLsizei args = unpacked->args;
+            unpacked->func(args.a1, args.a2, args.a3, args.a4);
+            break;
+        }
     }
 }
 #ifndef skip_glActiveTexture
@@ -495,6 +525,24 @@ void glBindBuffer(GLenum target, GLuint buffer) {
     PUSH_IF_COMPILING(glBindBuffer);
 #endif
     gles_glBindBuffer(target, buffer);
+}
+#endif
+#ifndef skip_glBindFramebufferOES
+void glBindFramebufferOES(GLenum target, GLuint framebuffer) {
+    LOAD_GLES(glBindFramebufferOES);
+#ifndef direct_glBindFramebufferOES
+    PUSH_IF_COMPILING(glBindFramebufferOES);
+#endif
+    gles_glBindFramebufferOES(target, framebuffer);
+}
+#endif
+#ifndef skip_glBindRenderbufferOES
+void glBindRenderbufferOES(GLenum target, GLuint renderbuffer) {
+    LOAD_GLES(glBindRenderbufferOES);
+#ifndef direct_glBindRenderbufferOES
+    PUSH_IF_COMPILING(glBindRenderbufferOES);
+#endif
+    gles_glBindRenderbufferOES(target, renderbuffer);
 }
 #endif
 #ifndef skip_glBindTexture
@@ -567,6 +615,15 @@ void glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvo
     PUSH_IF_COMPILING(glBufferSubData);
 #endif
     gles_glBufferSubData(target, offset, size, data);
+}
+#endif
+#ifndef skip_glCheckFramebufferStatusOES
+GLenum glCheckFramebufferStatusOES(GLenum target) {
+    LOAD_GLES(glCheckFramebufferStatusOES);
+#ifndef direct_glCheckFramebufferStatusOES
+    PUSH_IF_COMPILING(glCheckFramebufferStatusOES);
+#endif
+    return gles_glCheckFramebufferStatusOES(target);
 }
 #endif
 #ifndef skip_glClear
@@ -749,6 +806,24 @@ void glDeleteBuffers(GLsizei n, const GLuint * buffers) {
     gles_glDeleteBuffers(n, buffers);
 }
 #endif
+#ifndef skip_glDeleteFramebuffersOES
+void glDeleteFramebuffersOES(GLsizei n, const GLuint * framebuffers) {
+    LOAD_GLES(glDeleteFramebuffersOES);
+#ifndef direct_glDeleteFramebuffersOES
+    PUSH_IF_COMPILING(glDeleteFramebuffersOES);
+#endif
+    gles_glDeleteFramebuffersOES(n, framebuffers);
+}
+#endif
+#ifndef skip_glDeleteRenderbuffersOES
+void glDeleteRenderbuffersOES(GLsizei n, const GLuint * renderbuffers) {
+    LOAD_GLES(glDeleteRenderbuffersOES);
+#ifndef direct_glDeleteRenderbuffersOES
+    PUSH_IF_COMPILING(glDeleteRenderbuffersOES);
+#endif
+    gles_glDeleteRenderbuffersOES(n, renderbuffers);
+}
+#endif
 #ifndef skip_glDeleteTextures
 void glDeleteTextures(GLsizei n, const GLuint * textures) {
     LOAD_GLES(glDeleteTextures);
@@ -902,6 +977,24 @@ void glFogxv(GLenum pname, const GLfixed * params) {
     gles_glFogxv(pname, params);
 }
 #endif
+#ifndef skip_glFramebufferRenderbufferOES
+void glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+    LOAD_GLES(glFramebufferRenderbufferOES);
+#ifndef direct_glFramebufferRenderbufferOES
+    PUSH_IF_COMPILING(glFramebufferRenderbufferOES);
+#endif
+    gles_glFramebufferRenderbufferOES(target, attachment, renderbuffertarget, renderbuffer);
+}
+#endif
+#ifndef skip_glFramebufferTexture2DOES
+void glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
+    LOAD_GLES(glFramebufferTexture2DOES);
+#ifndef direct_glFramebufferTexture2DOES
+    PUSH_IF_COMPILING(glFramebufferTexture2DOES);
+#endif
+    gles_glFramebufferTexture2DOES(target, attachment, textarget, texture, level);
+}
+#endif
 #ifndef skip_glFrontFace
 void glFrontFace(GLenum mode) {
     LOAD_GLES(glFrontFace);
@@ -938,6 +1031,24 @@ void glGenBuffers(GLsizei n, GLuint * buffers) {
     gles_glGenBuffers(n, buffers);
 }
 #endif
+#ifndef skip_glGenFramebuffersOES
+void glGenFramebuffersOES(GLsizei n, GLuint * framebuffers) {
+    LOAD_GLES(glGenFramebuffersOES);
+#ifndef direct_glGenFramebuffersOES
+    PUSH_IF_COMPILING(glGenFramebuffersOES);
+#endif
+    gles_glGenFramebuffersOES(n, framebuffers);
+}
+#endif
+#ifndef skip_glGenRenderbuffersOES
+void glGenRenderbuffersOES(GLsizei n, GLuint * renderbuffers) {
+    LOAD_GLES(glGenRenderbuffersOES);
+#ifndef direct_glGenRenderbuffersOES
+    PUSH_IF_COMPILING(glGenRenderbuffersOES);
+#endif
+    gles_glGenRenderbuffersOES(n, renderbuffers);
+}
+#endif
 #ifndef skip_glGenTextures
 void glGenTextures(GLsizei n, GLuint * textures) {
     LOAD_GLES(glGenTextures);
@@ -945,6 +1056,15 @@ void glGenTextures(GLsizei n, GLuint * textures) {
     PUSH_IF_COMPILING(glGenTextures);
 #endif
     gles_glGenTextures(n, textures);
+}
+#endif
+#ifndef skip_glGenerateMipmapOES
+void glGenerateMipmapOES(GLenum target) {
+    LOAD_GLES(glGenerateMipmapOES);
+#ifndef direct_glGenerateMipmapOES
+    PUSH_IF_COMPILING(glGenerateMipmapOES);
+#endif
+    gles_glGenerateMipmapOES(target);
 }
 #endif
 #ifndef skip_glGetBooleanv
@@ -1010,6 +1130,15 @@ void glGetFloatv(GLenum pname, GLfloat * params) {
     gles_glGetFloatv(pname, params);
 }
 #endif
+#ifndef skip_glGetFramebufferAttachmentParameterivOES
+void glGetFramebufferAttachmentParameterivOES(GLenum target, GLenum attachment, GLenum pname, GLint * params) {
+    LOAD_GLES(glGetFramebufferAttachmentParameterivOES);
+#ifndef direct_glGetFramebufferAttachmentParameterivOES
+    PUSH_IF_COMPILING(glGetFramebufferAttachmentParameterivOES);
+#endif
+    gles_glGetFramebufferAttachmentParameterivOES(target, attachment, pname, params);
+}
+#endif
 #ifndef skip_glGetIntegerv
 void glGetIntegerv(GLenum pname, GLint * params) {
     LOAD_GLES(glGetIntegerv);
@@ -1062,6 +1191,15 @@ void glGetPointerv(GLenum pname, GLvoid ** params) {
     PUSH_IF_COMPILING(glGetPointerv);
 #endif
     gles_glGetPointerv(pname, params);
+}
+#endif
+#ifndef skip_glGetRenderbufferParameterivOES
+void glGetRenderbufferParameterivOES(GLenum target, GLenum pname, GLint * params) {
+    LOAD_GLES(glGetRenderbufferParameterivOES);
+#ifndef direct_glGetRenderbufferParameterivOES
+    PUSH_IF_COMPILING(glGetRenderbufferParameterivOES);
+#endif
+    gles_glGetRenderbufferParameterivOES(target, pname, params);
 }
 #endif
 #ifndef skip_glGetString
@@ -1152,6 +1290,24 @@ GLboolean glIsEnabled(GLenum cap) {
     PUSH_IF_COMPILING(glIsEnabled);
 #endif
     return gles_glIsEnabled(cap);
+}
+#endif
+#ifndef skip_glIsFramebufferOES
+GLboolean glIsFramebufferOES(GLuint framebuffer) {
+    LOAD_GLES(glIsFramebufferOES);
+#ifndef direct_glIsFramebufferOES
+    PUSH_IF_COMPILING(glIsFramebufferOES);
+#endif
+    return gles_glIsFramebufferOES(framebuffer);
+}
+#endif
+#ifndef skip_glIsRenderbufferOES
+GLboolean glIsRenderbufferOES(GLuint renderbuffer) {
+    LOAD_GLES(glIsRenderbufferOES);
+#ifndef direct_glIsRenderbufferOES
+    PUSH_IF_COMPILING(glIsRenderbufferOES);
+#endif
+    return gles_glIsRenderbufferOES(renderbuffer);
 }
 #endif
 #ifndef skip_glIsTexture
@@ -1530,6 +1686,15 @@ void glReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format
     PUSH_IF_COMPILING(glReadPixels);
 #endif
     gles_glReadPixels(x, y, width, height, format, type, pixels);
+}
+#endif
+#ifndef skip_glRenderbufferStorageOES
+void glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+    LOAD_GLES(glRenderbufferStorageOES);
+#ifndef direct_glRenderbufferStorageOES
+    PUSH_IF_COMPILING(glRenderbufferStorageOES);
+#endif
+    gles_glRenderbufferStorageOES(target, internalformat, width, height);
 }
 #endif
 #ifndef skip_glRotatef

@@ -72,7 +72,7 @@ extern void load_egl_lib();
 #define LOAD_EGL(name) LOAD_LIB(egl, name)
 #define LOAD_OES(name) \
     LOAD_EGL(eglGetProcAddress); \
-    LOAD_RAW(egl, name, egl_eglGetProcAddress(#name));
+    LOAD_RAW(gles, name, egl_eglGetProcAddress(#name));
 
 #ifndef PUSH_IF_COMPILING_EXT
 #define PUSH_IF_COMPILING_EXT(name, ...)             \
@@ -96,6 +96,6 @@ extern void load_egl_lib();
 
 #define PROXY_GLES(name) PROXY(GLES_SILENT, gles, name)
 #define PROXY_EGL(name) PROXY(EGL, egl, name)
-#define PROXY_OES(name) PROXY(OES, egl, name)
+#define PROXY_OES(name) PROXY(OES, gles, name)
 
 #endif
