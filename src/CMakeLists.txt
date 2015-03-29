@@ -1,7 +1,7 @@
 include_directories(util)
 
 file(GLOB_RECURSE GL_SOURCES gl/*.c gl/*.cpp)
-file(GLOB UTIL_SOURCES util/*.c util/math/*.c)
+file(GLOB_RECURSE UTIL_SOURCES util/*.c)
 set(GL_SOURCES ${GL_SOURCES} ${UTIL_SOURCES})
 
 include_directories(glx)
