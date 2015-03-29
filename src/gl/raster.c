@@ -3,6 +3,7 @@
 #include "pixel.h"
 #include "raster.h"
 #include "texture.h"
+#include "matrix.h"
 
 /* raster engine:
     we render pixels to memory somewhere
@@ -12,19 +13,27 @@
 */
 
 
-// TODO: glWindowPos
-
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     ERROR_IN_BLOCK();
     PROXY_GLES(glRasterPos3f);
+    GLfloat v[3] = {x, y, z};
+    gl_transform_vertex(v, v);
+    glWindowPos3f(v[0], v[1], v[2]);
+}
+
+void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
+    ERROR_IN_BLOCK();
+    PROXY_GLES(glWindowPos3f);
     raster_state_t *raster = &state.raster;
-    // TODO: glRasterPos4f?
-    // TODO: actually project, and clear the valid bit if we end up outside the viewport
     raster->pos.x = x;
     raster->pos.y = y;
     raster->pos.z = z;
-    raster->valid = 1;
-
+    viewport_state_t *v = &state.viewport;
+    if (x < v->x || x >= v->width || y < v->y || y >= v->height) {
+        raster->valid = 0;
+    } else {
+        raster->valid = 1;
+    }
     GLuint *dst = NULL;
     GLfloat *color = raster->color;
     if (pixel_convert(CURRENT->color, (GLvoid **)&dst, 1, 1, GL_RGBA, GL_FLOAT, GL_RGBA, GL_UNSIGNED_BYTE)) {
@@ -44,6 +53,9 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     PROXY_GLES(glViewport);
     if (state.raster.buf) {
         render_raster();
+    }
+    if (width < 0 || height < 0) {
+        ERROR(GL_INVALID_VALUE);
     }
     gles_glViewport(x, y, width, height);
     viewport_state_t *viewport = &state.viewport;
