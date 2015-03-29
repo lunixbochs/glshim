@@ -15,9 +15,7 @@
 // TODO: glWindowPos
 
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
-    if (state.block.active) {
-        ERROR(GL_INVALID_OPERATION);
-    }
+    ERROR_IN_BLOCK();
     PROXY_GLES(glRasterPos3f);
     raster_state_t *raster = &state.raster;
     // TODO: glRasterPos4f?
