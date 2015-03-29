@@ -156,6 +156,7 @@ typedef struct {
     GLuint base;
     GLuint name;
     GLenum mode;
+    GLuint recursion;
 } displaylist_state_t;
 
 typedef struct {
