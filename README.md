@@ -1,9 +1,11 @@
 [![Build Status](https://travis-ci.org/lunixbochs/glshim.svg?branch=master)](https://travis-ci.org/lunixbochs/glshim)
 
-glshim
+glshim (pvrtc branch)
 ====
 
 This is a shim providing OpenGL 1.x functionality to OpenGL ES accelerated cards.
+
+This branch includes a PVRTC decoder and is additionally bound by the terms of the PowerVR SDK license and attribution clause. Read LICENSE for more details.
 
 ----
 

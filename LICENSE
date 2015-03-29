@@ -17,3 +17,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Releases using this pvrtc branch are additionally bound by the PowerVR SDK
+license which can be found in src/util/texture/pvrtc/LICENSE. Note that
+this license includes an additional attribution clause for releases.

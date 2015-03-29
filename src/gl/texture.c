@@ -9,6 +9,7 @@
 #include "texture.h"
 #include "types.h"
 #include "texture/dxt/dxt.h"
+#include "texture/pvrtc/pvrtc.h"
 
 // expand non-power-of-two sizes
 // TODO: what does this do to repeating textures?
@@ -416,10 +417,14 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
         pixels = (GLvoid *)data;
     } else {
         switch (internalformat) {
-            case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
+            case GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG:
+            case GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG:
+            case GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG:
+            case GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG:
             case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
             case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
             case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
+            case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
                 if (target == GL_PROXY_TEXTURE_2D) {
                     return;
                 }
@@ -430,6 +435,15 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
         pixels = malloc(align4(width) * align4(height) * 4);
 #undef align4
         switch (internalformat) {
+            // the library doesn't have a separate RGB vs RGBA function
+            // so just ignore that part for now
+            case GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG:
+            case GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG:
+                PVRTDecompressPVRTC(data, true, width, height, pixels);
+            case GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG:
+            case GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG:
+                PVRTDecompressPVRTC(data, false, width, height, pixels);
+                break;
             case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
             case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
                 DecompressDXT(1, width, height, data, pixels);
