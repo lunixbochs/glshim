@@ -227,10 +227,12 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 case GL_CLIENT_ATTRIB_STACK_DEPTH:
                     *out = tack_len(&state.stack.client);
                     break;
+                case GL_MAX_LIST_NESTING:
+                    *out = 64;
+                    break;
                 case GL_MAX_ATTRIB_STACK_DEPTH:
                 case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
                 case GL_MAX_ELEMENTS_INDICES:
-                case GL_MAX_LIST_NESTING:
                 case GL_MAX_MODELVIEW_STACK_DEPTH:
                 case GL_MAX_NAME_STACK_DEPTH:
                 case GL_MAX_PROJECTION_STACK_DEPTH:

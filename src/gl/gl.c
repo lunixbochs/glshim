@@ -569,11 +569,16 @@ void glEndList() {
 
 void glCallList(GLuint list) {
     PUSH_IF_COMPILING(glCallList);
+    if (state.list.recursion >= 64) {
+        return;
+    }
+    state.list.recursion++;
     displaylist_t *l = get_list(list);
     displaylist_t *active = state.list.active;
     if (l) {
         dl_call(l);
     }
+    state.list.recursion--;
 }
 
 void glPushCall(void *call) {
