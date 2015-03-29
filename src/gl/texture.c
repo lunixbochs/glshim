@@ -416,10 +416,10 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
         pixels = (GLvoid *)data;
     } else {
         switch (internalformat) {
-            case COMPRESSED_RGB_S3TC_DXT1_EXT:
-            case COMPRESSED_RGBA_S3TC_DXT1_EXT:
-            case COMPRESSED_RGBA_S3TC_DXT3_EXT:
-            case COMPRESSED_RGBA_S3TC_DXT5_EXT:
+            case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
+            case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
+            case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
+            case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
                 if (target == GL_PROXY_TEXTURE_2D) {
                     return;
                 }
@@ -430,14 +430,14 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
         pixels = malloc(align4(width) * align4(height) * 4);
 #undef align4
         switch (internalformat) {
-            case COMPRESSED_RGB_S3TC_DXT1_EXT:
-            case COMPRESSED_RGBA_S3TC_DXT1_EXT:
+            case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
+            case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
                 DecompressDXT(1, width, height, data, pixels);
                 break;
-            case COMPRESSED_RGBA_S3TC_DXT3_EXT:
+            case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
                 DecompressDXT(3, width, height, data, pixels);
                 break;
-            case COMPRESSED_RGBA_S3TC_DXT5_EXT:
+            case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
                 DecompressDXT(5, width, height, data, pixels);
                 break;
         }
