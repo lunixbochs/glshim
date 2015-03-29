@@ -121,10 +121,7 @@ typedef struct {
     GLboolean color_enable;
     GLboolean tex_enable[MAX_TEX];
     GLboolean normal_enable;
-    pointer_state_t verts;
-    pointer_state_t color;
-    pointer_state_t normal;
-    pointer_state_t tex[MAX_TEX];
+    pointer_states_t pointers;
 } glclientstack_t;
 
 void glPushClientAttrib(GLbitfield mask);
