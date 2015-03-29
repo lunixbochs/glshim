@@ -20,6 +20,24 @@ int npot(int n) {
     return i;
 }
 
+bool is_supported_compression(GLenum format) {
+    LOAD_GLES(glGetIntegerv);
+    GLint num;
+    gles_glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &num);
+    if (num > 0) {
+        GLint *formats = malloc(num * sizeof(GLint));
+        gles_glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, formats);
+        for (GLint i = 0; i < num; i++) {
+            if (formats[i] == format) {
+                free(formats);
+                return true;
+            }
+        }
+        free(formats);
+    }
+    return false;
+}
+
 // conversions for GL_ARB_texture_rectangle
 void tex_coord_rect_arb(GLfloat *tex, GLsizei len,
                         GLsizei width, GLsizei height) {
@@ -383,25 +401,14 @@ void glPrioritizeTextures(GLsizei n, const GLuint *textures, const GLclampf *pri
     }
 }
 
-
 void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
                             GLsizei width, GLsizei height, GLint border,
                             GLsizei imageSize, const GLvoid *data) {
-    LOAD_GLES(glGetIntegerv);
-    GLint num;
-    gles_glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &num);
-    if (num > 0) {
-        GLint *formats = malloc(num * sizeof(GLint));
-        gles_glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, formats);
-        for (GLint i = 0; i < num; i++) {
-            if (formats[i] == internalformat) {
-                if (target == GL_PROXY_TEXTURE_2D) {
-                    return;
-                }
-                PROXY_GLES(glCompressedTexImage2D);
-            }
+    if (is_supported_compression(internalformat)) {
+        if (target == GL_PROXY_TEXTURE_2D) {
+            return;
         }
-        free(formats);
+        PROXY_GLES(glCompressedTexImage2D);
     }
     GLvoid *pixels;
     if (width * height * 4 == imageSize) {
@@ -440,4 +447,39 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
     if (pixels != data) {
         free(pixels);
     }
+}
+
+void glCompressedTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
+                               GLsizei width, GLsizei height, GLenum format,
+                               GLsizei imageSize, const GLvoid *data) {
+    if (is_supported_compression(format)) {
+        if (target == GL_PROXY_TEXTURE_2D) {
+            return;
+        }
+        PROXY_GLES(glCompressedTexSubImage2D);
+    }
+    fprintf(stderr, "libGL: glCompressedTexSubImage2D (%s) stub\n", gl_str(format));
+}
+
+void glCompressedTexImage1D(GLenum target, GLint level, GLenum internalformat,
+                            GLsizei width, GLint border,
+                            GLsizei imageSize, const GLvoid *data) {
+    glCompressedTexImage2D(target, level, internalformat, width, 1, border, imageSize, data);
+}
+
+void glCompressedTexImage3D(GLenum target, GLint level, GLenum internalformat,
+                            GLsizei width, GLsizei height, GLsizei depth, GLint border,
+                            GLsizei imageSize, const GLvoid *data) {
+    glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
+}
+
+void glCompressedTexSubImage1D(GLenum target, GLint level, GLint xoffset,
+                               GLsizei width, GLenum format,
+                               GLsizei imageSize, const GLvoid *data) {
+    glCompressedTexSubImage2D(target, level, xoffset, 0, width, 1, format, imageSize, data);
+}
+void glCompressedTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                               GLsizei width, GLsizei height, GLsizei depth, GLenum format,
+                               GLsizei imageSize, const GLvoid *data) {
+    glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
 }
