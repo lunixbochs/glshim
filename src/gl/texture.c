@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "error.h"
 #include "gl_helpers.h"
@@ -8,6 +8,7 @@
 #include "pixel.h"
 #include "texture.h"
 #include "types.h"
+#include "texture/dxt/dxt.h"
 
 // expand non-power-of-two sizes
 // TODO: what does this do to repeating textures?
@@ -383,7 +384,7 @@ void glPrioritizeTextures(GLsizei n, const GLuint *textures, const GLclampf *pri
 }
 
 
-void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalFormat,
+void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
                             GLsizei width, GLsizei height, GLint border,
                             GLsizei imageSize, const GLvoid *data) {
     LOAD_GLES(glGetIntegerv);
@@ -392,14 +393,51 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalFormat,
     if (num > 0) {
         GLint *formats = malloc(num * sizeof(GLint));
         gles_glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, formats);
-        free(formats);
         for (GLint i = 0; i < num; i++) {
-            if (formats[i] == internalFormat) {
+            if (formats[i] == internalformat) {
+                if (target == GL_PROXY_TEXTURE_2D) {
+                    return;
+                }
                 PROXY_GLES(glCompressedTexImage2D);
             }
         }
+        free(formats);
     }
-    switch (internalFormat) {
-        default: ERROR(GL_INVALID_ENUM);
+    GLvoid *pixels;
+    if (width * height * 4 == imageSize) {
+        // uncompressed?
+        pixels = (GLvoid *)data;
+    } else {
+        switch (internalformat) {
+            case COMPRESSED_RGB_S3TC_DXT1_EXT:
+            case COMPRESSED_RGBA_S3TC_DXT1_EXT:
+            case COMPRESSED_RGBA_S3TC_DXT3_EXT:
+            case COMPRESSED_RGBA_S3TC_DXT5_EXT:
+                if (target == GL_PROXY_TEXTURE_2D) {
+                    return;
+                }
+            default:
+                ERROR(GL_INVALID_ENUM);
+        }
+#define align4(n) ((n + 3) & ~3)
+        pixels = malloc(align4(width) * align4(height) * 4);
+#undef align4
+        switch (internalformat) {
+            case COMPRESSED_RGB_S3TC_DXT1_EXT:
+            case COMPRESSED_RGBA_S3TC_DXT1_EXT:
+                DecompressDXT(1, width, height, data, pixels);
+                break;
+            case COMPRESSED_RGBA_S3TC_DXT3_EXT:
+                DecompressDXT(3, width, height, data, pixels);
+                break;
+            case COMPRESSED_RGBA_S3TC_DXT5_EXT:
+                DecompressDXT(5, width, height, data, pixels);
+                break;
+        }
+    }
+    GLenum format = GL_UNSIGNED_BYTE;
+    glTexImage2D(target, level, format, width, height, border, format, GL_RGBA, pixels);
+    if (pixels != data) {
+        free(pixels);
     }
 }
