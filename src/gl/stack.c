@@ -185,11 +185,7 @@ void glPushClientAttrib(GLbitfield mask) {
         cur->color_enable = state.enable.color_array;
         cur->normal_enable = state.enable.normal_array;
         memcpy(&cur->tex_enable, &state.enable.tex_coord_array, sizeof(GLboolean) * MAX_TEX);
-
-        memcpy(&cur->verts, &state.pointers.vertex, sizeof(pointer_state_t));
-        memcpy(&cur->color, &state.pointers.color, sizeof(pointer_state_t));
-        memcpy(&cur->normal, &state.pointers.normal, sizeof(pointer_state_t));
-        memcpy(&cur->tex, &state.pointers.tex_coord, sizeof(pointer_state_t) * MAX_TEX);
+        memcpy(&cur->pointers, &state.pointers, sizeof(pointer_states_t));
     }
     tack_push(&state.stack.client, cur);
 }
@@ -366,11 +362,7 @@ void glPopClientAttrib() {
                 enable_disable(GL_TEXTURE_COORD_ARRAY, bit);
             }
         }
-
-        memcpy(&state.pointers.vertex, &cur->verts, sizeof(pointer_state_t));
-        memcpy(&state.pointers.color, &cur->color, sizeof(pointer_state_t));
-        memcpy(&state.pointers.normal, &cur->normal, sizeof(pointer_state_t));
-        memcpy(&state.pointers.tex_coord, &cur->tex, sizeof(pointer_state_t) * MAX_TEX);
+        memcpy(&state.pointers, &cur->pointers, sizeof(pointer_states_t));
     }
     free(cur);
 }
