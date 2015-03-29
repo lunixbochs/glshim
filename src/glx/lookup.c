@@ -5,7 +5,7 @@
 #include "../gl/wrap/extra.h"
 
 #define MAP(func_name, func) \
-    if (strcmp(name, func_name) == 0) return (void *)func;
+    if (strcmp((char *)name, func_name) == 0) return (void *)func;
 
 #define MAP_EGL(func_name, egl_func) \
     MAP(#func_name, eglGetProcAddress(#egl_func))
@@ -15,7 +15,7 @@
 #define ARB(func_name) MAP(#func_name "ARB", func_name)
 
 #define STUB(func_name)                       \
-    if (strcmp(name, #func_name) == 0) {      \
+    if (strcmp((char *)name, #func_name) == 0) {      \
         printf("glX stub: %s\n", #func_name); \
         return (void *)glXStub;               \
     }
