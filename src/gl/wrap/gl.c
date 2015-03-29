@@ -311,6 +311,19 @@ void glRasterPos4##suffix(type x, type y, type z, type w) { \
 void glRasterPos4##suffix##v(const type *v) {               \
     glRasterPos4f(v[0], v[1], v[2], v[3]);                  \
 }                                                           \
+/* window */                                                \
+void glWindowPos2##suffix(type x, type y) {                 \
+    glWindowPos3f(x, y, 0);                                 \
+}                                                           \
+void glWindowPos2##suffix##v(const type *v) {               \
+    glWindowPos3f(v[0], v[1], 0);                           \
+}                                                           \
+void glWindowPos3##suffix(type x, type y, type z) {         \
+    glWindowPos3f(x, y, z);                                 \
+}                                                           \
+void glWindowPos3##suffix##v(const type *v) {               \
+    glWindowPos3f(v[0], v[1], v[2]);                        \
+}                                                           \
 /* vertex */                                                \
 void glVertex2##suffix(type x, type y) {                    \
     glVertex2f(x, y);                                       \
@@ -479,6 +492,17 @@ void glRasterPos4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
 }
 void glRasterPos4fv(const GLfloat *v) {
     glRasterPos4f(v[0], v[1], v[2], v[3]);
+}
+
+// window
+void glWindowPos2f(GLfloat x, GLfloat y) {
+    glWindowPos3f(x, y, 0);
+}
+void glWindowPos2fv(const GLfloat *v) {
+    glWindowPos2i(v[0], v[1]);
+}
+void glWindowPos3fv(const GLfloat *v) {
+    glWindowPos3f(v[0], v[1], v[2]);
 }
 
 // eval
