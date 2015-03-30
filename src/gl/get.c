@@ -283,9 +283,9 @@ static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             GLenum error = gl_get_error();
             if (error == GL_INVALID_ENUM) {
                 fprintf(stderr, "libGL: GL_INVALID_ENUM when calling glGet<%s>(%s)\n", gl_str(type), gl_str(pname));
-            } else if (! error) {
-                gl_set_error(saved);
+                GL_TYPE_SWITCH(ret, params, type, *ret = 0;,);
             }
+            gl_set_error(error ? error : saved);
             break;
          }
     }
