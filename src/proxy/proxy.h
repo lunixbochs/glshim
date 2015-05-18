@@ -4174,7 +4174,7 @@ typedef struct {
     int func;
     ARGS_void_unsigned_int args;
 } INDEXED_void_unsigned_int;
-typedef void (*FUNC_void_Font_int_int_int)(Font font, int first, int count, int list);
+typedef void (*FUNC_void_Font_int_int_int)(Font font, int first, int count, int listBase);
 typedef struct {
     Font a1;
     int a2;
@@ -18575,8 +18575,8 @@ void glIndexedCall(const indexed_call_t *packed, void *ret_v);
 #define glXSwapIntervalSGI_FORMAT FORMAT_void_unsigned_int
 #define glXUseXFont_INDEX 554
 #define glXUseXFont_RETURN void
-#define glXUseXFont_ARG_NAMES font, first, count, list
-#define glXUseXFont_ARG_EXPAND Font font, int first, int count, int list
+#define glXUseXFont_ARG_NAMES font, first, count, listBase
+#define glXUseXFont_ARG_EXPAND Font font, int first, int count, int listBase
 #define glXUseXFont_PACKED PACKED_void_Font_int_int_int
 #define glXUseXFont_INDEXED INDEXED_void_Font_int_int_int
 #define glXUseXFont_FORMAT FORMAT_void_Font_int_int_int

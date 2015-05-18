@@ -69,7 +69,7 @@ glx:
   glXSwapBuffers: [void, Display *dpy, GLXDrawable drawable]
   glXSwapIntervalSGI: [void, unsigned int interval]
   glXSwapIntervalMESA: [int, unsigned int interval]
-  glXUseXFont: [void, Font font, int first, int count, int list]
+  glXUseXFont: [void, Font font, int first, int count, int listBase]
   glXVendorPrivate: [void]
   glXVendorPrivateWithReply: [void]
   glXWaitGL: [void]

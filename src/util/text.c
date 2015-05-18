@@ -99,15 +99,19 @@ static GLushort font[][13] = {
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x8f, 0xf1, 0x60, 0x00, 0x00, 0x00}
 };
 
+void text_draw_glyph(char c) {
+    if (c >= ' ' && c <= '~') {
+        GLubyte *glyph = (GLubyte *)&(font[c - ' '][0]);
+        glBitmap(8, 13, 0, 0, 9, 0, glyph);
+    }
+}
+
 void text_draw(int x, int y, char *text) {
     glPushAttrib(GL_CURRENT_BIT);
     glRasterPos2i(x, y);
     char c;
     while ((c = *text++)) {
-        if (c >= ' ' && c <= '~') {
-            GLubyte *glyph = (GLubyte *)&(font[c - ' '][0]);
-            glBitmap(8, 13, 0, 0, 9, 0, glyph);
-        }
+        text_draw_glyph(c);
     }
     glPopAttrib();
 }
