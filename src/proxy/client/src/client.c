@@ -5384,13 +5384,13 @@ void glXSwapIntervalSGI(unsigned int interval) {
 }
 #endif
 #if !defined(skip_client_glXUseXFont) && !defined(skip_index_glXUseXFont)
-void glXUseXFont(Font font, int first, int count, int list) {
+void glXUseXFont(Font font, int first, int count, int listBase) {
     glXUseXFont_INDEXED packed_data;
     packed_data.func = glXUseXFont_INDEX;
     packed_data.args.a1 = (Font)font;
     packed_data.args.a2 = (int)first;
     packed_data.args.a3 = (int)count;
-    packed_data.args.a4 = (int)list;
+    packed_data.args.a4 = (int)listBase;
     syscall(SYS_proxy, (void *)&packed_data, NULL);
 }
 #endif

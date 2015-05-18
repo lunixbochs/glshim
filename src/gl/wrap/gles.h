@@ -1512,7 +1512,7 @@ typedef struct {
     int func;
     ARGS_void_unsigned_int args;
 } INDEXED_void_unsigned_int;
-typedef void (*FUNC_void_Font_int_int_int)(Font font, int first, int count, int list);
+typedef void (*FUNC_void_Font_int_int_int)(Font font, int first, int count, int listBase);
 typedef struct {
     Font a1;
     int a2;
@@ -38140,8 +38140,8 @@ void glIndexedCall(const indexed_call_t *packed, void *ret_v);
 #define glXSwapIntervalSGI_FORMAT FORMAT_int_int
 #define glXUseXFont_INDEX 2824
 #define glXUseXFont_RETURN void
-#define glXUseXFont_ARG_NAMES font, first, count, list
-#define glXUseXFont_ARG_EXPAND Font font, int first, int count, int list
+#define glXUseXFont_ARG_NAMES font, first, count, listBase
+#define glXUseXFont_ARG_EXPAND Font font, int first, int count, int listBase
 #define glXUseXFont_PACKED PACKED_void_Font_int_int_int
 #define glXUseXFont_INDEXED INDEXED_void_Font_int_int_int
 #define glXUseXFont_FORMAT FORMAT_void_Font_int_int_int
@@ -78179,7 +78179,7 @@ typedef void (*glXWaitX_PTR)(glXWaitX_ARG_EXPAND);
 }
 #endif
 #ifndef direct_glXUseXFont
-#define push_glXUseXFont(font, first, count, list) { \
+#define push_glXUseXFont(font, first, count, listBase) { \
     glXUseXFont_PACKED *packed_data = malloc(sizeof(glXUseXFont_PACKED)); \
     packed_data->format = glXUseXFont_FORMAT; \
     packed_data->func = glXUseXFont; \
@@ -78187,7 +78187,7 @@ typedef void (*glXWaitX_PTR)(glXWaitX_ARG_EXPAND);
     packed_data->args.a1 = (Font)font; \
     packed_data->args.a2 = (int)first; \
     packed_data->args.a3 = (int)count; \
-    packed_data->args.a4 = (int)list; \
+    packed_data->args.a4 = (int)listBase; \
     glPushCall((void *)packed_data); \
 }
 #endif

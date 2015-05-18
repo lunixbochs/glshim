@@ -14,7 +14,7 @@
 
 #include "../gl/loader.h"
 #include "../gl/raster.h"
-#include "../gl/text.h"
+#include "text.h"
 #include "liveinfo.h"
 
 bool eglInitialized = false;
@@ -632,8 +632,19 @@ void glXDestroyWindow(Display *dpy, GLXWindow win) {
     PROXY_GLES(glXDestroyWindow);
 }
 
-void glXUseXFont(Font font, int first, int count, int list) {
+void glXUseXFont(Font font, int first, int count, int listBase) {
     PROXY_GLES(glXUseXFont);
+    if (state.list.active) {
+        fprintf(stderr, "libGL:error: glXUseXFont called during active block\n");
+        return;
+    }
+    for (int i = 0; i < count; i++) {
+        unsigned int c = first + i;
+        int list = listBase + i;
+        glNewList(list, GL_COMPILE);
+        text_draw_glyph(c);
+        glEndList();
+    }
 }
 
 void glXWaitGL() {
