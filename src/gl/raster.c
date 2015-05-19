@@ -12,19 +12,37 @@
     then let the other function do their thing
 */
 
-void init_raster() {
+static void update_viewport(GLint x, GLint y, GLsizei width, GLsizei height) {
+    viewport_state_t *vs = &state.viewport;
+    vs->x = x, vs->y = y;
+    vs->width = width, vs->height = height;
+    vs->nwidth = npot(width);
+    vs->nheight = npot(height);
+}
+
+static void init_raster() {
     viewport_state_t *vp = &state.viewport;
     if (!vp->width || !vp->height) {
         GLint tmp[4];
         glGetIntegerv(GL_VIEWPORT, tmp);
-        vp->x = tmp[0], vp->y = tmp[1];
-        vp->width = tmp[2], vp->height = tmp[3];
-        vp->nwidth = npot(vp->width);
-        vp->nheight = npot(vp->height);
+        update_viewport(tmp[0], tmp[1], tmp[2], tmp[3]);
     }
     if (! state.raster.buf) {
         state.raster.buf = (GLubyte *)malloc(4 * vp->nwidth * vp->nheight * sizeof(GLubyte));
     }
+}
+
+void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
+    PUSH_IF_COMPILING(glViewport);
+    PROXY_GLES(glViewport);
+    if (state.raster.buf) {
+        render_raster();
+    }
+    if (width < 0 || height < 0) {
+        ERROR(GL_INVALID_VALUE);
+    }
+    gles_glViewport(x, y, width, height);
+    update_viewport(x, y, width, height);
 }
 
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
@@ -32,6 +50,9 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     PROXY_GLES(glRasterPos3f);
     GLfloat v[3] = {x, y, z};
     gl_transform_vertex(v, v);
+    v[0] = (((v[0] + 1.0f) * 0.5f) * vs->width) + vs->x;
+    v[1] = (((-v[1] + 1.0f) * 0.5f) * vs->height) + vs->y;
+    // TODO: deal with Z
     glWindowPos3f(v[0], v[1], v[2]);
 }
 
@@ -61,23 +82,6 @@ void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
         }
         raster->pixel = 0xFFFFFFFF;
     }
-}
-
-void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
-    PUSH_IF_COMPILING(glViewport);
-    PROXY_GLES(glViewport);
-    if (state.raster.buf) {
-        render_raster();
-    }
-    if (width < 0 || height < 0) {
-        ERROR(GL_INVALID_VALUE);
-    }
-    gles_glViewport(x, y, width, height);
-    viewport_state_t *vp = &state.viewport;
-    vp->x = x, vp->y = y;
-    vp->width = width, vp->height = height;
-    vp->nwidth = npot(width);
-    vp->nheight = npot(height);
 }
 
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
