@@ -12,5 +12,8 @@ void glPackedCall(const packed_call_t *packed) {
             break;
         }
         {% endfor %}
+        default:
+            fprintf(stderr, "warning: glPackedCall with unknown format: %d\n", packed->format);
+            break;
     }
 }

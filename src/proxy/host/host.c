@@ -15959,6 +15959,9 @@ void glIndexedCall(const indexed_call_t *packed, void *ret_v) {
             break;
         }
         #endif
+        default:
+            fprintf(stderr, "warning: glIndexedCall with unknown index %d\n", packed->func);
+            break;
     }
 }
 #endif
