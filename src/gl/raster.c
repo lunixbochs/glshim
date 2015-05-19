@@ -58,23 +58,25 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
         ERROR(GL_INVALID_VALUE);
     }
     gles_glViewport(x, y, width, height);
-    viewport_state_t *viewport = &state.viewport;
-    viewport->x = x;
-    viewport->y = y;
-    viewport->width = width;
-    viewport->height = height;
-    viewport->nwidth = npot(width);
-    viewport->nheight = npot(height);
+    viewport_state_t *vp = &state.viewport;
+    vp->x = x, vp->y = y;
+    vp->width = width, vp->height = height;
+    vp->nwidth = npot(width);
+    vp->nheight = npot(height);
 }
 
 void init_raster() {
-    if (!state.viewport.width || !state.viewport.height) {
-        glGetIntegerv(GL_VIEWPORT, (GLint *)&state.viewport);
-        state.viewport.nwidth = npot(state.viewport.width);
-        state.viewport.nheight = npot(state.viewport.height);
+    viewport_state_t *vp = &state.viewport;
+    if (!vp->width || !vp->height) {
+        GLint tmp[4];
+        glGetIntegerv(GL_VIEWPORT, tmp);
+        vp->x = tmp[0], vp->y = tmp[1];
+        vp->width = tmp[2], vp->height = tmp[3];
+        vp->nwidth = npot(vp->width);
+        vp->nheight = npot(vp->height);
     }
     if (! state.raster.buf) {
-        state.raster.buf = (GLubyte *)malloc(4 * state.viewport.nwidth * state.viewport.nheight * sizeof(GLubyte));
+        state.raster.buf = (GLubyte *)malloc(4 * vp->nwidth * vp->nheight * sizeof(GLubyte));
     }
 }
 
