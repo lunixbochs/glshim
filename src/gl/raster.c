@@ -12,6 +12,20 @@
     then let the other function do their thing
 */
 
+void init_raster() {
+    viewport_state_t *vp = &state.viewport;
+    if (!vp->width || !vp->height) {
+        GLint tmp[4];
+        glGetIntegerv(GL_VIEWPORT, tmp);
+        vp->x = tmp[0], vp->y = tmp[1];
+        vp->width = tmp[2], vp->height = tmp[3];
+        vp->nwidth = npot(vp->width);
+        vp->nheight = npot(vp->height);
+    }
+    if (! state.raster.buf) {
+        state.raster.buf = (GLubyte *)malloc(4 * vp->nwidth * vp->nheight * sizeof(GLubyte));
+    }
+}
 
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     ERROR_IN_BLOCK();
@@ -28,6 +42,7 @@ void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
     raster->pos.x = x;
     raster->pos.y = y;
     raster->pos.z = z;
+    init_raster();
     viewport_state_t *v = &state.viewport;
     if (x < v->x || x >= v->width || y < v->y || y >= v->height) {
         raster->valid = 0;
@@ -63,21 +78,6 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     vp->width = width, vp->height = height;
     vp->nwidth = npot(width);
     vp->nheight = npot(height);
-}
-
-void init_raster() {
-    viewport_state_t *vp = &state.viewport;
-    if (!vp->width || !vp->height) {
-        GLint tmp[4];
-        glGetIntegerv(GL_VIEWPORT, tmp);
-        vp->x = tmp[0], vp->y = tmp[1];
-        vp->width = tmp[2], vp->height = tmp[3];
-        vp->nwidth = npot(vp->width);
-        vp->nheight = npot(vp->height);
-    }
-    if (! state.raster.buf) {
-        state.raster.buf = (GLubyte *)malloc(4 * vp->nwidth * vp->nheight * sizeof(GLubyte));
-    }
 }
 
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
