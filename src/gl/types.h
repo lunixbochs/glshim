@@ -9,8 +9,8 @@
 #include "extypes.h"
 #include "khash.h"
 #include "tack.h"
-#include "vectorial/simd4x4f.h"
 #include "wrap/types.h"
+#include "../util/mat4.h"
 
 // block.h
 typedef struct {
@@ -178,7 +178,7 @@ typedef struct {
 
 // matrix structs
 typedef struct {
-    simd4x4f matrix;
+    mat4 matrix;
     tack_t stack;
     bool init;
 } matrix_state_t;
