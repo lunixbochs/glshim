@@ -1,7 +1,7 @@
 include_directories(util)
 
 file(GLOB_RECURSE GL_SOURCES gl/*.c gl/*.cpp)
-file(GLOB UTIL_SOURCES util/*.c util/math/*.c)
+file(GLOB UTIL_SOURCES util/*.c util/math/*.c util/glouija/*.c)
 set(GL_SOURCES ${GL_SOURCES} ${UTIL_SOURCES})
 
 include_directories(glx)
@@ -26,9 +26,12 @@ endif()
 
 aux_source_directory(preload PRELOAD_SOURCES)
 add_library(preload SHARED EXCLUDE_FROM_ALL ${PRELOAD_SOURCES})
-if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    target_link_libraries(preload X11)
-endif()
+target_link_libraries(preload X11)
+
+file(GLOB_RECURSE REMOTE_SOURCES remote/*.c)
+add_executable(remote ${GL_SOURCES} ${REMOTE_SOURCES})
+set_target_properties(remote PROPERTIES OUTPUT_NAME libgl_remote)
+target_link_libraries(remote X11)
 
 INSTALL(TARGETS GL
     RUNTIME DESTINATION bin
