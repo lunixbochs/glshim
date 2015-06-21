@@ -10,6 +10,8 @@ if __name__ == '__main__':
     failed = False
     for name in walk('tests'):
         if name.endswith('.c'):
+            if os.path.basename(name).startswith('_'):
+                continue
             with open(name, 'r') as f:
                 data = f.read()
             if not 'mock_return;' in data:

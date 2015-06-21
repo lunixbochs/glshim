@@ -46,6 +46,8 @@ def walk(base):
 
 
 class Test:
+    cmake_template = 'CMakeLists.j2'
+
     def __init__(self, path, tail):
         self.path = path
         self.name = os.path.splitext(tail)[0].strip('/')
@@ -63,7 +65,10 @@ class Test:
             tail = path.replace(base, '', 1)
             test = None
             if path.endswith('.c'):
-                test = Test(path, tail)
+                if os.path.basename(path).startswith('_'):
+                    test = PureCTest(path, tail)
+                else:
+                    test = Test(path, tail)
             elif path.endswith('.py'):
                 test = PythonTest(path, tail)
             else:
@@ -102,7 +107,7 @@ class Test:
             os.makedirs(junk_dir)
 
         cmakelists = os.path.join(junk_dir, 'CMakeLists.txt')
-        t = env.get_template('CMakeLists.txt.j2')
+        t = env.get_template(self.cmake_template)
         txt = t.render(
             project=args.project,
             exe=self.exe,
@@ -148,6 +153,10 @@ class Test:
             return '<Test: {}>'.format(self.name)
 
 
+class PureCTest(Test):
+    cmake_template = 'CMakeLists_pure.j2'
+
+
 class PythonTest(Test):
     def build(self, project):
         return True
@@ -161,7 +170,7 @@ class PythonTest(Test):
 
 def run(args):
     tests = Test.find(args.base, args.tests)
-    tests.sort(key=lambda t: t.name)
+    tests.sort(key=lambda t: (t.__class__, t.name))
     if not tests:
         print 'No tests!'
         return
