@@ -2,4 +2,5 @@
 #define GL_REMOTE_H
 void remote_spawn();
 void remote_call(packed_call_t *call, void *ret_v);
+int remote_serve(int fd);
 #endif

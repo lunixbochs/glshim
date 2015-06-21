@@ -48,3 +48,40 @@ void remote_call(packed_call_t *call, void *ret_v) {
         memcpy(ret_v, ret.arg[0].data.block.data, ret_size);
     }
 }
+
+int remote_serve(int fd) {
+    if (glouija_init_server(fd)) {
+        fprintf(stderr, "error mapping shared memory from fd %d\n", fd);
+        return 2;
+    }
+    while (1) {
+        GlouijaCall c = {0};
+        glouija_command_read(&c);
+        if (c.args != 3) {
+            fprintf(stderr, "Invalid remote command.\n");
+            return 3;
+        }
+        packed_call_t *call = c.arg[0].data.block.data;
+        int retsize = c.arg[1].data.ui;
+        if (retsize > 0) {
+            char retbuf[8];
+            glIndexedCall(call, (void *)retbuf);
+            GlouijaCall ret = {
+                .args = 1,
+                .type = GLO_CALL_TYPE_CALL,
+                .arg = {
+                    {.type = GLO_ARG_TYPE_BLOCK,
+                    .data.block = {
+                        .data = retbuf,
+                        .size = retsize,
+                        .free = true,
+                    }}, 0,
+                },
+            };
+            glouija_command_write(&ret);
+        } else {
+            glIndexedCall(call, NULL);
+        }
+        free(call);
+    }
+}
