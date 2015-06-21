@@ -4,18 +4,21 @@
 {% include "base/indexed_call.j2" %}
 
 const int INDEX_RET_SIZE[] = {
+    0,
 {% for func in functions %}
     {% if func.void %}    0{% else %}    sizeof({{ func.return }}){% endif %},
 {% endfor %}
 };
 
 const int INDEX_PACKED_SIZE[] = {
+    0,
 {% for func in functions %}
     sizeof({{ func.name }}_PACKED),
 {% endfor %}
 };
 
 const char *INDEX_NAME[] = {
+    0,
 {% for func in functions %}
     "{{ func.name }}",
 {% endfor %}

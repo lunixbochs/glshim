@@ -36645,6 +36645,7 @@ const int INDEX_RET_SIZE[] = {
     0,
     0,
     0,
+    0,
     sizeof(GLboolean),
     sizeof(GLboolean),
     sizeof(GLboolean),
@@ -39215,6 +39216,7 @@ const int INDEX_RET_SIZE[] = {
 };
 
 const int INDEX_PACKED_SIZE[] = {
+    0,
     sizeof(glAccum_PACKED),
     sizeof(glAccumxOES_PACKED),
     sizeof(glActiveProgramEXT_PACKED),
@@ -41799,6 +41801,7 @@ const int INDEX_PACKED_SIZE[] = {
 };
 
 const char *INDEX_NAME[] = {
+    0,
     "glAccum",
     "glAccumxOES",
     "glActiveProgramEXT",
