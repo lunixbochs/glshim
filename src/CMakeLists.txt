@@ -1,4 +1,4 @@
-include_directories(util)
+include_directories(. util)
 
 file(GLOB_RECURSE GL_SOURCES gl/*.c gl/*.cpp)
 file(GLOB UTIL_SOURCES util/*.c util/math/*.c util/glouija/*.c)
