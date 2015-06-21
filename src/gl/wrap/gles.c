@@ -2,6 +2,7 @@
 #include "gles.h"
 #include "../loader.h"
 #include "../skip.h"
+#include "../remote.h"
 
 #ifndef skip_glActiveTexture
 void glActiveTexture(GLenum texture) {
@@ -9,6 +10,7 @@ void glActiveTexture(GLenum texture) {
 #ifndef direct_glActiveTexture
     PUSH_IF_COMPILING(glActiveTexture);
 #endif
+    FORWARD_IF_REMOTE(glActiveTexture);
     gles_glActiveTexture(texture);
 }
 #endif
@@ -18,6 +20,7 @@ void glAlphaFunc(GLenum func, GLclampf ref) {
 #ifndef direct_glAlphaFunc
     PUSH_IF_COMPILING(glAlphaFunc);
 #endif
+    FORWARD_IF_REMOTE(glAlphaFunc);
     gles_glAlphaFunc(func, ref);
 }
 #endif
@@ -27,6 +30,7 @@ void glAlphaFuncx(GLenum func, GLclampx ref) {
 #ifndef direct_glAlphaFuncx
     PUSH_IF_COMPILING(glAlphaFuncx);
 #endif
+    FORWARD_IF_REMOTE(glAlphaFuncx);
     gles_glAlphaFuncx(func, ref);
 }
 #endif
@@ -36,6 +40,7 @@ void glBindBuffer(GLenum target, GLuint buffer) {
 #ifndef direct_glBindBuffer
     PUSH_IF_COMPILING(glBindBuffer);
 #endif
+    FORWARD_IF_REMOTE(glBindBuffer);
     gles_glBindBuffer(target, buffer);
 }
 #endif
@@ -45,6 +50,7 @@ void glBindTexture(GLenum target, GLuint texture) {
 #ifndef direct_glBindTexture
     PUSH_IF_COMPILING(glBindTexture);
 #endif
+    FORWARD_IF_REMOTE(glBindTexture);
     gles_glBindTexture(target, texture);
 }
 #endif
@@ -54,6 +60,7 @@ void glBlendColorOES(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha
 #ifndef direct_glBlendColorOES
     PUSH_IF_COMPILING(glBlendColorOES);
 #endif
+    FORWARD_IF_REMOTE(glBlendColorOES);
     gles_glBlendColorOES(red, green, blue, alpha);
 }
 #endif
@@ -63,6 +70,7 @@ void glBlendEquationOES(GLenum mode) {
 #ifndef direct_glBlendEquationOES
     PUSH_IF_COMPILING(glBlendEquationOES);
 #endif
+    FORWARD_IF_REMOTE(glBlendEquationOES);
     gles_glBlendEquationOES(mode);
 }
 #endif
@@ -72,6 +80,7 @@ void glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha) {
 #ifndef direct_glBlendEquationSeparateOES
     PUSH_IF_COMPILING(glBlendEquationSeparateOES);
 #endif
+    FORWARD_IF_REMOTE(glBlendEquationSeparateOES);
     gles_glBlendEquationSeparateOES(modeRGB, modeAlpha);
 }
 #endif
@@ -81,6 +90,7 @@ void glBlendFunc(GLenum sfactor, GLenum dfactor) {
 #ifndef direct_glBlendFunc
     PUSH_IF_COMPILING(glBlendFunc);
 #endif
+    FORWARD_IF_REMOTE(glBlendFunc);
     gles_glBlendFunc(sfactor, dfactor);
 }
 #endif
@@ -90,6 +100,7 @@ void glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactor
 #ifndef direct_glBlendFuncSeparateOES
     PUSH_IF_COMPILING(glBlendFuncSeparateOES);
 #endif
+    FORWARD_IF_REMOTE(glBlendFuncSeparateOES);
     gles_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
 }
 #endif
@@ -99,6 +110,7 @@ void glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum us
 #ifndef direct_glBufferData
     PUSH_IF_COMPILING(glBufferData);
 #endif
+    FORWARD_IF_REMOTE(glBufferData);
     gles_glBufferData(target, size, data, usage);
 }
 #endif
@@ -108,6 +120,7 @@ void glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvo
 #ifndef direct_glBufferSubData
     PUSH_IF_COMPILING(glBufferSubData);
 #endif
+    FORWARD_IF_REMOTE(glBufferSubData);
     gles_glBufferSubData(target, offset, size, data);
 }
 #endif
@@ -117,6 +130,7 @@ void glClear(GLbitfield mask) {
 #ifndef direct_glClear
     PUSH_IF_COMPILING(glClear);
 #endif
+    FORWARD_IF_REMOTE(glClear);
     gles_glClear(mask);
 }
 #endif
@@ -126,6 +140,7 @@ void glClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
 #ifndef direct_glClearColor
     PUSH_IF_COMPILING(glClearColor);
 #endif
+    FORWARD_IF_REMOTE(glClearColor);
     gles_glClearColor(red, green, blue, alpha);
 }
 #endif
@@ -135,6 +150,7 @@ void glClearColorx(GLclampx red, GLclampx green, GLclampx blue, GLclampx alpha) 
 #ifndef direct_glClearColorx
     PUSH_IF_COMPILING(glClearColorx);
 #endif
+    FORWARD_IF_REMOTE(glClearColorx);
     gles_glClearColorx(red, green, blue, alpha);
 }
 #endif
@@ -144,6 +160,7 @@ void glClearDepthf(GLclampf depth) {
 #ifndef direct_glClearDepthf
     PUSH_IF_COMPILING(glClearDepthf);
 #endif
+    FORWARD_IF_REMOTE(glClearDepthf);
     gles_glClearDepthf(depth);
 }
 #endif
@@ -153,6 +170,7 @@ void glClearDepthx(GLclampx depth) {
 #ifndef direct_glClearDepthx
     PUSH_IF_COMPILING(glClearDepthx);
 #endif
+    FORWARD_IF_REMOTE(glClearDepthx);
     gles_glClearDepthx(depth);
 }
 #endif
@@ -162,6 +180,7 @@ void glClearStencil(GLint s) {
 #ifndef direct_glClearStencil
     PUSH_IF_COMPILING(glClearStencil);
 #endif
+    FORWARD_IF_REMOTE(glClearStencil);
     gles_glClearStencil(s);
 }
 #endif
@@ -171,6 +190,7 @@ void glClientActiveTexture(GLenum texture) {
 #ifndef direct_glClientActiveTexture
     PUSH_IF_COMPILING(glClientActiveTexture);
 #endif
+    FORWARD_IF_REMOTE(glClientActiveTexture);
     gles_glClientActiveTexture(texture);
 }
 #endif
@@ -180,6 +200,7 @@ void glClipPlanef(GLenum plane, const GLfloat * equation) {
 #ifndef direct_glClipPlanef
     PUSH_IF_COMPILING(glClipPlanef);
 #endif
+    FORWARD_IF_REMOTE(glClipPlanef);
     gles_glClipPlanef(plane, equation);
 }
 #endif
@@ -189,6 +210,7 @@ void glClipPlanex(GLenum plane, const GLfixed * equation) {
 #ifndef direct_glClipPlanex
     PUSH_IF_COMPILING(glClipPlanex);
 #endif
+    FORWARD_IF_REMOTE(glClipPlanex);
     gles_glClipPlanex(plane, equation);
 }
 #endif
@@ -198,6 +220,7 @@ void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
 #ifndef direct_glColor4f
     PUSH_IF_COMPILING(glColor4f);
 #endif
+    FORWARD_IF_REMOTE(glColor4f);
     gles_glColor4f(red, green, blue, alpha);
 }
 #endif
@@ -207,6 +230,7 @@ void glColor4ub(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha) {
 #ifndef direct_glColor4ub
     PUSH_IF_COMPILING(glColor4ub);
 #endif
+    FORWARD_IF_REMOTE(glColor4ub);
     gles_glColor4ub(red, green, blue, alpha);
 }
 #endif
@@ -216,6 +240,7 @@ void glColor4x(GLfixed red, GLfixed green, GLfixed blue, GLfixed alpha) {
 #ifndef direct_glColor4x
     PUSH_IF_COMPILING(glColor4x);
 #endif
+    FORWARD_IF_REMOTE(glColor4x);
     gles_glColor4x(red, green, blue, alpha);
 }
 #endif
@@ -225,6 +250,7 @@ void glColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha
 #ifndef direct_glColorMask
     PUSH_IF_COMPILING(glColorMask);
 #endif
+    FORWARD_IF_REMOTE(glColorMask);
     gles_glColorMask(red, green, blue, alpha);
 }
 #endif
@@ -234,6 +260,7 @@ void glColorPointer(GLint size, GLenum type, GLsizei stride, const GLvoid * poin
 #ifndef direct_glColorPointer
     PUSH_IF_COMPILING(glColorPointer);
 #endif
+    FORWARD_IF_REMOTE(glColorPointer);
     gles_glColorPointer(size, type, stride, pointer);
 }
 #endif
@@ -243,6 +270,7 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, G
 #ifndef direct_glCompressedTexImage2D
     PUSH_IF_COMPILING(glCompressedTexImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCompressedTexImage2D);
     gles_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
 }
 #endif
@@ -252,6 +280,7 @@ void glCompressedTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint 
 #ifndef direct_glCompressedTexSubImage2D
     PUSH_IF_COMPILING(glCompressedTexSubImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCompressedTexSubImage2D);
     gles_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
 }
 #endif
@@ -261,6 +290,7 @@ void glCopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x
 #ifndef direct_glCopyTexImage2D
     PUSH_IF_COMPILING(glCopyTexImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCopyTexImage2D);
     gles_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
 }
 #endif
@@ -270,6 +300,7 @@ void glCopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffse
 #ifndef direct_glCopyTexSubImage2D
     PUSH_IF_COMPILING(glCopyTexSubImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCopyTexSubImage2D);
     gles_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
 }
 #endif
@@ -279,6 +310,7 @@ void glCullFace(GLenum mode) {
 #ifndef direct_glCullFace
     PUSH_IF_COMPILING(glCullFace);
 #endif
+    FORWARD_IF_REMOTE(glCullFace);
     gles_glCullFace(mode);
 }
 #endif
@@ -288,6 +320,7 @@ void glDeleteBuffers(GLsizei n, const GLuint * buffers) {
 #ifndef direct_glDeleteBuffers
     PUSH_IF_COMPILING(glDeleteBuffers);
 #endif
+    FORWARD_IF_REMOTE(glDeleteBuffers);
     gles_glDeleteBuffers(n, buffers);
 }
 #endif
@@ -297,6 +330,7 @@ void glDeleteTextures(GLsizei n, const GLuint * textures) {
 #ifndef direct_glDeleteTextures
     PUSH_IF_COMPILING(glDeleteTextures);
 #endif
+    FORWARD_IF_REMOTE(glDeleteTextures);
     gles_glDeleteTextures(n, textures);
 }
 #endif
@@ -306,6 +340,7 @@ void glDepthFunc(GLenum func) {
 #ifndef direct_glDepthFunc
     PUSH_IF_COMPILING(glDepthFunc);
 #endif
+    FORWARD_IF_REMOTE(glDepthFunc);
     gles_glDepthFunc(func);
 }
 #endif
@@ -315,6 +350,7 @@ void glDepthMask(GLboolean flag) {
 #ifndef direct_glDepthMask
     PUSH_IF_COMPILING(glDepthMask);
 #endif
+    FORWARD_IF_REMOTE(glDepthMask);
     gles_glDepthMask(flag);
 }
 #endif
@@ -324,6 +360,7 @@ void glDepthRangef(GLclampf near, GLclampf far) {
 #ifndef direct_glDepthRangef
     PUSH_IF_COMPILING(glDepthRangef);
 #endif
+    FORWARD_IF_REMOTE(glDepthRangef);
     gles_glDepthRangef(near, far);
 }
 #endif
@@ -333,6 +370,7 @@ void glDepthRangex(GLclampx near, GLclampx far) {
 #ifndef direct_glDepthRangex
     PUSH_IF_COMPILING(glDepthRangex);
 #endif
+    FORWARD_IF_REMOTE(glDepthRangex);
     gles_glDepthRangex(near, far);
 }
 #endif
@@ -342,6 +380,7 @@ void glDisable(GLenum cap) {
 #ifndef direct_glDisable
     PUSH_IF_COMPILING(glDisable);
 #endif
+    FORWARD_IF_REMOTE(glDisable);
     gles_glDisable(cap);
 }
 #endif
@@ -351,6 +390,7 @@ void glDisableClientState(GLenum array) {
 #ifndef direct_glDisableClientState
     PUSH_IF_COMPILING(glDisableClientState);
 #endif
+    FORWARD_IF_REMOTE(glDisableClientState);
     gles_glDisableClientState(array);
 }
 #endif
@@ -360,6 +400,7 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
 #ifndef direct_glDrawArrays
     PUSH_IF_COMPILING(glDrawArrays);
 #endif
+    FORWARD_IF_REMOTE(glDrawArrays);
     gles_glDrawArrays(mode, first, count);
 }
 #endif
@@ -369,6 +410,7 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid * indi
 #ifndef direct_glDrawElements
     PUSH_IF_COMPILING(glDrawElements);
 #endif
+    FORWARD_IF_REMOTE(glDrawElements);
     gles_glDrawElements(mode, count, type, indices);
 }
 #endif
@@ -378,6 +420,7 @@ void glEnable(GLenum cap) {
 #ifndef direct_glEnable
     PUSH_IF_COMPILING(glEnable);
 #endif
+    FORWARD_IF_REMOTE(glEnable);
     gles_glEnable(cap);
 }
 #endif
@@ -387,6 +430,7 @@ void glEnableClientState(GLenum array) {
 #ifndef direct_glEnableClientState
     PUSH_IF_COMPILING(glEnableClientState);
 #endif
+    FORWARD_IF_REMOTE(glEnableClientState);
     gles_glEnableClientState(array);
 }
 #endif
@@ -396,6 +440,7 @@ void glFinish() {
 #ifndef direct_glFinish
     PUSH_IF_COMPILING(glFinish);
 #endif
+    FORWARD_IF_REMOTE(glFinish);
     gles_glFinish();
 }
 #endif
@@ -405,6 +450,7 @@ void glFlush() {
 #ifndef direct_glFlush
     PUSH_IF_COMPILING(glFlush);
 #endif
+    FORWARD_IF_REMOTE(glFlush);
     gles_glFlush();
 }
 #endif
@@ -414,6 +460,7 @@ void glFogf(GLenum pname, GLfloat param) {
 #ifndef direct_glFogf
     PUSH_IF_COMPILING(glFogf);
 #endif
+    FORWARD_IF_REMOTE(glFogf);
     gles_glFogf(pname, param);
 }
 #endif
@@ -423,6 +470,7 @@ void glFogfv(GLenum pname, const GLfloat * params) {
 #ifndef direct_glFogfv
     PUSH_IF_COMPILING(glFogfv);
 #endif
+    FORWARD_IF_REMOTE(glFogfv);
     gles_glFogfv(pname, params);
 }
 #endif
@@ -432,6 +480,7 @@ void glFogx(GLenum pname, GLfixed param) {
 #ifndef direct_glFogx
     PUSH_IF_COMPILING(glFogx);
 #endif
+    FORWARD_IF_REMOTE(glFogx);
     gles_glFogx(pname, param);
 }
 #endif
@@ -441,6 +490,7 @@ void glFogxv(GLenum pname, const GLfixed * params) {
 #ifndef direct_glFogxv
     PUSH_IF_COMPILING(glFogxv);
 #endif
+    FORWARD_IF_REMOTE(glFogxv);
     gles_glFogxv(pname, params);
 }
 #endif
@@ -450,6 +500,7 @@ void glFrontFace(GLenum mode) {
 #ifndef direct_glFrontFace
     PUSH_IF_COMPILING(glFrontFace);
 #endif
+    FORWARD_IF_REMOTE(glFrontFace);
     gles_glFrontFace(mode);
 }
 #endif
@@ -459,6 +510,7 @@ void glFrustumf(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloa
 #ifndef direct_glFrustumf
     PUSH_IF_COMPILING(glFrustumf);
 #endif
+    FORWARD_IF_REMOTE(glFrustumf);
     gles_glFrustumf(left, right, bottom, top, near, far);
 }
 #endif
@@ -468,6 +520,7 @@ void glFrustumx(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixe
 #ifndef direct_glFrustumx
     PUSH_IF_COMPILING(glFrustumx);
 #endif
+    FORWARD_IF_REMOTE(glFrustumx);
     gles_glFrustumx(left, right, bottom, top, near, far);
 }
 #endif
@@ -477,6 +530,7 @@ void glGenBuffers(GLsizei n, GLuint * buffers) {
 #ifndef direct_glGenBuffers
     PUSH_IF_COMPILING(glGenBuffers);
 #endif
+    FORWARD_IF_REMOTE(glGenBuffers);
     gles_glGenBuffers(n, buffers);
 }
 #endif
@@ -486,6 +540,7 @@ void glGenTextures(GLsizei n, GLuint * textures) {
 #ifndef direct_glGenTextures
     PUSH_IF_COMPILING(glGenTextures);
 #endif
+    FORWARD_IF_REMOTE(glGenTextures);
     gles_glGenTextures(n, textures);
 }
 #endif
@@ -495,6 +550,7 @@ void glGetBooleanv(GLenum pname, GLboolean * params) {
 #ifndef direct_glGetBooleanv
     PUSH_IF_COMPILING(glGetBooleanv);
 #endif
+    FORWARD_IF_REMOTE(glGetBooleanv);
     gles_glGetBooleanv(pname, params);
 }
 #endif
@@ -504,6 +560,7 @@ void glGetBufferParameteriv(GLenum target, GLenum pname, GLint * params) {
 #ifndef direct_glGetBufferParameteriv
     PUSH_IF_COMPILING(glGetBufferParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glGetBufferParameteriv);
     gles_glGetBufferParameteriv(target, pname, params);
 }
 #endif
@@ -513,6 +570,7 @@ void glGetClipPlanef(GLenum plane, GLfloat * equation) {
 #ifndef direct_glGetClipPlanef
     PUSH_IF_COMPILING(glGetClipPlanef);
 #endif
+    FORWARD_IF_REMOTE(glGetClipPlanef);
     gles_glGetClipPlanef(plane, equation);
 }
 #endif
@@ -522,6 +580,7 @@ void glGetClipPlanex(GLenum plane, GLfixed * equation) {
 #ifndef direct_glGetClipPlanex
     PUSH_IF_COMPILING(glGetClipPlanex);
 #endif
+    FORWARD_IF_REMOTE(glGetClipPlanex);
     gles_glGetClipPlanex(plane, equation);
 }
 #endif
@@ -531,6 +590,7 @@ GLenum glGetError() {
 #ifndef direct_glGetError
     PUSH_IF_COMPILING(glGetError);
 #endif
+    FORWARD_IF_REMOTE(glGetError);
     return gles_glGetError();
 }
 #endif
@@ -540,6 +600,7 @@ void glGetFixedv(GLenum pname, GLfixed * params) {
 #ifndef direct_glGetFixedv
     PUSH_IF_COMPILING(glGetFixedv);
 #endif
+    FORWARD_IF_REMOTE(glGetFixedv);
     gles_glGetFixedv(pname, params);
 }
 #endif
@@ -549,6 +610,7 @@ void glGetFloatv(GLenum pname, GLfloat * params) {
 #ifndef direct_glGetFloatv
     PUSH_IF_COMPILING(glGetFloatv);
 #endif
+    FORWARD_IF_REMOTE(glGetFloatv);
     gles_glGetFloatv(pname, params);
 }
 #endif
@@ -558,6 +620,7 @@ void glGetIntegerv(GLenum pname, GLint * params) {
 #ifndef direct_glGetIntegerv
     PUSH_IF_COMPILING(glGetIntegerv);
 #endif
+    FORWARD_IF_REMOTE(glGetIntegerv);
     gles_glGetIntegerv(pname, params);
 }
 #endif
@@ -567,6 +630,7 @@ void glGetLightfv(GLenum light, GLenum pname, GLfloat * params) {
 #ifndef direct_glGetLightfv
     PUSH_IF_COMPILING(glGetLightfv);
 #endif
+    FORWARD_IF_REMOTE(glGetLightfv);
     gles_glGetLightfv(light, pname, params);
 }
 #endif
@@ -576,6 +640,7 @@ void glGetLightxv(GLenum light, GLenum pname, GLfixed * params) {
 #ifndef direct_glGetLightxv
     PUSH_IF_COMPILING(glGetLightxv);
 #endif
+    FORWARD_IF_REMOTE(glGetLightxv);
     gles_glGetLightxv(light, pname, params);
 }
 #endif
@@ -585,6 +650,7 @@ void glGetMaterialfv(GLenum face, GLenum pname, GLfloat * params) {
 #ifndef direct_glGetMaterialfv
     PUSH_IF_COMPILING(glGetMaterialfv);
 #endif
+    FORWARD_IF_REMOTE(glGetMaterialfv);
     gles_glGetMaterialfv(face, pname, params);
 }
 #endif
@@ -594,6 +660,7 @@ void glGetMaterialxv(GLenum face, GLenum pname, GLfixed * params) {
 #ifndef direct_glGetMaterialxv
     PUSH_IF_COMPILING(glGetMaterialxv);
 #endif
+    FORWARD_IF_REMOTE(glGetMaterialxv);
     gles_glGetMaterialxv(face, pname, params);
 }
 #endif
@@ -603,6 +670,7 @@ void glGetPointerv(GLenum pname, GLvoid ** params) {
 #ifndef direct_glGetPointerv
     PUSH_IF_COMPILING(glGetPointerv);
 #endif
+    FORWARD_IF_REMOTE(glGetPointerv);
     gles_glGetPointerv(pname, params);
 }
 #endif
@@ -612,6 +680,7 @@ const GLubyte * glGetString(GLenum name) {
 #ifndef direct_glGetString
     PUSH_IF_COMPILING(glGetString);
 #endif
+    FORWARD_IF_REMOTE(glGetString);
     return gles_glGetString(name);
 }
 #endif
@@ -621,6 +690,7 @@ void glGetTexEnvfv(GLenum target, GLenum pname, GLfloat * params) {
 #ifndef direct_glGetTexEnvfv
     PUSH_IF_COMPILING(glGetTexEnvfv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexEnvfv);
     gles_glGetTexEnvfv(target, pname, params);
 }
 #endif
@@ -630,6 +700,7 @@ void glGetTexEnviv(GLenum target, GLenum pname, GLint * params) {
 #ifndef direct_glGetTexEnviv
     PUSH_IF_COMPILING(glGetTexEnviv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexEnviv);
     gles_glGetTexEnviv(target, pname, params);
 }
 #endif
@@ -639,6 +710,7 @@ void glGetTexEnvxv(GLenum target, GLenum pname, GLfixed * params) {
 #ifndef direct_glGetTexEnvxv
     PUSH_IF_COMPILING(glGetTexEnvxv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexEnvxv);
     gles_glGetTexEnvxv(target, pname, params);
 }
 #endif
@@ -648,6 +720,7 @@ void glGetTexParameterfv(GLenum target, GLenum pname, GLfloat * params) {
 #ifndef direct_glGetTexParameterfv
     PUSH_IF_COMPILING(glGetTexParameterfv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexParameterfv);
     gles_glGetTexParameterfv(target, pname, params);
 }
 #endif
@@ -657,6 +730,7 @@ void glGetTexParameteriv(GLenum target, GLenum pname, GLint * params) {
 #ifndef direct_glGetTexParameteriv
     PUSH_IF_COMPILING(glGetTexParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexParameteriv);
     gles_glGetTexParameteriv(target, pname, params);
 }
 #endif
@@ -666,6 +740,7 @@ void glGetTexParameterxv(GLenum target, GLenum pname, GLfixed * params) {
 #ifndef direct_glGetTexParameterxv
     PUSH_IF_COMPILING(glGetTexParameterxv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexParameterxv);
     gles_glGetTexParameterxv(target, pname, params);
 }
 #endif
@@ -675,6 +750,7 @@ void glHint(GLenum target, GLenum mode) {
 #ifndef direct_glHint
     PUSH_IF_COMPILING(glHint);
 #endif
+    FORWARD_IF_REMOTE(glHint);
     gles_glHint(target, mode);
 }
 #endif
@@ -684,6 +760,7 @@ GLboolean glIsBuffer(GLuint buffer) {
 #ifndef direct_glIsBuffer
     PUSH_IF_COMPILING(glIsBuffer);
 #endif
+    FORWARD_IF_REMOTE(glIsBuffer);
     return gles_glIsBuffer(buffer);
 }
 #endif
@@ -693,6 +770,7 @@ GLboolean glIsEnabled(GLenum cap) {
 #ifndef direct_glIsEnabled
     PUSH_IF_COMPILING(glIsEnabled);
 #endif
+    FORWARD_IF_REMOTE(glIsEnabled);
     return gles_glIsEnabled(cap);
 }
 #endif
@@ -702,6 +780,7 @@ GLboolean glIsTexture(GLuint texture) {
 #ifndef direct_glIsTexture
     PUSH_IF_COMPILING(glIsTexture);
 #endif
+    FORWARD_IF_REMOTE(glIsTexture);
     return gles_glIsTexture(texture);
 }
 #endif
@@ -711,6 +790,7 @@ void glLightModelf(GLenum pname, GLfloat param) {
 #ifndef direct_glLightModelf
     PUSH_IF_COMPILING(glLightModelf);
 #endif
+    FORWARD_IF_REMOTE(glLightModelf);
     gles_glLightModelf(pname, param);
 }
 #endif
@@ -720,6 +800,7 @@ void glLightModelfv(GLenum pname, const GLfloat * params) {
 #ifndef direct_glLightModelfv
     PUSH_IF_COMPILING(glLightModelfv);
 #endif
+    FORWARD_IF_REMOTE(glLightModelfv);
     gles_glLightModelfv(pname, params);
 }
 #endif
@@ -729,6 +810,7 @@ void glLightModelx(GLenum pname, GLfixed param) {
 #ifndef direct_glLightModelx
     PUSH_IF_COMPILING(glLightModelx);
 #endif
+    FORWARD_IF_REMOTE(glLightModelx);
     gles_glLightModelx(pname, param);
 }
 #endif
@@ -738,6 +820,7 @@ void glLightModelxv(GLenum pname, const GLfixed * params) {
 #ifndef direct_glLightModelxv
     PUSH_IF_COMPILING(glLightModelxv);
 #endif
+    FORWARD_IF_REMOTE(glLightModelxv);
     gles_glLightModelxv(pname, params);
 }
 #endif
@@ -747,6 +830,7 @@ void glLightf(GLenum light, GLenum pname, GLfloat param) {
 #ifndef direct_glLightf
     PUSH_IF_COMPILING(glLightf);
 #endif
+    FORWARD_IF_REMOTE(glLightf);
     gles_glLightf(light, pname, param);
 }
 #endif
@@ -756,6 +840,7 @@ void glLightfv(GLenum light, GLenum pname, const GLfloat * params) {
 #ifndef direct_glLightfv
     PUSH_IF_COMPILING(glLightfv);
 #endif
+    FORWARD_IF_REMOTE(glLightfv);
     gles_glLightfv(light, pname, params);
 }
 #endif
@@ -765,6 +850,7 @@ void glLightx(GLenum light, GLenum pname, GLfixed param) {
 #ifndef direct_glLightx
     PUSH_IF_COMPILING(glLightx);
 #endif
+    FORWARD_IF_REMOTE(glLightx);
     gles_glLightx(light, pname, param);
 }
 #endif
@@ -774,6 +860,7 @@ void glLightxv(GLenum light, GLenum pname, const GLfixed * params) {
 #ifndef direct_glLightxv
     PUSH_IF_COMPILING(glLightxv);
 #endif
+    FORWARD_IF_REMOTE(glLightxv);
     gles_glLightxv(light, pname, params);
 }
 #endif
@@ -783,6 +870,7 @@ void glLineWidth(GLfloat width) {
 #ifndef direct_glLineWidth
     PUSH_IF_COMPILING(glLineWidth);
 #endif
+    FORWARD_IF_REMOTE(glLineWidth);
     gles_glLineWidth(width);
 }
 #endif
@@ -792,6 +880,7 @@ void glLineWidthx(GLfixed width) {
 #ifndef direct_glLineWidthx
     PUSH_IF_COMPILING(glLineWidthx);
 #endif
+    FORWARD_IF_REMOTE(glLineWidthx);
     gles_glLineWidthx(width);
 }
 #endif
@@ -801,6 +890,7 @@ void glLoadIdentity() {
 #ifndef direct_glLoadIdentity
     PUSH_IF_COMPILING(glLoadIdentity);
 #endif
+    FORWARD_IF_REMOTE(glLoadIdentity);
     gles_glLoadIdentity();
 }
 #endif
@@ -810,6 +900,7 @@ void glLoadMatrixf(const GLfloat * m) {
 #ifndef direct_glLoadMatrixf
     PUSH_IF_COMPILING(glLoadMatrixf);
 #endif
+    FORWARD_IF_REMOTE(glLoadMatrixf);
     gles_glLoadMatrixf(m);
 }
 #endif
@@ -819,6 +910,7 @@ void glLoadMatrixx(const GLfixed * m) {
 #ifndef direct_glLoadMatrixx
     PUSH_IF_COMPILING(glLoadMatrixx);
 #endif
+    FORWARD_IF_REMOTE(glLoadMatrixx);
     gles_glLoadMatrixx(m);
 }
 #endif
@@ -828,6 +920,7 @@ void glLogicOp(GLenum opcode) {
 #ifndef direct_glLogicOp
     PUSH_IF_COMPILING(glLogicOp);
 #endif
+    FORWARD_IF_REMOTE(glLogicOp);
     gles_glLogicOp(opcode);
 }
 #endif
@@ -837,6 +930,7 @@ void glMaterialf(GLenum face, GLenum pname, GLfloat param) {
 #ifndef direct_glMaterialf
     PUSH_IF_COMPILING(glMaterialf);
 #endif
+    FORWARD_IF_REMOTE(glMaterialf);
     gles_glMaterialf(face, pname, param);
 }
 #endif
@@ -846,6 +940,7 @@ void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params) {
 #ifndef direct_glMaterialfv
     PUSH_IF_COMPILING(glMaterialfv);
 #endif
+    FORWARD_IF_REMOTE(glMaterialfv);
     gles_glMaterialfv(face, pname, params);
 }
 #endif
@@ -855,6 +950,7 @@ void glMaterialx(GLenum face, GLenum pname, GLfixed param) {
 #ifndef direct_glMaterialx
     PUSH_IF_COMPILING(glMaterialx);
 #endif
+    FORWARD_IF_REMOTE(glMaterialx);
     gles_glMaterialx(face, pname, param);
 }
 #endif
@@ -864,6 +960,7 @@ void glMaterialxv(GLenum face, GLenum pname, const GLfixed * params) {
 #ifndef direct_glMaterialxv
     PUSH_IF_COMPILING(glMaterialxv);
 #endif
+    FORWARD_IF_REMOTE(glMaterialxv);
     gles_glMaterialxv(face, pname, params);
 }
 #endif
@@ -873,6 +970,7 @@ void glMatrixMode(GLenum mode) {
 #ifndef direct_glMatrixMode
     PUSH_IF_COMPILING(glMatrixMode);
 #endif
+    FORWARD_IF_REMOTE(glMatrixMode);
     gles_glMatrixMode(mode);
 }
 #endif
@@ -882,6 +980,7 @@ void glMultMatrixf(const GLfloat * m) {
 #ifndef direct_glMultMatrixf
     PUSH_IF_COMPILING(glMultMatrixf);
 #endif
+    FORWARD_IF_REMOTE(glMultMatrixf);
     gles_glMultMatrixf(m);
 }
 #endif
@@ -891,6 +990,7 @@ void glMultMatrixx(const GLfixed * m) {
 #ifndef direct_glMultMatrixx
     PUSH_IF_COMPILING(glMultMatrixx);
 #endif
+    FORWARD_IF_REMOTE(glMultMatrixx);
     gles_glMultMatrixx(m);
 }
 #endif
@@ -900,6 +1000,7 @@ void glMultiTexCoord4f(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q
 #ifndef direct_glMultiTexCoord4f
     PUSH_IF_COMPILING(glMultiTexCoord4f);
 #endif
+    FORWARD_IF_REMOTE(glMultiTexCoord4f);
     gles_glMultiTexCoord4f(target, s, t, r, q);
 }
 #endif
@@ -909,6 +1010,7 @@ void glMultiTexCoord4x(GLenum target, GLfixed s, GLfixed t, GLfixed r, GLfixed q
 #ifndef direct_glMultiTexCoord4x
     PUSH_IF_COMPILING(glMultiTexCoord4x);
 #endif
+    FORWARD_IF_REMOTE(glMultiTexCoord4x);
     gles_glMultiTexCoord4x(target, s, t, r, q);
 }
 #endif
@@ -918,6 +1020,7 @@ void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
 #ifndef direct_glNormal3f
     PUSH_IF_COMPILING(glNormal3f);
 #endif
+    FORWARD_IF_REMOTE(glNormal3f);
     gles_glNormal3f(nx, ny, nz);
 }
 #endif
@@ -927,6 +1030,7 @@ void glNormal3x(GLfixed nx, GLfixed ny, GLfixed nz) {
 #ifndef direct_glNormal3x
     PUSH_IF_COMPILING(glNormal3x);
 #endif
+    FORWARD_IF_REMOTE(glNormal3x);
     gles_glNormal3x(nx, ny, nz);
 }
 #endif
@@ -936,6 +1040,7 @@ void glNormalPointer(GLenum type, GLsizei stride, const GLvoid * pointer) {
 #ifndef direct_glNormalPointer
     PUSH_IF_COMPILING(glNormalPointer);
 #endif
+    FORWARD_IF_REMOTE(glNormalPointer);
     gles_glNormalPointer(type, stride, pointer);
 }
 #endif
@@ -945,6 +1050,7 @@ void glOrthof(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat 
 #ifndef direct_glOrthof
     PUSH_IF_COMPILING(glOrthof);
 #endif
+    FORWARD_IF_REMOTE(glOrthof);
     gles_glOrthof(left, right, bottom, top, near, far);
 }
 #endif
@@ -954,6 +1060,7 @@ void glOrthox(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed 
 #ifndef direct_glOrthox
     PUSH_IF_COMPILING(glOrthox);
 #endif
+    FORWARD_IF_REMOTE(glOrthox);
     gles_glOrthox(left, right, bottom, top, near, far);
 }
 #endif
@@ -963,6 +1070,7 @@ void glPixelStorei(GLenum pname, GLint param) {
 #ifndef direct_glPixelStorei
     PUSH_IF_COMPILING(glPixelStorei);
 #endif
+    FORWARD_IF_REMOTE(glPixelStorei);
     gles_glPixelStorei(pname, param);
 }
 #endif
@@ -972,6 +1080,7 @@ void glPointParameterf(GLenum pname, GLfloat param) {
 #ifndef direct_glPointParameterf
     PUSH_IF_COMPILING(glPointParameterf);
 #endif
+    FORWARD_IF_REMOTE(glPointParameterf);
     gles_glPointParameterf(pname, param);
 }
 #endif
@@ -981,6 +1090,7 @@ void glPointParameterfv(GLenum pname, const GLfloat * params) {
 #ifndef direct_glPointParameterfv
     PUSH_IF_COMPILING(glPointParameterfv);
 #endif
+    FORWARD_IF_REMOTE(glPointParameterfv);
     gles_glPointParameterfv(pname, params);
 }
 #endif
@@ -990,6 +1100,7 @@ void glPointParameterx(GLenum pname, GLfixed param) {
 #ifndef direct_glPointParameterx
     PUSH_IF_COMPILING(glPointParameterx);
 #endif
+    FORWARD_IF_REMOTE(glPointParameterx);
     gles_glPointParameterx(pname, param);
 }
 #endif
@@ -999,6 +1110,7 @@ void glPointParameterxv(GLenum pname, const GLfixed * params) {
 #ifndef direct_glPointParameterxv
     PUSH_IF_COMPILING(glPointParameterxv);
 #endif
+    FORWARD_IF_REMOTE(glPointParameterxv);
     gles_glPointParameterxv(pname, params);
 }
 #endif
@@ -1008,6 +1120,7 @@ void glPointSize(GLfloat size) {
 #ifndef direct_glPointSize
     PUSH_IF_COMPILING(glPointSize);
 #endif
+    FORWARD_IF_REMOTE(glPointSize);
     gles_glPointSize(size);
 }
 #endif
@@ -1017,6 +1130,7 @@ void glPointSizePointerOES(GLenum type, GLsizei stride, const GLvoid * pointer) 
 #ifndef direct_glPointSizePointerOES
     PUSH_IF_COMPILING(glPointSizePointerOES);
 #endif
+    FORWARD_IF_REMOTE(glPointSizePointerOES);
     gles_glPointSizePointerOES(type, stride, pointer);
 }
 #endif
@@ -1026,6 +1140,7 @@ void glPointSizex(GLfixed size) {
 #ifndef direct_glPointSizex
     PUSH_IF_COMPILING(glPointSizex);
 #endif
+    FORWARD_IF_REMOTE(glPointSizex);
     gles_glPointSizex(size);
 }
 #endif
@@ -1035,6 +1150,7 @@ void glPolygonOffset(GLfloat factor, GLfloat units) {
 #ifndef direct_glPolygonOffset
     PUSH_IF_COMPILING(glPolygonOffset);
 #endif
+    FORWARD_IF_REMOTE(glPolygonOffset);
     gles_glPolygonOffset(factor, units);
 }
 #endif
@@ -1044,6 +1160,7 @@ void glPolygonOffsetx(GLfixed factor, GLfixed units) {
 #ifndef direct_glPolygonOffsetx
     PUSH_IF_COMPILING(glPolygonOffsetx);
 #endif
+    FORWARD_IF_REMOTE(glPolygonOffsetx);
     gles_glPolygonOffsetx(factor, units);
 }
 #endif
@@ -1053,6 +1170,7 @@ void glPopMatrix() {
 #ifndef direct_glPopMatrix
     PUSH_IF_COMPILING(glPopMatrix);
 #endif
+    FORWARD_IF_REMOTE(glPopMatrix);
     gles_glPopMatrix();
 }
 #endif
@@ -1062,6 +1180,7 @@ void glPushMatrix() {
 #ifndef direct_glPushMatrix
     PUSH_IF_COMPILING(glPushMatrix);
 #endif
+    FORWARD_IF_REMOTE(glPushMatrix);
     gles_glPushMatrix();
 }
 #endif
@@ -1071,6 +1190,7 @@ void glReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format
 #ifndef direct_glReadPixels
     PUSH_IF_COMPILING(glReadPixels);
 #endif
+    FORWARD_IF_REMOTE(glReadPixels);
     gles_glReadPixels(x, y, width, height, format, type, pixels);
 }
 #endif
@@ -1080,6 +1200,7 @@ void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
 #ifndef direct_glRotatef
     PUSH_IF_COMPILING(glRotatef);
 #endif
+    FORWARD_IF_REMOTE(glRotatef);
     gles_glRotatef(angle, x, y, z);
 }
 #endif
@@ -1089,6 +1210,7 @@ void glRotatex(GLfixed angle, GLfixed x, GLfixed y, GLfixed z) {
 #ifndef direct_glRotatex
     PUSH_IF_COMPILING(glRotatex);
 #endif
+    FORWARD_IF_REMOTE(glRotatex);
     gles_glRotatex(angle, x, y, z);
 }
 #endif
@@ -1098,6 +1220,7 @@ void glSampleCoverage(GLclampf value, GLboolean invert) {
 #ifndef direct_glSampleCoverage
     PUSH_IF_COMPILING(glSampleCoverage);
 #endif
+    FORWARD_IF_REMOTE(glSampleCoverage);
     gles_glSampleCoverage(value, invert);
 }
 #endif
@@ -1107,6 +1230,7 @@ void glSampleCoveragex(GLclampx value, GLboolean invert) {
 #ifndef direct_glSampleCoveragex
     PUSH_IF_COMPILING(glSampleCoveragex);
 #endif
+    FORWARD_IF_REMOTE(glSampleCoveragex);
     gles_glSampleCoveragex(value, invert);
 }
 #endif
@@ -1116,6 +1240,7 @@ void glScalef(GLfloat x, GLfloat y, GLfloat z) {
 #ifndef direct_glScalef
     PUSH_IF_COMPILING(glScalef);
 #endif
+    FORWARD_IF_REMOTE(glScalef);
     gles_glScalef(x, y, z);
 }
 #endif
@@ -1125,6 +1250,7 @@ void glScalex(GLfixed x, GLfixed y, GLfixed z) {
 #ifndef direct_glScalex
     PUSH_IF_COMPILING(glScalex);
 #endif
+    FORWARD_IF_REMOTE(glScalex);
     gles_glScalex(x, y, z);
 }
 #endif
@@ -1134,6 +1260,7 @@ void glScissor(GLint x, GLint y, GLsizei width, GLsizei height) {
 #ifndef direct_glScissor
     PUSH_IF_COMPILING(glScissor);
 #endif
+    FORWARD_IF_REMOTE(glScissor);
     gles_glScissor(x, y, width, height);
 }
 #endif
@@ -1143,6 +1270,7 @@ void glShadeModel(GLenum mode) {
 #ifndef direct_glShadeModel
     PUSH_IF_COMPILING(glShadeModel);
 #endif
+    FORWARD_IF_REMOTE(glShadeModel);
     gles_glShadeModel(mode);
 }
 #endif
@@ -1152,6 +1280,7 @@ void glStencilFunc(GLenum func, GLint ref, GLuint mask) {
 #ifndef direct_glStencilFunc
     PUSH_IF_COMPILING(glStencilFunc);
 #endif
+    FORWARD_IF_REMOTE(glStencilFunc);
     gles_glStencilFunc(func, ref, mask);
 }
 #endif
@@ -1161,6 +1290,7 @@ void glStencilMask(GLuint mask) {
 #ifndef direct_glStencilMask
     PUSH_IF_COMPILING(glStencilMask);
 #endif
+    FORWARD_IF_REMOTE(glStencilMask);
     gles_glStencilMask(mask);
 }
 #endif
@@ -1170,6 +1300,7 @@ void glStencilOp(GLenum fail, GLenum zfail, GLenum zpass) {
 #ifndef direct_glStencilOp
     PUSH_IF_COMPILING(glStencilOp);
 #endif
+    FORWARD_IF_REMOTE(glStencilOp);
     gles_glStencilOp(fail, zfail, zpass);
 }
 #endif
@@ -1179,6 +1310,7 @@ void glTexCoordPointer(GLint size, GLenum type, GLsizei stride, const GLvoid * p
 #ifndef direct_glTexCoordPointer
     PUSH_IF_COMPILING(glTexCoordPointer);
 #endif
+    FORWARD_IF_REMOTE(glTexCoordPointer);
     gles_glTexCoordPointer(size, type, stride, pointer);
 }
 #endif
@@ -1188,6 +1320,7 @@ void glTexEnvf(GLenum target, GLenum pname, GLfloat param) {
 #ifndef direct_glTexEnvf
     PUSH_IF_COMPILING(glTexEnvf);
 #endif
+    FORWARD_IF_REMOTE(glTexEnvf);
     gles_glTexEnvf(target, pname, param);
 }
 #endif
@@ -1197,6 +1330,7 @@ void glTexEnvfv(GLenum target, GLenum pname, const GLfloat * params) {
 #ifndef direct_glTexEnvfv
     PUSH_IF_COMPILING(glTexEnvfv);
 #endif
+    FORWARD_IF_REMOTE(glTexEnvfv);
     gles_glTexEnvfv(target, pname, params);
 }
 #endif
@@ -1206,6 +1340,7 @@ void glTexEnvi(GLenum target, GLenum pname, GLint param) {
 #ifndef direct_glTexEnvi
     PUSH_IF_COMPILING(glTexEnvi);
 #endif
+    FORWARD_IF_REMOTE(glTexEnvi);
     gles_glTexEnvi(target, pname, param);
 }
 #endif
@@ -1215,6 +1350,7 @@ void glTexEnviv(GLenum target, GLenum pname, const GLint * params) {
 #ifndef direct_glTexEnviv
     PUSH_IF_COMPILING(glTexEnviv);
 #endif
+    FORWARD_IF_REMOTE(glTexEnviv);
     gles_glTexEnviv(target, pname, params);
 }
 #endif
@@ -1224,6 +1360,7 @@ void glTexEnvx(GLenum target, GLenum pname, GLfixed param) {
 #ifndef direct_glTexEnvx
     PUSH_IF_COMPILING(glTexEnvx);
 #endif
+    FORWARD_IF_REMOTE(glTexEnvx);
     gles_glTexEnvx(target, pname, param);
 }
 #endif
@@ -1233,6 +1370,7 @@ void glTexEnvxv(GLenum target, GLenum pname, const GLfixed * params) {
 #ifndef direct_glTexEnvxv
     PUSH_IF_COMPILING(glTexEnvxv);
 #endif
+    FORWARD_IF_REMOTE(glTexEnvxv);
     gles_glTexEnvxv(target, pname, params);
 }
 #endif
@@ -1242,6 +1380,7 @@ void glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei widt
 #ifndef direct_glTexImage2D
     PUSH_IF_COMPILING(glTexImage2D);
 #endif
+    FORWARD_IF_REMOTE(glTexImage2D);
     gles_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
 }
 #endif
@@ -1251,6 +1390,7 @@ void glTexParameterf(GLenum target, GLenum pname, GLfloat param) {
 #ifndef direct_glTexParameterf
     PUSH_IF_COMPILING(glTexParameterf);
 #endif
+    FORWARD_IF_REMOTE(glTexParameterf);
     gles_glTexParameterf(target, pname, param);
 }
 #endif
@@ -1260,6 +1400,7 @@ void glTexParameterfv(GLenum target, GLenum pname, const GLfloat * params) {
 #ifndef direct_glTexParameterfv
     PUSH_IF_COMPILING(glTexParameterfv);
 #endif
+    FORWARD_IF_REMOTE(glTexParameterfv);
     gles_glTexParameterfv(target, pname, params);
 }
 #endif
@@ -1269,6 +1410,7 @@ void glTexParameteri(GLenum target, GLenum pname, GLint param) {
 #ifndef direct_glTexParameteri
     PUSH_IF_COMPILING(glTexParameteri);
 #endif
+    FORWARD_IF_REMOTE(glTexParameteri);
     gles_glTexParameteri(target, pname, param);
 }
 #endif
@@ -1278,6 +1420,7 @@ void glTexParameteriv(GLenum target, GLenum pname, const GLint * params) {
 #ifndef direct_glTexParameteriv
     PUSH_IF_COMPILING(glTexParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glTexParameteriv);
     gles_glTexParameteriv(target, pname, params);
 }
 #endif
@@ -1287,6 +1430,7 @@ void glTexParameterx(GLenum target, GLenum pname, GLfixed param) {
 #ifndef direct_glTexParameterx
     PUSH_IF_COMPILING(glTexParameterx);
 #endif
+    FORWARD_IF_REMOTE(glTexParameterx);
     gles_glTexParameterx(target, pname, param);
 }
 #endif
@@ -1296,6 +1440,7 @@ void glTexParameterxv(GLenum target, GLenum pname, const GLfixed * params) {
 #ifndef direct_glTexParameterxv
     PUSH_IF_COMPILING(glTexParameterxv);
 #endif
+    FORWARD_IF_REMOTE(glTexParameterxv);
     gles_glTexParameterxv(target, pname, params);
 }
 #endif
@@ -1305,6 +1450,7 @@ void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, G
 #ifndef direct_glTexSubImage2D
     PUSH_IF_COMPILING(glTexSubImage2D);
 #endif
+    FORWARD_IF_REMOTE(glTexSubImage2D);
     gles_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
 }
 #endif
@@ -1314,6 +1460,7 @@ void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
 #ifndef direct_glTranslatef
     PUSH_IF_COMPILING(glTranslatef);
 #endif
+    FORWARD_IF_REMOTE(glTranslatef);
     gles_glTranslatef(x, y, z);
 }
 #endif
@@ -1323,6 +1470,7 @@ void glTranslatex(GLfixed x, GLfixed y, GLfixed z) {
 #ifndef direct_glTranslatex
     PUSH_IF_COMPILING(glTranslatex);
 #endif
+    FORWARD_IF_REMOTE(glTranslatex);
     gles_glTranslatex(x, y, z);
 }
 #endif
@@ -1332,6 +1480,7 @@ void glVertexPointer(GLint size, GLenum type, GLsizei stride, const GLvoid * poi
 #ifndef direct_glVertexPointer
     PUSH_IF_COMPILING(glVertexPointer);
 #endif
+    FORWARD_IF_REMOTE(glVertexPointer);
     gles_glVertexPointer(size, type, stride, pointer);
 }
 #endif
@@ -1341,6 +1490,7 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
 #ifndef direct_glViewport
     PUSH_IF_COMPILING(glViewport);
 #endif
+    FORWARD_IF_REMOTE(glViewport);
     gles_glViewport(x, y, width, height);
 }
 #endif

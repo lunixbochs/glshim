@@ -86,6 +86,27 @@ extern void load_egl_lib();
 #define PUSH_IF_COMPILING(name) PUSH_IF_COMPILING_EXT(name, name##_ARG_NAMES)
 #endif
 
+#ifndef FORWARD_IF_REMOTE_EXT
+#define FORWARD_IF_REMOTE_EXT(name, ...)                     \
+    do {                                                     \
+        if (state.remote) {                                  \
+            name##_VOID_ONLY_WRAP(                           \
+                remote_call(pack_##name(__VA_ARGS__), NULL); \
+                return;                                      \
+            );                                               \
+            name##_NOT_VOID_WRAP(                            \
+                name##_RETURN ret = (name##_RETURN)0;        \
+                remote_call(pack_##name(__VA_ARGS__), &ret); \
+                return ret;                                  \
+            );                                               \
+        }                                                    \
+    } while (0)
+#endif
+
+#ifndef FORWARD_IF_REMOTE
+#define FORWARD_IF_REMOTE(name) FORWARD_IF_REMOTE_EXT(name, name##_ARG_NAMES)
+#endif
+
 #ifndef PROXY
 #define PROXY(load_name, lib, name) \
     LOAD_##load_name(name); \

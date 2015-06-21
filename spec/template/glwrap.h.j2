@@ -10,7 +10,7 @@
     packed_data->args.a{{ loop.index }} = ({{ arg.type|unconst }}){{ arg.name }}; \
     {% endfor %}
     {% endif %}
-    packed_data; \
+    (packed_call_t *)packed_data; \
 })
 {% endfor %}
 {% endblock %}

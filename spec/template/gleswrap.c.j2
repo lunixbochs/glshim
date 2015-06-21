@@ -14,6 +14,7 @@
 #ifndef direct_{{ func.name }}
     PUSH_IF_COMPILING({{ func.name }});
 #endif
+    FORWARD_IF_REMOTE({{ func.name }});
     {{ super() }}
 {% endblock %}
 {% block prefix %}gles{% endblock %}

@@ -8,6 +8,7 @@ void glActiveTexture(GLenum texture) {
 #ifndef direct_glActiveTexture
     PUSH_IF_COMPILING(glActiveTexture);
 #endif
+    FORWARD_IF_REMOTE(glActiveTexture);
     gles_glActiveTexture(texture);
 }
 #endif
@@ -17,6 +18,7 @@ void glAttachShader(GLuint program, GLuint shader) {
 #ifndef direct_glAttachShader
     PUSH_IF_COMPILING(glAttachShader);
 #endif
+    FORWARD_IF_REMOTE(glAttachShader);
     gles_glAttachShader(program, shader);
 }
 #endif
@@ -26,6 +28,7 @@ void glBindAttribLocation(GLuint program, GLuint index, const GLchar * name) {
 #ifndef direct_glBindAttribLocation
     PUSH_IF_COMPILING(glBindAttribLocation);
 #endif
+    FORWARD_IF_REMOTE(glBindAttribLocation);
     gles_glBindAttribLocation(program, index, name);
 }
 #endif
@@ -35,6 +38,7 @@ void glBindBuffer(GLenum target, GLuint buffer) {
 #ifndef direct_glBindBuffer
     PUSH_IF_COMPILING(glBindBuffer);
 #endif
+    FORWARD_IF_REMOTE(glBindBuffer);
     gles_glBindBuffer(target, buffer);
 }
 #endif
@@ -44,6 +48,7 @@ void glBindFramebuffer(GLenum target, GLuint framebuffer) {
 #ifndef direct_glBindFramebuffer
     PUSH_IF_COMPILING(glBindFramebuffer);
 #endif
+    FORWARD_IF_REMOTE(glBindFramebuffer);
     gles_glBindFramebuffer(target, framebuffer);
 }
 #endif
@@ -53,6 +58,7 @@ void glBindRenderbuffer(GLenum target, GLuint renderbuffer) {
 #ifndef direct_glBindRenderbuffer
     PUSH_IF_COMPILING(glBindRenderbuffer);
 #endif
+    FORWARD_IF_REMOTE(glBindRenderbuffer);
     gles_glBindRenderbuffer(target, renderbuffer);
 }
 #endif
@@ -62,6 +68,7 @@ void glBindTexture(GLenum target, GLuint texture) {
 #ifndef direct_glBindTexture
     PUSH_IF_COMPILING(glBindTexture);
 #endif
+    FORWARD_IF_REMOTE(glBindTexture);
     gles_glBindTexture(target, texture);
 }
 #endif
@@ -71,6 +78,7 @@ void glBlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
 #ifndef direct_glBlendColor
     PUSH_IF_COMPILING(glBlendColor);
 #endif
+    FORWARD_IF_REMOTE(glBlendColor);
     gles_glBlendColor(red, green, blue, alpha);
 }
 #endif
@@ -80,6 +88,7 @@ void glBlendEquation(GLenum mode) {
 #ifndef direct_glBlendEquation
     PUSH_IF_COMPILING(glBlendEquation);
 #endif
+    FORWARD_IF_REMOTE(glBlendEquation);
     gles_glBlendEquation(mode);
 }
 #endif
@@ -89,6 +98,7 @@ void glBlendEquationSeparate(GLenum modeRGB, GLenum modeA) {
 #ifndef direct_glBlendEquationSeparate
     PUSH_IF_COMPILING(glBlendEquationSeparate);
 #endif
+    FORWARD_IF_REMOTE(glBlendEquationSeparate);
     gles_glBlendEquationSeparate(modeRGB, modeA);
 }
 #endif
@@ -98,6 +108,7 @@ void glBlendFunc(GLenum sfactor, GLenum dfactor) {
 #ifndef direct_glBlendFunc
     PUSH_IF_COMPILING(glBlendFunc);
 #endif
+    FORWARD_IF_REMOTE(glBlendFunc);
     gles_glBlendFunc(sfactor, dfactor);
 }
 #endif
@@ -107,6 +118,7 @@ void glBlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlp
 #ifndef direct_glBlendFuncSeparate
     PUSH_IF_COMPILING(glBlendFuncSeparate);
 #endif
+    FORWARD_IF_REMOTE(glBlendFuncSeparate);
     gles_glBlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
 }
 #endif
@@ -116,6 +128,7 @@ void glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum us
 #ifndef direct_glBufferData
     PUSH_IF_COMPILING(glBufferData);
 #endif
+    FORWARD_IF_REMOTE(glBufferData);
     gles_glBufferData(target, size, data, usage);
 }
 #endif
@@ -125,6 +138,7 @@ void glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvo
 #ifndef direct_glBufferSubData
     PUSH_IF_COMPILING(glBufferSubData);
 #endif
+    FORWARD_IF_REMOTE(glBufferSubData);
     gles_glBufferSubData(target, offset, size, data);
 }
 #endif
@@ -134,6 +148,7 @@ GLenum glCheckFramebufferStatus(GLenum target) {
 #ifndef direct_glCheckFramebufferStatus
     PUSH_IF_COMPILING(glCheckFramebufferStatus);
 #endif
+    FORWARD_IF_REMOTE(glCheckFramebufferStatus);
     return gles_glCheckFramebufferStatus(target);
 }
 #endif
@@ -143,6 +158,7 @@ void glClear(GLbitfield mask) {
 #ifndef direct_glClear
     PUSH_IF_COMPILING(glClear);
 #endif
+    FORWARD_IF_REMOTE(glClear);
     gles_glClear(mask);
 }
 #endif
@@ -152,6 +168,7 @@ void glClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
 #ifndef direct_glClearColor
     PUSH_IF_COMPILING(glClearColor);
 #endif
+    FORWARD_IF_REMOTE(glClearColor);
     gles_glClearColor(red, green, blue, alpha);
 }
 #endif
@@ -161,6 +178,7 @@ void glClearDepthf(GLclampf depth) {
 #ifndef direct_glClearDepthf
     PUSH_IF_COMPILING(glClearDepthf);
 #endif
+    FORWARD_IF_REMOTE(glClearDepthf);
     gles_glClearDepthf(depth);
 }
 #endif
@@ -170,6 +188,7 @@ void glClearStencil(GLint s) {
 #ifndef direct_glClearStencil
     PUSH_IF_COMPILING(glClearStencil);
 #endif
+    FORWARD_IF_REMOTE(glClearStencil);
     gles_glClearStencil(s);
 }
 #endif
@@ -179,6 +198,7 @@ void glColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha
 #ifndef direct_glColorMask
     PUSH_IF_COMPILING(glColorMask);
 #endif
+    FORWARD_IF_REMOTE(glColorMask);
     gles_glColorMask(red, green, blue, alpha);
 }
 #endif
@@ -188,6 +208,7 @@ void glCompileShader(GLuint shader) {
 #ifndef direct_glCompileShader
     PUSH_IF_COMPILING(glCompileShader);
 #endif
+    FORWARD_IF_REMOTE(glCompileShader);
     gles_glCompileShader(shader);
 }
 #endif
@@ -197,6 +218,7 @@ void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, G
 #ifndef direct_glCompressedTexImage2D
     PUSH_IF_COMPILING(glCompressedTexImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCompressedTexImage2D);
     gles_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
 }
 #endif
@@ -206,6 +228,7 @@ void glCompressedTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint 
 #ifndef direct_glCompressedTexSubImage2D
     PUSH_IF_COMPILING(glCompressedTexSubImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCompressedTexSubImage2D);
     gles_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
 }
 #endif
@@ -215,6 +238,7 @@ void glCopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x
 #ifndef direct_glCopyTexImage2D
     PUSH_IF_COMPILING(glCopyTexImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCopyTexImage2D);
     gles_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
 }
 #endif
@@ -224,6 +248,7 @@ void glCopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffse
 #ifndef direct_glCopyTexSubImage2D
     PUSH_IF_COMPILING(glCopyTexSubImage2D);
 #endif
+    FORWARD_IF_REMOTE(glCopyTexSubImage2D);
     gles_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
 }
 #endif
@@ -233,6 +258,7 @@ GLuint glCreateProgram() {
 #ifndef direct_glCreateProgram
     PUSH_IF_COMPILING(glCreateProgram);
 #endif
+    FORWARD_IF_REMOTE(glCreateProgram);
     return gles_glCreateProgram();
 }
 #endif
@@ -242,6 +268,7 @@ GLuint glCreateShader(GLenum type) {
 #ifndef direct_glCreateShader
     PUSH_IF_COMPILING(glCreateShader);
 #endif
+    FORWARD_IF_REMOTE(glCreateShader);
     return gles_glCreateShader(type);
 }
 #endif
@@ -251,6 +278,7 @@ void glCullFace(GLenum mode) {
 #ifndef direct_glCullFace
     PUSH_IF_COMPILING(glCullFace);
 #endif
+    FORWARD_IF_REMOTE(glCullFace);
     gles_glCullFace(mode);
 }
 #endif
@@ -260,6 +288,7 @@ void glDeleteBuffers(GLsizei n, const GLuint * buffer) {
 #ifndef direct_glDeleteBuffers
     PUSH_IF_COMPILING(glDeleteBuffers);
 #endif
+    FORWARD_IF_REMOTE(glDeleteBuffers);
     gles_glDeleteBuffers(n, buffer);
 }
 #endif
@@ -269,6 +298,7 @@ void glDeleteFramebuffers(GLsizei n, const GLuint * framebuffers) {
 #ifndef direct_glDeleteFramebuffers
     PUSH_IF_COMPILING(glDeleteFramebuffers);
 #endif
+    FORWARD_IF_REMOTE(glDeleteFramebuffers);
     gles_glDeleteFramebuffers(n, framebuffers);
 }
 #endif
@@ -278,6 +308,7 @@ void glDeleteProgram(GLuint program) {
 #ifndef direct_glDeleteProgram
     PUSH_IF_COMPILING(glDeleteProgram);
 #endif
+    FORWARD_IF_REMOTE(glDeleteProgram);
     gles_glDeleteProgram(program);
 }
 #endif
@@ -287,6 +318,7 @@ void glDeleteRenderbuffers(GLsizei n, const GLuint * renderbuffers) {
 #ifndef direct_glDeleteRenderbuffers
     PUSH_IF_COMPILING(glDeleteRenderbuffers);
 #endif
+    FORWARD_IF_REMOTE(glDeleteRenderbuffers);
     gles_glDeleteRenderbuffers(n, renderbuffers);
 }
 #endif
@@ -296,6 +328,7 @@ void glDeleteShader(GLuint program) {
 #ifndef direct_glDeleteShader
     PUSH_IF_COMPILING(glDeleteShader);
 #endif
+    FORWARD_IF_REMOTE(glDeleteShader);
     gles_glDeleteShader(program);
 }
 #endif
@@ -305,6 +338,7 @@ void glDeleteTextures(GLsizei n, const GLuint * textures) {
 #ifndef direct_glDeleteTextures
     PUSH_IF_COMPILING(glDeleteTextures);
 #endif
+    FORWARD_IF_REMOTE(glDeleteTextures);
     gles_glDeleteTextures(n, textures);
 }
 #endif
@@ -314,6 +348,7 @@ void glDepthFunc(GLenum func) {
 #ifndef direct_glDepthFunc
     PUSH_IF_COMPILING(glDepthFunc);
 #endif
+    FORWARD_IF_REMOTE(glDepthFunc);
     gles_glDepthFunc(func);
 }
 #endif
@@ -323,6 +358,7 @@ void glDepthMask(GLboolean flag) {
 #ifndef direct_glDepthMask
     PUSH_IF_COMPILING(glDepthMask);
 #endif
+    FORWARD_IF_REMOTE(glDepthMask);
     gles_glDepthMask(flag);
 }
 #endif
@@ -332,6 +368,7 @@ void glDepthRangef(GLclampf zNear, GLclampf zFar) {
 #ifndef direct_glDepthRangef
     PUSH_IF_COMPILING(glDepthRangef);
 #endif
+    FORWARD_IF_REMOTE(glDepthRangef);
     gles_glDepthRangef(zNear, zFar);
 }
 #endif
@@ -341,6 +378,7 @@ void glDetachShader(GLuint program, GLuint shader) {
 #ifndef direct_glDetachShader
     PUSH_IF_COMPILING(glDetachShader);
 #endif
+    FORWARD_IF_REMOTE(glDetachShader);
     gles_glDetachShader(program, shader);
 }
 #endif
@@ -350,6 +388,7 @@ void glDisable(GLenum cap) {
 #ifndef direct_glDisable
     PUSH_IF_COMPILING(glDisable);
 #endif
+    FORWARD_IF_REMOTE(glDisable);
     gles_glDisable(cap);
 }
 #endif
@@ -359,6 +398,7 @@ void glDisableVertexAttribArray(GLuint index) {
 #ifndef direct_glDisableVertexAttribArray
     PUSH_IF_COMPILING(glDisableVertexAttribArray);
 #endif
+    FORWARD_IF_REMOTE(glDisableVertexAttribArray);
     gles_glDisableVertexAttribArray(index);
 }
 #endif
@@ -368,6 +408,7 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
 #ifndef direct_glDrawArrays
     PUSH_IF_COMPILING(glDrawArrays);
 #endif
+    FORWARD_IF_REMOTE(glDrawArrays);
     gles_glDrawArrays(mode, first, count);
 }
 #endif
@@ -377,6 +418,7 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid * indi
 #ifndef direct_glDrawElements
     PUSH_IF_COMPILING(glDrawElements);
 #endif
+    FORWARD_IF_REMOTE(glDrawElements);
     gles_glDrawElements(mode, count, type, indices);
 }
 #endif
@@ -386,6 +428,7 @@ void glEnable(GLenum cap) {
 #ifndef direct_glEnable
     PUSH_IF_COMPILING(glEnable);
 #endif
+    FORWARD_IF_REMOTE(glEnable);
     gles_glEnable(cap);
 }
 #endif
@@ -395,6 +438,7 @@ void glEnableVertexAttribArray(GLuint index) {
 #ifndef direct_glEnableVertexAttribArray
     PUSH_IF_COMPILING(glEnableVertexAttribArray);
 #endif
+    FORWARD_IF_REMOTE(glEnableVertexAttribArray);
     gles_glEnableVertexAttribArray(index);
 }
 #endif
@@ -404,6 +448,7 @@ void glFinish() {
 #ifndef direct_glFinish
     PUSH_IF_COMPILING(glFinish);
 #endif
+    FORWARD_IF_REMOTE(glFinish);
     gles_glFinish();
 }
 #endif
@@ -413,6 +458,7 @@ void glFlush() {
 #ifndef direct_glFlush
     PUSH_IF_COMPILING(glFlush);
 #endif
+    FORWARD_IF_REMOTE(glFlush);
     gles_glFlush();
 }
 #endif
@@ -422,6 +468,7 @@ void glFramebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbu
 #ifndef direct_glFramebufferRenderbuffer
     PUSH_IF_COMPILING(glFramebufferRenderbuffer);
 #endif
+    FORWARD_IF_REMOTE(glFramebufferRenderbuffer);
     gles_glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
 }
 #endif
@@ -431,6 +478,7 @@ void glFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, 
 #ifndef direct_glFramebufferTexture2D
     PUSH_IF_COMPILING(glFramebufferTexture2D);
 #endif
+    FORWARD_IF_REMOTE(glFramebufferTexture2D);
     gles_glFramebufferTexture2D(target, attachment, textarget, texture, level);
 }
 #endif
@@ -440,6 +488,7 @@ void glFrontFace(GLenum mode) {
 #ifndef direct_glFrontFace
     PUSH_IF_COMPILING(glFrontFace);
 #endif
+    FORWARD_IF_REMOTE(glFrontFace);
     gles_glFrontFace(mode);
 }
 #endif
@@ -449,6 +498,7 @@ void glGenBuffers(GLsizei n, GLuint * buffer) {
 #ifndef direct_glGenBuffers
     PUSH_IF_COMPILING(glGenBuffers);
 #endif
+    FORWARD_IF_REMOTE(glGenBuffers);
     gles_glGenBuffers(n, buffer);
 }
 #endif
@@ -458,6 +508,7 @@ void glGenFramebuffers(GLsizei n, GLuint * framebuffers) {
 #ifndef direct_glGenFramebuffers
     PUSH_IF_COMPILING(glGenFramebuffers);
 #endif
+    FORWARD_IF_REMOTE(glGenFramebuffers);
     gles_glGenFramebuffers(n, framebuffers);
 }
 #endif
@@ -467,6 +518,7 @@ void glGenRenderbuffers(GLsizei n, GLuint * renderbuffers) {
 #ifndef direct_glGenRenderbuffers
     PUSH_IF_COMPILING(glGenRenderbuffers);
 #endif
+    FORWARD_IF_REMOTE(glGenRenderbuffers);
     gles_glGenRenderbuffers(n, renderbuffers);
 }
 #endif
@@ -476,6 +528,7 @@ void glGenTextures(GLsizei n, GLuint * textures) {
 #ifndef direct_glGenTextures
     PUSH_IF_COMPILING(glGenTextures);
 #endif
+    FORWARD_IF_REMOTE(glGenTextures);
     gles_glGenTextures(n, textures);
 }
 #endif
@@ -485,6 +538,7 @@ void glGenerateMipmap(GLenum target) {
 #ifndef direct_glGenerateMipmap
     PUSH_IF_COMPILING(glGenerateMipmap);
 #endif
+    FORWARD_IF_REMOTE(glGenerateMipmap);
     gles_glGenerateMipmap(target);
 }
 #endif
@@ -494,6 +548,7 @@ void glGetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, GLsizei * 
 #ifndef direct_glGetActiveAttrib
     PUSH_IF_COMPILING(glGetActiveAttrib);
 #endif
+    FORWARD_IF_REMOTE(glGetActiveAttrib);
     gles_glGetActiveAttrib(program, index, bufSize, length, size, type, name);
 }
 #endif
@@ -503,6 +558,7 @@ void glGetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, GLsizei *
 #ifndef direct_glGetActiveUniform
     PUSH_IF_COMPILING(glGetActiveUniform);
 #endif
+    FORWARD_IF_REMOTE(glGetActiveUniform);
     gles_glGetActiveUniform(program, index, bufSize, length, size, type, name);
 }
 #endif
@@ -512,6 +568,7 @@ void glGetAttachedShaders(GLuint program, GLsizei maxCount, GLsizei * count, GLu
 #ifndef direct_glGetAttachedShaders
     PUSH_IF_COMPILING(glGetAttachedShaders);
 #endif
+    FORWARD_IF_REMOTE(glGetAttachedShaders);
     gles_glGetAttachedShaders(program, maxCount, count, obj);
 }
 #endif
@@ -521,6 +578,7 @@ GLint glGetAttribLocation(GLuint program, const GLchar * name) {
 #ifndef direct_glGetAttribLocation
     PUSH_IF_COMPILING(glGetAttribLocation);
 #endif
+    FORWARD_IF_REMOTE(glGetAttribLocation);
     return gles_glGetAttribLocation(program, name);
 }
 #endif
@@ -530,6 +588,7 @@ void glGetBooleanv(GLenum pname, GLboolean * params) {
 #ifndef direct_glGetBooleanv
     PUSH_IF_COMPILING(glGetBooleanv);
 #endif
+    FORWARD_IF_REMOTE(glGetBooleanv);
     gles_glGetBooleanv(pname, params);
 }
 #endif
@@ -539,6 +598,7 @@ void glGetBufferParameteriv(GLenum target, GLenum pname, GLint * params) {
 #ifndef direct_glGetBufferParameteriv
     PUSH_IF_COMPILING(glGetBufferParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glGetBufferParameteriv);
     gles_glGetBufferParameteriv(target, pname, params);
 }
 #endif
@@ -548,6 +608,7 @@ GLenum glGetError() {
 #ifndef direct_glGetError
     PUSH_IF_COMPILING(glGetError);
 #endif
+    FORWARD_IF_REMOTE(glGetError);
     return gles_glGetError();
 }
 #endif
@@ -557,6 +618,7 @@ void glGetFloatv(GLenum pname, GLfloat * params) {
 #ifndef direct_glGetFloatv
     PUSH_IF_COMPILING(glGetFloatv);
 #endif
+    FORWARD_IF_REMOTE(glGetFloatv);
     gles_glGetFloatv(pname, params);
 }
 #endif
@@ -566,6 +628,7 @@ void glGetFramebufferAttachmentParameteriv(GLenum target, GLenum attachment, GLe
 #ifndef direct_glGetFramebufferAttachmentParameteriv
     PUSH_IF_COMPILING(glGetFramebufferAttachmentParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glGetFramebufferAttachmentParameteriv);
     gles_glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
 }
 #endif
@@ -575,6 +638,7 @@ void glGetIntegerv(GLenum pname, GLint * params) {
 #ifndef direct_glGetIntegerv
     PUSH_IF_COMPILING(glGetIntegerv);
 #endif
+    FORWARD_IF_REMOTE(glGetIntegerv);
     gles_glGetIntegerv(pname, params);
 }
 #endif
@@ -584,6 +648,7 @@ void glGetProgramInfoLog(GLuint program, GLsizei bufSize, GLsizei * length, GLch
 #ifndef direct_glGetProgramInfoLog
     PUSH_IF_COMPILING(glGetProgramInfoLog);
 #endif
+    FORWARD_IF_REMOTE(glGetProgramInfoLog);
     gles_glGetProgramInfoLog(program, bufSize, length, infoLog);
 }
 #endif
@@ -593,6 +658,7 @@ void glGetProgramiv(GLuint program, GLenum pname, GLint * params) {
 #ifndef direct_glGetProgramiv
     PUSH_IF_COMPILING(glGetProgramiv);
 #endif
+    FORWARD_IF_REMOTE(glGetProgramiv);
     gles_glGetProgramiv(program, pname, params);
 }
 #endif
@@ -602,6 +668,7 @@ void glGetRenderbufferParameteriv(GLenum target, GLenum pname, GLint * params) {
 #ifndef direct_glGetRenderbufferParameteriv
     PUSH_IF_COMPILING(glGetRenderbufferParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glGetRenderbufferParameteriv);
     gles_glGetRenderbufferParameteriv(target, pname, params);
 }
 #endif
@@ -611,6 +678,7 @@ void glGetShaderInfoLog(GLuint shader, GLsizei bufSize, GLsizei * length, GLchar
 #ifndef direct_glGetShaderInfoLog
     PUSH_IF_COMPILING(glGetShaderInfoLog);
 #endif
+    FORWARD_IF_REMOTE(glGetShaderInfoLog);
     gles_glGetShaderInfoLog(shader, bufSize, length, infoLog);
 }
 #endif
@@ -620,6 +688,7 @@ void glGetShaderPrecisionFormat(GLenum shadertype, GLenum precisiontype, GLint *
 #ifndef direct_glGetShaderPrecisionFormat
     PUSH_IF_COMPILING(glGetShaderPrecisionFormat);
 #endif
+    FORWARD_IF_REMOTE(glGetShaderPrecisionFormat);
     gles_glGetShaderPrecisionFormat(shadertype, precisiontype, range, precision);
 }
 #endif
@@ -629,6 +698,7 @@ void glGetShaderSource(GLuint shader, GLsizei bufSize, GLsizei * length, GLchar 
 #ifndef direct_glGetShaderSource
     PUSH_IF_COMPILING(glGetShaderSource);
 #endif
+    FORWARD_IF_REMOTE(glGetShaderSource);
     gles_glGetShaderSource(shader, bufSize, length, source);
 }
 #endif
@@ -638,6 +708,7 @@ void glGetShaderiv(GLuint shader, GLenum pname, GLint * params) {
 #ifndef direct_glGetShaderiv
     PUSH_IF_COMPILING(glGetShaderiv);
 #endif
+    FORWARD_IF_REMOTE(glGetShaderiv);
     gles_glGetShaderiv(shader, pname, params);
 }
 #endif
@@ -647,6 +718,7 @@ const GLubyte * glGetString(GLenum name) {
 #ifndef direct_glGetString
     PUSH_IF_COMPILING(glGetString);
 #endif
+    FORWARD_IF_REMOTE(glGetString);
     return gles_glGetString(name);
 }
 #endif
@@ -656,6 +728,7 @@ void glGetTexParameterfv(GLenum target, GLenum pname, GLfloat * params) {
 #ifndef direct_glGetTexParameterfv
     PUSH_IF_COMPILING(glGetTexParameterfv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexParameterfv);
     gles_glGetTexParameterfv(target, pname, params);
 }
 #endif
@@ -665,6 +738,7 @@ void glGetTexParameteriv(GLenum target, GLenum pname, GLint * params) {
 #ifndef direct_glGetTexParameteriv
     PUSH_IF_COMPILING(glGetTexParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glGetTexParameteriv);
     gles_glGetTexParameteriv(target, pname, params);
 }
 #endif
@@ -674,6 +748,7 @@ GLint glGetUniformLocation(GLuint program, const GLchar * name) {
 #ifndef direct_glGetUniformLocation
     PUSH_IF_COMPILING(glGetUniformLocation);
 #endif
+    FORWARD_IF_REMOTE(glGetUniformLocation);
     return gles_glGetUniformLocation(program, name);
 }
 #endif
@@ -683,6 +758,7 @@ void glGetUniformfv(GLuint program, GLint location, GLfloat * params) {
 #ifndef direct_glGetUniformfv
     PUSH_IF_COMPILING(glGetUniformfv);
 #endif
+    FORWARD_IF_REMOTE(glGetUniformfv);
     gles_glGetUniformfv(program, location, params);
 }
 #endif
@@ -692,6 +768,7 @@ void glGetUniformiv(GLuint program, GLint location, GLint * params) {
 #ifndef direct_glGetUniformiv
     PUSH_IF_COMPILING(glGetUniformiv);
 #endif
+    FORWARD_IF_REMOTE(glGetUniformiv);
     gles_glGetUniformiv(program, location, params);
 }
 #endif
@@ -701,6 +778,7 @@ void glGetVertexAttribPointerv(GLuint index, GLenum pname, GLvoid ** pointer) {
 #ifndef direct_glGetVertexAttribPointerv
     PUSH_IF_COMPILING(glGetVertexAttribPointerv);
 #endif
+    FORWARD_IF_REMOTE(glGetVertexAttribPointerv);
     gles_glGetVertexAttribPointerv(index, pname, pointer);
 }
 #endif
@@ -710,6 +788,7 @@ void glGetVertexAttribfv(GLuint index, GLenum pname, GLfloat * params) {
 #ifndef direct_glGetVertexAttribfv
     PUSH_IF_COMPILING(glGetVertexAttribfv);
 #endif
+    FORWARD_IF_REMOTE(glGetVertexAttribfv);
     gles_glGetVertexAttribfv(index, pname, params);
 }
 #endif
@@ -719,6 +798,7 @@ void glGetVertexAttribiv(GLuint index, GLenum pname, GLint * params) {
 #ifndef direct_glGetVertexAttribiv
     PUSH_IF_COMPILING(glGetVertexAttribiv);
 #endif
+    FORWARD_IF_REMOTE(glGetVertexAttribiv);
     gles_glGetVertexAttribiv(index, pname, params);
 }
 #endif
@@ -728,6 +808,7 @@ void glHint(GLenum target, GLenum mode) {
 #ifndef direct_glHint
     PUSH_IF_COMPILING(glHint);
 #endif
+    FORWARD_IF_REMOTE(glHint);
     gles_glHint(target, mode);
 }
 #endif
@@ -737,6 +818,7 @@ GLboolean glIsBuffer(GLuint buffer) {
 #ifndef direct_glIsBuffer
     PUSH_IF_COMPILING(glIsBuffer);
 #endif
+    FORWARD_IF_REMOTE(glIsBuffer);
     return gles_glIsBuffer(buffer);
 }
 #endif
@@ -746,6 +828,7 @@ GLboolean glIsEnabled(GLenum cap) {
 #ifndef direct_glIsEnabled
     PUSH_IF_COMPILING(glIsEnabled);
 #endif
+    FORWARD_IF_REMOTE(glIsEnabled);
     return gles_glIsEnabled(cap);
 }
 #endif
@@ -755,6 +838,7 @@ GLboolean glIsFramebuffer(GLuint framebuffer) {
 #ifndef direct_glIsFramebuffer
     PUSH_IF_COMPILING(glIsFramebuffer);
 #endif
+    FORWARD_IF_REMOTE(glIsFramebuffer);
     return gles_glIsFramebuffer(framebuffer);
 }
 #endif
@@ -764,6 +848,7 @@ GLboolean glIsProgram(GLuint program) {
 #ifndef direct_glIsProgram
     PUSH_IF_COMPILING(glIsProgram);
 #endif
+    FORWARD_IF_REMOTE(glIsProgram);
     return gles_glIsProgram(program);
 }
 #endif
@@ -773,6 +858,7 @@ GLboolean glIsRenderbuffer(GLuint renderbuffer) {
 #ifndef direct_glIsRenderbuffer
     PUSH_IF_COMPILING(glIsRenderbuffer);
 #endif
+    FORWARD_IF_REMOTE(glIsRenderbuffer);
     return gles_glIsRenderbuffer(renderbuffer);
 }
 #endif
@@ -782,6 +868,7 @@ GLboolean glIsShader(GLuint shader) {
 #ifndef direct_glIsShader
     PUSH_IF_COMPILING(glIsShader);
 #endif
+    FORWARD_IF_REMOTE(glIsShader);
     return gles_glIsShader(shader);
 }
 #endif
@@ -791,6 +878,7 @@ GLboolean glIsTexture(GLuint texture) {
 #ifndef direct_glIsTexture
     PUSH_IF_COMPILING(glIsTexture);
 #endif
+    FORWARD_IF_REMOTE(glIsTexture);
     return gles_glIsTexture(texture);
 }
 #endif
@@ -800,6 +888,7 @@ void glLineWidth(GLfloat width) {
 #ifndef direct_glLineWidth
     PUSH_IF_COMPILING(glLineWidth);
 #endif
+    FORWARD_IF_REMOTE(glLineWidth);
     gles_glLineWidth(width);
 }
 #endif
@@ -809,6 +898,7 @@ void glLinkProgram(GLuint program) {
 #ifndef direct_glLinkProgram
     PUSH_IF_COMPILING(glLinkProgram);
 #endif
+    FORWARD_IF_REMOTE(glLinkProgram);
     gles_glLinkProgram(program);
 }
 #endif
@@ -818,6 +908,7 @@ void glPixelStorei(GLenum pname, GLint param) {
 #ifndef direct_glPixelStorei
     PUSH_IF_COMPILING(glPixelStorei);
 #endif
+    FORWARD_IF_REMOTE(glPixelStorei);
     gles_glPixelStorei(pname, param);
 }
 #endif
@@ -827,6 +918,7 @@ void glPolygonOffset(GLfloat factor, GLfloat units) {
 #ifndef direct_glPolygonOffset
     PUSH_IF_COMPILING(glPolygonOffset);
 #endif
+    FORWARD_IF_REMOTE(glPolygonOffset);
     gles_glPolygonOffset(factor, units);
 }
 #endif
@@ -836,6 +928,7 @@ void glReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format
 #ifndef direct_glReadPixels
     PUSH_IF_COMPILING(glReadPixels);
 #endif
+    FORWARD_IF_REMOTE(glReadPixels);
     gles_glReadPixels(x, y, width, height, format, type, pixels);
 }
 #endif
@@ -845,6 +938,7 @@ void glReleaseShaderCompiler() {
 #ifndef direct_glReleaseShaderCompiler
     PUSH_IF_COMPILING(glReleaseShaderCompiler);
 #endif
+    FORWARD_IF_REMOTE(glReleaseShaderCompiler);
     gles_glReleaseShaderCompiler();
 }
 #endif
@@ -854,6 +948,7 @@ void glRenderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, 
 #ifndef direct_glRenderbufferStorage
     PUSH_IF_COMPILING(glRenderbufferStorage);
 #endif
+    FORWARD_IF_REMOTE(glRenderbufferStorage);
     gles_glRenderbufferStorage(target, internalformat, width, height);
 }
 #endif
@@ -863,6 +958,7 @@ void glSampleCoverage(GLclampf value, GLboolean invert) {
 #ifndef direct_glSampleCoverage
     PUSH_IF_COMPILING(glSampleCoverage);
 #endif
+    FORWARD_IF_REMOTE(glSampleCoverage);
     gles_glSampleCoverage(value, invert);
 }
 #endif
@@ -872,6 +968,7 @@ void glScissor(GLint x, GLint y, GLsizei width, GLsizei height) {
 #ifndef direct_glScissor
     PUSH_IF_COMPILING(glScissor);
 #endif
+    FORWARD_IF_REMOTE(glScissor);
     gles_glScissor(x, y, width, height);
 }
 #endif
@@ -881,6 +978,7 @@ void glShaderBinary(GLsizei n, const GLuint * shaders, GLenum binaryformat, cons
 #ifndef direct_glShaderBinary
     PUSH_IF_COMPILING(glShaderBinary);
 #endif
+    FORWARD_IF_REMOTE(glShaderBinary);
     gles_glShaderBinary(n, shaders, binaryformat, binary, length);
 }
 #endif
@@ -890,6 +988,7 @@ void glShaderSource(GLuint shader, GLsizei count, const GLchar * const * string,
 #ifndef direct_glShaderSource
     PUSH_IF_COMPILING(glShaderSource);
 #endif
+    FORWARD_IF_REMOTE(glShaderSource);
     gles_glShaderSource(shader, count, string, length);
 }
 #endif
@@ -899,6 +998,7 @@ void glStencilFunc(GLenum func, GLint ref, GLuint mask) {
 #ifndef direct_glStencilFunc
     PUSH_IF_COMPILING(glStencilFunc);
 #endif
+    FORWARD_IF_REMOTE(glStencilFunc);
     gles_glStencilFunc(func, ref, mask);
 }
 #endif
@@ -908,6 +1008,7 @@ void glStencilFuncSeparate(GLenum face, GLenum func, GLint ref, GLuint mask) {
 #ifndef direct_glStencilFuncSeparate
     PUSH_IF_COMPILING(glStencilFuncSeparate);
 #endif
+    FORWARD_IF_REMOTE(glStencilFuncSeparate);
     gles_glStencilFuncSeparate(face, func, ref, mask);
 }
 #endif
@@ -917,6 +1018,7 @@ void glStencilMask(GLuint mask) {
 #ifndef direct_glStencilMask
     PUSH_IF_COMPILING(glStencilMask);
 #endif
+    FORWARD_IF_REMOTE(glStencilMask);
     gles_glStencilMask(mask);
 }
 #endif
@@ -926,6 +1028,7 @@ void glStencilMaskSeparate(GLenum face, GLuint mask) {
 #ifndef direct_glStencilMaskSeparate
     PUSH_IF_COMPILING(glStencilMaskSeparate);
 #endif
+    FORWARD_IF_REMOTE(glStencilMaskSeparate);
     gles_glStencilMaskSeparate(face, mask);
 }
 #endif
@@ -935,6 +1038,7 @@ void glStencilOp(GLenum fail, GLenum zfail, GLenum zpass) {
 #ifndef direct_glStencilOp
     PUSH_IF_COMPILING(glStencilOp);
 #endif
+    FORWARD_IF_REMOTE(glStencilOp);
     gles_glStencilOp(fail, zfail, zpass);
 }
 #endif
@@ -944,6 +1048,7 @@ void glStencilOpSeparate(GLenum face, GLenum sfail, GLenum zfail, GLenum zpass) 
 #ifndef direct_glStencilOpSeparate
     PUSH_IF_COMPILING(glStencilOpSeparate);
 #endif
+    FORWARD_IF_REMOTE(glStencilOpSeparate);
     gles_glStencilOpSeparate(face, sfail, zfail, zpass);
 }
 #endif
@@ -953,6 +1058,7 @@ void glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei widt
 #ifndef direct_glTexImage2D
     PUSH_IF_COMPILING(glTexImage2D);
 #endif
+    FORWARD_IF_REMOTE(glTexImage2D);
     gles_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
 }
 #endif
@@ -962,6 +1068,7 @@ void glTexParameterf(GLenum target, GLenum pname, GLfloat param) {
 #ifndef direct_glTexParameterf
     PUSH_IF_COMPILING(glTexParameterf);
 #endif
+    FORWARD_IF_REMOTE(glTexParameterf);
     gles_glTexParameterf(target, pname, param);
 }
 #endif
@@ -971,6 +1078,7 @@ void glTexParameterfv(GLenum target, GLenum pname, const GLfloat * params) {
 #ifndef direct_glTexParameterfv
     PUSH_IF_COMPILING(glTexParameterfv);
 #endif
+    FORWARD_IF_REMOTE(glTexParameterfv);
     gles_glTexParameterfv(target, pname, params);
 }
 #endif
@@ -980,6 +1088,7 @@ void glTexParameteri(GLenum target, GLenum pname, GLint param) {
 #ifndef direct_glTexParameteri
     PUSH_IF_COMPILING(glTexParameteri);
 #endif
+    FORWARD_IF_REMOTE(glTexParameteri);
     gles_glTexParameteri(target, pname, param);
 }
 #endif
@@ -989,6 +1098,7 @@ void glTexParameteriv(GLenum target, GLenum pname, const GLint * params) {
 #ifndef direct_glTexParameteriv
     PUSH_IF_COMPILING(glTexParameteriv);
 #endif
+    FORWARD_IF_REMOTE(glTexParameteriv);
     gles_glTexParameteriv(target, pname, params);
 }
 #endif
@@ -998,6 +1108,7 @@ void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, G
 #ifndef direct_glTexSubImage2D
     PUSH_IF_COMPILING(glTexSubImage2D);
 #endif
+    FORWARD_IF_REMOTE(glTexSubImage2D);
     gles_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
 }
 #endif
@@ -1007,6 +1118,7 @@ void glUniform1f(GLint location, GLfloat v0) {
 #ifndef direct_glUniform1f
     PUSH_IF_COMPILING(glUniform1f);
 #endif
+    FORWARD_IF_REMOTE(glUniform1f);
     gles_glUniform1f(location, v0);
 }
 #endif
@@ -1016,6 +1128,7 @@ void glUniform1fv(GLint location, GLsizei count, const GLfloat * value) {
 #ifndef direct_glUniform1fv
     PUSH_IF_COMPILING(glUniform1fv);
 #endif
+    FORWARD_IF_REMOTE(glUniform1fv);
     gles_glUniform1fv(location, count, value);
 }
 #endif
@@ -1025,6 +1138,7 @@ void glUniform1i(GLint location, GLint v0) {
 #ifndef direct_glUniform1i
     PUSH_IF_COMPILING(glUniform1i);
 #endif
+    FORWARD_IF_REMOTE(glUniform1i);
     gles_glUniform1i(location, v0);
 }
 #endif
@@ -1034,6 +1148,7 @@ void glUniform1iv(GLint location, GLsizei count, const GLint * value) {
 #ifndef direct_glUniform1iv
     PUSH_IF_COMPILING(glUniform1iv);
 #endif
+    FORWARD_IF_REMOTE(glUniform1iv);
     gles_glUniform1iv(location, count, value);
 }
 #endif
@@ -1043,6 +1158,7 @@ void glUniform2f(GLint location, GLfloat v0, GLfloat v1) {
 #ifndef direct_glUniform2f
     PUSH_IF_COMPILING(glUniform2f);
 #endif
+    FORWARD_IF_REMOTE(glUniform2f);
     gles_glUniform2f(location, v0, v1);
 }
 #endif
@@ -1052,6 +1168,7 @@ void glUniform2fv(GLint location, GLsizei count, const GLfloat * value) {
 #ifndef direct_glUniform2fv
     PUSH_IF_COMPILING(glUniform2fv);
 #endif
+    FORWARD_IF_REMOTE(glUniform2fv);
     gles_glUniform2fv(location, count, value);
 }
 #endif
@@ -1061,6 +1178,7 @@ void glUniform2i(GLint location, GLint v0, GLint v1) {
 #ifndef direct_glUniform2i
     PUSH_IF_COMPILING(glUniform2i);
 #endif
+    FORWARD_IF_REMOTE(glUniform2i);
     gles_glUniform2i(location, v0, v1);
 }
 #endif
@@ -1070,6 +1188,7 @@ void glUniform2iv(GLint location, GLsizei count, const GLint * value) {
 #ifndef direct_glUniform2iv
     PUSH_IF_COMPILING(glUniform2iv);
 #endif
+    FORWARD_IF_REMOTE(glUniform2iv);
     gles_glUniform2iv(location, count, value);
 }
 #endif
@@ -1079,6 +1198,7 @@ void glUniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2) {
 #ifndef direct_glUniform3f
     PUSH_IF_COMPILING(glUniform3f);
 #endif
+    FORWARD_IF_REMOTE(glUniform3f);
     gles_glUniform3f(location, v0, v1, v2);
 }
 #endif
@@ -1088,6 +1208,7 @@ void glUniform3fv(GLint location, GLsizei count, const GLfloat * value) {
 #ifndef direct_glUniform3fv
     PUSH_IF_COMPILING(glUniform3fv);
 #endif
+    FORWARD_IF_REMOTE(glUniform3fv);
     gles_glUniform3fv(location, count, value);
 }
 #endif
@@ -1097,6 +1218,7 @@ void glUniform3i(GLint location, GLint v0, GLint v1, GLint v2) {
 #ifndef direct_glUniform3i
     PUSH_IF_COMPILING(glUniform3i);
 #endif
+    FORWARD_IF_REMOTE(glUniform3i);
     gles_glUniform3i(location, v0, v1, v2);
 }
 #endif
@@ -1106,6 +1228,7 @@ void glUniform3iv(GLint location, GLsizei count, const GLint * value) {
 #ifndef direct_glUniform3iv
     PUSH_IF_COMPILING(glUniform3iv);
 #endif
+    FORWARD_IF_REMOTE(glUniform3iv);
     gles_glUniform3iv(location, count, value);
 }
 #endif
@@ -1115,6 +1238,7 @@ void glUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
 #ifndef direct_glUniform4f
     PUSH_IF_COMPILING(glUniform4f);
 #endif
+    FORWARD_IF_REMOTE(glUniform4f);
     gles_glUniform4f(location, v0, v1, v2, v3);
 }
 #endif
@@ -1124,6 +1248,7 @@ void glUniform4fv(GLint location, GLsizei count, const GLfloat * value) {
 #ifndef direct_glUniform4fv
     PUSH_IF_COMPILING(glUniform4fv);
 #endif
+    FORWARD_IF_REMOTE(glUniform4fv);
     gles_glUniform4fv(location, count, value);
 }
 #endif
@@ -1133,6 +1258,7 @@ void glUniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3) {
 #ifndef direct_glUniform4i
     PUSH_IF_COMPILING(glUniform4i);
 #endif
+    FORWARD_IF_REMOTE(glUniform4i);
     gles_glUniform4i(location, v0, v1, v2, v3);
 }
 #endif
@@ -1142,6 +1268,7 @@ void glUniform4iv(GLint location, GLsizei count, const GLint * value) {
 #ifndef direct_glUniform4iv
     PUSH_IF_COMPILING(glUniform4iv);
 #endif
+    FORWARD_IF_REMOTE(glUniform4iv);
     gles_glUniform4iv(location, count, value);
 }
 #endif
@@ -1151,6 +1278,7 @@ void glUniformMatrix2fv(GLint location, GLsizei count, GLboolean transpose, cons
 #ifndef direct_glUniformMatrix2fv
     PUSH_IF_COMPILING(glUniformMatrix2fv);
 #endif
+    FORWARD_IF_REMOTE(glUniformMatrix2fv);
     gles_glUniformMatrix2fv(location, count, transpose, value);
 }
 #endif
@@ -1160,6 +1288,7 @@ void glUniformMatrix3fv(GLint location, GLsizei count, GLboolean transpose, cons
 #ifndef direct_glUniformMatrix3fv
     PUSH_IF_COMPILING(glUniformMatrix3fv);
 #endif
+    FORWARD_IF_REMOTE(glUniformMatrix3fv);
     gles_glUniformMatrix3fv(location, count, transpose, value);
 }
 #endif
@@ -1169,6 +1298,7 @@ void glUniformMatrix4fv(GLint location, GLsizei count, GLboolean transpose, cons
 #ifndef direct_glUniformMatrix4fv
     PUSH_IF_COMPILING(glUniformMatrix4fv);
 #endif
+    FORWARD_IF_REMOTE(glUniformMatrix4fv);
     gles_glUniformMatrix4fv(location, count, transpose, value);
 }
 #endif
@@ -1178,6 +1308,7 @@ void glUseProgram(GLuint program) {
 #ifndef direct_glUseProgram
     PUSH_IF_COMPILING(glUseProgram);
 #endif
+    FORWARD_IF_REMOTE(glUseProgram);
     gles_glUseProgram(program);
 }
 #endif
@@ -1187,6 +1318,7 @@ void glValidateProgram(GLuint program) {
 #ifndef direct_glValidateProgram
     PUSH_IF_COMPILING(glValidateProgram);
 #endif
+    FORWARD_IF_REMOTE(glValidateProgram);
     gles_glValidateProgram(program);
 }
 #endif
@@ -1196,6 +1328,7 @@ void glVertexAttrib1f(GLuint index, GLfloat x) {
 #ifndef direct_glVertexAttrib1f
     PUSH_IF_COMPILING(glVertexAttrib1f);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib1f);
     gles_glVertexAttrib1f(index, x);
 }
 #endif
@@ -1205,6 +1338,7 @@ void glVertexAttrib1fv(GLuint index, const GLfloat * v) {
 #ifndef direct_glVertexAttrib1fv
     PUSH_IF_COMPILING(glVertexAttrib1fv);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib1fv);
     gles_glVertexAttrib1fv(index, v);
 }
 #endif
@@ -1214,6 +1348,7 @@ void glVertexAttrib2f(GLuint index, GLfloat x, GLfloat y) {
 #ifndef direct_glVertexAttrib2f
     PUSH_IF_COMPILING(glVertexAttrib2f);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib2f);
     gles_glVertexAttrib2f(index, x, y);
 }
 #endif
@@ -1223,6 +1358,7 @@ void glVertexAttrib2fv(GLuint index, const GLfloat * v) {
 #ifndef direct_glVertexAttrib2fv
     PUSH_IF_COMPILING(glVertexAttrib2fv);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib2fv);
     gles_glVertexAttrib2fv(index, v);
 }
 #endif
@@ -1232,6 +1368,7 @@ void glVertexAttrib3f(GLuint index, GLfloat x, GLfloat y, GLfloat z) {
 #ifndef direct_glVertexAttrib3f
     PUSH_IF_COMPILING(glVertexAttrib3f);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib3f);
     gles_glVertexAttrib3f(index, x, y, z);
 }
 #endif
@@ -1241,6 +1378,7 @@ void glVertexAttrib3fv(GLuint index, const GLfloat * v) {
 #ifndef direct_glVertexAttrib3fv
     PUSH_IF_COMPILING(glVertexAttrib3fv);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib3fv);
     gles_glVertexAttrib3fv(index, v);
 }
 #endif
@@ -1250,6 +1388,7 @@ void glVertexAttrib4f(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w) 
 #ifndef direct_glVertexAttrib4f
     PUSH_IF_COMPILING(glVertexAttrib4f);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib4f);
     gles_glVertexAttrib4f(index, x, y, z, w);
 }
 #endif
@@ -1259,6 +1398,7 @@ void glVertexAttrib4fv(GLuint index, const GLfloat * v) {
 #ifndef direct_glVertexAttrib4fv
     PUSH_IF_COMPILING(glVertexAttrib4fv);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttrib4fv);
     gles_glVertexAttrib4fv(index, v);
 }
 #endif
@@ -1268,6 +1408,7 @@ void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean norm
 #ifndef direct_glVertexAttribPointer
     PUSH_IF_COMPILING(glVertexAttribPointer);
 #endif
+    FORWARD_IF_REMOTE(glVertexAttribPointer);
     gles_glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 #endif
@@ -1277,6 +1418,7 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
 #ifndef direct_glViewport
     PUSH_IF_COMPILING(glViewport);
 #endif
+    FORWARD_IF_REMOTE(glViewport);
     gles_glViewport(x, y, width, height);
 }
 #endif

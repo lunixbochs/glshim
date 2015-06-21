@@ -229,6 +229,7 @@ typedef struct {
 typedef struct {
     displaylist_state_t list;
     tack_t lists;
+    GLboolean remote;
 
     GLenum error;
     block_state_t block;

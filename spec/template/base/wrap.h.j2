@@ -36,6 +36,13 @@ void glIndexedCall(const packed_call_t *packed, void *ret_v);
 #define {{ func.name }}_ARG_EXPAND {{ func.args|args }}
 #define {{ func.name }}_PACKED PACKED_{{ func.types }}
 #define {{ func.name }}_FORMAT FORMAT_{{ func.types }}
+{% if func.void %}
+#define {{ func.name }}_VOID_ONLY_WRAP(...) { __VA_ARGS__ }
+#define {{ func.name }}_NOT_VOID_WRAP(...) {}
+{% else %}
+#define {{ func.name }}_VOID_ONLY_WRAP(...) {}
+#define {{ func.name }}_NOT_VOID_WRAP(...) { __VA_ARGS__ }
+{% endif %}
 {% endfor %}
 
 {% for func in functions %}
