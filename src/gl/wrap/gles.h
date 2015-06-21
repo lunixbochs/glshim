@@ -12303,6 +12303,8 @@ typedef struct {
     ARGS_EGLint_EGLDisplay_EGLSyncKHR_EGLint args;
 } PACKED_EGLint_EGLDisplay_EGLSyncKHR_EGLint;
 
+extern const int INDEX_RET_SIZE[];
+extern const int INDEX_PACKED_SIZE[];
 extern void glPushCall(void *data);
 void glIndexedCall(const packed_call_t *packed, void *ret_v);
 

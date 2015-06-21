@@ -956,6 +956,8 @@ typedef struct {
     ARGS_void_GLuint_GLint_GLenum_GLboolean_GLsizei_const_GLvoid___GENPT__ args;
 } PACKED_void_GLuint_GLint_GLenum_GLboolean_GLsizei_const_GLvoid___GENPT__;
 
+extern const int INDEX_RET_SIZE[];
+extern const int INDEX_PACKED_SIZE[];
 extern void glPushCall(void *data);
 void glIndexedCall(const packed_call_t *packed, void *ret_v);
 

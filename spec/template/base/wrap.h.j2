@@ -24,6 +24,8 @@ typedef struct {
 } PACKED_{{ f.types }};
 {% endfor %}
 
+extern const int INDEX_RET_SIZE[];
+extern const int INDEX_PACKED_SIZE[];
 extern void glPushCall(void *data);
 void glIndexedCall(const packed_call_t *packed, void *ret_v);
 

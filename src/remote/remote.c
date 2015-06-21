@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
                         .size = retsize,
                         .free = true,
                     }}, 0,
-                }
+                },
             };
             glouija_command_write(&ret);
         } else {
