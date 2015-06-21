@@ -5,14 +5,16 @@
 #include "wrap/gles.h"
 #include "wrap/types.h"
 
-void remote_spawn() {
+void remote_spawn(char *path) {
+    if (path == NULL) {
+        path = "libgl_remote";
+    }
     int fd = glouija_init_client();
-    printf("%d\n", fd);
     int pid = fork();
     if (pid == 0) {
-        char *argv[] = {"./remote", NULL, NULL};
+        char *argv[] = {path, NULL, NULL};
         asprintf(&argv[1], "%d", fd);
-        execve("./remote", argv, NULL);
+        execve(path, argv, NULL);
     }
 }
 

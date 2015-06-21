@@ -1,6 +1,8 @@
 #ifndef GL_REMOTE_H
 #define GL_REMOTE_H
-void remote_spawn();
+#include "wrap/types.h"
+
+void remote_spawn(char *path);
 void remote_call(packed_call_t *call, void *ret_v);
 int remote_serve(int fd);
 #endif
