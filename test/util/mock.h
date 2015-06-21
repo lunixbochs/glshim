@@ -50,12 +50,6 @@ static int failed_test = 0;
     return failed_test; \
 }
 
-#define pack_glActiveTexture(texture) ({ \
-    glActiveTexture_PACKED *packed_data = malloc(sizeof(glActiveTexture_PACKED)); \
-    packed_data->index = glActiveTexture_INDEX; \
-    packed_data->args.a1 = (GLenum)texture; \
-    packed_data; \
-})
 #define emit_glActiveTexture(texture) { \
     mock_push(pack_glActiveTexture(texture)); \
 }
@@ -94,13 +88,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glAlphaFunc(func, ref) ({ \
-    glAlphaFunc_PACKED *packed_data = malloc(sizeof(glAlphaFunc_PACKED)); \
-    packed_data->index = glAlphaFunc_INDEX; \
-    packed_data->args.a1 = (GLenum)func; \
-    packed_data->args.a2 = (GLclampf)ref; \
-    packed_data; \
-})
 #define emit_glAlphaFunc(func, ref) { \
     mock_push(pack_glAlphaFunc(func, ref)); \
 }
@@ -142,13 +129,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glAlphaFuncx(func, ref) ({ \
-    glAlphaFuncx_PACKED *packed_data = malloc(sizeof(glAlphaFuncx_PACKED)); \
-    packed_data->index = glAlphaFuncx_INDEX; \
-    packed_data->args.a1 = (GLenum)func; \
-    packed_data->args.a2 = (GLclampx)ref; \
-    packed_data; \
-})
 #define emit_glAlphaFuncx(func, ref) { \
     mock_push(pack_glAlphaFuncx(func, ref)); \
 }
@@ -190,13 +170,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBindBuffer(target, buffer) ({ \
-    glBindBuffer_PACKED *packed_data = malloc(sizeof(glBindBuffer_PACKED)); \
-    packed_data->index = glBindBuffer_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLuint)buffer; \
-    packed_data; \
-})
 #define emit_glBindBuffer(target, buffer) { \
     mock_push(pack_glBindBuffer(target, buffer)); \
 }
@@ -238,13 +211,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBindTexture(target, texture) ({ \
-    glBindTexture_PACKED *packed_data = malloc(sizeof(glBindTexture_PACKED)); \
-    packed_data->index = glBindTexture_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLuint)texture; \
-    packed_data; \
-})
 #define emit_glBindTexture(target, texture) { \
     mock_push(pack_glBindTexture(target, texture)); \
 }
@@ -286,15 +252,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBlendColorOES(red, green, blue, alpha) ({ \
-    glBlendColorOES_PACKED *packed_data = malloc(sizeof(glBlendColorOES_PACKED)); \
-    packed_data->index = glBlendColorOES_INDEX; \
-    packed_data->args.a1 = (GLclampf)red; \
-    packed_data->args.a2 = (GLclampf)green; \
-    packed_data->args.a3 = (GLclampf)blue; \
-    packed_data->args.a4 = (GLclampf)alpha; \
-    packed_data; \
-})
 #define emit_glBlendColorOES(red, green, blue, alpha) { \
     mock_push(pack_glBlendColorOES(red, green, blue, alpha)); \
 }
@@ -342,12 +299,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBlendEquationOES(mode) ({ \
-    glBlendEquationOES_PACKED *packed_data = malloc(sizeof(glBlendEquationOES_PACKED)); \
-    packed_data->index = glBlendEquationOES_INDEX; \
-    packed_data->args.a1 = (GLenum)mode; \
-    packed_data; \
-})
 #define emit_glBlendEquationOES(mode) { \
     mock_push(pack_glBlendEquationOES(mode)); \
 }
@@ -386,13 +337,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBlendEquationSeparateOES(modeRGB, modeAlpha) ({ \
-    glBlendEquationSeparateOES_PACKED *packed_data = malloc(sizeof(glBlendEquationSeparateOES_PACKED)); \
-    packed_data->index = glBlendEquationSeparateOES_INDEX; \
-    packed_data->args.a1 = (GLenum)modeRGB; \
-    packed_data->args.a2 = (GLenum)modeAlpha; \
-    packed_data; \
-})
 #define emit_glBlendEquationSeparateOES(modeRGB, modeAlpha) { \
     mock_push(pack_glBlendEquationSeparateOES(modeRGB, modeAlpha)); \
 }
@@ -434,13 +378,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBlendFunc(sfactor, dfactor) ({ \
-    glBlendFunc_PACKED *packed_data = malloc(sizeof(glBlendFunc_PACKED)); \
-    packed_data->index = glBlendFunc_INDEX; \
-    packed_data->args.a1 = (GLenum)sfactor; \
-    packed_data->args.a2 = (GLenum)dfactor; \
-    packed_data; \
-})
 #define emit_glBlendFunc(sfactor, dfactor) { \
     mock_push(pack_glBlendFunc(sfactor, dfactor)); \
 }
@@ -482,15 +419,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha) ({ \
-    glBlendFuncSeparateOES_PACKED *packed_data = malloc(sizeof(glBlendFuncSeparateOES_PACKED)); \
-    packed_data->index = glBlendFuncSeparateOES_INDEX; \
-    packed_data->args.a1 = (GLenum)sfactorRGB; \
-    packed_data->args.a2 = (GLenum)dfactorRGB; \
-    packed_data->args.a3 = (GLenum)sfactorAlpha; \
-    packed_data->args.a4 = (GLenum)dfactorAlpha; \
-    packed_data; \
-})
 #define emit_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha) { \
     mock_push(pack_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha)); \
 }
@@ -538,15 +466,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBufferData(target, size, data, usage) ({ \
-    glBufferData_PACKED *packed_data = malloc(sizeof(glBufferData_PACKED)); \
-    packed_data->index = glBufferData_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLsizeiptr)size; \
-    packed_data->args.a3 = (GLvoid *)data; \
-    packed_data->args.a4 = (GLenum)usage; \
-    packed_data; \
-})
 #define emit_glBufferData(target, size, data, usage) { \
     mock_push(pack_glBufferData(target, size, data, usage)); \
 }
@@ -598,15 +517,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glBufferSubData(target, offset, size, data) ({ \
-    glBufferSubData_PACKED *packed_data = malloc(sizeof(glBufferSubData_PACKED)); \
-    packed_data->index = glBufferSubData_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLintptr)offset; \
-    packed_data->args.a3 = (GLsizeiptr)size; \
-    packed_data->args.a4 = (GLvoid *)data; \
-    packed_data; \
-})
 #define emit_glBufferSubData(target, offset, size, data) { \
     mock_push(pack_glBufferSubData(target, offset, size, data)); \
 }
@@ -658,12 +568,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClear(mask) ({ \
-    glClear_PACKED *packed_data = malloc(sizeof(glClear_PACKED)); \
-    packed_data->index = glClear_INDEX; \
-    packed_data->args.a1 = (GLbitfield)mask; \
-    packed_data; \
-})
 #define emit_glClear(mask) { \
     mock_push(pack_glClear(mask)); \
 }
@@ -702,15 +606,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClearColor(red, green, blue, alpha) ({ \
-    glClearColor_PACKED *packed_data = malloc(sizeof(glClearColor_PACKED)); \
-    packed_data->index = glClearColor_INDEX; \
-    packed_data->args.a1 = (GLclampf)red; \
-    packed_data->args.a2 = (GLclampf)green; \
-    packed_data->args.a3 = (GLclampf)blue; \
-    packed_data->args.a4 = (GLclampf)alpha; \
-    packed_data; \
-})
 #define emit_glClearColor(red, green, blue, alpha) { \
     mock_push(pack_glClearColor(red, green, blue, alpha)); \
 }
@@ -758,15 +653,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClearColorx(red, green, blue, alpha) ({ \
-    glClearColorx_PACKED *packed_data = malloc(sizeof(glClearColorx_PACKED)); \
-    packed_data->index = glClearColorx_INDEX; \
-    packed_data->args.a1 = (GLclampx)red; \
-    packed_data->args.a2 = (GLclampx)green; \
-    packed_data->args.a3 = (GLclampx)blue; \
-    packed_data->args.a4 = (GLclampx)alpha; \
-    packed_data; \
-})
 #define emit_glClearColorx(red, green, blue, alpha) { \
     mock_push(pack_glClearColorx(red, green, blue, alpha)); \
 }
@@ -814,12 +700,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClearDepthf(depth) ({ \
-    glClearDepthf_PACKED *packed_data = malloc(sizeof(glClearDepthf_PACKED)); \
-    packed_data->index = glClearDepthf_INDEX; \
-    packed_data->args.a1 = (GLclampf)depth; \
-    packed_data; \
-})
 #define emit_glClearDepthf(depth) { \
     mock_push(pack_glClearDepthf(depth)); \
 }
@@ -858,12 +738,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClearDepthx(depth) ({ \
-    glClearDepthx_PACKED *packed_data = malloc(sizeof(glClearDepthx_PACKED)); \
-    packed_data->index = glClearDepthx_INDEX; \
-    packed_data->args.a1 = (GLclampx)depth; \
-    packed_data; \
-})
 #define emit_glClearDepthx(depth) { \
     mock_push(pack_glClearDepthx(depth)); \
 }
@@ -902,12 +776,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClearStencil(s) ({ \
-    glClearStencil_PACKED *packed_data = malloc(sizeof(glClearStencil_PACKED)); \
-    packed_data->index = glClearStencil_INDEX; \
-    packed_data->args.a1 = (GLint)s; \
-    packed_data; \
-})
 #define emit_glClearStencil(s) { \
     mock_push(pack_glClearStencil(s)); \
 }
@@ -946,12 +814,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClientActiveTexture(texture) ({ \
-    glClientActiveTexture_PACKED *packed_data = malloc(sizeof(glClientActiveTexture_PACKED)); \
-    packed_data->index = glClientActiveTexture_INDEX; \
-    packed_data->args.a1 = (GLenum)texture; \
-    packed_data; \
-})
 #define emit_glClientActiveTexture(texture) { \
     mock_push(pack_glClientActiveTexture(texture)); \
 }
@@ -990,13 +852,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClipPlanef(plane, equation) ({ \
-    glClipPlanef_PACKED *packed_data = malloc(sizeof(glClipPlanef_PACKED)); \
-    packed_data->index = glClipPlanef_INDEX; \
-    packed_data->args.a1 = (GLenum)plane; \
-    packed_data->args.a2 = (GLfloat *)equation; \
-    packed_data; \
-})
 #define emit_glClipPlanef(plane, equation) { \
     mock_push(pack_glClipPlanef(plane, equation)); \
 }
@@ -1042,13 +897,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glClipPlanex(plane, equation) ({ \
-    glClipPlanex_PACKED *packed_data = malloc(sizeof(glClipPlanex_PACKED)); \
-    packed_data->index = glClipPlanex_INDEX; \
-    packed_data->args.a1 = (GLenum)plane; \
-    packed_data->args.a2 = (GLfixed *)equation; \
-    packed_data; \
-})
 #define emit_glClipPlanex(plane, equation) { \
     mock_push(pack_glClipPlanex(plane, equation)); \
 }
@@ -1094,15 +942,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glColor4f(red, green, blue, alpha) ({ \
-    glColor4f_PACKED *packed_data = malloc(sizeof(glColor4f_PACKED)); \
-    packed_data->index = glColor4f_INDEX; \
-    packed_data->args.a1 = (GLfloat)red; \
-    packed_data->args.a2 = (GLfloat)green; \
-    packed_data->args.a3 = (GLfloat)blue; \
-    packed_data->args.a4 = (GLfloat)alpha; \
-    packed_data; \
-})
 #define emit_glColor4f(red, green, blue, alpha) { \
     mock_push(pack_glColor4f(red, green, blue, alpha)); \
 }
@@ -1150,15 +989,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glColor4ub(red, green, blue, alpha) ({ \
-    glColor4ub_PACKED *packed_data = malloc(sizeof(glColor4ub_PACKED)); \
-    packed_data->index = glColor4ub_INDEX; \
-    packed_data->args.a1 = (GLubyte)red; \
-    packed_data->args.a2 = (GLubyte)green; \
-    packed_data->args.a3 = (GLubyte)blue; \
-    packed_data->args.a4 = (GLubyte)alpha; \
-    packed_data; \
-})
 #define emit_glColor4ub(red, green, blue, alpha) { \
     mock_push(pack_glColor4ub(red, green, blue, alpha)); \
 }
@@ -1206,15 +1036,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glColor4x(red, green, blue, alpha) ({ \
-    glColor4x_PACKED *packed_data = malloc(sizeof(glColor4x_PACKED)); \
-    packed_data->index = glColor4x_INDEX; \
-    packed_data->args.a1 = (GLfixed)red; \
-    packed_data->args.a2 = (GLfixed)green; \
-    packed_data->args.a3 = (GLfixed)blue; \
-    packed_data->args.a4 = (GLfixed)alpha; \
-    packed_data; \
-})
 #define emit_glColor4x(red, green, blue, alpha) { \
     mock_push(pack_glColor4x(red, green, blue, alpha)); \
 }
@@ -1262,15 +1083,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glColorMask(red, green, blue, alpha) ({ \
-    glColorMask_PACKED *packed_data = malloc(sizeof(glColorMask_PACKED)); \
-    packed_data->index = glColorMask_INDEX; \
-    packed_data->args.a1 = (GLboolean)red; \
-    packed_data->args.a2 = (GLboolean)green; \
-    packed_data->args.a3 = (GLboolean)blue; \
-    packed_data->args.a4 = (GLboolean)alpha; \
-    packed_data; \
-})
 #define emit_glColorMask(red, green, blue, alpha) { \
     mock_push(pack_glColorMask(red, green, blue, alpha)); \
 }
@@ -1318,15 +1130,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glColorPointer(size, type, stride, pointer) ({ \
-    glColorPointer_PACKED *packed_data = malloc(sizeof(glColorPointer_PACKED)); \
-    packed_data->index = glColorPointer_INDEX; \
-    packed_data->args.a1 = (GLint)size; \
-    packed_data->args.a2 = (GLenum)type; \
-    packed_data->args.a3 = (GLsizei)stride; \
-    packed_data->args.a4 = (GLvoid *)pointer; \
-    packed_data; \
-})
 #define emit_glColorPointer(size, type, stride, pointer) { \
     mock_push(pack_glColorPointer(size, type, stride, pointer)); \
 }
@@ -1378,19 +1181,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) ({ \
-    glCompressedTexImage2D_PACKED *packed_data = malloc(sizeof(glCompressedTexImage2D_PACKED)); \
-    packed_data->index = glCompressedTexImage2D_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLint)level; \
-    packed_data->args.a3 = (GLenum)internalformat; \
-    packed_data->args.a4 = (GLsizei)width; \
-    packed_data->args.a5 = (GLsizei)height; \
-    packed_data->args.a6 = (GLint)border; \
-    packed_data->args.a7 = (GLsizei)imageSize; \
-    packed_data->args.a8 = (GLvoid *)data; \
-    packed_data; \
-})
 #define emit_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) { \
     mock_push(pack_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data)); \
 }
@@ -1454,20 +1244,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) ({ \
-    glCompressedTexSubImage2D_PACKED *packed_data = malloc(sizeof(glCompressedTexSubImage2D_PACKED)); \
-    packed_data->index = glCompressedTexSubImage2D_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLint)level; \
-    packed_data->args.a3 = (GLint)xoffset; \
-    packed_data->args.a4 = (GLint)yoffset; \
-    packed_data->args.a5 = (GLsizei)width; \
-    packed_data->args.a6 = (GLsizei)height; \
-    packed_data->args.a7 = (GLenum)format; \
-    packed_data->args.a8 = (GLsizei)imageSize; \
-    packed_data->args.a9 = (GLvoid *)data; \
-    packed_data; \
-})
 #define emit_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) { \
     mock_push(pack_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data)); \
 }
@@ -1534,19 +1310,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) ({ \
-    glCopyTexImage2D_PACKED *packed_data = malloc(sizeof(glCopyTexImage2D_PACKED)); \
-    packed_data->index = glCopyTexImage2D_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLint)level; \
-    packed_data->args.a3 = (GLenum)internalformat; \
-    packed_data->args.a4 = (GLint)x; \
-    packed_data->args.a5 = (GLint)y; \
-    packed_data->args.a6 = (GLsizei)width; \
-    packed_data->args.a7 = (GLsizei)height; \
-    packed_data->args.a8 = (GLint)border; \
-    packed_data; \
-})
 #define emit_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) { \
     mock_push(pack_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border)); \
 }
@@ -1606,19 +1369,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) ({ \
-    glCopyTexSubImage2D_PACKED *packed_data = malloc(sizeof(glCopyTexSubImage2D_PACKED)); \
-    packed_data->index = glCopyTexSubImage2D_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLint)level; \
-    packed_data->args.a3 = (GLint)xoffset; \
-    packed_data->args.a4 = (GLint)yoffset; \
-    packed_data->args.a5 = (GLint)x; \
-    packed_data->args.a6 = (GLint)y; \
-    packed_data->args.a7 = (GLsizei)width; \
-    packed_data->args.a8 = (GLsizei)height; \
-    packed_data; \
-})
 #define emit_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) { \
     mock_push(pack_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height)); \
 }
@@ -1678,12 +1428,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glCullFace(mode) ({ \
-    glCullFace_PACKED *packed_data = malloc(sizeof(glCullFace_PACKED)); \
-    packed_data->index = glCullFace_INDEX; \
-    packed_data->args.a1 = (GLenum)mode; \
-    packed_data; \
-})
 #define emit_glCullFace(mode) { \
     mock_push(pack_glCullFace(mode)); \
 }
@@ -1722,13 +1466,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDeleteBuffers(n, buffers) ({ \
-    glDeleteBuffers_PACKED *packed_data = malloc(sizeof(glDeleteBuffers_PACKED)); \
-    packed_data->index = glDeleteBuffers_INDEX; \
-    packed_data->args.a1 = (GLsizei)n; \
-    packed_data->args.a2 = (GLuint *)buffers; \
-    packed_data; \
-})
 #define emit_glDeleteBuffers(n, buffers) { \
     mock_push(pack_glDeleteBuffers(n, buffers)); \
 }
@@ -1774,13 +1511,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDeleteTextures(n, textures) ({ \
-    glDeleteTextures_PACKED *packed_data = malloc(sizeof(glDeleteTextures_PACKED)); \
-    packed_data->index = glDeleteTextures_INDEX; \
-    packed_data->args.a1 = (GLsizei)n; \
-    packed_data->args.a2 = (GLuint *)textures; \
-    packed_data; \
-})
 #define emit_glDeleteTextures(n, textures) { \
     mock_push(pack_glDeleteTextures(n, textures)); \
 }
@@ -1826,12 +1556,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDepthFunc(func) ({ \
-    glDepthFunc_PACKED *packed_data = malloc(sizeof(glDepthFunc_PACKED)); \
-    packed_data->index = glDepthFunc_INDEX; \
-    packed_data->args.a1 = (GLenum)func; \
-    packed_data; \
-})
 #define emit_glDepthFunc(func) { \
     mock_push(pack_glDepthFunc(func)); \
 }
@@ -1870,12 +1594,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDepthMask(flag) ({ \
-    glDepthMask_PACKED *packed_data = malloc(sizeof(glDepthMask_PACKED)); \
-    packed_data->index = glDepthMask_INDEX; \
-    packed_data->args.a1 = (GLboolean)flag; \
-    packed_data; \
-})
 #define emit_glDepthMask(flag) { \
     mock_push(pack_glDepthMask(flag)); \
 }
@@ -1914,13 +1632,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDepthRangef(near, far) ({ \
-    glDepthRangef_PACKED *packed_data = malloc(sizeof(glDepthRangef_PACKED)); \
-    packed_data->index = glDepthRangef_INDEX; \
-    packed_data->args.a1 = (GLclampf)near; \
-    packed_data->args.a2 = (GLclampf)far; \
-    packed_data; \
-})
 #define emit_glDepthRangef(near, far) { \
     mock_push(pack_glDepthRangef(near, far)); \
 }
@@ -1962,13 +1673,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDepthRangex(near, far) ({ \
-    glDepthRangex_PACKED *packed_data = malloc(sizeof(glDepthRangex_PACKED)); \
-    packed_data->index = glDepthRangex_INDEX; \
-    packed_data->args.a1 = (GLclampx)near; \
-    packed_data->args.a2 = (GLclampx)far; \
-    packed_data; \
-})
 #define emit_glDepthRangex(near, far) { \
     mock_push(pack_glDepthRangex(near, far)); \
 }
@@ -2010,12 +1714,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDisable(cap) ({ \
-    glDisable_PACKED *packed_data = malloc(sizeof(glDisable_PACKED)); \
-    packed_data->index = glDisable_INDEX; \
-    packed_data->args.a1 = (GLenum)cap; \
-    packed_data; \
-})
 #define emit_glDisable(cap) { \
     mock_push(pack_glDisable(cap)); \
 }
@@ -2054,12 +1752,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDisableClientState(array) ({ \
-    glDisableClientState_PACKED *packed_data = malloc(sizeof(glDisableClientState_PACKED)); \
-    packed_data->index = glDisableClientState_INDEX; \
-    packed_data->args.a1 = (GLenum)array; \
-    packed_data; \
-})
 #define emit_glDisableClientState(array) { \
     mock_push(pack_glDisableClientState(array)); \
 }
@@ -2098,14 +1790,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDrawArrays(mode, first, count) ({ \
-    glDrawArrays_PACKED *packed_data = malloc(sizeof(glDrawArrays_PACKED)); \
-    packed_data->index = glDrawArrays_INDEX; \
-    packed_data->args.a1 = (GLenum)mode; \
-    packed_data->args.a2 = (GLint)first; \
-    packed_data->args.a3 = (GLsizei)count; \
-    packed_data; \
-})
 #define emit_glDrawArrays(mode, first, count) { \
     mock_push(pack_glDrawArrays(mode, first, count)); \
 }
@@ -2150,15 +1834,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glDrawElements(mode, count, type, indices) ({ \
-    glDrawElements_PACKED *packed_data = malloc(sizeof(glDrawElements_PACKED)); \
-    packed_data->index = glDrawElements_INDEX; \
-    packed_data->args.a1 = (GLenum)mode; \
-    packed_data->args.a2 = (GLsizei)count; \
-    packed_data->args.a3 = (GLenum)type; \
-    packed_data->args.a4 = (GLvoid *)indices; \
-    packed_data; \
-})
 #define emit_glDrawElements(mode, count, type, indices) { \
     mock_push(pack_glDrawElements(mode, count, type, indices)); \
 }
@@ -2210,12 +1885,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glEnable(cap) ({ \
-    glEnable_PACKED *packed_data = malloc(sizeof(glEnable_PACKED)); \
-    packed_data->index = glEnable_INDEX; \
-    packed_data->args.a1 = (GLenum)cap; \
-    packed_data; \
-})
 #define emit_glEnable(cap) { \
     mock_push(pack_glEnable(cap)); \
 }
@@ -2254,12 +1923,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glEnableClientState(array) ({ \
-    glEnableClientState_PACKED *packed_data = malloc(sizeof(glEnableClientState_PACKED)); \
-    packed_data->index = glEnableClientState_INDEX; \
-    packed_data->args.a1 = (GLenum)array; \
-    packed_data; \
-})
 #define emit_glEnableClientState(array) { \
     mock_push(pack_glEnableClientState(array)); \
 }
@@ -2298,11 +1961,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFinish() ({ \
-    glFinish_PACKED *packed_data = malloc(sizeof(glFinish_PACKED)); \
-    packed_data->index = glFinish_INDEX; \
-    packed_data; \
-})
 #define emit_glFinish() { \
     mock_push(pack_glFinish()); \
 }
@@ -2338,11 +1996,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFlush() ({ \
-    glFlush_PACKED *packed_data = malloc(sizeof(glFlush_PACKED)); \
-    packed_data->index = glFlush_INDEX; \
-    packed_data; \
-})
 #define emit_glFlush() { \
     mock_push(pack_glFlush()); \
 }
@@ -2378,13 +2031,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFogf(pname, param) ({ \
-    glFogf_PACKED *packed_data = malloc(sizeof(glFogf_PACKED)); \
-    packed_data->index = glFogf_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfloat)param; \
-    packed_data; \
-})
 #define emit_glFogf(pname, param) { \
     mock_push(pack_glFogf(pname, param)); \
 }
@@ -2426,13 +2072,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFogfv(pname, params) ({ \
-    glFogfv_PACKED *packed_data = malloc(sizeof(glFogfv_PACKED)); \
-    packed_data->index = glFogfv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glFogfv(pname, params) { \
     mock_push(pack_glFogfv(pname, params)); \
 }
@@ -2478,13 +2117,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFogx(pname, param) ({ \
-    glFogx_PACKED *packed_data = malloc(sizeof(glFogx_PACKED)); \
-    packed_data->index = glFogx_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfixed)param; \
-    packed_data; \
-})
 #define emit_glFogx(pname, param) { \
     mock_push(pack_glFogx(pname, param)); \
 }
@@ -2526,13 +2158,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFogxv(pname, params) ({ \
-    glFogxv_PACKED *packed_data = malloc(sizeof(glFogxv_PACKED)); \
-    packed_data->index = glFogxv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glFogxv(pname, params) { \
     mock_push(pack_glFogxv(pname, params)); \
 }
@@ -2578,12 +2203,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFrontFace(mode) ({ \
-    glFrontFace_PACKED *packed_data = malloc(sizeof(glFrontFace_PACKED)); \
-    packed_data->index = glFrontFace_INDEX; \
-    packed_data->args.a1 = (GLenum)mode; \
-    packed_data; \
-})
 #define emit_glFrontFace(mode) { \
     mock_push(pack_glFrontFace(mode)); \
 }
@@ -2622,17 +2241,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFrustumf(left, right, bottom, top, near, far) ({ \
-    glFrustumf_PACKED *packed_data = malloc(sizeof(glFrustumf_PACKED)); \
-    packed_data->index = glFrustumf_INDEX; \
-    packed_data->args.a1 = (GLfloat)left; \
-    packed_data->args.a2 = (GLfloat)right; \
-    packed_data->args.a3 = (GLfloat)bottom; \
-    packed_data->args.a4 = (GLfloat)top; \
-    packed_data->args.a5 = (GLfloat)near; \
-    packed_data->args.a6 = (GLfloat)far; \
-    packed_data; \
-})
 #define emit_glFrustumf(left, right, bottom, top, near, far) { \
     mock_push(pack_glFrustumf(left, right, bottom, top, near, far)); \
 }
@@ -2686,17 +2294,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glFrustumx(left, right, bottom, top, near, far) ({ \
-    glFrustumx_PACKED *packed_data = malloc(sizeof(glFrustumx_PACKED)); \
-    packed_data->index = glFrustumx_INDEX; \
-    packed_data->args.a1 = (GLfixed)left; \
-    packed_data->args.a2 = (GLfixed)right; \
-    packed_data->args.a3 = (GLfixed)bottom; \
-    packed_data->args.a4 = (GLfixed)top; \
-    packed_data->args.a5 = (GLfixed)near; \
-    packed_data->args.a6 = (GLfixed)far; \
-    packed_data; \
-})
 #define emit_glFrustumx(left, right, bottom, top, near, far) { \
     mock_push(pack_glFrustumx(left, right, bottom, top, near, far)); \
 }
@@ -2750,13 +2347,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGenBuffers(n, buffers) ({ \
-    glGenBuffers_PACKED *packed_data = malloc(sizeof(glGenBuffers_PACKED)); \
-    packed_data->index = glGenBuffers_INDEX; \
-    packed_data->args.a1 = (GLsizei)n; \
-    packed_data->args.a2 = (GLuint *)buffers; \
-    packed_data; \
-})
 #define emit_glGenBuffers(n, buffers) { \
     mock_push(pack_glGenBuffers(n, buffers)); \
 }
@@ -2802,13 +2392,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGenTextures(n, textures) ({ \
-    glGenTextures_PACKED *packed_data = malloc(sizeof(glGenTextures_PACKED)); \
-    packed_data->index = glGenTextures_INDEX; \
-    packed_data->args.a1 = (GLsizei)n; \
-    packed_data->args.a2 = (GLuint *)textures; \
-    packed_data; \
-})
 #define emit_glGenTextures(n, textures) { \
     mock_push(pack_glGenTextures(n, textures)); \
 }
@@ -2854,13 +2437,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetBooleanv(pname, params) ({ \
-    glGetBooleanv_PACKED *packed_data = malloc(sizeof(glGetBooleanv_PACKED)); \
-    packed_data->index = glGetBooleanv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLboolean *)params; \
-    packed_data; \
-})
 #define emit_glGetBooleanv(pname, params) { \
     mock_push(pack_glGetBooleanv(pname, params)); \
 }
@@ -2906,14 +2482,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetBufferParameteriv(target, pname, params) ({ \
-    glGetBufferParameteriv_PACKED *packed_data = malloc(sizeof(glGetBufferParameteriv_PACKED)); \
-    packed_data->index = glGetBufferParameteriv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLint *)params; \
-    packed_data; \
-})
 #define emit_glGetBufferParameteriv(target, pname, params) { \
     mock_push(pack_glGetBufferParameteriv(target, pname, params)); \
 }
@@ -2962,13 +2530,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetClipPlanef(plane, equation) ({ \
-    glGetClipPlanef_PACKED *packed_data = malloc(sizeof(glGetClipPlanef_PACKED)); \
-    packed_data->index = glGetClipPlanef_INDEX; \
-    packed_data->args.a1 = (GLenum)plane; \
-    packed_data->args.a2 = (GLfloat *)equation; \
-    packed_data; \
-})
 #define emit_glGetClipPlanef(plane, equation) { \
     mock_push(pack_glGetClipPlanef(plane, equation)); \
 }
@@ -3014,13 +2575,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetClipPlanex(plane, equation) ({ \
-    glGetClipPlanex_PACKED *packed_data = malloc(sizeof(glGetClipPlanex_PACKED)); \
-    packed_data->index = glGetClipPlanex_INDEX; \
-    packed_data->args.a1 = (GLenum)plane; \
-    packed_data->args.a2 = (GLfixed *)equation; \
-    packed_data; \
-})
 #define emit_glGetClipPlanex(plane, equation) { \
     mock_push(pack_glGetClipPlanex(plane, equation)); \
 }
@@ -3066,11 +2620,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetError() ({ \
-    glGetError_PACKED *packed_data = malloc(sizeof(glGetError_PACKED)); \
-    packed_data->index = glGetError_INDEX; \
-    packed_data; \
-})
 #define emit_glGetError() { \
     mock_push(pack_glGetError()); \
 }
@@ -3106,13 +2655,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetFixedv(pname, params) ({ \
-    glGetFixedv_PACKED *packed_data = malloc(sizeof(glGetFixedv_PACKED)); \
-    packed_data->index = glGetFixedv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glGetFixedv(pname, params) { \
     mock_push(pack_glGetFixedv(pname, params)); \
 }
@@ -3158,13 +2700,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetFloatv(pname, params) ({ \
-    glGetFloatv_PACKED *packed_data = malloc(sizeof(glGetFloatv_PACKED)); \
-    packed_data->index = glGetFloatv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glGetFloatv(pname, params) { \
     mock_push(pack_glGetFloatv(pname, params)); \
 }
@@ -3210,13 +2745,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetIntegerv(pname, params) ({ \
-    glGetIntegerv_PACKED *packed_data = malloc(sizeof(glGetIntegerv_PACKED)); \
-    packed_data->index = glGetIntegerv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLint *)params; \
-    packed_data; \
-})
 #define emit_glGetIntegerv(pname, params) { \
     mock_push(pack_glGetIntegerv(pname, params)); \
 }
@@ -3262,14 +2790,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetLightfv(light, pname, params) ({ \
-    glGetLightfv_PACKED *packed_data = malloc(sizeof(glGetLightfv_PACKED)); \
-    packed_data->index = glGetLightfv_INDEX; \
-    packed_data->args.a1 = (GLenum)light; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glGetLightfv(light, pname, params) { \
     mock_push(pack_glGetLightfv(light, pname, params)); \
 }
@@ -3318,14 +2838,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetLightxv(light, pname, params) ({ \
-    glGetLightxv_PACKED *packed_data = malloc(sizeof(glGetLightxv_PACKED)); \
-    packed_data->index = glGetLightxv_INDEX; \
-    packed_data->args.a1 = (GLenum)light; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glGetLightxv(light, pname, params) { \
     mock_push(pack_glGetLightxv(light, pname, params)); \
 }
@@ -3374,14 +2886,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetMaterialfv(face, pname, params) ({ \
-    glGetMaterialfv_PACKED *packed_data = malloc(sizeof(glGetMaterialfv_PACKED)); \
-    packed_data->index = glGetMaterialfv_INDEX; \
-    packed_data->args.a1 = (GLenum)face; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glGetMaterialfv(face, pname, params) { \
     mock_push(pack_glGetMaterialfv(face, pname, params)); \
 }
@@ -3430,14 +2934,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetMaterialxv(face, pname, params) ({ \
-    glGetMaterialxv_PACKED *packed_data = malloc(sizeof(glGetMaterialxv_PACKED)); \
-    packed_data->index = glGetMaterialxv_INDEX; \
-    packed_data->args.a1 = (GLenum)face; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glGetMaterialxv(face, pname, params) { \
     mock_push(pack_glGetMaterialxv(face, pname, params)); \
 }
@@ -3486,13 +2982,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetPointerv(pname, params) ({ \
-    glGetPointerv_PACKED *packed_data = malloc(sizeof(glGetPointerv_PACKED)); \
-    packed_data->index = glGetPointerv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLvoid **)params; \
-    packed_data; \
-})
 #define emit_glGetPointerv(pname, params) { \
     mock_push(pack_glGetPointerv(pname, params)); \
 }
@@ -3538,12 +3027,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetString(name) ({ \
-    glGetString_PACKED *packed_data = malloc(sizeof(glGetString_PACKED)); \
-    packed_data->index = glGetString_INDEX; \
-    packed_data->args.a1 = (GLenum)name; \
-    packed_data; \
-})
 #define emit_glGetString(name) { \
     mock_push(pack_glGetString(name)); \
 }
@@ -3582,14 +3065,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetTexEnvfv(target, pname, params) ({ \
-    glGetTexEnvfv_PACKED *packed_data = malloc(sizeof(glGetTexEnvfv_PACKED)); \
-    packed_data->index = glGetTexEnvfv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glGetTexEnvfv(target, pname, params) { \
     mock_push(pack_glGetTexEnvfv(target, pname, params)); \
 }
@@ -3638,14 +3113,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetTexEnviv(target, pname, params) ({ \
-    glGetTexEnviv_PACKED *packed_data = malloc(sizeof(glGetTexEnviv_PACKED)); \
-    packed_data->index = glGetTexEnviv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLint *)params; \
-    packed_data; \
-})
 #define emit_glGetTexEnviv(target, pname, params) { \
     mock_push(pack_glGetTexEnviv(target, pname, params)); \
 }
@@ -3694,14 +3161,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetTexEnvxv(target, pname, params) ({ \
-    glGetTexEnvxv_PACKED *packed_data = malloc(sizeof(glGetTexEnvxv_PACKED)); \
-    packed_data->index = glGetTexEnvxv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glGetTexEnvxv(target, pname, params) { \
     mock_push(pack_glGetTexEnvxv(target, pname, params)); \
 }
@@ -3750,14 +3209,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetTexParameterfv(target, pname, params) ({ \
-    glGetTexParameterfv_PACKED *packed_data = malloc(sizeof(glGetTexParameterfv_PACKED)); \
-    packed_data->index = glGetTexParameterfv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glGetTexParameterfv(target, pname, params) { \
     mock_push(pack_glGetTexParameterfv(target, pname, params)); \
 }
@@ -3806,14 +3257,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetTexParameteriv(target, pname, params) ({ \
-    glGetTexParameteriv_PACKED *packed_data = malloc(sizeof(glGetTexParameteriv_PACKED)); \
-    packed_data->index = glGetTexParameteriv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLint *)params; \
-    packed_data; \
-})
 #define emit_glGetTexParameteriv(target, pname, params) { \
     mock_push(pack_glGetTexParameteriv(target, pname, params)); \
 }
@@ -3862,14 +3305,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glGetTexParameterxv(target, pname, params) ({ \
-    glGetTexParameterxv_PACKED *packed_data = malloc(sizeof(glGetTexParameterxv_PACKED)); \
-    packed_data->index = glGetTexParameterxv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glGetTexParameterxv(target, pname, params) { \
     mock_push(pack_glGetTexParameterxv(target, pname, params)); \
 }
@@ -3918,13 +3353,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glHint(target, mode) ({ \
-    glHint_PACKED *packed_data = malloc(sizeof(glHint_PACKED)); \
-    packed_data->index = glHint_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)mode; \
-    packed_data; \
-})
 #define emit_glHint(target, mode) { \
     mock_push(pack_glHint(target, mode)); \
 }
@@ -3966,12 +3394,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glIsBuffer(buffer) ({ \
-    glIsBuffer_PACKED *packed_data = malloc(sizeof(glIsBuffer_PACKED)); \
-    packed_data->index = glIsBuffer_INDEX; \
-    packed_data->args.a1 = (GLuint)buffer; \
-    packed_data; \
-})
 #define emit_glIsBuffer(buffer) { \
     mock_push(pack_glIsBuffer(buffer)); \
 }
@@ -4010,12 +3432,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glIsEnabled(cap) ({ \
-    glIsEnabled_PACKED *packed_data = malloc(sizeof(glIsEnabled_PACKED)); \
-    packed_data->index = glIsEnabled_INDEX; \
-    packed_data->args.a1 = (GLenum)cap; \
-    packed_data; \
-})
 #define emit_glIsEnabled(cap) { \
     mock_push(pack_glIsEnabled(cap)); \
 }
@@ -4054,12 +3470,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glIsTexture(texture) ({ \
-    glIsTexture_PACKED *packed_data = malloc(sizeof(glIsTexture_PACKED)); \
-    packed_data->index = glIsTexture_INDEX; \
-    packed_data->args.a1 = (GLuint)texture; \
-    packed_data; \
-})
 #define emit_glIsTexture(texture) { \
     mock_push(pack_glIsTexture(texture)); \
 }
@@ -4098,13 +3508,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightModelf(pname, param) ({ \
-    glLightModelf_PACKED *packed_data = malloc(sizeof(glLightModelf_PACKED)); \
-    packed_data->index = glLightModelf_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfloat)param; \
-    packed_data; \
-})
 #define emit_glLightModelf(pname, param) { \
     mock_push(pack_glLightModelf(pname, param)); \
 }
@@ -4146,13 +3549,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightModelfv(pname, params) ({ \
-    glLightModelfv_PACKED *packed_data = malloc(sizeof(glLightModelfv_PACKED)); \
-    packed_data->index = glLightModelfv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glLightModelfv(pname, params) { \
     mock_push(pack_glLightModelfv(pname, params)); \
 }
@@ -4198,13 +3594,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightModelx(pname, param) ({ \
-    glLightModelx_PACKED *packed_data = malloc(sizeof(glLightModelx_PACKED)); \
-    packed_data->index = glLightModelx_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfixed)param; \
-    packed_data; \
-})
 #define emit_glLightModelx(pname, param) { \
     mock_push(pack_glLightModelx(pname, param)); \
 }
@@ -4246,13 +3635,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightModelxv(pname, params) ({ \
-    glLightModelxv_PACKED *packed_data = malloc(sizeof(glLightModelxv_PACKED)); \
-    packed_data->index = glLightModelxv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glLightModelxv(pname, params) { \
     mock_push(pack_glLightModelxv(pname, params)); \
 }
@@ -4298,14 +3680,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightf(light, pname, param) ({ \
-    glLightf_PACKED *packed_data = malloc(sizeof(glLightf_PACKED)); \
-    packed_data->index = glLightf_INDEX; \
-    packed_data->args.a1 = (GLenum)light; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat)param; \
-    packed_data; \
-})
 #define emit_glLightf(light, pname, param) { \
     mock_push(pack_glLightf(light, pname, param)); \
 }
@@ -4350,14 +3724,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightfv(light, pname, params) ({ \
-    glLightfv_PACKED *packed_data = malloc(sizeof(glLightfv_PACKED)); \
-    packed_data->index = glLightfv_INDEX; \
-    packed_data->args.a1 = (GLenum)light; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glLightfv(light, pname, params) { \
     mock_push(pack_glLightfv(light, pname, params)); \
 }
@@ -4406,14 +3772,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightx(light, pname, param) ({ \
-    glLightx_PACKED *packed_data = malloc(sizeof(glLightx_PACKED)); \
-    packed_data->index = glLightx_INDEX; \
-    packed_data->args.a1 = (GLenum)light; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed)param; \
-    packed_data; \
-})
 #define emit_glLightx(light, pname, param) { \
     mock_push(pack_glLightx(light, pname, param)); \
 }
@@ -4458,14 +3816,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLightxv(light, pname, params) ({ \
-    glLightxv_PACKED *packed_data = malloc(sizeof(glLightxv_PACKED)); \
-    packed_data->index = glLightxv_INDEX; \
-    packed_data->args.a1 = (GLenum)light; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glLightxv(light, pname, params) { \
     mock_push(pack_glLightxv(light, pname, params)); \
 }
@@ -4514,12 +3864,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLineWidth(width) ({ \
-    glLineWidth_PACKED *packed_data = malloc(sizeof(glLineWidth_PACKED)); \
-    packed_data->index = glLineWidth_INDEX; \
-    packed_data->args.a1 = (GLfloat)width; \
-    packed_data; \
-})
 #define emit_glLineWidth(width) { \
     mock_push(pack_glLineWidth(width)); \
 }
@@ -4558,12 +3902,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLineWidthx(width) ({ \
-    glLineWidthx_PACKED *packed_data = malloc(sizeof(glLineWidthx_PACKED)); \
-    packed_data->index = glLineWidthx_INDEX; \
-    packed_data->args.a1 = (GLfixed)width; \
-    packed_data; \
-})
 #define emit_glLineWidthx(width) { \
     mock_push(pack_glLineWidthx(width)); \
 }
@@ -4602,11 +3940,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLoadIdentity() ({ \
-    glLoadIdentity_PACKED *packed_data = malloc(sizeof(glLoadIdentity_PACKED)); \
-    packed_data->index = glLoadIdentity_INDEX; \
-    packed_data; \
-})
 #define emit_glLoadIdentity() { \
     mock_push(pack_glLoadIdentity()); \
 }
@@ -4642,12 +3975,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLoadMatrixf(m) ({ \
-    glLoadMatrixf_PACKED *packed_data = malloc(sizeof(glLoadMatrixf_PACKED)); \
-    packed_data->index = glLoadMatrixf_INDEX; \
-    packed_data->args.a1 = (GLfloat *)m; \
-    packed_data; \
-})
 #define emit_glLoadMatrixf(m) { \
     mock_push(pack_glLoadMatrixf(m)); \
 }
@@ -4690,12 +4017,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLoadMatrixx(m) ({ \
-    glLoadMatrixx_PACKED *packed_data = malloc(sizeof(glLoadMatrixx_PACKED)); \
-    packed_data->index = glLoadMatrixx_INDEX; \
-    packed_data->args.a1 = (GLfixed *)m; \
-    packed_data; \
-})
 #define emit_glLoadMatrixx(m) { \
     mock_push(pack_glLoadMatrixx(m)); \
 }
@@ -4738,12 +4059,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glLogicOp(opcode) ({ \
-    glLogicOp_PACKED *packed_data = malloc(sizeof(glLogicOp_PACKED)); \
-    packed_data->index = glLogicOp_INDEX; \
-    packed_data->args.a1 = (GLenum)opcode; \
-    packed_data; \
-})
 #define emit_glLogicOp(opcode) { \
     mock_push(pack_glLogicOp(opcode)); \
 }
@@ -4782,14 +4097,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMaterialf(face, pname, param) ({ \
-    glMaterialf_PACKED *packed_data = malloc(sizeof(glMaterialf_PACKED)); \
-    packed_data->index = glMaterialf_INDEX; \
-    packed_data->args.a1 = (GLenum)face; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat)param; \
-    packed_data; \
-})
 #define emit_glMaterialf(face, pname, param) { \
     mock_push(pack_glMaterialf(face, pname, param)); \
 }
@@ -4834,14 +4141,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMaterialfv(face, pname, params) ({ \
-    glMaterialfv_PACKED *packed_data = malloc(sizeof(glMaterialfv_PACKED)); \
-    packed_data->index = glMaterialfv_INDEX; \
-    packed_data->args.a1 = (GLenum)face; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glMaterialfv(face, pname, params) { \
     mock_push(pack_glMaterialfv(face, pname, params)); \
 }
@@ -4890,14 +4189,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMaterialx(face, pname, param) ({ \
-    glMaterialx_PACKED *packed_data = malloc(sizeof(glMaterialx_PACKED)); \
-    packed_data->index = glMaterialx_INDEX; \
-    packed_data->args.a1 = (GLenum)face; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed)param; \
-    packed_data; \
-})
 #define emit_glMaterialx(face, pname, param) { \
     mock_push(pack_glMaterialx(face, pname, param)); \
 }
@@ -4942,14 +4233,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMaterialxv(face, pname, params) ({ \
-    glMaterialxv_PACKED *packed_data = malloc(sizeof(glMaterialxv_PACKED)); \
-    packed_data->index = glMaterialxv_INDEX; \
-    packed_data->args.a1 = (GLenum)face; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glMaterialxv(face, pname, params) { \
     mock_push(pack_glMaterialxv(face, pname, params)); \
 }
@@ -4998,12 +4281,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMatrixMode(mode) ({ \
-    glMatrixMode_PACKED *packed_data = malloc(sizeof(glMatrixMode_PACKED)); \
-    packed_data->index = glMatrixMode_INDEX; \
-    packed_data->args.a1 = (GLenum)mode; \
-    packed_data; \
-})
 #define emit_glMatrixMode(mode) { \
     mock_push(pack_glMatrixMode(mode)); \
 }
@@ -5042,12 +4319,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMultMatrixf(m) ({ \
-    glMultMatrixf_PACKED *packed_data = malloc(sizeof(glMultMatrixf_PACKED)); \
-    packed_data->index = glMultMatrixf_INDEX; \
-    packed_data->args.a1 = (GLfloat *)m; \
-    packed_data; \
-})
 #define emit_glMultMatrixf(m) { \
     mock_push(pack_glMultMatrixf(m)); \
 }
@@ -5090,12 +4361,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMultMatrixx(m) ({ \
-    glMultMatrixx_PACKED *packed_data = malloc(sizeof(glMultMatrixx_PACKED)); \
-    packed_data->index = glMultMatrixx_INDEX; \
-    packed_data->args.a1 = (GLfixed *)m; \
-    packed_data; \
-})
 #define emit_glMultMatrixx(m) { \
     mock_push(pack_glMultMatrixx(m)); \
 }
@@ -5138,16 +4403,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMultiTexCoord4f(target, s, t, r, q) ({ \
-    glMultiTexCoord4f_PACKED *packed_data = malloc(sizeof(glMultiTexCoord4f_PACKED)); \
-    packed_data->index = glMultiTexCoord4f_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLfloat)s; \
-    packed_data->args.a3 = (GLfloat)t; \
-    packed_data->args.a4 = (GLfloat)r; \
-    packed_data->args.a5 = (GLfloat)q; \
-    packed_data; \
-})
 #define emit_glMultiTexCoord4f(target, s, t, r, q) { \
     mock_push(pack_glMultiTexCoord4f(target, s, t, r, q)); \
 }
@@ -5198,16 +4453,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glMultiTexCoord4x(target, s, t, r, q) ({ \
-    glMultiTexCoord4x_PACKED *packed_data = malloc(sizeof(glMultiTexCoord4x_PACKED)); \
-    packed_data->index = glMultiTexCoord4x_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLfixed)s; \
-    packed_data->args.a3 = (GLfixed)t; \
-    packed_data->args.a4 = (GLfixed)r; \
-    packed_data->args.a5 = (GLfixed)q; \
-    packed_data; \
-})
 #define emit_glMultiTexCoord4x(target, s, t, r, q) { \
     mock_push(pack_glMultiTexCoord4x(target, s, t, r, q)); \
 }
@@ -5258,14 +4503,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glNormal3f(nx, ny, nz) ({ \
-    glNormal3f_PACKED *packed_data = malloc(sizeof(glNormal3f_PACKED)); \
-    packed_data->index = glNormal3f_INDEX; \
-    packed_data->args.a1 = (GLfloat)nx; \
-    packed_data->args.a2 = (GLfloat)ny; \
-    packed_data->args.a3 = (GLfloat)nz; \
-    packed_data; \
-})
 #define emit_glNormal3f(nx, ny, nz) { \
     mock_push(pack_glNormal3f(nx, ny, nz)); \
 }
@@ -5310,14 +4547,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glNormal3x(nx, ny, nz) ({ \
-    glNormal3x_PACKED *packed_data = malloc(sizeof(glNormal3x_PACKED)); \
-    packed_data->index = glNormal3x_INDEX; \
-    packed_data->args.a1 = (GLfixed)nx; \
-    packed_data->args.a2 = (GLfixed)ny; \
-    packed_data->args.a3 = (GLfixed)nz; \
-    packed_data; \
-})
 #define emit_glNormal3x(nx, ny, nz) { \
     mock_push(pack_glNormal3x(nx, ny, nz)); \
 }
@@ -5362,14 +4591,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glNormalPointer(type, stride, pointer) ({ \
-    glNormalPointer_PACKED *packed_data = malloc(sizeof(glNormalPointer_PACKED)); \
-    packed_data->index = glNormalPointer_INDEX; \
-    packed_data->args.a1 = (GLenum)type; \
-    packed_data->args.a2 = (GLsizei)stride; \
-    packed_data->args.a3 = (GLvoid *)pointer; \
-    packed_data; \
-})
 #define emit_glNormalPointer(type, stride, pointer) { \
     mock_push(pack_glNormalPointer(type, stride, pointer)); \
 }
@@ -5418,17 +4639,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glOrthof(left, right, bottom, top, near, far) ({ \
-    glOrthof_PACKED *packed_data = malloc(sizeof(glOrthof_PACKED)); \
-    packed_data->index = glOrthof_INDEX; \
-    packed_data->args.a1 = (GLfloat)left; \
-    packed_data->args.a2 = (GLfloat)right; \
-    packed_data->args.a3 = (GLfloat)bottom; \
-    packed_data->args.a4 = (GLfloat)top; \
-    packed_data->args.a5 = (GLfloat)near; \
-    packed_data->args.a6 = (GLfloat)far; \
-    packed_data; \
-})
 #define emit_glOrthof(left, right, bottom, top, near, far) { \
     mock_push(pack_glOrthof(left, right, bottom, top, near, far)); \
 }
@@ -5482,17 +4692,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glOrthox(left, right, bottom, top, near, far) ({ \
-    glOrthox_PACKED *packed_data = malloc(sizeof(glOrthox_PACKED)); \
-    packed_data->index = glOrthox_INDEX; \
-    packed_data->args.a1 = (GLfixed)left; \
-    packed_data->args.a2 = (GLfixed)right; \
-    packed_data->args.a3 = (GLfixed)bottom; \
-    packed_data->args.a4 = (GLfixed)top; \
-    packed_data->args.a5 = (GLfixed)near; \
-    packed_data->args.a6 = (GLfixed)far; \
-    packed_data; \
-})
 #define emit_glOrthox(left, right, bottom, top, near, far) { \
     mock_push(pack_glOrthox(left, right, bottom, top, near, far)); \
 }
@@ -5546,13 +4745,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPixelStorei(pname, param) ({ \
-    glPixelStorei_PACKED *packed_data = malloc(sizeof(glPixelStorei_PACKED)); \
-    packed_data->index = glPixelStorei_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLint)param; \
-    packed_data; \
-})
 #define emit_glPixelStorei(pname, param) { \
     mock_push(pack_glPixelStorei(pname, param)); \
 }
@@ -5594,13 +4786,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPointParameterf(pname, param) ({ \
-    glPointParameterf_PACKED *packed_data = malloc(sizeof(glPointParameterf_PACKED)); \
-    packed_data->index = glPointParameterf_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfloat)param; \
-    packed_data; \
-})
 #define emit_glPointParameterf(pname, param) { \
     mock_push(pack_glPointParameterf(pname, param)); \
 }
@@ -5642,13 +4827,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPointParameterfv(pname, params) ({ \
-    glPointParameterfv_PACKED *packed_data = malloc(sizeof(glPointParameterfv_PACKED)); \
-    packed_data->index = glPointParameterfv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glPointParameterfv(pname, params) { \
     mock_push(pack_glPointParameterfv(pname, params)); \
 }
@@ -5694,13 +4872,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPointParameterx(pname, param) ({ \
-    glPointParameterx_PACKED *packed_data = malloc(sizeof(glPointParameterx_PACKED)); \
-    packed_data->index = glPointParameterx_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfixed)param; \
-    packed_data; \
-})
 #define emit_glPointParameterx(pname, param) { \
     mock_push(pack_glPointParameterx(pname, param)); \
 }
@@ -5742,13 +4913,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPointParameterxv(pname, params) ({ \
-    glPointParameterxv_PACKED *packed_data = malloc(sizeof(glPointParameterxv_PACKED)); \
-    packed_data->index = glPointParameterxv_INDEX; \
-    packed_data->args.a1 = (GLenum)pname; \
-    packed_data->args.a2 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glPointParameterxv(pname, params) { \
     mock_push(pack_glPointParameterxv(pname, params)); \
 }
@@ -5794,12 +4958,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPointSize(size) ({ \
-    glPointSize_PACKED *packed_data = malloc(sizeof(glPointSize_PACKED)); \
-    packed_data->index = glPointSize_INDEX; \
-    packed_data->args.a1 = (GLfloat)size; \
-    packed_data; \
-})
 #define emit_glPointSize(size) { \
     mock_push(pack_glPointSize(size)); \
 }
@@ -5838,14 +4996,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPointSizePointerOES(type, stride, pointer) ({ \
-    glPointSizePointerOES_PACKED *packed_data = malloc(sizeof(glPointSizePointerOES_PACKED)); \
-    packed_data->index = glPointSizePointerOES_INDEX; \
-    packed_data->args.a1 = (GLenum)type; \
-    packed_data->args.a2 = (GLsizei)stride; \
-    packed_data->args.a3 = (GLvoid *)pointer; \
-    packed_data; \
-})
 #define emit_glPointSizePointerOES(type, stride, pointer) { \
     mock_push(pack_glPointSizePointerOES(type, stride, pointer)); \
 }
@@ -5894,12 +5044,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPointSizex(size) ({ \
-    glPointSizex_PACKED *packed_data = malloc(sizeof(glPointSizex_PACKED)); \
-    packed_data->index = glPointSizex_INDEX; \
-    packed_data->args.a1 = (GLfixed)size; \
-    packed_data; \
-})
 #define emit_glPointSizex(size) { \
     mock_push(pack_glPointSizex(size)); \
 }
@@ -5938,13 +5082,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPolygonOffset(factor, units) ({ \
-    glPolygonOffset_PACKED *packed_data = malloc(sizeof(glPolygonOffset_PACKED)); \
-    packed_data->index = glPolygonOffset_INDEX; \
-    packed_data->args.a1 = (GLfloat)factor; \
-    packed_data->args.a2 = (GLfloat)units; \
-    packed_data; \
-})
 #define emit_glPolygonOffset(factor, units) { \
     mock_push(pack_glPolygonOffset(factor, units)); \
 }
@@ -5986,13 +5123,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPolygonOffsetx(factor, units) ({ \
-    glPolygonOffsetx_PACKED *packed_data = malloc(sizeof(glPolygonOffsetx_PACKED)); \
-    packed_data->index = glPolygonOffsetx_INDEX; \
-    packed_data->args.a1 = (GLfixed)factor; \
-    packed_data->args.a2 = (GLfixed)units; \
-    packed_data; \
-})
 #define emit_glPolygonOffsetx(factor, units) { \
     mock_push(pack_glPolygonOffsetx(factor, units)); \
 }
@@ -6034,11 +5164,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPopMatrix() ({ \
-    glPopMatrix_PACKED *packed_data = malloc(sizeof(glPopMatrix_PACKED)); \
-    packed_data->index = glPopMatrix_INDEX; \
-    packed_data; \
-})
 #define emit_glPopMatrix() { \
     mock_push(pack_glPopMatrix()); \
 }
@@ -6074,11 +5199,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glPushMatrix() ({ \
-    glPushMatrix_PACKED *packed_data = malloc(sizeof(glPushMatrix_PACKED)); \
-    packed_data->index = glPushMatrix_INDEX; \
-    packed_data; \
-})
 #define emit_glPushMatrix() { \
     mock_push(pack_glPushMatrix()); \
 }
@@ -6114,18 +5234,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glReadPixels(x, y, width, height, format, type, pixels) ({ \
-    glReadPixels_PACKED *packed_data = malloc(sizeof(glReadPixels_PACKED)); \
-    packed_data->index = glReadPixels_INDEX; \
-    packed_data->args.a1 = (GLint)x; \
-    packed_data->args.a2 = (GLint)y; \
-    packed_data->args.a3 = (GLsizei)width; \
-    packed_data->args.a4 = (GLsizei)height; \
-    packed_data->args.a5 = (GLenum)format; \
-    packed_data->args.a6 = (GLenum)type; \
-    packed_data->args.a7 = (GLvoid *)pixels; \
-    packed_data; \
-})
 #define emit_glReadPixels(x, y, width, height, format, type, pixels) { \
     mock_push(pack_glReadPixels(x, y, width, height, format, type, pixels)); \
 }
@@ -6186,15 +5294,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glRotatef(angle, x, y, z) ({ \
-    glRotatef_PACKED *packed_data = malloc(sizeof(glRotatef_PACKED)); \
-    packed_data->index = glRotatef_INDEX; \
-    packed_data->args.a1 = (GLfloat)angle; \
-    packed_data->args.a2 = (GLfloat)x; \
-    packed_data->args.a3 = (GLfloat)y; \
-    packed_data->args.a4 = (GLfloat)z; \
-    packed_data; \
-})
 #define emit_glRotatef(angle, x, y, z) { \
     mock_push(pack_glRotatef(angle, x, y, z)); \
 }
@@ -6242,15 +5341,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glRotatex(angle, x, y, z) ({ \
-    glRotatex_PACKED *packed_data = malloc(sizeof(glRotatex_PACKED)); \
-    packed_data->index = glRotatex_INDEX; \
-    packed_data->args.a1 = (GLfixed)angle; \
-    packed_data->args.a2 = (GLfixed)x; \
-    packed_data->args.a3 = (GLfixed)y; \
-    packed_data->args.a4 = (GLfixed)z; \
-    packed_data; \
-})
 #define emit_glRotatex(angle, x, y, z) { \
     mock_push(pack_glRotatex(angle, x, y, z)); \
 }
@@ -6298,13 +5388,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glSampleCoverage(value, invert) ({ \
-    glSampleCoverage_PACKED *packed_data = malloc(sizeof(glSampleCoverage_PACKED)); \
-    packed_data->index = glSampleCoverage_INDEX; \
-    packed_data->args.a1 = (GLclampf)value; \
-    packed_data->args.a2 = (GLboolean)invert; \
-    packed_data; \
-})
 #define emit_glSampleCoverage(value, invert) { \
     mock_push(pack_glSampleCoverage(value, invert)); \
 }
@@ -6346,13 +5429,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glSampleCoveragex(value, invert) ({ \
-    glSampleCoveragex_PACKED *packed_data = malloc(sizeof(glSampleCoveragex_PACKED)); \
-    packed_data->index = glSampleCoveragex_INDEX; \
-    packed_data->args.a1 = (GLclampx)value; \
-    packed_data->args.a2 = (GLboolean)invert; \
-    packed_data; \
-})
 #define emit_glSampleCoveragex(value, invert) { \
     mock_push(pack_glSampleCoveragex(value, invert)); \
 }
@@ -6394,14 +5470,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glScalef(x, y, z) ({ \
-    glScalef_PACKED *packed_data = malloc(sizeof(glScalef_PACKED)); \
-    packed_data->index = glScalef_INDEX; \
-    packed_data->args.a1 = (GLfloat)x; \
-    packed_data->args.a2 = (GLfloat)y; \
-    packed_data->args.a3 = (GLfloat)z; \
-    packed_data; \
-})
 #define emit_glScalef(x, y, z) { \
     mock_push(pack_glScalef(x, y, z)); \
 }
@@ -6446,14 +5514,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glScalex(x, y, z) ({ \
-    glScalex_PACKED *packed_data = malloc(sizeof(glScalex_PACKED)); \
-    packed_data->index = glScalex_INDEX; \
-    packed_data->args.a1 = (GLfixed)x; \
-    packed_data->args.a2 = (GLfixed)y; \
-    packed_data->args.a3 = (GLfixed)z; \
-    packed_data; \
-})
 #define emit_glScalex(x, y, z) { \
     mock_push(pack_glScalex(x, y, z)); \
 }
@@ -6498,15 +5558,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glScissor(x, y, width, height) ({ \
-    glScissor_PACKED *packed_data = malloc(sizeof(glScissor_PACKED)); \
-    packed_data->index = glScissor_INDEX; \
-    packed_data->args.a1 = (GLint)x; \
-    packed_data->args.a2 = (GLint)y; \
-    packed_data->args.a3 = (GLsizei)width; \
-    packed_data->args.a4 = (GLsizei)height; \
-    packed_data; \
-})
 #define emit_glScissor(x, y, width, height) { \
     mock_push(pack_glScissor(x, y, width, height)); \
 }
@@ -6554,12 +5605,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glShadeModel(mode) ({ \
-    glShadeModel_PACKED *packed_data = malloc(sizeof(glShadeModel_PACKED)); \
-    packed_data->index = glShadeModel_INDEX; \
-    packed_data->args.a1 = (GLenum)mode; \
-    packed_data; \
-})
 #define emit_glShadeModel(mode) { \
     mock_push(pack_glShadeModel(mode)); \
 }
@@ -6598,14 +5643,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glStencilFunc(func, ref, mask) ({ \
-    glStencilFunc_PACKED *packed_data = malloc(sizeof(glStencilFunc_PACKED)); \
-    packed_data->index = glStencilFunc_INDEX; \
-    packed_data->args.a1 = (GLenum)func; \
-    packed_data->args.a2 = (GLint)ref; \
-    packed_data->args.a3 = (GLuint)mask; \
-    packed_data; \
-})
 #define emit_glStencilFunc(func, ref, mask) { \
     mock_push(pack_glStencilFunc(func, ref, mask)); \
 }
@@ -6650,12 +5687,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glStencilMask(mask) ({ \
-    glStencilMask_PACKED *packed_data = malloc(sizeof(glStencilMask_PACKED)); \
-    packed_data->index = glStencilMask_INDEX; \
-    packed_data->args.a1 = (GLuint)mask; \
-    packed_data; \
-})
 #define emit_glStencilMask(mask) { \
     mock_push(pack_glStencilMask(mask)); \
 }
@@ -6694,14 +5725,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glStencilOp(fail, zfail, zpass) ({ \
-    glStencilOp_PACKED *packed_data = malloc(sizeof(glStencilOp_PACKED)); \
-    packed_data->index = glStencilOp_INDEX; \
-    packed_data->args.a1 = (GLenum)fail; \
-    packed_data->args.a2 = (GLenum)zfail; \
-    packed_data->args.a3 = (GLenum)zpass; \
-    packed_data; \
-})
 #define emit_glStencilOp(fail, zfail, zpass) { \
     mock_push(pack_glStencilOp(fail, zfail, zpass)); \
 }
@@ -6746,15 +5769,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexCoordPointer(size, type, stride, pointer) ({ \
-    glTexCoordPointer_PACKED *packed_data = malloc(sizeof(glTexCoordPointer_PACKED)); \
-    packed_data->index = glTexCoordPointer_INDEX; \
-    packed_data->args.a1 = (GLint)size; \
-    packed_data->args.a2 = (GLenum)type; \
-    packed_data->args.a3 = (GLsizei)stride; \
-    packed_data->args.a4 = (GLvoid *)pointer; \
-    packed_data; \
-})
 #define emit_glTexCoordPointer(size, type, stride, pointer) { \
     mock_push(pack_glTexCoordPointer(size, type, stride, pointer)); \
 }
@@ -6806,14 +5820,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexEnvf(target, pname, param) ({ \
-    glTexEnvf_PACKED *packed_data = malloc(sizeof(glTexEnvf_PACKED)); \
-    packed_data->index = glTexEnvf_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat)param; \
-    packed_data; \
-})
 #define emit_glTexEnvf(target, pname, param) { \
     mock_push(pack_glTexEnvf(target, pname, param)); \
 }
@@ -6858,14 +5864,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexEnvfv(target, pname, params) ({ \
-    glTexEnvfv_PACKED *packed_data = malloc(sizeof(glTexEnvfv_PACKED)); \
-    packed_data->index = glTexEnvfv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glTexEnvfv(target, pname, params) { \
     mock_push(pack_glTexEnvfv(target, pname, params)); \
 }
@@ -6914,14 +5912,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexEnvi(target, pname, param) ({ \
-    glTexEnvi_PACKED *packed_data = malloc(sizeof(glTexEnvi_PACKED)); \
-    packed_data->index = glTexEnvi_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLint)param; \
-    packed_data; \
-})
 #define emit_glTexEnvi(target, pname, param) { \
     mock_push(pack_glTexEnvi(target, pname, param)); \
 }
@@ -6966,14 +5956,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexEnviv(target, pname, params) ({ \
-    glTexEnviv_PACKED *packed_data = malloc(sizeof(glTexEnviv_PACKED)); \
-    packed_data->index = glTexEnviv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLint *)params; \
-    packed_data; \
-})
 #define emit_glTexEnviv(target, pname, params) { \
     mock_push(pack_glTexEnviv(target, pname, params)); \
 }
@@ -7022,14 +6004,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexEnvx(target, pname, param) ({ \
-    glTexEnvx_PACKED *packed_data = malloc(sizeof(glTexEnvx_PACKED)); \
-    packed_data->index = glTexEnvx_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed)param; \
-    packed_data; \
-})
 #define emit_glTexEnvx(target, pname, param) { \
     mock_push(pack_glTexEnvx(target, pname, param)); \
 }
@@ -7074,14 +6048,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexEnvxv(target, pname, params) ({ \
-    glTexEnvxv_PACKED *packed_data = malloc(sizeof(glTexEnvxv_PACKED)); \
-    packed_data->index = glTexEnvxv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glTexEnvxv(target, pname, params) { \
     mock_push(pack_glTexEnvxv(target, pname, params)); \
 }
@@ -7130,20 +6096,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) ({ \
-    glTexImage2D_PACKED *packed_data = malloc(sizeof(glTexImage2D_PACKED)); \
-    packed_data->index = glTexImage2D_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLint)level; \
-    packed_data->args.a3 = (GLint)internalformat; \
-    packed_data->args.a4 = (GLsizei)width; \
-    packed_data->args.a5 = (GLsizei)height; \
-    packed_data->args.a6 = (GLint)border; \
-    packed_data->args.a7 = (GLenum)format; \
-    packed_data->args.a8 = (GLenum)type; \
-    packed_data->args.a9 = (GLvoid *)pixels; \
-    packed_data; \
-})
 #define emit_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) { \
     mock_push(pack_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels)); \
 }
@@ -7210,14 +6162,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexParameterf(target, pname, param) ({ \
-    glTexParameterf_PACKED *packed_data = malloc(sizeof(glTexParameterf_PACKED)); \
-    packed_data->index = glTexParameterf_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat)param; \
-    packed_data; \
-})
 #define emit_glTexParameterf(target, pname, param) { \
     mock_push(pack_glTexParameterf(target, pname, param)); \
 }
@@ -7262,14 +6206,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexParameterfv(target, pname, params) ({ \
-    glTexParameterfv_PACKED *packed_data = malloc(sizeof(glTexParameterfv_PACKED)); \
-    packed_data->index = glTexParameterfv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfloat *)params; \
-    packed_data; \
-})
 #define emit_glTexParameterfv(target, pname, params) { \
     mock_push(pack_glTexParameterfv(target, pname, params)); \
 }
@@ -7318,14 +6254,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexParameteri(target, pname, param) ({ \
-    glTexParameteri_PACKED *packed_data = malloc(sizeof(glTexParameteri_PACKED)); \
-    packed_data->index = glTexParameteri_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLint)param; \
-    packed_data; \
-})
 #define emit_glTexParameteri(target, pname, param) { \
     mock_push(pack_glTexParameteri(target, pname, param)); \
 }
@@ -7370,14 +6298,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexParameteriv(target, pname, params) ({ \
-    glTexParameteriv_PACKED *packed_data = malloc(sizeof(glTexParameteriv_PACKED)); \
-    packed_data->index = glTexParameteriv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLint *)params; \
-    packed_data; \
-})
 #define emit_glTexParameteriv(target, pname, params) { \
     mock_push(pack_glTexParameteriv(target, pname, params)); \
 }
@@ -7426,14 +6346,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexParameterx(target, pname, param) ({ \
-    glTexParameterx_PACKED *packed_data = malloc(sizeof(glTexParameterx_PACKED)); \
-    packed_data->index = glTexParameterx_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed)param; \
-    packed_data; \
-})
 #define emit_glTexParameterx(target, pname, param) { \
     mock_push(pack_glTexParameterx(target, pname, param)); \
 }
@@ -7478,14 +6390,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexParameterxv(target, pname, params) ({ \
-    glTexParameterxv_PACKED *packed_data = malloc(sizeof(glTexParameterxv_PACKED)); \
-    packed_data->index = glTexParameterxv_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLenum)pname; \
-    packed_data->args.a3 = (GLfixed *)params; \
-    packed_data; \
-})
 #define emit_glTexParameterxv(target, pname, params) { \
     mock_push(pack_glTexParameterxv(target, pname, params)); \
 }
@@ -7534,20 +6438,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) ({ \
-    glTexSubImage2D_PACKED *packed_data = malloc(sizeof(glTexSubImage2D_PACKED)); \
-    packed_data->index = glTexSubImage2D_INDEX; \
-    packed_data->args.a1 = (GLenum)target; \
-    packed_data->args.a2 = (GLint)level; \
-    packed_data->args.a3 = (GLint)xoffset; \
-    packed_data->args.a4 = (GLint)yoffset; \
-    packed_data->args.a5 = (GLsizei)width; \
-    packed_data->args.a6 = (GLsizei)height; \
-    packed_data->args.a7 = (GLenum)format; \
-    packed_data->args.a8 = (GLenum)type; \
-    packed_data->args.a9 = (GLvoid *)pixels; \
-    packed_data; \
-})
 #define emit_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) { \
     mock_push(pack_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels)); \
 }
@@ -7614,14 +6504,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTranslatef(x, y, z) ({ \
-    glTranslatef_PACKED *packed_data = malloc(sizeof(glTranslatef_PACKED)); \
-    packed_data->index = glTranslatef_INDEX; \
-    packed_data->args.a1 = (GLfloat)x; \
-    packed_data->args.a2 = (GLfloat)y; \
-    packed_data->args.a3 = (GLfloat)z; \
-    packed_data; \
-})
 #define emit_glTranslatef(x, y, z) { \
     mock_push(pack_glTranslatef(x, y, z)); \
 }
@@ -7666,14 +6548,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glTranslatex(x, y, z) ({ \
-    glTranslatex_PACKED *packed_data = malloc(sizeof(glTranslatex_PACKED)); \
-    packed_data->index = glTranslatex_INDEX; \
-    packed_data->args.a1 = (GLfixed)x; \
-    packed_data->args.a2 = (GLfixed)y; \
-    packed_data->args.a3 = (GLfixed)z; \
-    packed_data; \
-})
 #define emit_glTranslatex(x, y, z) { \
     mock_push(pack_glTranslatex(x, y, z)); \
 }
@@ -7718,15 +6592,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glVertexPointer(size, type, stride, pointer) ({ \
-    glVertexPointer_PACKED *packed_data = malloc(sizeof(glVertexPointer_PACKED)); \
-    packed_data->index = glVertexPointer_INDEX; \
-    packed_data->args.a1 = (GLint)size; \
-    packed_data->args.a2 = (GLenum)type; \
-    packed_data->args.a3 = (GLsizei)stride; \
-    packed_data->args.a4 = (GLvoid *)pointer; \
-    packed_data; \
-})
 #define emit_glVertexPointer(size, type, stride, pointer) { \
     mock_push(pack_glVertexPointer(size, type, stride, pointer)); \
 }
@@ -7778,15 +6643,6 @@ static int failed_test = 0;
         } \
     } \
 }
-#define pack_glViewport(x, y, width, height) ({ \
-    glViewport_PACKED *packed_data = malloc(sizeof(glViewport_PACKED)); \
-    packed_data->index = glViewport_INDEX; \
-    packed_data->args.a1 = (GLint)x; \
-    packed_data->args.a2 = (GLint)y; \
-    packed_data->args.a3 = (GLsizei)width; \
-    packed_data->args.a4 = (GLsizei)height; \
-    packed_data; \
-})
 #define emit_glViewport(x, y, width, height) { \
     mock_push(pack_glViewport(x, y, width, height)); \
 }

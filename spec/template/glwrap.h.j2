@@ -1,10 +1,8 @@
 {% extends "base/wrap.h.j2" %}
 {% block content %}
 {{ super() }}
-
 {% for func in functions %}
-#ifndef direct_{{ func.name }}
-#define push_{{ func.name }}({{ func.args|args(0) }}) { \
+#define pack_{{ func.name }}({{ func.args|args(0) }}) ({ \
     {{ func.name }}_PACKED *packed_data = malloc(sizeof({{ func.name }}_PACKED)); \
     packed_data->index = {{ func.name }}_INDEX; \
     {% if func.args %}
@@ -12,8 +10,7 @@
     packed_data->args.a{{ loop.index }} = ({{ arg.type|unconst }}){{ arg.name }}; \
     {% endfor %}
     {% endif %}
-    glPushCall((void *)packed_data); \
-}
-#endif
+    packed_data; \
+})
 {% endfor %}
 {% endblock %}

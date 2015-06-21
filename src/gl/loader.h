@@ -77,7 +77,7 @@ extern void load_egl_lib();
 #ifndef PUSH_IF_COMPILING_EXT
 #define PUSH_IF_COMPILING_EXT(name, ...)             \
     if (state.list.active) {                         \
-        push_##name(__VA_ARGS__);                    \
+        glPushCall(pack_##name(__VA_ARGS__));        \
         return (name##_RETURN)0;                     \
     }
 #endif
