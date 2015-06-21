@@ -5,7 +5,7 @@
 #include "wrap/gles.h"
 #include "wrap/types.h"
 
-void remote_spawn(char *path) {
+int remote_spawn(char *path) {
     if (path == NULL) {
         path = "libgl_remote";
     }
@@ -16,6 +16,7 @@ void remote_spawn(char *path) {
         asprintf(&argv[1], "%d", fd);
         execve(path, argv, NULL);
     }
+    return pid;
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
