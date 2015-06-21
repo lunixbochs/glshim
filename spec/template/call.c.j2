@@ -15,4 +15,10 @@ const int INDEX_PACKED_SIZE[] = {
 {% endfor %}
 };
 
+const char *INDEX_NAME[] = {
+{% for func in functions %}
+    "{{ func.name }}",
+{% endfor %}
+};
+
 {% endblock %}

@@ -12305,8 +12305,10 @@ typedef struct {
 
 extern const int INDEX_RET_SIZE[];
 extern const int INDEX_PACKED_SIZE[];
+extern const char *INDEX_NAME[];
 extern void glPushCall(void *data);
 void glIndexedCall(const packed_call_t *packed, void *ret_v);
+void glIndexedPrint(const packed_call_t *packed);
 
 #define eglBindAPI_INDEX 1
 #define eglBindAPI_RETURN EGLBoolean
