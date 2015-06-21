@@ -30,8 +30,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(preload X11)
 endif()
 
-add_subdirectory(proxy)
-
 INSTALL(TARGETS GL
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib

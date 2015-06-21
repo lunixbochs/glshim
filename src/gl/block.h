@@ -4,7 +4,7 @@
 #include "types.h"
 
 #define DEFAULT_BLOCK_CAPACITY 16
-#define RENDER_BLOCK_FORMAT -1
+#define RENDER_BLOCK_INDEX -1
 
 extern block_t *bl_new(GLenum mode);
 extern void bl_free(block_t *block);

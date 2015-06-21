@@ -43,9 +43,8 @@ typedef struct {
 } block_t;
 
 typedef struct {
-    int format;
+    int index;
     block_t *block;
-    int refs;
 } block_call_t;
 
 // eval.h

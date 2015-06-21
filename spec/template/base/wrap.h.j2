@@ -17,24 +17,15 @@ typedef struct {
 } ARGS_{{ f.types }};
 {% endif %}
 typedef struct {
-    int format;
-    FUNC_{{ f.types }} func;
-    int refs;
+    int index;
     {% if f.args %}
     ARGS_{{ f.types }} args;
     {% endif %}
 } PACKED_{{ f.types }};
-typedef struct {
-    int func;
-    {% if f.args %}
-    ARGS_{{ f.types }} args;
-    {% endif %}
-} INDEXED_{{ f.types }};
 {% endfor %}
 
 extern void glPushCall(void *data);
-void glPackedCall(const packed_call_t *packed);
-void glIndexedCall(const indexed_call_t *packed, void *ret_v);
+void glIndexedCall(const packed_call_t *packed, void *ret_v);
 
 {% for func in functions %}
 #define {{ func.name }}_INDEX {{ loop.index }}
@@ -42,7 +33,6 @@ void glIndexedCall(const indexed_call_t *packed, void *ret_v);
 #define {{ func.name }}_ARG_NAMES {{ func.args|args(0) }}
 #define {{ func.name }}_ARG_EXPAND {{ func.args|args }}
 #define {{ func.name }}_PACKED PACKED_{{ func.types }}
-#define {{ func.name }}_INDEXED INDEXED_{{ func.types }}
 #define {{ func.name }}_FORMAT FORMAT_{{ func.types }}
 {% endfor %}
 

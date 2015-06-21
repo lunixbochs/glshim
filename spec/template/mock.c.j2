@@ -14,15 +14,15 @@ const char *mock_name(int func) {
     }
 }
 
-void mock_print(const indexed_call_t *packed) {
+void mock_print(const packed_call_t *packed) {
     if (packed == NULL) {
         printf("NULL()\n");
         return;
     }
-    switch (packed->func) {
+    switch (packed->index) {
         {% for f in functions %}
         case {{ f.name }}_INDEX: {
-            INDEXED_{{ f.types }} *unpacked = (INDEXED_{{ f.types }} *)packed;
+            PACKED_{{ f.types }} *unpacked = (PACKED_{{ f.types }} *)packed;
             {% if f.args %}
             ARGS_{{ f.types }} args = unpacked->args;
             {% endif %}
@@ -54,9 +54,9 @@ void *mock_slide(int func) {
     if (mock.pos >= mock.len) {
         return NULL;
     }
-    indexed_call_t **stack = (indexed_call_t **)mock.data;
+    packed_call_t **stack = (packed_call_t **)mock.data;
     for (int i = mock.pos; i < mock.len; i++) {
-        if (stack[i]->func == func) {
+        if (stack[i]->index == func) {
             mock.pos = i + 1;
             return stack[i];
         }

@@ -11,8 +11,6 @@
 {% block main %}
 {{ super() }}
 
-snd_config_t *snd_config = NULL;
-
 __GLXextFuncPtr glXGetProcAddressARB(const GLubyte *name) {
     {% for func in functions %}
     {% if not func.name.startswith('snd_') %}
@@ -37,8 +35,8 @@ __GLXextFuncPtr glXGetProcAddress(const GLubyte *name) {
 {% endblock %}
 
 {% block call %}
-    {{ func.name }}_INDEXED packed_data;
-    packed_data.func = {{ func.name }}_INDEX;
+    {{ func.name }}_PACKED packed_data;
+    packed_data.index = {{ func.name }}_INDEX;
     {% for arg in func.args %}
     packed_data.args.a{{ loop.index }} = ({{ arg.type|unconst }}){{ arg.name }};
     {% endfor %}

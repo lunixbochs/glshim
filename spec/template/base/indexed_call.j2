@@ -1,25 +1,34 @@
-void glIndexedCall(const indexed_call_t *packed, void *ret_v) {
-    switch (packed->func) {
+{% macro call(f) -%}
+{{ f.name }}({% for arg in f.args -%}
+    args.a{{ loop.index }}{% if not arg.last %}, {% endif %}
+{% endfor %})
+{%- endmacro %}
+
+void glIndexedCall(const packed_call_t *packed, void *ret_v) {
+    switch (packed->index) {
         {% for f in functions %}
         #ifndef skip_index_{{ f.name }}
         case {{ f.name }}_INDEX: {
-            INDEXED_{{ f.types }} *unpacked = (INDEXED_{{ f.types }} *)packed;
+            PACKED_{{ f.types }} *unpacked = (PACKED_{{ f.types }} *)packed;
             {% if f.args %}
             ARGS_{{ f.types }} args = unpacked->args;
             {% endif %}
             {% if not f.void %}
             {{ f.return }} *ret = ({{ f.return }} *)ret_v;
-            *ret =
+            if (ret != NULL) {
+                *ret = {{ call(f) }};
+            } else {
+                {{ call(f) }};
+            }
+            {% else %}
+            {{ call(f) }};
             {% endif %}
-            {{ f.name }}({% for arg in f.args -%}
-                args.a{{ loop.index }}{% if not arg.last %}, {% endif %}
-            {% endfor %});
             break;
         }
         #endif
         {% endfor %}
         default:
-            fprintf(stderr, "warning: glIndexedCall with unknown index %d\n", packed->func);
+            fprintf(stderr, "warning: glIndexedCall with unknown index %d\n", packed->index);
             break;
     }
 }

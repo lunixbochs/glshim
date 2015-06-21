@@ -17,7 +17,7 @@ void *mock_get(int idx);
 void *mock_peek();
 void *mock_shift();
 void *mock_slide(int func);
-void mock_print(const indexed_call_t *packed);
+void mock_print(const packed_call_t *packed);
 void mock_push(void *call);
 
 static int verbose_test = 0;
@@ -42,7 +42,7 @@ static int failed_test = 0;
     printf("\n");
 
 #define mock_return { \
-    indexed_call_t *call = NULL; \
+    packed_call_t *call = NULL; \
     while ((call = mock_shift()) != NULL) { \
         mock_warningf("extra "); \
         mock_print(call); \
@@ -55,8 +55,8 @@ static int failed_test = 0;
 
 {% for func in functions %}
 #define pack_{{ func.name }}({{ func.args|args(0) }}) ({ \
-    {{ func.name }}_INDEXED *packed_data = malloc(sizeof({{ func.name }}_INDEXED)); \
-    packed_data->func = {{ func.name }}_INDEX; \
+    {{ func.name }}_PACKED *packed_data = malloc(sizeof({{ func.name }}_PACKED)); \
+    packed_data->index = {{ func.name }}_INDEX; \
     {% if func.args %}
     {% for arg in func.args %}
     packed_data->args.a{{ loop.index }} = ({{ arg.type|unconst }}){{ arg.name }}; \
@@ -68,14 +68,14 @@ static int failed_test = 0;
     mock_push(pack_{{ func.name }}({{ func.args|args(0) }})); \
 }
 #define test_{{ func.name }}({{ func.args|args(0) }}) { \
-    {{ func.name }}_INDEXED *packed = mock_cur(); \
+    {{ func.name }}_PACKED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("{{ func.name }} missing (no calls left)\n"); \
-    } else if (packed->func != {{ func.name }}_INDEX) { \
+    } else if (packed->index != {{ func.name }}_INDEX) { \
         if (verbose_test) { \
             mock_print(mock_cur()); \
         } \
-        indexed_call_t *tmp = (indexed_call_t *)packed; \
+        packed_call_t *tmp = (packed_call_t *)packed; \
         packed = mock_slide({{ func.name }}_INDEX); \
         if (! packed) { \
             mock_errorf("{{ func.name }} missing\n"); \
@@ -109,7 +109,7 @@ static int failed_test = 0;
         {% endfor %}
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const indexed_call_t *)packed); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
             printf("  want: {{ func.name }}({{ func.args|printf }});\n", {{ func.args|args(0) }}); \
         } \
     } \
@@ -122,7 +122,6 @@ static int failed_test = 0;
 #define gles_{{ func.name }}_ARG_NAMES {{ func.args|args(0) }}
 #define gles_{{ func.name }}_ARG_EXPAND {{ func.args|args }}
 #define gles_{{ func.name }}_PACKED PACKED_{{ func.types }}
-#define gles_{{ func.name }}_INDEXED INDEXED_{{ func.types }}
 #define gles_{{ func.name }}_FORMAT FORMAT_{{ func.types }}
 {% endfor %}
 
