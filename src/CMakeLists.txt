@@ -29,7 +29,7 @@ add_library(preload SHARED EXCLUDE_FROM_ALL ${PRELOAD_SOURCES})
 target_link_libraries(preload X11)
 
 file(GLOB_RECURSE REMOTE_SOURCES remote/*.c)
-add_executable(remote ${GL_SOURCES} ${REMOTE_SOURCES})
+add_executable(remote EXCLUDE_FROM_ALL ${GL_SOURCES} ${REMOTE_SOURCES})
 set_target_properties(remote PROPERTIES OUTPUT_NAME libgl_remote)
 target_link_libraries(remote X11)
 
