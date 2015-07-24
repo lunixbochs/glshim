@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 #include "block.h"
+#include "gl_helpers.h"
 #include "glouija/glouija.h"
 #include "wrap/gles.h"
 #include "wrap/types.h"
@@ -135,6 +136,21 @@ void remote_call(packed_call_t *call, void *ret_v) {
             0,
         },
     };
+    switch (call->index) {
+        case glDeleteTextures_INDEX:
+        {
+            glDeleteTextures_PACKED *n = call;
+            glouija_add_block(&c, n->args.textures, n->args.n * sizeof(GLuint), true);
+            break;
+        }
+        case glTexImage2D_INDEX:
+        {
+            glTexImage2D_PACKED *n = call;
+            size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
+            glouija_add_block(&c, n->args.pixels, size, true);
+            break;
+        }
+    }
     glouija_command_write(&c);
     if (ret_size) {
         GlouijaCall ret = {0};
