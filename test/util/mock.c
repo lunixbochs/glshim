@@ -172,12 +172,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glAlphaFunc_INDEX: {
             PACKED_glAlphaFunc *unpacked = (PACKED_glAlphaFunc *)packed;
-            printf("glAlphaFunc(0x%04X, %p);\n", unpacked->args.func, unpacked->args.ref);
+            printf("glAlphaFunc(0x%04X, %0.2f);\n", unpacked->args.func, unpacked->args.ref);
             break;
         }
         case glAlphaFuncx_INDEX: {
             PACKED_glAlphaFuncx *unpacked = (PACKED_glAlphaFuncx *)packed;
-            printf("glAlphaFuncx(0x%04X, %p);\n", unpacked->args.func, unpacked->args.ref);
+            printf("glAlphaFuncx(0x%04X, %d);\n", unpacked->args.func, unpacked->args.ref);
             break;
         }
         case glBindBuffer_INDEX: {
@@ -192,7 +192,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glBlendColorOES_INDEX: {
             PACKED_glBlendColorOES *unpacked = (PACKED_glBlendColorOES *)packed;
-            printf("glBlendColorOES(%p, %p, %p, %p);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
+            printf("glBlendColorOES(%0.2f, %0.2f, %0.2f, %0.2f);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
             break;
         }
         case glBlendEquationOES_INDEX: {
@@ -217,12 +217,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glBufferData_INDEX: {
             PACKED_glBufferData *unpacked = (PACKED_glBufferData *)packed;
-            printf("glBufferData(0x%04X, %d, %p, 0x%04X);\n", unpacked->args.target, unpacked->args.size, unpacked->args.data, unpacked->args.usage);
+            printf("glBufferData(0x%04X, %td, %p, 0x%04X);\n", unpacked->args.target, unpacked->args.size, unpacked->args.data, unpacked->args.usage);
             break;
         }
         case glBufferSubData_INDEX: {
             PACKED_glBufferSubData *unpacked = (PACKED_glBufferSubData *)packed;
-            printf("glBufferSubData(0x%04X, %d, %d, %p);\n", unpacked->args.target, unpacked->args.offset, unpacked->args.size, unpacked->args.data);
+            printf("glBufferSubData(0x%04X, %td, %td, %p);\n", unpacked->args.target, unpacked->args.offset, unpacked->args.size, unpacked->args.data);
             break;
         }
         case glClear_INDEX: {
@@ -232,22 +232,22 @@ void mock_print(const packed_call_t *packed) {
         }
         case glClearColor_INDEX: {
             PACKED_glClearColor *unpacked = (PACKED_glClearColor *)packed;
-            printf("glClearColor(%p, %p, %p, %p);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
+            printf("glClearColor(%0.2f, %0.2f, %0.2f, %0.2f);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
             break;
         }
         case glClearColorx_INDEX: {
             PACKED_glClearColorx *unpacked = (PACKED_glClearColorx *)packed;
-            printf("glClearColorx(%p, %p, %p, %p);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
+            printf("glClearColorx(%d, %d, %d, %d);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
             break;
         }
         case glClearDepthf_INDEX: {
             PACKED_glClearDepthf *unpacked = (PACKED_glClearDepthf *)packed;
-            printf("glClearDepthf(%p);\n", unpacked->args.depth);
+            printf("glClearDepthf(%0.2f);\n", unpacked->args.depth);
             break;
         }
         case glClearDepthx_INDEX: {
             PACKED_glClearDepthx *unpacked = (PACKED_glClearDepthx *)packed;
-            printf("glClearDepthx(%p);\n", unpacked->args.depth);
+            printf("glClearDepthx(%d);\n", unpacked->args.depth);
             break;
         }
         case glClearStencil_INDEX: {
@@ -282,7 +282,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glColor4x_INDEX: {
             PACKED_glColor4x *unpacked = (PACKED_glColor4x *)packed;
-            printf("glColor4x(%p, %p, %p, %p);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
+            printf("glColor4x(%d, %d, %d, %d);\n", unpacked->args.red, unpacked->args.green, unpacked->args.blue, unpacked->args.alpha);
             break;
         }
         case glColorMask_INDEX: {
@@ -342,12 +342,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glDepthRangef_INDEX: {
             PACKED_glDepthRangef *unpacked = (PACKED_glDepthRangef *)packed;
-            printf("glDepthRangef(%p, %p);\n", unpacked->args.near, unpacked->args.far);
+            printf("glDepthRangef(%0.2f, %0.2f);\n", unpacked->args.near, unpacked->args.far);
             break;
         }
         case glDepthRangex_INDEX: {
             PACKED_glDepthRangex *unpacked = (PACKED_glDepthRangex *)packed;
-            printf("glDepthRangex(%p, %p);\n", unpacked->args.near, unpacked->args.far);
+            printf("glDepthRangex(%d, %d);\n", unpacked->args.near, unpacked->args.far);
             break;
         }
         case glDisable_INDEX: {
@@ -402,7 +402,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glFogx_INDEX: {
             PACKED_glFogx *unpacked = (PACKED_glFogx *)packed;
-            printf("glFogx(0x%04X, %p);\n", unpacked->args.pname, unpacked->args.param);
+            printf("glFogx(0x%04X, %d);\n", unpacked->args.pname, unpacked->args.param);
             break;
         }
         case glFogxv_INDEX: {
@@ -422,7 +422,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glFrustumx_INDEX: {
             PACKED_glFrustumx *unpacked = (PACKED_glFrustumx *)packed;
-            printf("glFrustumx(%p, %p, %p, %p, %p, %p);\n", unpacked->args.left, unpacked->args.right, unpacked->args.bottom, unpacked->args.top, unpacked->args.near, unpacked->args.far);
+            printf("glFrustumx(%d, %d, %d, %d, %d, %d);\n", unpacked->args.left, unpacked->args.right, unpacked->args.bottom, unpacked->args.top, unpacked->args.near, unpacked->args.far);
             break;
         }
         case glGenBuffers_INDEX: {
@@ -567,7 +567,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glLightModelx_INDEX: {
             PACKED_glLightModelx *unpacked = (PACKED_glLightModelx *)packed;
-            printf("glLightModelx(0x%04X, %p);\n", unpacked->args.pname, unpacked->args.param);
+            printf("glLightModelx(0x%04X, %d);\n", unpacked->args.pname, unpacked->args.param);
             break;
         }
         case glLightModelxv_INDEX: {
@@ -587,7 +587,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glLightx_INDEX: {
             PACKED_glLightx *unpacked = (PACKED_glLightx *)packed;
-            printf("glLightx(0x%04X, 0x%04X, %p);\n", unpacked->args.light, unpacked->args.pname, unpacked->args.param);
+            printf("glLightx(0x%04X, 0x%04X, %d);\n", unpacked->args.light, unpacked->args.pname, unpacked->args.param);
             break;
         }
         case glLightxv_INDEX: {
@@ -602,7 +602,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glLineWidthx_INDEX: {
             PACKED_glLineWidthx *unpacked = (PACKED_glLineWidthx *)packed;
-            printf("glLineWidthx(%p);\n", unpacked->args.width);
+            printf("glLineWidthx(%d);\n", unpacked->args.width);
             break;
         }
         case glLoadIdentity_INDEX: {
@@ -637,7 +637,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glMaterialx_INDEX: {
             PACKED_glMaterialx *unpacked = (PACKED_glMaterialx *)packed;
-            printf("glMaterialx(0x%04X, 0x%04X, %p);\n", unpacked->args.face, unpacked->args.pname, unpacked->args.param);
+            printf("glMaterialx(0x%04X, 0x%04X, %d);\n", unpacked->args.face, unpacked->args.pname, unpacked->args.param);
             break;
         }
         case glMaterialxv_INDEX: {
@@ -667,7 +667,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glMultiTexCoord4x_INDEX: {
             PACKED_glMultiTexCoord4x *unpacked = (PACKED_glMultiTexCoord4x *)packed;
-            printf("glMultiTexCoord4x(0x%04X, %p, %p, %p, %p);\n", unpacked->args.target, unpacked->args.s, unpacked->args.t, unpacked->args.r, unpacked->args.q);
+            printf("glMultiTexCoord4x(0x%04X, %d, %d, %d, %d);\n", unpacked->args.target, unpacked->args.s, unpacked->args.t, unpacked->args.r, unpacked->args.q);
             break;
         }
         case glNormal3f_INDEX: {
@@ -677,7 +677,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glNormal3x_INDEX: {
             PACKED_glNormal3x *unpacked = (PACKED_glNormal3x *)packed;
-            printf("glNormal3x(%p, %p, %p);\n", unpacked->args.nx, unpacked->args.ny, unpacked->args.nz);
+            printf("glNormal3x(%d, %d, %d);\n", unpacked->args.nx, unpacked->args.ny, unpacked->args.nz);
             break;
         }
         case glNormalPointer_INDEX: {
@@ -692,7 +692,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glOrthox_INDEX: {
             PACKED_glOrthox *unpacked = (PACKED_glOrthox *)packed;
-            printf("glOrthox(%p, %p, %p, %p, %p, %p);\n", unpacked->args.left, unpacked->args.right, unpacked->args.bottom, unpacked->args.top, unpacked->args.near, unpacked->args.far);
+            printf("glOrthox(%d, %d, %d, %d, %d, %d);\n", unpacked->args.left, unpacked->args.right, unpacked->args.bottom, unpacked->args.top, unpacked->args.near, unpacked->args.far);
             break;
         }
         case glPixelStorei_INDEX: {
@@ -712,7 +712,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glPointParameterx_INDEX: {
             PACKED_glPointParameterx *unpacked = (PACKED_glPointParameterx *)packed;
-            printf("glPointParameterx(0x%04X, %p);\n", unpacked->args.pname, unpacked->args.param);
+            printf("glPointParameterx(0x%04X, %d);\n", unpacked->args.pname, unpacked->args.param);
             break;
         }
         case glPointParameterxv_INDEX: {
@@ -732,7 +732,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glPointSizex_INDEX: {
             PACKED_glPointSizex *unpacked = (PACKED_glPointSizex *)packed;
-            printf("glPointSizex(%p);\n", unpacked->args.size);
+            printf("glPointSizex(%d);\n", unpacked->args.size);
             break;
         }
         case glPolygonOffset_INDEX: {
@@ -742,7 +742,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glPolygonOffsetx_INDEX: {
             PACKED_glPolygonOffsetx *unpacked = (PACKED_glPolygonOffsetx *)packed;
-            printf("glPolygonOffsetx(%p, %p);\n", unpacked->args.factor, unpacked->args.units);
+            printf("glPolygonOffsetx(%d, %d);\n", unpacked->args.factor, unpacked->args.units);
             break;
         }
         case glPopMatrix_INDEX: {
@@ -767,17 +767,17 @@ void mock_print(const packed_call_t *packed) {
         }
         case glRotatex_INDEX: {
             PACKED_glRotatex *unpacked = (PACKED_glRotatex *)packed;
-            printf("glRotatex(%p, %p, %p, %p);\n", unpacked->args.angle, unpacked->args.x, unpacked->args.y, unpacked->args.z);
+            printf("glRotatex(%d, %d, %d, %d);\n", unpacked->args.angle, unpacked->args.x, unpacked->args.y, unpacked->args.z);
             break;
         }
         case glSampleCoverage_INDEX: {
             PACKED_glSampleCoverage *unpacked = (PACKED_glSampleCoverage *)packed;
-            printf("glSampleCoverage(%p, %d);\n", unpacked->args.value, unpacked->args.invert);
+            printf("glSampleCoverage(%0.2f, %d);\n", unpacked->args.value, unpacked->args.invert);
             break;
         }
         case glSampleCoveragex_INDEX: {
             PACKED_glSampleCoveragex *unpacked = (PACKED_glSampleCoveragex *)packed;
-            printf("glSampleCoveragex(%p, %d);\n", unpacked->args.value, unpacked->args.invert);
+            printf("glSampleCoveragex(%d, %d);\n", unpacked->args.value, unpacked->args.invert);
             break;
         }
         case glScalef_INDEX: {
@@ -787,7 +787,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glScalex_INDEX: {
             PACKED_glScalex *unpacked = (PACKED_glScalex *)packed;
-            printf("glScalex(%p, %p, %p);\n", unpacked->args.x, unpacked->args.y, unpacked->args.z);
+            printf("glScalex(%d, %d, %d);\n", unpacked->args.x, unpacked->args.y, unpacked->args.z);
             break;
         }
         case glScissor_INDEX: {
@@ -842,7 +842,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glTexEnvx_INDEX: {
             PACKED_glTexEnvx *unpacked = (PACKED_glTexEnvx *)packed;
-            printf("glTexEnvx(0x%04X, 0x%04X, %p);\n", unpacked->args.target, unpacked->args.pname, unpacked->args.param);
+            printf("glTexEnvx(0x%04X, 0x%04X, %d);\n", unpacked->args.target, unpacked->args.pname, unpacked->args.param);
             break;
         }
         case glTexEnvxv_INDEX: {
@@ -877,7 +877,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glTexParameterx_INDEX: {
             PACKED_glTexParameterx *unpacked = (PACKED_glTexParameterx *)packed;
-            printf("glTexParameterx(0x%04X, 0x%04X, %p);\n", unpacked->args.target, unpacked->args.pname, unpacked->args.param);
+            printf("glTexParameterx(0x%04X, 0x%04X, %d);\n", unpacked->args.target, unpacked->args.pname, unpacked->args.param);
             break;
         }
         case glTexParameterxv_INDEX: {
@@ -897,7 +897,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glTranslatex_INDEX: {
             PACKED_glTranslatex *unpacked = (PACKED_glTranslatex *)packed;
-            printf("glTranslatex(%p, %p, %p);\n", unpacked->args.x, unpacked->args.y, unpacked->args.z);
+            printf("glTranslatex(%d, %d, %d);\n", unpacked->args.x, unpacked->args.y, unpacked->args.z);
             break;
         }
         case glVertexPointer_INDEX: {

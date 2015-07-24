@@ -125,7 +125,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glAlphaFunc(0x%04X, %p);\n", _func, _ref); \
+            printf("  want: glAlphaFunc(0x%04X, %0.2f);\n", _func, _ref); \
         } \
     } \
 }
@@ -166,7 +166,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glAlphaFuncx(0x%04X, %p);\n", _func, _ref); \
+            printf("  want: glAlphaFuncx(0x%04X, %d);\n", _func, _ref); \
         } \
     } \
 }
@@ -295,7 +295,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glBlendColorOES(%p, %p, %p, %p);\n", _red, _green, _blue, _alpha); \
+            printf("  want: glBlendColorOES(%0.2f, %0.2f, %0.2f, %0.2f);\n", _red, _green, _blue, _alpha); \
         } \
     } \
 }
@@ -513,7 +513,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glBufferData(0x%04X, %d, %p, 0x%04X);\n", _target, _size, _data, _usage); \
+            printf("  want: glBufferData(0x%04X, %td, %p, 0x%04X);\n", _target, _size, _data, _usage); \
         } \
     } \
 }
@@ -564,7 +564,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glBufferSubData(0x%04X, %d, %d, %p);\n", _target, _offset, _size, _data); \
+            printf("  want: glBufferSubData(0x%04X, %td, %td, %p);\n", _target, _offset, _size, _data); \
         } \
     } \
 }
@@ -649,7 +649,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glClearColor(%p, %p, %p, %p);\n", _red, _green, _blue, _alpha); \
+            printf("  want: glClearColor(%0.2f, %0.2f, %0.2f, %0.2f);\n", _red, _green, _blue, _alpha); \
         } \
     } \
 }
@@ -696,7 +696,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glClearColorx(%p, %p, %p, %p);\n", _red, _green, _blue, _alpha); \
+            printf("  want: glClearColorx(%d, %d, %d, %d);\n", _red, _green, _blue, _alpha); \
         } \
     } \
 }
@@ -734,7 +734,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glClearDepthf(%p);\n", _depth); \
+            printf("  want: glClearDepthf(%0.2f);\n", _depth); \
         } \
     } \
 }
@@ -772,7 +772,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glClearDepthx(%p);\n", _depth); \
+            printf("  want: glClearDepthx(%d);\n", _depth); \
         } \
     } \
 }
@@ -1079,7 +1079,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glColor4x(%p, %p, %p, %p);\n", _red, _green, _blue, _alpha); \
+            printf("  want: glColor4x(%d, %d, %d, %d);\n", _red, _green, _blue, _alpha); \
         } \
     } \
 }
@@ -1669,7 +1669,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glDepthRangef(%p, %p);\n", _near, _far); \
+            printf("  want: glDepthRangef(%0.2f, %0.2f);\n", _near, _far); \
         } \
     } \
 }
@@ -1710,7 +1710,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glDepthRangex(%p, %p);\n", _near, _far); \
+            printf("  want: glDepthRangex(%d, %d);\n", _near, _far); \
         } \
     } \
 }
@@ -2154,7 +2154,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glFogx(0x%04X, %p);\n", _pname, _param); \
+            printf("  want: glFogx(0x%04X, %d);\n", _pname, _param); \
         } \
     } \
 }
@@ -2343,7 +2343,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glFrustumx(%p, %p, %p, %p, %p, %p);\n", _left, _right, _bottom, _top, _near, _far); \
+            printf("  want: glFrustumx(%d, %d, %d, %d, %d, %d);\n", _left, _right, _bottom, _top, _near, _far); \
         } \
     } \
 }
@@ -3631,7 +3631,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glLightModelx(0x%04X, %p);\n", _pname, _param); \
+            printf("  want: glLightModelx(0x%04X, %d);\n", _pname, _param); \
         } \
     } \
 }
@@ -3812,7 +3812,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glLightx(0x%04X, 0x%04X, %p);\n", _light, _pname, _param); \
+            printf("  want: glLightx(0x%04X, 0x%04X, %d);\n", _light, _pname, _param); \
         } \
     } \
 }
@@ -3936,7 +3936,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glLineWidthx(%p);\n", _width); \
+            printf("  want: glLineWidthx(%d);\n", _width); \
         } \
     } \
 }
@@ -4229,7 +4229,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glMaterialx(0x%04X, 0x%04X, %p);\n", _face, _pname, _param); \
+            printf("  want: glMaterialx(0x%04X, 0x%04X, %d);\n", _face, _pname, _param); \
         } \
     } \
 }
@@ -4499,7 +4499,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glMultiTexCoord4x(0x%04X, %p, %p, %p, %p);\n", _target, _s, _t, _r, _q); \
+            printf("  want: glMultiTexCoord4x(0x%04X, %d, %d, %d, %d);\n", _target, _s, _t, _r, _q); \
         } \
     } \
 }
@@ -4587,7 +4587,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glNormal3x(%p, %p, %p);\n", _nx, _ny, _nz); \
+            printf("  want: glNormal3x(%d, %d, %d);\n", _nx, _ny, _nz); \
         } \
     } \
 }
@@ -4741,7 +4741,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glOrthox(%p, %p, %p, %p, %p, %p);\n", _left, _right, _bottom, _top, _near, _far); \
+            printf("  want: glOrthox(%d, %d, %d, %d, %d, %d);\n", _left, _right, _bottom, _top, _near, _far); \
         } \
     } \
 }
@@ -4909,7 +4909,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glPointParameterx(0x%04X, %p);\n", _pname, _param); \
+            printf("  want: glPointParameterx(0x%04X, %d);\n", _pname, _param); \
         } \
     } \
 }
@@ -5078,7 +5078,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glPointSizex(%p);\n", _size); \
+            printf("  want: glPointSizex(%d);\n", _size); \
         } \
     } \
 }
@@ -5160,7 +5160,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glPolygonOffsetx(%p, %p);\n", _factor, _units); \
+            printf("  want: glPolygonOffsetx(%d, %d);\n", _factor, _units); \
         } \
     } \
 }
@@ -5384,7 +5384,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glRotatex(%p, %p, %p, %p);\n", _angle, _x, _y, _z); \
+            printf("  want: glRotatex(%d, %d, %d, %d);\n", _angle, _x, _y, _z); \
         } \
     } \
 }
@@ -5425,7 +5425,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glSampleCoverage(%p, %d);\n", _value, _invert); \
+            printf("  want: glSampleCoverage(%0.2f, %d);\n", _value, _invert); \
         } \
     } \
 }
@@ -5466,7 +5466,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glSampleCoveragex(%p, %d);\n", _value, _invert); \
+            printf("  want: glSampleCoveragex(%d, %d);\n", _value, _invert); \
         } \
     } \
 }
@@ -5554,7 +5554,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glScalex(%p, %p, %p);\n", _x, _y, _z); \
+            printf("  want: glScalex(%d, %d, %d);\n", _x, _y, _z); \
         } \
     } \
 }
@@ -6044,7 +6044,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glTexEnvx(0x%04X, 0x%04X, %p);\n", _target, _pname, _param); \
+            printf("  want: glTexEnvx(0x%04X, 0x%04X, %d);\n", _target, _pname, _param); \
         } \
     } \
 }
@@ -6386,7 +6386,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glTexParameterx(0x%04X, 0x%04X, %p);\n", _target, _pname, _param); \
+            printf("  want: glTexParameterx(0x%04X, 0x%04X, %d);\n", _target, _pname, _param); \
         } \
     } \
 }
@@ -6588,7 +6588,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glTranslatex(%p, %p, %p);\n", _x, _y, _z); \
+            printf("  want: glTranslatex(%d, %d, %d);\n", _x, _y, _z); \
         } \
     } \
 }

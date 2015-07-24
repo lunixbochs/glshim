@@ -2,6 +2,7 @@
 
 import argparse
 import jinja2
+import sys
 import re
 from yaml import load
 
@@ -23,21 +24,31 @@ printf_lookup = {
     'GLbitfield':    'd',
     'GLboolean':     'd',
     'GLbyte':        'c',
-    'GLubyte':       'c',
     'GLchar':        'c',
+    'GLclampd':      '0.2f',
+    'GLclampf':      '0.2f',
+    'GLclampx':      'd',
     'GLdouble':      '0.2f',
     'GLenum':        '0x%04X',
+    'GLfixed':       'd',
     'GLfloat':       '0.2f',
+    'GLhalfNV':      'd',
     'GLint':         'd',
-    'GLintptr':      'd',
-    'GLintptrARB':   'd',
+    'GLint64EXT':    'lld',
+    'GLintptr':      'td',
+    'GLintptrARB':   'td',
+    'GLhandleARB':   'u',
     'GLshort':       'd',
     'GLsizei':       'd',
-    'GLsizeiptr':    'd',
-    'GLsizeiptrARB': 'd',
+    'GLsizeiptr':    'td',
+    'GLsizeiptrARB': 'td',
+    'GLubyte':       'c',
     'GLuint':        'u',
+    'GLuint64':      'llu',
+    'GLuint64EXT':   'llu',
     'GLushort':      'u',
     'GLvoid':        'p',
+    'GLvdpauSurfaceNV': 'td'
 }
 
 def printf(args):

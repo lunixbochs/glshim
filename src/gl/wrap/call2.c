@@ -21236,7 +21236,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glAccumxOES_INDEX: {
             PACKED_glAccumxOES *unpacked = (PACKED_glAccumxOES *)packed;
             ARGS_glAccumxOES args = unpacked->args;
-            printf("glAccumxOES(0x%04X, %p);\n", args.op, args.value);
+            printf("glAccumxOES(0x%04X, %d);\n", args.op, args.value);
             break;
         }
         case glActiveProgramEXT_INDEX: {
@@ -21302,7 +21302,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glAlphaFuncxOES_INDEX: {
             PACKED_glAlphaFuncxOES *unpacked = (PACKED_glAlphaFuncxOES *)packed;
             ARGS_glAlphaFuncxOES args = unpacked->args;
-            printf("glAlphaFuncxOES(0x%04X, %p);\n", args.func, args.ref);
+            printf("glAlphaFuncxOES(0x%04X, %d);\n", args.func, args.ref);
             break;
         }
         case glApplyTextureEXT_INDEX: {
@@ -21356,7 +21356,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glAttachObjectARB_INDEX: {
             PACKED_glAttachObjectARB *unpacked = (PACKED_glAttachObjectARB *)packed;
             ARGS_glAttachObjectARB args = unpacked->args;
-            printf("glAttachObjectARB(%p, %p);\n", args.containerObj, args.obj);
+            printf("glAttachObjectARB(%u, %u);\n", args.containerObj, args.obj);
             break;
         }
         case glAttachShader_INDEX: {
@@ -21460,7 +21460,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBindAttribLocationARB_INDEX: {
             PACKED_glBindAttribLocationARB *unpacked = (PACKED_glBindAttribLocationARB *)packed;
             ARGS_glBindAttribLocationARB args = unpacked->args;
-            printf("glBindAttribLocationARB(%p, %u, %p);\n", args.programObj, args.index, args.name);
+            printf("glBindAttribLocationARB(%u, %u, %p);\n", args.programObj, args.index, args.name);
             break;
         }
         case glBindBuffer_INDEX: {
@@ -21496,31 +21496,31 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBindBufferOffsetEXT_INDEX: {
             PACKED_glBindBufferOffsetEXT *unpacked = (PACKED_glBindBufferOffsetEXT *)packed;
             ARGS_glBindBufferOffsetEXT args = unpacked->args;
-            printf("glBindBufferOffsetEXT(0x%04X, %u, %u, %d);\n", args.target, args.index, args.buffer, args.offset);
+            printf("glBindBufferOffsetEXT(0x%04X, %u, %u, %td);\n", args.target, args.index, args.buffer, args.offset);
             break;
         }
         case glBindBufferOffsetNV_INDEX: {
             PACKED_glBindBufferOffsetNV *unpacked = (PACKED_glBindBufferOffsetNV *)packed;
             ARGS_glBindBufferOffsetNV args = unpacked->args;
-            printf("glBindBufferOffsetNV(0x%04X, %u, %u, %d);\n", args.target, args.index, args.buffer, args.offset);
+            printf("glBindBufferOffsetNV(0x%04X, %u, %u, %td);\n", args.target, args.index, args.buffer, args.offset);
             break;
         }
         case glBindBufferRange_INDEX: {
             PACKED_glBindBufferRange *unpacked = (PACKED_glBindBufferRange *)packed;
             ARGS_glBindBufferRange args = unpacked->args;
-            printf("glBindBufferRange(0x%04X, %u, %u, %d, %d);\n", args.target, args.index, args.buffer, args.offset, args.size);
+            printf("glBindBufferRange(0x%04X, %u, %u, %td, %td);\n", args.target, args.index, args.buffer, args.offset, args.size);
             break;
         }
         case glBindBufferRangeEXT_INDEX: {
             PACKED_glBindBufferRangeEXT *unpacked = (PACKED_glBindBufferRangeEXT *)packed;
             ARGS_glBindBufferRangeEXT args = unpacked->args;
-            printf("glBindBufferRangeEXT(0x%04X, %u, %u, %d, %d);\n", args.target, args.index, args.buffer, args.offset, args.size);
+            printf("glBindBufferRangeEXT(0x%04X, %u, %u, %td, %td);\n", args.target, args.index, args.buffer, args.offset, args.size);
             break;
         }
         case glBindBufferRangeNV_INDEX: {
             PACKED_glBindBufferRangeNV *unpacked = (PACKED_glBindBufferRangeNV *)packed;
             ARGS_glBindBufferRangeNV args = unpacked->args;
-            printf("glBindBufferRangeNV(0x%04X, %u, %u, %d, %d);\n", args.target, args.index, args.buffer, args.offset, args.size);
+            printf("glBindBufferRangeNV(0x%04X, %u, %u, %td, %td);\n", args.target, args.index, args.buffer, args.offset, args.size);
             break;
         }
         case glBindFragDataLocation_INDEX: {
@@ -21682,7 +21682,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBindVertexBuffer_INDEX: {
             PACKED_glBindVertexBuffer *unpacked = (PACKED_glBindVertexBuffer *)packed;
             ARGS_glBindVertexBuffer args = unpacked->args;
-            printf("glBindVertexBuffer(%u, %u, %d, %d);\n", args.bindingindex, args.buffer, args.offset, args.stride);
+            printf("glBindVertexBuffer(%u, %u, %td, %d);\n", args.bindingindex, args.buffer, args.offset, args.stride);
             break;
         }
         case glBindVertexShaderEXT_INDEX: {
@@ -21694,7 +21694,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBindVideoCaptureStreamBufferNV_INDEX: {
             PACKED_glBindVideoCaptureStreamBufferNV *unpacked = (PACKED_glBindVideoCaptureStreamBufferNV *)packed;
             ARGS_glBindVideoCaptureStreamBufferNV args = unpacked->args;
-            printf("glBindVideoCaptureStreamBufferNV(%u, %u, 0x%04X, %d);\n", args.video_capture_slot, args.stream, args.frame_region, args.offset);
+            printf("glBindVideoCaptureStreamBufferNV(%u, %u, 0x%04X, %td);\n", args.video_capture_slot, args.stream, args.frame_region, args.offset);
             break;
         }
         case glBindVideoCaptureStreamTextureNV_INDEX: {
@@ -21778,7 +21778,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBitmapxOES_INDEX: {
             PACKED_glBitmapxOES *unpacked = (PACKED_glBitmapxOES *)packed;
             ARGS_glBitmapxOES args = unpacked->args;
-            printf("glBitmapxOES(%d, %d, %p, %p, %p, %p, %p);\n", args.width, args.height, args.xorig, args.yorig, args.xmove, args.ymove, args.bitmap);
+            printf("glBitmapxOES(%d, %d, %d, %d, %d, %d, %p);\n", args.width, args.height, args.xorig, args.yorig, args.xmove, args.ymove, args.bitmap);
             break;
         }
         case glBlendColor_INDEX: {
@@ -21796,7 +21796,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBlendColorxOES_INDEX: {
             PACKED_glBlendColorxOES *unpacked = (PACKED_glBlendColorxOES *)packed;
             ARGS_glBlendColorxOES args = unpacked->args;
-            printf("glBlendColorxOES(%p, %p, %p, %p);\n", args.red, args.green, args.blue, args.alpha);
+            printf("glBlendColorxOES(%d, %d, %d, %d);\n", args.red, args.green, args.blue, args.alpha);
             break;
         }
         case glBlendEquation_INDEX: {
@@ -21934,19 +21934,19 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBufferAddressRangeNV_INDEX: {
             PACKED_glBufferAddressRangeNV *unpacked = (PACKED_glBufferAddressRangeNV *)packed;
             ARGS_glBufferAddressRangeNV args = unpacked->args;
-            printf("glBufferAddressRangeNV(0x%04X, %u, %p, %d);\n", args.pname, args.index, args.address, args.length);
+            printf("glBufferAddressRangeNV(0x%04X, %u, %llu, %td);\n", args.pname, args.index, args.address, args.length);
             break;
         }
         case glBufferData_INDEX: {
             PACKED_glBufferData *unpacked = (PACKED_glBufferData *)packed;
             ARGS_glBufferData args = unpacked->args;
-            printf("glBufferData(0x%04X, %d, %p, 0x%04X);\n", args.target, args.size, args.data, args.usage);
+            printf("glBufferData(0x%04X, %td, %p, 0x%04X);\n", args.target, args.size, args.data, args.usage);
             break;
         }
         case glBufferDataARB_INDEX: {
             PACKED_glBufferDataARB *unpacked = (PACKED_glBufferDataARB *)packed;
             ARGS_glBufferDataARB args = unpacked->args;
-            printf("glBufferDataARB(0x%04X, %d, %p, 0x%04X);\n", args.target, args.size, args.data, args.usage);
+            printf("glBufferDataARB(0x%04X, %td, %p, 0x%04X);\n", args.target, args.size, args.data, args.usage);
             break;
         }
         case glBufferParameteriAPPLE_INDEX: {
@@ -21958,13 +21958,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBufferSubData_INDEX: {
             PACKED_glBufferSubData *unpacked = (PACKED_glBufferSubData *)packed;
             ARGS_glBufferSubData args = unpacked->args;
-            printf("glBufferSubData(0x%04X, %d, %d, %p);\n", args.target, args.offset, args.size, args.data);
+            printf("glBufferSubData(0x%04X, %td, %td, %p);\n", args.target, args.offset, args.size, args.data);
             break;
         }
         case glBufferSubDataARB_INDEX: {
             PACKED_glBufferSubDataARB *unpacked = (PACKED_glBufferSubDataARB *)packed;
             ARGS_glBufferSubDataARB args = unpacked->args;
-            printf("glBufferSubDataARB(0x%04X, %d, %d, %p);\n", args.target, args.offset, args.size, args.data);
+            printf("glBufferSubDataARB(0x%04X, %td, %td, %p);\n", args.target, args.offset, args.size, args.data);
             break;
         }
         case glCallList_INDEX: {
@@ -22024,7 +22024,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glClearAccumxOES_INDEX: {
             PACKED_glClearAccumxOES *unpacked = (PACKED_glClearAccumxOES *)packed;
             ARGS_glClearAccumxOES args = unpacked->args;
-            printf("glClearAccumxOES(%p, %p, %p, %p);\n", args.red, args.green, args.blue, args.alpha);
+            printf("glClearAccumxOES(%d, %d, %d, %d);\n", args.red, args.green, args.blue, args.alpha);
             break;
         }
         case glClearBufferData_INDEX: {
@@ -22036,7 +22036,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glClearBufferSubData_INDEX: {
             PACKED_glClearBufferSubData *unpacked = (PACKED_glClearBufferSubData *)packed;
             ARGS_glClearBufferSubData args = unpacked->args;
-            printf("glClearBufferSubData(0x%04X, 0x%04X, %d, %d, 0x%04X, 0x%04X, %p);\n", args.target, args.internalformat, args.offset, args.size, args.format, args.type, args.data);
+            printf("glClearBufferSubData(0x%04X, 0x%04X, %td, %td, 0x%04X, 0x%04X, %p);\n", args.target, args.internalformat, args.offset, args.size, args.format, args.type, args.data);
             break;
         }
         case glClearBufferfi_INDEX: {
@@ -22084,7 +22084,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glClearColorxOES_INDEX: {
             PACKED_glClearColorxOES *unpacked = (PACKED_glClearColorxOES *)packed;
             ARGS_glClearColorxOES args = unpacked->args;
-            printf("glClearColorxOES(%p, %p, %p, %p);\n", args.red, args.green, args.blue, args.alpha);
+            printf("glClearColorxOES(%d, %d, %d, %d);\n", args.red, args.green, args.blue, args.alpha);
             break;
         }
         case glClearDepth_INDEX: {
@@ -22108,13 +22108,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glClearDepthfOES_INDEX: {
             PACKED_glClearDepthfOES *unpacked = (PACKED_glClearDepthfOES *)packed;
             ARGS_glClearDepthfOES args = unpacked->args;
-            printf("glClearDepthfOES(%p);\n", args.depth);
+            printf("glClearDepthfOES(%0.2f);\n", args.depth);
             break;
         }
         case glClearDepthxOES_INDEX: {
             PACKED_glClearDepthxOES *unpacked = (PACKED_glClearDepthxOES *)packed;
             ARGS_glClearDepthxOES args = unpacked->args;
-            printf("glClearDepthxOES(%p);\n", args.depth);
+            printf("glClearDepthxOES(%d);\n", args.depth);
             break;
         }
         case glClearIndex_INDEX: {
@@ -22132,7 +22132,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glClearNamedBufferSubDataEXT_INDEX: {
             PACKED_glClearNamedBufferSubDataEXT *unpacked = (PACKED_glClearNamedBufferSubDataEXT *)packed;
             ARGS_glClearNamedBufferSubDataEXT args = unpacked->args;
-            printf("glClearNamedBufferSubDataEXT(%u, 0x%04X, 0x%04X, 0x%04X, %d, %d, %p);\n", args.buffer, args.internalformat, args.format, args.type, args.offset, args.size, args.data);
+            printf("glClearNamedBufferSubDataEXT(%u, 0x%04X, 0x%04X, 0x%04X, %td, %td, %p);\n", args.buffer, args.internalformat, args.format, args.type, args.offset, args.size, args.data);
             break;
         }
         case glClearStencil_INDEX: {
@@ -22168,7 +22168,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glClientWaitSync_INDEX: {
             PACKED_glClientWaitSync *unpacked = (PACKED_glClientWaitSync *)packed;
             ARGS_glClientWaitSync args = unpacked->args;
-            printf("glClientWaitSync(%p, %d, %p);\n", args.sync, args.flags, args.timeout);
+            printf("glClientWaitSync(%p, %d, %llu);\n", args.sync, args.flags, args.timeout);
             break;
         }
         case glClipPlane_INDEX: {
@@ -22240,7 +22240,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glColor3hNV_INDEX: {
             PACKED_glColor3hNV *unpacked = (PACKED_glColor3hNV *)packed;
             ARGS_glColor3hNV args = unpacked->args;
-            printf("glColor3hNV(%p, %p, %p);\n", args.red, args.green, args.blue);
+            printf("glColor3hNV(%d, %d, %d);\n", args.red, args.green, args.blue);
             break;
         }
         case glColor3hvNV_INDEX: {
@@ -22312,7 +22312,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glColor3xOES_INDEX: {
             PACKED_glColor3xOES *unpacked = (PACKED_glColor3xOES *)packed;
             ARGS_glColor3xOES args = unpacked->args;
-            printf("glColor3xOES(%p, %p, %p);\n", args.red, args.green, args.blue);
+            printf("glColor3xOES(%d, %d, %d);\n", args.red, args.green, args.blue);
             break;
         }
         case glColor3xvOES_INDEX: {
@@ -22372,7 +22372,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glColor4hNV_INDEX: {
             PACKED_glColor4hNV *unpacked = (PACKED_glColor4hNV *)packed;
             ARGS_glColor4hNV args = unpacked->args;
-            printf("glColor4hNV(%p, %p, %p, %p);\n", args.red, args.green, args.blue, args.alpha);
+            printf("glColor4hNV(%d, %d, %d, %d);\n", args.red, args.green, args.blue, args.alpha);
             break;
         }
         case glColor4hvNV_INDEX: {
@@ -22468,7 +22468,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glColor4xOES_INDEX: {
             PACKED_glColor4xOES *unpacked = (PACKED_glColor4xOES *)packed;
             ARGS_glColor4xOES args = unpacked->args;
-            printf("glColor4xOES(%p, %p, %p, %p);\n", args.red, args.green, args.blue, args.alpha);
+            printf("glColor4xOES(%d, %d, %d, %d);\n", args.red, args.green, args.blue, args.alpha);
             break;
         }
         case glColor4xvOES_INDEX: {
@@ -22678,7 +22678,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glCompileShaderARB_INDEX: {
             PACKED_glCompileShaderARB *unpacked = (PACKED_glCompileShaderARB *)packed;
             ARGS_glCompileShaderARB args = unpacked->args;
-            printf("glCompileShaderARB(%p);\n", args.shaderObj);
+            printf("glCompileShaderARB(%u);\n", args.shaderObj);
             break;
         }
         case glCompileShaderIncludeARB_INDEX: {
@@ -22906,7 +22906,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glConvolutionParameterxOES_INDEX: {
             PACKED_glConvolutionParameterxOES *unpacked = (PACKED_glConvolutionParameterxOES *)packed;
             ARGS_glConvolutionParameterxOES args = unpacked->args;
-            printf("glConvolutionParameterxOES(0x%04X, 0x%04X, %p);\n", args.target, args.pname, args.param);
+            printf("glConvolutionParameterxOES(0x%04X, 0x%04X, %d);\n", args.target, args.pname, args.param);
             break;
         }
         case glConvolutionParameterxvOES_INDEX: {
@@ -22918,7 +22918,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glCopyBufferSubData_INDEX: {
             PACKED_glCopyBufferSubData *unpacked = (PACKED_glCopyBufferSubData *)packed;
             ARGS_glCopyBufferSubData args = unpacked->args;
-            printf("glCopyBufferSubData(0x%04X, 0x%04X, %d, %d, %d);\n", args.readTarget, args.writeTarget, args.readOffset, args.writeOffset, args.size);
+            printf("glCopyBufferSubData(0x%04X, 0x%04X, %td, %td, %td);\n", args.readTarget, args.writeTarget, args.readOffset, args.writeOffset, args.size);
             break;
         }
         case glCopyColorSubTable_INDEX: {
@@ -23340,7 +23340,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glDeleteObjectARB_INDEX: {
             PACKED_glDeleteObjectARB *unpacked = (PACKED_glDeleteObjectARB *)packed;
             ARGS_glDeleteObjectARB args = unpacked->args;
-            printf("glDeleteObjectARB(%p);\n", args.obj);
+            printf("glDeleteObjectARB(%u);\n", args.obj);
             break;
         }
         case glDeleteOcclusionQueriesNV_INDEX: {
@@ -23472,7 +23472,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glDepthBoundsEXT_INDEX: {
             PACKED_glDepthBoundsEXT *unpacked = (PACKED_glDepthBoundsEXT *)packed;
             ARGS_glDepthBoundsEXT args = unpacked->args;
-            printf("glDepthBoundsEXT(%p, %p);\n", args.zmin, args.zmax);
+            printf("glDepthBoundsEXT(%0.2f, %0.2f);\n", args.zmin, args.zmax);
             break;
         }
         case glDepthBoundsdNV_INDEX: {
@@ -23526,19 +23526,19 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glDepthRangefOES_INDEX: {
             PACKED_glDepthRangefOES *unpacked = (PACKED_glDepthRangefOES *)packed;
             ARGS_glDepthRangefOES args = unpacked->args;
-            printf("glDepthRangefOES(%p, %p);\n", args.n, args.f);
+            printf("glDepthRangefOES(%0.2f, %0.2f);\n", args.n, args.f);
             break;
         }
         case glDepthRangexOES_INDEX: {
             PACKED_glDepthRangexOES *unpacked = (PACKED_glDepthRangexOES *)packed;
             ARGS_glDepthRangexOES args = unpacked->args;
-            printf("glDepthRangexOES(%p, %p);\n", args.n, args.f);
+            printf("glDepthRangexOES(%d, %d);\n", args.n, args.f);
             break;
         }
         case glDetachObjectARB_INDEX: {
             PACKED_glDetachObjectARB *unpacked = (PACKED_glDetachObjectARB *)packed;
             ARGS_glDetachObjectARB args = unpacked->args;
-            printf("glDetachObjectARB(%p, %p);\n", args.containerObj, args.attachedObj);
+            printf("glDetachObjectARB(%u, %u);\n", args.containerObj, args.attachedObj);
             break;
         }
         case glDetachShader_INDEX: {
@@ -23634,7 +23634,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glDispatchComputeIndirect_INDEX: {
             PACKED_glDispatchComputeIndirect *unpacked = (PACKED_glDispatchComputeIndirect *)packed;
             ARGS_glDispatchComputeIndirect args = unpacked->args;
-            printf("glDispatchComputeIndirect(%d);\n", args.indirect);
+            printf("glDispatchComputeIndirect(%td);\n", args.indirect);
             break;
         }
         case glDrawArrays_INDEX: {
@@ -24068,7 +24068,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glEvalCoord1xOES_INDEX: {
             PACKED_glEvalCoord1xOES *unpacked = (PACKED_glEvalCoord1xOES *)packed;
             ARGS_glEvalCoord1xOES args = unpacked->args;
-            printf("glEvalCoord1xOES(%p);\n", args.u);
+            printf("glEvalCoord1xOES(%d);\n", args.u);
             break;
         }
         case glEvalCoord1xvOES_INDEX: {
@@ -24104,7 +24104,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glEvalCoord2xOES_INDEX: {
             PACKED_glEvalCoord2xOES *unpacked = (PACKED_glEvalCoord2xOES *)packed;
             ARGS_glEvalCoord2xOES args = unpacked->args;
-            printf("glEvalCoord2xOES(%p, %p);\n", args.u, args.v);
+            printf("glEvalCoord2xOES(%d, %d);\n", args.u, args.v);
             break;
         }
         case glEvalCoord2xvOES_INDEX: {
@@ -24218,19 +24218,19 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glFlushMappedBufferRange_INDEX: {
             PACKED_glFlushMappedBufferRange *unpacked = (PACKED_glFlushMappedBufferRange *)packed;
             ARGS_glFlushMappedBufferRange args = unpacked->args;
-            printf("glFlushMappedBufferRange(0x%04X, %d, %d);\n", args.target, args.offset, args.length);
+            printf("glFlushMappedBufferRange(0x%04X, %td, %td);\n", args.target, args.offset, args.length);
             break;
         }
         case glFlushMappedBufferRangeAPPLE_INDEX: {
             PACKED_glFlushMappedBufferRangeAPPLE *unpacked = (PACKED_glFlushMappedBufferRangeAPPLE *)packed;
             ARGS_glFlushMappedBufferRangeAPPLE args = unpacked->args;
-            printf("glFlushMappedBufferRangeAPPLE(0x%04X, %d, %d);\n", args.target, args.offset, args.size);
+            printf("glFlushMappedBufferRangeAPPLE(0x%04X, %td, %td);\n", args.target, args.offset, args.size);
             break;
         }
         case glFlushMappedNamedBufferRangeEXT_INDEX: {
             PACKED_glFlushMappedNamedBufferRangeEXT *unpacked = (PACKED_glFlushMappedNamedBufferRangeEXT *)packed;
             ARGS_glFlushMappedNamedBufferRangeEXT args = unpacked->args;
-            printf("glFlushMappedNamedBufferRangeEXT(%u, %d, %d);\n", args.buffer, args.offset, args.length);
+            printf("glFlushMappedNamedBufferRangeEXT(%u, %td, %td);\n", args.buffer, args.offset, args.length);
             break;
         }
         case glFlushPixelDataRangeNV_INDEX: {
@@ -24334,7 +24334,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glFogCoordhNV_INDEX: {
             PACKED_glFogCoordhNV *unpacked = (PACKED_glFogCoordhNV *)packed;
             ARGS_glFogCoordhNV args = unpacked->args;
-            printf("glFogCoordhNV(%p);\n", args.fog);
+            printf("glFogCoordhNV(%d);\n", args.fog);
             break;
         }
         case glFogCoordhvNV_INDEX: {
@@ -24376,7 +24376,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glFogxOES_INDEX: {
             PACKED_glFogxOES *unpacked = (PACKED_glFogxOES *)packed;
             ARGS_glFogxOES args = unpacked->args;
-            printf("glFogxOES(0x%04X, %p);\n", args.pname, args.param);
+            printf("glFogxOES(0x%04X, %d);\n", args.pname, args.param);
             break;
         }
         case glFogxvOES_INDEX: {
@@ -24620,7 +24620,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glFrustumxOES_INDEX: {
             PACKED_glFrustumxOES *unpacked = (PACKED_glFrustumxOES *)packed;
             ARGS_glFrustumxOES args = unpacked->args;
-            printf("glFrustumxOES(%p, %p, %p, %p, %p, %p);\n", args.l, args.r, args.b, args.t, args.n, args.f);
+            printf("glFrustumxOES(%d, %d, %d, %d, %d, %d);\n", args.l, args.r, args.b, args.t, args.n, args.f);
             break;
         }
         case glGenAsyncMarkersSGIX_INDEX: {
@@ -24836,7 +24836,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetActiveAttribARB_INDEX: {
             PACKED_glGetActiveAttribARB *unpacked = (PACKED_glGetActiveAttribARB *)packed;
             ARGS_glGetActiveAttribARB args = unpacked->args;
-            printf("glGetActiveAttribARB(%p, %u, %d, %p, %p, %p, %p);\n", args.programObj, args.index, args.maxLength, args.length, args.size, args.type, args.name);
+            printf("glGetActiveAttribARB(%u, %u, %d, %p, %p, %p, %p);\n", args.programObj, args.index, args.maxLength, args.length, args.size, args.type, args.name);
             break;
         }
         case glGetActiveSubroutineName_INDEX: {
@@ -24866,7 +24866,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetActiveUniformARB_INDEX: {
             PACKED_glGetActiveUniformARB *unpacked = (PACKED_glGetActiveUniformARB *)packed;
             ARGS_glGetActiveUniformARB args = unpacked->args;
-            printf("glGetActiveUniformARB(%p, %u, %d, %p, %p, %p, %p);\n", args.programObj, args.index, args.maxLength, args.length, args.size, args.type, args.name);
+            printf("glGetActiveUniformARB(%u, %u, %d, %p, %p, %p, %p);\n", args.programObj, args.index, args.maxLength, args.length, args.size, args.type, args.name);
             break;
         }
         case glGetActiveUniformBlockName_INDEX: {
@@ -24914,7 +24914,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetAttachedObjectsARB_INDEX: {
             PACKED_glGetAttachedObjectsARB *unpacked = (PACKED_glGetAttachedObjectsARB *)packed;
             ARGS_glGetAttachedObjectsARB args = unpacked->args;
-            printf("glGetAttachedObjectsARB(%p, %d, %p, %p);\n", args.containerObj, args.maxCount, args.count, args.obj);
+            printf("glGetAttachedObjectsARB(%u, %d, %p, %p);\n", args.containerObj, args.maxCount, args.count, args.obj);
             break;
         }
         case glGetAttachedShaders_INDEX: {
@@ -24932,7 +24932,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetAttribLocationARB_INDEX: {
             PACKED_glGetAttribLocationARB *unpacked = (PACKED_glGetAttribLocationARB *)packed;
             ARGS_glGetAttribLocationARB args = unpacked->args;
-            printf("glGetAttribLocationARB(%p, %p);\n", args.programObj, args.name);
+            printf("glGetAttribLocationARB(%u, %p);\n", args.programObj, args.name);
             break;
         }
         case glGetBooleanIndexedvEXT_INDEX: {
@@ -24992,13 +24992,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetBufferSubData_INDEX: {
             PACKED_glGetBufferSubData *unpacked = (PACKED_glGetBufferSubData *)packed;
             ARGS_glGetBufferSubData args = unpacked->args;
-            printf("glGetBufferSubData(0x%04X, %d, %d, %p);\n", args.target, args.offset, args.size, args.data);
+            printf("glGetBufferSubData(0x%04X, %td, %td, %p);\n", args.target, args.offset, args.size, args.data);
             break;
         }
         case glGetBufferSubDataARB_INDEX: {
             PACKED_glGetBufferSubDataARB *unpacked = (PACKED_glGetBufferSubDataARB *)packed;
             ARGS_glGetBufferSubDataARB args = unpacked->args;
-            printf("glGetBufferSubDataARB(0x%04X, %d, %d, %p);\n", args.target, args.offset, args.size, args.data);
+            printf("glGetBufferSubDataARB(0x%04X, %td, %td, %p);\n", args.target, args.offset, args.size, args.data);
             break;
         }
         case glGetClipPlane_INDEX: {
@@ -25414,7 +25414,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetInfoLogARB_INDEX: {
             PACKED_glGetInfoLogARB *unpacked = (PACKED_glGetInfoLogARB *)packed;
             ARGS_glGetInfoLogARB args = unpacked->args;
-            printf("glGetInfoLogARB(%p, %d, %p, %p);\n", args.obj, args.maxLength, args.length, args.infoLog);
+            printf("glGetInfoLogARB(%u, %d, %p, %p);\n", args.obj, args.maxLength, args.length, args.infoLog);
             break;
         }
         case glGetInstrumentsSGIX_INDEX: {
@@ -25610,7 +25610,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetMaterialxOES_INDEX: {
             PACKED_glGetMaterialxOES *unpacked = (PACKED_glGetMaterialxOES *)packed;
             ARGS_glGetMaterialxOES args = unpacked->args;
-            printf("glGetMaterialxOES(0x%04X, 0x%04X, %p);\n", args.face, args.pname, args.param);
+            printf("glGetMaterialxOES(0x%04X, 0x%04X, %d);\n", args.face, args.pname, args.param);
             break;
         }
         case glGetMinmax_INDEX: {
@@ -25754,7 +25754,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetNamedBufferSubDataEXT_INDEX: {
             PACKED_glGetNamedBufferSubDataEXT *unpacked = (PACKED_glGetNamedBufferSubDataEXT *)packed;
             ARGS_glGetNamedBufferSubDataEXT args = unpacked->args;
-            printf("glGetNamedBufferSubDataEXT(%u, %d, %d, %p);\n", args.buffer, args.offset, args.size, args.data);
+            printf("glGetNamedBufferSubDataEXT(%u, %td, %td, %p);\n", args.buffer, args.offset, args.size, args.data);
             break;
         }
         case glGetNamedFramebufferAttachmentParameterivEXT_INDEX: {
@@ -25844,7 +25844,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetObjectParameterfvARB_INDEX: {
             PACKED_glGetObjectParameterfvARB *unpacked = (PACKED_glGetObjectParameterfvARB *)packed;
             ARGS_glGetObjectParameterfvARB args = unpacked->args;
-            printf("glGetObjectParameterfvARB(%p, 0x%04X, %p);\n", args.obj, args.pname, args.params);
+            printf("glGetObjectParameterfvARB(%u, 0x%04X, %p);\n", args.obj, args.pname, args.params);
             break;
         }
         case glGetObjectParameterivAPPLE_INDEX: {
@@ -25856,7 +25856,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetObjectParameterivARB_INDEX: {
             PACKED_glGetObjectParameterivARB *unpacked = (PACKED_glGetObjectParameterivARB *)packed;
             ARGS_glGetObjectParameterivARB args = unpacked->args;
-            printf("glGetObjectParameterivARB(%p, 0x%04X, %p);\n", args.obj, args.pname, args.params);
+            printf("glGetObjectParameterivARB(%u, 0x%04X, %p);\n", args.obj, args.pname, args.params);
             break;
         }
         case glGetObjectPtrLabel_INDEX: {
@@ -26378,7 +26378,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetShaderSourceARB_INDEX: {
             PACKED_glGetShaderSourceARB *unpacked = (PACKED_glGetShaderSourceARB *)packed;
             ARGS_glGetShaderSourceARB args = unpacked->args;
-            printf("glGetShaderSourceARB(%p, %d, %p, %p);\n", args.obj, args.maxLength, args.length, args.source);
+            printf("glGetShaderSourceARB(%u, %d, %p, %p);\n", args.obj, args.maxLength, args.length, args.source);
             break;
         }
         case glGetShaderiv_INDEX: {
@@ -26660,7 +26660,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetUniformLocationARB_INDEX: {
             PACKED_glGetUniformLocationARB *unpacked = (PACKED_glGetUniformLocationARB *)packed;
             ARGS_glGetUniformLocationARB args = unpacked->args;
-            printf("glGetUniformLocationARB(%p, %p);\n", args.programObj, args.name);
+            printf("glGetUniformLocationARB(%u, %p);\n", args.programObj, args.name);
             break;
         }
         case glGetUniformOffsetEXT_INDEX: {
@@ -26690,7 +26690,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetUniformfvARB_INDEX: {
             PACKED_glGetUniformfvARB *unpacked = (PACKED_glGetUniformfvARB *)packed;
             ARGS_glGetUniformfvARB args = unpacked->args;
-            printf("glGetUniformfvARB(%p, %d, %p);\n", args.programObj, args.location, args.params);
+            printf("glGetUniformfvARB(%u, %d, %p);\n", args.programObj, args.location, args.params);
             break;
         }
         case glGetUniformi64vNV_INDEX: {
@@ -26708,7 +26708,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glGetUniformivARB_INDEX: {
             PACKED_glGetUniformivARB *unpacked = (PACKED_glGetUniformivARB *)packed;
             ARGS_glGetUniformivARB args = unpacked->args;
-            printf("glGetUniformivARB(%p, %d, %p);\n", args.programObj, args.location, args.params);
+            printf("glGetUniformivARB(%u, %d, %p);\n", args.programObj, args.location, args.params);
             break;
         }
         case glGetUniformui64vNV_INDEX: {
@@ -27188,7 +27188,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glImportSyncEXT_INDEX: {
             PACKED_glImportSyncEXT *unpacked = (PACKED_glImportSyncEXT *)packed;
             ARGS_glImportSyncEXT args = unpacked->args;
-            printf("glImportSyncEXT(0x%04X, %d, %d);\n", args.external_sync_type, args.external_sync, args.flags);
+            printf("glImportSyncEXT(0x%04X, %td, %d);\n", args.external_sync_type, args.external_sync, args.flags);
             break;
         }
         case glIndexFormatNV_INDEX: {
@@ -27200,7 +27200,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glIndexFuncEXT_INDEX: {
             PACKED_glIndexFuncEXT *unpacked = (PACKED_glIndexFuncEXT *)packed;
             ARGS_glIndexFuncEXT args = unpacked->args;
-            printf("glIndexFuncEXT(0x%04X, %p);\n", args.func, args.ref);
+            printf("glIndexFuncEXT(0x%04X, %0.2f);\n", args.func, args.ref);
             break;
         }
         case glIndexMask_INDEX: {
@@ -27296,7 +27296,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glIndexxOES_INDEX: {
             PACKED_glIndexxOES *unpacked = (PACKED_glIndexxOES *)packed;
             ARGS_glIndexxOES args = unpacked->args;
-            printf("glIndexxOES(%p);\n", args.component);
+            printf("glIndexxOES(%d);\n", args.component);
             break;
         }
         case glIndexxvOES_INDEX: {
@@ -27342,7 +27342,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glInvalidateBufferSubData_INDEX: {
             PACKED_glInvalidateBufferSubData *unpacked = (PACKED_glInvalidateBufferSubData *)packed;
             ARGS_glInvalidateBufferSubData args = unpacked->args;
-            printf("glInvalidateBufferSubData(%u, %d, %d);\n", args.buffer, args.offset, args.length);
+            printf("glInvalidateBufferSubData(%u, %td, %td);\n", args.buffer, args.offset, args.length);
             break;
         }
         case glInvalidateFramebuffer_INDEX: {
@@ -27438,7 +27438,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glIsImageHandleResidentNV_INDEX: {
             PACKED_glIsImageHandleResidentNV *unpacked = (PACKED_glIsImageHandleResidentNV *)packed;
             ARGS_glIsImageHandleResidentNV args = unpacked->args;
-            printf("glIsImageHandleResidentNV(%p);\n", args.handle);
+            printf("glIsImageHandleResidentNV(%llu);\n", args.handle);
             break;
         }
         case glIsList_INDEX: {
@@ -27576,7 +27576,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glIsTextureHandleResidentNV_INDEX: {
             PACKED_glIsTextureHandleResidentNV *unpacked = (PACKED_glIsTextureHandleResidentNV *)packed;
             ARGS_glIsTextureHandleResidentNV args = unpacked->args;
-            printf("glIsTextureHandleResidentNV(%p);\n", args.handle);
+            printf("glIsTextureHandleResidentNV(%llu);\n", args.handle);
             break;
         }
         case glIsTransformFeedback_INDEX: {
@@ -27648,7 +27648,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glLightModelxOES_INDEX: {
             PACKED_glLightModelxOES *unpacked = (PACKED_glLightModelxOES *)packed;
             ARGS_glLightModelxOES args = unpacked->args;
-            printf("glLightModelxOES(0x%04X, %p);\n", args.pname, args.param);
+            printf("glLightModelxOES(0x%04X, %d);\n", args.pname, args.param);
             break;
         }
         case glLightModelxvOES_INDEX: {
@@ -27684,7 +27684,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glLightxOES_INDEX: {
             PACKED_glLightxOES *unpacked = (PACKED_glLightxOES *)packed;
             ARGS_glLightxOES args = unpacked->args;
-            printf("glLightxOES(0x%04X, 0x%04X, %p);\n", args.light, args.pname, args.param);
+            printf("glLightxOES(0x%04X, 0x%04X, %d);\n", args.light, args.pname, args.param);
             break;
         }
         case glLightxvOES_INDEX: {
@@ -27708,7 +27708,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glLineWidthxOES_INDEX: {
             PACKED_glLineWidthxOES *unpacked = (PACKED_glLineWidthxOES *)packed;
             ARGS_glLineWidthxOES args = unpacked->args;
-            printf("glLineWidthxOES(%p);\n", args.width);
+            printf("glLineWidthxOES(%d);\n", args.width);
             break;
         }
         case glLinkProgram_INDEX: {
@@ -27720,7 +27720,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glLinkProgramARB_INDEX: {
             PACKED_glLinkProgramARB *unpacked = (PACKED_glLinkProgramARB *)packed;
             ARGS_glLinkProgramARB args = unpacked->args;
-            printf("glLinkProgramARB(%p);\n", args.programObj);
+            printf("glLinkProgramARB(%u);\n", args.programObj);
             break;
         }
         case glListBase_INDEX: {
@@ -27850,13 +27850,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMakeImageHandleNonResidentNV_INDEX: {
             PACKED_glMakeImageHandleNonResidentNV *unpacked = (PACKED_glMakeImageHandleNonResidentNV *)packed;
             ARGS_glMakeImageHandleNonResidentNV args = unpacked->args;
-            printf("glMakeImageHandleNonResidentNV(%p);\n", args.handle);
+            printf("glMakeImageHandleNonResidentNV(%llu);\n", args.handle);
             break;
         }
         case glMakeImageHandleResidentNV_INDEX: {
             PACKED_glMakeImageHandleResidentNV *unpacked = (PACKED_glMakeImageHandleResidentNV *)packed;
             ARGS_glMakeImageHandleResidentNV args = unpacked->args;
-            printf("glMakeImageHandleResidentNV(%p, 0x%04X);\n", args.handle, args.access);
+            printf("glMakeImageHandleResidentNV(%llu, 0x%04X);\n", args.handle, args.access);
             break;
         }
         case glMakeNamedBufferNonResidentNV_INDEX: {
@@ -27874,13 +27874,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMakeTextureHandleNonResidentNV_INDEX: {
             PACKED_glMakeTextureHandleNonResidentNV *unpacked = (PACKED_glMakeTextureHandleNonResidentNV *)packed;
             ARGS_glMakeTextureHandleNonResidentNV args = unpacked->args;
-            printf("glMakeTextureHandleNonResidentNV(%p);\n", args.handle);
+            printf("glMakeTextureHandleNonResidentNV(%llu);\n", args.handle);
             break;
         }
         case glMakeTextureHandleResidentNV_INDEX: {
             PACKED_glMakeTextureHandleResidentNV *unpacked = (PACKED_glMakeTextureHandleResidentNV *)packed;
             ARGS_glMakeTextureHandleResidentNV args = unpacked->args;
-            printf("glMakeTextureHandleResidentNV(%p);\n", args.handle);
+            printf("glMakeTextureHandleResidentNV(%llu);\n", args.handle);
             break;
         }
         case glMap1d_INDEX: {
@@ -27898,7 +27898,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMap1xOES_INDEX: {
             PACKED_glMap1xOES *unpacked = (PACKED_glMap1xOES *)packed;
             ARGS_glMap1xOES args = unpacked->args;
-            printf("glMap1xOES(0x%04X, %p, %p, %d, %d, %p);\n", args.target, args.u1, args.u2, args.stride, args.order, args.points);
+            printf("glMap1xOES(0x%04X, %d, %d, %d, %d, %d);\n", args.target, args.u1, args.u2, args.stride, args.order, args.points);
             break;
         }
         case glMap2d_INDEX: {
@@ -27916,7 +27916,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMap2xOES_INDEX: {
             PACKED_glMap2xOES *unpacked = (PACKED_glMap2xOES *)packed;
             ARGS_glMap2xOES args = unpacked->args;
-            printf("glMap2xOES(0x%04X, %p, %p, %d, %d, %p, %p, %d, %d, %p);\n", args.target, args.u1, args.u2, args.ustride, args.uorder, args.v1, args.v2, args.vstride, args.vorder, args.points);
+            printf("glMap2xOES(0x%04X, %d, %d, %d, %d, %d, %d, %d, %d, %d);\n", args.target, args.u1, args.u2, args.ustride, args.uorder, args.v1, args.v2, args.vstride, args.vorder, args.points);
             break;
         }
         case glMapBuffer_INDEX: {
@@ -27934,7 +27934,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMapBufferRange_INDEX: {
             PACKED_glMapBufferRange *unpacked = (PACKED_glMapBufferRange *)packed;
             ARGS_glMapBufferRange args = unpacked->args;
-            printf("glMapBufferRange(0x%04X, %d, %d, %d);\n", args.target, args.offset, args.length, args.access);
+            printf("glMapBufferRange(0x%04X, %td, %td, %d);\n", args.target, args.offset, args.length, args.access);
             break;
         }
         case glMapControlPointsNV_INDEX: {
@@ -27958,7 +27958,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMapGrid1xOES_INDEX: {
             PACKED_glMapGrid1xOES *unpacked = (PACKED_glMapGrid1xOES *)packed;
             ARGS_glMapGrid1xOES args = unpacked->args;
-            printf("glMapGrid1xOES(%d, %p, %p);\n", args.n, args.u1, args.u2);
+            printf("glMapGrid1xOES(%d, %d, %d);\n", args.n, args.u1, args.u2);
             break;
         }
         case glMapGrid2d_INDEX: {
@@ -27976,7 +27976,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMapGrid2xOES_INDEX: {
             PACKED_glMapGrid2xOES *unpacked = (PACKED_glMapGrid2xOES *)packed;
             ARGS_glMapGrid2xOES args = unpacked->args;
-            printf("glMapGrid2xOES(%d, %p, %p, %p, %p);\n", args.n, args.u1, args.u2, args.v1, args.v2);
+            printf("glMapGrid2xOES(%d, %d, %d, %d, %d);\n", args.n, args.u1, args.u2, args.v1, args.v2);
             break;
         }
         case glMapNamedBufferEXT_INDEX: {
@@ -27988,7 +27988,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMapNamedBufferRangeEXT_INDEX: {
             PACKED_glMapNamedBufferRangeEXT *unpacked = (PACKED_glMapNamedBufferRangeEXT *)packed;
             ARGS_glMapNamedBufferRangeEXT args = unpacked->args;
-            printf("glMapNamedBufferRangeEXT(%u, %d, %d, %d);\n", args.buffer, args.offset, args.length, args.access);
+            printf("glMapNamedBufferRangeEXT(%u, %td, %td, %d);\n", args.buffer, args.offset, args.length, args.access);
             break;
         }
         case glMapObjectBufferATI_INDEX: {
@@ -28066,7 +28066,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMaterialxOES_INDEX: {
             PACKED_glMaterialxOES *unpacked = (PACKED_glMaterialxOES *)packed;
             ARGS_glMaterialxOES args = unpacked->args;
-            printf("glMaterialxOES(0x%04X, 0x%04X, %p);\n", args.face, args.pname, args.param);
+            printf("glMaterialxOES(0x%04X, 0x%04X, %d);\n", args.face, args.pname, args.param);
             break;
         }
         case glMaterialxvOES_INDEX: {
@@ -28450,7 +28450,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord1hNV_INDEX: {
             PACKED_glMultiTexCoord1hNV *unpacked = (PACKED_glMultiTexCoord1hNV *)packed;
             ARGS_glMultiTexCoord1hNV args = unpacked->args;
-            printf("glMultiTexCoord1hNV(0x%04X, %p);\n", args.target, args.s);
+            printf("glMultiTexCoord1hNV(0x%04X, %d);\n", args.target, args.s);
             break;
         }
         case glMultiTexCoord1hvNV_INDEX: {
@@ -28510,7 +28510,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord1xOES_INDEX: {
             PACKED_glMultiTexCoord1xOES *unpacked = (PACKED_glMultiTexCoord1xOES *)packed;
             ARGS_glMultiTexCoord1xOES args = unpacked->args;
-            printf("glMultiTexCoord1xOES(0x%04X, %p);\n", args.texture, args.s);
+            printf("glMultiTexCoord1xOES(0x%04X, %d);\n", args.texture, args.s);
             break;
         }
         case glMultiTexCoord1xvOES_INDEX: {
@@ -28582,7 +28582,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord2hNV_INDEX: {
             PACKED_glMultiTexCoord2hNV *unpacked = (PACKED_glMultiTexCoord2hNV *)packed;
             ARGS_glMultiTexCoord2hNV args = unpacked->args;
-            printf("glMultiTexCoord2hNV(0x%04X, %p, %p);\n", args.target, args.s, args.t);
+            printf("glMultiTexCoord2hNV(0x%04X, %d, %d);\n", args.target, args.s, args.t);
             break;
         }
         case glMultiTexCoord2hvNV_INDEX: {
@@ -28642,7 +28642,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord2xOES_INDEX: {
             PACKED_glMultiTexCoord2xOES *unpacked = (PACKED_glMultiTexCoord2xOES *)packed;
             ARGS_glMultiTexCoord2xOES args = unpacked->args;
-            printf("glMultiTexCoord2xOES(0x%04X, %p, %p);\n", args.texture, args.s, args.t);
+            printf("glMultiTexCoord2xOES(0x%04X, %d, %d);\n", args.texture, args.s, args.t);
             break;
         }
         case glMultiTexCoord2xvOES_INDEX: {
@@ -28714,7 +28714,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord3hNV_INDEX: {
             PACKED_glMultiTexCoord3hNV *unpacked = (PACKED_glMultiTexCoord3hNV *)packed;
             ARGS_glMultiTexCoord3hNV args = unpacked->args;
-            printf("glMultiTexCoord3hNV(0x%04X, %p, %p, %p);\n", args.target, args.s, args.t, args.r);
+            printf("glMultiTexCoord3hNV(0x%04X, %d, %d, %d);\n", args.target, args.s, args.t, args.r);
             break;
         }
         case glMultiTexCoord3hvNV_INDEX: {
@@ -28774,7 +28774,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord3xOES_INDEX: {
             PACKED_glMultiTexCoord3xOES *unpacked = (PACKED_glMultiTexCoord3xOES *)packed;
             ARGS_glMultiTexCoord3xOES args = unpacked->args;
-            printf("glMultiTexCoord3xOES(0x%04X, %p, %p, %p);\n", args.texture, args.s, args.t, args.r);
+            printf("glMultiTexCoord3xOES(0x%04X, %d, %d, %d);\n", args.texture, args.s, args.t, args.r);
             break;
         }
         case glMultiTexCoord3xvOES_INDEX: {
@@ -28846,7 +28846,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord4hNV_INDEX: {
             PACKED_glMultiTexCoord4hNV *unpacked = (PACKED_glMultiTexCoord4hNV *)packed;
             ARGS_glMultiTexCoord4hNV args = unpacked->args;
-            printf("glMultiTexCoord4hNV(0x%04X, %p, %p, %p, %p);\n", args.target, args.s, args.t, args.r, args.q);
+            printf("glMultiTexCoord4hNV(0x%04X, %d, %d, %d, %d);\n", args.target, args.s, args.t, args.r, args.q);
             break;
         }
         case glMultiTexCoord4hvNV_INDEX: {
@@ -28906,7 +28906,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMultiTexCoord4xOES_INDEX: {
             PACKED_glMultiTexCoord4xOES *unpacked = (PACKED_glMultiTexCoord4xOES *)packed;
             ARGS_glMultiTexCoord4xOES args = unpacked->args;
-            printf("glMultiTexCoord4xOES(0x%04X, %p, %p, %p, %p);\n", args.texture, args.s, args.t, args.r, args.q);
+            printf("glMultiTexCoord4xOES(0x%04X, %d, %d, %d, %d);\n", args.texture, args.s, args.t, args.r, args.q);
             break;
         }
         case glMultiTexCoord4xvOES_INDEX: {
@@ -29110,19 +29110,19 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glNamedBufferDataEXT_INDEX: {
             PACKED_glNamedBufferDataEXT *unpacked = (PACKED_glNamedBufferDataEXT *)packed;
             ARGS_glNamedBufferDataEXT args = unpacked->args;
-            printf("glNamedBufferDataEXT(%u, %d, %p, 0x%04X);\n", args.buffer, args.size, args.data, args.usage);
+            printf("glNamedBufferDataEXT(%u, %td, %p, 0x%04X);\n", args.buffer, args.size, args.data, args.usage);
             break;
         }
         case glNamedBufferSubDataEXT_INDEX: {
             PACKED_glNamedBufferSubDataEXT *unpacked = (PACKED_glNamedBufferSubDataEXT *)packed;
             ARGS_glNamedBufferSubDataEXT args = unpacked->args;
-            printf("glNamedBufferSubDataEXT(%u, %d, %d, %p);\n", args.buffer, args.offset, args.size, args.data);
+            printf("glNamedBufferSubDataEXT(%u, %td, %td, %p);\n", args.buffer, args.offset, args.size, args.data);
             break;
         }
         case glNamedCopyBufferSubDataEXT_INDEX: {
             PACKED_glNamedCopyBufferSubDataEXT *unpacked = (PACKED_glNamedCopyBufferSubDataEXT *)packed;
             ARGS_glNamedCopyBufferSubDataEXT args = unpacked->args;
-            printf("glNamedCopyBufferSubDataEXT(%u, %u, %d, %d, %d);\n", args.readBuffer, args.writeBuffer, args.readOffset, args.writeOffset, args.size);
+            printf("glNamedCopyBufferSubDataEXT(%u, %u, %td, %td, %td);\n", args.readBuffer, args.writeBuffer, args.readOffset, args.writeOffset, args.size);
             break;
         }
         case glNamedFramebufferParameteriEXT_INDEX: {
@@ -29332,7 +29332,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glNormal3hNV_INDEX: {
             PACKED_glNormal3hNV *unpacked = (PACKED_glNormal3hNV *)packed;
             ARGS_glNormal3hNV args = unpacked->args;
-            printf("glNormal3hNV(%p, %p, %p);\n", args.nx, args.ny, args.nz);
+            printf("glNormal3hNV(%d, %d, %d);\n", args.nx, args.ny, args.nz);
             break;
         }
         case glNormal3hvNV_INDEX: {
@@ -29368,7 +29368,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glNormal3xOES_INDEX: {
             PACKED_glNormal3xOES *unpacked = (PACKED_glNormal3xOES *)packed;
             ARGS_glNormal3xOES args = unpacked->args;
-            printf("glNormal3xOES(%p, %p, %p);\n", args.nx, args.ny, args.nz);
+            printf("glNormal3xOES(%d, %d, %d);\n", args.nx, args.ny, args.nz);
             break;
         }
         case glNormal3xvOES_INDEX: {
@@ -29518,7 +29518,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glOrthoxOES_INDEX: {
             PACKED_glOrthoxOES *unpacked = (PACKED_glOrthoxOES *)packed;
             ARGS_glOrthoxOES args = unpacked->args;
-            printf("glOrthoxOES(%p, %p, %p, %p, %p, %p);\n", args.l, args.r, args.b, args.t, args.n, args.f);
+            printf("glOrthoxOES(%d, %d, %d, %d, %d, %d);\n", args.l, args.r, args.b, args.t, args.n, args.f);
             break;
         }
         case glPNTrianglesfATI_INDEX: {
@@ -29548,7 +29548,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPassThroughxOES_INDEX: {
             PACKED_glPassThroughxOES *unpacked = (PACKED_glPassThroughxOES *)packed;
             ARGS_glPassThroughxOES args = unpacked->args;
-            printf("glPassThroughxOES(%p);\n", args.token);
+            printf("glPassThroughxOES(%d);\n", args.token);
             break;
         }
         case glPatchParameterfv_INDEX: {
@@ -29724,7 +29724,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPixelStorex_INDEX: {
             PACKED_glPixelStorex *unpacked = (PACKED_glPixelStorex *)packed;
             ARGS_glPixelStorex args = unpacked->args;
-            printf("glPixelStorex(0x%04X, %p);\n", args.pname, args.param);
+            printf("glPixelStorex(0x%04X, %d);\n", args.pname, args.param);
             break;
         }
         case glPixelTexGenParameterfSGIS_INDEX: {
@@ -29772,7 +29772,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPixelTransferxOES_INDEX: {
             PACKED_glPixelTransferxOES *unpacked = (PACKED_glPixelTransferxOES *)packed;
             ARGS_glPixelTransferxOES args = unpacked->args;
-            printf("glPixelTransferxOES(0x%04X, %p);\n", args.pname, args.param);
+            printf("glPixelTransferxOES(0x%04X, %d);\n", args.pname, args.param);
             break;
         }
         case glPixelTransformParameterfEXT_INDEX: {
@@ -29808,7 +29808,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPixelZoomxOES_INDEX: {
             PACKED_glPixelZoomxOES *unpacked = (PACKED_glPixelZoomxOES *)packed;
             ARGS_glPixelZoomxOES args = unpacked->args;
-            printf("glPixelZoomxOES(%p, %p);\n", args.xfactor, args.yfactor);
+            printf("glPixelZoomxOES(%d, %d);\n", args.xfactor, args.yfactor);
             break;
         }
         case glPointAlongPathNV_INDEX: {
@@ -29904,7 +29904,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPointSizexOES_INDEX: {
             PACKED_glPointSizexOES *unpacked = (PACKED_glPointSizexOES *)packed;
             ARGS_glPointSizexOES args = unpacked->args;
-            printf("glPointSizexOES(%p);\n", args.size);
+            printf("glPointSizexOES(%d);\n", args.size);
             break;
         }
         case glPollAsyncSGIX_INDEX: {
@@ -29940,7 +29940,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPolygonOffsetxOES_INDEX: {
             PACKED_glPolygonOffsetxOES *unpacked = (PACKED_glPolygonOffsetxOES *)packed;
             ARGS_glPolygonOffsetxOES args = unpacked->args;
-            printf("glPolygonOffsetxOES(%p, %p);\n", args.factor, args.units);
+            printf("glPolygonOffsetxOES(%d, %d);\n", args.factor, args.units);
             break;
         }
         case glPolygonStipple_INDEX: {
@@ -29972,13 +29972,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPresentFrameDualFillNV_INDEX: {
             PACKED_glPresentFrameDualFillNV *unpacked = (PACKED_glPresentFrameDualFillNV *)packed;
             ARGS_glPresentFrameDualFillNV args = unpacked->args;
-            printf("glPresentFrameDualFillNV(%u, %p, %u, %u, 0x%04X, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u);\n", args.video_slot, args.minPresentTime, args.beginPresentTimeId, args.presentDurationId, args.type, args.target0, args.fill0, args.target1, args.fill1, args.target2, args.fill2, args.target3, args.fill3);
+            printf("glPresentFrameDualFillNV(%u, %llu, %u, %u, 0x%04X, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u);\n", args.video_slot, args.minPresentTime, args.beginPresentTimeId, args.presentDurationId, args.type, args.target0, args.fill0, args.target1, args.fill1, args.target2, args.fill2, args.target3, args.fill3);
             break;
         }
         case glPresentFrameKeyedNV_INDEX: {
             PACKED_glPresentFrameKeyedNV *unpacked = (PACKED_glPresentFrameKeyedNV *)packed;
             ARGS_glPresentFrameKeyedNV args = unpacked->args;
-            printf("glPresentFrameKeyedNV(%u, %p, %u, %u, 0x%04X, 0x%04X, %u, %u, 0x%04X, %u, %u);\n", args.video_slot, args.minPresentTime, args.beginPresentTimeId, args.presentDurationId, args.type, args.target0, args.fill0, args.key0, args.target1, args.fill1, args.key1);
+            printf("glPresentFrameKeyedNV(%u, %llu, %u, %u, 0x%04X, 0x%04X, %u, %u, 0x%04X, %u, %u);\n", args.video_slot, args.minPresentTime, args.beginPresentTimeId, args.presentDurationId, args.type, args.target0, args.fill0, args.key0, args.target1, args.fill1, args.key1);
             break;
         }
         case glPrimitiveRestartIndex_INDEX: {
@@ -30318,7 +30318,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform1i64NV_INDEX: {
             PACKED_glProgramUniform1i64NV *unpacked = (PACKED_glProgramUniform1i64NV *)packed;
             ARGS_glProgramUniform1i64NV args = unpacked->args;
-            printf("glProgramUniform1i64NV(%u, %d, %p);\n", args.program, args.location, args.x);
+            printf("glProgramUniform1i64NV(%u, %d, %lld);\n", args.program, args.location, args.x);
             break;
         }
         case glProgramUniform1i64vNV_INDEX: {
@@ -30354,7 +30354,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform1ui64NV_INDEX: {
             PACKED_glProgramUniform1ui64NV *unpacked = (PACKED_glProgramUniform1ui64NV *)packed;
             ARGS_glProgramUniform1ui64NV args = unpacked->args;
-            printf("glProgramUniform1ui64NV(%u, %d, %p);\n", args.program, args.location, args.x);
+            printf("glProgramUniform1ui64NV(%u, %d, %llu);\n", args.program, args.location, args.x);
             break;
         }
         case glProgramUniform1ui64vNV_INDEX: {
@@ -30438,7 +30438,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform2i64NV_INDEX: {
             PACKED_glProgramUniform2i64NV *unpacked = (PACKED_glProgramUniform2i64NV *)packed;
             ARGS_glProgramUniform2i64NV args = unpacked->args;
-            printf("glProgramUniform2i64NV(%u, %d, %p, %p);\n", args.program, args.location, args.x, args.y);
+            printf("glProgramUniform2i64NV(%u, %d, %lld, %lld);\n", args.program, args.location, args.x, args.y);
             break;
         }
         case glProgramUniform2i64vNV_INDEX: {
@@ -30474,7 +30474,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform2ui64NV_INDEX: {
             PACKED_glProgramUniform2ui64NV *unpacked = (PACKED_glProgramUniform2ui64NV *)packed;
             ARGS_glProgramUniform2ui64NV args = unpacked->args;
-            printf("glProgramUniform2ui64NV(%u, %d, %p, %p);\n", args.program, args.location, args.x, args.y);
+            printf("glProgramUniform2ui64NV(%u, %d, %llu, %llu);\n", args.program, args.location, args.x, args.y);
             break;
         }
         case glProgramUniform2ui64vNV_INDEX: {
@@ -30558,7 +30558,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform3i64NV_INDEX: {
             PACKED_glProgramUniform3i64NV *unpacked = (PACKED_glProgramUniform3i64NV *)packed;
             ARGS_glProgramUniform3i64NV args = unpacked->args;
-            printf("glProgramUniform3i64NV(%u, %d, %p, %p, %p);\n", args.program, args.location, args.x, args.y, args.z);
+            printf("glProgramUniform3i64NV(%u, %d, %lld, %lld, %lld);\n", args.program, args.location, args.x, args.y, args.z);
             break;
         }
         case glProgramUniform3i64vNV_INDEX: {
@@ -30594,7 +30594,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform3ui64NV_INDEX: {
             PACKED_glProgramUniform3ui64NV *unpacked = (PACKED_glProgramUniform3ui64NV *)packed;
             ARGS_glProgramUniform3ui64NV args = unpacked->args;
-            printf("glProgramUniform3ui64NV(%u, %d, %p, %p, %p);\n", args.program, args.location, args.x, args.y, args.z);
+            printf("glProgramUniform3ui64NV(%u, %d, %llu, %llu, %llu);\n", args.program, args.location, args.x, args.y, args.z);
             break;
         }
         case glProgramUniform3ui64vNV_INDEX: {
@@ -30678,7 +30678,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform4i64NV_INDEX: {
             PACKED_glProgramUniform4i64NV *unpacked = (PACKED_glProgramUniform4i64NV *)packed;
             ARGS_glProgramUniform4i64NV args = unpacked->args;
-            printf("glProgramUniform4i64NV(%u, %d, %p, %p, %p, %p);\n", args.program, args.location, args.x, args.y, args.z, args.w);
+            printf("glProgramUniform4i64NV(%u, %d, %lld, %lld, %lld, %lld);\n", args.program, args.location, args.x, args.y, args.z, args.w);
             break;
         }
         case glProgramUniform4i64vNV_INDEX: {
@@ -30714,7 +30714,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform4ui64NV_INDEX: {
             PACKED_glProgramUniform4ui64NV *unpacked = (PACKED_glProgramUniform4ui64NV *)packed;
             ARGS_glProgramUniform4ui64NV args = unpacked->args;
-            printf("glProgramUniform4ui64NV(%u, %d, %p, %p, %p, %p);\n", args.program, args.location, args.x, args.y, args.z, args.w);
+            printf("glProgramUniform4ui64NV(%u, %d, %llu, %llu, %llu, %llu);\n", args.program, args.location, args.x, args.y, args.z, args.w);
             break;
         }
         case glProgramUniform4ui64vNV_INDEX: {
@@ -30744,7 +30744,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniformHandleui64NV_INDEX: {
             PACKED_glProgramUniformHandleui64NV *unpacked = (PACKED_glProgramUniformHandleui64NV *)packed;
             ARGS_glProgramUniformHandleui64NV args = unpacked->args;
-            printf("glProgramUniformHandleui64NV(%u, %d, %p);\n", args.program, args.location, args.value);
+            printf("glProgramUniformHandleui64NV(%u, %d, %llu);\n", args.program, args.location, args.value);
             break;
         }
         case glProgramUniformHandleui64vNV_INDEX: {
@@ -30972,7 +30972,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniformui64NV_INDEX: {
             PACKED_glProgramUniformui64NV *unpacked = (PACKED_glProgramUniformui64NV *)packed;
             ARGS_glProgramUniformui64NV args = unpacked->args;
-            printf("glProgramUniformui64NV(%u, %d, %p);\n", args.program, args.location, args.value);
+            printf("glProgramUniformui64NV(%u, %d, %llu);\n", args.program, args.location, args.value);
             break;
         }
         case glProgramUniformui64vNV_INDEX: {
@@ -31096,7 +31096,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glRasterPos2xOES_INDEX: {
             PACKED_glRasterPos2xOES *unpacked = (PACKED_glRasterPos2xOES *)packed;
             ARGS_glRasterPos2xOES args = unpacked->args;
-            printf("glRasterPos2xOES(%p, %p);\n", args.x, args.y);
+            printf("glRasterPos2xOES(%d, %d);\n", args.x, args.y);
             break;
         }
         case glRasterPos2xvOES_INDEX: {
@@ -31156,7 +31156,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glRasterPos3xOES_INDEX: {
             PACKED_glRasterPos3xOES *unpacked = (PACKED_glRasterPos3xOES *)packed;
             ARGS_glRasterPos3xOES args = unpacked->args;
-            printf("glRasterPos3xOES(%p, %p, %p);\n", args.x, args.y, args.z);
+            printf("glRasterPos3xOES(%d, %d, %d);\n", args.x, args.y, args.z);
             break;
         }
         case glRasterPos3xvOES_INDEX: {
@@ -31216,7 +31216,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glRasterPos4xOES_INDEX: {
             PACKED_glRasterPos4xOES *unpacked = (PACKED_glRasterPos4xOES *)packed;
             ARGS_glRasterPos4xOES args = unpacked->args;
-            printf("glRasterPos4xOES(%p, %p, %p, %p);\n", args.x, args.y, args.z, args.w);
+            printf("glRasterPos4xOES(%d, %d, %d, %d);\n", args.x, args.y, args.z, args.w);
             break;
         }
         case glRasterPos4xvOES_INDEX: {
@@ -31300,7 +31300,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glRectxOES_INDEX: {
             PACKED_glRectxOES *unpacked = (PACKED_glRectxOES *)packed;
             ARGS_glRectxOES args = unpacked->args;
-            printf("glRectxOES(%p, %p, %p, %p);\n", args.x1, args.y1, args.x2, args.y2);
+            printf("glRectxOES(%d, %d, %d, %d);\n", args.x1, args.y1, args.x2, args.y2);
             break;
         }
         case glRectxvOES_INDEX: {
@@ -31550,7 +31550,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glRotatexOES_INDEX: {
             PACKED_glRotatexOES *unpacked = (PACKED_glRotatexOES *)packed;
             ARGS_glRotatexOES args = unpacked->args;
-            printf("glRotatexOES(%p, %p, %p, %p);\n", args.angle, args.x, args.y, args.z);
+            printf("glRotatexOES(%d, %d, %d, %d);\n", args.angle, args.x, args.y, args.z);
             break;
         }
         case glSampleCoverage_INDEX: {
@@ -31568,7 +31568,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glSampleCoverageOES_INDEX: {
             PACKED_glSampleCoverageOES *unpacked = (PACKED_glSampleCoverageOES *)packed;
             ARGS_glSampleCoverageOES args = unpacked->args;
-            printf("glSampleCoverageOES(%p, %d);\n", args.value, args.invert);
+            printf("glSampleCoverageOES(%d, %d);\n", args.value, args.invert);
             break;
         }
         case glSampleMapATI_INDEX: {
@@ -31580,7 +31580,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glSampleMaskEXT_INDEX: {
             PACKED_glSampleMaskEXT *unpacked = (PACKED_glSampleMaskEXT *)packed;
             ARGS_glSampleMaskEXT args = unpacked->args;
-            printf("glSampleMaskEXT(%p, %d);\n", args.value, args.invert);
+            printf("glSampleMaskEXT(%0.2f, %d);\n", args.value, args.invert);
             break;
         }
         case glSampleMaskIndexedNV_INDEX: {
@@ -31592,7 +31592,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glSampleMaskSGIS_INDEX: {
             PACKED_glSampleMaskSGIS *unpacked = (PACKED_glSampleMaskSGIS *)packed;
             ARGS_glSampleMaskSGIS args = unpacked->args;
-            printf("glSampleMaskSGIS(%p, %d);\n", args.value, args.invert);
+            printf("glSampleMaskSGIS(%0.2f, %d);\n", args.value, args.invert);
             break;
         }
         case glSampleMaski_INDEX: {
@@ -31664,7 +31664,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glScalexOES_INDEX: {
             PACKED_glScalexOES *unpacked = (PACKED_glScalexOES *)packed;
             ARGS_glScalexOES args = unpacked->args;
-            printf("glScalexOES(%p, %p, %p);\n", args.x, args.y, args.z);
+            printf("glScalexOES(%d, %d, %d);\n", args.x, args.y, args.z);
             break;
         }
         case glScissor_INDEX: {
@@ -31766,7 +31766,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glSecondaryColor3hNV_INDEX: {
             PACKED_glSecondaryColor3hNV *unpacked = (PACKED_glSecondaryColor3hNV *)packed;
             ARGS_glSecondaryColor3hNV args = unpacked->args;
-            printf("glSecondaryColor3hNV(%p, %p, %p);\n", args.red, args.green, args.blue);
+            printf("glSecondaryColor3hNV(%d, %d, %d);\n", args.red, args.green, args.blue);
             break;
         }
         case glSecondaryColor3hvNV_INDEX: {
@@ -32030,7 +32030,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glShaderSourceARB_INDEX: {
             PACKED_glShaderSourceARB *unpacked = (PACKED_glShaderSourceARB *)packed;
             ARGS_glShaderSourceARB args = unpacked->args;
-            printf("glShaderSourceARB(%p, %d, %p, %p);\n", args.shaderObj, args.count, args.string, args.length);
+            printf("glShaderSourceARB(%u, %d, %p, %p);\n", args.shaderObj, args.count, args.string, args.length);
             break;
         }
         case glShaderStorageBlockBinding_INDEX: {
@@ -32308,7 +32308,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexBufferRange_INDEX: {
             PACKED_glTexBufferRange *unpacked = (PACKED_glTexBufferRange *)packed;
             ARGS_glTexBufferRange args = unpacked->args;
-            printf("glTexBufferRange(0x%04X, 0x%04X, %u, %d, %d);\n", args.target, args.internalformat, args.buffer, args.offset, args.size);
+            printf("glTexBufferRange(0x%04X, 0x%04X, %u, %td, %td);\n", args.target, args.internalformat, args.buffer, args.offset, args.size);
             break;
         }
         case glTexBumpParameterfvATI_INDEX: {
@@ -32362,7 +32362,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord1hNV_INDEX: {
             PACKED_glTexCoord1hNV *unpacked = (PACKED_glTexCoord1hNV *)packed;
             ARGS_glTexCoord1hNV args = unpacked->args;
-            printf("glTexCoord1hNV(%p);\n", args.s);
+            printf("glTexCoord1hNV(%d);\n", args.s);
             break;
         }
         case glTexCoord1hvNV_INDEX: {
@@ -32398,7 +32398,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord1xOES_INDEX: {
             PACKED_glTexCoord1xOES *unpacked = (PACKED_glTexCoord1xOES *)packed;
             ARGS_glTexCoord1xOES args = unpacked->args;
-            printf("glTexCoord1xOES(%p);\n", args.s);
+            printf("glTexCoord1xOES(%d);\n", args.s);
             break;
         }
         case glTexCoord1xvOES_INDEX: {
@@ -32506,7 +32506,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord2hNV_INDEX: {
             PACKED_glTexCoord2hNV *unpacked = (PACKED_glTexCoord2hNV *)packed;
             ARGS_glTexCoord2hNV args = unpacked->args;
-            printf("glTexCoord2hNV(%p, %p);\n", args.s, args.t);
+            printf("glTexCoord2hNV(%d, %d);\n", args.s, args.t);
             break;
         }
         case glTexCoord2hvNV_INDEX: {
@@ -32542,7 +32542,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord2xOES_INDEX: {
             PACKED_glTexCoord2xOES *unpacked = (PACKED_glTexCoord2xOES *)packed;
             ARGS_glTexCoord2xOES args = unpacked->args;
-            printf("glTexCoord2xOES(%p, %p);\n", args.s, args.t);
+            printf("glTexCoord2xOES(%d, %d);\n", args.s, args.t);
             break;
         }
         case glTexCoord2xvOES_INDEX: {
@@ -32590,7 +32590,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord3hNV_INDEX: {
             PACKED_glTexCoord3hNV *unpacked = (PACKED_glTexCoord3hNV *)packed;
             ARGS_glTexCoord3hNV args = unpacked->args;
-            printf("glTexCoord3hNV(%p, %p, %p);\n", args.s, args.t, args.r);
+            printf("glTexCoord3hNV(%d, %d, %d);\n", args.s, args.t, args.r);
             break;
         }
         case glTexCoord3hvNV_INDEX: {
@@ -32626,7 +32626,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord3xOES_INDEX: {
             PACKED_glTexCoord3xOES *unpacked = (PACKED_glTexCoord3xOES *)packed;
             ARGS_glTexCoord3xOES args = unpacked->args;
-            printf("glTexCoord3xOES(%p, %p, %p);\n", args.s, args.t, args.r);
+            printf("glTexCoord3xOES(%d, %d, %d);\n", args.s, args.t, args.r);
             break;
         }
         case glTexCoord3xvOES_INDEX: {
@@ -32698,7 +32698,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord4hNV_INDEX: {
             PACKED_glTexCoord4hNV *unpacked = (PACKED_glTexCoord4hNV *)packed;
             ARGS_glTexCoord4hNV args = unpacked->args;
-            printf("glTexCoord4hNV(%p, %p, %p, %p);\n", args.s, args.t, args.r, args.q);
+            printf("glTexCoord4hNV(%d, %d, %d, %d);\n", args.s, args.t, args.r, args.q);
             break;
         }
         case glTexCoord4hvNV_INDEX: {
@@ -32734,7 +32734,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexCoord4xOES_INDEX: {
             PACKED_glTexCoord4xOES *unpacked = (PACKED_glTexCoord4xOES *)packed;
             ARGS_glTexCoord4xOES args = unpacked->args;
-            printf("glTexCoord4xOES(%p, %p, %p, %p);\n", args.s, args.t, args.r, args.q);
+            printf("glTexCoord4xOES(%d, %d, %d, %d);\n", args.s, args.t, args.r, args.q);
             break;
         }
         case glTexCoord4xvOES_INDEX: {
@@ -32848,7 +32848,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexEnvxOES_INDEX: {
             PACKED_glTexEnvxOES *unpacked = (PACKED_glTexEnvxOES *)packed;
             ARGS_glTexEnvxOES args = unpacked->args;
-            printf("glTexEnvxOES(0x%04X, 0x%04X, %p);\n", args.target, args.pname, args.param);
+            printf("glTexEnvxOES(0x%04X, 0x%04X, %d);\n", args.target, args.pname, args.param);
             break;
         }
         case glTexEnvxvOES_INDEX: {
@@ -32902,7 +32902,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexGenxOES_INDEX: {
             PACKED_glTexGenxOES *unpacked = (PACKED_glTexGenxOES *)packed;
             ARGS_glTexGenxOES args = unpacked->args;
-            printf("glTexGenxOES(0x%04X, 0x%04X, %p);\n", args.coord, args.pname, args.param);
+            printf("glTexGenxOES(0x%04X, 0x%04X, %d);\n", args.coord, args.pname, args.param);
             break;
         }
         case glTexGenxvOES_INDEX: {
@@ -33016,7 +33016,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTexParameterxOES_INDEX: {
             PACKED_glTexParameterxOES *unpacked = (PACKED_glTexParameterxOES *)packed;
             ARGS_glTexParameterxOES args = unpacked->args;
-            printf("glTexParameterxOES(0x%04X, 0x%04X, %p);\n", args.target, args.pname, args.param);
+            printf("glTexParameterxOES(0x%04X, 0x%04X, %d);\n", args.target, args.pname, args.param);
             break;
         }
         case glTexParameterxvOES_INDEX: {
@@ -33122,7 +33122,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTextureBufferRangeEXT_INDEX: {
             PACKED_glTextureBufferRangeEXT *unpacked = (PACKED_glTextureBufferRangeEXT *)packed;
             ARGS_glTextureBufferRangeEXT args = unpacked->args;
-            printf("glTextureBufferRangeEXT(%u, 0x%04X, 0x%04X, %u, %d, %d);\n", args.texture, args.target, args.internalformat, args.buffer, args.offset, args.size);
+            printf("glTextureBufferRangeEXT(%u, 0x%04X, 0x%04X, %u, %td, %td);\n", args.texture, args.target, args.internalformat, args.buffer, args.offset, args.size);
             break;
         }
         case glTextureColorMaskSGIS_INDEX: {
@@ -33356,7 +33356,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glTranslatexOES_INDEX: {
             PACKED_glTranslatexOES *unpacked = (PACKED_glTranslatexOES *)packed;
             ARGS_glTranslatexOES args = unpacked->args;
-            printf("glTranslatexOES(%p, %p, %p);\n", args.x, args.y, args.z);
+            printf("glTranslatexOES(%d, %d, %d);\n", args.x, args.y, args.z);
             break;
         }
         case glUniform1d_INDEX: {
@@ -33404,7 +33404,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform1i64NV_INDEX: {
             PACKED_glUniform1i64NV *unpacked = (PACKED_glUniform1i64NV *)packed;
             ARGS_glUniform1i64NV args = unpacked->args;
-            printf("glUniform1i64NV(%d, %p);\n", args.location, args.x);
+            printf("glUniform1i64NV(%d, %lld);\n", args.location, args.x);
             break;
         }
         case glUniform1i64vNV_INDEX: {
@@ -33440,7 +33440,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform1ui64NV_INDEX: {
             PACKED_glUniform1ui64NV *unpacked = (PACKED_glUniform1ui64NV *)packed;
             ARGS_glUniform1ui64NV args = unpacked->args;
-            printf("glUniform1ui64NV(%d, %p);\n", args.location, args.x);
+            printf("glUniform1ui64NV(%d, %llu);\n", args.location, args.x);
             break;
         }
         case glUniform1ui64vNV_INDEX: {
@@ -33512,7 +33512,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform2i64NV_INDEX: {
             PACKED_glUniform2i64NV *unpacked = (PACKED_glUniform2i64NV *)packed;
             ARGS_glUniform2i64NV args = unpacked->args;
-            printf("glUniform2i64NV(%d, %p, %p);\n", args.location, args.x, args.y);
+            printf("glUniform2i64NV(%d, %lld, %lld);\n", args.location, args.x, args.y);
             break;
         }
         case glUniform2i64vNV_INDEX: {
@@ -33548,7 +33548,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform2ui64NV_INDEX: {
             PACKED_glUniform2ui64NV *unpacked = (PACKED_glUniform2ui64NV *)packed;
             ARGS_glUniform2ui64NV args = unpacked->args;
-            printf("glUniform2ui64NV(%d, %p, %p);\n", args.location, args.x, args.y);
+            printf("glUniform2ui64NV(%d, %llu, %llu);\n", args.location, args.x, args.y);
             break;
         }
         case glUniform2ui64vNV_INDEX: {
@@ -33620,7 +33620,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform3i64NV_INDEX: {
             PACKED_glUniform3i64NV *unpacked = (PACKED_glUniform3i64NV *)packed;
             ARGS_glUniform3i64NV args = unpacked->args;
-            printf("glUniform3i64NV(%d, %p, %p, %p);\n", args.location, args.x, args.y, args.z);
+            printf("glUniform3i64NV(%d, %lld, %lld, %lld);\n", args.location, args.x, args.y, args.z);
             break;
         }
         case glUniform3i64vNV_INDEX: {
@@ -33656,7 +33656,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform3ui64NV_INDEX: {
             PACKED_glUniform3ui64NV *unpacked = (PACKED_glUniform3ui64NV *)packed;
             ARGS_glUniform3ui64NV args = unpacked->args;
-            printf("glUniform3ui64NV(%d, %p, %p, %p);\n", args.location, args.x, args.y, args.z);
+            printf("glUniform3ui64NV(%d, %llu, %llu, %llu);\n", args.location, args.x, args.y, args.z);
             break;
         }
         case glUniform3ui64vNV_INDEX: {
@@ -33728,7 +33728,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform4i64NV_INDEX: {
             PACKED_glUniform4i64NV *unpacked = (PACKED_glUniform4i64NV *)packed;
             ARGS_glUniform4i64NV args = unpacked->args;
-            printf("glUniform4i64NV(%d, %p, %p, %p, %p);\n", args.location, args.x, args.y, args.z, args.w);
+            printf("glUniform4i64NV(%d, %lld, %lld, %lld, %lld);\n", args.location, args.x, args.y, args.z, args.w);
             break;
         }
         case glUniform4i64vNV_INDEX: {
@@ -33764,7 +33764,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform4ui64NV_INDEX: {
             PACKED_glUniform4ui64NV *unpacked = (PACKED_glUniform4ui64NV *)packed;
             ARGS_glUniform4ui64NV args = unpacked->args;
-            printf("glUniform4ui64NV(%d, %p, %p, %p, %p);\n", args.location, args.x, args.y, args.z, args.w);
+            printf("glUniform4ui64NV(%d, %llu, %llu, %llu, %llu);\n", args.location, args.x, args.y, args.z, args.w);
             break;
         }
         case glUniform4ui64vNV_INDEX: {
@@ -33806,7 +33806,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniformHandleui64NV_INDEX: {
             PACKED_glUniformHandleui64NV *unpacked = (PACKED_glUniformHandleui64NV *)packed;
             ARGS_glUniformHandleui64NV args = unpacked->args;
-            printf("glUniformHandleui64NV(%d, %p);\n", args.location, args.value);
+            printf("glUniformHandleui64NV(%d, %llu);\n", args.location, args.value);
             break;
         }
         case glUniformHandleui64vNV_INDEX: {
@@ -33950,7 +33950,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniformui64NV_INDEX: {
             PACKED_glUniformui64NV *unpacked = (PACKED_glUniformui64NV *)packed;
             ARGS_glUniformui64NV args = unpacked->args;
-            printf("glUniformui64NV(%d, %p);\n", args.location, args.value);
+            printf("glUniformui64NV(%d, %llu);\n", args.location, args.value);
             break;
         }
         case glUniformui64vNV_INDEX: {
@@ -34008,7 +34008,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUseProgramObjectARB_INDEX: {
             PACKED_glUseProgramObjectARB *unpacked = (PACKED_glUseProgramObjectARB *)packed;
             ARGS_glUseProgramObjectARB args = unpacked->args;
-            printf("glUseProgramObjectARB(%p);\n", args.programObj);
+            printf("glUseProgramObjectARB(%u);\n", args.programObj);
             break;
         }
         case glUseProgramStages_INDEX: {
@@ -34030,7 +34030,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVDPAUGetSurfaceivNV_INDEX: {
             PACKED_glVDPAUGetSurfaceivNV *unpacked = (PACKED_glVDPAUGetSurfaceivNV *)packed;
             ARGS_glVDPAUGetSurfaceivNV args = unpacked->args;
-            printf("glVDPAUGetSurfaceivNV(%p, 0x%04X, %d, %p, %p);\n", args.surface, args.pname, args.bufSize, args.length, args.values);
+            printf("glVDPAUGetSurfaceivNV(%td, 0x%04X, %d, %p, %p);\n", args.surface, args.pname, args.bufSize, args.length, args.values);
             break;
         }
         case glVDPAUInitNV_INDEX: {
@@ -34042,7 +34042,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVDPAUIsSurfaceNV_INDEX: {
             PACKED_glVDPAUIsSurfaceNV *unpacked = (PACKED_glVDPAUIsSurfaceNV *)packed;
             ARGS_glVDPAUIsSurfaceNV args = unpacked->args;
-            printf("glVDPAUIsSurfaceNV(%p);\n", args.surface);
+            printf("glVDPAUIsSurfaceNV(%td);\n", args.surface);
             break;
         }
         case glVDPAUMapSurfacesNV_INDEX: {
@@ -34066,7 +34066,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVDPAUSurfaceAccessNV_INDEX: {
             PACKED_glVDPAUSurfaceAccessNV *unpacked = (PACKED_glVDPAUSurfaceAccessNV *)packed;
             ARGS_glVDPAUSurfaceAccessNV args = unpacked->args;
-            printf("glVDPAUSurfaceAccessNV(%p, 0x%04X);\n", args.surface, args.access);
+            printf("glVDPAUSurfaceAccessNV(%td, 0x%04X);\n", args.surface, args.access);
             break;
         }
         case glVDPAUUnmapSurfacesNV_INDEX: {
@@ -34078,7 +34078,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVDPAUUnregisterSurfaceNV_INDEX: {
             PACKED_glVDPAUUnregisterSurfaceNV *unpacked = (PACKED_glVDPAUUnregisterSurfaceNV *)packed;
             ARGS_glVDPAUUnregisterSurfaceNV args = unpacked->args;
-            printf("glVDPAUUnregisterSurfaceNV(%p);\n", args.surface);
+            printf("glVDPAUUnregisterSurfaceNV(%td);\n", args.surface);
             break;
         }
         case glValidateProgram_INDEX: {
@@ -34090,7 +34090,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glValidateProgramARB_INDEX: {
             PACKED_glValidateProgramARB *unpacked = (PACKED_glValidateProgramARB *)packed;
             ARGS_glValidateProgramARB args = unpacked->args;
-            printf("glValidateProgramARB(%p);\n", args.programObj);
+            printf("glValidateProgramARB(%u);\n", args.programObj);
             break;
         }
         case glValidateProgramPipeline_INDEX: {
@@ -34198,7 +34198,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertex2hNV_INDEX: {
             PACKED_glVertex2hNV *unpacked = (PACKED_glVertex2hNV *)packed;
             ARGS_glVertex2hNV args = unpacked->args;
-            printf("glVertex2hNV(%p, %p);\n", args.x, args.y);
+            printf("glVertex2hNV(%d, %d);\n", args.x, args.y);
             break;
         }
         case glVertex2hvNV_INDEX: {
@@ -34234,7 +34234,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertex2xOES_INDEX: {
             PACKED_glVertex2xOES *unpacked = (PACKED_glVertex2xOES *)packed;
             ARGS_glVertex2xOES args = unpacked->args;
-            printf("glVertex2xOES(%p);\n", args.x);
+            printf("glVertex2xOES(%d);\n", args.x);
             break;
         }
         case glVertex2xvOES_INDEX: {
@@ -34282,7 +34282,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertex3hNV_INDEX: {
             PACKED_glVertex3hNV *unpacked = (PACKED_glVertex3hNV *)packed;
             ARGS_glVertex3hNV args = unpacked->args;
-            printf("glVertex3hNV(%p, %p, %p);\n", args.x, args.y, args.z);
+            printf("glVertex3hNV(%d, %d, %d);\n", args.x, args.y, args.z);
             break;
         }
         case glVertex3hvNV_INDEX: {
@@ -34318,7 +34318,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertex3xOES_INDEX: {
             PACKED_glVertex3xOES *unpacked = (PACKED_glVertex3xOES *)packed;
             ARGS_glVertex3xOES args = unpacked->args;
-            printf("glVertex3xOES(%p, %p);\n", args.x, args.y);
+            printf("glVertex3xOES(%d, %d);\n", args.x, args.y);
             break;
         }
         case glVertex3xvOES_INDEX: {
@@ -34366,7 +34366,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertex4hNV_INDEX: {
             PACKED_glVertex4hNV *unpacked = (PACKED_glVertex4hNV *)packed;
             ARGS_glVertex4hNV args = unpacked->args;
-            printf("glVertex4hNV(%p, %p, %p, %p);\n", args.x, args.y, args.z, args.w);
+            printf("glVertex4hNV(%d, %d, %d, %d);\n", args.x, args.y, args.z, args.w);
             break;
         }
         case glVertex4hvNV_INDEX: {
@@ -34402,7 +34402,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertex4xOES_INDEX: {
             PACKED_glVertex4xOES *unpacked = (PACKED_glVertex4xOES *)packed;
             ARGS_glVertex4xOES args = unpacked->args;
-            printf("glVertex4xOES(%p, %p, %p);\n", args.x, args.y, args.z);
+            printf("glVertex4xOES(%d, %d, %d);\n", args.x, args.y, args.z);
             break;
         }
         case glVertex4xvOES_INDEX: {
@@ -34414,43 +34414,43 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexArrayBindVertexBufferEXT_INDEX: {
             PACKED_glVertexArrayBindVertexBufferEXT *unpacked = (PACKED_glVertexArrayBindVertexBufferEXT *)packed;
             ARGS_glVertexArrayBindVertexBufferEXT args = unpacked->args;
-            printf("glVertexArrayBindVertexBufferEXT(%u, %u, %u, %d, %d);\n", args.vaobj, args.bindingindex, args.buffer, args.offset, args.stride);
+            printf("glVertexArrayBindVertexBufferEXT(%u, %u, %u, %td, %d);\n", args.vaobj, args.bindingindex, args.buffer, args.offset, args.stride);
             break;
         }
         case glVertexArrayColorOffsetEXT_INDEX: {
             PACKED_glVertexArrayColorOffsetEXT *unpacked = (PACKED_glVertexArrayColorOffsetEXT *)packed;
             ARGS_glVertexArrayColorOffsetEXT args = unpacked->args;
-            printf("glVertexArrayColorOffsetEXT(%u, %u, %d, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
+            printf("glVertexArrayColorOffsetEXT(%u, %u, %d, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayEdgeFlagOffsetEXT_INDEX: {
             PACKED_glVertexArrayEdgeFlagOffsetEXT *unpacked = (PACKED_glVertexArrayEdgeFlagOffsetEXT *)packed;
             ARGS_glVertexArrayEdgeFlagOffsetEXT args = unpacked->args;
-            printf("glVertexArrayEdgeFlagOffsetEXT(%u, %u, %d, %d);\n", args.vaobj, args.buffer, args.stride, args.offset);
+            printf("glVertexArrayEdgeFlagOffsetEXT(%u, %u, %d, %td);\n", args.vaobj, args.buffer, args.stride, args.offset);
             break;
         }
         case glVertexArrayFogCoordOffsetEXT_INDEX: {
             PACKED_glVertexArrayFogCoordOffsetEXT *unpacked = (PACKED_glVertexArrayFogCoordOffsetEXT *)packed;
             ARGS_glVertexArrayFogCoordOffsetEXT args = unpacked->args;
-            printf("glVertexArrayFogCoordOffsetEXT(%u, %u, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.type, args.stride, args.offset);
+            printf("glVertexArrayFogCoordOffsetEXT(%u, %u, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayIndexOffsetEXT_INDEX: {
             PACKED_glVertexArrayIndexOffsetEXT *unpacked = (PACKED_glVertexArrayIndexOffsetEXT *)packed;
             ARGS_glVertexArrayIndexOffsetEXT args = unpacked->args;
-            printf("glVertexArrayIndexOffsetEXT(%u, %u, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.type, args.stride, args.offset);
+            printf("glVertexArrayIndexOffsetEXT(%u, %u, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayMultiTexCoordOffsetEXT_INDEX: {
             PACKED_glVertexArrayMultiTexCoordOffsetEXT *unpacked = (PACKED_glVertexArrayMultiTexCoordOffsetEXT *)packed;
             ARGS_glVertexArrayMultiTexCoordOffsetEXT args = unpacked->args;
-            printf("glVertexArrayMultiTexCoordOffsetEXT(%u, %u, 0x%04X, %d, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.texunit, args.size, args.type, args.stride, args.offset);
+            printf("glVertexArrayMultiTexCoordOffsetEXT(%u, %u, 0x%04X, %d, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.texunit, args.size, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayNormalOffsetEXT_INDEX: {
             PACKED_glVertexArrayNormalOffsetEXT *unpacked = (PACKED_glVertexArrayNormalOffsetEXT *)packed;
             ARGS_glVertexArrayNormalOffsetEXT args = unpacked->args;
-            printf("glVertexArrayNormalOffsetEXT(%u, %u, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.type, args.stride, args.offset);
+            printf("glVertexArrayNormalOffsetEXT(%u, %u, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayParameteriAPPLE_INDEX: {
@@ -34474,13 +34474,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexArraySecondaryColorOffsetEXT_INDEX: {
             PACKED_glVertexArraySecondaryColorOffsetEXT *unpacked = (PACKED_glVertexArraySecondaryColorOffsetEXT *)packed;
             ARGS_glVertexArraySecondaryColorOffsetEXT args = unpacked->args;
-            printf("glVertexArraySecondaryColorOffsetEXT(%u, %u, %d, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
+            printf("glVertexArraySecondaryColorOffsetEXT(%u, %u, %d, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayTexCoordOffsetEXT_INDEX: {
             PACKED_glVertexArrayTexCoordOffsetEXT *unpacked = (PACKED_glVertexArrayTexCoordOffsetEXT *)packed;
             ARGS_glVertexArrayTexCoordOffsetEXT args = unpacked->args;
-            printf("glVertexArrayTexCoordOffsetEXT(%u, %u, %d, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
+            printf("glVertexArrayTexCoordOffsetEXT(%u, %u, %d, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayVertexAttribBindingEXT_INDEX: {
@@ -34504,7 +34504,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexArrayVertexAttribIOffsetEXT_INDEX: {
             PACKED_glVertexArrayVertexAttribIOffsetEXT *unpacked = (PACKED_glVertexArrayVertexAttribIOffsetEXT *)packed;
             ARGS_glVertexArrayVertexAttribIOffsetEXT args = unpacked->args;
-            printf("glVertexArrayVertexAttribIOffsetEXT(%u, %u, %u, %d, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.index, args.size, args.type, args.stride, args.offset);
+            printf("glVertexArrayVertexAttribIOffsetEXT(%u, %u, %u, %d, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.index, args.size, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayVertexAttribLFormatEXT_INDEX: {
@@ -34516,13 +34516,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexArrayVertexAttribLOffsetEXT_INDEX: {
             PACKED_glVertexArrayVertexAttribLOffsetEXT *unpacked = (PACKED_glVertexArrayVertexAttribLOffsetEXT *)packed;
             ARGS_glVertexArrayVertexAttribLOffsetEXT args = unpacked->args;
-            printf("glVertexArrayVertexAttribLOffsetEXT(%u, %u, %u, %d, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.index, args.size, args.type, args.stride, args.offset);
+            printf("glVertexArrayVertexAttribLOffsetEXT(%u, %u, %u, %d, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.index, args.size, args.type, args.stride, args.offset);
             break;
         }
         case glVertexArrayVertexAttribOffsetEXT_INDEX: {
             PACKED_glVertexArrayVertexAttribOffsetEXT *unpacked = (PACKED_glVertexArrayVertexAttribOffsetEXT *)packed;
             ARGS_glVertexArrayVertexAttribOffsetEXT args = unpacked->args;
-            printf("glVertexArrayVertexAttribOffsetEXT(%u, %u, %u, %d, 0x%04X, %d, %d, %d);\n", args.vaobj, args.buffer, args.index, args.size, args.type, args.normalized, args.stride, args.offset);
+            printf("glVertexArrayVertexAttribOffsetEXT(%u, %u, %u, %d, 0x%04X, %d, %d, %td);\n", args.vaobj, args.buffer, args.index, args.size, args.type, args.normalized, args.stride, args.offset);
             break;
         }
         case glVertexArrayVertexBindingDivisorEXT_INDEX: {
@@ -34534,7 +34534,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexArrayVertexOffsetEXT_INDEX: {
             PACKED_glVertexArrayVertexOffsetEXT *unpacked = (PACKED_glVertexArrayVertexOffsetEXT *)packed;
             ARGS_glVertexArrayVertexOffsetEXT args = unpacked->args;
-            printf("glVertexArrayVertexOffsetEXT(%u, %u, %d, 0x%04X, %d, %d);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
+            printf("glVertexArrayVertexOffsetEXT(%u, %u, %d, 0x%04X, %d, %td);\n", args.vaobj, args.buffer, args.size, args.type, args.stride, args.offset);
             break;
         }
         case glVertexAttrib1d_INDEX: {
@@ -34612,7 +34612,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttrib1hNV_INDEX: {
             PACKED_glVertexAttrib1hNV *unpacked = (PACKED_glVertexAttrib1hNV *)packed;
             ARGS_glVertexAttrib1hNV args = unpacked->args;
-            printf("glVertexAttrib1hNV(%u, %p);\n", args.index, args.x);
+            printf("glVertexAttrib1hNV(%u, %d);\n", args.index, args.x);
             break;
         }
         case glVertexAttrib1hvNV_INDEX: {
@@ -34732,7 +34732,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttrib2hNV_INDEX: {
             PACKED_glVertexAttrib2hNV *unpacked = (PACKED_glVertexAttrib2hNV *)packed;
             ARGS_glVertexAttrib2hNV args = unpacked->args;
-            printf("glVertexAttrib2hNV(%u, %p, %p);\n", args.index, args.x, args.y);
+            printf("glVertexAttrib2hNV(%u, %d, %d);\n", args.index, args.x, args.y);
             break;
         }
         case glVertexAttrib2hvNV_INDEX: {
@@ -34852,7 +34852,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttrib3hNV_INDEX: {
             PACKED_glVertexAttrib3hNV *unpacked = (PACKED_glVertexAttrib3hNV *)packed;
             ARGS_glVertexAttrib3hNV args = unpacked->args;
-            printf("glVertexAttrib3hNV(%u, %p, %p, %p);\n", args.index, args.x, args.y, args.z);
+            printf("glVertexAttrib3hNV(%u, %d, %d, %d);\n", args.index, args.x, args.y, args.z);
             break;
         }
         case glVertexAttrib3hvNV_INDEX: {
@@ -35068,7 +35068,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttrib4hNV_INDEX: {
             PACKED_glVertexAttrib4hNV *unpacked = (PACKED_glVertexAttrib4hNV *)packed;
             ARGS_glVertexAttrib4hNV args = unpacked->args;
-            printf("glVertexAttrib4hNV(%u, %p, %p, %p, %p);\n", args.index, args.x, args.y, args.z, args.w);
+            printf("glVertexAttrib4hNV(%u, %d, %d, %d, %d);\n", args.index, args.x, args.y, args.z, args.w);
             break;
         }
         case glVertexAttrib4hvNV_INDEX: {
@@ -35500,7 +35500,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL1i64NV_INDEX: {
             PACKED_glVertexAttribL1i64NV *unpacked = (PACKED_glVertexAttribL1i64NV *)packed;
             ARGS_glVertexAttribL1i64NV args = unpacked->args;
-            printf("glVertexAttribL1i64NV(%u, %p);\n", args.index, args.x);
+            printf("glVertexAttribL1i64NV(%u, %lld);\n", args.index, args.x);
             break;
         }
         case glVertexAttribL1i64vNV_INDEX: {
@@ -35512,7 +35512,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL1ui64NV_INDEX: {
             PACKED_glVertexAttribL1ui64NV *unpacked = (PACKED_glVertexAttribL1ui64NV *)packed;
             ARGS_glVertexAttribL1ui64NV args = unpacked->args;
-            printf("glVertexAttribL1ui64NV(%u, %p);\n", args.index, args.x);
+            printf("glVertexAttribL1ui64NV(%u, %llu);\n", args.index, args.x);
             break;
         }
         case glVertexAttribL1ui64vNV_INDEX: {
@@ -35548,7 +35548,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL2i64NV_INDEX: {
             PACKED_glVertexAttribL2i64NV *unpacked = (PACKED_glVertexAttribL2i64NV *)packed;
             ARGS_glVertexAttribL2i64NV args = unpacked->args;
-            printf("glVertexAttribL2i64NV(%u, %p, %p);\n", args.index, args.x, args.y);
+            printf("glVertexAttribL2i64NV(%u, %lld, %lld);\n", args.index, args.x, args.y);
             break;
         }
         case glVertexAttribL2i64vNV_INDEX: {
@@ -35560,7 +35560,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL2ui64NV_INDEX: {
             PACKED_glVertexAttribL2ui64NV *unpacked = (PACKED_glVertexAttribL2ui64NV *)packed;
             ARGS_glVertexAttribL2ui64NV args = unpacked->args;
-            printf("glVertexAttribL2ui64NV(%u, %p, %p);\n", args.index, args.x, args.y);
+            printf("glVertexAttribL2ui64NV(%u, %llu, %llu);\n", args.index, args.x, args.y);
             break;
         }
         case glVertexAttribL2ui64vNV_INDEX: {
@@ -35596,7 +35596,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL3i64NV_INDEX: {
             PACKED_glVertexAttribL3i64NV *unpacked = (PACKED_glVertexAttribL3i64NV *)packed;
             ARGS_glVertexAttribL3i64NV args = unpacked->args;
-            printf("glVertexAttribL3i64NV(%u, %p, %p, %p);\n", args.index, args.x, args.y, args.z);
+            printf("glVertexAttribL3i64NV(%u, %lld, %lld, %lld);\n", args.index, args.x, args.y, args.z);
             break;
         }
         case glVertexAttribL3i64vNV_INDEX: {
@@ -35608,7 +35608,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL3ui64NV_INDEX: {
             PACKED_glVertexAttribL3ui64NV *unpacked = (PACKED_glVertexAttribL3ui64NV *)packed;
             ARGS_glVertexAttribL3ui64NV args = unpacked->args;
-            printf("glVertexAttribL3ui64NV(%u, %p, %p, %p);\n", args.index, args.x, args.y, args.z);
+            printf("glVertexAttribL3ui64NV(%u, %llu, %llu, %llu);\n", args.index, args.x, args.y, args.z);
             break;
         }
         case glVertexAttribL3ui64vNV_INDEX: {
@@ -35644,7 +35644,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL4i64NV_INDEX: {
             PACKED_glVertexAttribL4i64NV *unpacked = (PACKED_glVertexAttribL4i64NV *)packed;
             ARGS_glVertexAttribL4i64NV args = unpacked->args;
-            printf("glVertexAttribL4i64NV(%u, %p, %p, %p, %p);\n", args.index, args.x, args.y, args.z, args.w);
+            printf("glVertexAttribL4i64NV(%u, %lld, %lld, %lld, %lld);\n", args.index, args.x, args.y, args.z, args.w);
             break;
         }
         case glVertexAttribL4i64vNV_INDEX: {
@@ -35656,7 +35656,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL4ui64NV_INDEX: {
             PACKED_glVertexAttribL4ui64NV *unpacked = (PACKED_glVertexAttribL4ui64NV *)packed;
             ARGS_glVertexAttribL4ui64NV args = unpacked->args;
-            printf("glVertexAttribL4ui64NV(%u, %p, %p, %p, %p);\n", args.index, args.x, args.y, args.z, args.w);
+            printf("glVertexAttribL4ui64NV(%u, %llu, %llu, %llu, %llu);\n", args.index, args.x, args.y, args.z, args.w);
             break;
         }
         case glVertexAttribL4ui64vNV_INDEX: {
@@ -36160,7 +36160,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexWeighthNV_INDEX: {
             PACKED_glVertexWeighthNV *unpacked = (PACKED_glVertexWeighthNV *)packed;
             ARGS_glVertexWeighthNV args = unpacked->args;
-            printf("glVertexWeighthNV(%p);\n", args.weight);
+            printf("glVertexWeighthNV(%d);\n", args.weight);
             break;
         }
         case glVertexWeighthvNV_INDEX: {
@@ -36220,7 +36220,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glWaitSync_INDEX: {
             PACKED_glWaitSync *unpacked = (PACKED_glWaitSync *)packed;
             ARGS_glWaitSync args = unpacked->args;
-            printf("glWaitSync(%p, %d, %p);\n", args.sync, args.flags, args.timeout);
+            printf("glWaitSync(%p, %d, %llu);\n", args.sync, args.flags, args.timeout);
             break;
         }
         case glWeightPathsNV_INDEX: {
