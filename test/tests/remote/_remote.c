@@ -15,8 +15,8 @@ int main(int argc, char **argv) {
         glRectf(0, 0, 1, 1);
         int status = 0;
         waitpid(pid, &status, 0);
-        if (WEXITSTATUS(status)) {
-            fprintf(stderr, "Error from libgl_remote.\n");
+        if (status) {
+            fprintf(stderr, "Error from libgl_remote: %d\n", status);
             return 1;
         }
     } else {
