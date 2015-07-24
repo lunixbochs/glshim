@@ -239,6 +239,7 @@ static void scan_env() {
 
 GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct) {
     scan_env();
+    FORWARD_IF_REMOTE(glXCreateContext);
     PROXY_GLES(glXCreateContext);
     LOAD_EGL(eglBindAPI);
     LOAD_EGL(eglChooseConfig);
@@ -339,6 +340,7 @@ GLXContext glXCreateContextAttribsARB(Display *dpy, GLXFBConfig config, GLXConte
 }
 
 void glXDestroyContext(Display *dpy, GLXContext ctx) {
+    FORWARD_IF_REMOTE(glXDestroyContext);
     PROXY_GLES(glXDestroyContext);
     LOAD_EGL(eglDestroyContext);
     LOAD_EGL(eglDestroySurface);
@@ -388,6 +390,7 @@ not set to EGL_NO_CONTEXT.
 */
 
 Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
+    FORWARD_IF_REMOTE(glXMakeCurrent);
     PROXY_GLES(glXMakeCurrent);
     LOAD_EGL(eglCreateWindowSurface);
     LOAD_EGL(eglDestroySurface);
@@ -429,6 +432,7 @@ Bool glXMakeContextCurrent(Display *dpy, GLXDrawable draw, int read, GLXContext 
 }
 
 void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
+    FORWARD_IF_REMOTE(glXSwapBuffers);
     static int frames = 0;
     if (g_showfps || g_liveinfo) {
         // framerate counter
