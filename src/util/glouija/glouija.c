@@ -182,6 +182,7 @@ static int glouija_data_read(void *data, int size, int pos) {
 
 void glouija_add_block(GlouijaCall *c, void *data, size_t size, int free) {
     int i = c->args++;
+    c->arg[i].type = GLO_ARG_TYPE_BLOCK;
     c->arg[i].data.block.data = data;
     c->arg[i].data.block.size = size;
     c->arg[i].data.block.free = free;
