@@ -12,10 +12,7 @@ int main(int argc, char **argv) {
             .args = 1,
             .type = GLO_CALL_TYPE_CALL,
             .arg = {
-                {
-                    .type = GLO_ARG_TYPE_UINT,
-                    .data.ui = 42,
-                },
+                {.type = GLO_ARG_TYPE_UINT, .data.ui = 42},
                 0,
             },
         };
@@ -47,10 +44,7 @@ int main(int argc, char **argv) {
             .args = 1,
             .type = GLO_CALL_TYPE_CALL,
             .arg = {
-                {
-                    .type = GLO_ARG_TYPE_UINT,
-                    .data.ui = c.arg[0].data.ui + 1,
-                },
+                {.type = GLO_ARG_TYPE_UINT, .data.ui = c.arg[0].data.ui + 1},
                 0,
             },
         };

@@ -4,6 +4,7 @@
 #include "block.h"
 #include "gl_helpers.h"
 #include "glouija/glouija.h"
+#include "remote.h"
 #include "wrap/gles.h"
 #include "wrap/types.h"
 
@@ -46,7 +47,6 @@ static uint32_t read_uint32(uintptr_t *src) {
 }
 
 void *remote_serialize_block(block_t *block, size_t *ret_size) {
-    printf("len: %d\n", block->len);
     size_t size = sizeof(uint32_t) + sizeof(block_t);
     size += sizeof(uint32_t);
     if (block->vert) {
@@ -71,7 +71,7 @@ void *remote_serialize_block(block_t *block, size_t *ret_size) {
     }
     void *buf = malloc(size);
     uintptr_t pos = (uintptr_t)buf;
-    write_uint32(&pos, (uint32_t)RENDER_BLOCK_INDEX);
+    write_uint32(&pos, (uint32_t)REMOTE_BLOCK_INDEX);
     write_memcpy(&pos, block, sizeof(block_t));
     if (block->vert) {
         write_memcpy(&pos, block->vert, block->len * 3 * sizeof(GLfloat));
@@ -121,21 +121,11 @@ void remote_call(packed_call_t *call, void *ret_v) {
         .args = 2,
         .type = GLO_CALL_TYPE_CALL,
         .arg = {
-            {
-                .type = GLO_ARG_TYPE_BLOCK,
-                .data.block = {
-                    .data = call,
-                    .size = pack_size,
-                    .free = true,
-                },
-            },
-            {
-                .type = GLO_ARG_TYPE_UINT,
-                .data.ui = ret_size,
-            },
+            {.type = GLO_ARG_TYPE_UINT, .data.ui = ret_size},
             0,
         },
     };
+    glouija_add_block(&c, call, pack_size, true);
     switch (call->index) {
         case glDeleteTextures_INDEX:
         {
@@ -171,23 +161,13 @@ int remote_serve(int fd) {
             fprintf(stderr, "Invalid remote command.\n");
             return 3;
         }
-        packed_call_t *call = c.arg[0].data.block.data;
-        int retsize = c.arg[1].data.ui;
+        int retsize = c.arg[0].data.ui;
+        packed_call_t *call = c.arg[1].data.block.data;
         if (retsize > 0) {
             char retbuf[8];
             glIndexedCall(call, (void *)retbuf);
-            GlouijaCall ret = {
-                .args = 1,
-                .type = GLO_CALL_TYPE_CALL,
-                .arg = {
-                    {.type = GLO_ARG_TYPE_BLOCK,
-                    .data.block = {
-                        .data = retbuf,
-                        .size = retsize,
-                        .free = true,
-                    }}, 0,
-                },
-            };
+            GlouijaCall ret = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
+            glouija_add_block(&ret, retbuf, retsize, true);
             glouija_command_write(&ret);
         } else {
             glIndexedCall(call, NULL);
@@ -200,24 +180,14 @@ void remote_block_draw(block_t *block) {
     size_t size = 0;
     void *buf = remote_serialize_block(block, &size);
     GlouijaCall c = {
-        .args = 2,
+        .args = 1,
         .type = GLO_CALL_TYPE_CALL,
         .arg = {
-            {
-                .type = GLO_ARG_TYPE_BLOCK,
-                .data.block = {
-                    .data = buf,
-                    .size = size,
-                    .free = true,
-                },
-            },
-            {
-                .type = GLO_ARG_TYPE_UINT,
-                .data.ui = 0,
-            },
+            {.type = GLO_ARG_TYPE_UINT, .data.ui = 0},
             0,
         },
     };
+    glouija_add_block(&c, buf, size, true);
     glouija_command_write(&c);
     free(buf);
     return;

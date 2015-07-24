@@ -31,14 +31,14 @@ int main(int argc, char **argv) {
             fprintf(stderr, "Invalid remote_call received.\n");
             return 1;
         }
-        packed_call_t *call = c.arg[0].data.block.data;
-        if (call->index != RENDER_BLOCK_INDEX) {
-            fprintf(stderr, "Expected RENDER_BLOCK_INDEX.\nGot: ");
+        packed_call_t *call = c.arg[1].data.block.data;
+        if (call->index != REMOTE_BLOCK_INDEX) {
+            fprintf(stderr, "Expected REMOTE_BLOCK_INDEX.\nGot: ");
             glIndexedPrint(call);
             return 1;
         }
         void *buf = call;
-        block_t *block = remote_deserialize_block(buf, NULL);
+        block_t *block = remote_deserialize_block(buf);
         printf("got a block: %p (len: %d)\n", block, block->len);
         if (block->vert) {
             printf("vert: {\n");
