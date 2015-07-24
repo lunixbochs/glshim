@@ -221,6 +221,24 @@ void bl_draw(block_t *block) {
         tex[i] = block->tex[i];
     }
 #endif
+    if (state.remote) {
+#ifdef LOCAL_MATRIX
+        void *tmp = malloc(sizeof(block_t));
+        memcpy(tmp, block, sizeof(block_t));
+        tmp->vert = vert;
+        for (int i = 0; i < MAX_TEX; i++) {
+            tmp->tex[i] = tex[i];
+        }
+        remote_block_draw(tmp);
+        free(vert);
+        for (int i = 0; i < MAX_TEX; i++) {
+            free(tex[i]);
+        }
+#else
+        remote_block_draw(block);
+#endif
+        return;
+    }
 
     LOAD_GLES(glDrawArrays);
     LOAD_GLES(glDrawElements);

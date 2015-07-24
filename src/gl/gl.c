@@ -158,6 +158,7 @@ static inline bool should_intercept_render(GLenum mode) {
         texgen_enabled |= state.enable.texgen_s[i] || state.enable.texgen_t[i];
     }
     return (
+        (state.remote) ||
         (state.enable.vertex_array && ! gl_valid_vertex_type(state.pointers.vertex.type)) ||
         (texgen_enabled) ||
         (mode == GL_LINES && state.enable.line_stipple) ||

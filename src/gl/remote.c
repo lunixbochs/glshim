@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "block.h"
 #include "glouija/glouija.h"
 #include "wrap/gles.h"
 #include "wrap/types.h"
+
+#include <string.h>
 
 int remote_spawn(char *path) {
     if (path == NULL) {
@@ -17,6 +20,94 @@ int remote_spawn(char *path) {
         execve(path, argv, NULL);
     }
     return pid;
+}
+
+static void write_memcpy(uintptr_t *dst, void *src, size_t size) {
+    memcpy(*(void **)dst, src, size);
+    *dst += size;
+}
+
+static void write_uint32(uintptr_t *dst, uint32_t i) {
+    **(uint32_t **)dst = i;
+    *dst += 4;
+}
+
+static void *read_ptr(uintptr_t *src, size_t size) {
+    void *pos = (void *)*src;
+    *src += size;
+    return pos;
+}
+
+static uint32_t read_uint32(uintptr_t *src) {
+    uint32_t i = *(uint32_t *)src;
+    *src += 4;
+    return i;
+}
+
+void *remote_serialize_block(block_t *block, size_t *ret_size) {
+    printf("len: %d\n", block->len);
+    size_t size = sizeof(uint32_t) + sizeof(block_t);
+    size += sizeof(uint32_t);
+    if (block->vert) {
+        size += block->len * 3 * sizeof(GLfloat);
+    }
+    size += sizeof(uint32_t);
+    if (block->normal) {
+        size += block->len * 3 * sizeof(GLfloat);
+    }
+    size += sizeof(uint32_t);
+    if (block->color) {
+        size += block->len * 4 * sizeof(GLfloat);
+    }
+    for (int i = 0; i < MAX_TEX; i++) {
+        size += sizeof(uint32_t);
+        if (block->tex[i]) {
+            size += block->len * 2 * sizeof(GLfloat);
+        }
+    }
+    if (ret_size) {
+        *ret_size = size;
+    }
+    void *buf = malloc(size);
+    uintptr_t pos = (uintptr_t)buf;
+    write_uint32(&pos, (uint32_t)RENDER_BLOCK_INDEX);
+    write_memcpy(&pos, block, sizeof(block_t));
+    if (block->vert) {
+        write_memcpy(&pos, block->vert, block->len * 3 * sizeof(GLfloat));
+    }
+    if (block->normal) {
+        write_memcpy(&pos, block->normal, block->len * 3 * sizeof(GLfloat));
+    }
+    if (block->color) {
+        write_memcpy(&pos, block->color, block->len * 4 * sizeof(GLfloat));
+    }
+    for (int i = 0; i < MAX_TEX; i++) {
+        if (block->tex[i]) {
+            write_memcpy(&pos, block->tex[i], block->len * 2 * sizeof(GLfloat));
+        }
+    }
+    return buf;
+}
+
+block_t *remote_deserialize_block(void *buf) {
+    uintptr_t pos = (uintptr_t)buf;
+    pos += sizeof(uint32_t);
+    block_t *block = (block_t *)read_ptr(&pos, sizeof(block_t));
+    if (block->vert) {
+        block->vert = (GLfloat *)read_ptr(&pos, block->len * 3 * sizeof(GLfloat));
+    }
+    if (block->normal) {
+        block->normal = (GLfloat *)read_ptr(&pos, block->len * 3 * sizeof(GLfloat));
+    }
+    if (block->color) {
+        block->color = (GLfloat *)read_ptr(&pos, block->len * 4 * sizeof(GLfloat));
+    }
+    for (int i = 0; i < MAX_TEX; i++) {
+        if (block->tex[i]) {
+            block->tex[i] = (GLfloat *)read_ptr(&pos, block->len * 2 * sizeof(GLfloat));
+        }
+    }
+    return block;
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
@@ -87,4 +178,31 @@ int remote_serve(int fd) {
         }
         free(call);
     }
+}
+
+void remote_block_draw(block_t *block) {
+    size_t size = 0;
+    void *buf = remote_serialize_block(block, &size);
+    GlouijaCall c = {
+        .args = 2,
+        .type = GLO_CALL_TYPE_CALL,
+        .arg = {
+            {
+                .type = GLO_ARG_TYPE_BLOCK,
+                .data.block = {
+                    .data = buf,
+                    .size = size,
+                    .free = true,
+                },
+            },
+            {
+                .type = GLO_ARG_TYPE_UINT,
+                .data.ui = 0,
+            },
+            0,
+        },
+    };
+    glouija_command_write(&c);
+    free(buf);
+    return;
 }
