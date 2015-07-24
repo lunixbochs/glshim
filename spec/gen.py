@@ -12,9 +12,9 @@ env = jinja2.Environment(
     loader=jinja2.FileSystemLoader('template'),
 )
 
-def args(args, add_type=True):
+def args(args, add_type=True, prefix=''):
     return ', '.join(
-        '{} {}'.format(arg['type'], arg['name']) if add_type else arg['name']
+        '{} {}{}'.format(arg['type'], prefix, arg['name']) if add_type else prefix + arg['name']
         for arg in args
     )
 

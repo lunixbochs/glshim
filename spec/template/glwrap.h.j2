@@ -7,7 +7,7 @@
     packed_data->index = {{ func.name }}_INDEX; \
     {% if func.args %}
     {% for arg in func.args %}
-    packed_data->args.a{{ loop.index }} = ({{ arg.type|unconst }}){{ arg.name }}; \
+    packed_data->args.{{ arg.name }} = ({{ arg.type|unconst }}){{ arg.name }}; \
     {% endfor %}
     {% endif %}
     (packed_call_t *)packed_data; \

@@ -107,8 +107,8 @@ APPLE_vertex_program_evaluators:
       u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint
       vorder, const GLfloat *points]
 ARB_ES2_compatibility:
-  glClearDepthf: [void, GLfloat d]
-  glDepthRangef: [void, GLfloat n, GLfloat f]
+  glClearDepthf: [void, GLfloat depth]
+  glDepthRangef: [void, GLfloat near, GLfloat far]
   glGetShaderPrecisionFormat: [void, GLenum shadertype, GLenum precisiontype, GLint
       *range, GLint *precision]
   glReleaseShaderCompiler: [void]

@@ -363,13 +363,13 @@ void glDepthMask(GLboolean flag) {
 }
 #endif
 #ifndef skip_glDepthRangef
-void glDepthRangef(GLclampf zNear, GLclampf zFar) {
+void glDepthRangef(GLclampf near, GLclampf far) {
     LOAD_GLES(glDepthRangef);
 #ifndef direct_glDepthRangef
     PUSH_IF_COMPILING(glDepthRangef);
 #endif
     FORWARD_IF_REMOTE(glDepthRangef);
-    gles_glDepthRangef(zNear, zFar);
+    gles_glDepthRangef(near, far);
 }
 #endif
 #ifndef skip_glDetachShader

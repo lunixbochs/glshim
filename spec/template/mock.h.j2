@@ -57,7 +57,7 @@ static int failed_test = 0;
 #define emit_{{ func.name }}({{ func.args|args(0) }}) { \
     mock_push(pack_{{ func.name }}({{ func.args|args(0) }})); \
 }
-#define test_{{ func.name }}({{ func.args|args(0) }}) { \
+#define test_{{ func.name }}({{ func.args|args(0, '_') }}) { \
     {{ func.name }}_PACKED *packed = mock_cur(); \
     if (packed == NULL) { \
         mock_errorf("{{ func.name }} missing (no calls left)\n"); \
@@ -84,15 +84,15 @@ static int failed_test = 0;
         void *a, *b; \
         {% for arg in func.args %}
         {% if '*' in arg.type %}
-        a = packed->args.a{{ loop.index }}, b = {{ arg.name }}; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof({{ arg.name }})) != 0))) { \
+        a = packed->args.{{ arg.name }}, b = _{{ arg.name }}; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_{{ arg.name }})) != 0))) { \
             printf("  ERROR: arg mismatch: {{ arg.name }}\n"); \
-            mock_print_ptr("  expected:", b, sizeof({{ arg.name }})); \
-            mock_print_ptr("     found:", a, sizeof({{ arg.name }})); \
+            mock_print_ptr("  expected:", b, sizeof(_{{ arg.name }})); \
+            mock_print_ptr("     found:", a, sizeof(_{{ arg.name }})); \
         {% elif 'float' in arg.type or 'double' in arg.type %}
-        if (packed->args.a{{ loop.index }} - {{ arg.name }} >= 0.01) { \
+        if (packed->args.{{ arg.name }} - _{{ arg.name }} >= 0.01) { \
         {% else %}
-        if (packed->args.a{{ loop.index }} != {{ arg.name }}) { \
+        if (packed->args.{{ arg.name }} != _{{ arg.name }}) { \
         {% endif %}
             match = 0; \
         } \
@@ -100,7 +100,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: {{ func.name }}({{ func.args|printf }});\n", {{ func.args|args(0) }}); \
+            printf("  want: {{ func.name }}({{ func.args|printf }});\n", {{ func.args|args(0, '_') }}); \
         } \
     } \
 }
@@ -111,8 +111,7 @@ static int failed_test = 0;
 #define gles_{{ func.name }}_RETURN {{ func.return }}
 #define gles_{{ func.name }}_ARG_NAMES {{ func.args|args(0) }}
 #define gles_{{ func.name }}_ARG_EXPAND {{ func.args|args }}
-#define gles_{{ func.name }}_PACKED PACKED_{{ func.types }}
-#define gles_{{ func.name }}_FORMAT FORMAT_{{ func.types }}
+#define gles_{{ func.name }}_PACKED PACKED_{{ func.name }}
 {% endfor %}
 
 {% for func in functions %}
