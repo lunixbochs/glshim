@@ -6,6 +6,7 @@
 #include "render.h"
 #include "texgen.h"
 #include "texture.h"
+#include "remote.h"
 
 #define alloc_sublist(n, type, cap) \
     (GLfloat *)malloc(n * gl_sizeof(type) * cap)
