@@ -65,6 +65,7 @@ typedef struct {
 uint32_t glouija_alloc_remote_tag(void *data, uint32_t size);
 void glouija_free_remote_tag(uint32_t tag);
 void glouija_await_incoming();
+void glouija_add_block(GlouijaCall *c, void *data, size_t size, int free);
 int glouija_command_write(GlouijaCall *c);
 int glouija_command_read(GlouijaCall *c);
 int glouija_init_server(int fd);

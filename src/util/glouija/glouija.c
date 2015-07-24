@@ -180,6 +180,13 @@ static int glouija_data_read(void *data, int size, int pos) {
     return -1;
 }
 
+void glouija_add_block(GlouijaCall *c, void *data, size_t size, int free) {
+    int i = c->args++;
+    c->arg[i].data.block.data = data;
+    c->arg[i].data.block.size = size;
+    c->arg[i].data.block.free = free;
+}
+
 int glouija_command_write(GlouijaCall *c) {
     int pos, i, argsz;
     GlouijaSerialCallHead cbuff;
