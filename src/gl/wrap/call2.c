@@ -36626,7 +36626,7 @@ void glIndexedPrint(const packed_call_t *packed) {
             break;
         }
         default:
-            fprintf(stderr, "warning: glIndexedCall with unknown index %d\n", packed->index);
+            fprintf(stderr, "warning: glIndexedPrint with unknown index %d\n", packed->index);
             break;
     }
 }
