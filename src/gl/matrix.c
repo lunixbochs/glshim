@@ -2,6 +2,7 @@
 #include "loader.h"
 #include "matrix.h"
 #include "types.h"
+#include "remote.h"
 
 #ifdef LOCAL_MATRIX
 #define PROXY_MATRIX(name)
@@ -67,10 +68,14 @@ static void update_mvp() {
 }
 
 static void upload_matrix() {
-    LOAD_GLES(glLoadMatrixf);
     GLfloat tmp[16];
     mat4_save(get_current_matrix(), tmp);
-    gles_glLoadMatrixf(tmp);
+    if (state.remote) {
+        remote_call(pack_glLoadMatrixf(tmp), NULL);
+    } else {
+        LOAD_GLES(glLoadMatrixf);
+        gles_glLoadMatrixf(tmp);
+    }
 }
 
 // GL matrix functions
@@ -79,6 +84,7 @@ void glLoadIdentity() {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_identity(get_current_matrix());
+    FORWARD_IF_REMOTE(glLoadIdentity);
     PROXY_MATRIX(glLoadIdentity);
 }
 
@@ -87,6 +93,7 @@ void glLoadMatrixf(const GLfloat *m) {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_load(get_current_matrix(), m);
+    FORWARD_IF_REMOTE(glLoadMatrixf);
     PROXY_MATRIX(glLoadMatrixf);
 }
 
@@ -111,6 +118,7 @@ void glMatrixMode(GLenum mode) {
             ERROR(GL_INVALID_ENUM);
     }
     state.matrix.mode = mode;
+    FORWARD_IF_REMOTE(glMatrixMode);
     PROXY_MATRIX(glMatrixMode);
 }
 

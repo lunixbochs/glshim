@@ -3,9 +3,11 @@
 #include "light.h"
 #include "loader.h"
 #include "matrix.h"
+#include "remote.h"
 
 #ifndef USE_ES2
 void glLightModelf(GLenum pname, GLfloat param) {
+    FORWARD_IF_REMOTE(glLightModelf);
     LOAD_GLES(glLightModelf);
     ERROR_IN_BLOCK();
     switch (pname) {
@@ -19,6 +21,7 @@ void glLightModelf(GLenum pname, GLfloat param) {
 }
 
 void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
+    FORWARD_IF_REMOTE(glMaterialfv);
     PUSH_IF_COMPILING(glMaterialfv);
     LOAD_GLES(glMaterialfv);
     gles_glMaterialfv(GL_FRONT_AND_BACK, pname, params);
@@ -26,6 +29,7 @@ void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
 
 #ifdef LOCAL_MATRIX
 void glLightfv(GLenum light, GLenum pname, const GLfloat *params) {
+    FORWARD_IF_REMOTE(glLightfv);
     LOAD_GLES(glLightfv);
     ERROR_IN_BLOCK();
     GLfloat tmp[4];
