@@ -5,6 +5,7 @@
 #include "loader.h"
 #include "texture.h"
 #include "types.h"
+#include "remote.h"
 
 glstate_t state = {
     0,
@@ -79,34 +80,49 @@ static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
 
 void glEnable(GLenum cap) {
     PUSH_IF_COMPILING(glEnable);
-    LOAD_GLES(glEnable);
+    LOAD_GLES_SILENT(glEnable);
+    void (*next_glEnable)(GLenum) = gles_glEnable;
+    if (state.remote) {
+        next_glEnable = remote_glEnable;
+    }
     ERROR_IN_BLOCK();
-    proxy_glEnable(cap, true, gles_glEnable);
+    proxy_glEnable(cap, true, next_glEnable);
 }
 
 void glDisable(GLenum cap) {
     PUSH_IF_COMPILING(glDisable);
+    LOAD_GLES_SILENT(glDisable);
+    void (*next_glDisable)(GLenum) = gles_glDisable;
+    if (state.remote) {
+        next_glDisable = remote_glDisable;
+    }
     ERROR_IN_BLOCK();
-    LOAD_GLES(glDisable);
-    proxy_glEnable(cap, false, gles_glDisable);
+    proxy_glEnable(cap, false, next_glDisable);
 }
 
 #ifndef USE_ES2
 void glEnableClientState(GLenum cap) {
-    LOAD_GLES(glEnableClientState);
+    LOAD_GLES_SILENT(glEnableClientState);
+    void (*next_glEnableClientState)(GLenum) = gles_glEnableClientState;
     ERROR_IN_BLOCK();
-    proxy_glEnable(cap, true, gles_glEnableClientState);
+    if (state.remote) {
+        next_glEnableClientState = remote_glEnableClientState;
+    }
+    proxy_glEnable(cap, true, next_glEnableClientState);
 }
 
 void glDisableClientState(GLenum cap) {
-    LOAD_GLES(glDisableClientState);
+    LOAD_GLES_SILENT(glDisableClientState);
+    void (*next_glDisableClientState)(GLenum) = gles_glDisableClientState;
     ERROR_IN_BLOCK();
-    proxy_glEnable(cap, false, gles_glDisableClientState);
+    if (state.remote) {
+        next_glDisableClientState = remote_glDisableClientState;
+    }
+    proxy_glEnable(cap, false, next_glDisableClientState);
 }
 #endif
 
 GLboolean glIsEnabled(GLenum cap) {
-    LOAD_GLES(glIsEnabled);
     if (state.block.active) {
         gl_set_error(GL_INVALID_OPERATION);
         return 0;
@@ -121,7 +137,11 @@ GLboolean glIsEnabled(GLenum cap) {
         case GL_TEXTURE_COORD_ARRAY:
             return state.enable.tex_coord_array[state.texture.client];
         default:
+        {
+            FORWARD_IF_REMOTE(glIsEnabled);
+            LOAD_GLES(glIsEnabled);
             return gles_glIsEnabled(cap);
+        }
     }
 }
 
