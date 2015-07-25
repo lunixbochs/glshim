@@ -143,3 +143,23 @@ char *tack_str_join(tack_t *stack, const char *sep) {
     }
     return out;
 }
+
+uintptr_t tack_get_int(tack_t *stack, int idx) {
+    return (uintptr_t)tack_get(stack, idx);
+}
+
+uintptr_t tack_peek_int(tack_t *stack) {
+    return (uintptr_t)tack_peek(stack);
+}
+
+uintptr_t tack_pop_int(tack_t *stack) {
+    return (uintptr_t)tack_pop(stack);
+}
+
+void tack_push_int(tack_t *stack, uintptr_t val) {
+    tack_push(stack, (void *)val);
+}
+
+void tack_set_int(tack_t *stack, int idx, uintptr_t val) {
+    tack_set(stack, idx, (void *)val);
+}

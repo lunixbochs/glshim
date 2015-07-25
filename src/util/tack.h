@@ -1,6 +1,8 @@
 #ifndef TACK_H
 #define TACK_H
 
+#include <stdint.h>
+
 typedef struct {
     void **data;
     int len, cap, pos;
@@ -18,5 +20,11 @@ extern void *tack_shift(tack_t *stack);
 extern void tack_clear(tack_t *stack);
 extern void tack_push(tack_t *stack, void *data);
 extern void tack_set(tack_t *stack, int idx, void *data);
+
+extern uintptr_t tack_get_int(tack_t *stack, int idx);
+extern uintptr_t tack_peek_int(tack_t *stack);
+extern uintptr_t tack_pop_int(tack_t *stack);
+extern void tack_push_int(tack_t *stack, uintptr_t val);
+extern void tack_set_int(tack_t *stack, int idx, uintptr_t val);
 
 #endif
