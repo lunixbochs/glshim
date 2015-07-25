@@ -4,6 +4,7 @@
 #include "raster.h"
 #include "texture.h"
 #include "matrix.h"
+#include "remote.h"
 
 /* raster engine:
     we render pixels to memory somewhere
@@ -164,6 +165,10 @@ void render_raster() {
     if (!state.viewport.width || !state.viewport.height || !state.raster.buf)
         return;
 
+    if (state.remote) {
+        remote_render_raster(&state);
+        return;
+    }
 // FIXME
 #ifndef USE_ES2
     glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT);
