@@ -172,7 +172,7 @@ int remote_serve(int fd) {
     while (1) {
         GlouijaCall c = {0};
         glouija_command_read(&c);
-        if (c.args != 3) {
+        if (c.args < 2) {
             fprintf(stderr, "Invalid remote command.\n");
             return 3;
         }
