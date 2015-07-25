@@ -9,8 +9,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define SERVER_BUFFER_SIZE (1024*8)
-#define CLIENT_BUFFER_SIZE (1024*8)
+#define SERVER_BUFFER_SIZE (1024*1024)
+#define CLIENT_BUFFER_SIZE (1024*1024)
 #define GLO_CALL_ARG_MAX 8
 
 enum GlouijaCallType {
