@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "gl/remote.h"
 #include "gl/wrap/gles.h"
 #include "glouija/glouija.h"
 
