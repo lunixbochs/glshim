@@ -238,13 +238,14 @@ static void scan_env() {
     }
     const char *remote = getenv("LIBGL_REMOTE");
     if (remote) {
-        fprintf(stderr, "libGL: remote rendering enabled\n");
+        unsetenv("LIBGL_REMOTE");
         if (strcmp(remote, "1") == 0) {
-            remote = "libgl_remote";
+            remote = NULL;
         }
-        int pid = remote_spawn("libgl_remote");
+        int pid = remote_spawn(remote);
         if (pid > 0) {
             state.remote = pid;
+            printf("libGL: remote pid %d\n", pid);
         }
     }
 }

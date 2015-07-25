@@ -1,4 +1,6 @@
+#include <errno.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "block.h"
@@ -7,8 +9,6 @@
 #include "remote.h"
 #include "wrap/gles.h"
 #include "wrap/types.h"
-
-#include <string.h>
 
 #define GLOUIJA_CALL_INIT(ret_size)                            \
     {                                                          \
@@ -20,16 +20,19 @@
     }
 
 
-int remote_spawn(char *path) {
+int remote_spawn(const char *path) {
     if (path == NULL) {
         path = "libgl_remote";
     }
     int fd = glouija_init_client();
     int pid = fork();
     if (pid == 0) {
-        char *argv[] = {path, NULL, NULL};
+        char *argv[] = {(char *)path, NULL, NULL};
         asprintf(&argv[1], "%d", fd);
         execve(path, argv, NULL);
+        if (errno) {
+            fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
+        }
     }
     return pid;
 }

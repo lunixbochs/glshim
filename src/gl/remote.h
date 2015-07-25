@@ -9,7 +9,7 @@
 #define REMOTE_RENDER_RASTER -3
 
 int remote_serve(int fd);
-int remote_spawn(char *path);
+int remote_spawn(const char *path);
 void *remote_serialize_block(block_t *block, size_t *size);
 block_t *remote_deserialize_block(void *buf);
 void remote_call(packed_call_t *call, void *ret_v);
