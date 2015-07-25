@@ -2526,210 +2526,210 @@ void glViewport(glViewport_ARG_EXPAND);
 typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
 
 
-#define pack_glActiveTexture(texture) ({ \
+#define pack_glActiveTexture(_texture) ({ \
     glActiveTexture_PACKED *packed_data = malloc(sizeof(glActiveTexture_PACKED)); \
     packed_data->index = glActiveTexture_INDEX; \
-    packed_data->args.texture = (GLenum)texture; \
+    packed_data->args.texture = (GLenum)_texture; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glAttachShader(program, shader) ({ \
+#define pack_glAttachShader(_program, _shader) ({ \
     glAttachShader_PACKED *packed_data = malloc(sizeof(glAttachShader_PACKED)); \
     packed_data->index = glAttachShader_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.shader = (GLuint)shader; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.shader = (GLuint)_shader; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBindAttribLocation(program, index, name) ({ \
+#define pack_glBindAttribLocation(_program, _index, _name) ({ \
     glBindAttribLocation_PACKED *packed_data = malloc(sizeof(glBindAttribLocation_PACKED)); \
     packed_data->index = glBindAttribLocation_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.name = (GLchar *)name; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.name = (GLchar *)_name; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBindBuffer(target, buffer) ({ \
+#define pack_glBindBuffer(_target, _buffer) ({ \
     glBindBuffer_PACKED *packed_data = malloc(sizeof(glBindBuffer_PACKED)); \
     packed_data->index = glBindBuffer_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.buffer = (GLuint)buffer; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.buffer = (GLuint)_buffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBindFramebuffer(target, framebuffer) ({ \
+#define pack_glBindFramebuffer(_target, _framebuffer) ({ \
     glBindFramebuffer_PACKED *packed_data = malloc(sizeof(glBindFramebuffer_PACKED)); \
     packed_data->index = glBindFramebuffer_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.framebuffer = (GLuint)framebuffer; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.framebuffer = (GLuint)_framebuffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBindRenderbuffer(target, renderbuffer) ({ \
+#define pack_glBindRenderbuffer(_target, _renderbuffer) ({ \
     glBindRenderbuffer_PACKED *packed_data = malloc(sizeof(glBindRenderbuffer_PACKED)); \
     packed_data->index = glBindRenderbuffer_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.renderbuffer = (GLuint)renderbuffer; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.renderbuffer = (GLuint)_renderbuffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBindTexture(target, texture) ({ \
+#define pack_glBindTexture(_target, _texture) ({ \
     glBindTexture_PACKED *packed_data = malloc(sizeof(glBindTexture_PACKED)); \
     packed_data->index = glBindTexture_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.texture = (GLuint)texture; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.texture = (GLuint)_texture; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBlendColor(red, green, blue, alpha) ({ \
+#define pack_glBlendColor(_red, _green, _blue, _alpha) ({ \
     glBlendColor_PACKED *packed_data = malloc(sizeof(glBlendColor_PACKED)); \
     packed_data->index = glBlendColor_INDEX; \
-    packed_data->args.red = (GLclampf)red; \
-    packed_data->args.green = (GLclampf)green; \
-    packed_data->args.blue = (GLclampf)blue; \
-    packed_data->args.alpha = (GLclampf)alpha; \
+    packed_data->args.red = (GLclampf)_red; \
+    packed_data->args.green = (GLclampf)_green; \
+    packed_data->args.blue = (GLclampf)_blue; \
+    packed_data->args.alpha = (GLclampf)_alpha; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBlendEquation(mode) ({ \
+#define pack_glBlendEquation(_mode) ({ \
     glBlendEquation_PACKED *packed_data = malloc(sizeof(glBlendEquation_PACKED)); \
     packed_data->index = glBlendEquation_INDEX; \
-    packed_data->args.mode = (GLenum)mode; \
+    packed_data->args.mode = (GLenum)_mode; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBlendEquationSeparate(modeRGB, modeA) ({ \
+#define pack_glBlendEquationSeparate(_modeRGB, _modeA) ({ \
     glBlendEquationSeparate_PACKED *packed_data = malloc(sizeof(glBlendEquationSeparate_PACKED)); \
     packed_data->index = glBlendEquationSeparate_INDEX; \
-    packed_data->args.modeRGB = (GLenum)modeRGB; \
-    packed_data->args.modeA = (GLenum)modeA; \
+    packed_data->args.modeRGB = (GLenum)_modeRGB; \
+    packed_data->args.modeA = (GLenum)_modeA; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBlendFunc(sfactor, dfactor) ({ \
+#define pack_glBlendFunc(_sfactor, _dfactor) ({ \
     glBlendFunc_PACKED *packed_data = malloc(sizeof(glBlendFunc_PACKED)); \
     packed_data->index = glBlendFunc_INDEX; \
-    packed_data->args.sfactor = (GLenum)sfactor; \
-    packed_data->args.dfactor = (GLenum)dfactor; \
+    packed_data->args.sfactor = (GLenum)_sfactor; \
+    packed_data->args.dfactor = (GLenum)_dfactor; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha) ({ \
+#define pack_glBlendFuncSeparate(_sfactorRGB, _dfactorRGB, _sfactorAlpha, _dfactorAlpha) ({ \
     glBlendFuncSeparate_PACKED *packed_data = malloc(sizeof(glBlendFuncSeparate_PACKED)); \
     packed_data->index = glBlendFuncSeparate_INDEX; \
-    packed_data->args.sfactorRGB = (GLenum)sfactorRGB; \
-    packed_data->args.dfactorRGB = (GLenum)dfactorRGB; \
-    packed_data->args.sfactorAlpha = (GLenum)sfactorAlpha; \
-    packed_data->args.dfactorAlpha = (GLenum)dfactorAlpha; \
+    packed_data->args.sfactorRGB = (GLenum)_sfactorRGB; \
+    packed_data->args.dfactorRGB = (GLenum)_dfactorRGB; \
+    packed_data->args.sfactorAlpha = (GLenum)_sfactorAlpha; \
+    packed_data->args.dfactorAlpha = (GLenum)_dfactorAlpha; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBufferData(target, size, data, usage) ({ \
+#define pack_glBufferData(_target, _size, _data, _usage) ({ \
     glBufferData_PACKED *packed_data = malloc(sizeof(glBufferData_PACKED)); \
     packed_data->index = glBufferData_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.size = (GLsizeiptr)size; \
-    packed_data->args.data = (GLvoid *)data; \
-    packed_data->args.usage = (GLenum)usage; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.size = (GLsizeiptr)_size; \
+    packed_data->args.data = (GLvoid *)_data; \
+    packed_data->args.usage = (GLenum)_usage; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glBufferSubData(target, offset, size, data) ({ \
+#define pack_glBufferSubData(_target, _offset, _size, _data) ({ \
     glBufferSubData_PACKED *packed_data = malloc(sizeof(glBufferSubData_PACKED)); \
     packed_data->index = glBufferSubData_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.offset = (GLintptr)offset; \
-    packed_data->args.size = (GLsizeiptr)size; \
-    packed_data->args.data = (GLvoid *)data; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.offset = (GLintptr)_offset; \
+    packed_data->args.size = (GLsizeiptr)_size; \
+    packed_data->args.data = (GLvoid *)_data; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCheckFramebufferStatus(target) ({ \
+#define pack_glCheckFramebufferStatus(_target) ({ \
     glCheckFramebufferStatus_PACKED *packed_data = malloc(sizeof(glCheckFramebufferStatus_PACKED)); \
     packed_data->index = glCheckFramebufferStatus_INDEX; \
-    packed_data->args.target = (GLenum)target; \
+    packed_data->args.target = (GLenum)_target; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glClear(mask) ({ \
+#define pack_glClear(_mask) ({ \
     glClear_PACKED *packed_data = malloc(sizeof(glClear_PACKED)); \
     packed_data->index = glClear_INDEX; \
-    packed_data->args.mask = (GLbitfield)mask; \
+    packed_data->args.mask = (GLbitfield)_mask; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glClearColor(red, green, blue, alpha) ({ \
+#define pack_glClearColor(_red, _green, _blue, _alpha) ({ \
     glClearColor_PACKED *packed_data = malloc(sizeof(glClearColor_PACKED)); \
     packed_data->index = glClearColor_INDEX; \
-    packed_data->args.red = (GLclampf)red; \
-    packed_data->args.green = (GLclampf)green; \
-    packed_data->args.blue = (GLclampf)blue; \
-    packed_data->args.alpha = (GLclampf)alpha; \
+    packed_data->args.red = (GLclampf)_red; \
+    packed_data->args.green = (GLclampf)_green; \
+    packed_data->args.blue = (GLclampf)_blue; \
+    packed_data->args.alpha = (GLclampf)_alpha; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glClearDepthf(depth) ({ \
+#define pack_glClearDepthf(_depth) ({ \
     glClearDepthf_PACKED *packed_data = malloc(sizeof(glClearDepthf_PACKED)); \
     packed_data->index = glClearDepthf_INDEX; \
-    packed_data->args.depth = (GLclampf)depth; \
+    packed_data->args.depth = (GLclampf)_depth; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glClearStencil(s) ({ \
+#define pack_glClearStencil(_s) ({ \
     glClearStencil_PACKED *packed_data = malloc(sizeof(glClearStencil_PACKED)); \
     packed_data->index = glClearStencil_INDEX; \
-    packed_data->args.s = (GLint)s; \
+    packed_data->args.s = (GLint)_s; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glColorMask(red, green, blue, alpha) ({ \
+#define pack_glColorMask(_red, _green, _blue, _alpha) ({ \
     glColorMask_PACKED *packed_data = malloc(sizeof(glColorMask_PACKED)); \
     packed_data->index = glColorMask_INDEX; \
-    packed_data->args.red = (GLboolean)red; \
-    packed_data->args.green = (GLboolean)green; \
-    packed_data->args.blue = (GLboolean)blue; \
-    packed_data->args.alpha = (GLboolean)alpha; \
+    packed_data->args.red = (GLboolean)_red; \
+    packed_data->args.green = (GLboolean)_green; \
+    packed_data->args.blue = (GLboolean)_blue; \
+    packed_data->args.alpha = (GLboolean)_alpha; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCompileShader(shader) ({ \
+#define pack_glCompileShader(_shader) ({ \
     glCompileShader_PACKED *packed_data = malloc(sizeof(glCompileShader_PACKED)); \
     packed_data->index = glCompileShader_INDEX; \
-    packed_data->args.shader = (GLuint)shader; \
+    packed_data->args.shader = (GLuint)_shader; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) ({ \
+#define pack_glCompressedTexImage2D(_target, _level, _internalformat, _width, _height, _border, _imageSize, _data) ({ \
     glCompressedTexImage2D_PACKED *packed_data = malloc(sizeof(glCompressedTexImage2D_PACKED)); \
     packed_data->index = glCompressedTexImage2D_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.level = (GLint)level; \
-    packed_data->args.internalformat = (GLenum)internalformat; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
-    packed_data->args.border = (GLint)border; \
-    packed_data->args.imageSize = (GLsizei)imageSize; \
-    packed_data->args.data = (GLvoid *)data; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.level = (GLint)_level; \
+    packed_data->args.internalformat = (GLenum)_internalformat; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
+    packed_data->args.border = (GLint)_border; \
+    packed_data->args.imageSize = (GLsizei)_imageSize; \
+    packed_data->args.data = (GLvoid *)_data; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) ({ \
+#define pack_glCompressedTexSubImage2D(_target, _level, _xoffset, _yoffset, _width, _height, _format, _imageSize, _data) ({ \
     glCompressedTexSubImage2D_PACKED *packed_data = malloc(sizeof(glCompressedTexSubImage2D_PACKED)); \
     packed_data->index = glCompressedTexSubImage2D_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.level = (GLint)level; \
-    packed_data->args.xoffset = (GLint)xoffset; \
-    packed_data->args.yoffset = (GLint)yoffset; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
-    packed_data->args.format = (GLenum)format; \
-    packed_data->args.imageSize = (GLsizei)imageSize; \
-    packed_data->args.data = (GLvoid *)data; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.level = (GLint)_level; \
+    packed_data->args.xoffset = (GLint)_xoffset; \
+    packed_data->args.yoffset = (GLint)_yoffset; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
+    packed_data->args.format = (GLenum)_format; \
+    packed_data->args.imageSize = (GLsizei)_imageSize; \
+    packed_data->args.data = (GLvoid *)_data; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) ({ \
+#define pack_glCopyTexImage2D(_target, _level, _internalformat, _x, _y, _width, _height, _border) ({ \
     glCopyTexImage2D_PACKED *packed_data = malloc(sizeof(glCopyTexImage2D_PACKED)); \
     packed_data->index = glCopyTexImage2D_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.level = (GLint)level; \
-    packed_data->args.internalformat = (GLenum)internalformat; \
-    packed_data->args.x = (GLint)x; \
-    packed_data->args.y = (GLint)y; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
-    packed_data->args.border = (GLint)border; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.level = (GLint)_level; \
+    packed_data->args.internalformat = (GLenum)_internalformat; \
+    packed_data->args.x = (GLint)_x; \
+    packed_data->args.y = (GLint)_y; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
+    packed_data->args.border = (GLint)_border; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) ({ \
+#define pack_glCopyTexSubImage2D(_target, _level, _xoffset, _yoffset, _x, _y, _width, _height) ({ \
     glCopyTexSubImage2D_PACKED *packed_data = malloc(sizeof(glCopyTexSubImage2D_PACKED)); \
     packed_data->index = glCopyTexSubImage2D_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.level = (GLint)level; \
-    packed_data->args.xoffset = (GLint)xoffset; \
-    packed_data->args.yoffset = (GLint)yoffset; \
-    packed_data->args.x = (GLint)x; \
-    packed_data->args.y = (GLint)y; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.level = (GLint)_level; \
+    packed_data->args.xoffset = (GLint)_xoffset; \
+    packed_data->args.yoffset = (GLint)_yoffset; \
+    packed_data->args.x = (GLint)_x; \
+    packed_data->args.y = (GLint)_y; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
     (packed_call_t *)packed_data; \
 })
 #define pack_glCreateProgram() ({ \
@@ -2737,123 +2737,123 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     packed_data->index = glCreateProgram_INDEX; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCreateShader(type) ({ \
+#define pack_glCreateShader(_type) ({ \
     glCreateShader_PACKED *packed_data = malloc(sizeof(glCreateShader_PACKED)); \
     packed_data->index = glCreateShader_INDEX; \
-    packed_data->args.type = (GLenum)type; \
+    packed_data->args.type = (GLenum)_type; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glCullFace(mode) ({ \
+#define pack_glCullFace(_mode) ({ \
     glCullFace_PACKED *packed_data = malloc(sizeof(glCullFace_PACKED)); \
     packed_data->index = glCullFace_INDEX; \
-    packed_data->args.mode = (GLenum)mode; \
+    packed_data->args.mode = (GLenum)_mode; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDeleteBuffers(n, buffer) ({ \
+#define pack_glDeleteBuffers(_n, _buffer) ({ \
     glDeleteBuffers_PACKED *packed_data = malloc(sizeof(glDeleteBuffers_PACKED)); \
     packed_data->index = glDeleteBuffers_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.buffer = (GLuint *)buffer; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.buffer = (GLuint *)_buffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDeleteFramebuffers(n, framebuffers) ({ \
+#define pack_glDeleteFramebuffers(_n, _framebuffers) ({ \
     glDeleteFramebuffers_PACKED *packed_data = malloc(sizeof(glDeleteFramebuffers_PACKED)); \
     packed_data->index = glDeleteFramebuffers_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.framebuffers = (GLuint *)framebuffers; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.framebuffers = (GLuint *)_framebuffers; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDeleteProgram(program) ({ \
+#define pack_glDeleteProgram(_program) ({ \
     glDeleteProgram_PACKED *packed_data = malloc(sizeof(glDeleteProgram_PACKED)); \
     packed_data->index = glDeleteProgram_INDEX; \
-    packed_data->args.program = (GLuint)program; \
+    packed_data->args.program = (GLuint)_program; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDeleteRenderbuffers(n, renderbuffers) ({ \
+#define pack_glDeleteRenderbuffers(_n, _renderbuffers) ({ \
     glDeleteRenderbuffers_PACKED *packed_data = malloc(sizeof(glDeleteRenderbuffers_PACKED)); \
     packed_data->index = glDeleteRenderbuffers_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.renderbuffers = (GLuint *)renderbuffers; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.renderbuffers = (GLuint *)_renderbuffers; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDeleteShader(program) ({ \
+#define pack_glDeleteShader(_program) ({ \
     glDeleteShader_PACKED *packed_data = malloc(sizeof(glDeleteShader_PACKED)); \
     packed_data->index = glDeleteShader_INDEX; \
-    packed_data->args.program = (GLuint)program; \
+    packed_data->args.program = (GLuint)_program; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDeleteTextures(n, textures) ({ \
+#define pack_glDeleteTextures(_n, _textures) ({ \
     glDeleteTextures_PACKED *packed_data = malloc(sizeof(glDeleteTextures_PACKED)); \
     packed_data->index = glDeleteTextures_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.textures = (GLuint *)textures; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.textures = (GLuint *)_textures; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDepthFunc(func) ({ \
+#define pack_glDepthFunc(_func) ({ \
     glDepthFunc_PACKED *packed_data = malloc(sizeof(glDepthFunc_PACKED)); \
     packed_data->index = glDepthFunc_INDEX; \
-    packed_data->args.func = (GLenum)func; \
+    packed_data->args.func = (GLenum)_func; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDepthMask(flag) ({ \
+#define pack_glDepthMask(_flag) ({ \
     glDepthMask_PACKED *packed_data = malloc(sizeof(glDepthMask_PACKED)); \
     packed_data->index = glDepthMask_INDEX; \
-    packed_data->args.flag = (GLboolean)flag; \
+    packed_data->args.flag = (GLboolean)_flag; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDepthRangef(near, far) ({ \
+#define pack_glDepthRangef(_near, _far) ({ \
     glDepthRangef_PACKED *packed_data = malloc(sizeof(glDepthRangef_PACKED)); \
     packed_data->index = glDepthRangef_INDEX; \
-    packed_data->args.near = (GLclampf)near; \
-    packed_data->args.far = (GLclampf)far; \
+    packed_data->args.near = (GLclampf)_near; \
+    packed_data->args.far = (GLclampf)_far; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDetachShader(program, shader) ({ \
+#define pack_glDetachShader(_program, _shader) ({ \
     glDetachShader_PACKED *packed_data = malloc(sizeof(glDetachShader_PACKED)); \
     packed_data->index = glDetachShader_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.shader = (GLuint)shader; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.shader = (GLuint)_shader; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDisable(cap) ({ \
+#define pack_glDisable(_cap) ({ \
     glDisable_PACKED *packed_data = malloc(sizeof(glDisable_PACKED)); \
     packed_data->index = glDisable_INDEX; \
-    packed_data->args.cap = (GLenum)cap; \
+    packed_data->args.cap = (GLenum)_cap; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDisableVertexAttribArray(index) ({ \
+#define pack_glDisableVertexAttribArray(_index) ({ \
     glDisableVertexAttribArray_PACKED *packed_data = malloc(sizeof(glDisableVertexAttribArray_PACKED)); \
     packed_data->index = glDisableVertexAttribArray_INDEX; \
-    packed_data->args.index = (GLuint)index; \
+    packed_data->args.index = (GLuint)_index; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDrawArrays(mode, first, count) ({ \
+#define pack_glDrawArrays(_mode, _first, _count) ({ \
     glDrawArrays_PACKED *packed_data = malloc(sizeof(glDrawArrays_PACKED)); \
     packed_data->index = glDrawArrays_INDEX; \
-    packed_data->args.mode = (GLenum)mode; \
-    packed_data->args.first = (GLint)first; \
-    packed_data->args.count = (GLsizei)count; \
+    packed_data->args.mode = (GLenum)_mode; \
+    packed_data->args.first = (GLint)_first; \
+    packed_data->args.count = (GLsizei)_count; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glDrawElements(mode, count, type, indices) ({ \
+#define pack_glDrawElements(_mode, _count, _type, _indices) ({ \
     glDrawElements_PACKED *packed_data = malloc(sizeof(glDrawElements_PACKED)); \
     packed_data->index = glDrawElements_INDEX; \
-    packed_data->args.mode = (GLenum)mode; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.type = (GLenum)type; \
-    packed_data->args.indices = (GLvoid *)indices; \
+    packed_data->args.mode = (GLenum)_mode; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.type = (GLenum)_type; \
+    packed_data->args.indices = (GLvoid *)_indices; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glEnable(cap) ({ \
+#define pack_glEnable(_cap) ({ \
     glEnable_PACKED *packed_data = malloc(sizeof(glEnable_PACKED)); \
     packed_data->index = glEnable_INDEX; \
-    packed_data->args.cap = (GLenum)cap; \
+    packed_data->args.cap = (GLenum)_cap; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glEnableVertexAttribArray(index) ({ \
+#define pack_glEnableVertexAttribArray(_index) ({ \
     glEnableVertexAttribArray_PACKED *packed_data = malloc(sizeof(glEnableVertexAttribArray_PACKED)); \
     packed_data->index = glEnableVertexAttribArray_INDEX; \
-    packed_data->args.index = (GLuint)index; \
+    packed_data->args.index = (GLuint)_index; \
     (packed_call_t *)packed_data; \
 })
 #define pack_glFinish() ({ \
@@ -2866,118 +2866,118 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     packed_data->index = glFlush_INDEX; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer) ({ \
+#define pack_glFramebufferRenderbuffer(_target, _attachment, _renderbuffertarget, _renderbuffer) ({ \
     glFramebufferRenderbuffer_PACKED *packed_data = malloc(sizeof(glFramebufferRenderbuffer_PACKED)); \
     packed_data->index = glFramebufferRenderbuffer_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.attachment = (GLenum)attachment; \
-    packed_data->args.renderbuffertarget = (GLenum)renderbuffertarget; \
-    packed_data->args.renderbuffer = (GLuint)renderbuffer; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.attachment = (GLenum)_attachment; \
+    packed_data->args.renderbuffertarget = (GLenum)_renderbuffertarget; \
+    packed_data->args.renderbuffer = (GLuint)_renderbuffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glFramebufferTexture2D(target, attachment, textarget, texture, level) ({ \
+#define pack_glFramebufferTexture2D(_target, _attachment, _textarget, _texture, _level) ({ \
     glFramebufferTexture2D_PACKED *packed_data = malloc(sizeof(glFramebufferTexture2D_PACKED)); \
     packed_data->index = glFramebufferTexture2D_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.attachment = (GLenum)attachment; \
-    packed_data->args.textarget = (GLenum)textarget; \
-    packed_data->args.texture = (GLuint)texture; \
-    packed_data->args.level = (GLint)level; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.attachment = (GLenum)_attachment; \
+    packed_data->args.textarget = (GLenum)_textarget; \
+    packed_data->args.texture = (GLuint)_texture; \
+    packed_data->args.level = (GLint)_level; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glFrontFace(mode) ({ \
+#define pack_glFrontFace(_mode) ({ \
     glFrontFace_PACKED *packed_data = malloc(sizeof(glFrontFace_PACKED)); \
     packed_data->index = glFrontFace_INDEX; \
-    packed_data->args.mode = (GLenum)mode; \
+    packed_data->args.mode = (GLenum)_mode; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGenBuffers(n, buffer) ({ \
+#define pack_glGenBuffers(_n, _buffer) ({ \
     glGenBuffers_PACKED *packed_data = malloc(sizeof(glGenBuffers_PACKED)); \
     packed_data->index = glGenBuffers_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.buffer = (GLuint *)buffer; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.buffer = (GLuint *)_buffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGenFramebuffers(n, framebuffers) ({ \
+#define pack_glGenFramebuffers(_n, _framebuffers) ({ \
     glGenFramebuffers_PACKED *packed_data = malloc(sizeof(glGenFramebuffers_PACKED)); \
     packed_data->index = glGenFramebuffers_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.framebuffers = (GLuint *)framebuffers; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.framebuffers = (GLuint *)_framebuffers; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGenRenderbuffers(n, renderbuffers) ({ \
+#define pack_glGenRenderbuffers(_n, _renderbuffers) ({ \
     glGenRenderbuffers_PACKED *packed_data = malloc(sizeof(glGenRenderbuffers_PACKED)); \
     packed_data->index = glGenRenderbuffers_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.renderbuffers = (GLuint *)renderbuffers; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.renderbuffers = (GLuint *)_renderbuffers; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGenTextures(n, textures) ({ \
+#define pack_glGenTextures(_n, _textures) ({ \
     glGenTextures_PACKED *packed_data = malloc(sizeof(glGenTextures_PACKED)); \
     packed_data->index = glGenTextures_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.textures = (GLuint *)textures; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.textures = (GLuint *)_textures; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGenerateMipmap(target) ({ \
+#define pack_glGenerateMipmap(_target) ({ \
     glGenerateMipmap_PACKED *packed_data = malloc(sizeof(glGenerateMipmap_PACKED)); \
     packed_data->index = glGenerateMipmap_INDEX; \
-    packed_data->args.target = (GLenum)target; \
+    packed_data->args.target = (GLenum)_target; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetActiveAttrib(program, index, bufSize, length, size, type, name) ({ \
+#define pack_glGetActiveAttrib(_program, _index, _bufSize, _length, _size, _type, _name) ({ \
     glGetActiveAttrib_PACKED *packed_data = malloc(sizeof(glGetActiveAttrib_PACKED)); \
     packed_data->index = glGetActiveAttrib_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.bufSize = (GLsizei)bufSize; \
-    packed_data->args.length = (GLsizei *)length; \
-    packed_data->args.size = (GLint *)size; \
-    packed_data->args.type = (GLenum *)type; \
-    packed_data->args.name = (GLchar *)name; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.bufSize = (GLsizei)_bufSize; \
+    packed_data->args.length = (GLsizei *)_length; \
+    packed_data->args.size = (GLint *)_size; \
+    packed_data->args.type = (GLenum *)_type; \
+    packed_data->args.name = (GLchar *)_name; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetActiveUniform(program, index, bufSize, length, size, type, name) ({ \
+#define pack_glGetActiveUniform(_program, _index, _bufSize, _length, _size, _type, _name) ({ \
     glGetActiveUniform_PACKED *packed_data = malloc(sizeof(glGetActiveUniform_PACKED)); \
     packed_data->index = glGetActiveUniform_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.bufSize = (GLsizei)bufSize; \
-    packed_data->args.length = (GLsizei *)length; \
-    packed_data->args.size = (GLint *)size; \
-    packed_data->args.type = (GLenum *)type; \
-    packed_data->args.name = (GLchar *)name; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.bufSize = (GLsizei)_bufSize; \
+    packed_data->args.length = (GLsizei *)_length; \
+    packed_data->args.size = (GLint *)_size; \
+    packed_data->args.type = (GLenum *)_type; \
+    packed_data->args.name = (GLchar *)_name; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetAttachedShaders(program, maxCount, count, obj) ({ \
+#define pack_glGetAttachedShaders(_program, _maxCount, _count, _obj) ({ \
     glGetAttachedShaders_PACKED *packed_data = malloc(sizeof(glGetAttachedShaders_PACKED)); \
     packed_data->index = glGetAttachedShaders_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.maxCount = (GLsizei)maxCount; \
-    packed_data->args.count = (GLsizei *)count; \
-    packed_data->args.obj = (GLuint *)obj; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.maxCount = (GLsizei)_maxCount; \
+    packed_data->args.count = (GLsizei *)_count; \
+    packed_data->args.obj = (GLuint *)_obj; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetAttribLocation(program, name) ({ \
+#define pack_glGetAttribLocation(_program, _name) ({ \
     glGetAttribLocation_PACKED *packed_data = malloc(sizeof(glGetAttribLocation_PACKED)); \
     packed_data->index = glGetAttribLocation_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.name = (GLchar *)name; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.name = (GLchar *)_name; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetBooleanv(pname, params) ({ \
+#define pack_glGetBooleanv(_pname, _params) ({ \
     glGetBooleanv_PACKED *packed_data = malloc(sizeof(glGetBooleanv_PACKED)); \
     packed_data->index = glGetBooleanv_INDEX; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLboolean *)params; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLboolean *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetBufferParameteriv(target, pname, params) ({ \
+#define pack_glGetBufferParameteriv(_target, _pname, _params) ({ \
     glGetBufferParameteriv_PACKED *packed_data = malloc(sizeof(glGetBufferParameteriv_PACKED)); \
     packed_data->index = glGetBufferParameteriv_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
 #define pack_glGetError() ({ \
@@ -2985,243 +2985,243 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     packed_data->index = glGetError_INDEX; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetFloatv(pname, params) ({ \
+#define pack_glGetFloatv(_pname, _params) ({ \
     glGetFloatv_PACKED *packed_data = malloc(sizeof(glGetFloatv_PACKED)); \
     packed_data->index = glGetFloatv_INDEX; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLfloat *)params; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLfloat *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetFramebufferAttachmentParameteriv(target, attachment, pname, params) ({ \
+#define pack_glGetFramebufferAttachmentParameteriv(_target, _attachment, _pname, _params) ({ \
     glGetFramebufferAttachmentParameteriv_PACKED *packed_data = malloc(sizeof(glGetFramebufferAttachmentParameteriv_PACKED)); \
     packed_data->index = glGetFramebufferAttachmentParameteriv_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.attachment = (GLenum)attachment; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.attachment = (GLenum)_attachment; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetIntegerv(pname, params) ({ \
+#define pack_glGetIntegerv(_pname, _params) ({ \
     glGetIntegerv_PACKED *packed_data = malloc(sizeof(glGetIntegerv_PACKED)); \
     packed_data->index = glGetIntegerv_INDEX; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetProgramInfoLog(program, bufSize, length, infoLog) ({ \
+#define pack_glGetProgramInfoLog(_program, _bufSize, _length, _infoLog) ({ \
     glGetProgramInfoLog_PACKED *packed_data = malloc(sizeof(glGetProgramInfoLog_PACKED)); \
     packed_data->index = glGetProgramInfoLog_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.bufSize = (GLsizei)bufSize; \
-    packed_data->args.length = (GLsizei *)length; \
-    packed_data->args.infoLog = (GLchar *)infoLog; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.bufSize = (GLsizei)_bufSize; \
+    packed_data->args.length = (GLsizei *)_length; \
+    packed_data->args.infoLog = (GLchar *)_infoLog; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetProgramiv(program, pname, params) ({ \
+#define pack_glGetProgramiv(_program, _pname, _params) ({ \
     glGetProgramiv_PACKED *packed_data = malloc(sizeof(glGetProgramiv_PACKED)); \
     packed_data->index = glGetProgramiv_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetRenderbufferParameteriv(target, pname, params) ({ \
+#define pack_glGetRenderbufferParameteriv(_target, _pname, _params) ({ \
     glGetRenderbufferParameteriv_PACKED *packed_data = malloc(sizeof(glGetRenderbufferParameteriv_PACKED)); \
     packed_data->index = glGetRenderbufferParameteriv_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetShaderInfoLog(shader, bufSize, length, infoLog) ({ \
+#define pack_glGetShaderInfoLog(_shader, _bufSize, _length, _infoLog) ({ \
     glGetShaderInfoLog_PACKED *packed_data = malloc(sizeof(glGetShaderInfoLog_PACKED)); \
     packed_data->index = glGetShaderInfoLog_INDEX; \
-    packed_data->args.shader = (GLuint)shader; \
-    packed_data->args.bufSize = (GLsizei)bufSize; \
-    packed_data->args.length = (GLsizei *)length; \
-    packed_data->args.infoLog = (GLchar *)infoLog; \
+    packed_data->args.shader = (GLuint)_shader; \
+    packed_data->args.bufSize = (GLsizei)_bufSize; \
+    packed_data->args.length = (GLsizei *)_length; \
+    packed_data->args.infoLog = (GLchar *)_infoLog; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetShaderPrecisionFormat(shadertype, precisiontype, range, precision) ({ \
+#define pack_glGetShaderPrecisionFormat(_shadertype, _precisiontype, _range, _precision) ({ \
     glGetShaderPrecisionFormat_PACKED *packed_data = malloc(sizeof(glGetShaderPrecisionFormat_PACKED)); \
     packed_data->index = glGetShaderPrecisionFormat_INDEX; \
-    packed_data->args.shadertype = (GLenum)shadertype; \
-    packed_data->args.precisiontype = (GLenum)precisiontype; \
-    packed_data->args.range = (GLint *)range; \
-    packed_data->args.precision = (GLint *)precision; \
+    packed_data->args.shadertype = (GLenum)_shadertype; \
+    packed_data->args.precisiontype = (GLenum)_precisiontype; \
+    packed_data->args.range = (GLint *)_range; \
+    packed_data->args.precision = (GLint *)_precision; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetShaderSource(shader, bufSize, length, source) ({ \
+#define pack_glGetShaderSource(_shader, _bufSize, _length, _source) ({ \
     glGetShaderSource_PACKED *packed_data = malloc(sizeof(glGetShaderSource_PACKED)); \
     packed_data->index = glGetShaderSource_INDEX; \
-    packed_data->args.shader = (GLuint)shader; \
-    packed_data->args.bufSize = (GLsizei)bufSize; \
-    packed_data->args.length = (GLsizei *)length; \
-    packed_data->args.source = (GLchar *)source; \
+    packed_data->args.shader = (GLuint)_shader; \
+    packed_data->args.bufSize = (GLsizei)_bufSize; \
+    packed_data->args.length = (GLsizei *)_length; \
+    packed_data->args.source = (GLchar *)_source; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetShaderiv(shader, pname, params) ({ \
+#define pack_glGetShaderiv(_shader, _pname, _params) ({ \
     glGetShaderiv_PACKED *packed_data = malloc(sizeof(glGetShaderiv_PACKED)); \
     packed_data->index = glGetShaderiv_INDEX; \
-    packed_data->args.shader = (GLuint)shader; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.shader = (GLuint)_shader; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetString(name) ({ \
+#define pack_glGetString(_name) ({ \
     glGetString_PACKED *packed_data = malloc(sizeof(glGetString_PACKED)); \
     packed_data->index = glGetString_INDEX; \
-    packed_data->args.name = (GLenum)name; \
+    packed_data->args.name = (GLenum)_name; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetTexParameterfv(target, pname, params) ({ \
+#define pack_glGetTexParameterfv(_target, _pname, _params) ({ \
     glGetTexParameterfv_PACKED *packed_data = malloc(sizeof(glGetTexParameterfv_PACKED)); \
     packed_data->index = glGetTexParameterfv_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLfloat *)params; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLfloat *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetTexParameteriv(target, pname, params) ({ \
+#define pack_glGetTexParameteriv(_target, _pname, _params) ({ \
     glGetTexParameteriv_PACKED *packed_data = malloc(sizeof(glGetTexParameteriv_PACKED)); \
     packed_data->index = glGetTexParameteriv_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetUniformLocation(program, name) ({ \
+#define pack_glGetUniformLocation(_program, _name) ({ \
     glGetUniformLocation_PACKED *packed_data = malloc(sizeof(glGetUniformLocation_PACKED)); \
     packed_data->index = glGetUniformLocation_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.name = (GLchar *)name; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.name = (GLchar *)_name; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetUniformfv(program, location, params) ({ \
+#define pack_glGetUniformfv(_program, _location, _params) ({ \
     glGetUniformfv_PACKED *packed_data = malloc(sizeof(glGetUniformfv_PACKED)); \
     packed_data->index = glGetUniformfv_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.params = (GLfloat *)params; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.params = (GLfloat *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetUniformiv(program, location, params) ({ \
+#define pack_glGetUniformiv(_program, _location, _params) ({ \
     glGetUniformiv_PACKED *packed_data = malloc(sizeof(glGetUniformiv_PACKED)); \
     packed_data->index = glGetUniformiv_INDEX; \
-    packed_data->args.program = (GLuint)program; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.program = (GLuint)_program; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetVertexAttribPointerv(index, pname, pointer) ({ \
+#define pack_glGetVertexAttribPointerv(_index, _pname, _pointer) ({ \
     glGetVertexAttribPointerv_PACKED *packed_data = malloc(sizeof(glGetVertexAttribPointerv_PACKED)); \
     packed_data->index = glGetVertexAttribPointerv_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.pointer = (GLvoid **)pointer; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.pointer = (GLvoid **)_pointer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetVertexAttribfv(index, pname, params) ({ \
+#define pack_glGetVertexAttribfv(_index, _pname, _params) ({ \
     glGetVertexAttribfv_PACKED *packed_data = malloc(sizeof(glGetVertexAttribfv_PACKED)); \
     packed_data->index = glGetVertexAttribfv_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLfloat *)params; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLfloat *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glGetVertexAttribiv(index, pname, params) ({ \
+#define pack_glGetVertexAttribiv(_index, _pname, _params) ({ \
     glGetVertexAttribiv_PACKED *packed_data = malloc(sizeof(glGetVertexAttribiv_PACKED)); \
     packed_data->index = glGetVertexAttribiv_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glHint(target, mode) ({ \
+#define pack_glHint(_target, _mode) ({ \
     glHint_PACKED *packed_data = malloc(sizeof(glHint_PACKED)); \
     packed_data->index = glHint_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.mode = (GLenum)mode; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.mode = (GLenum)_mode; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glIsBuffer(buffer) ({ \
+#define pack_glIsBuffer(_buffer) ({ \
     glIsBuffer_PACKED *packed_data = malloc(sizeof(glIsBuffer_PACKED)); \
     packed_data->index = glIsBuffer_INDEX; \
-    packed_data->args.buffer = (GLuint)buffer; \
+    packed_data->args.buffer = (GLuint)_buffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glIsEnabled(cap) ({ \
+#define pack_glIsEnabled(_cap) ({ \
     glIsEnabled_PACKED *packed_data = malloc(sizeof(glIsEnabled_PACKED)); \
     packed_data->index = glIsEnabled_INDEX; \
-    packed_data->args.cap = (GLenum)cap; \
+    packed_data->args.cap = (GLenum)_cap; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glIsFramebuffer(framebuffer) ({ \
+#define pack_glIsFramebuffer(_framebuffer) ({ \
     glIsFramebuffer_PACKED *packed_data = malloc(sizeof(glIsFramebuffer_PACKED)); \
     packed_data->index = glIsFramebuffer_INDEX; \
-    packed_data->args.framebuffer = (GLuint)framebuffer; \
+    packed_data->args.framebuffer = (GLuint)_framebuffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glIsProgram(program) ({ \
+#define pack_glIsProgram(_program) ({ \
     glIsProgram_PACKED *packed_data = malloc(sizeof(glIsProgram_PACKED)); \
     packed_data->index = glIsProgram_INDEX; \
-    packed_data->args.program = (GLuint)program; \
+    packed_data->args.program = (GLuint)_program; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glIsRenderbuffer(renderbuffer) ({ \
+#define pack_glIsRenderbuffer(_renderbuffer) ({ \
     glIsRenderbuffer_PACKED *packed_data = malloc(sizeof(glIsRenderbuffer_PACKED)); \
     packed_data->index = glIsRenderbuffer_INDEX; \
-    packed_data->args.renderbuffer = (GLuint)renderbuffer; \
+    packed_data->args.renderbuffer = (GLuint)_renderbuffer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glIsShader(shader) ({ \
+#define pack_glIsShader(_shader) ({ \
     glIsShader_PACKED *packed_data = malloc(sizeof(glIsShader_PACKED)); \
     packed_data->index = glIsShader_INDEX; \
-    packed_data->args.shader = (GLuint)shader; \
+    packed_data->args.shader = (GLuint)_shader; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glIsTexture(texture) ({ \
+#define pack_glIsTexture(_texture) ({ \
     glIsTexture_PACKED *packed_data = malloc(sizeof(glIsTexture_PACKED)); \
     packed_data->index = glIsTexture_INDEX; \
-    packed_data->args.texture = (GLuint)texture; \
+    packed_data->args.texture = (GLuint)_texture; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glLineWidth(width) ({ \
+#define pack_glLineWidth(_width) ({ \
     glLineWidth_PACKED *packed_data = malloc(sizeof(glLineWidth_PACKED)); \
     packed_data->index = glLineWidth_INDEX; \
-    packed_data->args.width = (GLfloat)width; \
+    packed_data->args.width = (GLfloat)_width; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glLinkProgram(program) ({ \
+#define pack_glLinkProgram(_program) ({ \
     glLinkProgram_PACKED *packed_data = malloc(sizeof(glLinkProgram_PACKED)); \
     packed_data->index = glLinkProgram_INDEX; \
-    packed_data->args.program = (GLuint)program; \
+    packed_data->args.program = (GLuint)_program; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glPixelStorei(pname, param) ({ \
+#define pack_glPixelStorei(_pname, _param) ({ \
     glPixelStorei_PACKED *packed_data = malloc(sizeof(glPixelStorei_PACKED)); \
     packed_data->index = glPixelStorei_INDEX; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.param = (GLint)param; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.param = (GLint)_param; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glPolygonOffset(factor, units) ({ \
+#define pack_glPolygonOffset(_factor, _units) ({ \
     glPolygonOffset_PACKED *packed_data = malloc(sizeof(glPolygonOffset_PACKED)); \
     packed_data->index = glPolygonOffset_INDEX; \
-    packed_data->args.factor = (GLfloat)factor; \
-    packed_data->args.units = (GLfloat)units; \
+    packed_data->args.factor = (GLfloat)_factor; \
+    packed_data->args.units = (GLfloat)_units; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glReadPixels(x, y, width, height, format, type, pixels) ({ \
+#define pack_glReadPixels(_x, _y, _width, _height, _format, _type, _pixels) ({ \
     glReadPixels_PACKED *packed_data = malloc(sizeof(glReadPixels_PACKED)); \
     packed_data->index = glReadPixels_INDEX; \
-    packed_data->args.x = (GLint)x; \
-    packed_data->args.y = (GLint)y; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
-    packed_data->args.format = (GLenum)format; \
-    packed_data->args.type = (GLenum)type; \
-    packed_data->args.pixels = (GLvoid *)pixels; \
+    packed_data->args.x = (GLint)_x; \
+    packed_data->args.y = (GLint)_y; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
+    packed_data->args.format = (GLenum)_format; \
+    packed_data->args.type = (GLenum)_type; \
+    packed_data->args.pixels = (GLvoid *)_pixels; \
     (packed_call_t *)packed_data; \
 })
 #define pack_glReleaseShaderCompiler() ({ \
@@ -3229,408 +3229,408 @@ typedef void (*glViewport_PTR)(glViewport_ARG_EXPAND);
     packed_data->index = glReleaseShaderCompiler_INDEX; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glRenderbufferStorage(target, internalformat, width, height) ({ \
+#define pack_glRenderbufferStorage(_target, _internalformat, _width, _height) ({ \
     glRenderbufferStorage_PACKED *packed_data = malloc(sizeof(glRenderbufferStorage_PACKED)); \
     packed_data->index = glRenderbufferStorage_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.internalformat = (GLenum)internalformat; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.internalformat = (GLenum)_internalformat; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glSampleCoverage(value, invert) ({ \
+#define pack_glSampleCoverage(_value, _invert) ({ \
     glSampleCoverage_PACKED *packed_data = malloc(sizeof(glSampleCoverage_PACKED)); \
     packed_data->index = glSampleCoverage_INDEX; \
-    packed_data->args.value = (GLclampf)value; \
-    packed_data->args.invert = (GLboolean)invert; \
+    packed_data->args.value = (GLclampf)_value; \
+    packed_data->args.invert = (GLboolean)_invert; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glScissor(x, y, width, height) ({ \
+#define pack_glScissor(_x, _y, _width, _height) ({ \
     glScissor_PACKED *packed_data = malloc(sizeof(glScissor_PACKED)); \
     packed_data->index = glScissor_INDEX; \
-    packed_data->args.x = (GLint)x; \
-    packed_data->args.y = (GLint)y; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
+    packed_data->args.x = (GLint)_x; \
+    packed_data->args.y = (GLint)_y; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glShaderBinary(n, shaders, binaryformat, binary, length) ({ \
+#define pack_glShaderBinary(_n, _shaders, _binaryformat, _binary, _length) ({ \
     glShaderBinary_PACKED *packed_data = malloc(sizeof(glShaderBinary_PACKED)); \
     packed_data->index = glShaderBinary_INDEX; \
-    packed_data->args.n = (GLsizei)n; \
-    packed_data->args.shaders = (GLuint *)shaders; \
-    packed_data->args.binaryformat = (GLenum)binaryformat; \
-    packed_data->args.binary = (GLvoid *)binary; \
-    packed_data->args.length = (GLsizei)length; \
+    packed_data->args.n = (GLsizei)_n; \
+    packed_data->args.shaders = (GLuint *)_shaders; \
+    packed_data->args.binaryformat = (GLenum)_binaryformat; \
+    packed_data->args.binary = (GLvoid *)_binary; \
+    packed_data->args.length = (GLsizei)_length; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glShaderSource(shader, count, string, length) ({ \
+#define pack_glShaderSource(_shader, _count, _string, _length) ({ \
     glShaderSource_PACKED *packed_data = malloc(sizeof(glShaderSource_PACKED)); \
     packed_data->index = glShaderSource_INDEX; \
-    packed_data->args.shader = (GLuint)shader; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.string = (GLchar * *)string; \
-    packed_data->args.length = (GLint *)length; \
+    packed_data->args.shader = (GLuint)_shader; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.string = (GLchar * *)_string; \
+    packed_data->args.length = (GLint *)_length; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glStencilFunc(func, ref, mask) ({ \
+#define pack_glStencilFunc(_func, _ref, _mask) ({ \
     glStencilFunc_PACKED *packed_data = malloc(sizeof(glStencilFunc_PACKED)); \
     packed_data->index = glStencilFunc_INDEX; \
-    packed_data->args.func = (GLenum)func; \
-    packed_data->args.ref = (GLint)ref; \
-    packed_data->args.mask = (GLuint)mask; \
+    packed_data->args.func = (GLenum)_func; \
+    packed_data->args.ref = (GLint)_ref; \
+    packed_data->args.mask = (GLuint)_mask; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glStencilFuncSeparate(face, func, ref, mask) ({ \
+#define pack_glStencilFuncSeparate(_face, _func, _ref, _mask) ({ \
     glStencilFuncSeparate_PACKED *packed_data = malloc(sizeof(glStencilFuncSeparate_PACKED)); \
     packed_data->index = glStencilFuncSeparate_INDEX; \
-    packed_data->args.face = (GLenum)face; \
-    packed_data->args.func = (GLenum)func; \
-    packed_data->args.ref = (GLint)ref; \
-    packed_data->args.mask = (GLuint)mask; \
+    packed_data->args.face = (GLenum)_face; \
+    packed_data->args.func = (GLenum)_func; \
+    packed_data->args.ref = (GLint)_ref; \
+    packed_data->args.mask = (GLuint)_mask; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glStencilMask(mask) ({ \
+#define pack_glStencilMask(_mask) ({ \
     glStencilMask_PACKED *packed_data = malloc(sizeof(glStencilMask_PACKED)); \
     packed_data->index = glStencilMask_INDEX; \
-    packed_data->args.mask = (GLuint)mask; \
+    packed_data->args.mask = (GLuint)_mask; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glStencilMaskSeparate(face, mask) ({ \
+#define pack_glStencilMaskSeparate(_face, _mask) ({ \
     glStencilMaskSeparate_PACKED *packed_data = malloc(sizeof(glStencilMaskSeparate_PACKED)); \
     packed_data->index = glStencilMaskSeparate_INDEX; \
-    packed_data->args.face = (GLenum)face; \
-    packed_data->args.mask = (GLuint)mask; \
+    packed_data->args.face = (GLenum)_face; \
+    packed_data->args.mask = (GLuint)_mask; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glStencilOp(fail, zfail, zpass) ({ \
+#define pack_glStencilOp(_fail, _zfail, _zpass) ({ \
     glStencilOp_PACKED *packed_data = malloc(sizeof(glStencilOp_PACKED)); \
     packed_data->index = glStencilOp_INDEX; \
-    packed_data->args.fail = (GLenum)fail; \
-    packed_data->args.zfail = (GLenum)zfail; \
-    packed_data->args.zpass = (GLenum)zpass; \
+    packed_data->args.fail = (GLenum)_fail; \
+    packed_data->args.zfail = (GLenum)_zfail; \
+    packed_data->args.zpass = (GLenum)_zpass; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glStencilOpSeparate(face, sfail, zfail, zpass) ({ \
+#define pack_glStencilOpSeparate(_face, _sfail, _zfail, _zpass) ({ \
     glStencilOpSeparate_PACKED *packed_data = malloc(sizeof(glStencilOpSeparate_PACKED)); \
     packed_data->index = glStencilOpSeparate_INDEX; \
-    packed_data->args.face = (GLenum)face; \
-    packed_data->args.sfail = (GLenum)sfail; \
-    packed_data->args.zfail = (GLenum)zfail; \
-    packed_data->args.zpass = (GLenum)zpass; \
+    packed_data->args.face = (GLenum)_face; \
+    packed_data->args.sfail = (GLenum)_sfail; \
+    packed_data->args.zfail = (GLenum)_zfail; \
+    packed_data->args.zpass = (GLenum)_zpass; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) ({ \
+#define pack_glTexImage2D(_target, _level, _internalformat, _width, _height, _border, _format, _type, _pixels) ({ \
     glTexImage2D_PACKED *packed_data = malloc(sizeof(glTexImage2D_PACKED)); \
     packed_data->index = glTexImage2D_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.level = (GLint)level; \
-    packed_data->args.internalformat = (GLint)internalformat; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
-    packed_data->args.border = (GLint)border; \
-    packed_data->args.format = (GLenum)format; \
-    packed_data->args.type = (GLenum)type; \
-    packed_data->args.pixels = (GLvoid *)pixels; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.level = (GLint)_level; \
+    packed_data->args.internalformat = (GLint)_internalformat; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
+    packed_data->args.border = (GLint)_border; \
+    packed_data->args.format = (GLenum)_format; \
+    packed_data->args.type = (GLenum)_type; \
+    packed_data->args.pixels = (GLvoid *)_pixels; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glTexParameterf(target, pname, param) ({ \
+#define pack_glTexParameterf(_target, _pname, _param) ({ \
     glTexParameterf_PACKED *packed_data = malloc(sizeof(glTexParameterf_PACKED)); \
     packed_data->index = glTexParameterf_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.param = (GLfloat)param; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.param = (GLfloat)_param; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glTexParameterfv(target, pname, params) ({ \
+#define pack_glTexParameterfv(_target, _pname, _params) ({ \
     glTexParameterfv_PACKED *packed_data = malloc(sizeof(glTexParameterfv_PACKED)); \
     packed_data->index = glTexParameterfv_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLfloat *)params; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLfloat *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glTexParameteri(target, pname, param) ({ \
+#define pack_glTexParameteri(_target, _pname, _param) ({ \
     glTexParameteri_PACKED *packed_data = malloc(sizeof(glTexParameteri_PACKED)); \
     packed_data->index = glTexParameteri_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.param = (GLint)param; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.param = (GLint)_param; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glTexParameteriv(target, pname, params) ({ \
+#define pack_glTexParameteriv(_target, _pname, _params) ({ \
     glTexParameteriv_PACKED *packed_data = malloc(sizeof(glTexParameteriv_PACKED)); \
     packed_data->index = glTexParameteriv_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.pname = (GLenum)pname; \
-    packed_data->args.params = (GLint *)params; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.pname = (GLenum)_pname; \
+    packed_data->args.params = (GLint *)_params; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) ({ \
+#define pack_glTexSubImage2D(_target, _level, _xoffset, _yoffset, _width, _height, _format, _type, _pixels) ({ \
     glTexSubImage2D_PACKED *packed_data = malloc(sizeof(glTexSubImage2D_PACKED)); \
     packed_data->index = glTexSubImage2D_INDEX; \
-    packed_data->args.target = (GLenum)target; \
-    packed_data->args.level = (GLint)level; \
-    packed_data->args.xoffset = (GLint)xoffset; \
-    packed_data->args.yoffset = (GLint)yoffset; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
-    packed_data->args.format = (GLenum)format; \
-    packed_data->args.type = (GLenum)type; \
-    packed_data->args.pixels = (GLvoid *)pixels; \
+    packed_data->args.target = (GLenum)_target; \
+    packed_data->args.level = (GLint)_level; \
+    packed_data->args.xoffset = (GLint)_xoffset; \
+    packed_data->args.yoffset = (GLint)_yoffset; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
+    packed_data->args.format = (GLenum)_format; \
+    packed_data->args.type = (GLenum)_type; \
+    packed_data->args.pixels = (GLvoid *)_pixels; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform1f(location, v0) ({ \
+#define pack_glUniform1f(_location, _v0) ({ \
     glUniform1f_PACKED *packed_data = malloc(sizeof(glUniform1f_PACKED)); \
     packed_data->index = glUniform1f_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLfloat)v0; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLfloat)_v0; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform1fv(location, count, value) ({ \
+#define pack_glUniform1fv(_location, _count, _value) ({ \
     glUniform1fv_PACKED *packed_data = malloc(sizeof(glUniform1fv_PACKED)); \
     packed_data->index = glUniform1fv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLfloat *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLfloat *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform1i(location, v0) ({ \
+#define pack_glUniform1i(_location, _v0) ({ \
     glUniform1i_PACKED *packed_data = malloc(sizeof(glUniform1i_PACKED)); \
     packed_data->index = glUniform1i_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLint)v0; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLint)_v0; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform1iv(location, count, value) ({ \
+#define pack_glUniform1iv(_location, _count, _value) ({ \
     glUniform1iv_PACKED *packed_data = malloc(sizeof(glUniform1iv_PACKED)); \
     packed_data->index = glUniform1iv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLint *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLint *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform2f(location, v0, v1) ({ \
+#define pack_glUniform2f(_location, _v0, _v1) ({ \
     glUniform2f_PACKED *packed_data = malloc(sizeof(glUniform2f_PACKED)); \
     packed_data->index = glUniform2f_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLfloat)v0; \
-    packed_data->args.v1 = (GLfloat)v1; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLfloat)_v0; \
+    packed_data->args.v1 = (GLfloat)_v1; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform2fv(location, count, value) ({ \
+#define pack_glUniform2fv(_location, _count, _value) ({ \
     glUniform2fv_PACKED *packed_data = malloc(sizeof(glUniform2fv_PACKED)); \
     packed_data->index = glUniform2fv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLfloat *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLfloat *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform2i(location, v0, v1) ({ \
+#define pack_glUniform2i(_location, _v0, _v1) ({ \
     glUniform2i_PACKED *packed_data = malloc(sizeof(glUniform2i_PACKED)); \
     packed_data->index = glUniform2i_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLint)v0; \
-    packed_data->args.v1 = (GLint)v1; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLint)_v0; \
+    packed_data->args.v1 = (GLint)_v1; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform2iv(location, count, value) ({ \
+#define pack_glUniform2iv(_location, _count, _value) ({ \
     glUniform2iv_PACKED *packed_data = malloc(sizeof(glUniform2iv_PACKED)); \
     packed_data->index = glUniform2iv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLint *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLint *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform3f(location, v0, v1, v2) ({ \
+#define pack_glUniform3f(_location, _v0, _v1, _v2) ({ \
     glUniform3f_PACKED *packed_data = malloc(sizeof(glUniform3f_PACKED)); \
     packed_data->index = glUniform3f_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLfloat)v0; \
-    packed_data->args.v1 = (GLfloat)v1; \
-    packed_data->args.v2 = (GLfloat)v2; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLfloat)_v0; \
+    packed_data->args.v1 = (GLfloat)_v1; \
+    packed_data->args.v2 = (GLfloat)_v2; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform3fv(location, count, value) ({ \
+#define pack_glUniform3fv(_location, _count, _value) ({ \
     glUniform3fv_PACKED *packed_data = malloc(sizeof(glUniform3fv_PACKED)); \
     packed_data->index = glUniform3fv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLfloat *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLfloat *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform3i(location, v0, v1, v2) ({ \
+#define pack_glUniform3i(_location, _v0, _v1, _v2) ({ \
     glUniform3i_PACKED *packed_data = malloc(sizeof(glUniform3i_PACKED)); \
     packed_data->index = glUniform3i_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLint)v0; \
-    packed_data->args.v1 = (GLint)v1; \
-    packed_data->args.v2 = (GLint)v2; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLint)_v0; \
+    packed_data->args.v1 = (GLint)_v1; \
+    packed_data->args.v2 = (GLint)_v2; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform3iv(location, count, value) ({ \
+#define pack_glUniform3iv(_location, _count, _value) ({ \
     glUniform3iv_PACKED *packed_data = malloc(sizeof(glUniform3iv_PACKED)); \
     packed_data->index = glUniform3iv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLint *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLint *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform4f(location, v0, v1, v2, v3) ({ \
+#define pack_glUniform4f(_location, _v0, _v1, _v2, _v3) ({ \
     glUniform4f_PACKED *packed_data = malloc(sizeof(glUniform4f_PACKED)); \
     packed_data->index = glUniform4f_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLfloat)v0; \
-    packed_data->args.v1 = (GLfloat)v1; \
-    packed_data->args.v2 = (GLfloat)v2; \
-    packed_data->args.v3 = (GLfloat)v3; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLfloat)_v0; \
+    packed_data->args.v1 = (GLfloat)_v1; \
+    packed_data->args.v2 = (GLfloat)_v2; \
+    packed_data->args.v3 = (GLfloat)_v3; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform4fv(location, count, value) ({ \
+#define pack_glUniform4fv(_location, _count, _value) ({ \
     glUniform4fv_PACKED *packed_data = malloc(sizeof(glUniform4fv_PACKED)); \
     packed_data->index = glUniform4fv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLfloat *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLfloat *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform4i(location, v0, v1, v2, v3) ({ \
+#define pack_glUniform4i(_location, _v0, _v1, _v2, _v3) ({ \
     glUniform4i_PACKED *packed_data = malloc(sizeof(glUniform4i_PACKED)); \
     packed_data->index = glUniform4i_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.v0 = (GLint)v0; \
-    packed_data->args.v1 = (GLint)v1; \
-    packed_data->args.v2 = (GLint)v2; \
-    packed_data->args.v3 = (GLint)v3; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.v0 = (GLint)_v0; \
+    packed_data->args.v1 = (GLint)_v1; \
+    packed_data->args.v2 = (GLint)_v2; \
+    packed_data->args.v3 = (GLint)_v3; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniform4iv(location, count, value) ({ \
+#define pack_glUniform4iv(_location, _count, _value) ({ \
     glUniform4iv_PACKED *packed_data = malloc(sizeof(glUniform4iv_PACKED)); \
     packed_data->index = glUniform4iv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.value = (GLint *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.value = (GLint *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniformMatrix2fv(location, count, transpose, value) ({ \
+#define pack_glUniformMatrix2fv(_location, _count, _transpose, _value) ({ \
     glUniformMatrix2fv_PACKED *packed_data = malloc(sizeof(glUniformMatrix2fv_PACKED)); \
     packed_data->index = glUniformMatrix2fv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.transpose = (GLboolean)transpose; \
-    packed_data->args.value = (GLfloat *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.transpose = (GLboolean)_transpose; \
+    packed_data->args.value = (GLfloat *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniformMatrix3fv(location, count, transpose, value) ({ \
+#define pack_glUniformMatrix3fv(_location, _count, _transpose, _value) ({ \
     glUniformMatrix3fv_PACKED *packed_data = malloc(sizeof(glUniformMatrix3fv_PACKED)); \
     packed_data->index = glUniformMatrix3fv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.transpose = (GLboolean)transpose; \
-    packed_data->args.value = (GLfloat *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.transpose = (GLboolean)_transpose; \
+    packed_data->args.value = (GLfloat *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUniformMatrix4fv(location, count, transpose, value) ({ \
+#define pack_glUniformMatrix4fv(_location, _count, _transpose, _value) ({ \
     glUniformMatrix4fv_PACKED *packed_data = malloc(sizeof(glUniformMatrix4fv_PACKED)); \
     packed_data->index = glUniformMatrix4fv_INDEX; \
-    packed_data->args.location = (GLint)location; \
-    packed_data->args.count = (GLsizei)count; \
-    packed_data->args.transpose = (GLboolean)transpose; \
-    packed_data->args.value = (GLfloat *)value; \
+    packed_data->args.location = (GLint)_location; \
+    packed_data->args.count = (GLsizei)_count; \
+    packed_data->args.transpose = (GLboolean)_transpose; \
+    packed_data->args.value = (GLfloat *)_value; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glUseProgram(program) ({ \
+#define pack_glUseProgram(_program) ({ \
     glUseProgram_PACKED *packed_data = malloc(sizeof(glUseProgram_PACKED)); \
     packed_data->index = glUseProgram_INDEX; \
-    packed_data->args.program = (GLuint)program; \
+    packed_data->args.program = (GLuint)_program; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glValidateProgram(program) ({ \
+#define pack_glValidateProgram(_program) ({ \
     glValidateProgram_PACKED *packed_data = malloc(sizeof(glValidateProgram_PACKED)); \
     packed_data->index = glValidateProgram_INDEX; \
-    packed_data->args.program = (GLuint)program; \
+    packed_data->args.program = (GLuint)_program; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib1f(index, x) ({ \
+#define pack_glVertexAttrib1f(_index, _x) ({ \
     glVertexAttrib1f_PACKED *packed_data = malloc(sizeof(glVertexAttrib1f_PACKED)); \
     packed_data->index = glVertexAttrib1f_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.x = (GLfloat)x; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.x = (GLfloat)_x; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib1fv(index, v) ({ \
+#define pack_glVertexAttrib1fv(_index, _v) ({ \
     glVertexAttrib1fv_PACKED *packed_data = malloc(sizeof(glVertexAttrib1fv_PACKED)); \
     packed_data->index = glVertexAttrib1fv_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.v = (GLfloat *)v; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.v = (GLfloat *)_v; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib2f(index, x, y) ({ \
+#define pack_glVertexAttrib2f(_index, _x, _y) ({ \
     glVertexAttrib2f_PACKED *packed_data = malloc(sizeof(glVertexAttrib2f_PACKED)); \
     packed_data->index = glVertexAttrib2f_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.x = (GLfloat)x; \
-    packed_data->args.y = (GLfloat)y; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.x = (GLfloat)_x; \
+    packed_data->args.y = (GLfloat)_y; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib2fv(index, v) ({ \
+#define pack_glVertexAttrib2fv(_index, _v) ({ \
     glVertexAttrib2fv_PACKED *packed_data = malloc(sizeof(glVertexAttrib2fv_PACKED)); \
     packed_data->index = glVertexAttrib2fv_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.v = (GLfloat *)v; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.v = (GLfloat *)_v; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib3f(index, x, y, z) ({ \
+#define pack_glVertexAttrib3f(_index, _x, _y, _z) ({ \
     glVertexAttrib3f_PACKED *packed_data = malloc(sizeof(glVertexAttrib3f_PACKED)); \
     packed_data->index = glVertexAttrib3f_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.x = (GLfloat)x; \
-    packed_data->args.y = (GLfloat)y; \
-    packed_data->args.z = (GLfloat)z; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.x = (GLfloat)_x; \
+    packed_data->args.y = (GLfloat)_y; \
+    packed_data->args.z = (GLfloat)_z; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib3fv(index, v) ({ \
+#define pack_glVertexAttrib3fv(_index, _v) ({ \
     glVertexAttrib3fv_PACKED *packed_data = malloc(sizeof(glVertexAttrib3fv_PACKED)); \
     packed_data->index = glVertexAttrib3fv_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.v = (GLfloat *)v; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.v = (GLfloat *)_v; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib4f(index, x, y, z, w) ({ \
+#define pack_glVertexAttrib4f(_index, _x, _y, _z, _w) ({ \
     glVertexAttrib4f_PACKED *packed_data = malloc(sizeof(glVertexAttrib4f_PACKED)); \
     packed_data->index = glVertexAttrib4f_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.x = (GLfloat)x; \
-    packed_data->args.y = (GLfloat)y; \
-    packed_data->args.z = (GLfloat)z; \
-    packed_data->args.w = (GLfloat)w; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.x = (GLfloat)_x; \
+    packed_data->args.y = (GLfloat)_y; \
+    packed_data->args.z = (GLfloat)_z; \
+    packed_data->args.w = (GLfloat)_w; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttrib4fv(index, v) ({ \
+#define pack_glVertexAttrib4fv(_index, _v) ({ \
     glVertexAttrib4fv_PACKED *packed_data = malloc(sizeof(glVertexAttrib4fv_PACKED)); \
     packed_data->index = glVertexAttrib4fv_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.v = (GLfloat *)v; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.v = (GLfloat *)_v; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glVertexAttribPointer(index, size, type, normalized, stride, pointer) ({ \
+#define pack_glVertexAttribPointer(_index, _size, _type, _normalized, _stride, _pointer) ({ \
     glVertexAttribPointer_PACKED *packed_data = malloc(sizeof(glVertexAttribPointer_PACKED)); \
     packed_data->index = glVertexAttribPointer_INDEX; \
-    packed_data->args.index = (GLuint)index; \
-    packed_data->args.size = (GLint)size; \
-    packed_data->args.type = (GLenum)type; \
-    packed_data->args.normalized = (GLboolean)normalized; \
-    packed_data->args.stride = (GLsizei)stride; \
-    packed_data->args.pointer = (GLvoid *)pointer; \
+    packed_data->args.index = (GLuint)_index; \
+    packed_data->args.size = (GLint)_size; \
+    packed_data->args.type = (GLenum)_type; \
+    packed_data->args.normalized = (GLboolean)_normalized; \
+    packed_data->args.stride = (GLsizei)_stride; \
+    packed_data->args.pointer = (GLvoid *)_pointer; \
     (packed_call_t *)packed_data; \
 })
-#define pack_glViewport(x, y, width, height) ({ \
+#define pack_glViewport(_x, _y, _width, _height) ({ \
     glViewport_PACKED *packed_data = malloc(sizeof(glViewport_PACKED)); \
     packed_data->index = glViewport_INDEX; \
-    packed_data->args.x = (GLint)x; \
-    packed_data->args.y = (GLint)y; \
-    packed_data->args.width = (GLsizei)width; \
-    packed_data->args.height = (GLsizei)height; \
+    packed_data->args.x = (GLint)_x; \
+    packed_data->args.y = (GLint)_y; \
+    packed_data->args.width = (GLsizei)_width; \
+    packed_data->args.height = (GLsizei)_height; \
     (packed_call_t *)packed_data; \
 })
 #endif
