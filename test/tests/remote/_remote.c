@@ -32,8 +32,8 @@ int main(int argc, char **argv) {
             return 1;
         }
         packed_call_t *call = c.arg[1].data.block.data;
-        if (call->index != REMOTE_BLOCK_INDEX) {
-            fprintf(stderr, "Expected REMOTE_BLOCK_INDEX.\nGot: ");
+        if (call->index != REMOTE_BLOCK_DRAW) {
+            fprintf(stderr, "Expected REMOTE_BLOCK_DRAW.\nGot: ");
             glIndexedPrint(call);
             return 1;
         }

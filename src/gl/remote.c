@@ -10,6 +10,16 @@
 
 #include <string.h>
 
+#define GLOUIJA_CALL_INIT(ret_size)                            \
+    {                                                          \
+        .args = 1,                                             \
+        .type = GLO_CALL_TYPE_CALL,                            \
+        .arg = {                                               \
+            {.type = GLO_ARG_TYPE_UINT, .data.ui = ret_size},  \
+        0},                                                    \
+    }
+
+
 int remote_spawn(char *path) {
     if (path == NULL) {
         path = "libgl_remote";
@@ -71,7 +81,7 @@ void *remote_serialize_block(block_t *block, size_t *ret_size) {
     }
     void *buf = malloc(size);
     uintptr_t pos = (uintptr_t)buf;
-    write_uint32(&pos, (uint32_t)REMOTE_BLOCK_INDEX);
+    write_uint32(&pos, REMOTE_BLOCK_DRAW);
     write_memcpy(&pos, block, sizeof(block_t));
     if (block->vert) {
         write_memcpy(&pos, block->vert, block->len * 3 * sizeof(GLfloat));
@@ -111,36 +121,28 @@ block_t *remote_deserialize_block(void *buf) {
     return block;
 }
 
-void remote_call(packed_call_t *call, void *ret_v) {
-    int ret_size = INDEX_RET_SIZE[call->index];
-    int pack_size = INDEX_PACKED_SIZE[call->index];
-    if (ret_v == NULL) {
-        ret_size = 0;
-    }
-    GlouijaCall c = {
-        .args = 2,
-        .type = GLO_CALL_TYPE_CALL,
-        .arg = {
-            {.type = GLO_ARG_TYPE_UINT, .data.ui = ret_size},
-            0,
-        },
-    };
-    glouija_add_block(&c, call, pack_size, true);
+static void remote_call_process(GlouijaCall *c, packed_call_t *call) {
     switch (call->index) {
         case glDeleteTextures_INDEX:
         {
-            glDeleteTextures_PACKED *n = call;
-            glouija_add_block(&c, n->args.textures, n->args.n * sizeof(GLuint), true);
+            glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
+            glouija_add_block(c, n->args.textures, n->args.n * sizeof(GLuint), true);
             break;
         }
         case glTexImage2D_INDEX:
         {
-            glTexImage2D_PACKED *n = call;
+            glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
             size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-            glouija_add_block(&c, n->args.pixels, size, true);
+            glouija_add_block(c, n->args.pixels, size, true);
             break;
         }
     }
+}
+
+static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
+    GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
+    glouija_add_block(&c, call, pack_size, true);
+    remote_call_process(&c, call);
     glouija_command_write(&c);
     if (ret_size) {
         GlouijaCall ret = {0};
@@ -149,11 +151,21 @@ void remote_call(packed_call_t *call, void *ret_v) {
     }
 }
 
+void remote_call(packed_call_t *call, void *ret_v) {
+    int ret_size = INDEX_RET_SIZE[call->index];
+    int pack_size = INDEX_PACKED_SIZE[call->index];
+    if (ret_v == NULL) {
+        ret_size = 0;
+    }
+    remote_call_raw(call, pack_size, ret_v, ret_size);
+}
+
 int remote_serve(int fd) {
     if (glouija_init_server(fd)) {
         fprintf(stderr, "error mapping shared memory from fd %d\n", fd);
         return 2;
     }
+    char retbuf[8];
     while (1) {
         GlouijaCall c = {0};
         glouija_command_read(&c);
@@ -163,32 +175,87 @@ int remote_serve(int fd) {
         }
         int retsize = c.arg[0].data.ui;
         packed_call_t *call = c.arg[1].data.block.data;
+        void *ret = NULL;
+        if (retsize > 8) {
+            ret = malloc(retsize);
+        } else if (retsize > 0) {
+            ret = retbuf;
+        }
+        switch (call->index) {
+            case REMOTE_BLOCK_DRAW:
+            {
+                block_t *block = remote_deserialize_block((void *)call);
+                bl_draw(block);
+                break;
+            }
+            case REMOTE_GL_GET:
+            {
+                break;
+            }
+            case REMOTE_RENDER_RASTER:
+            {
+                break;
+            }
+            default:
+                glIndexedCall(call, (void *)ret);
+                break;
+        }
         if (retsize > 0) {
-            char retbuf[8];
-            glIndexedCall(call, (void *)retbuf);
             GlouijaCall ret = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
             glouija_add_block(&ret, retbuf, retsize, true);
             glouija_command_write(&ret);
-        } else {
-            glIndexedCall(call, NULL);
         }
         free(call);
+        if (retsize > 8) {
+            free(ret);
+        }
     }
 }
 
 void remote_block_draw(block_t *block) {
     size_t size = 0;
     void *buf = remote_serialize_block(block, &size);
-    GlouijaCall c = {
-        .args = 1,
-        .type = GLO_CALL_TYPE_CALL,
-        .arg = {
-            {.type = GLO_ARG_TYPE_UINT, .data.ui = 0},
-            0,
-        },
-    };
-    glouija_add_block(&c, buf, size, true);
-    glouija_command_write(&c);
+    remote_call_raw(buf, size, NULL, 0);
     free(buf);
-    return;
+}
+
+void remote_gl_get(GLenum pname, GLenum type, GLvoid *params) {
+    size_t buf_size = sizeof(uint32_t) * 3;
+    void *buf = malloc(buf_size);
+    uintptr_t pos = (uintptr_t )buf;
+    write_uint32(&pos, REMOTE_GL_GET);
+    write_uint32(&pos, pname);
+    write_uint32(&pos, type);
+    size_t param_size = gl_sizeof(type) * gl_getv_length(pname);
+    remote_call_raw((packed_call_t *)buf, buf_size, params, param_size);
+}
+
+void remote_render_raster(glstate_t *state) {
+    viewport_state_t *v = &state->viewport;
+    size_t raster_size = v->nwidth * v->nheight * gl_pixel_sizeof(GL_RGBA, GL_UNSIGNED_BYTE);
+    uint32_t buf_size = sizeof(uint32_t) * 2;
+    void *buf = malloc(buf_size);
+    uintptr_t pos = (uintptr_t)buf;
+    write_uint32(&pos, REMOTE_RENDER_RASTER);
+    write_uint32(&pos, raster_size);
+    GlouijaCall c = GLOUIJA_CALL_INIT(0);
+    glouija_add_block(&c, buf, buf_size, true);
+    glouija_add_block(&c, state->raster.buf, raster_size, true);
+    glouija_command_write(&c);
+}
+
+void remote_glEnable(GLenum cap) {
+    remote_call(pack_glEnable(cap), NULL);
+}
+
+void remote_glDisable(GLenum cap) {
+    remote_call(pack_glDisable(cap), NULL);
+}
+
+void remote_glEnableClientState(GLenum cap) {
+    remote_call(pack_glEnableClientState(cap), NULL);
+}
+
+void remote_glDisableClientState(GLenum cap) {
+    remote_call(pack_glDisableClientState(cap), NULL);
 }
