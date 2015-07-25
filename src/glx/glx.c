@@ -236,6 +236,17 @@ static void scan_env() {
     if (g_vsync) {
         init_vsync();
     }
+    const char *remote = getenv("LIBGL_REMOTE");
+    if (remote) {
+        fprintf(stderr, "libGL: remote rendering enabled\n");
+        if (strcmp(remote, "1") == 0) {
+            remote = "libgl_remote";
+        }
+        int pid = remote_spawn("libgl_remote");
+        if (pid > 0) {
+            state.remote = pid;
+        }
+    }
 }
 
 GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct) {
