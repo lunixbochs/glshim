@@ -5,6 +5,7 @@
 #include "gl_str.h"
 #include "loader.h"
 #include "matrix.h"
+#include "remote.h"
 
 void gl_set_error(GLenum error) {
     LOAD_GLES(glGetError);
@@ -76,6 +77,10 @@ const GLubyte *glGetString(GLenum name) {
 }
 
 static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
+    if (state.remote) {
+        remote_gl_get(pname, type, params);
+        return;
+    }
     LOAD_GLES(glGetBooleanv);
     LOAD_GLES(glGetFloatv);
     LOAD_GLES(glGetIntegerv);
