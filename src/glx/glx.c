@@ -14,6 +14,7 @@
 
 #include "../gl/loader.h"
 #include "../gl/raster.h"
+#include "../gl/remote.h"
 #include "text.h"
 #include "liveinfo.h"
 
