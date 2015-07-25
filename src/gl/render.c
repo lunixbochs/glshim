@@ -59,7 +59,7 @@ void glPushName(GLuint name) {
     if (state.render.mode != GL_SELECT) {
         return;
     }
-    tack_push(&state.select.names, name);
+    tack_push_int(&state.select.names, name);
 }
 
 void glLoadName(GLuint name) {
@@ -69,7 +69,7 @@ void glLoadName(GLuint name) {
     ERROR_IN_BLOCK();
     int len = tack_len(&state.select.names);
     if (len > 0) {
-        tack_set(&state.select.names, len - 1, name);
+        tack_set_int(&state.select.names, len - 1, name);
     } else {
         ERROR(GL_INVALID_OPERATION);
     }
@@ -172,7 +172,7 @@ static void select_match(block_t *block, GLfloat zmin, GLfloat zmax, int i) {
         push(state.select.count / 4);
         push(zmin * INT_MAX);
         push(zmax * INT_MAX);
-        push(tack_peek(&state.select.names));
+        push(tack_peek_int(&state.select.names));
     }
 #undef push
 }
