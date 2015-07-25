@@ -29,7 +29,7 @@ int remote_spawn(const char *path) {
     if (pid == 0) {
         char *argv[] = {(char *)path, NULL, NULL};
         asprintf(&argv[1], "%d", fd);
-        execve(path, argv, NULL);
+        execvp(path, argv);
         if (errno) {
             fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
         }
