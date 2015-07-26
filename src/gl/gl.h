@@ -24,7 +24,7 @@
 #define GL_H
 
 #include "../config.h"
-#include "wrap/es.h"
+#include "wrap/glpack.h"
 
 #include "gl_helpers.h"
 #include "defines.h"

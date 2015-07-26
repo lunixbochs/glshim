@@ -71,7 +71,9 @@ void *mock_pop() {
 
 {% endblock %}
 
-{% block func_prefix %}gles_{% endblock %}
+{% block func_prefix -%}
+{% if not func.name.startswith('glX') %}gles_{% endif %}
+{%- endblock %}
 {% block call %}
     emit_{{ func.name }}({{ func.args|args(0) }});
     {% if not func.void %}

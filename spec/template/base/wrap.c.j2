@@ -5,7 +5,7 @@
 {% endblock %}
 {% for func in functions %}
 {% block definition scoped %}
-{{ func.return }} {% block func_prefix %}{% endblock %}{{ func.name }}({{ func.args|args }}) {
+{{ func.return }} {% block func_prefix scoped %}{% endblock %}{{ func.name }}({{ func.args|args }}) {
     {% block load scoped %}{% endblock %}
     {% block call scoped %}
     {% if not func.void %}return {% endif %}{% block prefix %}wrap{% endblock %}_{{ func.name }}({{ func.args|args(0) }});

@@ -5,7 +5,7 @@
 
 #include "glouija/glouija.h"
 #include "remote.h"
-#include "wrap/gles.h"
+#include "wrap/glpack.h"
 #include "types.h"
 
 int main(int argc, char **argv) {

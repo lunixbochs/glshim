@@ -3,7 +3,7 @@
 extern "C" {
 #endif
 #include "gl_str.h"
-#include "wrap/gles.h"
+#include "wrap/glpack.h"
 
 #ifndef MOCK_H
 #define MOCK_H
@@ -6690,752 +6690,6352 @@ static int failed_test = 0;
         } \
     } \
 }
-
-#define gles_glActiveTexture_INDEX 1
-#define gles_glActiveTexture_RETURN void
-#define gles_glActiveTexture_ARG_NAMES texture
-#define gles_glActiveTexture_ARG_EXPAND GLenum texture
-#define gles_glActiveTexture_PACKED PACKED_glActiveTexture
-#define gles_glAlphaFunc_INDEX 2
-#define gles_glAlphaFunc_RETURN void
-#define gles_glAlphaFunc_ARG_NAMES func, ref
-#define gles_glAlphaFunc_ARG_EXPAND GLenum func, GLclampf ref
-#define gles_glAlphaFunc_PACKED PACKED_glAlphaFunc
-#define gles_glAlphaFuncx_INDEX 3
-#define gles_glAlphaFuncx_RETURN void
-#define gles_glAlphaFuncx_ARG_NAMES func, ref
-#define gles_glAlphaFuncx_ARG_EXPAND GLenum func, GLclampx ref
-#define gles_glAlphaFuncx_PACKED PACKED_glAlphaFuncx
-#define gles_glBindBuffer_INDEX 4
-#define gles_glBindBuffer_RETURN void
-#define gles_glBindBuffer_ARG_NAMES target, buffer
-#define gles_glBindBuffer_ARG_EXPAND GLenum target, GLuint buffer
-#define gles_glBindBuffer_PACKED PACKED_glBindBuffer
-#define gles_glBindTexture_INDEX 5
-#define gles_glBindTexture_RETURN void
-#define gles_glBindTexture_ARG_NAMES target, texture
-#define gles_glBindTexture_ARG_EXPAND GLenum target, GLuint texture
-#define gles_glBindTexture_PACKED PACKED_glBindTexture
-#define gles_glBlendColorOES_INDEX 6
-#define gles_glBlendColorOES_RETURN void
-#define gles_glBlendColorOES_ARG_NAMES red, green, blue, alpha
-#define gles_glBlendColorOES_ARG_EXPAND GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha
-#define gles_glBlendColorOES_PACKED PACKED_glBlendColorOES
-#define gles_glBlendEquationOES_INDEX 7
-#define gles_glBlendEquationOES_RETURN void
-#define gles_glBlendEquationOES_ARG_NAMES mode
-#define gles_glBlendEquationOES_ARG_EXPAND GLenum mode
-#define gles_glBlendEquationOES_PACKED PACKED_glBlendEquationOES
-#define gles_glBlendEquationSeparateOES_INDEX 8
-#define gles_glBlendEquationSeparateOES_RETURN void
-#define gles_glBlendEquationSeparateOES_ARG_NAMES modeRGB, modeAlpha
-#define gles_glBlendEquationSeparateOES_ARG_EXPAND GLenum modeRGB, GLenum modeAlpha
-#define gles_glBlendEquationSeparateOES_PACKED PACKED_glBlendEquationSeparateOES
-#define gles_glBlendFunc_INDEX 9
-#define gles_glBlendFunc_RETURN void
-#define gles_glBlendFunc_ARG_NAMES sfactor, dfactor
-#define gles_glBlendFunc_ARG_EXPAND GLenum sfactor, GLenum dfactor
-#define gles_glBlendFunc_PACKED PACKED_glBlendFunc
-#define gles_glBlendFuncSeparateOES_INDEX 10
-#define gles_glBlendFuncSeparateOES_RETURN void
-#define gles_glBlendFuncSeparateOES_ARG_NAMES sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha
-#define gles_glBlendFuncSeparateOES_ARG_EXPAND GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha
-#define gles_glBlendFuncSeparateOES_PACKED PACKED_glBlendFuncSeparateOES
-#define gles_glBufferData_INDEX 11
-#define gles_glBufferData_RETURN void
-#define gles_glBufferData_ARG_NAMES target, size, data, usage
-#define gles_glBufferData_ARG_EXPAND GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage
-#define gles_glBufferData_PACKED PACKED_glBufferData
-#define gles_glBufferSubData_INDEX 12
-#define gles_glBufferSubData_RETURN void
-#define gles_glBufferSubData_ARG_NAMES target, offset, size, data
-#define gles_glBufferSubData_ARG_EXPAND GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid * data
-#define gles_glBufferSubData_PACKED PACKED_glBufferSubData
-#define gles_glClear_INDEX 13
-#define gles_glClear_RETURN void
-#define gles_glClear_ARG_NAMES mask
-#define gles_glClear_ARG_EXPAND GLbitfield mask
-#define gles_glClear_PACKED PACKED_glClear
-#define gles_glClearColor_INDEX 14
-#define gles_glClearColor_RETURN void
-#define gles_glClearColor_ARG_NAMES red, green, blue, alpha
-#define gles_glClearColor_ARG_EXPAND GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha
-#define gles_glClearColor_PACKED PACKED_glClearColor
-#define gles_glClearColorx_INDEX 15
-#define gles_glClearColorx_RETURN void
-#define gles_glClearColorx_ARG_NAMES red, green, blue, alpha
-#define gles_glClearColorx_ARG_EXPAND GLclampx red, GLclampx green, GLclampx blue, GLclampx alpha
-#define gles_glClearColorx_PACKED PACKED_glClearColorx
-#define gles_glClearDepthf_INDEX 16
-#define gles_glClearDepthf_RETURN void
-#define gles_glClearDepthf_ARG_NAMES depth
-#define gles_glClearDepthf_ARG_EXPAND GLclampf depth
-#define gles_glClearDepthf_PACKED PACKED_glClearDepthf
-#define gles_glClearDepthx_INDEX 17
-#define gles_glClearDepthx_RETURN void
-#define gles_glClearDepthx_ARG_NAMES depth
-#define gles_glClearDepthx_ARG_EXPAND GLclampx depth
-#define gles_glClearDepthx_PACKED PACKED_glClearDepthx
-#define gles_glClearStencil_INDEX 18
-#define gles_glClearStencil_RETURN void
-#define gles_glClearStencil_ARG_NAMES s
-#define gles_glClearStencil_ARG_EXPAND GLint s
-#define gles_glClearStencil_PACKED PACKED_glClearStencil
-#define gles_glClientActiveTexture_INDEX 19
-#define gles_glClientActiveTexture_RETURN void
-#define gles_glClientActiveTexture_ARG_NAMES texture
-#define gles_glClientActiveTexture_ARG_EXPAND GLenum texture
-#define gles_glClientActiveTexture_PACKED PACKED_glClientActiveTexture
-#define gles_glClipPlanef_INDEX 20
-#define gles_glClipPlanef_RETURN void
-#define gles_glClipPlanef_ARG_NAMES plane, equation
-#define gles_glClipPlanef_ARG_EXPAND GLenum plane, const GLfloat * equation
-#define gles_glClipPlanef_PACKED PACKED_glClipPlanef
-#define gles_glClipPlanex_INDEX 21
-#define gles_glClipPlanex_RETURN void
-#define gles_glClipPlanex_ARG_NAMES plane, equation
-#define gles_glClipPlanex_ARG_EXPAND GLenum plane, const GLfixed * equation
-#define gles_glClipPlanex_PACKED PACKED_glClipPlanex
-#define gles_glColor4f_INDEX 22
-#define gles_glColor4f_RETURN void
-#define gles_glColor4f_ARG_NAMES red, green, blue, alpha
-#define gles_glColor4f_ARG_EXPAND GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha
-#define gles_glColor4f_PACKED PACKED_glColor4f
-#define gles_glColor4ub_INDEX 23
-#define gles_glColor4ub_RETURN void
-#define gles_glColor4ub_ARG_NAMES red, green, blue, alpha
-#define gles_glColor4ub_ARG_EXPAND GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha
-#define gles_glColor4ub_PACKED PACKED_glColor4ub
-#define gles_glColor4x_INDEX 24
-#define gles_glColor4x_RETURN void
-#define gles_glColor4x_ARG_NAMES red, green, blue, alpha
-#define gles_glColor4x_ARG_EXPAND GLfixed red, GLfixed green, GLfixed blue, GLfixed alpha
-#define gles_glColor4x_PACKED PACKED_glColor4x
-#define gles_glColorMask_INDEX 25
-#define gles_glColorMask_RETURN void
-#define gles_glColorMask_ARG_NAMES red, green, blue, alpha
-#define gles_glColorMask_ARG_EXPAND GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha
-#define gles_glColorMask_PACKED PACKED_glColorMask
-#define gles_glColorPointer_INDEX 26
-#define gles_glColorPointer_RETURN void
-#define gles_glColorPointer_ARG_NAMES size, type, stride, pointer
-#define gles_glColorPointer_ARG_EXPAND GLint size, GLenum type, GLsizei stride, const GLvoid * pointer
-#define gles_glColorPointer_PACKED PACKED_glColorPointer
-#define gles_glCompressedTexImage2D_INDEX 27
-#define gles_glCompressedTexImage2D_RETURN void
-#define gles_glCompressedTexImage2D_ARG_NAMES target, level, internalformat, width, height, border, imageSize, data
-#define gles_glCompressedTexImage2D_ARG_EXPAND GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const GLvoid * data
-#define gles_glCompressedTexImage2D_PACKED PACKED_glCompressedTexImage2D
-#define gles_glCompressedTexSubImage2D_INDEX 28
-#define gles_glCompressedTexSubImage2D_RETURN void
-#define gles_glCompressedTexSubImage2D_ARG_NAMES target, level, xoffset, yoffset, width, height, format, imageSize, data
-#define gles_glCompressedTexSubImage2D_ARG_EXPAND GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid * data
-#define gles_glCompressedTexSubImage2D_PACKED PACKED_glCompressedTexSubImage2D
-#define gles_glCopyTexImage2D_INDEX 29
-#define gles_glCopyTexImage2D_RETURN void
-#define gles_glCopyTexImage2D_ARG_NAMES target, level, internalformat, x, y, width, height, border
-#define gles_glCopyTexImage2D_ARG_EXPAND GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border
-#define gles_glCopyTexImage2D_PACKED PACKED_glCopyTexImage2D
-#define gles_glCopyTexSubImage2D_INDEX 30
-#define gles_glCopyTexSubImage2D_RETURN void
-#define gles_glCopyTexSubImage2D_ARG_NAMES target, level, xoffset, yoffset, x, y, width, height
-#define gles_glCopyTexSubImage2D_ARG_EXPAND GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height
-#define gles_glCopyTexSubImage2D_PACKED PACKED_glCopyTexSubImage2D
-#define gles_glCullFace_INDEX 31
-#define gles_glCullFace_RETURN void
-#define gles_glCullFace_ARG_NAMES mode
-#define gles_glCullFace_ARG_EXPAND GLenum mode
-#define gles_glCullFace_PACKED PACKED_glCullFace
-#define gles_glDeleteBuffers_INDEX 32
-#define gles_glDeleteBuffers_RETURN void
-#define gles_glDeleteBuffers_ARG_NAMES n, buffers
-#define gles_glDeleteBuffers_ARG_EXPAND GLsizei n, const GLuint * buffers
-#define gles_glDeleteBuffers_PACKED PACKED_glDeleteBuffers
-#define gles_glDeleteTextures_INDEX 33
-#define gles_glDeleteTextures_RETURN void
-#define gles_glDeleteTextures_ARG_NAMES n, textures
-#define gles_glDeleteTextures_ARG_EXPAND GLsizei n, const GLuint * textures
-#define gles_glDeleteTextures_PACKED PACKED_glDeleteTextures
-#define gles_glDepthFunc_INDEX 34
-#define gles_glDepthFunc_RETURN void
-#define gles_glDepthFunc_ARG_NAMES func
-#define gles_glDepthFunc_ARG_EXPAND GLenum func
-#define gles_glDepthFunc_PACKED PACKED_glDepthFunc
-#define gles_glDepthMask_INDEX 35
-#define gles_glDepthMask_RETURN void
-#define gles_glDepthMask_ARG_NAMES flag
-#define gles_glDepthMask_ARG_EXPAND GLboolean flag
-#define gles_glDepthMask_PACKED PACKED_glDepthMask
-#define gles_glDepthRangef_INDEX 36
-#define gles_glDepthRangef_RETURN void
-#define gles_glDepthRangef_ARG_NAMES near, far
-#define gles_glDepthRangef_ARG_EXPAND GLclampf near, GLclampf far
-#define gles_glDepthRangef_PACKED PACKED_glDepthRangef
-#define gles_glDepthRangex_INDEX 37
-#define gles_glDepthRangex_RETURN void
-#define gles_glDepthRangex_ARG_NAMES near, far
-#define gles_glDepthRangex_ARG_EXPAND GLclampx near, GLclampx far
-#define gles_glDepthRangex_PACKED PACKED_glDepthRangex
-#define gles_glDisable_INDEX 38
-#define gles_glDisable_RETURN void
-#define gles_glDisable_ARG_NAMES cap
-#define gles_glDisable_ARG_EXPAND GLenum cap
-#define gles_glDisable_PACKED PACKED_glDisable
-#define gles_glDisableClientState_INDEX 39
-#define gles_glDisableClientState_RETURN void
-#define gles_glDisableClientState_ARG_NAMES array
-#define gles_glDisableClientState_ARG_EXPAND GLenum array
-#define gles_glDisableClientState_PACKED PACKED_glDisableClientState
-#define gles_glDrawArrays_INDEX 40
-#define gles_glDrawArrays_RETURN void
-#define gles_glDrawArrays_ARG_NAMES mode, first, count
-#define gles_glDrawArrays_ARG_EXPAND GLenum mode, GLint first, GLsizei count
-#define gles_glDrawArrays_PACKED PACKED_glDrawArrays
-#define gles_glDrawElements_INDEX 41
-#define gles_glDrawElements_RETURN void
-#define gles_glDrawElements_ARG_NAMES mode, count, type, indices
-#define gles_glDrawElements_ARG_EXPAND GLenum mode, GLsizei count, GLenum type, const GLvoid * indices
-#define gles_glDrawElements_PACKED PACKED_glDrawElements
-#define gles_glEnable_INDEX 42
-#define gles_glEnable_RETURN void
-#define gles_glEnable_ARG_NAMES cap
-#define gles_glEnable_ARG_EXPAND GLenum cap
-#define gles_glEnable_PACKED PACKED_glEnable
-#define gles_glEnableClientState_INDEX 43
-#define gles_glEnableClientState_RETURN void
-#define gles_glEnableClientState_ARG_NAMES array
-#define gles_glEnableClientState_ARG_EXPAND GLenum array
-#define gles_glEnableClientState_PACKED PACKED_glEnableClientState
-#define gles_glFinish_INDEX 44
-#define gles_glFinish_RETURN void
-#define gles_glFinish_ARG_NAMES 
-#define gles_glFinish_ARG_EXPAND 
-#define gles_glFinish_PACKED PACKED_glFinish
-#define gles_glFlush_INDEX 45
-#define gles_glFlush_RETURN void
-#define gles_glFlush_ARG_NAMES 
-#define gles_glFlush_ARG_EXPAND 
-#define gles_glFlush_PACKED PACKED_glFlush
-#define gles_glFogf_INDEX 46
-#define gles_glFogf_RETURN void
-#define gles_glFogf_ARG_NAMES pname, param
-#define gles_glFogf_ARG_EXPAND GLenum pname, GLfloat param
-#define gles_glFogf_PACKED PACKED_glFogf
-#define gles_glFogfv_INDEX 47
-#define gles_glFogfv_RETURN void
-#define gles_glFogfv_ARG_NAMES pname, params
-#define gles_glFogfv_ARG_EXPAND GLenum pname, const GLfloat * params
-#define gles_glFogfv_PACKED PACKED_glFogfv
-#define gles_glFogx_INDEX 48
-#define gles_glFogx_RETURN void
-#define gles_glFogx_ARG_NAMES pname, param
-#define gles_glFogx_ARG_EXPAND GLenum pname, GLfixed param
-#define gles_glFogx_PACKED PACKED_glFogx
-#define gles_glFogxv_INDEX 49
-#define gles_glFogxv_RETURN void
-#define gles_glFogxv_ARG_NAMES pname, params
-#define gles_glFogxv_ARG_EXPAND GLenum pname, const GLfixed * params
-#define gles_glFogxv_PACKED PACKED_glFogxv
-#define gles_glFrontFace_INDEX 50
-#define gles_glFrontFace_RETURN void
-#define gles_glFrontFace_ARG_NAMES mode
-#define gles_glFrontFace_ARG_EXPAND GLenum mode
-#define gles_glFrontFace_PACKED PACKED_glFrontFace
-#define gles_glFrustumf_INDEX 51
-#define gles_glFrustumf_RETURN void
-#define gles_glFrustumf_ARG_NAMES left, right, bottom, top, near, far
-#define gles_glFrustumf_ARG_EXPAND GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far
-#define gles_glFrustumf_PACKED PACKED_glFrustumf
-#define gles_glFrustumx_INDEX 52
-#define gles_glFrustumx_RETURN void
-#define gles_glFrustumx_ARG_NAMES left, right, bottom, top, near, far
-#define gles_glFrustumx_ARG_EXPAND GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed near, GLfixed far
-#define gles_glFrustumx_PACKED PACKED_glFrustumx
-#define gles_glGenBuffers_INDEX 53
-#define gles_glGenBuffers_RETURN void
-#define gles_glGenBuffers_ARG_NAMES n, buffers
-#define gles_glGenBuffers_ARG_EXPAND GLsizei n, GLuint * buffers
-#define gles_glGenBuffers_PACKED PACKED_glGenBuffers
-#define gles_glGenTextures_INDEX 54
-#define gles_glGenTextures_RETURN void
-#define gles_glGenTextures_ARG_NAMES n, textures
-#define gles_glGenTextures_ARG_EXPAND GLsizei n, GLuint * textures
-#define gles_glGenTextures_PACKED PACKED_glGenTextures
-#define gles_glGetBooleanv_INDEX 55
-#define gles_glGetBooleanv_RETURN void
-#define gles_glGetBooleanv_ARG_NAMES pname, params
-#define gles_glGetBooleanv_ARG_EXPAND GLenum pname, GLboolean * params
-#define gles_glGetBooleanv_PACKED PACKED_glGetBooleanv
-#define gles_glGetBufferParameteriv_INDEX 56
-#define gles_glGetBufferParameteriv_RETURN void
-#define gles_glGetBufferParameteriv_ARG_NAMES target, pname, params
-#define gles_glGetBufferParameteriv_ARG_EXPAND GLenum target, GLenum pname, GLint * params
-#define gles_glGetBufferParameteriv_PACKED PACKED_glGetBufferParameteriv
-#define gles_glGetClipPlanef_INDEX 57
-#define gles_glGetClipPlanef_RETURN void
-#define gles_glGetClipPlanef_ARG_NAMES plane, equation
-#define gles_glGetClipPlanef_ARG_EXPAND GLenum plane, GLfloat * equation
-#define gles_glGetClipPlanef_PACKED PACKED_glGetClipPlanef
-#define gles_glGetClipPlanex_INDEX 58
-#define gles_glGetClipPlanex_RETURN void
-#define gles_glGetClipPlanex_ARG_NAMES plane, equation
-#define gles_glGetClipPlanex_ARG_EXPAND GLenum plane, GLfixed * equation
-#define gles_glGetClipPlanex_PACKED PACKED_glGetClipPlanex
-#define gles_glGetError_INDEX 59
-#define gles_glGetError_RETURN GLenum
-#define gles_glGetError_ARG_NAMES 
-#define gles_glGetError_ARG_EXPAND 
-#define gles_glGetError_PACKED PACKED_glGetError
-#define gles_glGetFixedv_INDEX 60
-#define gles_glGetFixedv_RETURN void
-#define gles_glGetFixedv_ARG_NAMES pname, params
-#define gles_glGetFixedv_ARG_EXPAND GLenum pname, GLfixed * params
-#define gles_glGetFixedv_PACKED PACKED_glGetFixedv
-#define gles_glGetFloatv_INDEX 61
-#define gles_glGetFloatv_RETURN void
-#define gles_glGetFloatv_ARG_NAMES pname, params
-#define gles_glGetFloatv_ARG_EXPAND GLenum pname, GLfloat * params
-#define gles_glGetFloatv_PACKED PACKED_glGetFloatv
-#define gles_glGetIntegerv_INDEX 62
-#define gles_glGetIntegerv_RETURN void
-#define gles_glGetIntegerv_ARG_NAMES pname, params
-#define gles_glGetIntegerv_ARG_EXPAND GLenum pname, GLint * params
-#define gles_glGetIntegerv_PACKED PACKED_glGetIntegerv
-#define gles_glGetLightfv_INDEX 63
-#define gles_glGetLightfv_RETURN void
-#define gles_glGetLightfv_ARG_NAMES light, pname, params
-#define gles_glGetLightfv_ARG_EXPAND GLenum light, GLenum pname, GLfloat * params
-#define gles_glGetLightfv_PACKED PACKED_glGetLightfv
-#define gles_glGetLightxv_INDEX 64
-#define gles_glGetLightxv_RETURN void
-#define gles_glGetLightxv_ARG_NAMES light, pname, params
-#define gles_glGetLightxv_ARG_EXPAND GLenum light, GLenum pname, GLfixed * params
-#define gles_glGetLightxv_PACKED PACKED_glGetLightxv
-#define gles_glGetMaterialfv_INDEX 65
-#define gles_glGetMaterialfv_RETURN void
-#define gles_glGetMaterialfv_ARG_NAMES face, pname, params
-#define gles_glGetMaterialfv_ARG_EXPAND GLenum face, GLenum pname, GLfloat * params
-#define gles_glGetMaterialfv_PACKED PACKED_glGetMaterialfv
-#define gles_glGetMaterialxv_INDEX 66
-#define gles_glGetMaterialxv_RETURN void
-#define gles_glGetMaterialxv_ARG_NAMES face, pname, params
-#define gles_glGetMaterialxv_ARG_EXPAND GLenum face, GLenum pname, GLfixed * params
-#define gles_glGetMaterialxv_PACKED PACKED_glGetMaterialxv
-#define gles_glGetPointerv_INDEX 67
-#define gles_glGetPointerv_RETURN void
-#define gles_glGetPointerv_ARG_NAMES pname, params
-#define gles_glGetPointerv_ARG_EXPAND GLenum pname, GLvoid ** params
-#define gles_glGetPointerv_PACKED PACKED_glGetPointerv
-#define gles_glGetString_INDEX 68
-#define gles_glGetString_RETURN const GLubyte *
-#define gles_glGetString_ARG_NAMES name
-#define gles_glGetString_ARG_EXPAND GLenum name
-#define gles_glGetString_PACKED PACKED_glGetString
-#define gles_glGetTexEnvfv_INDEX 69
-#define gles_glGetTexEnvfv_RETURN void
-#define gles_glGetTexEnvfv_ARG_NAMES target, pname, params
-#define gles_glGetTexEnvfv_ARG_EXPAND GLenum target, GLenum pname, GLfloat * params
-#define gles_glGetTexEnvfv_PACKED PACKED_glGetTexEnvfv
-#define gles_glGetTexEnviv_INDEX 70
-#define gles_glGetTexEnviv_RETURN void
-#define gles_glGetTexEnviv_ARG_NAMES target, pname, params
-#define gles_glGetTexEnviv_ARG_EXPAND GLenum target, GLenum pname, GLint * params
-#define gles_glGetTexEnviv_PACKED PACKED_glGetTexEnviv
-#define gles_glGetTexEnvxv_INDEX 71
-#define gles_glGetTexEnvxv_RETURN void
-#define gles_glGetTexEnvxv_ARG_NAMES target, pname, params
-#define gles_glGetTexEnvxv_ARG_EXPAND GLenum target, GLenum pname, GLfixed * params
-#define gles_glGetTexEnvxv_PACKED PACKED_glGetTexEnvxv
-#define gles_glGetTexParameterfv_INDEX 72
-#define gles_glGetTexParameterfv_RETURN void
-#define gles_glGetTexParameterfv_ARG_NAMES target, pname, params
-#define gles_glGetTexParameterfv_ARG_EXPAND GLenum target, GLenum pname, GLfloat * params
-#define gles_glGetTexParameterfv_PACKED PACKED_glGetTexParameterfv
-#define gles_glGetTexParameteriv_INDEX 73
-#define gles_glGetTexParameteriv_RETURN void
-#define gles_glGetTexParameteriv_ARG_NAMES target, pname, params
-#define gles_glGetTexParameteriv_ARG_EXPAND GLenum target, GLenum pname, GLint * params
-#define gles_glGetTexParameteriv_PACKED PACKED_glGetTexParameteriv
-#define gles_glGetTexParameterxv_INDEX 74
-#define gles_glGetTexParameterxv_RETURN void
-#define gles_glGetTexParameterxv_ARG_NAMES target, pname, params
-#define gles_glGetTexParameterxv_ARG_EXPAND GLenum target, GLenum pname, GLfixed * params
-#define gles_glGetTexParameterxv_PACKED PACKED_glGetTexParameterxv
-#define gles_glHint_INDEX 75
-#define gles_glHint_RETURN void
-#define gles_glHint_ARG_NAMES target, mode
-#define gles_glHint_ARG_EXPAND GLenum target, GLenum mode
-#define gles_glHint_PACKED PACKED_glHint
-#define gles_glIsBuffer_INDEX 76
-#define gles_glIsBuffer_RETURN GLboolean
-#define gles_glIsBuffer_ARG_NAMES buffer
-#define gles_glIsBuffer_ARG_EXPAND GLuint buffer
-#define gles_glIsBuffer_PACKED PACKED_glIsBuffer
-#define gles_glIsEnabled_INDEX 77
-#define gles_glIsEnabled_RETURN GLboolean
-#define gles_glIsEnabled_ARG_NAMES cap
-#define gles_glIsEnabled_ARG_EXPAND GLenum cap
-#define gles_glIsEnabled_PACKED PACKED_glIsEnabled
-#define gles_glIsTexture_INDEX 78
-#define gles_glIsTexture_RETURN GLboolean
-#define gles_glIsTexture_ARG_NAMES texture
-#define gles_glIsTexture_ARG_EXPAND GLuint texture
-#define gles_glIsTexture_PACKED PACKED_glIsTexture
-#define gles_glLightModelf_INDEX 79
-#define gles_glLightModelf_RETURN void
-#define gles_glLightModelf_ARG_NAMES pname, param
-#define gles_glLightModelf_ARG_EXPAND GLenum pname, GLfloat param
-#define gles_glLightModelf_PACKED PACKED_glLightModelf
-#define gles_glLightModelfv_INDEX 80
-#define gles_glLightModelfv_RETURN void
-#define gles_glLightModelfv_ARG_NAMES pname, params
-#define gles_glLightModelfv_ARG_EXPAND GLenum pname, const GLfloat * params
-#define gles_glLightModelfv_PACKED PACKED_glLightModelfv
-#define gles_glLightModelx_INDEX 81
-#define gles_glLightModelx_RETURN void
-#define gles_glLightModelx_ARG_NAMES pname, param
-#define gles_glLightModelx_ARG_EXPAND GLenum pname, GLfixed param
-#define gles_glLightModelx_PACKED PACKED_glLightModelx
-#define gles_glLightModelxv_INDEX 82
-#define gles_glLightModelxv_RETURN void
-#define gles_glLightModelxv_ARG_NAMES pname, params
-#define gles_glLightModelxv_ARG_EXPAND GLenum pname, const GLfixed * params
-#define gles_glLightModelxv_PACKED PACKED_glLightModelxv
-#define gles_glLightf_INDEX 83
-#define gles_glLightf_RETURN void
-#define gles_glLightf_ARG_NAMES light, pname, param
-#define gles_glLightf_ARG_EXPAND GLenum light, GLenum pname, GLfloat param
-#define gles_glLightf_PACKED PACKED_glLightf
-#define gles_glLightfv_INDEX 84
-#define gles_glLightfv_RETURN void
-#define gles_glLightfv_ARG_NAMES light, pname, params
-#define gles_glLightfv_ARG_EXPAND GLenum light, GLenum pname, const GLfloat * params
-#define gles_glLightfv_PACKED PACKED_glLightfv
-#define gles_glLightx_INDEX 85
-#define gles_glLightx_RETURN void
-#define gles_glLightx_ARG_NAMES light, pname, param
-#define gles_glLightx_ARG_EXPAND GLenum light, GLenum pname, GLfixed param
-#define gles_glLightx_PACKED PACKED_glLightx
-#define gles_glLightxv_INDEX 86
-#define gles_glLightxv_RETURN void
-#define gles_glLightxv_ARG_NAMES light, pname, params
-#define gles_glLightxv_ARG_EXPAND GLenum light, GLenum pname, const GLfixed * params
-#define gles_glLightxv_PACKED PACKED_glLightxv
-#define gles_glLineWidth_INDEX 87
-#define gles_glLineWidth_RETURN void
-#define gles_glLineWidth_ARG_NAMES width
-#define gles_glLineWidth_ARG_EXPAND GLfloat width
-#define gles_glLineWidth_PACKED PACKED_glLineWidth
-#define gles_glLineWidthx_INDEX 88
-#define gles_glLineWidthx_RETURN void
-#define gles_glLineWidthx_ARG_NAMES width
-#define gles_glLineWidthx_ARG_EXPAND GLfixed width
-#define gles_glLineWidthx_PACKED PACKED_glLineWidthx
-#define gles_glLoadIdentity_INDEX 89
-#define gles_glLoadIdentity_RETURN void
-#define gles_glLoadIdentity_ARG_NAMES 
-#define gles_glLoadIdentity_ARG_EXPAND 
-#define gles_glLoadIdentity_PACKED PACKED_glLoadIdentity
-#define gles_glLoadMatrixf_INDEX 90
-#define gles_glLoadMatrixf_RETURN void
-#define gles_glLoadMatrixf_ARG_NAMES m
-#define gles_glLoadMatrixf_ARG_EXPAND const GLfloat * m
-#define gles_glLoadMatrixf_PACKED PACKED_glLoadMatrixf
-#define gles_glLoadMatrixx_INDEX 91
-#define gles_glLoadMatrixx_RETURN void
-#define gles_glLoadMatrixx_ARG_NAMES m
-#define gles_glLoadMatrixx_ARG_EXPAND const GLfixed * m
-#define gles_glLoadMatrixx_PACKED PACKED_glLoadMatrixx
-#define gles_glLogicOp_INDEX 92
-#define gles_glLogicOp_RETURN void
-#define gles_glLogicOp_ARG_NAMES opcode
-#define gles_glLogicOp_ARG_EXPAND GLenum opcode
-#define gles_glLogicOp_PACKED PACKED_glLogicOp
-#define gles_glMaterialf_INDEX 93
-#define gles_glMaterialf_RETURN void
-#define gles_glMaterialf_ARG_NAMES face, pname, param
-#define gles_glMaterialf_ARG_EXPAND GLenum face, GLenum pname, GLfloat param
-#define gles_glMaterialf_PACKED PACKED_glMaterialf
-#define gles_glMaterialfv_INDEX 94
-#define gles_glMaterialfv_RETURN void
-#define gles_glMaterialfv_ARG_NAMES face, pname, params
-#define gles_glMaterialfv_ARG_EXPAND GLenum face, GLenum pname, const GLfloat * params
-#define gles_glMaterialfv_PACKED PACKED_glMaterialfv
-#define gles_glMaterialx_INDEX 95
-#define gles_glMaterialx_RETURN void
-#define gles_glMaterialx_ARG_NAMES face, pname, param
-#define gles_glMaterialx_ARG_EXPAND GLenum face, GLenum pname, GLfixed param
-#define gles_glMaterialx_PACKED PACKED_glMaterialx
-#define gles_glMaterialxv_INDEX 96
-#define gles_glMaterialxv_RETURN void
-#define gles_glMaterialxv_ARG_NAMES face, pname, params
-#define gles_glMaterialxv_ARG_EXPAND GLenum face, GLenum pname, const GLfixed * params
-#define gles_glMaterialxv_PACKED PACKED_glMaterialxv
-#define gles_glMatrixMode_INDEX 97
-#define gles_glMatrixMode_RETURN void
-#define gles_glMatrixMode_ARG_NAMES mode
-#define gles_glMatrixMode_ARG_EXPAND GLenum mode
-#define gles_glMatrixMode_PACKED PACKED_glMatrixMode
-#define gles_glMultMatrixf_INDEX 98
-#define gles_glMultMatrixf_RETURN void
-#define gles_glMultMatrixf_ARG_NAMES m
-#define gles_glMultMatrixf_ARG_EXPAND const GLfloat * m
-#define gles_glMultMatrixf_PACKED PACKED_glMultMatrixf
-#define gles_glMultMatrixx_INDEX 99
-#define gles_glMultMatrixx_RETURN void
-#define gles_glMultMatrixx_ARG_NAMES m
-#define gles_glMultMatrixx_ARG_EXPAND const GLfixed * m
-#define gles_glMultMatrixx_PACKED PACKED_glMultMatrixx
-#define gles_glMultiTexCoord4f_INDEX 100
-#define gles_glMultiTexCoord4f_RETURN void
-#define gles_glMultiTexCoord4f_ARG_NAMES target, s, t, r, q
-#define gles_glMultiTexCoord4f_ARG_EXPAND GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q
-#define gles_glMultiTexCoord4f_PACKED PACKED_glMultiTexCoord4f
-#define gles_glMultiTexCoord4x_INDEX 101
-#define gles_glMultiTexCoord4x_RETURN void
-#define gles_glMultiTexCoord4x_ARG_NAMES target, s, t, r, q
-#define gles_glMultiTexCoord4x_ARG_EXPAND GLenum target, GLfixed s, GLfixed t, GLfixed r, GLfixed q
-#define gles_glMultiTexCoord4x_PACKED PACKED_glMultiTexCoord4x
-#define gles_glNormal3f_INDEX 102
-#define gles_glNormal3f_RETURN void
-#define gles_glNormal3f_ARG_NAMES nx, ny, nz
-#define gles_glNormal3f_ARG_EXPAND GLfloat nx, GLfloat ny, GLfloat nz
-#define gles_glNormal3f_PACKED PACKED_glNormal3f
-#define gles_glNormal3x_INDEX 103
-#define gles_glNormal3x_RETURN void
-#define gles_glNormal3x_ARG_NAMES nx, ny, nz
-#define gles_glNormal3x_ARG_EXPAND GLfixed nx, GLfixed ny, GLfixed nz
-#define gles_glNormal3x_PACKED PACKED_glNormal3x
-#define gles_glNormalPointer_INDEX 104
-#define gles_glNormalPointer_RETURN void
-#define gles_glNormalPointer_ARG_NAMES type, stride, pointer
-#define gles_glNormalPointer_ARG_EXPAND GLenum type, GLsizei stride, const GLvoid * pointer
-#define gles_glNormalPointer_PACKED PACKED_glNormalPointer
-#define gles_glOrthof_INDEX 105
-#define gles_glOrthof_RETURN void
-#define gles_glOrthof_ARG_NAMES left, right, bottom, top, near, far
-#define gles_glOrthof_ARG_EXPAND GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far
-#define gles_glOrthof_PACKED PACKED_glOrthof
-#define gles_glOrthox_INDEX 106
-#define gles_glOrthox_RETURN void
-#define gles_glOrthox_ARG_NAMES left, right, bottom, top, near, far
-#define gles_glOrthox_ARG_EXPAND GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed near, GLfixed far
-#define gles_glOrthox_PACKED PACKED_glOrthox
-#define gles_glPixelStorei_INDEX 107
-#define gles_glPixelStorei_RETURN void
-#define gles_glPixelStorei_ARG_NAMES pname, param
-#define gles_glPixelStorei_ARG_EXPAND GLenum pname, GLint param
-#define gles_glPixelStorei_PACKED PACKED_glPixelStorei
-#define gles_glPointParameterf_INDEX 108
-#define gles_glPointParameterf_RETURN void
-#define gles_glPointParameterf_ARG_NAMES pname, param
-#define gles_glPointParameterf_ARG_EXPAND GLenum pname, GLfloat param
-#define gles_glPointParameterf_PACKED PACKED_glPointParameterf
-#define gles_glPointParameterfv_INDEX 109
-#define gles_glPointParameterfv_RETURN void
-#define gles_glPointParameterfv_ARG_NAMES pname, params
-#define gles_glPointParameterfv_ARG_EXPAND GLenum pname, const GLfloat * params
-#define gles_glPointParameterfv_PACKED PACKED_glPointParameterfv
-#define gles_glPointParameterx_INDEX 110
-#define gles_glPointParameterx_RETURN void
-#define gles_glPointParameterx_ARG_NAMES pname, param
-#define gles_glPointParameterx_ARG_EXPAND GLenum pname, GLfixed param
-#define gles_glPointParameterx_PACKED PACKED_glPointParameterx
-#define gles_glPointParameterxv_INDEX 111
-#define gles_glPointParameterxv_RETURN void
-#define gles_glPointParameterxv_ARG_NAMES pname, params
-#define gles_glPointParameterxv_ARG_EXPAND GLenum pname, const GLfixed * params
-#define gles_glPointParameterxv_PACKED PACKED_glPointParameterxv
-#define gles_glPointSize_INDEX 112
-#define gles_glPointSize_RETURN void
-#define gles_glPointSize_ARG_NAMES size
-#define gles_glPointSize_ARG_EXPAND GLfloat size
-#define gles_glPointSize_PACKED PACKED_glPointSize
-#define gles_glPointSizePointerOES_INDEX 113
-#define gles_glPointSizePointerOES_RETURN void
-#define gles_glPointSizePointerOES_ARG_NAMES type, stride, pointer
-#define gles_glPointSizePointerOES_ARG_EXPAND GLenum type, GLsizei stride, const GLvoid * pointer
-#define gles_glPointSizePointerOES_PACKED PACKED_glPointSizePointerOES
-#define gles_glPointSizex_INDEX 114
-#define gles_glPointSizex_RETURN void
-#define gles_glPointSizex_ARG_NAMES size
-#define gles_glPointSizex_ARG_EXPAND GLfixed size
-#define gles_glPointSizex_PACKED PACKED_glPointSizex
-#define gles_glPolygonOffset_INDEX 115
-#define gles_glPolygonOffset_RETURN void
-#define gles_glPolygonOffset_ARG_NAMES factor, units
-#define gles_glPolygonOffset_ARG_EXPAND GLfloat factor, GLfloat units
-#define gles_glPolygonOffset_PACKED PACKED_glPolygonOffset
-#define gles_glPolygonOffsetx_INDEX 116
-#define gles_glPolygonOffsetx_RETURN void
-#define gles_glPolygonOffsetx_ARG_NAMES factor, units
-#define gles_glPolygonOffsetx_ARG_EXPAND GLfixed factor, GLfixed units
-#define gles_glPolygonOffsetx_PACKED PACKED_glPolygonOffsetx
-#define gles_glPopMatrix_INDEX 117
-#define gles_glPopMatrix_RETURN void
-#define gles_glPopMatrix_ARG_NAMES 
-#define gles_glPopMatrix_ARG_EXPAND 
-#define gles_glPopMatrix_PACKED PACKED_glPopMatrix
-#define gles_glPushMatrix_INDEX 118
-#define gles_glPushMatrix_RETURN void
-#define gles_glPushMatrix_ARG_NAMES 
-#define gles_glPushMatrix_ARG_EXPAND 
-#define gles_glPushMatrix_PACKED PACKED_glPushMatrix
-#define gles_glReadPixels_INDEX 119
-#define gles_glReadPixels_RETURN void
-#define gles_glReadPixels_ARG_NAMES x, y, width, height, format, type, pixels
-#define gles_glReadPixels_ARG_EXPAND GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid * pixels
-#define gles_glReadPixels_PACKED PACKED_glReadPixels
-#define gles_glRotatef_INDEX 120
-#define gles_glRotatef_RETURN void
-#define gles_glRotatef_ARG_NAMES angle, x, y, z
-#define gles_glRotatef_ARG_EXPAND GLfloat angle, GLfloat x, GLfloat y, GLfloat z
-#define gles_glRotatef_PACKED PACKED_glRotatef
-#define gles_glRotatex_INDEX 121
-#define gles_glRotatex_RETURN void
-#define gles_glRotatex_ARG_NAMES angle, x, y, z
-#define gles_glRotatex_ARG_EXPAND GLfixed angle, GLfixed x, GLfixed y, GLfixed z
-#define gles_glRotatex_PACKED PACKED_glRotatex
-#define gles_glSampleCoverage_INDEX 122
-#define gles_glSampleCoverage_RETURN void
-#define gles_glSampleCoverage_ARG_NAMES value, invert
-#define gles_glSampleCoverage_ARG_EXPAND GLclampf value, GLboolean invert
-#define gles_glSampleCoverage_PACKED PACKED_glSampleCoverage
-#define gles_glSampleCoveragex_INDEX 123
-#define gles_glSampleCoveragex_RETURN void
-#define gles_glSampleCoveragex_ARG_NAMES value, invert
-#define gles_glSampleCoveragex_ARG_EXPAND GLclampx value, GLboolean invert
-#define gles_glSampleCoveragex_PACKED PACKED_glSampleCoveragex
-#define gles_glScalef_INDEX 124
-#define gles_glScalef_RETURN void
-#define gles_glScalef_ARG_NAMES x, y, z
-#define gles_glScalef_ARG_EXPAND GLfloat x, GLfloat y, GLfloat z
-#define gles_glScalef_PACKED PACKED_glScalef
-#define gles_glScalex_INDEX 125
-#define gles_glScalex_RETURN void
-#define gles_glScalex_ARG_NAMES x, y, z
-#define gles_glScalex_ARG_EXPAND GLfixed x, GLfixed y, GLfixed z
-#define gles_glScalex_PACKED PACKED_glScalex
-#define gles_glScissor_INDEX 126
-#define gles_glScissor_RETURN void
-#define gles_glScissor_ARG_NAMES x, y, width, height
-#define gles_glScissor_ARG_EXPAND GLint x, GLint y, GLsizei width, GLsizei height
-#define gles_glScissor_PACKED PACKED_glScissor
-#define gles_glShadeModel_INDEX 127
-#define gles_glShadeModel_RETURN void
-#define gles_glShadeModel_ARG_NAMES mode
-#define gles_glShadeModel_ARG_EXPAND GLenum mode
-#define gles_glShadeModel_PACKED PACKED_glShadeModel
-#define gles_glStencilFunc_INDEX 128
-#define gles_glStencilFunc_RETURN void
-#define gles_glStencilFunc_ARG_NAMES func, ref, mask
-#define gles_glStencilFunc_ARG_EXPAND GLenum func, GLint ref, GLuint mask
-#define gles_glStencilFunc_PACKED PACKED_glStencilFunc
-#define gles_glStencilMask_INDEX 129
-#define gles_glStencilMask_RETURN void
-#define gles_glStencilMask_ARG_NAMES mask
-#define gles_glStencilMask_ARG_EXPAND GLuint mask
-#define gles_glStencilMask_PACKED PACKED_glStencilMask
-#define gles_glStencilOp_INDEX 130
-#define gles_glStencilOp_RETURN void
-#define gles_glStencilOp_ARG_NAMES fail, zfail, zpass
-#define gles_glStencilOp_ARG_EXPAND GLenum fail, GLenum zfail, GLenum zpass
-#define gles_glStencilOp_PACKED PACKED_glStencilOp
-#define gles_glTexCoordPointer_INDEX 131
-#define gles_glTexCoordPointer_RETURN void
-#define gles_glTexCoordPointer_ARG_NAMES size, type, stride, pointer
-#define gles_glTexCoordPointer_ARG_EXPAND GLint size, GLenum type, GLsizei stride, const GLvoid * pointer
-#define gles_glTexCoordPointer_PACKED PACKED_glTexCoordPointer
-#define gles_glTexEnvf_INDEX 132
-#define gles_glTexEnvf_RETURN void
-#define gles_glTexEnvf_ARG_NAMES target, pname, param
-#define gles_glTexEnvf_ARG_EXPAND GLenum target, GLenum pname, GLfloat param
-#define gles_glTexEnvf_PACKED PACKED_glTexEnvf
-#define gles_glTexEnvfv_INDEX 133
-#define gles_glTexEnvfv_RETURN void
-#define gles_glTexEnvfv_ARG_NAMES target, pname, params
-#define gles_glTexEnvfv_ARG_EXPAND GLenum target, GLenum pname, const GLfloat * params
-#define gles_glTexEnvfv_PACKED PACKED_glTexEnvfv
-#define gles_glTexEnvi_INDEX 134
-#define gles_glTexEnvi_RETURN void
-#define gles_glTexEnvi_ARG_NAMES target, pname, param
-#define gles_glTexEnvi_ARG_EXPAND GLenum target, GLenum pname, GLint param
-#define gles_glTexEnvi_PACKED PACKED_glTexEnvi
-#define gles_glTexEnviv_INDEX 135
-#define gles_glTexEnviv_RETURN void
-#define gles_glTexEnviv_ARG_NAMES target, pname, params
-#define gles_glTexEnviv_ARG_EXPAND GLenum target, GLenum pname, const GLint * params
-#define gles_glTexEnviv_PACKED PACKED_glTexEnviv
-#define gles_glTexEnvx_INDEX 136
-#define gles_glTexEnvx_RETURN void
-#define gles_glTexEnvx_ARG_NAMES target, pname, param
-#define gles_glTexEnvx_ARG_EXPAND GLenum target, GLenum pname, GLfixed param
-#define gles_glTexEnvx_PACKED PACKED_glTexEnvx
-#define gles_glTexEnvxv_INDEX 137
-#define gles_glTexEnvxv_RETURN void
-#define gles_glTexEnvxv_ARG_NAMES target, pname, params
-#define gles_glTexEnvxv_ARG_EXPAND GLenum target, GLenum pname, const GLfixed * params
-#define gles_glTexEnvxv_PACKED PACKED_glTexEnvxv
-#define gles_glTexImage2D_INDEX 138
-#define gles_glTexImage2D_RETURN void
-#define gles_glTexImage2D_ARG_NAMES target, level, internalformat, width, height, border, format, type, pixels
-#define gles_glTexImage2D_ARG_EXPAND GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * pixels
-#define gles_glTexImage2D_PACKED PACKED_glTexImage2D
-#define gles_glTexParameterf_INDEX 139
-#define gles_glTexParameterf_RETURN void
-#define gles_glTexParameterf_ARG_NAMES target, pname, param
-#define gles_glTexParameterf_ARG_EXPAND GLenum target, GLenum pname, GLfloat param
-#define gles_glTexParameterf_PACKED PACKED_glTexParameterf
-#define gles_glTexParameterfv_INDEX 140
-#define gles_glTexParameterfv_RETURN void
-#define gles_glTexParameterfv_ARG_NAMES target, pname, params
-#define gles_glTexParameterfv_ARG_EXPAND GLenum target, GLenum pname, const GLfloat * params
-#define gles_glTexParameterfv_PACKED PACKED_glTexParameterfv
-#define gles_glTexParameteri_INDEX 141
-#define gles_glTexParameteri_RETURN void
-#define gles_glTexParameteri_ARG_NAMES target, pname, param
-#define gles_glTexParameteri_ARG_EXPAND GLenum target, GLenum pname, GLint param
-#define gles_glTexParameteri_PACKED PACKED_glTexParameteri
-#define gles_glTexParameteriv_INDEX 142
-#define gles_glTexParameteriv_RETURN void
-#define gles_glTexParameteriv_ARG_NAMES target, pname, params
-#define gles_glTexParameteriv_ARG_EXPAND GLenum target, GLenum pname, const GLint * params
-#define gles_glTexParameteriv_PACKED PACKED_glTexParameteriv
-#define gles_glTexParameterx_INDEX 143
-#define gles_glTexParameterx_RETURN void
-#define gles_glTexParameterx_ARG_NAMES target, pname, param
-#define gles_glTexParameterx_ARG_EXPAND GLenum target, GLenum pname, GLfixed param
-#define gles_glTexParameterx_PACKED PACKED_glTexParameterx
-#define gles_glTexParameterxv_INDEX 144
-#define gles_glTexParameterxv_RETURN void
-#define gles_glTexParameterxv_ARG_NAMES target, pname, params
-#define gles_glTexParameterxv_ARG_EXPAND GLenum target, GLenum pname, const GLfixed * params
-#define gles_glTexParameterxv_PACKED PACKED_glTexParameterxv
-#define gles_glTexSubImage2D_INDEX 145
-#define gles_glTexSubImage2D_RETURN void
-#define gles_glTexSubImage2D_ARG_NAMES target, level, xoffset, yoffset, width, height, format, type, pixels
-#define gles_glTexSubImage2D_ARG_EXPAND GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid * pixels
-#define gles_glTexSubImage2D_PACKED PACKED_glTexSubImage2D
-#define gles_glTranslatef_INDEX 146
-#define gles_glTranslatef_RETURN void
-#define gles_glTranslatef_ARG_NAMES x, y, z
-#define gles_glTranslatef_ARG_EXPAND GLfloat x, GLfloat y, GLfloat z
-#define gles_glTranslatef_PACKED PACKED_glTranslatef
-#define gles_glTranslatex_INDEX 147
-#define gles_glTranslatex_RETURN void
-#define gles_glTranslatex_ARG_NAMES x, y, z
-#define gles_glTranslatex_ARG_EXPAND GLfixed x, GLfixed y, GLfixed z
-#define gles_glTranslatex_PACKED PACKED_glTranslatex
-#define gles_glVertexPointer_INDEX 148
-#define gles_glVertexPointer_RETURN void
-#define gles_glVertexPointer_ARG_NAMES size, type, stride, pointer
-#define gles_glVertexPointer_ARG_EXPAND GLint size, GLenum type, GLsizei stride, const GLvoid * pointer
-#define gles_glVertexPointer_PACKED PACKED_glVertexPointer
-#define gles_glViewport_INDEX 149
-#define gles_glViewport_RETURN void
-#define gles_glViewport_ARG_NAMES x, y, width, height
-#define gles_glViewport_ARG_EXPAND GLint x, GLint y, GLsizei width, GLsizei height
-#define gles_glViewport_PACKED PACKED_glViewport
+#define emit_glXAssociateDMPbufferSGIX(dpy, pbuffer, params, dmbuffer) { \
+    mock_push(pack_glXAssociateDMPbufferSGIX(dpy, pbuffer, params, dmbuffer)); \
+}
+#define test_glXAssociateDMPbufferSGIX(_dpy, _pbuffer, _params, _dmbuffer) { \
+    glXAssociateDMPbufferSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXAssociateDMPbufferSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXAssociateDMPbufferSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXAssociateDMPbufferSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXAssociateDMPbufferSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXAssociateDMPbufferSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pbuffer != _pbuffer) { \
+            match = 0; \
+        } \
+        a = packed->args.params, b = _params; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+            printf("  ERROR: arg mismatch: params\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_params)); \
+            mock_print_ptr("     found:", a, sizeof(_params)); \
+            match = 0; \
+        } \
+        if (packed->args.dmbuffer != _dmbuffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXAssociateDMPbufferSGIX(%p, %p, %p, %p);\n", _dpy, _pbuffer, _params, _dmbuffer); \
+        } \
+    } \
+}
+#define emit_glXBindChannelToWindowSGIX(display, screen, channel, window) { \
+    mock_push(pack_glXBindChannelToWindowSGIX(display, screen, channel, window)); \
+}
+#define test_glXBindChannelToWindowSGIX(_display, _screen, _channel, _window) { \
+    glXBindChannelToWindowSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindChannelToWindowSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXBindChannelToWindowSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindChannelToWindowSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindChannelToWindowSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindChannelToWindowSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.channel != _channel) { \
+            match = 0; \
+        } \
+        if (packed->args.window != _window) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindChannelToWindowSGIX(%p, %p, %p, %p);\n", _display, _screen, _channel, _window); \
+        } \
+    } \
+}
+#define emit_glXBindHyperpipeSGIX(dpy, hpId) { \
+    mock_push(pack_glXBindHyperpipeSGIX(dpy, hpId)); \
+}
+#define test_glXBindHyperpipeSGIX(_dpy, _hpId) { \
+    glXBindHyperpipeSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindHyperpipeSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXBindHyperpipeSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindHyperpipeSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindHyperpipeSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindHyperpipeSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.hpId != _hpId) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindHyperpipeSGIX(%p, %p);\n", _dpy, _hpId); \
+        } \
+    } \
+}
+#define emit_glXBindSwapBarrierNV(dpy, group, barrier) { \
+    mock_push(pack_glXBindSwapBarrierNV(dpy, group, barrier)); \
+}
+#define test_glXBindSwapBarrierNV(_dpy, _group, _barrier) { \
+    glXBindSwapBarrierNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindSwapBarrierNV missing (no calls left)\n"); \
+    } else if (packed->index != glXBindSwapBarrierNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindSwapBarrierNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindSwapBarrierNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindSwapBarrierNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.group != _group) { \
+            match = 0; \
+        } \
+        if (packed->args.barrier != _barrier) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindSwapBarrierNV(%p, %u, %u);\n", _dpy, _group, _barrier); \
+        } \
+    } \
+}
+#define emit_glXBindSwapBarrierSGIX(dpy, drawable, barrier) { \
+    mock_push(pack_glXBindSwapBarrierSGIX(dpy, drawable, barrier)); \
+}
+#define test_glXBindSwapBarrierSGIX(_dpy, _drawable, _barrier) { \
+    glXBindSwapBarrierSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindSwapBarrierSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXBindSwapBarrierSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindSwapBarrierSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindSwapBarrierSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindSwapBarrierSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.barrier != _barrier) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindSwapBarrierSGIX(%p, %p, %p);\n", _dpy, _drawable, _barrier); \
+        } \
+    } \
+}
+#define emit_glXBindTexImageEXT(dpy, drawable, buffer, attrib_list) { \
+    mock_push(pack_glXBindTexImageEXT(dpy, drawable, buffer, attrib_list)); \
+}
+#define test_glXBindTexImageEXT(_dpy, _drawable, _buffer, _attrib_list) { \
+    glXBindTexImageEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindTexImageEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXBindTexImageEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindTexImageEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindTexImageEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindTexImageEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.buffer != _buffer) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindTexImageEXT(%p, %p, %p, %p);\n", _dpy, _drawable, _buffer, _attrib_list); \
+        } \
+    } \
+}
+#define emit_glXBindVideoCaptureDeviceNV(dpy, video_capture_slot, device) { \
+    mock_push(pack_glXBindVideoCaptureDeviceNV(dpy, video_capture_slot, device)); \
+}
+#define test_glXBindVideoCaptureDeviceNV(_dpy, _video_capture_slot, _device) { \
+    glXBindVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindVideoCaptureDeviceNV missing (no calls left)\n"); \
+    } else if (packed->index != glXBindVideoCaptureDeviceNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindVideoCaptureDeviceNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindVideoCaptureDeviceNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindVideoCaptureDeviceNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.video_capture_slot != _video_capture_slot) { \
+            match = 0; \
+        } \
+        if (packed->args.device != _device) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindVideoCaptureDeviceNV(%p, %p, %p);\n", _dpy, _video_capture_slot, _device); \
+        } \
+    } \
+}
+#define emit_glXBindVideoDeviceNV(dpy, video_slot, video_device, attrib_list) { \
+    mock_push(pack_glXBindVideoDeviceNV(dpy, video_slot, video_device, attrib_list)); \
+}
+#define test_glXBindVideoDeviceNV(_dpy, _video_slot, _video_device, _attrib_list) { \
+    glXBindVideoDeviceNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindVideoDeviceNV missing (no calls left)\n"); \
+    } else if (packed->index != glXBindVideoDeviceNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindVideoDeviceNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindVideoDeviceNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindVideoDeviceNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.video_slot != _video_slot) { \
+            match = 0; \
+        } \
+        if (packed->args.video_device != _video_device) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindVideoDeviceNV(%p, %p, %p, %p);\n", _dpy, _video_slot, _video_device, _attrib_list); \
+        } \
+    } \
+}
+#define emit_glXBindVideoImageNV(dpy, VideoDevice, pbuf, iVideoBuffer) { \
+    mock_push(pack_glXBindVideoImageNV(dpy, VideoDevice, pbuf, iVideoBuffer)); \
+}
+#define test_glXBindVideoImageNV(_dpy, _VideoDevice, _pbuf, _iVideoBuffer) { \
+    glXBindVideoImageNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXBindVideoImageNV missing (no calls left)\n"); \
+    } else if (packed->index != glXBindVideoImageNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXBindVideoImageNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXBindVideoImageNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXBindVideoImageNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.VideoDevice != _VideoDevice) { \
+            match = 0; \
+        } \
+        if (packed->args.pbuf != _pbuf) { \
+            match = 0; \
+        } \
+        if (packed->args.iVideoBuffer != _iVideoBuffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXBindVideoImageNV(%p, %p, %p, %p);\n", _dpy, _VideoDevice, _pbuf, _iVideoBuffer); \
+        } \
+    } \
+}
+#define emit_glXChangeDrawableAttributes(drawable) { \
+    mock_push(pack_glXChangeDrawableAttributes(drawable)); \
+}
+#define test_glXChangeDrawableAttributes(_drawable) { \
+    glXChangeDrawableAttributes_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXChangeDrawableAttributes missing (no calls left)\n"); \
+    } else if (packed->index != glXChangeDrawableAttributes_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXChangeDrawableAttributes_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXChangeDrawableAttributes missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXChangeDrawableAttributes:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXChangeDrawableAttributes(%p);\n", _drawable); \
+        } \
+    } \
+}
+#define emit_glXChangeDrawableAttributesSGIX(drawable) { \
+    mock_push(pack_glXChangeDrawableAttributesSGIX(drawable)); \
+}
+#define test_glXChangeDrawableAttributesSGIX(_drawable) { \
+    glXChangeDrawableAttributesSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXChangeDrawableAttributesSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXChangeDrawableAttributesSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXChangeDrawableAttributesSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXChangeDrawableAttributesSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXChangeDrawableAttributesSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXChangeDrawableAttributesSGIX(%p);\n", _drawable); \
+        } \
+    } \
+}
+#define emit_glXChannelRectSGIX(display, screen, channel, x, y, w, h) { \
+    mock_push(pack_glXChannelRectSGIX(display, screen, channel, x, y, w, h)); \
+}
+#define test_glXChannelRectSGIX(_display, _screen, _channel, _x, _y, _w, _h) { \
+    glXChannelRectSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXChannelRectSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXChannelRectSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXChannelRectSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXChannelRectSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXChannelRectSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.channel != _channel) { \
+            match = 0; \
+        } \
+        if (packed->args.x != _x) { \
+            match = 0; \
+        } \
+        if (packed->args.y != _y) { \
+            match = 0; \
+        } \
+        if (packed->args.w != _w) { \
+            match = 0; \
+        } \
+        if (packed->args.h != _h) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", _display, _screen, _channel, _x, _y, _w, _h); \
+        } \
+    } \
+}
+#define emit_glXChannelRectSyncSGIX(display, screen, channel, synctype) { \
+    mock_push(pack_glXChannelRectSyncSGIX(display, screen, channel, synctype)); \
+}
+#define test_glXChannelRectSyncSGIX(_display, _screen, _channel, _synctype) { \
+    glXChannelRectSyncSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXChannelRectSyncSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXChannelRectSyncSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXChannelRectSyncSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXChannelRectSyncSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXChannelRectSyncSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.channel != _channel) { \
+            match = 0; \
+        } \
+        if (packed->args.synctype != _synctype) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXChannelRectSyncSGIX(%p, %p, %p, 0x%04X);\n", _display, _screen, _channel, _synctype); \
+        } \
+    } \
+}
+#define emit_glXChooseFBConfig(dpy, screen, attrib_list, nelements) { \
+    mock_push(pack_glXChooseFBConfig(dpy, screen, attrib_list, nelements)); \
+}
+#define test_glXChooseFBConfig(_dpy, _screen, _attrib_list, _nelements) { \
+    glXChooseFBConfig_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXChooseFBConfig missing (no calls left)\n"); \
+    } else if (packed->index != glXChooseFBConfig_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXChooseFBConfig_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXChooseFBConfig missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXChooseFBConfig:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        a = packed->args.nelements, b = _nelements; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
+            printf("  ERROR: arg mismatch: nelements\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_nelements)); \
+            mock_print_ptr("     found:", a, sizeof(_nelements)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXChooseFBConfig(%p, %p, %p, %p);\n", _dpy, _screen, _attrib_list, _nelements); \
+        } \
+    } \
+}
+#define emit_glXChooseFBConfigSGIX(dpy, screen, attrib_list, nelements) { \
+    mock_push(pack_glXChooseFBConfigSGIX(dpy, screen, attrib_list, nelements)); \
+}
+#define test_glXChooseFBConfigSGIX(_dpy, _screen, _attrib_list, _nelements) { \
+    glXChooseFBConfigSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXChooseFBConfigSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXChooseFBConfigSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXChooseFBConfigSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXChooseFBConfigSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXChooseFBConfigSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        a = packed->args.nelements, b = _nelements; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
+            printf("  ERROR: arg mismatch: nelements\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_nelements)); \
+            mock_print_ptr("     found:", a, sizeof(_nelements)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXChooseFBConfigSGIX(%p, %p, %p, %p);\n", _dpy, _screen, _attrib_list, _nelements); \
+        } \
+    } \
+}
+#define emit_glXChooseVisual(dpy, screen, attribList) { \
+    mock_push(pack_glXChooseVisual(dpy, screen, attribList)); \
+}
+#define test_glXChooseVisual(_dpy, _screen, _attribList) { \
+    glXChooseVisual_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXChooseVisual missing (no calls left)\n"); \
+    } else if (packed->index != glXChooseVisual_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXChooseVisual_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXChooseVisual missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXChooseVisual:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.attribList, b = _attribList; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attribList)) != 0))) { \
+            printf("  ERROR: arg mismatch: attribList\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attribList)); \
+            mock_print_ptr("     found:", a, sizeof(_attribList)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXChooseVisual(%p, %p, %p);\n", _dpy, _screen, _attribList); \
+        } \
+    } \
+}
+#define emit_glXClientInfo() { \
+    mock_push(pack_glXClientInfo()); \
+}
+#define test_glXClientInfo() { \
+    glXClientInfo_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXClientInfo missing (no calls left)\n"); \
+    } else if (packed->index != glXClientInfo_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXClientInfo_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXClientInfo missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXClientInfo:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXClientInfo();\n", ); \
+        } \
+    } \
+}
+#define emit_glXCopyContext(dpy, src, dst, mask) { \
+    mock_push(pack_glXCopyContext(dpy, src, dst, mask)); \
+}
+#define test_glXCopyContext(_dpy, _src, _dst, _mask) { \
+    glXCopyContext_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCopyContext missing (no calls left)\n"); \
+    } else if (packed->index != glXCopyContext_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCopyContext_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCopyContext missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCopyContext:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.src != _src) { \
+            match = 0; \
+        } \
+        if (packed->args.dst != _dst) { \
+            match = 0; \
+        } \
+        if (packed->args.mask != _mask) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCopyContext(%p, %p, %p, %p);\n", _dpy, _src, _dst, _mask); \
+        } \
+    } \
+}
+#define emit_glXCopyImageSubDataNV(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth) { \
+    mock_push(pack_glXCopyImageSubDataNV(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth)); \
+}
+#define test_glXCopyImageSubDataNV(_dpy, _srcCtx, _srcName, _srcTarget, _srcLevel, _srcX, _srcY, _srcZ, _dstCtx, _dstName, _dstTarget, _dstLevel, _dstX, _dstY, _dstZ, _width, _height, _depth) { \
+    glXCopyImageSubDataNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCopyImageSubDataNV missing (no calls left)\n"); \
+    } else if (packed->index != glXCopyImageSubDataNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCopyImageSubDataNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCopyImageSubDataNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCopyImageSubDataNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.srcCtx != _srcCtx) { \
+            match = 0; \
+        } \
+        if (packed->args.srcName != _srcName) { \
+            match = 0; \
+        } \
+        if (packed->args.srcTarget != _srcTarget) { \
+            match = 0; \
+        } \
+        if (packed->args.srcLevel != _srcLevel) { \
+            match = 0; \
+        } \
+        if (packed->args.srcX != _srcX) { \
+            match = 0; \
+        } \
+        if (packed->args.srcY != _srcY) { \
+            match = 0; \
+        } \
+        if (packed->args.srcZ != _srcZ) { \
+            match = 0; \
+        } \
+        if (packed->args.dstCtx != _dstCtx) { \
+            match = 0; \
+        } \
+        if (packed->args.dstName != _dstName) { \
+            match = 0; \
+        } \
+        if (packed->args.dstTarget != _dstTarget) { \
+            match = 0; \
+        } \
+        if (packed->args.dstLevel != _dstLevel) { \
+            match = 0; \
+        } \
+        if (packed->args.dstX != _dstX) { \
+            match = 0; \
+        } \
+        if (packed->args.dstY != _dstY) { \
+            match = 0; \
+        } \
+        if (packed->args.dstZ != _dstZ) { \
+            match = 0; \
+        } \
+        if (packed->args.width != _width) { \
+            match = 0; \
+        } \
+        if (packed->args.height != _height) { \
+            match = 0; \
+        } \
+        if (packed->args.depth != _depth) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCopyImageSubDataNV(%p, %p, %u, 0x%04X, %d, %d, %d, %d, %p, %u, 0x%04X, %d, %d, %d, %d, %d, %d, %d);\n", _dpy, _srcCtx, _srcName, _srcTarget, _srcLevel, _srcX, _srcY, _srcZ, _dstCtx, _dstName, _dstTarget, _dstLevel, _dstX, _dstY, _dstZ, _width, _height, _depth); \
+        } \
+    } \
+}
+#define emit_glXCopySubBufferMESA(dpy, drawable, x, y, width, height) { \
+    mock_push(pack_glXCopySubBufferMESA(dpy, drawable, x, y, width, height)); \
+}
+#define test_glXCopySubBufferMESA(_dpy, _drawable, _x, _y, _width, _height) { \
+    glXCopySubBufferMESA_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCopySubBufferMESA missing (no calls left)\n"); \
+    } else if (packed->index != glXCopySubBufferMESA_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCopySubBufferMESA_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCopySubBufferMESA missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCopySubBufferMESA:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.x != _x) { \
+            match = 0; \
+        } \
+        if (packed->args.y != _y) { \
+            match = 0; \
+        } \
+        if (packed->args.width != _width) { \
+            match = 0; \
+        } \
+        if (packed->args.height != _height) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCopySubBufferMESA(%p, %p, %p, %p, %p, %p);\n", _dpy, _drawable, _x, _y, _width, _height); \
+        } \
+    } \
+}
+#define emit_glXCreateContext(dpy, vis, shareList, direct) { \
+    mock_push(pack_glXCreateContext(dpy, vis, shareList, direct)); \
+}
+#define test_glXCreateContext(_dpy, _vis, _shareList, _direct) { \
+    glXCreateContext_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateContext missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateContext_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateContext_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateContext missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateContext:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        a = packed->args.vis, b = _vis; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_vis)) != 0))) { \
+            printf("  ERROR: arg mismatch: vis\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_vis)); \
+            mock_print_ptr("     found:", a, sizeof(_vis)); \
+            match = 0; \
+        } \
+        if (packed->args.shareList != _shareList) { \
+            match = 0; \
+        } \
+        if (packed->args.direct != _direct) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateContext(%p, %p, %p, %p);\n", _dpy, _vis, _shareList, _direct); \
+        } \
+    } \
+}
+#define emit_glXCreateContextAttribsARB(dpy, config, share_context, direct, attrib_list) { \
+    mock_push(pack_glXCreateContextAttribsARB(dpy, config, share_context, direct, attrib_list)); \
+}
+#define test_glXCreateContextAttribsARB(_dpy, _config, _share_context, _direct, _attrib_list) { \
+    glXCreateContextAttribsARB_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateContextAttribsARB missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateContextAttribsARB_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateContextAttribsARB_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateContextAttribsARB missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateContextAttribsARB:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.share_context != _share_context) { \
+            match = 0; \
+        } \
+        if (packed->args.direct != _direct) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateContextAttribsARB(%p, %p, %p, %p, %p);\n", _dpy, _config, _share_context, _direct, _attrib_list); \
+        } \
+    } \
+}
+#define emit_glXCreateContextWithConfigSGIX(dpy, config, render_type, share_list, direct) { \
+    mock_push(pack_glXCreateContextWithConfigSGIX(dpy, config, render_type, share_list, direct)); \
+}
+#define test_glXCreateContextWithConfigSGIX(_dpy, _config, _render_type, _share_list, _direct) { \
+    glXCreateContextWithConfigSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateContextWithConfigSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateContextWithConfigSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateContextWithConfigSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateContextWithConfigSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateContextWithConfigSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.render_type != _render_type) { \
+            match = 0; \
+        } \
+        if (packed->args.share_list != _share_list) { \
+            match = 0; \
+        } \
+        if (packed->args.direct != _direct) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateContextWithConfigSGIX(%p, %p, %p, %p, %p);\n", _dpy, _config, _render_type, _share_list, _direct); \
+        } \
+    } \
+}
+#define emit_glXCreateGLXPbufferSGIX(dpy, config, width, height, attrib_list) { \
+    mock_push(pack_glXCreateGLXPbufferSGIX(dpy, config, width, height, attrib_list)); \
+}
+#define test_glXCreateGLXPbufferSGIX(_dpy, _config, _width, _height, _attrib_list) { \
+    glXCreateGLXPbufferSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateGLXPbufferSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateGLXPbufferSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateGLXPbufferSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateGLXPbufferSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateGLXPbufferSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.width != _width) { \
+            match = 0; \
+        } \
+        if (packed->args.height != _height) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateGLXPbufferSGIX(%p, %p, %p, %p, %p);\n", _dpy, _config, _width, _height, _attrib_list); \
+        } \
+    } \
+}
+#define emit_glXCreateGLXPixmap(dpy, visual, pixmap) { \
+    mock_push(pack_glXCreateGLXPixmap(dpy, visual, pixmap)); \
+}
+#define test_glXCreateGLXPixmap(_dpy, _visual, _pixmap) { \
+    glXCreateGLXPixmap_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateGLXPixmap missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateGLXPixmap_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateGLXPixmap_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateGLXPixmap missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateGLXPixmap:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        a = packed->args.visual, b = _visual; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_visual)) != 0))) { \
+            printf("  ERROR: arg mismatch: visual\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_visual)); \
+            mock_print_ptr("     found:", a, sizeof(_visual)); \
+            match = 0; \
+        } \
+        if (packed->args.pixmap != _pixmap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateGLXPixmap(%p, %p, %p);\n", _dpy, _visual, _pixmap); \
+        } \
+    } \
+}
+#define emit_glXCreateGLXPixmapMESA(dpy, visual, pixmap, cmap) { \
+    mock_push(pack_glXCreateGLXPixmapMESA(dpy, visual, pixmap, cmap)); \
+}
+#define test_glXCreateGLXPixmapMESA(_dpy, _visual, _pixmap, _cmap) { \
+    glXCreateGLXPixmapMESA_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateGLXPixmapMESA missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateGLXPixmapMESA_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateGLXPixmapMESA_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateGLXPixmapMESA missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateGLXPixmapMESA:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        a = packed->args.visual, b = _visual; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_visual)) != 0))) { \
+            printf("  ERROR: arg mismatch: visual\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_visual)); \
+            mock_print_ptr("     found:", a, sizeof(_visual)); \
+            match = 0; \
+        } \
+        if (packed->args.pixmap != _pixmap) { \
+            match = 0; \
+        } \
+        if (packed->args.cmap != _cmap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateGLXPixmapMESA(%p, %p, %p, %p);\n", _dpy, _visual, _pixmap, _cmap); \
+        } \
+    } \
+}
+#define emit_glXCreateGLXPixmapWithConfigSGIX(dpy, config, pixmap) { \
+    mock_push(pack_glXCreateGLXPixmapWithConfigSGIX(dpy, config, pixmap)); \
+}
+#define test_glXCreateGLXPixmapWithConfigSGIX(_dpy, _config, _pixmap) { \
+    glXCreateGLXPixmapWithConfigSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateGLXPixmapWithConfigSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateGLXPixmapWithConfigSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateGLXPixmapWithConfigSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateGLXPixmapWithConfigSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateGLXPixmapWithConfigSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.pixmap != _pixmap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateGLXPixmapWithConfigSGIX(%p, %p, %p);\n", _dpy, _config, _pixmap); \
+        } \
+    } \
+}
+#define emit_glXCreateGLXVideoSourceSGIX(display, screen, server, path, nodeClass, drainNode) { \
+    mock_push(pack_glXCreateGLXVideoSourceSGIX(display, screen, server, path, nodeClass, drainNode)); \
+}
+#define test_glXCreateGLXVideoSourceSGIX(_display, _screen, _server, _path, _nodeClass, _drainNode) { \
+    glXCreateGLXVideoSourceSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateGLXVideoSourceSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateGLXVideoSourceSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateGLXVideoSourceSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateGLXVideoSourceSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateGLXVideoSourceSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.server != _server) { \
+            match = 0; \
+        } \
+        if (packed->args.path != _path) { \
+            match = 0; \
+        } \
+        if (packed->args.nodeClass != _nodeClass) { \
+            match = 0; \
+        } \
+        if (packed->args.drainNode != _drainNode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateGLXVideoSourceSGIX(%p, %p, %p, %p, %p, %p);\n", _display, _screen, _server, _path, _nodeClass, _drainNode); \
+        } \
+    } \
+}
+#define emit_glXCreateNewContext(dpy, config, render_type, share_list, direct) { \
+    mock_push(pack_glXCreateNewContext(dpy, config, render_type, share_list, direct)); \
+}
+#define test_glXCreateNewContext(_dpy, _config, _render_type, _share_list, _direct) { \
+    glXCreateNewContext_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateNewContext missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateNewContext_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateNewContext_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateNewContext missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateNewContext:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.render_type != _render_type) { \
+            match = 0; \
+        } \
+        if (packed->args.share_list != _share_list) { \
+            match = 0; \
+        } \
+        if (packed->args.direct != _direct) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateNewContext(%p, %p, %p, %p, %p);\n", _dpy, _config, _render_type, _share_list, _direct); \
+        } \
+    } \
+}
+#define emit_glXCreatePbuffer(dpy, config, attrib_list) { \
+    mock_push(pack_glXCreatePbuffer(dpy, config, attrib_list)); \
+}
+#define test_glXCreatePbuffer(_dpy, _config, _attrib_list) { \
+    glXCreatePbuffer_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreatePbuffer missing (no calls left)\n"); \
+    } else if (packed->index != glXCreatePbuffer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreatePbuffer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreatePbuffer missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreatePbuffer:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreatePbuffer(%p, %p, %p);\n", _dpy, _config, _attrib_list); \
+        } \
+    } \
+}
+#define emit_glXCreatePixmap(dpy, config, pixmap, attrib_list) { \
+    mock_push(pack_glXCreatePixmap(dpy, config, pixmap, attrib_list)); \
+}
+#define test_glXCreatePixmap(_dpy, _config, _pixmap, _attrib_list) { \
+    glXCreatePixmap_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreatePixmap missing (no calls left)\n"); \
+    } else if (packed->index != glXCreatePixmap_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreatePixmap_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreatePixmap missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreatePixmap:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.pixmap != _pixmap) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreatePixmap(%p, %p, %p, %p);\n", _dpy, _config, _pixmap, _attrib_list); \
+        } \
+    } \
+}
+#define emit_glXCreateWindow(dpy, config, win, attrib_list) { \
+    mock_push(pack_glXCreateWindow(dpy, config, win, attrib_list)); \
+}
+#define test_glXCreateWindow(_dpy, _config, _win, _attrib_list) { \
+    glXCreateWindow_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCreateWindow missing (no calls left)\n"); \
+    } else if (packed->index != glXCreateWindow_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCreateWindow_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCreateWindow missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCreateWindow:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.win != _win) { \
+            match = 0; \
+        } \
+        a = packed->args.attrib_list, b = _attrib_list; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
+            printf("  ERROR: arg mismatch: attrib_list\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attrib_list)); \
+            mock_print_ptr("     found:", a, sizeof(_attrib_list)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCreateWindow(%p, %p, %p, %p);\n", _dpy, _config, _win, _attrib_list); \
+        } \
+    } \
+}
+#define emit_glXCushionSGI(dpy, window, cushion) { \
+    mock_push(pack_glXCushionSGI(dpy, window, cushion)); \
+}
+#define test_glXCushionSGI(_dpy, _window, _cushion) { \
+    glXCushionSGI_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXCushionSGI missing (no calls left)\n"); \
+    } else if (packed->index != glXCushionSGI_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXCushionSGI_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXCushionSGI missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXCushionSGI:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.window != _window) { \
+            match = 0; \
+        } \
+        if (packed->args.cushion - _cushion >= 0.01) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXCushionSGI(%p, %p, %p);\n", _dpy, _window, _cushion); \
+        } \
+    } \
+}
+#define emit_glXDestroyContext(dpy, ctx) { \
+    mock_push(pack_glXDestroyContext(dpy, ctx)); \
+}
+#define test_glXDestroyContext(_dpy, _ctx) { \
+    glXDestroyContext_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyContext missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyContext_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyContext_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyContext missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyContext:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.ctx != _ctx) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyContext(%p, %p);\n", _dpy, _ctx); \
+        } \
+    } \
+}
+#define emit_glXDestroyGLXPbufferSGIX(dpy, pbuf) { \
+    mock_push(pack_glXDestroyGLXPbufferSGIX(dpy, pbuf)); \
+}
+#define test_glXDestroyGLXPbufferSGIX(_dpy, _pbuf) { \
+    glXDestroyGLXPbufferSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyGLXPbufferSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyGLXPbufferSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyGLXPbufferSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyGLXPbufferSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyGLXPbufferSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pbuf != _pbuf) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyGLXPbufferSGIX(%p, %p);\n", _dpy, _pbuf); \
+        } \
+    } \
+}
+#define emit_glXDestroyGLXPixmap(dpy, pixmap) { \
+    mock_push(pack_glXDestroyGLXPixmap(dpy, pixmap)); \
+}
+#define test_glXDestroyGLXPixmap(_dpy, _pixmap) { \
+    glXDestroyGLXPixmap_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyGLXPixmap missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyGLXPixmap_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyGLXPixmap_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyGLXPixmap missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyGLXPixmap:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pixmap != _pixmap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyGLXPixmap(%p, %p);\n", _dpy, _pixmap); \
+        } \
+    } \
+}
+#define emit_glXDestroyGLXVideoSourceSGIX(dpy, glxvideosource) { \
+    mock_push(pack_glXDestroyGLXVideoSourceSGIX(dpy, glxvideosource)); \
+}
+#define test_glXDestroyGLXVideoSourceSGIX(_dpy, _glxvideosource) { \
+    glXDestroyGLXVideoSourceSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyGLXVideoSourceSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyGLXVideoSourceSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyGLXVideoSourceSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyGLXVideoSourceSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyGLXVideoSourceSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.glxvideosource != _glxvideosource) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyGLXVideoSourceSGIX(%p, %p);\n", _dpy, _glxvideosource); \
+        } \
+    } \
+}
+#define emit_glXDestroyHyperpipeConfigSGIX(dpy, hpId) { \
+    mock_push(pack_glXDestroyHyperpipeConfigSGIX(dpy, hpId)); \
+}
+#define test_glXDestroyHyperpipeConfigSGIX(_dpy, _hpId) { \
+    glXDestroyHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyHyperpipeConfigSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyHyperpipeConfigSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyHyperpipeConfigSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyHyperpipeConfigSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyHyperpipeConfigSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.hpId != _hpId) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyHyperpipeConfigSGIX(%p, %p);\n", _dpy, _hpId); \
+        } \
+    } \
+}
+#define emit_glXDestroyPbuffer(dpy, pbuf) { \
+    mock_push(pack_glXDestroyPbuffer(dpy, pbuf)); \
+}
+#define test_glXDestroyPbuffer(_dpy, _pbuf) { \
+    glXDestroyPbuffer_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyPbuffer missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyPbuffer_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyPbuffer_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyPbuffer missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyPbuffer:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pbuf != _pbuf) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyPbuffer(%p, %p);\n", _dpy, _pbuf); \
+        } \
+    } \
+}
+#define emit_glXDestroyPixmap(dpy, pixmap) { \
+    mock_push(pack_glXDestroyPixmap(dpy, pixmap)); \
+}
+#define test_glXDestroyPixmap(_dpy, _pixmap) { \
+    glXDestroyPixmap_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyPixmap missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyPixmap_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyPixmap_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyPixmap missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyPixmap:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pixmap != _pixmap) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyPixmap(%p, %p);\n", _dpy, _pixmap); \
+        } \
+    } \
+}
+#define emit_glXDestroyWindow(dpy, win) { \
+    mock_push(pack_glXDestroyWindow(dpy, win)); \
+}
+#define test_glXDestroyWindow(_dpy, _win) { \
+    glXDestroyWindow_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXDestroyWindow missing (no calls left)\n"); \
+    } else if (packed->index != glXDestroyWindow_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXDestroyWindow_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXDestroyWindow missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXDestroyWindow:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.win != _win) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXDestroyWindow(%p, %p);\n", _dpy, _win); \
+        } \
+    } \
+}
+#define emit_glXEnumerateVideoCaptureDevicesNV(dpy, screen, nelements) { \
+    mock_push(pack_glXEnumerateVideoCaptureDevicesNV(dpy, screen, nelements)); \
+}
+#define test_glXEnumerateVideoCaptureDevicesNV(_dpy, _screen, _nelements) { \
+    glXEnumerateVideoCaptureDevicesNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXEnumerateVideoCaptureDevicesNV missing (no calls left)\n"); \
+    } else if (packed->index != glXEnumerateVideoCaptureDevicesNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXEnumerateVideoCaptureDevicesNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXEnumerateVideoCaptureDevicesNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXEnumerateVideoCaptureDevicesNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.nelements, b = _nelements; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
+            printf("  ERROR: arg mismatch: nelements\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_nelements)); \
+            mock_print_ptr("     found:", a, sizeof(_nelements)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXEnumerateVideoCaptureDevicesNV(%p, %p, %p);\n", _dpy, _screen, _nelements); \
+        } \
+    } \
+}
+#define emit_glXEnumerateVideoDevicesNV(dpy, screen, nelements) { \
+    mock_push(pack_glXEnumerateVideoDevicesNV(dpy, screen, nelements)); \
+}
+#define test_glXEnumerateVideoDevicesNV(_dpy, _screen, _nelements) { \
+    glXEnumerateVideoDevicesNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXEnumerateVideoDevicesNV missing (no calls left)\n"); \
+    } else if (packed->index != glXEnumerateVideoDevicesNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXEnumerateVideoDevicesNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXEnumerateVideoDevicesNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXEnumerateVideoDevicesNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.nelements, b = _nelements; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
+            printf("  ERROR: arg mismatch: nelements\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_nelements)); \
+            mock_print_ptr("     found:", a, sizeof(_nelements)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXEnumerateVideoDevicesNV(%p, %p, %p);\n", _dpy, _screen, _nelements); \
+        } \
+    } \
+}
+#define emit_glXFreeContextEXT(dpy, context) { \
+    mock_push(pack_glXFreeContextEXT(dpy, context)); \
+}
+#define test_glXFreeContextEXT(_dpy, _context) { \
+    glXFreeContextEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXFreeContextEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXFreeContextEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXFreeContextEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXFreeContextEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXFreeContextEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.context != _context) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXFreeContextEXT(%p, %p);\n", _dpy, _context); \
+        } \
+    } \
+}
+#define emit_glXGetAGPOffsetMESA(pointer) { \
+    mock_push(pack_glXGetAGPOffsetMESA(pointer)); \
+}
+#define test_glXGetAGPOffsetMESA(_pointer) { \
+    glXGetAGPOffsetMESA_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetAGPOffsetMESA missing (no calls left)\n"); \
+    } else if (packed->index != glXGetAGPOffsetMESA_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetAGPOffsetMESA_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetAGPOffsetMESA missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetAGPOffsetMESA:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.pointer, b = _pointer; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pointer)) != 0))) { \
+            printf("  ERROR: arg mismatch: pointer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_pointer)); \
+            mock_print_ptr("     found:", a, sizeof(_pointer)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetAGPOffsetMESA(%p);\n", _pointer); \
+        } \
+    } \
+}
+#define emit_glXGetClientString(display, name) { \
+    mock_push(pack_glXGetClientString(display, name)); \
+}
+#define test_glXGetClientString(_display, _name) { \
+    glXGetClientString_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetClientString missing (no calls left)\n"); \
+    } else if (packed->index != glXGetClientString_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetClientString_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetClientString missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetClientString:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        if (packed->args.name != _name) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetClientString(%p, %p);\n", _display, _name); \
+        } \
+    } \
+}
+#define emit_glXGetConfig(display, visual, attribute, value) { \
+    mock_push(pack_glXGetConfig(display, visual, attribute, value)); \
+}
+#define test_glXGetConfig(_display, _visual, _attribute, _value) { \
+    glXGetConfig_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetConfig missing (no calls left)\n"); \
+    } else if (packed->index != glXGetConfig_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetConfig_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetConfig missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetConfig:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        a = packed->args.visual, b = _visual; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_visual)) != 0))) { \
+            printf("  ERROR: arg mismatch: visual\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_visual)); \
+            mock_print_ptr("     found:", a, sizeof(_visual)); \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetConfig(%p, %p, %p, %p);\n", _display, _visual, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXGetContextIDEXT(context) { \
+    mock_push(pack_glXGetContextIDEXT(context)); \
+}
+#define test_glXGetContextIDEXT(_context) { \
+    glXGetContextIDEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetContextIDEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXGetContextIDEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetContextIDEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetContextIDEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetContextIDEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.context != _context) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetContextIDEXT(%p);\n", _context); \
+        } \
+    } \
+}
+#define emit_glXGetCurrentContext() { \
+    mock_push(pack_glXGetCurrentContext()); \
+}
+#define test_glXGetCurrentContext() { \
+    glXGetCurrentContext_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetCurrentContext missing (no calls left)\n"); \
+    } else if (packed->index != glXGetCurrentContext_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetCurrentContext_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetCurrentContext missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetCurrentContext:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetCurrentContext();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetCurrentDisplay() { \
+    mock_push(pack_glXGetCurrentDisplay()); \
+}
+#define test_glXGetCurrentDisplay() { \
+    glXGetCurrentDisplay_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetCurrentDisplay missing (no calls left)\n"); \
+    } else if (packed->index != glXGetCurrentDisplay_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetCurrentDisplay_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetCurrentDisplay missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetCurrentDisplay:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetCurrentDisplay();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetCurrentDisplayEXT() { \
+    mock_push(pack_glXGetCurrentDisplayEXT()); \
+}
+#define test_glXGetCurrentDisplayEXT() { \
+    glXGetCurrentDisplayEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetCurrentDisplayEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXGetCurrentDisplayEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetCurrentDisplayEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetCurrentDisplayEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetCurrentDisplayEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetCurrentDisplayEXT();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetCurrentDrawable() { \
+    mock_push(pack_glXGetCurrentDrawable()); \
+}
+#define test_glXGetCurrentDrawable() { \
+    glXGetCurrentDrawable_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetCurrentDrawable missing (no calls left)\n"); \
+    } else if (packed->index != glXGetCurrentDrawable_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetCurrentDrawable_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetCurrentDrawable missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetCurrentDrawable:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetCurrentDrawable();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetCurrentReadDrawable() { \
+    mock_push(pack_glXGetCurrentReadDrawable()); \
+}
+#define test_glXGetCurrentReadDrawable() { \
+    glXGetCurrentReadDrawable_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetCurrentReadDrawable missing (no calls left)\n"); \
+    } else if (packed->index != glXGetCurrentReadDrawable_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetCurrentReadDrawable_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetCurrentReadDrawable missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetCurrentReadDrawable:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetCurrentReadDrawable();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetCurrentReadDrawableSGI() { \
+    mock_push(pack_glXGetCurrentReadDrawableSGI()); \
+}
+#define test_glXGetCurrentReadDrawableSGI() { \
+    glXGetCurrentReadDrawableSGI_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetCurrentReadDrawableSGI missing (no calls left)\n"); \
+    } else if (packed->index != glXGetCurrentReadDrawableSGI_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetCurrentReadDrawableSGI_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetCurrentReadDrawableSGI missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetCurrentReadDrawableSGI:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetCurrentReadDrawableSGI();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetDrawableAttributes(drawable) { \
+    mock_push(pack_glXGetDrawableAttributes(drawable)); \
+}
+#define test_glXGetDrawableAttributes(_drawable) { \
+    glXGetDrawableAttributes_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetDrawableAttributes missing (no calls left)\n"); \
+    } else if (packed->index != glXGetDrawableAttributes_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetDrawableAttributes_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetDrawableAttributes missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetDrawableAttributes:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetDrawableAttributes(%p);\n", _drawable); \
+        } \
+    } \
+}
+#define emit_glXGetDrawableAttributesSGIX(drawable) { \
+    mock_push(pack_glXGetDrawableAttributesSGIX(drawable)); \
+}
+#define test_glXGetDrawableAttributesSGIX(_drawable) { \
+    glXGetDrawableAttributesSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetDrawableAttributesSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXGetDrawableAttributesSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetDrawableAttributesSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetDrawableAttributesSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetDrawableAttributesSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetDrawableAttributesSGIX(%p);\n", _drawable); \
+        } \
+    } \
+}
+#define emit_glXGetFBConfigAttrib(dpy, config, attribute, value) { \
+    mock_push(pack_glXGetFBConfigAttrib(dpy, config, attribute, value)); \
+}
+#define test_glXGetFBConfigAttrib(_dpy, _config, _attribute, _value) { \
+    glXGetFBConfigAttrib_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetFBConfigAttrib missing (no calls left)\n"); \
+    } else if (packed->index != glXGetFBConfigAttrib_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetFBConfigAttrib_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetFBConfigAttrib missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetFBConfigAttrib:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetFBConfigAttrib(%p, %p, %p, %p);\n", _dpy, _config, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXGetFBConfigAttribSGIX(dpy, config, attribute, value) { \
+    mock_push(pack_glXGetFBConfigAttribSGIX(dpy, config, attribute, value)); \
+}
+#define test_glXGetFBConfigAttribSGIX(_dpy, _config, _attribute, _value) { \
+    glXGetFBConfigAttribSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetFBConfigAttribSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXGetFBConfigAttribSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetFBConfigAttribSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetFBConfigAttribSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetFBConfigAttribSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetFBConfigAttribSGIX(%p, %p, %p, %p);\n", _dpy, _config, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXGetFBConfigFromVisualSGIX(dpy, vis) { \
+    mock_push(pack_glXGetFBConfigFromVisualSGIX(dpy, vis)); \
+}
+#define test_glXGetFBConfigFromVisualSGIX(_dpy, _vis) { \
+    glXGetFBConfigFromVisualSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetFBConfigFromVisualSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXGetFBConfigFromVisualSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetFBConfigFromVisualSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetFBConfigFromVisualSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetFBConfigFromVisualSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        a = packed->args.vis, b = _vis; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_vis)) != 0))) { \
+            printf("  ERROR: arg mismatch: vis\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_vis)); \
+            mock_print_ptr("     found:", a, sizeof(_vis)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetFBConfigFromVisualSGIX(%p, %p);\n", _dpy, _vis); \
+        } \
+    } \
+}
+#define emit_glXGetFBConfigs(dpy, screen, nelements) { \
+    mock_push(pack_glXGetFBConfigs(dpy, screen, nelements)); \
+}
+#define test_glXGetFBConfigs(_dpy, _screen, _nelements) { \
+    glXGetFBConfigs_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetFBConfigs missing (no calls left)\n"); \
+    } else if (packed->index != glXGetFBConfigs_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetFBConfigs_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetFBConfigs missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetFBConfigs:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.nelements, b = _nelements; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
+            printf("  ERROR: arg mismatch: nelements\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_nelements)); \
+            mock_print_ptr("     found:", a, sizeof(_nelements)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetFBConfigs(%p, %p, %p);\n", _dpy, _screen, _nelements); \
+        } \
+    } \
+}
+#define emit_glXGetFBConfigsSGIX() { \
+    mock_push(pack_glXGetFBConfigsSGIX()); \
+}
+#define test_glXGetFBConfigsSGIX() { \
+    glXGetFBConfigsSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetFBConfigsSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXGetFBConfigsSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetFBConfigsSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetFBConfigsSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetFBConfigsSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetFBConfigsSGIX();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetMscRateOML(dpy, drawable, numerator, denominator) { \
+    mock_push(pack_glXGetMscRateOML(dpy, drawable, numerator, denominator)); \
+}
+#define test_glXGetMscRateOML(_dpy, _drawable, _numerator, _denominator) { \
+    glXGetMscRateOML_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetMscRateOML missing (no calls left)\n"); \
+    } else if (packed->index != glXGetMscRateOML_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetMscRateOML_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetMscRateOML missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetMscRateOML:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        a = packed->args.numerator, b = _numerator; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_numerator)) != 0))) { \
+            printf("  ERROR: arg mismatch: numerator\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_numerator)); \
+            mock_print_ptr("     found:", a, sizeof(_numerator)); \
+            match = 0; \
+        } \
+        a = packed->args.denominator, b = _denominator; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_denominator)) != 0))) { \
+            printf("  ERROR: arg mismatch: denominator\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_denominator)); \
+            mock_print_ptr("     found:", a, sizeof(_denominator)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetMscRateOML(%p, %p, %p, %p);\n", _dpy, _drawable, _numerator, _denominator); \
+        } \
+    } \
+}
+#define emit_glXGetProcAddress(procName) { \
+    mock_push(pack_glXGetProcAddress(procName)); \
+}
+#define test_glXGetProcAddress(_procName) { \
+    glXGetProcAddress_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetProcAddress missing (no calls left)\n"); \
+    } else if (packed->index != glXGetProcAddress_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetProcAddress_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetProcAddress missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetProcAddress:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.procName, b = _procName; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_procName)) != 0))) { \
+            printf("  ERROR: arg mismatch: procName\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_procName)); \
+            mock_print_ptr("     found:", a, sizeof(_procName)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetProcAddress(%p);\n", _procName); \
+        } \
+    } \
+}
+#define emit_glXGetProcAddressARB(procName) { \
+    mock_push(pack_glXGetProcAddressARB(procName)); \
+}
+#define test_glXGetProcAddressARB(_procName) { \
+    glXGetProcAddressARB_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetProcAddressARB missing (no calls left)\n"); \
+    } else if (packed->index != glXGetProcAddressARB_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetProcAddressARB_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetProcAddressARB missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetProcAddressARB:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.procName, b = _procName; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_procName)) != 0))) { \
+            printf("  ERROR: arg mismatch: procName\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_procName)); \
+            mock_print_ptr("     found:", a, sizeof(_procName)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetProcAddressARB(%p);\n", _procName); \
+        } \
+    } \
+}
+#define emit_glXGetSelectedEvent(dpy, draw, event_mask) { \
+    mock_push(pack_glXGetSelectedEvent(dpy, draw, event_mask)); \
+}
+#define test_glXGetSelectedEvent(_dpy, _draw, _event_mask) { \
+    glXGetSelectedEvent_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetSelectedEvent missing (no calls left)\n"); \
+    } else if (packed->index != glXGetSelectedEvent_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetSelectedEvent_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetSelectedEvent missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetSelectedEvent:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.draw != _draw) { \
+            match = 0; \
+        } \
+        a = packed->args.event_mask, b = _event_mask; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_event_mask)) != 0))) { \
+            printf("  ERROR: arg mismatch: event_mask\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_event_mask)); \
+            mock_print_ptr("     found:", a, sizeof(_event_mask)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetSelectedEvent(%p, %p, %p);\n", _dpy, _draw, _event_mask); \
+        } \
+    } \
+}
+#define emit_glXGetSelectedEventSGIX(dpy, drawable, mask) { \
+    mock_push(pack_glXGetSelectedEventSGIX(dpy, drawable, mask)); \
+}
+#define test_glXGetSelectedEventSGIX(_dpy, _drawable, _mask) { \
+    glXGetSelectedEventSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetSelectedEventSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXGetSelectedEventSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetSelectedEventSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetSelectedEventSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetSelectedEventSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        a = packed->args.mask, b = _mask; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_mask)) != 0))) { \
+            printf("  ERROR: arg mismatch: mask\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_mask)); \
+            mock_print_ptr("     found:", a, sizeof(_mask)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetSelectedEventSGIX(%p, %p, %p);\n", _dpy, _drawable, _mask); \
+        } \
+    } \
+}
+#define emit_glXGetSyncValuesOML(dpy, drawable, ust, msc, sbc) { \
+    mock_push(pack_glXGetSyncValuesOML(dpy, drawable, ust, msc, sbc)); \
+}
+#define test_glXGetSyncValuesOML(_dpy, _drawable, _ust, _msc, _sbc) { \
+    glXGetSyncValuesOML_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetSyncValuesOML missing (no calls left)\n"); \
+    } else if (packed->index != glXGetSyncValuesOML_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetSyncValuesOML_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetSyncValuesOML missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetSyncValuesOML:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        a = packed->args.ust, b = _ust; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_ust)) != 0))) { \
+            printf("  ERROR: arg mismatch: ust\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_ust)); \
+            mock_print_ptr("     found:", a, sizeof(_ust)); \
+            match = 0; \
+        } \
+        a = packed->args.msc, b = _msc; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_msc)) != 0))) { \
+            printf("  ERROR: arg mismatch: msc\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_msc)); \
+            mock_print_ptr("     found:", a, sizeof(_msc)); \
+            match = 0; \
+        } \
+        a = packed->args.sbc, b = _sbc; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_sbc)) != 0))) { \
+            printf("  ERROR: arg mismatch: sbc\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_sbc)); \
+            mock_print_ptr("     found:", a, sizeof(_sbc)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetSyncValuesOML(%p, %p, %p, %p, %p);\n", _dpy, _drawable, _ust, _msc, _sbc); \
+        } \
+    } \
+}
+#define emit_glXGetTransparentIndexSUN(dpy, overlay, underlay, pTransparentIndex) { \
+    mock_push(pack_glXGetTransparentIndexSUN(dpy, overlay, underlay, pTransparentIndex)); \
+}
+#define test_glXGetTransparentIndexSUN(_dpy, _overlay, _underlay, _pTransparentIndex) { \
+    glXGetTransparentIndexSUN_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetTransparentIndexSUN missing (no calls left)\n"); \
+    } else if (packed->index != glXGetTransparentIndexSUN_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetTransparentIndexSUN_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetTransparentIndexSUN missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetTransparentIndexSUN:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.overlay != _overlay) { \
+            match = 0; \
+        } \
+        if (packed->args.underlay != _underlay) { \
+            match = 0; \
+        } \
+        a = packed->args.pTransparentIndex, b = _pTransparentIndex; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pTransparentIndex)) != 0))) { \
+            printf("  ERROR: arg mismatch: pTransparentIndex\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_pTransparentIndex)); \
+            mock_print_ptr("     found:", a, sizeof(_pTransparentIndex)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetTransparentIndexSUN(%p, %p, %p, %p);\n", _dpy, _overlay, _underlay, _pTransparentIndex); \
+        } \
+    } \
+}
+#define emit_glXGetVideoDeviceNV(dpy, screen, numVideoDevices, pVideoDevice) { \
+    mock_push(pack_glXGetVideoDeviceNV(dpy, screen, numVideoDevices, pVideoDevice)); \
+}
+#define test_glXGetVideoDeviceNV(_dpy, _screen, _numVideoDevices, _pVideoDevice) { \
+    glXGetVideoDeviceNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetVideoDeviceNV missing (no calls left)\n"); \
+    } else if (packed->index != glXGetVideoDeviceNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetVideoDeviceNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetVideoDeviceNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetVideoDeviceNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.numVideoDevices != _numVideoDevices) { \
+            match = 0; \
+        } \
+        a = packed->args.pVideoDevice, b = _pVideoDevice; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pVideoDevice)) != 0))) { \
+            printf("  ERROR: arg mismatch: pVideoDevice\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_pVideoDevice)); \
+            mock_print_ptr("     found:", a, sizeof(_pVideoDevice)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetVideoDeviceNV(%p, %p, %p, %p);\n", _dpy, _screen, _numVideoDevices, _pVideoDevice); \
+        } \
+    } \
+}
+#define emit_glXGetVideoInfoNV(dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo) { \
+    mock_push(pack_glXGetVideoInfoNV(dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo)); \
+}
+#define test_glXGetVideoInfoNV(_dpy, _screen, _VideoDevice, _pulCounterOutputPbuffer, _pulCounterOutputVideo) { \
+    glXGetVideoInfoNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetVideoInfoNV missing (no calls left)\n"); \
+    } else if (packed->index != glXGetVideoInfoNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetVideoInfoNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetVideoInfoNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetVideoInfoNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.VideoDevice != _VideoDevice) { \
+            match = 0; \
+        } \
+        a = packed->args.pulCounterOutputPbuffer, b = _pulCounterOutputPbuffer; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pulCounterOutputPbuffer)) != 0))) { \
+            printf("  ERROR: arg mismatch: pulCounterOutputPbuffer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_pulCounterOutputPbuffer)); \
+            mock_print_ptr("     found:", a, sizeof(_pulCounterOutputPbuffer)); \
+            match = 0; \
+        } \
+        a = packed->args.pulCounterOutputVideo, b = _pulCounterOutputVideo; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pulCounterOutputVideo)) != 0))) { \
+            printf("  ERROR: arg mismatch: pulCounterOutputVideo\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_pulCounterOutputVideo)); \
+            mock_print_ptr("     found:", a, sizeof(_pulCounterOutputVideo)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetVideoInfoNV(%p, %p, %p, %p, %p);\n", _dpy, _screen, _VideoDevice, _pulCounterOutputPbuffer, _pulCounterOutputVideo); \
+        } \
+    } \
+}
+#define emit_glXGetVideoSyncSGI(count) { \
+    mock_push(pack_glXGetVideoSyncSGI(count)); \
+}
+#define test_glXGetVideoSyncSGI(_count) { \
+    glXGetVideoSyncSGI_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetVideoSyncSGI missing (no calls left)\n"); \
+    } else if (packed->index != glXGetVideoSyncSGI_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetVideoSyncSGI_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetVideoSyncSGI missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetVideoSyncSGI:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.count, b = _count; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_count)) != 0))) { \
+            printf("  ERROR: arg mismatch: count\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_count)); \
+            mock_print_ptr("     found:", a, sizeof(_count)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetVideoSyncSGI(%p);\n", _count); \
+        } \
+    } \
+}
+#define emit_glXGetVisualConfigs() { \
+    mock_push(pack_glXGetVisualConfigs()); \
+}
+#define test_glXGetVisualConfigs() { \
+    glXGetVisualConfigs_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetVisualConfigs missing (no calls left)\n"); \
+    } else if (packed->index != glXGetVisualConfigs_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetVisualConfigs_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetVisualConfigs missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetVisualConfigs:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetVisualConfigs();\n", ); \
+        } \
+    } \
+}
+#define emit_glXGetVisualFromFBConfig(dpy, config) { \
+    mock_push(pack_glXGetVisualFromFBConfig(dpy, config)); \
+}
+#define test_glXGetVisualFromFBConfig(_dpy, _config) { \
+    glXGetVisualFromFBConfig_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetVisualFromFBConfig missing (no calls left)\n"); \
+    } else if (packed->index != glXGetVisualFromFBConfig_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetVisualFromFBConfig_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetVisualFromFBConfig missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetVisualFromFBConfig:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetVisualFromFBConfig(%p, %p);\n", _dpy, _config); \
+        } \
+    } \
+}
+#define emit_glXGetVisualFromFBConfigSGIX(dpy, config) { \
+    mock_push(pack_glXGetVisualFromFBConfigSGIX(dpy, config)); \
+}
+#define test_glXGetVisualFromFBConfigSGIX(_dpy, _config) { \
+    glXGetVisualFromFBConfigSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXGetVisualFromFBConfigSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXGetVisualFromFBConfigSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXGetVisualFromFBConfigSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXGetVisualFromFBConfigSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXGetVisualFromFBConfigSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.config != _config) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXGetVisualFromFBConfigSGIX(%p, %p);\n", _dpy, _config); \
+        } \
+    } \
+}
+#define emit_glXHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, attribList) { \
+    mock_push(pack_glXHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, attribList)); \
+}
+#define test_glXHyperpipeAttribSGIX(_dpy, _timeSlice, _attrib, _size, _attribList) { \
+    glXHyperpipeAttribSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXHyperpipeAttribSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXHyperpipeAttribSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXHyperpipeAttribSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXHyperpipeAttribSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXHyperpipeAttribSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.timeSlice != _timeSlice) { \
+            match = 0; \
+        } \
+        if (packed->args.attrib != _attrib) { \
+            match = 0; \
+        } \
+        if (packed->args.size != _size) { \
+            match = 0; \
+        } \
+        a = packed->args.attribList, b = _attribList; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attribList)) != 0))) { \
+            printf("  ERROR: arg mismatch: attribList\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attribList)); \
+            mock_print_ptr("     found:", a, sizeof(_attribList)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", _dpy, _timeSlice, _attrib, _size, _attribList); \
+        } \
+    } \
+}
+#define emit_glXHyperpipeConfigSGIX(dpy, networkId, npipes, cfg, hpId) { \
+    mock_push(pack_glXHyperpipeConfigSGIX(dpy, networkId, npipes, cfg, hpId)); \
+}
+#define test_glXHyperpipeConfigSGIX(_dpy, _networkId, _npipes, _cfg, _hpId) { \
+    glXHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXHyperpipeConfigSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXHyperpipeConfigSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXHyperpipeConfigSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXHyperpipeConfigSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXHyperpipeConfigSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.networkId != _networkId) { \
+            match = 0; \
+        } \
+        if (packed->args.npipes != _npipes) { \
+            match = 0; \
+        } \
+        a = packed->args.cfg, b = _cfg; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_cfg)) != 0))) { \
+            printf("  ERROR: arg mismatch: cfg\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_cfg)); \
+            mock_print_ptr("     found:", a, sizeof(_cfg)); \
+            match = 0; \
+        } \
+        a = packed->args.hpId, b = _hpId; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_hpId)) != 0))) { \
+            printf("  ERROR: arg mismatch: hpId\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_hpId)); \
+            mock_print_ptr("     found:", a, sizeof(_hpId)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXHyperpipeConfigSGIX(%p, %p, %p, %p, %p);\n", _dpy, _networkId, _npipes, _cfg, _hpId); \
+        } \
+    } \
+}
+#define emit_glXImportContextEXT(dpy, contextID) { \
+    mock_push(pack_glXImportContextEXT(dpy, contextID)); \
+}
+#define test_glXImportContextEXT(_dpy, _contextID) { \
+    glXImportContextEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXImportContextEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXImportContextEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXImportContextEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXImportContextEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXImportContextEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.contextID != _contextID) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXImportContextEXT(%p, %p);\n", _dpy, _contextID); \
+        } \
+    } \
+}
+#define emit_glXIsDirect(dpy, ctx) { \
+    mock_push(pack_glXIsDirect(dpy, ctx)); \
+}
+#define test_glXIsDirect(_dpy, _ctx) { \
+    glXIsDirect_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXIsDirect missing (no calls left)\n"); \
+    } else if (packed->index != glXIsDirect_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXIsDirect_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXIsDirect missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXIsDirect:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.ctx != _ctx) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXIsDirect(%p, %p);\n", _dpy, _ctx); \
+        } \
+    } \
+}
+#define emit_glXJoinSwapGroupNV(dpy, drawable, group) { \
+    mock_push(pack_glXJoinSwapGroupNV(dpy, drawable, group)); \
+}
+#define test_glXJoinSwapGroupNV(_dpy, _drawable, _group) { \
+    glXJoinSwapGroupNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXJoinSwapGroupNV missing (no calls left)\n"); \
+    } else if (packed->index != glXJoinSwapGroupNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXJoinSwapGroupNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXJoinSwapGroupNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXJoinSwapGroupNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.group != _group) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXJoinSwapGroupNV(%p, %p, %u);\n", _dpy, _drawable, _group); \
+        } \
+    } \
+}
+#define emit_glXJoinSwapGroupSGIX(dpy, drawable, member) { \
+    mock_push(pack_glXJoinSwapGroupSGIX(dpy, drawable, member)); \
+}
+#define test_glXJoinSwapGroupSGIX(_dpy, _drawable, _member) { \
+    glXJoinSwapGroupSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXJoinSwapGroupSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXJoinSwapGroupSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXJoinSwapGroupSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXJoinSwapGroupSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXJoinSwapGroupSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.member != _member) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXJoinSwapGroupSGIX(%p, %p, %p);\n", _dpy, _drawable, _member); \
+        } \
+    } \
+}
+#define emit_glXLockVideoCaptureDeviceNV(dpy, device) { \
+    mock_push(pack_glXLockVideoCaptureDeviceNV(dpy, device)); \
+}
+#define test_glXLockVideoCaptureDeviceNV(_dpy, _device) { \
+    glXLockVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXLockVideoCaptureDeviceNV missing (no calls left)\n"); \
+    } else if (packed->index != glXLockVideoCaptureDeviceNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXLockVideoCaptureDeviceNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXLockVideoCaptureDeviceNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXLockVideoCaptureDeviceNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.device != _device) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXLockVideoCaptureDeviceNV(%p, %p);\n", _dpy, _device); \
+        } \
+    } \
+}
+#define emit_glXMakeContextCurrent(dpy, draw, read, ctx) { \
+    mock_push(pack_glXMakeContextCurrent(dpy, draw, read, ctx)); \
+}
+#define test_glXMakeContextCurrent(_dpy, _draw, _read, _ctx) { \
+    glXMakeContextCurrent_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXMakeContextCurrent missing (no calls left)\n"); \
+    } else if (packed->index != glXMakeContextCurrent_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXMakeContextCurrent_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXMakeContextCurrent missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXMakeContextCurrent:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.draw != _draw) { \
+            match = 0; \
+        } \
+        if (packed->args.read != _read) { \
+            match = 0; \
+        } \
+        if (packed->args.ctx != _ctx) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXMakeContextCurrent(%p, %p, %p, %p);\n", _dpy, _draw, _read, _ctx); \
+        } \
+    } \
+}
+#define emit_glXMakeCurrent(dpy, drawable, ctx) { \
+    mock_push(pack_glXMakeCurrent(dpy, drawable, ctx)); \
+}
+#define test_glXMakeCurrent(_dpy, _drawable, _ctx) { \
+    glXMakeCurrent_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXMakeCurrent missing (no calls left)\n"); \
+    } else if (packed->index != glXMakeCurrent_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXMakeCurrent_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXMakeCurrent missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXMakeCurrent:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.ctx != _ctx) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXMakeCurrent(%p, %p, %p);\n", _dpy, _drawable, _ctx); \
+        } \
+    } \
+}
+#define emit_glXMakeCurrentReadSGI(dpy, draw, read, ctx) { \
+    mock_push(pack_glXMakeCurrentReadSGI(dpy, draw, read, ctx)); \
+}
+#define test_glXMakeCurrentReadSGI(_dpy, _draw, _read, _ctx) { \
+    glXMakeCurrentReadSGI_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXMakeCurrentReadSGI missing (no calls left)\n"); \
+    } else if (packed->index != glXMakeCurrentReadSGI_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXMakeCurrentReadSGI_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXMakeCurrentReadSGI missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXMakeCurrentReadSGI:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.draw != _draw) { \
+            match = 0; \
+        } \
+        if (packed->args.read != _read) { \
+            match = 0; \
+        } \
+        if (packed->args.ctx != _ctx) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXMakeCurrentReadSGI(%p, %p, %p, %p);\n", _dpy, _draw, _read, _ctx); \
+        } \
+    } \
+}
+#define emit_glXQueryChannelDeltasSGIX(display, screen, channel, x, y, w, h) { \
+    mock_push(pack_glXQueryChannelDeltasSGIX(display, screen, channel, x, y, w, h)); \
+}
+#define test_glXQueryChannelDeltasSGIX(_display, _screen, _channel, _x, _y, _w, _h) { \
+    glXQueryChannelDeltasSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryChannelDeltasSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryChannelDeltasSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryChannelDeltasSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryChannelDeltasSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryChannelDeltasSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.channel != _channel) { \
+            match = 0; \
+        } \
+        a = packed->args.x, b = _x; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_x)) != 0))) { \
+            printf("  ERROR: arg mismatch: x\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_x)); \
+            mock_print_ptr("     found:", a, sizeof(_x)); \
+            match = 0; \
+        } \
+        a = packed->args.y, b = _y; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_y)) != 0))) { \
+            printf("  ERROR: arg mismatch: y\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_y)); \
+            mock_print_ptr("     found:", a, sizeof(_y)); \
+            match = 0; \
+        } \
+        a = packed->args.w, b = _w; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_w)) != 0))) { \
+            printf("  ERROR: arg mismatch: w\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_w)); \
+            mock_print_ptr("     found:", a, sizeof(_w)); \
+            match = 0; \
+        } \
+        a = packed->args.h, b = _h; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_h)) != 0))) { \
+            printf("  ERROR: arg mismatch: h\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_h)); \
+            mock_print_ptr("     found:", a, sizeof(_h)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryChannelDeltasSGIX(%p, %p, %p, %p, %p, %p, %p);\n", _display, _screen, _channel, _x, _y, _w, _h); \
+        } \
+    } \
+}
+#define emit_glXQueryChannelRectSGIX(display, screen, channel, dx, dy, dw, dh) { \
+    mock_push(pack_glXQueryChannelRectSGIX(display, screen, channel, dx, dy, dw, dh)); \
+}
+#define test_glXQueryChannelRectSGIX(_display, _screen, _channel, _dx, _dy, _dw, _dh) { \
+    glXQueryChannelRectSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryChannelRectSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryChannelRectSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryChannelRectSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryChannelRectSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryChannelRectSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.channel != _channel) { \
+            match = 0; \
+        } \
+        a = packed->args.dx, b = _dx; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dx)) != 0))) { \
+            printf("  ERROR: arg mismatch: dx\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dx)); \
+            mock_print_ptr("     found:", a, sizeof(_dx)); \
+            match = 0; \
+        } \
+        a = packed->args.dy, b = _dy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dy)); \
+            mock_print_ptr("     found:", a, sizeof(_dy)); \
+            match = 0; \
+        } \
+        a = packed->args.dw, b = _dw; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dw)) != 0))) { \
+            printf("  ERROR: arg mismatch: dw\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dw)); \
+            mock_print_ptr("     found:", a, sizeof(_dw)); \
+            match = 0; \
+        } \
+        a = packed->args.dh, b = _dh; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dh)) != 0))) { \
+            printf("  ERROR: arg mismatch: dh\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dh)); \
+            mock_print_ptr("     found:", a, sizeof(_dh)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", _display, _screen, _channel, _dx, _dy, _dw, _dh); \
+        } \
+    } \
+}
+#define emit_glXQueryContext(dpy, ctx, attribute, value) { \
+    mock_push(pack_glXQueryContext(dpy, ctx, attribute, value)); \
+}
+#define test_glXQueryContext(_dpy, _ctx, _attribute, _value) { \
+    glXQueryContext_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryContext missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryContext_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryContext_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryContext missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryContext:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.ctx != _ctx) { \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryContext(%p, %p, %p, %p);\n", _dpy, _ctx, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXQueryContextInfoEXT(dpy, context, attribute, value) { \
+    mock_push(pack_glXQueryContextInfoEXT(dpy, context, attribute, value)); \
+}
+#define test_glXQueryContextInfoEXT(_dpy, _context, _attribute, _value) { \
+    glXQueryContextInfoEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryContextInfoEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryContextInfoEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryContextInfoEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryContextInfoEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryContextInfoEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.context != _context) { \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryContextInfoEXT(%p, %p, %p, %p);\n", _dpy, _context, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXQueryDrawable(dpy, draw, attribute, value) { \
+    mock_push(pack_glXQueryDrawable(dpy, draw, attribute, value)); \
+}
+#define test_glXQueryDrawable(_dpy, _draw, _attribute, _value) { \
+    glXQueryDrawable_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryDrawable missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryDrawable_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryDrawable_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryDrawable missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryDrawable:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.draw != _draw) { \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryDrawable(%p, %p, %p, %p);\n", _dpy, _draw, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXQueryExtension(display, errorBase, eventBase) { \
+    mock_push(pack_glXQueryExtension(display, errorBase, eventBase)); \
+}
+#define test_glXQueryExtension(_display, _errorBase, _eventBase) { \
+    glXQueryExtension_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryExtension missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryExtension_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryExtension_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryExtension missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryExtension:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.display, b = _display; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
+            printf("  ERROR: arg mismatch: display\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_display)); \
+            mock_print_ptr("     found:", a, sizeof(_display)); \
+            match = 0; \
+        } \
+        a = packed->args.errorBase, b = _errorBase; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_errorBase)) != 0))) { \
+            printf("  ERROR: arg mismatch: errorBase\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_errorBase)); \
+            mock_print_ptr("     found:", a, sizeof(_errorBase)); \
+            match = 0; \
+        } \
+        a = packed->args.eventBase, b = _eventBase; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_eventBase)) != 0))) { \
+            printf("  ERROR: arg mismatch: eventBase\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_eventBase)); \
+            mock_print_ptr("     found:", a, sizeof(_eventBase)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryExtension(%p, %p, %p);\n", _display, _errorBase, _eventBase); \
+        } \
+    } \
+}
+#define emit_glXQueryExtensionsString(dpy, screen) { \
+    mock_push(pack_glXQueryExtensionsString(dpy, screen)); \
+}
+#define test_glXQueryExtensionsString(_dpy, _screen) { \
+    glXQueryExtensionsString_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryExtensionsString missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryExtensionsString_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryExtensionsString_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryExtensionsString missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryExtensionsString:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryExtensionsString(%p, %p);\n", _dpy, _screen); \
+        } \
+    } \
+}
+#define emit_glXQueryFrameCountNV(dpy, screen, count) { \
+    mock_push(pack_glXQueryFrameCountNV(dpy, screen, count)); \
+}
+#define test_glXQueryFrameCountNV(_dpy, _screen, _count) { \
+    glXQueryFrameCountNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryFrameCountNV missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryFrameCountNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryFrameCountNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryFrameCountNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryFrameCountNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.count, b = _count; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_count)) != 0))) { \
+            printf("  ERROR: arg mismatch: count\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_count)); \
+            mock_print_ptr("     found:", a, sizeof(_count)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryFrameCountNV(%p, %p, %p);\n", _dpy, _screen, _count); \
+        } \
+    } \
+}
+#define emit_glXQueryGLXPbufferSGIX(dpy, pbuf, attribute, value) { \
+    mock_push(pack_glXQueryGLXPbufferSGIX(dpy, pbuf, attribute, value)); \
+}
+#define test_glXQueryGLXPbufferSGIX(_dpy, _pbuf, _attribute, _value) { \
+    glXQueryGLXPbufferSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryGLXPbufferSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryGLXPbufferSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryGLXPbufferSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryGLXPbufferSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryGLXPbufferSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pbuf != _pbuf) { \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryGLXPbufferSGIX(%p, %p, %p, %p);\n", _dpy, _pbuf, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXQueryHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, returnAttribList) { \
+    mock_push(pack_glXQueryHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, returnAttribList)); \
+}
+#define test_glXQueryHyperpipeAttribSGIX(_dpy, _timeSlice, _attrib, _size, _returnAttribList) { \
+    glXQueryHyperpipeAttribSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryHyperpipeAttribSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryHyperpipeAttribSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryHyperpipeAttribSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryHyperpipeAttribSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryHyperpipeAttribSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.timeSlice != _timeSlice) { \
+            match = 0; \
+        } \
+        if (packed->args.attrib != _attrib) { \
+            match = 0; \
+        } \
+        if (packed->args.size != _size) { \
+            match = 0; \
+        } \
+        a = packed->args.returnAttribList, b = _returnAttribList; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_returnAttribList)) != 0))) { \
+            printf("  ERROR: arg mismatch: returnAttribList\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_returnAttribList)); \
+            mock_print_ptr("     found:", a, sizeof(_returnAttribList)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", _dpy, _timeSlice, _attrib, _size, _returnAttribList); \
+        } \
+    } \
+}
+#define emit_glXQueryHyperpipeBestAttribSGIX(dpy, timeSlice, attrib, size, attribList, returnAttribList) { \
+    mock_push(pack_glXQueryHyperpipeBestAttribSGIX(dpy, timeSlice, attrib, size, attribList, returnAttribList)); \
+}
+#define test_glXQueryHyperpipeBestAttribSGIX(_dpy, _timeSlice, _attrib, _size, _attribList, _returnAttribList) { \
+    glXQueryHyperpipeBestAttribSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryHyperpipeBestAttribSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryHyperpipeBestAttribSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryHyperpipeBestAttribSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryHyperpipeBestAttribSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryHyperpipeBestAttribSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.timeSlice != _timeSlice) { \
+            match = 0; \
+        } \
+        if (packed->args.attrib != _attrib) { \
+            match = 0; \
+        } \
+        if (packed->args.size != _size) { \
+            match = 0; \
+        } \
+        a = packed->args.attribList, b = _attribList; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attribList)) != 0))) { \
+            printf("  ERROR: arg mismatch: attribList\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_attribList)); \
+            mock_print_ptr("     found:", a, sizeof(_attribList)); \
+            match = 0; \
+        } \
+        a = packed->args.returnAttribList, b = _returnAttribList; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_returnAttribList)) != 0))) { \
+            printf("  ERROR: arg mismatch: returnAttribList\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_returnAttribList)); \
+            mock_print_ptr("     found:", a, sizeof(_returnAttribList)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryHyperpipeBestAttribSGIX(%p, %p, %p, %p, %p, %p);\n", _dpy, _timeSlice, _attrib, _size, _attribList, _returnAttribList); \
+        } \
+    } \
+}
+#define emit_glXQueryHyperpipeConfigSGIX(dpy, hpId, npipes) { \
+    mock_push(pack_glXQueryHyperpipeConfigSGIX(dpy, hpId, npipes)); \
+}
+#define test_glXQueryHyperpipeConfigSGIX(_dpy, _hpId, _npipes) { \
+    glXQueryHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryHyperpipeConfigSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryHyperpipeConfigSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryHyperpipeConfigSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryHyperpipeConfigSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryHyperpipeConfigSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.hpId != _hpId) { \
+            match = 0; \
+        } \
+        a = packed->args.npipes, b = _npipes; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_npipes)) != 0))) { \
+            printf("  ERROR: arg mismatch: npipes\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_npipes)); \
+            mock_print_ptr("     found:", a, sizeof(_npipes)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryHyperpipeConfigSGIX(%p, %p, %p);\n", _dpy, _hpId, _npipes); \
+        } \
+    } \
+}
+#define emit_glXQueryHyperpipeNetworkSGIX(dpy, npipes) { \
+    mock_push(pack_glXQueryHyperpipeNetworkSGIX(dpy, npipes)); \
+}
+#define test_glXQueryHyperpipeNetworkSGIX(_dpy, _npipes) { \
+    glXQueryHyperpipeNetworkSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryHyperpipeNetworkSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryHyperpipeNetworkSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryHyperpipeNetworkSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryHyperpipeNetworkSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryHyperpipeNetworkSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        a = packed->args.npipes, b = _npipes; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_npipes)) != 0))) { \
+            printf("  ERROR: arg mismatch: npipes\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_npipes)); \
+            mock_print_ptr("     found:", a, sizeof(_npipes)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryHyperpipeNetworkSGIX(%p, %p);\n", _dpy, _npipes); \
+        } \
+    } \
+}
+#define emit_glXQueryMaxSwapBarriersSGIX(dpy, screen, max) { \
+    mock_push(pack_glXQueryMaxSwapBarriersSGIX(dpy, screen, max)); \
+}
+#define test_glXQueryMaxSwapBarriersSGIX(_dpy, _screen, _max) { \
+    glXQueryMaxSwapBarriersSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryMaxSwapBarriersSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryMaxSwapBarriersSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryMaxSwapBarriersSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryMaxSwapBarriersSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryMaxSwapBarriersSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.max, b = _max; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_max)) != 0))) { \
+            printf("  ERROR: arg mismatch: max\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_max)); \
+            mock_print_ptr("     found:", a, sizeof(_max)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryMaxSwapBarriersSGIX(%p, %p, %p);\n", _dpy, _screen, _max); \
+        } \
+    } \
+}
+#define emit_glXQueryMaxSwapGroupsNV(dpy, screen, maxGroups, maxBarriers) { \
+    mock_push(pack_glXQueryMaxSwapGroupsNV(dpy, screen, maxGroups, maxBarriers)); \
+}
+#define test_glXQueryMaxSwapGroupsNV(_dpy, _screen, _maxGroups, _maxBarriers) { \
+    glXQueryMaxSwapGroupsNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryMaxSwapGroupsNV missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryMaxSwapGroupsNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryMaxSwapGroupsNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryMaxSwapGroupsNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryMaxSwapGroupsNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        a = packed->args.maxGroups, b = _maxGroups; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_maxGroups)) != 0))) { \
+            printf("  ERROR: arg mismatch: maxGroups\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_maxGroups)); \
+            mock_print_ptr("     found:", a, sizeof(_maxGroups)); \
+            match = 0; \
+        } \
+        a = packed->args.maxBarriers, b = _maxBarriers; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_maxBarriers)) != 0))) { \
+            printf("  ERROR: arg mismatch: maxBarriers\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_maxBarriers)); \
+            mock_print_ptr("     found:", a, sizeof(_maxBarriers)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryMaxSwapGroupsNV(%p, %p, %p, %p);\n", _dpy, _screen, _maxGroups, _maxBarriers); \
+        } \
+    } \
+}
+#define emit_glXQueryServerString(dpy, screen, name) { \
+    mock_push(pack_glXQueryServerString(dpy, screen, name)); \
+}
+#define test_glXQueryServerString(_dpy, _screen, _name) { \
+    glXQueryServerString_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryServerString missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryServerString_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryServerString_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryServerString missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryServerString:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.name != _name) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryServerString(%p, %p, %p);\n", _dpy, _screen, _name); \
+        } \
+    } \
+}
+#define emit_glXQuerySwapGroupNV(dpy, drawable, group, barrier) { \
+    mock_push(pack_glXQuerySwapGroupNV(dpy, drawable, group, barrier)); \
+}
+#define test_glXQuerySwapGroupNV(_dpy, _drawable, _group, _barrier) { \
+    glXQuerySwapGroupNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQuerySwapGroupNV missing (no calls left)\n"); \
+    } else if (packed->index != glXQuerySwapGroupNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQuerySwapGroupNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQuerySwapGroupNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQuerySwapGroupNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        a = packed->args.group, b = _group; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_group)) != 0))) { \
+            printf("  ERROR: arg mismatch: group\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_group)); \
+            mock_print_ptr("     found:", a, sizeof(_group)); \
+            match = 0; \
+        } \
+        a = packed->args.barrier, b = _barrier; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_barrier)) != 0))) { \
+            printf("  ERROR: arg mismatch: barrier\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_barrier)); \
+            mock_print_ptr("     found:", a, sizeof(_barrier)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQuerySwapGroupNV(%p, %p, %p, %p);\n", _dpy, _drawable, _group, _barrier); \
+        } \
+    } \
+}
+#define emit_glXQueryVersion(dpy, maj, min) { \
+    mock_push(pack_glXQueryVersion(dpy, maj, min)); \
+}
+#define test_glXQueryVersion(_dpy, _maj, _min) { \
+    glXQueryVersion_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryVersion missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryVersion_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryVersion_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryVersion missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryVersion:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        a = packed->args.maj, b = _maj; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_maj)) != 0))) { \
+            printf("  ERROR: arg mismatch: maj\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_maj)); \
+            mock_print_ptr("     found:", a, sizeof(_maj)); \
+            match = 0; \
+        } \
+        a = packed->args.min, b = _min; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_min)) != 0))) { \
+            printf("  ERROR: arg mismatch: min\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_min)); \
+            mock_print_ptr("     found:", a, sizeof(_min)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryVersion(%p, %p, %p);\n", _dpy, _maj, _min); \
+        } \
+    } \
+}
+#define emit_glXQueryVideoCaptureDeviceNV(dpy, device, attribute, value) { \
+    mock_push(pack_glXQueryVideoCaptureDeviceNV(dpy, device, attribute, value)); \
+}
+#define test_glXQueryVideoCaptureDeviceNV(_dpy, _device, _attribute, _value) { \
+    glXQueryVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXQueryVideoCaptureDeviceNV missing (no calls left)\n"); \
+    } else if (packed->index != glXQueryVideoCaptureDeviceNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXQueryVideoCaptureDeviceNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXQueryVideoCaptureDeviceNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXQueryVideoCaptureDeviceNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.device != _device) { \
+            match = 0; \
+        } \
+        if (packed->args.attribute != _attribute) { \
+            match = 0; \
+        } \
+        a = packed->args.value, b = _value; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
+            printf("  ERROR: arg mismatch: value\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_value)); \
+            mock_print_ptr("     found:", a, sizeof(_value)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXQueryVideoCaptureDeviceNV(%p, %p, %p, %p);\n", _dpy, _device, _attribute, _value); \
+        } \
+    } \
+}
+#define emit_glXReleaseBuffersMESA(dpy, drawable) { \
+    mock_push(pack_glXReleaseBuffersMESA(dpy, drawable)); \
+}
+#define test_glXReleaseBuffersMESA(_dpy, _drawable) { \
+    glXReleaseBuffersMESA_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXReleaseBuffersMESA missing (no calls left)\n"); \
+    } else if (packed->index != glXReleaseBuffersMESA_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXReleaseBuffersMESA_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXReleaseBuffersMESA missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXReleaseBuffersMESA:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXReleaseBuffersMESA(%p, %p);\n", _dpy, _drawable); \
+        } \
+    } \
+}
+#define emit_glXReleaseTexImageEXT(dpy, drawable, buffer) { \
+    mock_push(pack_glXReleaseTexImageEXT(dpy, drawable, buffer)); \
+}
+#define test_glXReleaseTexImageEXT(_dpy, _drawable, _buffer) { \
+    glXReleaseTexImageEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXReleaseTexImageEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXReleaseTexImageEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXReleaseTexImageEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXReleaseTexImageEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXReleaseTexImageEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.buffer != _buffer) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXReleaseTexImageEXT(%p, %p, %p);\n", _dpy, _drawable, _buffer); \
+        } \
+    } \
+}
+#define emit_glXReleaseVideoCaptureDeviceNV(dpy, device) { \
+    mock_push(pack_glXReleaseVideoCaptureDeviceNV(dpy, device)); \
+}
+#define test_glXReleaseVideoCaptureDeviceNV(_dpy, _device) { \
+    glXReleaseVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXReleaseVideoCaptureDeviceNV missing (no calls left)\n"); \
+    } else if (packed->index != glXReleaseVideoCaptureDeviceNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXReleaseVideoCaptureDeviceNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXReleaseVideoCaptureDeviceNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXReleaseVideoCaptureDeviceNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.device != _device) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXReleaseVideoCaptureDeviceNV(%p, %p);\n", _dpy, _device); \
+        } \
+    } \
+}
+#define emit_glXReleaseVideoDeviceNV(dpy, screen, VideoDevice) { \
+    mock_push(pack_glXReleaseVideoDeviceNV(dpy, screen, VideoDevice)); \
+}
+#define test_glXReleaseVideoDeviceNV(_dpy, _screen, _VideoDevice) { \
+    glXReleaseVideoDeviceNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXReleaseVideoDeviceNV missing (no calls left)\n"); \
+    } else if (packed->index != glXReleaseVideoDeviceNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXReleaseVideoDeviceNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXReleaseVideoDeviceNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXReleaseVideoDeviceNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (packed->args.VideoDevice != _VideoDevice) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXReleaseVideoDeviceNV(%p, %p, %p);\n", _dpy, _screen, _VideoDevice); \
+        } \
+    } \
+}
+#define emit_glXReleaseVideoImageNV(dpy, pbuf) { \
+    mock_push(pack_glXReleaseVideoImageNV(dpy, pbuf)); \
+}
+#define test_glXReleaseVideoImageNV(_dpy, _pbuf) { \
+    glXReleaseVideoImageNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXReleaseVideoImageNV missing (no calls left)\n"); \
+    } else if (packed->index != glXReleaseVideoImageNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXReleaseVideoImageNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXReleaseVideoImageNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXReleaseVideoImageNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pbuf != _pbuf) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXReleaseVideoImageNV(%p, %p);\n", _dpy, _pbuf); \
+        } \
+    } \
+}
+#define emit_glXRender() { \
+    mock_push(pack_glXRender()); \
+}
+#define test_glXRender() { \
+    glXRender_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXRender missing (no calls left)\n"); \
+    } else if (packed->index != glXRender_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXRender_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXRender missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXRender:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXRender();\n", ); \
+        } \
+    } \
+}
+#define emit_glXRenderLarge() { \
+    mock_push(pack_glXRenderLarge()); \
+}
+#define test_glXRenderLarge() { \
+    glXRenderLarge_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXRenderLarge missing (no calls left)\n"); \
+    } else if (packed->index != glXRenderLarge_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXRenderLarge_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXRenderLarge missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXRenderLarge:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXRenderLarge();\n", ); \
+        } \
+    } \
+}
+#define emit_glXResetFrameCountNV(dpy, screen) { \
+    mock_push(pack_glXResetFrameCountNV(dpy, screen)); \
+}
+#define test_glXResetFrameCountNV(_dpy, _screen) { \
+    glXResetFrameCountNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXResetFrameCountNV missing (no calls left)\n"); \
+    } else if (packed->index != glXResetFrameCountNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXResetFrameCountNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXResetFrameCountNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXResetFrameCountNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.screen != _screen) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXResetFrameCountNV(%p, %p);\n", _dpy, _screen); \
+        } \
+    } \
+}
+#define emit_glXSelectEvent(dpy, draw, event_mask) { \
+    mock_push(pack_glXSelectEvent(dpy, draw, event_mask)); \
+}
+#define test_glXSelectEvent(_dpy, _draw, _event_mask) { \
+    glXSelectEvent_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSelectEvent missing (no calls left)\n"); \
+    } else if (packed->index != glXSelectEvent_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSelectEvent_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSelectEvent missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSelectEvent:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.draw != _draw) { \
+            match = 0; \
+        } \
+        if (packed->args.event_mask != _event_mask) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSelectEvent(%p, %p, %p);\n", _dpy, _draw, _event_mask); \
+        } \
+    } \
+}
+#define emit_glXSelectEventSGIX(dpy, drawable, mask) { \
+    mock_push(pack_glXSelectEventSGIX(dpy, drawable, mask)); \
+}
+#define test_glXSelectEventSGIX(_dpy, _drawable, _mask) { \
+    glXSelectEventSGIX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSelectEventSGIX missing (no calls left)\n"); \
+    } else if (packed->index != glXSelectEventSGIX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSelectEventSGIX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSelectEventSGIX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSelectEventSGIX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.mask != _mask) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSelectEventSGIX(%p, %p, %p);\n", _dpy, _drawable, _mask); \
+        } \
+    } \
+}
+#define emit_glXSendPbufferToVideoNV(dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock) { \
+    mock_push(pack_glXSendPbufferToVideoNV(dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock)); \
+}
+#define test_glXSendPbufferToVideoNV(_dpy, _pbuf, _iBufferType, _pulCounterPbuffer, _bBlock) { \
+    glXSendPbufferToVideoNV_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSendPbufferToVideoNV missing (no calls left)\n"); \
+    } else if (packed->index != glXSendPbufferToVideoNV_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSendPbufferToVideoNV_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSendPbufferToVideoNV missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSendPbufferToVideoNV:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.pbuf != _pbuf) { \
+            match = 0; \
+        } \
+        if (packed->args.iBufferType != _iBufferType) { \
+            match = 0; \
+        } \
+        a = packed->args.pulCounterPbuffer, b = _pulCounterPbuffer; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pulCounterPbuffer)) != 0))) { \
+            printf("  ERROR: arg mismatch: pulCounterPbuffer\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_pulCounterPbuffer)); \
+            mock_print_ptr("     found:", a, sizeof(_pulCounterPbuffer)); \
+            match = 0; \
+        } \
+        if (packed->args.bBlock != _bBlock) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSendPbufferToVideoNV(%p, %p, %p, %p, %d);\n", _dpy, _pbuf, _iBufferType, _pulCounterPbuffer, _bBlock); \
+        } \
+    } \
+}
+#define emit_glXSet3DfxModeMESA(mode) { \
+    mock_push(pack_glXSet3DfxModeMESA(mode)); \
+}
+#define test_glXSet3DfxModeMESA(_mode) { \
+    glXSet3DfxModeMESA_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSet3DfxModeMESA missing (no calls left)\n"); \
+    } else if (packed->index != glXSet3DfxModeMESA_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSet3DfxModeMESA_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSet3DfxModeMESA missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSet3DfxModeMESA:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.mode != _mode) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSet3DfxModeMESA(%p);\n", _mode); \
+        } \
+    } \
+}
+#define emit_glXSwapBuffers(dpy, drawable) { \
+    mock_push(pack_glXSwapBuffers(dpy, drawable)); \
+}
+#define test_glXSwapBuffers(_dpy, _drawable) { \
+    glXSwapBuffers_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSwapBuffers missing (no calls left)\n"); \
+    } else if (packed->index != glXSwapBuffers_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSwapBuffers_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSwapBuffers missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSwapBuffers:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSwapBuffers(%p, %p);\n", _dpy, _drawable); \
+        } \
+    } \
+}
+#define emit_glXSwapBuffersMscOML(dpy, drawable, target_msc, divisor, remainder) { \
+    mock_push(pack_glXSwapBuffersMscOML(dpy, drawable, target_msc, divisor, remainder)); \
+}
+#define test_glXSwapBuffersMscOML(_dpy, _drawable, _target_msc, _divisor, _remainder) { \
+    glXSwapBuffersMscOML_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSwapBuffersMscOML missing (no calls left)\n"); \
+    } else if (packed->index != glXSwapBuffersMscOML_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSwapBuffersMscOML_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSwapBuffersMscOML missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSwapBuffersMscOML:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.target_msc != _target_msc) { \
+            match = 0; \
+        } \
+        if (packed->args.divisor != _divisor) { \
+            match = 0; \
+        } \
+        if (packed->args.remainder != _remainder) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSwapBuffersMscOML(%p, %p, %p, %p, %p);\n", _dpy, _drawable, _target_msc, _divisor, _remainder); \
+        } \
+    } \
+}
+#define emit_glXSwapIntervalEXT(dpy, drawable, interval) { \
+    mock_push(pack_glXSwapIntervalEXT(dpy, drawable, interval)); \
+}
+#define test_glXSwapIntervalEXT(_dpy, _drawable, _interval) { \
+    glXSwapIntervalEXT_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSwapIntervalEXT missing (no calls left)\n"); \
+    } else if (packed->index != glXSwapIntervalEXT_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSwapIntervalEXT_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSwapIntervalEXT missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSwapIntervalEXT:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.interval != _interval) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSwapIntervalEXT(%p, %p, %p);\n", _dpy, _drawable, _interval); \
+        } \
+    } \
+}
+#define emit_glXSwapIntervalMESA(interval) { \
+    mock_push(pack_glXSwapIntervalMESA(interval)); \
+}
+#define test_glXSwapIntervalMESA(_interval) { \
+    glXSwapIntervalMESA_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSwapIntervalMESA missing (no calls left)\n"); \
+    } else if (packed->index != glXSwapIntervalMESA_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSwapIntervalMESA_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSwapIntervalMESA missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSwapIntervalMESA:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.interval != _interval) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSwapIntervalMESA(%p);\n", _interval); \
+        } \
+    } \
+}
+#define emit_glXSwapIntervalSGI(interval) { \
+    mock_push(pack_glXSwapIntervalSGI(interval)); \
+}
+#define test_glXSwapIntervalSGI(_interval) { \
+    glXSwapIntervalSGI_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXSwapIntervalSGI missing (no calls left)\n"); \
+    } else if (packed->index != glXSwapIntervalSGI_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXSwapIntervalSGI_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXSwapIntervalSGI missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXSwapIntervalSGI:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.interval != _interval) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXSwapIntervalSGI(%p);\n", _interval); \
+        } \
+    } \
+}
+#define emit_glXUseXFont(font, first, count, listBase) { \
+    mock_push(pack_glXUseXFont(font, first, count, listBase)); \
+}
+#define test_glXUseXFont(_font, _first, _count, _listBase) { \
+    glXUseXFont_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXUseXFont missing (no calls left)\n"); \
+    } else if (packed->index != glXUseXFont_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXUseXFont_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXUseXFont missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXUseXFont:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.font != _font) { \
+            match = 0; \
+        } \
+        if (packed->args.first != _first) { \
+            match = 0; \
+        } \
+        if (packed->args.count != _count) { \
+            match = 0; \
+        } \
+        if (packed->args.listBase != _listBase) { \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXUseXFont(%p, %p, %p, %p);\n", _font, _first, _count, _listBase); \
+        } \
+    } \
+}
+#define emit_glXVendorPrivate() { \
+    mock_push(pack_glXVendorPrivate()); \
+}
+#define test_glXVendorPrivate() { \
+    glXVendorPrivate_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXVendorPrivate missing (no calls left)\n"); \
+    } else if (packed->index != glXVendorPrivate_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXVendorPrivate_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXVendorPrivate missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXVendorPrivate:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXVendorPrivate();\n", ); \
+        } \
+    } \
+}
+#define emit_glXVendorPrivateWithReply() { \
+    mock_push(pack_glXVendorPrivateWithReply()); \
+}
+#define test_glXVendorPrivateWithReply() { \
+    glXVendorPrivateWithReply_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXVendorPrivateWithReply missing (no calls left)\n"); \
+    } else if (packed->index != glXVendorPrivateWithReply_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXVendorPrivateWithReply_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXVendorPrivateWithReply missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXVendorPrivateWithReply:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXVendorPrivateWithReply();\n", ); \
+        } \
+    } \
+}
+#define emit_glXWaitForMscOML(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc) { \
+    mock_push(pack_glXWaitForMscOML(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc)); \
+}
+#define test_glXWaitForMscOML(_dpy, _drawable, _target_msc, _divisor, _remainder, _ust, _msc, _sbc) { \
+    glXWaitForMscOML_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXWaitForMscOML missing (no calls left)\n"); \
+    } else if (packed->index != glXWaitForMscOML_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXWaitForMscOML_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXWaitForMscOML missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXWaitForMscOML:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.target_msc != _target_msc) { \
+            match = 0; \
+        } \
+        if (packed->args.divisor != _divisor) { \
+            match = 0; \
+        } \
+        if (packed->args.remainder != _remainder) { \
+            match = 0; \
+        } \
+        a = packed->args.ust, b = _ust; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_ust)) != 0))) { \
+            printf("  ERROR: arg mismatch: ust\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_ust)); \
+            mock_print_ptr("     found:", a, sizeof(_ust)); \
+            match = 0; \
+        } \
+        a = packed->args.msc, b = _msc; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_msc)) != 0))) { \
+            printf("  ERROR: arg mismatch: msc\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_msc)); \
+            mock_print_ptr("     found:", a, sizeof(_msc)); \
+            match = 0; \
+        } \
+        a = packed->args.sbc, b = _sbc; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_sbc)) != 0))) { \
+            printf("  ERROR: arg mismatch: sbc\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_sbc)); \
+            mock_print_ptr("     found:", a, sizeof(_sbc)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXWaitForMscOML(%p, %p, %p, %p, %p, %p, %p, %p);\n", _dpy, _drawable, _target_msc, _divisor, _remainder, _ust, _msc, _sbc); \
+        } \
+    } \
+}
+#define emit_glXWaitForSbcOML(dpy, drawable, target_sbc, ust, msc, sbc) { \
+    mock_push(pack_glXWaitForSbcOML(dpy, drawable, target_sbc, ust, msc, sbc)); \
+}
+#define test_glXWaitForSbcOML(_dpy, _drawable, _target_sbc, _ust, _msc, _sbc) { \
+    glXWaitForSbcOML_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXWaitForSbcOML missing (no calls left)\n"); \
+    } else if (packed->index != glXWaitForSbcOML_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXWaitForSbcOML_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXWaitForSbcOML missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXWaitForSbcOML:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        a = packed->args.dpy, b = _dpy; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
+            printf("  ERROR: arg mismatch: dpy\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_dpy)); \
+            mock_print_ptr("     found:", a, sizeof(_dpy)); \
+            match = 0; \
+        } \
+        if (packed->args.drawable != _drawable) { \
+            match = 0; \
+        } \
+        if (packed->args.target_sbc != _target_sbc) { \
+            match = 0; \
+        } \
+        a = packed->args.ust, b = _ust; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_ust)) != 0))) { \
+            printf("  ERROR: arg mismatch: ust\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_ust)); \
+            mock_print_ptr("     found:", a, sizeof(_ust)); \
+            match = 0; \
+        } \
+        a = packed->args.msc, b = _msc; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_msc)) != 0))) { \
+            printf("  ERROR: arg mismatch: msc\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_msc)); \
+            mock_print_ptr("     found:", a, sizeof(_msc)); \
+            match = 0; \
+        } \
+        a = packed->args.sbc, b = _sbc; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_sbc)) != 0))) { \
+            printf("  ERROR: arg mismatch: sbc\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_sbc)); \
+            mock_print_ptr("     found:", a, sizeof(_sbc)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXWaitForSbcOML(%p, %p, %p, %p, %p, %p);\n", _dpy, _drawable, _target_sbc, _ust, _msc, _sbc); \
+        } \
+    } \
+}
+#define emit_glXWaitGL() { \
+    mock_push(pack_glXWaitGL()); \
+}
+#define test_glXWaitGL() { \
+    glXWaitGL_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXWaitGL missing (no calls left)\n"); \
+    } else if (packed->index != glXWaitGL_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXWaitGL_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXWaitGL missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXWaitGL:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXWaitGL();\n", ); \
+        } \
+    } \
+}
+#define emit_glXWaitVideoSyncSGI(divisor, remainder, count) { \
+    mock_push(pack_glXWaitVideoSyncSGI(divisor, remainder, count)); \
+}
+#define test_glXWaitVideoSyncSGI(_divisor, _remainder, _count) { \
+    glXWaitVideoSyncSGI_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXWaitVideoSyncSGI missing (no calls left)\n"); \
+    } else if (packed->index != glXWaitVideoSyncSGI_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXWaitVideoSyncSGI_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXWaitVideoSyncSGI missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXWaitVideoSyncSGI:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (packed->args.divisor != _divisor) { \
+            match = 0; \
+        } \
+        if (packed->args.remainder != _remainder) { \
+            match = 0; \
+        } \
+        a = packed->args.count, b = _count; \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_count)) != 0))) { \
+            printf("  ERROR: arg mismatch: count\n"); \
+            mock_print_ptr("  expected:", b, sizeof(_count)); \
+            mock_print_ptr("     found:", a, sizeof(_count)); \
+            match = 0; \
+        } \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXWaitVideoSyncSGI(%p, %p, %p);\n", _divisor, _remainder, _count); \
+        } \
+    } \
+}
+#define emit_glXWaitX() { \
+    mock_push(pack_glXWaitX()); \
+}
+#define test_glXWaitX() { \
+    glXWaitX_PACKED *packed = mock_cur(); \
+    if (packed == NULL) { \
+        mock_errorf("glXWaitX missing (no calls left)\n"); \
+    } else if (packed->index != glXWaitX_INDEX) { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        packed_call_t *tmp = (packed_call_t *)packed; \
+        packed = mock_slide(glXWaitX_INDEX); \
+        if (! packed) { \
+            mock_errorf("glXWaitX missing\n"); \
+        } else { \
+            mock_warningf("unexpected call while looking for glXWaitX:\n  "); \
+            mock_print(tmp); \
+        }\
+    } else { \
+        if (verbose_test) { \
+            mock_print(mock_cur()); \
+        } \
+        mock_shift(); \
+    } \
+    if (packed) { \
+        int match = 1; \
+        void *a, *b; \
+        if (! match) { \
+            mock_errorf("calls do not match:\n"); \
+            printf("  have: "); mock_print((const packed_call_t *)packed); \
+            printf("  want: glXWaitX();\n", ); \
+        } \
+    } \
+}
 
 void gles_glActiveTexture(glActiveTexture_ARG_EXPAND);
 void gles_glAlphaFunc(glAlphaFunc_ARG_EXPAND);

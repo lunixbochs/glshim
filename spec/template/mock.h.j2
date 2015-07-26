@@ -107,14 +107,8 @@ static int failed_test = 0;
 {% endfor %}
 
 {% for func in functions %}
-#define gles_{{ func.name }}_INDEX {{ loop.index }}
-#define gles_{{ func.name }}_RETURN {{ func.return }}
-#define gles_{{ func.name }}_ARG_NAMES {{ func.args|args(0) }}
-#define gles_{{ func.name }}_ARG_EXPAND {{ func.args|args }}
-#define gles_{{ func.name }}_PACKED PACKED_{{ func.name }}
-{% endfor %}
-
-{% for func in functions %}
+{% if not func.name.startswith('glX') %}
 {{ func.return }} gles_{{ func.name }}({{ func.name }}_ARG_EXPAND);
+{% endif %}
 {% endfor %}
 {% endblock %}

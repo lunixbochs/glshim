@@ -1,5 +1,5 @@
 #ifdef USE_ES2
-#include "gles2.h"
+#include "glpack.h"
 #include "../loader.h"
 
 #ifndef skip_glActiveTexture
@@ -93,13 +93,13 @@ void glBlendEquation(GLenum mode) {
 }
 #endif
 #ifndef skip_glBlendEquationSeparate
-void glBlendEquationSeparate(GLenum modeRGB, GLenum modeA) {
+void glBlendEquationSeparate(GLenum modeRGB, GLenum modeAlpha) {
     LOAD_GLES(glBlendEquationSeparate);
 #ifndef direct_glBlendEquationSeparate
     PUSH_IF_COMPILING(glBlendEquationSeparate);
 #endif
     FORWARD_IF_REMOTE(glBlendEquationSeparate);
-    gles_glBlendEquationSeparate(modeRGB, modeA);
+    gles_glBlendEquationSeparate(modeRGB, modeAlpha);
 }
 #endif
 #ifndef skip_glBlendFunc
@@ -283,13 +283,13 @@ void glCullFace(GLenum mode) {
 }
 #endif
 #ifndef skip_glDeleteBuffers
-void glDeleteBuffers(GLsizei n, const GLuint * buffer) {
+void glDeleteBuffers(GLsizei n, const GLuint * buffers) {
     LOAD_GLES(glDeleteBuffers);
 #ifndef direct_glDeleteBuffers
     PUSH_IF_COMPILING(glDeleteBuffers);
 #endif
     FORWARD_IF_REMOTE(glDeleteBuffers);
-    gles_glDeleteBuffers(n, buffer);
+    gles_glDeleteBuffers(n, buffers);
 }
 #endif
 #ifndef skip_glDeleteFramebuffers
@@ -323,13 +323,13 @@ void glDeleteRenderbuffers(GLsizei n, const GLuint * renderbuffers) {
 }
 #endif
 #ifndef skip_glDeleteShader
-void glDeleteShader(GLuint program) {
+void glDeleteShader(GLuint shader) {
     LOAD_GLES(glDeleteShader);
 #ifndef direct_glDeleteShader
     PUSH_IF_COMPILING(glDeleteShader);
 #endif
     FORWARD_IF_REMOTE(glDeleteShader);
-    gles_glDeleteShader(program);
+    gles_glDeleteShader(shader);
 }
 #endif
 #ifndef skip_glDeleteTextures
@@ -493,13 +493,13 @@ void glFrontFace(GLenum mode) {
 }
 #endif
 #ifndef skip_glGenBuffers
-void glGenBuffers(GLsizei n, GLuint * buffer) {
+void glGenBuffers(GLsizei n, GLuint * buffers) {
     LOAD_GLES(glGenBuffers);
 #ifndef direct_glGenBuffers
     PUSH_IF_COMPILING(glGenBuffers);
 #endif
     FORWARD_IF_REMOTE(glGenBuffers);
-    gles_glGenBuffers(n, buffer);
+    gles_glGenBuffers(n, buffers);
 }
 #endif
 #ifndef skip_glGenFramebuffers
@@ -973,13 +973,13 @@ void glScissor(GLint x, GLint y, GLsizei width, GLsizei height) {
 }
 #endif
 #ifndef skip_glShaderBinary
-void glShaderBinary(GLsizei n, const GLuint * shaders, GLenum binaryformat, const GLvoid * binary, GLsizei length) {
+void glShaderBinary(GLsizei count, const GLuint * shaders, GLenum binaryformat, const GLvoid * binary, GLsizei length) {
     LOAD_GLES(glShaderBinary);
 #ifndef direct_glShaderBinary
     PUSH_IF_COMPILING(glShaderBinary);
 #endif
     FORWARD_IF_REMOTE(glShaderBinary);
-    gles_glShaderBinary(n, shaders, binaryformat, binary, length);
+    gles_glShaderBinary(count, shaders, binaryformat, binary, length);
 }
 #endif
 #ifndef skip_glShaderSource
@@ -1043,13 +1043,13 @@ void glStencilOp(GLenum fail, GLenum zfail, GLenum zpass) {
 }
 #endif
 #ifndef skip_glStencilOpSeparate
-void glStencilOpSeparate(GLenum face, GLenum sfail, GLenum zfail, GLenum zpass) {
+void glStencilOpSeparate(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass) {
     LOAD_GLES(glStencilOpSeparate);
 #ifndef direct_glStencilOpSeparate
     PUSH_IF_COMPILING(glStencilOpSeparate);
 #endif
     FORWARD_IF_REMOTE(glStencilOpSeparate);
-    gles_glStencilOpSeparate(face, sfail, zfail, zpass);
+    gles_glStencilOpSeparate(face, sfail, dpfail, dppass);
 }
 #endif
 #ifndef skip_glTexImage2D

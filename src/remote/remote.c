@@ -1,9 +1,6 @@
-#include <stdbool.h>
 #include <stdio.h>
 
 #include "gl/remote.h"
-#include "gl/wrap/gles.h"
-#include "glouija/glouija.h"
 
 int main(int argc, char **argv) {
     if (argc < 2) {

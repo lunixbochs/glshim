@@ -1,34 +1,16 @@
 {% macro args(f) -%}
 {% for arg in f.args -%}
-    args.{{ arg.name }}{% if not arg.last %}, {% endif %}
+    args->{{ arg.name }}{% if not arg.last %}, {% endif %}
 {% endfor %}
-{%- endmacro %}
-
-{% macro call(f) -%}
-{{ f.name }}({{ args(f) }});
 {%- endmacro %}
 
 void glIndexedCall(const packed_call_t *packed, void *ret_v) {
     switch (packed->index) {
         {% for f in functions %}
         #ifndef skip_index_{{ f.name }}
-        case {{ f.name }}_INDEX: {
-            PACKED_{{ f.name }} *unpacked = (PACKED_{{ f.name }} *)packed;
-            {% if f.args %}
-            ARGS_{{ f.name }} args = unpacked->args;
-            {% endif %}
-            {% if not f.void %}
-            {{ f.return }} *ret = ({{ f.return }} *)ret_v;
-            if (ret != NULL) {
-                *ret = {{ call(f) }};
-            } else {
-                {{ call(f) }};
-            }
-            {% else %}
-            {{ call(f) }};
-            {% endif %}
+        case {{ f.name }}_INDEX:
+            call_{{ f.name }}(packed, ret_v);
             break;
-        }
         #endif
         {% endfor %}
         default:
@@ -43,7 +25,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case {{ f.name }}_INDEX: {
             {% if f.args %}
             PACKED_{{ f.name }} *unpacked = (PACKED_{{ f.name }} *)packed;
-            ARGS_{{ f.name }} args = unpacked->args;
+            ARGS_{{ f.name }} *args = (ARGS_{{ f.name }} *)&unpacked->args;
             printf("{{ f.name }}({{ f.args|printf }});\n", {{ args(f) }});
             {% else %}
             printf("{{ f.name }}();\n");

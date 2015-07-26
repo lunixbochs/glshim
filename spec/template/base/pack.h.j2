@@ -1,3 +1,13 @@
+{% macro args(f) -%}
+{% for arg in f.args -%}
+    args->{{ arg.name }}{% if not arg.last %}, {% endif %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro call(f) -%}
+{{ f.name }}({{ args(f) }});
+{%- endmacro %}
+
 {% extends "base/header.j2" %}
 {% block content %}
 
@@ -37,9 +47,32 @@ void glIndexedPrint(const packed_call_t *packed);
 #define {{ func.name }}_VOID_ONLY_WRAP(...) {}
 #define {{ func.name }}_NOT_VOID_WRAP(...) { __VA_ARGS__ }
 {% endif %}
-{% endfor %}
-
-{% for func in functions %}
+#define pack_{{ func.name }}({{ func.args|args(0, '_') }}) ({ \
+    {{ func.name }}_PACKED *packed_data = malloc(sizeof({{ func.name }}_PACKED)); \
+    packed_data->index = {{ func.name }}_INDEX; \
+    {% if func.args %}
+    {% for arg in func.args %}
+    packed_data->args.{{ arg.name }} = ({{ arg.type|unconst }})_{{ arg.name }}; \
+    {% endfor %}
+    {% endif %}
+    (packed_call_t *)packed_data; \
+})
+#define call_{{ func.name }}(packed, ret_v) do { \
+    {% if func.args %}
+    PACKED_{{ func.name }} *unpacked = (PACKED_{{ func.name }} *)packed; \
+    ARGS_{{ func.name }} *args = (ARGS_{{ func.name }} *)&unpacked->args; \
+    {% endif %}
+    {% if not func.void %}
+    {{ func.return }} *ret = ({{ func.return }} *)ret_v; \
+    if (ret != NULL) { \
+        *ret = {{ call(func) }}; \
+    } else { \
+        {{ call(func) }}; \
+    } \
+    {% else %}
+    {{ call(func) }}; \
+    {% endif %}
+} while(0)
 {{ func.return }} {{ func.name }}({{ func.name }}_ARG_EXPAND);
 typedef {{ func.return }} (*{{ func.name }}_PTR)({{ func.name }}_ARG_EXPAND);
 {% endfor %}

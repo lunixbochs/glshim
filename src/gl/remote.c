@@ -7,7 +7,7 @@
 #include "gl_helpers.h"
 #include "glouija/glouija.h"
 #include "remote.h"
-#include "wrap/gles.h"
+#include "wrap/glpack.h"
 #include "wrap/types.h"
 
 #define GLOUIJA_CALL_INIT(ret_size)                            \

@@ -156,6 +156,134 @@ const char *mock_name(int func) {
         case glTranslatex_INDEX: return "glTranslatex";
         case glVertexPointer_INDEX: return "glVertexPointer";
         case glViewport_INDEX: return "glViewport";
+        case glXAssociateDMPbufferSGIX_INDEX: return "glXAssociateDMPbufferSGIX";
+        case glXBindChannelToWindowSGIX_INDEX: return "glXBindChannelToWindowSGIX";
+        case glXBindHyperpipeSGIX_INDEX: return "glXBindHyperpipeSGIX";
+        case glXBindSwapBarrierNV_INDEX: return "glXBindSwapBarrierNV";
+        case glXBindSwapBarrierSGIX_INDEX: return "glXBindSwapBarrierSGIX";
+        case glXBindTexImageEXT_INDEX: return "glXBindTexImageEXT";
+        case glXBindVideoCaptureDeviceNV_INDEX: return "glXBindVideoCaptureDeviceNV";
+        case glXBindVideoDeviceNV_INDEX: return "glXBindVideoDeviceNV";
+        case glXBindVideoImageNV_INDEX: return "glXBindVideoImageNV";
+        case glXChangeDrawableAttributes_INDEX: return "glXChangeDrawableAttributes";
+        case glXChangeDrawableAttributesSGIX_INDEX: return "glXChangeDrawableAttributesSGIX";
+        case glXChannelRectSGIX_INDEX: return "glXChannelRectSGIX";
+        case glXChannelRectSyncSGIX_INDEX: return "glXChannelRectSyncSGIX";
+        case glXChooseFBConfig_INDEX: return "glXChooseFBConfig";
+        case glXChooseFBConfigSGIX_INDEX: return "glXChooseFBConfigSGIX";
+        case glXChooseVisual_INDEX: return "glXChooseVisual";
+        case glXClientInfo_INDEX: return "glXClientInfo";
+        case glXCopyContext_INDEX: return "glXCopyContext";
+        case glXCopyImageSubDataNV_INDEX: return "glXCopyImageSubDataNV";
+        case glXCopySubBufferMESA_INDEX: return "glXCopySubBufferMESA";
+        case glXCreateContext_INDEX: return "glXCreateContext";
+        case glXCreateContextAttribsARB_INDEX: return "glXCreateContextAttribsARB";
+        case glXCreateContextWithConfigSGIX_INDEX: return "glXCreateContextWithConfigSGIX";
+        case glXCreateGLXPbufferSGIX_INDEX: return "glXCreateGLXPbufferSGIX";
+        case glXCreateGLXPixmap_INDEX: return "glXCreateGLXPixmap";
+        case glXCreateGLXPixmapMESA_INDEX: return "glXCreateGLXPixmapMESA";
+        case glXCreateGLXPixmapWithConfigSGIX_INDEX: return "glXCreateGLXPixmapWithConfigSGIX";
+        case glXCreateGLXVideoSourceSGIX_INDEX: return "glXCreateGLXVideoSourceSGIX";
+        case glXCreateNewContext_INDEX: return "glXCreateNewContext";
+        case glXCreatePbuffer_INDEX: return "glXCreatePbuffer";
+        case glXCreatePixmap_INDEX: return "glXCreatePixmap";
+        case glXCreateWindow_INDEX: return "glXCreateWindow";
+        case glXCushionSGI_INDEX: return "glXCushionSGI";
+        case glXDestroyContext_INDEX: return "glXDestroyContext";
+        case glXDestroyGLXPbufferSGIX_INDEX: return "glXDestroyGLXPbufferSGIX";
+        case glXDestroyGLXPixmap_INDEX: return "glXDestroyGLXPixmap";
+        case glXDestroyGLXVideoSourceSGIX_INDEX: return "glXDestroyGLXVideoSourceSGIX";
+        case glXDestroyHyperpipeConfigSGIX_INDEX: return "glXDestroyHyperpipeConfigSGIX";
+        case glXDestroyPbuffer_INDEX: return "glXDestroyPbuffer";
+        case glXDestroyPixmap_INDEX: return "glXDestroyPixmap";
+        case glXDestroyWindow_INDEX: return "glXDestroyWindow";
+        case glXEnumerateVideoCaptureDevicesNV_INDEX: return "glXEnumerateVideoCaptureDevicesNV";
+        case glXEnumerateVideoDevicesNV_INDEX: return "glXEnumerateVideoDevicesNV";
+        case glXFreeContextEXT_INDEX: return "glXFreeContextEXT";
+        case glXGetAGPOffsetMESA_INDEX: return "glXGetAGPOffsetMESA";
+        case glXGetClientString_INDEX: return "glXGetClientString";
+        case glXGetConfig_INDEX: return "glXGetConfig";
+        case glXGetContextIDEXT_INDEX: return "glXGetContextIDEXT";
+        case glXGetCurrentContext_INDEX: return "glXGetCurrentContext";
+        case glXGetCurrentDisplay_INDEX: return "glXGetCurrentDisplay";
+        case glXGetCurrentDisplayEXT_INDEX: return "glXGetCurrentDisplayEXT";
+        case glXGetCurrentDrawable_INDEX: return "glXGetCurrentDrawable";
+        case glXGetCurrentReadDrawable_INDEX: return "glXGetCurrentReadDrawable";
+        case glXGetCurrentReadDrawableSGI_INDEX: return "glXGetCurrentReadDrawableSGI";
+        case glXGetDrawableAttributes_INDEX: return "glXGetDrawableAttributes";
+        case glXGetDrawableAttributesSGIX_INDEX: return "glXGetDrawableAttributesSGIX";
+        case glXGetFBConfigAttrib_INDEX: return "glXGetFBConfigAttrib";
+        case glXGetFBConfigAttribSGIX_INDEX: return "glXGetFBConfigAttribSGIX";
+        case glXGetFBConfigFromVisualSGIX_INDEX: return "glXGetFBConfigFromVisualSGIX";
+        case glXGetFBConfigs_INDEX: return "glXGetFBConfigs";
+        case glXGetFBConfigsSGIX_INDEX: return "glXGetFBConfigsSGIX";
+        case glXGetMscRateOML_INDEX: return "glXGetMscRateOML";
+        case glXGetProcAddress_INDEX: return "glXGetProcAddress";
+        case glXGetProcAddressARB_INDEX: return "glXGetProcAddressARB";
+        case glXGetSelectedEvent_INDEX: return "glXGetSelectedEvent";
+        case glXGetSelectedEventSGIX_INDEX: return "glXGetSelectedEventSGIX";
+        case glXGetSyncValuesOML_INDEX: return "glXGetSyncValuesOML";
+        case glXGetTransparentIndexSUN_INDEX: return "glXGetTransparentIndexSUN";
+        case glXGetVideoDeviceNV_INDEX: return "glXGetVideoDeviceNV";
+        case glXGetVideoInfoNV_INDEX: return "glXGetVideoInfoNV";
+        case glXGetVideoSyncSGI_INDEX: return "glXGetVideoSyncSGI";
+        case glXGetVisualConfigs_INDEX: return "glXGetVisualConfigs";
+        case glXGetVisualFromFBConfig_INDEX: return "glXGetVisualFromFBConfig";
+        case glXGetVisualFromFBConfigSGIX_INDEX: return "glXGetVisualFromFBConfigSGIX";
+        case glXHyperpipeAttribSGIX_INDEX: return "glXHyperpipeAttribSGIX";
+        case glXHyperpipeConfigSGIX_INDEX: return "glXHyperpipeConfigSGIX";
+        case glXImportContextEXT_INDEX: return "glXImportContextEXT";
+        case glXIsDirect_INDEX: return "glXIsDirect";
+        case glXJoinSwapGroupNV_INDEX: return "glXJoinSwapGroupNV";
+        case glXJoinSwapGroupSGIX_INDEX: return "glXJoinSwapGroupSGIX";
+        case glXLockVideoCaptureDeviceNV_INDEX: return "glXLockVideoCaptureDeviceNV";
+        case glXMakeContextCurrent_INDEX: return "glXMakeContextCurrent";
+        case glXMakeCurrent_INDEX: return "glXMakeCurrent";
+        case glXMakeCurrentReadSGI_INDEX: return "glXMakeCurrentReadSGI";
+        case glXQueryChannelDeltasSGIX_INDEX: return "glXQueryChannelDeltasSGIX";
+        case glXQueryChannelRectSGIX_INDEX: return "glXQueryChannelRectSGIX";
+        case glXQueryContext_INDEX: return "glXQueryContext";
+        case glXQueryContextInfoEXT_INDEX: return "glXQueryContextInfoEXT";
+        case glXQueryDrawable_INDEX: return "glXQueryDrawable";
+        case glXQueryExtension_INDEX: return "glXQueryExtension";
+        case glXQueryExtensionsString_INDEX: return "glXQueryExtensionsString";
+        case glXQueryFrameCountNV_INDEX: return "glXQueryFrameCountNV";
+        case glXQueryGLXPbufferSGIX_INDEX: return "glXQueryGLXPbufferSGIX";
+        case glXQueryHyperpipeAttribSGIX_INDEX: return "glXQueryHyperpipeAttribSGIX";
+        case glXQueryHyperpipeBestAttribSGIX_INDEX: return "glXQueryHyperpipeBestAttribSGIX";
+        case glXQueryHyperpipeConfigSGIX_INDEX: return "glXQueryHyperpipeConfigSGIX";
+        case glXQueryHyperpipeNetworkSGIX_INDEX: return "glXQueryHyperpipeNetworkSGIX";
+        case glXQueryMaxSwapBarriersSGIX_INDEX: return "glXQueryMaxSwapBarriersSGIX";
+        case glXQueryMaxSwapGroupsNV_INDEX: return "glXQueryMaxSwapGroupsNV";
+        case glXQueryServerString_INDEX: return "glXQueryServerString";
+        case glXQuerySwapGroupNV_INDEX: return "glXQuerySwapGroupNV";
+        case glXQueryVersion_INDEX: return "glXQueryVersion";
+        case glXQueryVideoCaptureDeviceNV_INDEX: return "glXQueryVideoCaptureDeviceNV";
+        case glXReleaseBuffersMESA_INDEX: return "glXReleaseBuffersMESA";
+        case glXReleaseTexImageEXT_INDEX: return "glXReleaseTexImageEXT";
+        case glXReleaseVideoCaptureDeviceNV_INDEX: return "glXReleaseVideoCaptureDeviceNV";
+        case glXReleaseVideoDeviceNV_INDEX: return "glXReleaseVideoDeviceNV";
+        case glXReleaseVideoImageNV_INDEX: return "glXReleaseVideoImageNV";
+        case glXRender_INDEX: return "glXRender";
+        case glXRenderLarge_INDEX: return "glXRenderLarge";
+        case glXResetFrameCountNV_INDEX: return "glXResetFrameCountNV";
+        case glXSelectEvent_INDEX: return "glXSelectEvent";
+        case glXSelectEventSGIX_INDEX: return "glXSelectEventSGIX";
+        case glXSendPbufferToVideoNV_INDEX: return "glXSendPbufferToVideoNV";
+        case glXSet3DfxModeMESA_INDEX: return "glXSet3DfxModeMESA";
+        case glXSwapBuffers_INDEX: return "glXSwapBuffers";
+        case glXSwapBuffersMscOML_INDEX: return "glXSwapBuffersMscOML";
+        case glXSwapIntervalEXT_INDEX: return "glXSwapIntervalEXT";
+        case glXSwapIntervalMESA_INDEX: return "glXSwapIntervalMESA";
+        case glXSwapIntervalSGI_INDEX: return "glXSwapIntervalSGI";
+        case glXUseXFont_INDEX: return "glXUseXFont";
+        case glXVendorPrivate_INDEX: return "glXVendorPrivate";
+        case glXVendorPrivateWithReply_INDEX: return "glXVendorPrivateWithReply";
+        case glXWaitForMscOML_INDEX: return "glXWaitForMscOML";
+        case glXWaitForSbcOML_INDEX: return "glXWaitForSbcOML";
+        case glXWaitGL_INDEX: return "glXWaitGL";
+        case glXWaitVideoSyncSGI_INDEX: return "glXWaitVideoSyncSGI";
+        case glXWaitX_INDEX: return "glXWaitX";
     }
 }
 
@@ -910,6 +1038,646 @@ void mock_print(const packed_call_t *packed) {
             printf("glViewport(%d, %d, %d, %d);\n", unpacked->args.x, unpacked->args.y, unpacked->args.width, unpacked->args.height);
             break;
         }
+        case glXAssociateDMPbufferSGIX_INDEX: {
+            PACKED_glXAssociateDMPbufferSGIX *unpacked = (PACKED_glXAssociateDMPbufferSGIX *)packed;
+            printf("glXAssociateDMPbufferSGIX(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.pbuffer, unpacked->args.params, unpacked->args.dmbuffer);
+            break;
+        }
+        case glXBindChannelToWindowSGIX_INDEX: {
+            PACKED_glXBindChannelToWindowSGIX *unpacked = (PACKED_glXBindChannelToWindowSGIX *)packed;
+            printf("glXBindChannelToWindowSGIX(%p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.window);
+            break;
+        }
+        case glXBindHyperpipeSGIX_INDEX: {
+            PACKED_glXBindHyperpipeSGIX *unpacked = (PACKED_glXBindHyperpipeSGIX *)packed;
+            printf("glXBindHyperpipeSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.hpId);
+            break;
+        }
+        case glXBindSwapBarrierNV_INDEX: {
+            PACKED_glXBindSwapBarrierNV *unpacked = (PACKED_glXBindSwapBarrierNV *)packed;
+            printf("glXBindSwapBarrierNV(%p, %u, %u);\n", unpacked->args.dpy, unpacked->args.group, unpacked->args.barrier);
+            break;
+        }
+        case glXBindSwapBarrierSGIX_INDEX: {
+            PACKED_glXBindSwapBarrierSGIX *unpacked = (PACKED_glXBindSwapBarrierSGIX *)packed;
+            printf("glXBindSwapBarrierSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.barrier);
+            break;
+        }
+        case glXBindTexImageEXT_INDEX: {
+            PACKED_glXBindTexImageEXT *unpacked = (PACKED_glXBindTexImageEXT *)packed;
+            printf("glXBindTexImageEXT(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.buffer, unpacked->args.attrib_list);
+            break;
+        }
+        case glXBindVideoCaptureDeviceNV_INDEX: {
+            PACKED_glXBindVideoCaptureDeviceNV *unpacked = (PACKED_glXBindVideoCaptureDeviceNV *)packed;
+            printf("glXBindVideoCaptureDeviceNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.video_capture_slot, unpacked->args.device);
+            break;
+        }
+        case glXBindVideoDeviceNV_INDEX: {
+            PACKED_glXBindVideoDeviceNV *unpacked = (PACKED_glXBindVideoDeviceNV *)packed;
+            printf("glXBindVideoDeviceNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.video_slot, unpacked->args.video_device, unpacked->args.attrib_list);
+            break;
+        }
+        case glXBindVideoImageNV_INDEX: {
+            PACKED_glXBindVideoImageNV *unpacked = (PACKED_glXBindVideoImageNV *)packed;
+            printf("glXBindVideoImageNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.VideoDevice, unpacked->args.pbuf, unpacked->args.iVideoBuffer);
+            break;
+        }
+        case glXChangeDrawableAttributes_INDEX: {
+            PACKED_glXChangeDrawableAttributes *unpacked = (PACKED_glXChangeDrawableAttributes *)packed;
+            printf("glXChangeDrawableAttributes(%p);\n", unpacked->args.drawable);
+            break;
+        }
+        case glXChangeDrawableAttributesSGIX_INDEX: {
+            PACKED_glXChangeDrawableAttributesSGIX *unpacked = (PACKED_glXChangeDrawableAttributesSGIX *)packed;
+            printf("glXChangeDrawableAttributesSGIX(%p);\n", unpacked->args.drawable);
+            break;
+        }
+        case glXChannelRectSGIX_INDEX: {
+            PACKED_glXChannelRectSGIX *unpacked = (PACKED_glXChannelRectSGIX *)packed;
+            printf("glXChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.x, unpacked->args.y, unpacked->args.w, unpacked->args.h);
+            break;
+        }
+        case glXChannelRectSyncSGIX_INDEX: {
+            PACKED_glXChannelRectSyncSGIX *unpacked = (PACKED_glXChannelRectSyncSGIX *)packed;
+            printf("glXChannelRectSyncSGIX(%p, %p, %p, 0x%04X);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.synctype);
+            break;
+        }
+        case glXChooseFBConfig_INDEX: {
+            PACKED_glXChooseFBConfig *unpacked = (PACKED_glXChooseFBConfig *)packed;
+            printf("glXChooseFBConfig(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attrib_list, unpacked->args.nelements);
+            break;
+        }
+        case glXChooseFBConfigSGIX_INDEX: {
+            PACKED_glXChooseFBConfigSGIX *unpacked = (PACKED_glXChooseFBConfigSGIX *)packed;
+            printf("glXChooseFBConfigSGIX(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attrib_list, unpacked->args.nelements);
+            break;
+        }
+        case glXChooseVisual_INDEX: {
+            PACKED_glXChooseVisual *unpacked = (PACKED_glXChooseVisual *)packed;
+            printf("glXChooseVisual(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attribList);
+            break;
+        }
+        case glXClientInfo_INDEX: {
+            PACKED_glXClientInfo *unpacked = (PACKED_glXClientInfo *)packed;
+            printf("glXClientInfo();\n");
+            break;
+        }
+        case glXCopyContext_INDEX: {
+            PACKED_glXCopyContext *unpacked = (PACKED_glXCopyContext *)packed;
+            printf("glXCopyContext(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.src, unpacked->args.dst, unpacked->args.mask);
+            break;
+        }
+        case glXCopyImageSubDataNV_INDEX: {
+            PACKED_glXCopyImageSubDataNV *unpacked = (PACKED_glXCopyImageSubDataNV *)packed;
+            printf("glXCopyImageSubDataNV(%p, %p, %u, 0x%04X, %d, %d, %d, %d, %p, %u, 0x%04X, %d, %d, %d, %d, %d, %d, %d);\n", unpacked->args.dpy, unpacked->args.srcCtx, unpacked->args.srcName, unpacked->args.srcTarget, unpacked->args.srcLevel, unpacked->args.srcX, unpacked->args.srcY, unpacked->args.srcZ, unpacked->args.dstCtx, unpacked->args.dstName, unpacked->args.dstTarget, unpacked->args.dstLevel, unpacked->args.dstX, unpacked->args.dstY, unpacked->args.dstZ, unpacked->args.width, unpacked->args.height, unpacked->args.depth);
+            break;
+        }
+        case glXCopySubBufferMESA_INDEX: {
+            PACKED_glXCopySubBufferMESA *unpacked = (PACKED_glXCopySubBufferMESA *)packed;
+            printf("glXCopySubBufferMESA(%p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.x, unpacked->args.y, unpacked->args.width, unpacked->args.height);
+            break;
+        }
+        case glXCreateContext_INDEX: {
+            PACKED_glXCreateContext *unpacked = (PACKED_glXCreateContext *)packed;
+            printf("glXCreateContext(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.vis, unpacked->args.shareList, unpacked->args.direct);
+            break;
+        }
+        case glXCreateContextAttribsARB_INDEX: {
+            PACKED_glXCreateContextAttribsARB *unpacked = (PACKED_glXCreateContextAttribsARB *)packed;
+            printf("glXCreateContextAttribsARB(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.share_context, unpacked->args.direct, unpacked->args.attrib_list);
+            break;
+        }
+        case glXCreateContextWithConfigSGIX_INDEX: {
+            PACKED_glXCreateContextWithConfigSGIX *unpacked = (PACKED_glXCreateContextWithConfigSGIX *)packed;
+            printf("glXCreateContextWithConfigSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.render_type, unpacked->args.share_list, unpacked->args.direct);
+            break;
+        }
+        case glXCreateGLXPbufferSGIX_INDEX: {
+            PACKED_glXCreateGLXPbufferSGIX *unpacked = (PACKED_glXCreateGLXPbufferSGIX *)packed;
+            printf("glXCreateGLXPbufferSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.width, unpacked->args.height, unpacked->args.attrib_list);
+            break;
+        }
+        case glXCreateGLXPixmap_INDEX: {
+            PACKED_glXCreateGLXPixmap *unpacked = (PACKED_glXCreateGLXPixmap *)packed;
+            printf("glXCreateGLXPixmap(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.visual, unpacked->args.pixmap);
+            break;
+        }
+        case glXCreateGLXPixmapMESA_INDEX: {
+            PACKED_glXCreateGLXPixmapMESA *unpacked = (PACKED_glXCreateGLXPixmapMESA *)packed;
+            printf("glXCreateGLXPixmapMESA(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.visual, unpacked->args.pixmap, unpacked->args.cmap);
+            break;
+        }
+        case glXCreateGLXPixmapWithConfigSGIX_INDEX: {
+            PACKED_glXCreateGLXPixmapWithConfigSGIX *unpacked = (PACKED_glXCreateGLXPixmapWithConfigSGIX *)packed;
+            printf("glXCreateGLXPixmapWithConfigSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.pixmap);
+            break;
+        }
+        case glXCreateGLXVideoSourceSGIX_INDEX: {
+            PACKED_glXCreateGLXVideoSourceSGIX *unpacked = (PACKED_glXCreateGLXVideoSourceSGIX *)packed;
+            printf("glXCreateGLXVideoSourceSGIX(%p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.server, unpacked->args.path, unpacked->args.nodeClass, unpacked->args.drainNode);
+            break;
+        }
+        case glXCreateNewContext_INDEX: {
+            PACKED_glXCreateNewContext *unpacked = (PACKED_glXCreateNewContext *)packed;
+            printf("glXCreateNewContext(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.render_type, unpacked->args.share_list, unpacked->args.direct);
+            break;
+        }
+        case glXCreatePbuffer_INDEX: {
+            PACKED_glXCreatePbuffer *unpacked = (PACKED_glXCreatePbuffer *)packed;
+            printf("glXCreatePbuffer(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.attrib_list);
+            break;
+        }
+        case glXCreatePixmap_INDEX: {
+            PACKED_glXCreatePixmap *unpacked = (PACKED_glXCreatePixmap *)packed;
+            printf("glXCreatePixmap(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.pixmap, unpacked->args.attrib_list);
+            break;
+        }
+        case glXCreateWindow_INDEX: {
+            PACKED_glXCreateWindow *unpacked = (PACKED_glXCreateWindow *)packed;
+            printf("glXCreateWindow(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.win, unpacked->args.attrib_list);
+            break;
+        }
+        case glXCushionSGI_INDEX: {
+            PACKED_glXCushionSGI *unpacked = (PACKED_glXCushionSGI *)packed;
+            printf("glXCushionSGI(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.window, unpacked->args.cushion);
+            break;
+        }
+        case glXDestroyContext_INDEX: {
+            PACKED_glXDestroyContext *unpacked = (PACKED_glXDestroyContext *)packed;
+            printf("glXDestroyContext(%p, %p);\n", unpacked->args.dpy, unpacked->args.ctx);
+            break;
+        }
+        case glXDestroyGLXPbufferSGIX_INDEX: {
+            PACKED_glXDestroyGLXPbufferSGIX *unpacked = (PACKED_glXDestroyGLXPbufferSGIX *)packed;
+            printf("glXDestroyGLXPbufferSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.pbuf);
+            break;
+        }
+        case glXDestroyGLXPixmap_INDEX: {
+            PACKED_glXDestroyGLXPixmap *unpacked = (PACKED_glXDestroyGLXPixmap *)packed;
+            printf("glXDestroyGLXPixmap(%p, %p);\n", unpacked->args.dpy, unpacked->args.pixmap);
+            break;
+        }
+        case glXDestroyGLXVideoSourceSGIX_INDEX: {
+            PACKED_glXDestroyGLXVideoSourceSGIX *unpacked = (PACKED_glXDestroyGLXVideoSourceSGIX *)packed;
+            printf("glXDestroyGLXVideoSourceSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.glxvideosource);
+            break;
+        }
+        case glXDestroyHyperpipeConfigSGIX_INDEX: {
+            PACKED_glXDestroyHyperpipeConfigSGIX *unpacked = (PACKED_glXDestroyHyperpipeConfigSGIX *)packed;
+            printf("glXDestroyHyperpipeConfigSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.hpId);
+            break;
+        }
+        case glXDestroyPbuffer_INDEX: {
+            PACKED_glXDestroyPbuffer *unpacked = (PACKED_glXDestroyPbuffer *)packed;
+            printf("glXDestroyPbuffer(%p, %p);\n", unpacked->args.dpy, unpacked->args.pbuf);
+            break;
+        }
+        case glXDestroyPixmap_INDEX: {
+            PACKED_glXDestroyPixmap *unpacked = (PACKED_glXDestroyPixmap *)packed;
+            printf("glXDestroyPixmap(%p, %p);\n", unpacked->args.dpy, unpacked->args.pixmap);
+            break;
+        }
+        case glXDestroyWindow_INDEX: {
+            PACKED_glXDestroyWindow *unpacked = (PACKED_glXDestroyWindow *)packed;
+            printf("glXDestroyWindow(%p, %p);\n", unpacked->args.dpy, unpacked->args.win);
+            break;
+        }
+        case glXEnumerateVideoCaptureDevicesNV_INDEX: {
+            PACKED_glXEnumerateVideoCaptureDevicesNV *unpacked = (PACKED_glXEnumerateVideoCaptureDevicesNV *)packed;
+            printf("glXEnumerateVideoCaptureDevicesNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
+            break;
+        }
+        case glXEnumerateVideoDevicesNV_INDEX: {
+            PACKED_glXEnumerateVideoDevicesNV *unpacked = (PACKED_glXEnumerateVideoDevicesNV *)packed;
+            printf("glXEnumerateVideoDevicesNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
+            break;
+        }
+        case glXFreeContextEXT_INDEX: {
+            PACKED_glXFreeContextEXT *unpacked = (PACKED_glXFreeContextEXT *)packed;
+            printf("glXFreeContextEXT(%p, %p);\n", unpacked->args.dpy, unpacked->args.context);
+            break;
+        }
+        case glXGetAGPOffsetMESA_INDEX: {
+            PACKED_glXGetAGPOffsetMESA *unpacked = (PACKED_glXGetAGPOffsetMESA *)packed;
+            printf("glXGetAGPOffsetMESA(%p);\n", unpacked->args.pointer);
+            break;
+        }
+        case glXGetClientString_INDEX: {
+            PACKED_glXGetClientString *unpacked = (PACKED_glXGetClientString *)packed;
+            printf("glXGetClientString(%p, %p);\n", unpacked->args.display, unpacked->args.name);
+            break;
+        }
+        case glXGetConfig_INDEX: {
+            PACKED_glXGetConfig *unpacked = (PACKED_glXGetConfig *)packed;
+            printf("glXGetConfig(%p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.visual, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXGetContextIDEXT_INDEX: {
+            PACKED_glXGetContextIDEXT *unpacked = (PACKED_glXGetContextIDEXT *)packed;
+            printf("glXGetContextIDEXT(%p);\n", unpacked->args.context);
+            break;
+        }
+        case glXGetCurrentContext_INDEX: {
+            PACKED_glXGetCurrentContext *unpacked = (PACKED_glXGetCurrentContext *)packed;
+            printf("glXGetCurrentContext();\n");
+            break;
+        }
+        case glXGetCurrentDisplay_INDEX: {
+            PACKED_glXGetCurrentDisplay *unpacked = (PACKED_glXGetCurrentDisplay *)packed;
+            printf("glXGetCurrentDisplay();\n");
+            break;
+        }
+        case glXGetCurrentDisplayEXT_INDEX: {
+            PACKED_glXGetCurrentDisplayEXT *unpacked = (PACKED_glXGetCurrentDisplayEXT *)packed;
+            printf("glXGetCurrentDisplayEXT();\n");
+            break;
+        }
+        case glXGetCurrentDrawable_INDEX: {
+            PACKED_glXGetCurrentDrawable *unpacked = (PACKED_glXGetCurrentDrawable *)packed;
+            printf("glXGetCurrentDrawable();\n");
+            break;
+        }
+        case glXGetCurrentReadDrawable_INDEX: {
+            PACKED_glXGetCurrentReadDrawable *unpacked = (PACKED_glXGetCurrentReadDrawable *)packed;
+            printf("glXGetCurrentReadDrawable();\n");
+            break;
+        }
+        case glXGetCurrentReadDrawableSGI_INDEX: {
+            PACKED_glXGetCurrentReadDrawableSGI *unpacked = (PACKED_glXGetCurrentReadDrawableSGI *)packed;
+            printf("glXGetCurrentReadDrawableSGI();\n");
+            break;
+        }
+        case glXGetDrawableAttributes_INDEX: {
+            PACKED_glXGetDrawableAttributes *unpacked = (PACKED_glXGetDrawableAttributes *)packed;
+            printf("glXGetDrawableAttributes(%p);\n", unpacked->args.drawable);
+            break;
+        }
+        case glXGetDrawableAttributesSGIX_INDEX: {
+            PACKED_glXGetDrawableAttributesSGIX *unpacked = (PACKED_glXGetDrawableAttributesSGIX *)packed;
+            printf("glXGetDrawableAttributesSGIX(%p);\n", unpacked->args.drawable);
+            break;
+        }
+        case glXGetFBConfigAttrib_INDEX: {
+            PACKED_glXGetFBConfigAttrib *unpacked = (PACKED_glXGetFBConfigAttrib *)packed;
+            printf("glXGetFBConfigAttrib(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXGetFBConfigAttribSGIX_INDEX: {
+            PACKED_glXGetFBConfigAttribSGIX *unpacked = (PACKED_glXGetFBConfigAttribSGIX *)packed;
+            printf("glXGetFBConfigAttribSGIX(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXGetFBConfigFromVisualSGIX_INDEX: {
+            PACKED_glXGetFBConfigFromVisualSGIX *unpacked = (PACKED_glXGetFBConfigFromVisualSGIX *)packed;
+            printf("glXGetFBConfigFromVisualSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.vis);
+            break;
+        }
+        case glXGetFBConfigs_INDEX: {
+            PACKED_glXGetFBConfigs *unpacked = (PACKED_glXGetFBConfigs *)packed;
+            printf("glXGetFBConfigs(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
+            break;
+        }
+        case glXGetFBConfigsSGIX_INDEX: {
+            PACKED_glXGetFBConfigsSGIX *unpacked = (PACKED_glXGetFBConfigsSGIX *)packed;
+            printf("glXGetFBConfigsSGIX();\n");
+            break;
+        }
+        case glXGetMscRateOML_INDEX: {
+            PACKED_glXGetMscRateOML *unpacked = (PACKED_glXGetMscRateOML *)packed;
+            printf("glXGetMscRateOML(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.numerator, unpacked->args.denominator);
+            break;
+        }
+        case glXGetProcAddress_INDEX: {
+            PACKED_glXGetProcAddress *unpacked = (PACKED_glXGetProcAddress *)packed;
+            printf("glXGetProcAddress(%p);\n", unpacked->args.procName);
+            break;
+        }
+        case glXGetProcAddressARB_INDEX: {
+            PACKED_glXGetProcAddressARB *unpacked = (PACKED_glXGetProcAddressARB *)packed;
+            printf("glXGetProcAddressARB(%p);\n", unpacked->args.procName);
+            break;
+        }
+        case glXGetSelectedEvent_INDEX: {
+            PACKED_glXGetSelectedEvent *unpacked = (PACKED_glXGetSelectedEvent *)packed;
+            printf("glXGetSelectedEvent(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.event_mask);
+            break;
+        }
+        case glXGetSelectedEventSGIX_INDEX: {
+            PACKED_glXGetSelectedEventSGIX *unpacked = (PACKED_glXGetSelectedEventSGIX *)packed;
+            printf("glXGetSelectedEventSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.mask);
+            break;
+        }
+        case glXGetSyncValuesOML_INDEX: {
+            PACKED_glXGetSyncValuesOML *unpacked = (PACKED_glXGetSyncValuesOML *)packed;
+            printf("glXGetSyncValuesOML(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
+            break;
+        }
+        case glXGetTransparentIndexSUN_INDEX: {
+            PACKED_glXGetTransparentIndexSUN *unpacked = (PACKED_glXGetTransparentIndexSUN *)packed;
+            printf("glXGetTransparentIndexSUN(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.overlay, unpacked->args.underlay, unpacked->args.pTransparentIndex);
+            break;
+        }
+        case glXGetVideoDeviceNV_INDEX: {
+            PACKED_glXGetVideoDeviceNV *unpacked = (PACKED_glXGetVideoDeviceNV *)packed;
+            printf("glXGetVideoDeviceNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.numVideoDevices, unpacked->args.pVideoDevice);
+            break;
+        }
+        case glXGetVideoInfoNV_INDEX: {
+            PACKED_glXGetVideoInfoNV *unpacked = (PACKED_glXGetVideoInfoNV *)packed;
+            printf("glXGetVideoInfoNV(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.VideoDevice, unpacked->args.pulCounterOutputPbuffer, unpacked->args.pulCounterOutputVideo);
+            break;
+        }
+        case glXGetVideoSyncSGI_INDEX: {
+            PACKED_glXGetVideoSyncSGI *unpacked = (PACKED_glXGetVideoSyncSGI *)packed;
+            printf("glXGetVideoSyncSGI(%p);\n", unpacked->args.count);
+            break;
+        }
+        case glXGetVisualConfigs_INDEX: {
+            PACKED_glXGetVisualConfigs *unpacked = (PACKED_glXGetVisualConfigs *)packed;
+            printf("glXGetVisualConfigs();\n");
+            break;
+        }
+        case glXGetVisualFromFBConfig_INDEX: {
+            PACKED_glXGetVisualFromFBConfig *unpacked = (PACKED_glXGetVisualFromFBConfig *)packed;
+            printf("glXGetVisualFromFBConfig(%p, %p);\n", unpacked->args.dpy, unpacked->args.config);
+            break;
+        }
+        case glXGetVisualFromFBConfigSGIX_INDEX: {
+            PACKED_glXGetVisualFromFBConfigSGIX *unpacked = (PACKED_glXGetVisualFromFBConfigSGIX *)packed;
+            printf("glXGetVisualFromFBConfigSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.config);
+            break;
+        }
+        case glXHyperpipeAttribSGIX_INDEX: {
+            PACKED_glXHyperpipeAttribSGIX *unpacked = (PACKED_glXHyperpipeAttribSGIX *)packed;
+            printf("glXHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.attribList);
+            break;
+        }
+        case glXHyperpipeConfigSGIX_INDEX: {
+            PACKED_glXHyperpipeConfigSGIX *unpacked = (PACKED_glXHyperpipeConfigSGIX *)packed;
+            printf("glXHyperpipeConfigSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.networkId, unpacked->args.npipes, unpacked->args.cfg, unpacked->args.hpId);
+            break;
+        }
+        case glXImportContextEXT_INDEX: {
+            PACKED_glXImportContextEXT *unpacked = (PACKED_glXImportContextEXT *)packed;
+            printf("glXImportContextEXT(%p, %p);\n", unpacked->args.dpy, unpacked->args.contextID);
+            break;
+        }
+        case glXIsDirect_INDEX: {
+            PACKED_glXIsDirect *unpacked = (PACKED_glXIsDirect *)packed;
+            printf("glXIsDirect(%p, %p);\n", unpacked->args.dpy, unpacked->args.ctx);
+            break;
+        }
+        case glXJoinSwapGroupNV_INDEX: {
+            PACKED_glXJoinSwapGroupNV *unpacked = (PACKED_glXJoinSwapGroupNV *)packed;
+            printf("glXJoinSwapGroupNV(%p, %p, %u);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.group);
+            break;
+        }
+        case glXJoinSwapGroupSGIX_INDEX: {
+            PACKED_glXJoinSwapGroupSGIX *unpacked = (PACKED_glXJoinSwapGroupSGIX *)packed;
+            printf("glXJoinSwapGroupSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.member);
+            break;
+        }
+        case glXLockVideoCaptureDeviceNV_INDEX: {
+            PACKED_glXLockVideoCaptureDeviceNV *unpacked = (PACKED_glXLockVideoCaptureDeviceNV *)packed;
+            printf("glXLockVideoCaptureDeviceNV(%p, %p);\n", unpacked->args.dpy, unpacked->args.device);
+            break;
+        }
+        case glXMakeContextCurrent_INDEX: {
+            PACKED_glXMakeContextCurrent *unpacked = (PACKED_glXMakeContextCurrent *)packed;
+            printf("glXMakeContextCurrent(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.read, unpacked->args.ctx);
+            break;
+        }
+        case glXMakeCurrent_INDEX: {
+            PACKED_glXMakeCurrent *unpacked = (PACKED_glXMakeCurrent *)packed;
+            printf("glXMakeCurrent(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.ctx);
+            break;
+        }
+        case glXMakeCurrentReadSGI_INDEX: {
+            PACKED_glXMakeCurrentReadSGI *unpacked = (PACKED_glXMakeCurrentReadSGI *)packed;
+            printf("glXMakeCurrentReadSGI(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.read, unpacked->args.ctx);
+            break;
+        }
+        case glXQueryChannelDeltasSGIX_INDEX: {
+            PACKED_glXQueryChannelDeltasSGIX *unpacked = (PACKED_glXQueryChannelDeltasSGIX *)packed;
+            printf("glXQueryChannelDeltasSGIX(%p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.x, unpacked->args.y, unpacked->args.w, unpacked->args.h);
+            break;
+        }
+        case glXQueryChannelRectSGIX_INDEX: {
+            PACKED_glXQueryChannelRectSGIX *unpacked = (PACKED_glXQueryChannelRectSGIX *)packed;
+            printf("glXQueryChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.dx, unpacked->args.dy, unpacked->args.dw, unpacked->args.dh);
+            break;
+        }
+        case glXQueryContext_INDEX: {
+            PACKED_glXQueryContext *unpacked = (PACKED_glXQueryContext *)packed;
+            printf("glXQueryContext(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.ctx, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXQueryContextInfoEXT_INDEX: {
+            PACKED_glXQueryContextInfoEXT *unpacked = (PACKED_glXQueryContextInfoEXT *)packed;
+            printf("glXQueryContextInfoEXT(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.context, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXQueryDrawable_INDEX: {
+            PACKED_glXQueryDrawable *unpacked = (PACKED_glXQueryDrawable *)packed;
+            printf("glXQueryDrawable(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXQueryExtension_INDEX: {
+            PACKED_glXQueryExtension *unpacked = (PACKED_glXQueryExtension *)packed;
+            printf("glXQueryExtension(%p, %p, %p);\n", unpacked->args.display, unpacked->args.errorBase, unpacked->args.eventBase);
+            break;
+        }
+        case glXQueryExtensionsString_INDEX: {
+            PACKED_glXQueryExtensionsString *unpacked = (PACKED_glXQueryExtensionsString *)packed;
+            printf("glXQueryExtensionsString(%p, %p);\n", unpacked->args.dpy, unpacked->args.screen);
+            break;
+        }
+        case glXQueryFrameCountNV_INDEX: {
+            PACKED_glXQueryFrameCountNV *unpacked = (PACKED_glXQueryFrameCountNV *)packed;
+            printf("glXQueryFrameCountNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.count);
+            break;
+        }
+        case glXQueryGLXPbufferSGIX_INDEX: {
+            PACKED_glXQueryGLXPbufferSGIX *unpacked = (PACKED_glXQueryGLXPbufferSGIX *)packed;
+            printf("glXQueryGLXPbufferSGIX(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.pbuf, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXQueryHyperpipeAttribSGIX_INDEX: {
+            PACKED_glXQueryHyperpipeAttribSGIX *unpacked = (PACKED_glXQueryHyperpipeAttribSGIX *)packed;
+            printf("glXQueryHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.returnAttribList);
+            break;
+        }
+        case glXQueryHyperpipeBestAttribSGIX_INDEX: {
+            PACKED_glXQueryHyperpipeBestAttribSGIX *unpacked = (PACKED_glXQueryHyperpipeBestAttribSGIX *)packed;
+            printf("glXQueryHyperpipeBestAttribSGIX(%p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.attribList, unpacked->args.returnAttribList);
+            break;
+        }
+        case glXQueryHyperpipeConfigSGIX_INDEX: {
+            PACKED_glXQueryHyperpipeConfigSGIX *unpacked = (PACKED_glXQueryHyperpipeConfigSGIX *)packed;
+            printf("glXQueryHyperpipeConfigSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.hpId, unpacked->args.npipes);
+            break;
+        }
+        case glXQueryHyperpipeNetworkSGIX_INDEX: {
+            PACKED_glXQueryHyperpipeNetworkSGIX *unpacked = (PACKED_glXQueryHyperpipeNetworkSGIX *)packed;
+            printf("glXQueryHyperpipeNetworkSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.npipes);
+            break;
+        }
+        case glXQueryMaxSwapBarriersSGIX_INDEX: {
+            PACKED_glXQueryMaxSwapBarriersSGIX *unpacked = (PACKED_glXQueryMaxSwapBarriersSGIX *)packed;
+            printf("glXQueryMaxSwapBarriersSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.max);
+            break;
+        }
+        case glXQueryMaxSwapGroupsNV_INDEX: {
+            PACKED_glXQueryMaxSwapGroupsNV *unpacked = (PACKED_glXQueryMaxSwapGroupsNV *)packed;
+            printf("glXQueryMaxSwapGroupsNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.maxGroups, unpacked->args.maxBarriers);
+            break;
+        }
+        case glXQueryServerString_INDEX: {
+            PACKED_glXQueryServerString *unpacked = (PACKED_glXQueryServerString *)packed;
+            printf("glXQueryServerString(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.name);
+            break;
+        }
+        case glXQuerySwapGroupNV_INDEX: {
+            PACKED_glXQuerySwapGroupNV *unpacked = (PACKED_glXQuerySwapGroupNV *)packed;
+            printf("glXQuerySwapGroupNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.group, unpacked->args.barrier);
+            break;
+        }
+        case glXQueryVersion_INDEX: {
+            PACKED_glXQueryVersion *unpacked = (PACKED_glXQueryVersion *)packed;
+            printf("glXQueryVersion(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.maj, unpacked->args.min);
+            break;
+        }
+        case glXQueryVideoCaptureDeviceNV_INDEX: {
+            PACKED_glXQueryVideoCaptureDeviceNV *unpacked = (PACKED_glXQueryVideoCaptureDeviceNV *)packed;
+            printf("glXQueryVideoCaptureDeviceNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.device, unpacked->args.attribute, unpacked->args.value);
+            break;
+        }
+        case glXReleaseBuffersMESA_INDEX: {
+            PACKED_glXReleaseBuffersMESA *unpacked = (PACKED_glXReleaseBuffersMESA *)packed;
+            printf("glXReleaseBuffersMESA(%p, %p);\n", unpacked->args.dpy, unpacked->args.drawable);
+            break;
+        }
+        case glXReleaseTexImageEXT_INDEX: {
+            PACKED_glXReleaseTexImageEXT *unpacked = (PACKED_glXReleaseTexImageEXT *)packed;
+            printf("glXReleaseTexImageEXT(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.buffer);
+            break;
+        }
+        case glXReleaseVideoCaptureDeviceNV_INDEX: {
+            PACKED_glXReleaseVideoCaptureDeviceNV *unpacked = (PACKED_glXReleaseVideoCaptureDeviceNV *)packed;
+            printf("glXReleaseVideoCaptureDeviceNV(%p, %p);\n", unpacked->args.dpy, unpacked->args.device);
+            break;
+        }
+        case glXReleaseVideoDeviceNV_INDEX: {
+            PACKED_glXReleaseVideoDeviceNV *unpacked = (PACKED_glXReleaseVideoDeviceNV *)packed;
+            printf("glXReleaseVideoDeviceNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.VideoDevice);
+            break;
+        }
+        case glXReleaseVideoImageNV_INDEX: {
+            PACKED_glXReleaseVideoImageNV *unpacked = (PACKED_glXReleaseVideoImageNV *)packed;
+            printf("glXReleaseVideoImageNV(%p, %p);\n", unpacked->args.dpy, unpacked->args.pbuf);
+            break;
+        }
+        case glXRender_INDEX: {
+            PACKED_glXRender *unpacked = (PACKED_glXRender *)packed;
+            printf("glXRender();\n");
+            break;
+        }
+        case glXRenderLarge_INDEX: {
+            PACKED_glXRenderLarge *unpacked = (PACKED_glXRenderLarge *)packed;
+            printf("glXRenderLarge();\n");
+            break;
+        }
+        case glXResetFrameCountNV_INDEX: {
+            PACKED_glXResetFrameCountNV *unpacked = (PACKED_glXResetFrameCountNV *)packed;
+            printf("glXResetFrameCountNV(%p, %p);\n", unpacked->args.dpy, unpacked->args.screen);
+            break;
+        }
+        case glXSelectEvent_INDEX: {
+            PACKED_glXSelectEvent *unpacked = (PACKED_glXSelectEvent *)packed;
+            printf("glXSelectEvent(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.event_mask);
+            break;
+        }
+        case glXSelectEventSGIX_INDEX: {
+            PACKED_glXSelectEventSGIX *unpacked = (PACKED_glXSelectEventSGIX *)packed;
+            printf("glXSelectEventSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.mask);
+            break;
+        }
+        case glXSendPbufferToVideoNV_INDEX: {
+            PACKED_glXSendPbufferToVideoNV *unpacked = (PACKED_glXSendPbufferToVideoNV *)packed;
+            printf("glXSendPbufferToVideoNV(%p, %p, %p, %p, %d);\n", unpacked->args.dpy, unpacked->args.pbuf, unpacked->args.iBufferType, unpacked->args.pulCounterPbuffer, unpacked->args.bBlock);
+            break;
+        }
+        case glXSet3DfxModeMESA_INDEX: {
+            PACKED_glXSet3DfxModeMESA *unpacked = (PACKED_glXSet3DfxModeMESA *)packed;
+            printf("glXSet3DfxModeMESA(%p);\n", unpacked->args.mode);
+            break;
+        }
+        case glXSwapBuffers_INDEX: {
+            PACKED_glXSwapBuffers *unpacked = (PACKED_glXSwapBuffers *)packed;
+            printf("glXSwapBuffers(%p, %p);\n", unpacked->args.dpy, unpacked->args.drawable);
+            break;
+        }
+        case glXSwapBuffersMscOML_INDEX: {
+            PACKED_glXSwapBuffersMscOML *unpacked = (PACKED_glXSwapBuffersMscOML *)packed;
+            printf("glXSwapBuffersMscOML(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_msc, unpacked->args.divisor, unpacked->args.remainder);
+            break;
+        }
+        case glXSwapIntervalEXT_INDEX: {
+            PACKED_glXSwapIntervalEXT *unpacked = (PACKED_glXSwapIntervalEXT *)packed;
+            printf("glXSwapIntervalEXT(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.interval);
+            break;
+        }
+        case glXSwapIntervalMESA_INDEX: {
+            PACKED_glXSwapIntervalMESA *unpacked = (PACKED_glXSwapIntervalMESA *)packed;
+            printf("glXSwapIntervalMESA(%p);\n", unpacked->args.interval);
+            break;
+        }
+        case glXSwapIntervalSGI_INDEX: {
+            PACKED_glXSwapIntervalSGI *unpacked = (PACKED_glXSwapIntervalSGI *)packed;
+            printf("glXSwapIntervalSGI(%p);\n", unpacked->args.interval);
+            break;
+        }
+        case glXUseXFont_INDEX: {
+            PACKED_glXUseXFont *unpacked = (PACKED_glXUseXFont *)packed;
+            printf("glXUseXFont(%p, %p, %p, %p);\n", unpacked->args.font, unpacked->args.first, unpacked->args.count, unpacked->args.listBase);
+            break;
+        }
+        case glXVendorPrivate_INDEX: {
+            PACKED_glXVendorPrivate *unpacked = (PACKED_glXVendorPrivate *)packed;
+            printf("glXVendorPrivate();\n");
+            break;
+        }
+        case glXVendorPrivateWithReply_INDEX: {
+            PACKED_glXVendorPrivateWithReply *unpacked = (PACKED_glXVendorPrivateWithReply *)packed;
+            printf("glXVendorPrivateWithReply();\n");
+            break;
+        }
+        case glXWaitForMscOML_INDEX: {
+            PACKED_glXWaitForMscOML *unpacked = (PACKED_glXWaitForMscOML *)packed;
+            printf("glXWaitForMscOML(%p, %p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_msc, unpacked->args.divisor, unpacked->args.remainder, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
+            break;
+        }
+        case glXWaitForSbcOML_INDEX: {
+            PACKED_glXWaitForSbcOML *unpacked = (PACKED_glXWaitForSbcOML *)packed;
+            printf("glXWaitForSbcOML(%p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_sbc, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
+            break;
+        }
+        case glXWaitGL_INDEX: {
+            PACKED_glXWaitGL *unpacked = (PACKED_glXWaitGL *)packed;
+            printf("glXWaitGL();\n");
+            break;
+        }
+        case glXWaitVideoSyncSGI_INDEX: {
+            PACKED_glXWaitVideoSyncSGI *unpacked = (PACKED_glXWaitVideoSyncSGI *)packed;
+            printf("glXWaitVideoSyncSGI(%p, %p, %p);\n", unpacked->args.divisor, unpacked->args.remainder, unpacked->args.count);
+            break;
+        }
+        case glXWaitX_INDEX: {
+            PACKED_glXWaitX *unpacked = (PACKED_glXWaitX *)packed;
+            printf("glXWaitX();\n");
+            break;
+        }
     }
 }
 
@@ -1402,4 +2170,477 @@ void gles_glVertexPointer(GLint size, GLenum type, GLsizei stride, const GLvoid 
 }
 void gles_glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     emit_glViewport(x, y, width, height);
+}
+Bool glXAssociateDMPbufferSGIX(Display * dpy, GLXPbufferSGIX pbuffer, DMparams * params, DMbuffer dmbuffer) {
+    emit_glXAssociateDMPbufferSGIX(dpy, pbuffer, params, dmbuffer);
+    return (Bool)0;
+}
+int glXBindChannelToWindowSGIX(Display * display, int screen, int channel, Window window) {
+    emit_glXBindChannelToWindowSGIX(display, screen, channel, window);
+    return (int)0;
+}
+int glXBindHyperpipeSGIX(Display * dpy, int hpId) {
+    emit_glXBindHyperpipeSGIX(dpy, hpId);
+    return (int)0;
+}
+Bool glXBindSwapBarrierNV(Display * dpy, GLuint group, GLuint barrier) {
+    emit_glXBindSwapBarrierNV(dpy, group, barrier);
+    return (Bool)0;
+}
+void glXBindSwapBarrierSGIX(Display * dpy, GLXDrawable drawable, int barrier) {
+    emit_glXBindSwapBarrierSGIX(dpy, drawable, barrier);
+}
+void glXBindTexImageEXT(Display * dpy, GLXDrawable drawable, int buffer, const int * attrib_list) {
+    emit_glXBindTexImageEXT(dpy, drawable, buffer, attrib_list);
+}
+int glXBindVideoCaptureDeviceNV(Display * dpy, unsigned int video_capture_slot, GLXVideoCaptureDeviceNV device) {
+    emit_glXBindVideoCaptureDeviceNV(dpy, video_capture_slot, device);
+    return (int)0;
+}
+int glXBindVideoDeviceNV(Display * dpy, unsigned int video_slot, unsigned int video_device, const int * attrib_list) {
+    emit_glXBindVideoDeviceNV(dpy, video_slot, video_device, attrib_list);
+    return (int)0;
+}
+int glXBindVideoImageNV(Display * dpy, GLXVideoDeviceNV VideoDevice, GLXPbuffer pbuf, int iVideoBuffer) {
+    emit_glXBindVideoImageNV(dpy, VideoDevice, pbuf, iVideoBuffer);
+    return (int)0;
+}
+void glXChangeDrawableAttributes(uint32_t drawable) {
+    emit_glXChangeDrawableAttributes(drawable);
+}
+void glXChangeDrawableAttributesSGIX(uint32_t drawable) {
+    emit_glXChangeDrawableAttributesSGIX(drawable);
+}
+int glXChannelRectSGIX(Display * display, int screen, int channel, int x, int y, int w, int h) {
+    emit_glXChannelRectSGIX(display, screen, channel, x, y, w, h);
+    return (int)0;
+}
+int glXChannelRectSyncSGIX(Display * display, int screen, int channel, GLenum synctype) {
+    emit_glXChannelRectSyncSGIX(display, screen, channel, synctype);
+    return (int)0;
+}
+GLXFBConfig * glXChooseFBConfig(Display * dpy, int screen, const int * attrib_list, int * nelements) {
+    emit_glXChooseFBConfig(dpy, screen, attrib_list, nelements);
+    return (GLXFBConfig *)0;
+}
+GLXFBConfigSGIX * glXChooseFBConfigSGIX(Display * dpy, int screen, int * attrib_list, int * nelements) {
+    emit_glXChooseFBConfigSGIX(dpy, screen, attrib_list, nelements);
+    return (GLXFBConfigSGIX *)0;
+}
+XVisualInfo * glXChooseVisual(Display * dpy, int screen, int * attribList) {
+    emit_glXChooseVisual(dpy, screen, attribList);
+    return (XVisualInfo *)0;
+}
+void glXClientInfo() {
+    emit_glXClientInfo();
+}
+void glXCopyContext(Display * dpy, GLXContext src, GLXContext dst, unsigned long mask) {
+    emit_glXCopyContext(dpy, src, dst, mask);
+}
+void glXCopyImageSubDataNV(Display * dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth) {
+    emit_glXCopyImageSubDataNV(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+}
+void glXCopySubBufferMESA(Display * dpy, GLXDrawable drawable, int x, int y, int width, int height) {
+    emit_glXCopySubBufferMESA(dpy, drawable, x, y, width, height);
+}
+GLXContext glXCreateContext(Display * dpy, XVisualInfo * vis, GLXContext shareList, Bool direct) {
+    emit_glXCreateContext(dpy, vis, shareList, direct);
+    return (GLXContext)0;
+}
+GLXContext glXCreateContextAttribsARB(Display * dpy, GLXFBConfig config, GLXContext share_context, Bool direct, const int * attrib_list) {
+    emit_glXCreateContextAttribsARB(dpy, config, share_context, direct, attrib_list);
+    return (GLXContext)0;
+}
+GLXContext glXCreateContextWithConfigSGIX(Display * dpy, GLXFBConfigSGIX config, int render_type, GLXContext share_list, Bool direct) {
+    emit_glXCreateContextWithConfigSGIX(dpy, config, render_type, share_list, direct);
+    return (GLXContext)0;
+}
+GLXPbufferSGIX glXCreateGLXPbufferSGIX(Display * dpy, GLXFBConfigSGIX config, unsigned int width, unsigned int height, int * attrib_list) {
+    emit_glXCreateGLXPbufferSGIX(dpy, config, width, height, attrib_list);
+    return (GLXPbufferSGIX)0;
+}
+GLXPixmap glXCreateGLXPixmap(Display * dpy, XVisualInfo * visual, Pixmap pixmap) {
+    emit_glXCreateGLXPixmap(dpy, visual, pixmap);
+    return (GLXPixmap)0;
+}
+GLXPixmap glXCreateGLXPixmapMESA(Display * dpy, XVisualInfo * visual, Pixmap pixmap, Colormap cmap) {
+    emit_glXCreateGLXPixmapMESA(dpy, visual, pixmap, cmap);
+    return (GLXPixmap)0;
+}
+GLXPixmap glXCreateGLXPixmapWithConfigSGIX(Display * dpy, GLXFBConfigSGIX config, Pixmap pixmap) {
+    emit_glXCreateGLXPixmapWithConfigSGIX(dpy, config, pixmap);
+    return (GLXPixmap)0;
+}
+GLXVideoSourceSGIX glXCreateGLXVideoSourceSGIX(Display * display, int screen, VLServer server, VLPath path, int nodeClass, VLNode drainNode) {
+    emit_glXCreateGLXVideoSourceSGIX(display, screen, server, path, nodeClass, drainNode);
+    return (GLXVideoSourceSGIX)0;
+}
+GLXContext glXCreateNewContext(Display * dpy, GLXFBConfig config, int render_type, GLXContext share_list, Bool direct) {
+    emit_glXCreateNewContext(dpy, config, render_type, share_list, direct);
+    return (GLXContext)0;
+}
+GLXPbuffer glXCreatePbuffer(Display * dpy, GLXFBConfig config, const int * attrib_list) {
+    emit_glXCreatePbuffer(dpy, config, attrib_list);
+    return (GLXPbuffer)0;
+}
+GLXPixmap glXCreatePixmap(Display * dpy, GLXFBConfig config, Pixmap pixmap, const int * attrib_list) {
+    emit_glXCreatePixmap(dpy, config, pixmap, attrib_list);
+    return (GLXPixmap)0;
+}
+GLXWindow glXCreateWindow(Display * dpy, GLXFBConfig config, Window win, const int * attrib_list) {
+    emit_glXCreateWindow(dpy, config, win, attrib_list);
+    return (GLXWindow)0;
+}
+void glXCushionSGI(Display * dpy, Window window, float cushion) {
+    emit_glXCushionSGI(dpy, window, cushion);
+}
+void glXDestroyContext(Display * dpy, GLXContext ctx) {
+    emit_glXDestroyContext(dpy, ctx);
+}
+void glXDestroyGLXPbufferSGIX(Display * dpy, GLXPbufferSGIX pbuf) {
+    emit_glXDestroyGLXPbufferSGIX(dpy, pbuf);
+}
+void glXDestroyGLXPixmap(Display * dpy, GLXPixmap pixmap) {
+    emit_glXDestroyGLXPixmap(dpy, pixmap);
+}
+void glXDestroyGLXVideoSourceSGIX(Display * dpy, GLXVideoSourceSGIX glxvideosource) {
+    emit_glXDestroyGLXVideoSourceSGIX(dpy, glxvideosource);
+}
+int glXDestroyHyperpipeConfigSGIX(Display * dpy, int hpId) {
+    emit_glXDestroyHyperpipeConfigSGIX(dpy, hpId);
+    return (int)0;
+}
+void glXDestroyPbuffer(Display * dpy, GLXPbuffer pbuf) {
+    emit_glXDestroyPbuffer(dpy, pbuf);
+}
+void glXDestroyPixmap(Display * dpy, GLXPixmap pixmap) {
+    emit_glXDestroyPixmap(dpy, pixmap);
+}
+void glXDestroyWindow(Display * dpy, GLXWindow win) {
+    emit_glXDestroyWindow(dpy, win);
+}
+GLXVideoCaptureDeviceNV * glXEnumerateVideoCaptureDevicesNV(Display * dpy, int screen, int * nelements) {
+    emit_glXEnumerateVideoCaptureDevicesNV(dpy, screen, nelements);
+    return (GLXVideoCaptureDeviceNV *)0;
+}
+unsigned int * glXEnumerateVideoDevicesNV(Display * dpy, int screen, int * nelements) {
+    emit_glXEnumerateVideoDevicesNV(dpy, screen, nelements);
+    return (unsigned int *)0;
+}
+void glXFreeContextEXT(Display * dpy, GLXContext context) {
+    emit_glXFreeContextEXT(dpy, context);
+}
+unsigned int glXGetAGPOffsetMESA(const void * pointer) {
+    emit_glXGetAGPOffsetMESA(pointer);
+    return (unsigned int)0;
+}
+const char * glXGetClientString(Display * display, int name) {
+    emit_glXGetClientString(display, name);
+    return (const char *)0;
+}
+int glXGetConfig(Display * display, XVisualInfo * visual, int attribute, int * value) {
+    emit_glXGetConfig(display, visual, attribute, value);
+    return (int)0;
+}
+GLXContextID glXGetContextIDEXT(const GLXContext context) {
+    emit_glXGetContextIDEXT(context);
+    return (GLXContextID)0;
+}
+GLXContext glXGetCurrentContext() {
+    emit_glXGetCurrentContext();
+    return (GLXContext)0;
+}
+Display * glXGetCurrentDisplay() {
+    emit_glXGetCurrentDisplay();
+    return (Display *)0;
+}
+Display * glXGetCurrentDisplayEXT() {
+    emit_glXGetCurrentDisplayEXT();
+    return (Display *)0;
+}
+GLXDrawable glXGetCurrentDrawable() {
+    emit_glXGetCurrentDrawable();
+    return (GLXDrawable)0;
+}
+GLXDrawable glXGetCurrentReadDrawable() {
+    emit_glXGetCurrentReadDrawable();
+    return (GLXDrawable)0;
+}
+GLXDrawable glXGetCurrentReadDrawableSGI() {
+    emit_glXGetCurrentReadDrawableSGI();
+    return (GLXDrawable)0;
+}
+void glXGetDrawableAttributes(uint32_t drawable) {
+    emit_glXGetDrawableAttributes(drawable);
+}
+void glXGetDrawableAttributesSGIX(uint32_t drawable) {
+    emit_glXGetDrawableAttributesSGIX(drawable);
+}
+int glXGetFBConfigAttrib(Display * dpy, GLXFBConfig config, int attribute, int * value) {
+    emit_glXGetFBConfigAttrib(dpy, config, attribute, value);
+    return (int)0;
+}
+int glXGetFBConfigAttribSGIX(Display * dpy, GLXFBConfigSGIX config, int attribute, int * value) {
+    emit_glXGetFBConfigAttribSGIX(dpy, config, attribute, value);
+    return (int)0;
+}
+GLXFBConfigSGIX glXGetFBConfigFromVisualSGIX(Display * dpy, XVisualInfo * vis) {
+    emit_glXGetFBConfigFromVisualSGIX(dpy, vis);
+    return (GLXFBConfigSGIX)0;
+}
+GLXFBConfig * glXGetFBConfigs(Display * dpy, int screen, int * nelements) {
+    emit_glXGetFBConfigs(dpy, screen, nelements);
+    return (GLXFBConfig *)0;
+}
+void glXGetFBConfigsSGIX() {
+    emit_glXGetFBConfigsSGIX();
+}
+Bool glXGetMscRateOML(Display * dpy, GLXDrawable drawable, int32_t * numerator, int32_t * denominator) {
+    emit_glXGetMscRateOML(dpy, drawable, numerator, denominator);
+    return (Bool)0;
+}
+__GLXextFuncPtr glXGetProcAddress(const GLubyte * procName) {
+    emit_glXGetProcAddress(procName);
+    return (__GLXextFuncPtr)0;
+}
+__GLXextFuncPtr glXGetProcAddressARB(const GLubyte * procName) {
+    emit_glXGetProcAddressARB(procName);
+    return (__GLXextFuncPtr)0;
+}
+void glXGetSelectedEvent(Display * dpy, GLXDrawable draw, unsigned long * event_mask) {
+    emit_glXGetSelectedEvent(dpy, draw, event_mask);
+}
+void glXGetSelectedEventSGIX(Display * dpy, GLXDrawable drawable, unsigned long * mask) {
+    emit_glXGetSelectedEventSGIX(dpy, drawable, mask);
+}
+Bool glXGetSyncValuesOML(Display * dpy, GLXDrawable drawable, int64_t * ust, int64_t * msc, int64_t * sbc) {
+    emit_glXGetSyncValuesOML(dpy, drawable, ust, msc, sbc);
+    return (Bool)0;
+}
+Status glXGetTransparentIndexSUN(Display * dpy, Window overlay, Window underlay, long * pTransparentIndex) {
+    emit_glXGetTransparentIndexSUN(dpy, overlay, underlay, pTransparentIndex);
+    return (Status)0;
+}
+int glXGetVideoDeviceNV(Display * dpy, int screen, int numVideoDevices, GLXVideoDeviceNV * pVideoDevice) {
+    emit_glXGetVideoDeviceNV(dpy, screen, numVideoDevices, pVideoDevice);
+    return (int)0;
+}
+int glXGetVideoInfoNV(Display * dpy, int screen, GLXVideoDeviceNV VideoDevice, unsigned long * pulCounterOutputPbuffer, unsigned long * pulCounterOutputVideo) {
+    emit_glXGetVideoInfoNV(dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
+    return (int)0;
+}
+int glXGetVideoSyncSGI(unsigned int * count) {
+    emit_glXGetVideoSyncSGI(count);
+    return (int)0;
+}
+void glXGetVisualConfigs() {
+    emit_glXGetVisualConfigs();
+}
+XVisualInfo * glXGetVisualFromFBConfig(Display * dpy, GLXFBConfig config) {
+    emit_glXGetVisualFromFBConfig(dpy, config);
+    return (XVisualInfo *)0;
+}
+XVisualInfo * glXGetVisualFromFBConfigSGIX(Display * dpy, GLXFBConfigSGIX config) {
+    emit_glXGetVisualFromFBConfigSGIX(dpy, config);
+    return (XVisualInfo *)0;
+}
+int glXHyperpipeAttribSGIX(Display * dpy, int timeSlice, int attrib, int size, void * attribList) {
+    emit_glXHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, attribList);
+    return (int)0;
+}
+int glXHyperpipeConfigSGIX(Display * dpy, int networkId, int npipes, GLXHyperpipeConfigSGIX * cfg, int * hpId) {
+    emit_glXHyperpipeConfigSGIX(dpy, networkId, npipes, cfg, hpId);
+    return (int)0;
+}
+GLXContext glXImportContextEXT(Display * dpy, GLXContextID contextID) {
+    emit_glXImportContextEXT(dpy, contextID);
+    return (GLXContext)0;
+}
+Bool glXIsDirect(Display * dpy, GLXContext ctx) {
+    emit_glXIsDirect(dpy, ctx);
+    return (Bool)0;
+}
+Bool glXJoinSwapGroupNV(Display * dpy, GLXDrawable drawable, GLuint group) {
+    emit_glXJoinSwapGroupNV(dpy, drawable, group);
+    return (Bool)0;
+}
+void glXJoinSwapGroupSGIX(Display * dpy, GLXDrawable drawable, GLXDrawable member) {
+    emit_glXJoinSwapGroupSGIX(dpy, drawable, member);
+}
+void glXLockVideoCaptureDeviceNV(Display * dpy, GLXVideoCaptureDeviceNV device) {
+    emit_glXLockVideoCaptureDeviceNV(dpy, device);
+}
+Bool glXMakeContextCurrent(Display * dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx) {
+    emit_glXMakeContextCurrent(dpy, draw, read, ctx);
+    return (Bool)0;
+}
+Bool glXMakeCurrent(Display * dpy, GLXDrawable drawable, GLXContext ctx) {
+    emit_glXMakeCurrent(dpy, drawable, ctx);
+    return (Bool)0;
+}
+Bool glXMakeCurrentReadSGI(Display * dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx) {
+    emit_glXMakeCurrentReadSGI(dpy, draw, read, ctx);
+    return (Bool)0;
+}
+int glXQueryChannelDeltasSGIX(Display * display, int screen, int channel, int * x, int * y, int * w, int * h) {
+    emit_glXQueryChannelDeltasSGIX(display, screen, channel, x, y, w, h);
+    return (int)0;
+}
+int glXQueryChannelRectSGIX(Display * display, int screen, int channel, int * dx, int * dy, int * dw, int * dh) {
+    emit_glXQueryChannelRectSGIX(display, screen, channel, dx, dy, dw, dh);
+    return (int)0;
+}
+int glXQueryContext(Display * dpy, GLXContext ctx, int attribute, int * value) {
+    emit_glXQueryContext(dpy, ctx, attribute, value);
+    return (int)0;
+}
+int glXQueryContextInfoEXT(Display * dpy, GLXContext context, int attribute, int * value) {
+    emit_glXQueryContextInfoEXT(dpy, context, attribute, value);
+    return (int)0;
+}
+void glXQueryDrawable(Display * dpy, GLXDrawable draw, int attribute, unsigned int * value) {
+    emit_glXQueryDrawable(dpy, draw, attribute, value);
+}
+Bool glXQueryExtension(Display * display, int * errorBase, int * eventBase) {
+    emit_glXQueryExtension(display, errorBase, eventBase);
+    return (Bool)0;
+}
+const char * glXQueryExtensionsString(Display * dpy, int screen) {
+    emit_glXQueryExtensionsString(dpy, screen);
+    return (const char *)0;
+}
+Bool glXQueryFrameCountNV(Display * dpy, int screen, GLuint * count) {
+    emit_glXQueryFrameCountNV(dpy, screen, count);
+    return (Bool)0;
+}
+int glXQueryGLXPbufferSGIX(Display * dpy, GLXPbufferSGIX pbuf, int attribute, unsigned int * value) {
+    emit_glXQueryGLXPbufferSGIX(dpy, pbuf, attribute, value);
+    return (int)0;
+}
+int glXQueryHyperpipeAttribSGIX(Display * dpy, int timeSlice, int attrib, int size, void * returnAttribList) {
+    emit_glXQueryHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, returnAttribList);
+    return (int)0;
+}
+int glXQueryHyperpipeBestAttribSGIX(Display * dpy, int timeSlice, int attrib, int size, void * attribList, void * returnAttribList) {
+    emit_glXQueryHyperpipeBestAttribSGIX(dpy, timeSlice, attrib, size, attribList, returnAttribList);
+    return (int)0;
+}
+GLXHyperpipeConfigSGIX * glXQueryHyperpipeConfigSGIX(Display * dpy, int hpId, int * npipes) {
+    emit_glXQueryHyperpipeConfigSGIX(dpy, hpId, npipes);
+    return (GLXHyperpipeConfigSGIX *)0;
+}
+GLXHyperpipeNetworkSGIX * glXQueryHyperpipeNetworkSGIX(Display * dpy, int * npipes) {
+    emit_glXQueryHyperpipeNetworkSGIX(dpy, npipes);
+    return (GLXHyperpipeNetworkSGIX *)0;
+}
+Bool glXQueryMaxSwapBarriersSGIX(Display * dpy, int screen, int * max) {
+    emit_glXQueryMaxSwapBarriersSGIX(dpy, screen, max);
+    return (Bool)0;
+}
+Bool glXQueryMaxSwapGroupsNV(Display * dpy, int screen, GLuint * maxGroups, GLuint * maxBarriers) {
+    emit_glXQueryMaxSwapGroupsNV(dpy, screen, maxGroups, maxBarriers);
+    return (Bool)0;
+}
+const char * glXQueryServerString(Display * dpy, int screen, int name) {
+    emit_glXQueryServerString(dpy, screen, name);
+    return (const char *)0;
+}
+Bool glXQuerySwapGroupNV(Display * dpy, GLXDrawable drawable, GLuint * group, GLuint * barrier) {
+    emit_glXQuerySwapGroupNV(dpy, drawable, group, barrier);
+    return (Bool)0;
+}
+Bool glXQueryVersion(Display * dpy, int * maj, int * min) {
+    emit_glXQueryVersion(dpy, maj, min);
+    return (Bool)0;
+}
+int glXQueryVideoCaptureDeviceNV(Display * dpy, GLXVideoCaptureDeviceNV device, int attribute, int * value) {
+    emit_glXQueryVideoCaptureDeviceNV(dpy, device, attribute, value);
+    return (int)0;
+}
+Bool glXReleaseBuffersMESA(Display * dpy, GLXDrawable drawable) {
+    emit_glXReleaseBuffersMESA(dpy, drawable);
+    return (Bool)0;
+}
+void glXReleaseTexImageEXT(Display * dpy, GLXDrawable drawable, int buffer) {
+    emit_glXReleaseTexImageEXT(dpy, drawable, buffer);
+}
+void glXReleaseVideoCaptureDeviceNV(Display * dpy, GLXVideoCaptureDeviceNV device) {
+    emit_glXReleaseVideoCaptureDeviceNV(dpy, device);
+}
+int glXReleaseVideoDeviceNV(Display * dpy, int screen, GLXVideoDeviceNV VideoDevice) {
+    emit_glXReleaseVideoDeviceNV(dpy, screen, VideoDevice);
+    return (int)0;
+}
+int glXReleaseVideoImageNV(Display * dpy, GLXPbuffer pbuf) {
+    emit_glXReleaseVideoImageNV(dpy, pbuf);
+    return (int)0;
+}
+void glXRender() {
+    emit_glXRender();
+}
+void glXRenderLarge() {
+    emit_glXRenderLarge();
+}
+Bool glXResetFrameCountNV(Display * dpy, int screen) {
+    emit_glXResetFrameCountNV(dpy, screen);
+    return (Bool)0;
+}
+void glXSelectEvent(Display * dpy, GLXDrawable draw, unsigned long event_mask) {
+    emit_glXSelectEvent(dpy, draw, event_mask);
+}
+void glXSelectEventSGIX(Display * dpy, GLXDrawable drawable, unsigned long mask) {
+    emit_glXSelectEventSGIX(dpy, drawable, mask);
+}
+int glXSendPbufferToVideoNV(Display * dpy, GLXPbuffer pbuf, int iBufferType, unsigned long * pulCounterPbuffer, GLboolean bBlock) {
+    emit_glXSendPbufferToVideoNV(dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock);
+    return (int)0;
+}
+Bool glXSet3DfxModeMESA(int mode) {
+    emit_glXSet3DfxModeMESA(mode);
+    return (Bool)0;
+}
+void glXSwapBuffers(Display * dpy, GLXDrawable drawable) {
+    emit_glXSwapBuffers(dpy, drawable);
+}
+int64_t glXSwapBuffersMscOML(Display * dpy, GLXDrawable drawable, int64_t target_msc, int64_t divisor, int64_t remainder) {
+    emit_glXSwapBuffersMscOML(dpy, drawable, target_msc, divisor, remainder);
+    return (int64_t)0;
+}
+void glXSwapIntervalEXT(Display * dpy, GLXDrawable drawable, int interval) {
+    emit_glXSwapIntervalEXT(dpy, drawable, interval);
+}
+int glXSwapIntervalMESA(unsigned int interval) {
+    emit_glXSwapIntervalMESA(interval);
+    return (int)0;
+}
+int glXSwapIntervalSGI(int interval) {
+    emit_glXSwapIntervalSGI(interval);
+    return (int)0;
+}
+void glXUseXFont(Font font, int first, int count, int listBase) {
+    emit_glXUseXFont(font, first, count, listBase);
+}
+void glXVendorPrivate() {
+    emit_glXVendorPrivate();
+}
+void glXVendorPrivateWithReply() {
+    emit_glXVendorPrivateWithReply();
+}
+Bool glXWaitForMscOML(Display * dpy, GLXDrawable drawable, int64_t target_msc, int64_t divisor, int64_t remainder, int64_t * ust, int64_t * msc, int64_t * sbc) {
+    emit_glXWaitForMscOML(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc);
+    return (Bool)0;
+}
+Bool glXWaitForSbcOML(Display * dpy, GLXDrawable drawable, int64_t target_sbc, int64_t * ust, int64_t * msc, int64_t * sbc) {
+    emit_glXWaitForSbcOML(dpy, drawable, target_sbc, ust, msc, sbc);
+    return (Bool)0;
+}
+void glXWaitGL() {
+    emit_glXWaitGL();
+}
+int glXWaitVideoSyncSGI(int divisor, int remainder, unsigned int * count) {
+    emit_glXWaitVideoSyncSGI(divisor, remainder, count);
+    return (int)0;
+}
+void glXWaitX() {
+    emit_glXWaitX();
 }

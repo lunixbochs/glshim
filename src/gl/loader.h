@@ -7,7 +7,7 @@
 #include <string.h>
 
 #include "const.h"
-#include "wrap/gles.h"
+#include "wrap/glpack.h"
 
 // will become references to dlopen'd gles and egl
 extern void *gles, *egl;
