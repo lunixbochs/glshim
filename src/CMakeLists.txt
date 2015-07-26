@@ -31,7 +31,7 @@ target_link_libraries(preload X11)
 file(GLOB_RECURSE REMOTE_SOURCES remote/*.c)
 add_executable(remote EXCLUDE_FROM_ALL ${REMOTE_SOURCES})
 set_target_properties(remote PROPERTIES OUTPUT_NAME libgl_remote)
-target_link_libraries(remote X11 GL_static)
+target_link_libraries(remote GL_static X11 m dl)
 
 INSTALL(TARGETS GL
     RUNTIME DESTINATION bin
