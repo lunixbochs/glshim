@@ -118,6 +118,11 @@ static EGLContext eglContext;
 static GLXContext glxContext;
 static Display *g_display;
 
+/* When creating window, we should save given drawable 
+ * to prevent creating other window on next glxMakeCurrent */
+static GLXDrawable g_saved_drawable = 0;
+static GLXDrawable g_real_drawable;
+
 #ifdef __linux__
 #ifndef FBIO_WAITFORVSYNC
 #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
@@ -131,6 +136,7 @@ static bool g_vsync = false;
 static bool g_xrefresh = false;
 static bool g_stacktrace = false;
 static bool g_bcm_active = false;
+static bool g_create_window = false;
 #ifndef BCMHOST
 static bool g_bcmhost = false;
 #else
@@ -150,6 +156,19 @@ static void init_display(Display *display) {
     } else {
         eglDisplay = egl_eglGetDisplay(g_display);
     }
+}
+
+static GLXDrawable init_window(GLXDrawable drawable)
+{
+	if(drawable == g_saved_drawable) return g_real_drawable;
+	if(!g_real_drawable)
+	{
+		g_real_drawable=(GLXDrawable) XCreateSimpleWindow(g_display, RootWindow(g_display, 0), 0, 0, 1280, 1024, 0, BlackPixel(g_display, 0),BlackPixel(g_display, 0));
+		XMapWindow(g_display, (Window)g_real_drawable);
+		XFlush(g_display);
+	}
+	g_saved_drawable = drawable;
+	return g_real_drawable;
 }
 
 static void init_vsync() {
@@ -233,6 +252,7 @@ static void scan_env() {
     env(LIBGL_FPS, g_showfps, "fps counter enabled");
     env(LIBGL_FPS_OVERLAY, g_fps_overlay, "fps overlay enabled");
     env(LIBGL_VSYNC, g_vsync, "vsync enabled");
+    env(LIBGL_CREATE_WINDOW, g_create_window, "create window enabled");
     if (g_vsync) {
         init_vsync();
     }
@@ -424,6 +444,8 @@ Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
 
     if (g_usefb)
         drawable = 0;
+    else if(g_create_window)
+		drawable = init_window(drawable);
     static EGLint const window_attribute_list[] = {
         EGL_RENDER_BUFFER, EGL_BACK_BUFFER,
         EGL_NONE,
