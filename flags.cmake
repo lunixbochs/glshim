@@ -1,4 +1,4 @@
-add_definitions(-g -funwind-tables -ffast-math)
+add_definitions(-g -funwind-tables -ffast-math -D_GNU_SOURCE)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
