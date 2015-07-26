@@ -127,7 +127,7 @@ block_t *remote_deserialize_block(void *buf) {
     return block;
 }
 
-static void remote_call_process(GlouijaCall *c, packed_call_t *call) {
+static void remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
     switch (call->index) {
         case glDeleteTextures_INDEX:
         {
@@ -148,7 +148,7 @@ static void remote_call_process(GlouijaCall *c, packed_call_t *call) {
 static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
     GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
     glouija_add_block(&c, call, pack_size, true);
-    remote_call_process(&c, call);
+    remote_call_preprocess(&c, call);
     glouija_command_write(&c);
     if (ret_size) {
         GlouijaCall ret = {0};
