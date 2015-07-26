@@ -28,10 +28,13 @@ int remote_spawn(const char *path) {
     int pid = fork();
     if (pid == 0) {
         char *argv[] = {(char *)path, NULL, NULL};
-        asprintf(&argv[1], "%d", fd);
-        execvp(path, argv);
-        if (errno) {
-            fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
+        if (asprintf(&argv[1], "%d", fd) < 0) {
+            fprintf(stderr, "libGL: asprintf allocation failed\n");
+        } else {
+            execvp(path, argv);
+            if (errno) {
+                fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
+            }
         }
     }
     return pid;
