@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <X11/Xlib.h>
 
 #include "block.h"
 #include "gl_helpers.h"
@@ -139,7 +140,7 @@ block_t *remote_deserialize_block(void *buf) {
     return block;
 }
 
-static void remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
+static int remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
     switch (call->index) {
         case glDeleteTextures_INDEX:
         {
@@ -154,19 +155,51 @@ static void remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
             glouija_add_block(c, n->args.pixels, size, true);
             break;
         }
+        case glXChooseVisual_INDEX:
+        {
+            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
+            int *attribList = n->args.attribList;
+            int size = 0;
+            while (attribList[size++]) {}
+            glouija_add_block(c, attribList, size, true);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+static void remote_call_postprocess(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, void *ret_v, size_t ret_size) {
+    switch (call->index) {
+        case glXChooseVisual_INDEX:
+        {
+            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
+            XVisualInfo **ret_vis = (XVisualInfo **)ret_v;
+            if (*ret_vis) {
+                XVisualInfo *visual = ret->arg[1].data.block.data;
+                int count;
+                XVisualInfo tmp;
+                XMatchVisualInfo(n->args.dpy, visual->screen, visual->depth, visual->class, &tmp);
+                memcpy(visual, &tmp, sizeof(XVisualInfo));
+                *ret_vis = visual;
+            }
+            break;
+        }
     }
 }
 
 static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
     GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
     glouija_add_block(&c, call, pack_size, true);
-    remote_call_preprocess(&c, call);
+    int extra = remote_call_preprocess(&c, call);
     glouija_command_write(&c);
-    if (ret_size) {
-        GlouijaCall ret = {0};
+    GlouijaCall ret = {0};
+    if (ret_size || extra) {
         glouija_command_read(&ret);
+    }
+    if (ret_size) {
         memcpy(ret_v, ret.arg[0].data.block.data, ret_size);
     }
+    remote_call_postprocess(&c, &ret, call, ret_v, ret_size);
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
@@ -175,7 +208,56 @@ void remote_call(packed_call_t *call, void *ret_v) {
     if (ret_v == NULL) {
         ret_size = 0;
     }
+    printf("client call: ");
+    glIndexedPrint(call);
     remote_call_raw(call, pack_size, ret_v, ret_size);
+    if (ret_size > 0) {
+        printf("returned (%d): ", ret_size);
+        if (ret_size == 4) {
+            printf("0x%x\n", *(uint32_t *)ret_v);
+        } else if (ret_size == 8) {
+            printf("0x%x\n", *(uint64_t *)ret_v);
+        } else {
+            for (int i = 0; i < ret_size; i++) {
+                printf("%x", ((unsigned char *)ret_v)[i]);
+            }
+            printf("\n");
+        }
+    }
+}
+
+void remote_serve_call(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
+    printf("remote call: ");
+    glIndexedPrint(call);
+    switch (call->index) {
+        case REMOTE_BLOCK_DRAW:
+        {
+            block_t *block = remote_deserialize_block((void *)call);
+            bl_draw(block);
+            return;
+        }
+        case REMOTE_GL_GET:
+        {
+            return;
+        }
+        case REMOTE_RENDER_RASTER:
+        {
+            return;
+        }
+        case glXChooseVisual_INDEX:
+        {
+            PACKED_glXChooseVisual *n = (PACKED_glXChooseVisual *)call;
+            n->args.attribList = c->arg[2].data.block.data;
+            int *attribList = n->args.attribList;
+            XVisualInfo *info = NULL;
+            glIndexedCall(call, (void *)&info);
+            if (info) {
+                glouija_add_block(response, info, sizeof(XVisualInfo), true);
+            }
+            return;
+        }
+    }
+    glIndexedCall(call, (void *)ret);
 }
 
 int remote_serve(int fd) {
@@ -199,29 +281,13 @@ int remote_serve(int fd) {
         } else if (retsize > 0) {
             ret = retbuf;
         }
-        switch (call->index) {
-            case REMOTE_BLOCK_DRAW:
-            {
-                block_t *block = remote_deserialize_block((void *)call);
-                bl_draw(block);
-                break;
-            }
-            case REMOTE_GL_GET:
-            {
-                break;
-            }
-            case REMOTE_RENDER_RASTER:
-            {
-                break;
-            }
-            default:
-                glIndexedCall(call, (void *)ret);
-                break;
-        }
+        GlouijaCall response = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
+        remote_serve_call(&c, &response, call, ret);
         if (retsize > 0) {
-            GlouijaCall ret = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
-            glouija_add_block(&ret, retbuf, retsize, true);
-            glouija_command_write(&ret);
+            glouija_add_block(&response, ret, retsize, true);
+        }
+        if (response.args > 0) {
+            glouija_command_write(&response);
         }
         free(call);
         if (retsize > 8) {
