@@ -8,6 +8,7 @@
 #include "glouija/glouija.h"
 #include "remote.h"
 #include "wrap/glpack.h"
+#include "wrap/remote.h"
 #include "wrap/types.h"
 
 #define GLOUIJA_CALL_INIT(ret_size)                            \
@@ -19,7 +20,6 @@
         0},                                                    \
     }
 
-
 int remote_spawn(const char *path) {
     if (path == NULL) {
         path = "libgl_remote";
@@ -27,7 +27,7 @@ int remote_spawn(const char *path) {
     int fd = glouija_init_client();
     int pid = fork();
     if (pid == 0) {
-        int gdb = getenv("LIBGL_REMOTE_GDB");
+        char *gdb = getenv("LIBGL_REMOTE_GDB");
         const char *exec = gdb ? "gdb" : path;
         char **argv;
         char **fd_pos;
@@ -139,70 +139,10 @@ block_t *remote_deserialize_block(void *buf) {
     return block;
 }
 
-static int remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
-    switch (call->index) {
-        case glDeleteTextures_INDEX:
-        {
-            glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
-            glouija_add_block(c, n->args.textures, n->args.n * sizeof(GLuint), true);
-            break;
-        }
-        case glTexImage2D_INDEX:
-        {
-            glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
-            size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-            glouija_add_block(c, n->args.pixels, size, true);
-            break;
-        }
-        case glLoadMatrixf_INDEX:
-        {
-            glLoadMatrixf_PACKED *n = (glLoadMatrixf_PACKED *)call;
-            glouija_add_block(c, n->args.m, 16 * sizeof(GLfloat), true);
-            break;
-        }
-#if 0
-        // this is disabled to remove the X dependency for now
-        // it looks like glXChooseVisual returns don't matter anyway
-        case glXChooseVisual_INDEX:
-        {
-            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
-            int *attribList = n->args.attribList;
-            int size = 0;
-            while (attribList[size++]) {}
-            glouija_add_block(c, attribList, size, true);
-            return 1;
-        }
-#endif
-    }
-    return 0;
-}
-
-static void remote_call_postprocess(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, void *ret_v, size_t ret_size) {
-    switch (call->index) {
-#if 0
-        // see above
-        case glXChooseVisual_INDEX:
-        {
-            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
-            XVisualInfo **ret_vis = (XVisualInfo **)ret_v;
-            if (*ret_vis) {
-                XVisualInfo *visual = ret->arg[1].data.block.data;
-                int count;
-                XVisualInfo tmp;
-                XMatchVisualInfo(n->args.dpy, visual->screen, visual->depth, visual->class, &tmp);
-                memcpy(visual, &tmp, sizeof(XVisualInfo));
-                *ret_vis = visual;
-            }
-            break;
-        }
-#endif
-    }
-}
-
 static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
     GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
     glouija_add_block(&c, call, pack_size, true);
-    int extra = remote_call_preprocess(&c, call);
+    int extra = remote_local_pre(&c, call);
     glouija_command_write(&c);
     GlouijaCall ret = {0};
     if (ret_size || extra) {
@@ -211,7 +151,7 @@ static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, 
     if (ret_size) {
         memcpy(ret_v, ret.arg[0].data.block.data, ret_size);
     }
-    remote_call_postprocess(&c, &ret, call, ret_v, ret_size);
+    remote_local_post(&c, &ret, call, ret_v, ret_size);
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
@@ -240,54 +180,6 @@ void remote_call(packed_call_t *call, void *ret_v) {
     }
 }
 
-void remote_serve_call(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
-    if (call->index >= 0) {
-        printf("remote call: ");
-        glIndexedPrint(call);
-    }
-    switch (call->index) {
-        case REMOTE_BLOCK_DRAW:
-        {
-            block_t *block = remote_deserialize_block((void *)call);
-            bl_draw(block);
-            return;
-        }
-        case REMOTE_GL_GET:
-        {
-            return;
-        }
-        case REMOTE_RENDER_RASTER:
-        {
-            return;
-        }
-        case glDeleteTextures_INDEX:
-            ((glDeleteTextures_PACKED *)call)->args.textures = c->arg[2].data.block.data;
-            break;
-        case glTexImage2D_INDEX:
-            ((glTexImage2D_PACKED *)call)->args.pixels = c->arg[2].data.block.data;
-            break;
-        case glLoadMatrixf_INDEX:
-            ((glLoadMatrixf_PACKED *)call)->args.m = c->arg[2].data.block.data;
-            break;
-#if 0
-        // see above
-        case glXChooseVisual_INDEX:
-        {
-            PACKED_glXChooseVisual *n = (PACKED_glXChooseVisual *)call;
-            n->args.attribList = c->arg[2].data.block.data;
-            int *attribList = n->args.attribList;
-            XVisualInfo *info = NULL;
-            glIndexedCall(call, (void *)&info);
-            if (info) {
-                glouija_add_block(response, info, sizeof(XVisualInfo), true);
-            }
-            return;
-        }
-#endif
-    }
-    glIndexedCall(call, (void *)ret);
-}
-
 int remote_serve(int fd) {
     if (glouija_init_server(fd)) {
         fprintf(stderr, "error mapping shared memory from fd %d\n", fd);
@@ -310,7 +202,7 @@ int remote_serve(int fd) {
             ret = retbuf;
         }
         GlouijaCall response = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
-        remote_serve_call(&c, &response, call, ret);
+        remote_target_process(&c, &response, call, ret);
         if (retsize > 0) {
             glouija_add_block(&response, ret, retsize, true);
         }
