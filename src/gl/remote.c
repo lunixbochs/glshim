@@ -154,6 +154,12 @@ static int remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
             glouija_add_block(c, n->args.pixels, size, true);
             break;
         }
+        case glLoadMatrixf_INDEX:
+        {
+            glLoadMatrixf_PACKED *n = (glLoadMatrixf_PACKED *)call;
+            glouija_add_block(c, n->args.m, 16 * sizeof(GLfloat), true);
+            break;
+        }
 #if 0
         // this is disabled to remove the X dependency for now
         // it looks like glXChooseVisual returns don't matter anyway
@@ -254,6 +260,15 @@ void remote_serve_call(GlouijaCall *c, GlouijaCall *response, packed_call_t *cal
         {
             return;
         }
+        case glDeleteTextures_INDEX:
+            ((glDeleteTextures_PACKED *)call)->args.textures = c->arg[2].data.block.data;
+            break;
+        case glTexImage2D_INDEX:
+            ((glTexImage2D_PACKED *)call)->args.pixels = c->arg[2].data.block.data;
+            break;
+        case glLoadMatrixf_INDEX:
+            ((glLoadMatrixf_PACKED *)call)->args.m = c->arg[2].data.block.data;
+            break;
 #if 0
         // see above
         case glXChooseVisual_INDEX:
