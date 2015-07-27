@@ -24,6 +24,38 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
             glouija_add_block(c, n->args.m, 16 * sizeof(GLfloat), true);
             break;
         }
+        case glLightfv_INDEX:
+        {
+            glLightfv_PACKED *n = (glLightfv_PACKED *)call;
+            int count = 1;
+            switch (n->args.pname) {
+                case GL_AMBIENT:
+                case GL_DIFFUSE:
+                case GL_SPECULAR:
+                case GL_POSITION:
+                    count = 4;
+                    break;
+                case GL_SPOT_DIRECTION:
+                    count = 3;
+                    break;
+            }
+            glouija_add_block(c, n->args.params, count * sizeof(GLfloat), true);
+            break;
+        }
+        case glMaterialfv_INDEX:
+        {
+            glMaterialfv_PACKED *n = (glMaterialfv_PACKED *)call;
+            int count = 4;
+            switch (n->args.pname) {
+                case GL_SHININESS:
+                    count = 1;
+                    break;
+                case GL_COLOR_INDEXES:
+                    count = 3;
+                    break;
+            }
+            glouija_add_block(c, n->args.params, count * sizeof(GLfloat), true);
+        }
 #if 0
         // this is disabled to remove the X dependency for now
         // it looks like glXChooseVisual returns don't matter anyway
@@ -68,6 +100,7 @@ void remote_target_process(GlouijaCall *c, GlouijaCall *response, packed_call_t 
         printf("remote call: ");
         glIndexedPrint(call);
     }
+    void *first = c->arg[2].data.block.data;
     switch (call->index) {
         case REMOTE_BLOCK_DRAW:
         {
@@ -84,13 +117,19 @@ void remote_target_process(GlouijaCall *c, GlouijaCall *response, packed_call_t 
             return;
         }
         case glDeleteTextures_INDEX:
-            ((glDeleteTextures_PACKED *)call)->args.textures = c->arg[2].data.block.data;
+            ((glDeleteTextures_PACKED *)call)->args.textures = first;
             break;
         case glTexImage2D_INDEX:
-            ((glTexImage2D_PACKED *)call)->args.pixels = c->arg[2].data.block.data;
+            ((glTexImage2D_PACKED *)call)->args.pixels = first;
             break;
         case glLoadMatrixf_INDEX:
-            ((glLoadMatrixf_PACKED *)call)->args.m = c->arg[2].data.block.data;
+            ((glLoadMatrixf_PACKED *)call)->args.m = first;
+            break;
+        case glLightfv_INDEX:
+            ((glLightfv_PACKED *)call)->args.params = first;
+            break;
+        case glMaterialfv_INDEX:
+            ((glMaterialfv_PACKED *)call)->args.params = first;
             break;
 #if 0
         // see above
