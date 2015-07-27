@@ -6,8 +6,9 @@
 #ifndef __GLOUIJA_H__
 #define __GLOUIJA_H__
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 #define SERVER_BUFFER_SIZE (1024*1024)
 #define CLIENT_BUFFER_SIZE (1024*1024)
