@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <X11/Xlib.h>
 
 #include "block.h"
 #include "gl_helpers.h"
@@ -155,6 +154,9 @@ static int remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
             glouija_add_block(c, n->args.pixels, size, true);
             break;
         }
+#if 0
+        // this is disabled to remove the X dependency for now
+        // it looks like glXChooseVisual returns don't matter anyway
         case glXChooseVisual_INDEX:
         {
             glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
@@ -164,12 +166,15 @@ static int remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
             glouija_add_block(c, attribList, size, true);
             return 1;
         }
+#endif
     }
     return 0;
 }
 
 static void remote_call_postprocess(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, void *ret_v, size_t ret_size) {
     switch (call->index) {
+#if 0
+        // see above
         case glXChooseVisual_INDEX:
         {
             glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
@@ -184,6 +189,7 @@ static void remote_call_postprocess(GlouijaCall *c, GlouijaCall *ret, packed_cal
             }
             break;
         }
+#endif
     }
 }
 
@@ -248,6 +254,8 @@ void remote_serve_call(GlouijaCall *c, GlouijaCall *response, packed_call_t *cal
         {
             return;
         }
+#if 0
+        // see above
         case glXChooseVisual_INDEX:
         {
             PACKED_glXChooseVisual *n = (PACKED_glXChooseVisual *)call;
@@ -260,6 +268,7 @@ void remote_serve_call(GlouijaCall *c, GlouijaCall *response, packed_call_t *cal
             }
             return;
         }
+#endif
     }
     glIndexedCall(call, (void *)ret);
 }
