@@ -261,25 +261,29 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
     t.size = s; t.type = type; t.stride = stride; t.pointer = pointer;
 void glVertexPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
-    LOAD_GLES(glVertexPointer);
     clone_gl_pointer(state.pointers.vertex, size);
+    if (state.remote) return;
+    LOAD_GLES(glVertexPointer);
     gles_glVertexPointer(size, type, stride, pointer);
 }
 void glColorPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
-    LOAD_GLES(glColorPointer);
     clone_gl_pointer(state.pointers.color, size);
+    if (state.remote) return;
+    LOAD_GLES(glColorPointer);
     gles_glColorPointer(size, type, stride, pointer);
 }
 void glNormalPointer(GLenum type, GLsizei stride, const GLvoid *pointer) {
-    LOAD_GLES(glNormalPointer);
     clone_gl_pointer(state.pointers.normal, 3);
+    if (state.remote) return;
+    LOAD_GLES(glNormalPointer);
     gles_glNormalPointer(type, stride, pointer);
 }
 void glTexCoordPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
-    LOAD_GLES(glTexCoordPointer);
     clone_gl_pointer(state.pointers.tex_coord[state.texture.client], size);
+    if (state.remote) return;
+    LOAD_GLES(glTexCoordPointer);
     gles_glTexCoordPointer(size, type, stride, pointer);
 }
 #undef clone_gl_pointer
@@ -427,6 +431,7 @@ void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
     normal[2] = nz;
 
     if (! block) {
+        FORWARD_IF_REMOTE(glNormal3f);
         PUSH_IF_COMPILING(glNormal3f);
         LOAD_GLES(glNormal3f);
         gles_glNormal3f(nx, ny, nz);
@@ -447,6 +452,7 @@ void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
 
 #ifndef USE_ES2
     if (! block) {
+        FORWARD_IF_REMOTE(glColor4f);
         PUSH_IF_COMPILING(glColor4f);
         LOAD_GLES(glColor4f);
         gles_glColor4f(red, green, blue, alpha);
