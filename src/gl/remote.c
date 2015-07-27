@@ -208,8 +208,10 @@ void remote_call(packed_call_t *call, void *ret_v) {
     if (ret_v == NULL) {
         ret_size = 0;
     }
-    printf("client call: ");
-    glIndexedPrint(call);
+    if (call->index >= 0) {
+        printf("client call: ");
+        glIndexedPrint(call);
+    }
     remote_call_raw(call, pack_size, ret_v, ret_size);
     if (ret_size > 0) {
         printf("returned (%d): ", ret_size);
@@ -227,8 +229,10 @@ void remote_call(packed_call_t *call, void *ret_v) {
 }
 
 void remote_serve_call(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
-    printf("remote call: ");
-    glIndexedPrint(call);
+    if (call->index >= 0) {
+        printf("remote call: ");
+        glIndexedPrint(call);
+    }
     switch (call->index) {
         case REMOTE_BLOCK_DRAW:
         {
