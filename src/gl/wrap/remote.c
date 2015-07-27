@@ -55,7 +55,10 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
                     break;
             }
             glouija_add_block(c, n->args.params, count * sizeof(GLfloat), true);
+            break;
         }
+        case glGenTextures_INDEX:
+            return 1;
 #if 0
         // this is disabled to remove the X dependency for now
         // it looks like glXChooseVisual returns don't matter anyway
@@ -75,6 +78,12 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
 
 void remote_local_post(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, void *ret_v, size_t ret_size) {
     switch (call->index) {
+        case glGenTextures_INDEX:
+        {
+            glGenTextures_PACKED *n = (glGenTextures_PACKED *)call;
+            memcpy(n->args.textures, ret->arg[0].data.block.data, n->args.n * sizeof(GLuint));
+            break;
+        }
 #if 0
         // see above
         case glXChooseVisual_INDEX:
@@ -131,6 +140,15 @@ void remote_target_process(GlouijaCall *c, GlouijaCall *response, packed_call_t 
         case glMaterialfv_INDEX:
             ((glMaterialfv_PACKED *)call)->args.params = first;
             break;
+        case glGenTextures_INDEX:
+        {
+            glGenTextures_PACKED *n = (glGenTextures_PACKED *)call;
+            size_t size = n->args.n * sizeof(GLuint);
+            n->args.textures = malloc(size);
+            glIndexedCall(call, NULL);
+            glouija_add_block(response, n->args.textures, size, true);
+            return;
+        }
 #if 0
         // see above
         case glXChooseVisual_INDEX:
