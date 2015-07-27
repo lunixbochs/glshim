@@ -27,11 +27,23 @@ int remote_spawn(const char *path) {
     int fd = glouija_init_client();
     int pid = fork();
     if (pid == 0) {
-        char *argv[] = {(char *)path, NULL, NULL};
-        if (asprintf(&argv[1], "%d", fd) < 0) {
+        int gdb = getenv("LIBGL_REMOTE_GDB");
+        const char *exec = gdb ? "gdb" : path;
+        char **argv;
+        char **fd_pos;
+        char *argv_gdb[] = {"gdb", "--args", (char *)path, NULL, NULL};
+        char *argv_real[] = {(char *)path, NULL, NULL};
+        if (gdb) {
+            argv = argv_gdb;
+            fd_pos = &argv[3];
+        } else {
+            argv = argv_real;
+            fd_pos = &argv[1];
+        }
+        if (asprintf(fd_pos, "%d", fd) < 0) {
             fprintf(stderr, "libGL: asprintf allocation failed\n");
         } else {
-            execvp(path, argv);
+            execvp(exec, argv);
             if (errno) {
                 fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
             }
