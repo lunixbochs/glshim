@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 #include "block.h"
 #include "gl_helpers.h"
@@ -20,7 +22,43 @@
         0},                                                    \
     }
 
+static void (*old_sigchld)(int);
+
+static void remote_sigchld(int sig) {
+    if (state.remote) {
+        int status;
+        pid_t pid;
+        while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+            if (pid == state.remote) {
+                state.remote = 0;
+                if (WIFSIGNALED(status)) {
+                    printf("libgl_remote killed with signal: %d\n", WTERMSIG(status));
+                } else if (WIFEXITED(status)) {
+                    printf("libgl_remote exited with code: %d\n", WEXITSTATUS(status));
+                }
+            }
+        }
+        if (! state.remote) {
+            abort();
+        }
+    }
+    if (old_sigchld == SIG_DFL) {
+        signal(sig, SIG_DFL);
+        raise(sig);
+        signal(sig, remote_sigchld);
+    } else if (old_sigchld == SIG_IGN) {
+        return;
+    } else {
+        old_sigchld(sig);
+    }
+}
+
 int remote_spawn(const char *path) {
+    static int first = 1;
+    if (first) {
+        first = 0;
+        old_sigchld = signal(SIGCHLD, remote_sigchld);
+    }
     if (path == NULL) {
         path = "libgl_remote";
     }
