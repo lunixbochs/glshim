@@ -1,3 +1,4 @@
+#include "../get.h"
 #include "../remote.h"
 #include "./glpack.h"
 #include "./remote.h"
@@ -129,6 +130,8 @@ void remote_target_pre(GlouijaCall *c, GlouijaCall *response, packed_call_t *cal
         }
         case REMOTE_GL_GET:
         {
+            uint32_t *buf = (uint32_t *)call;
+            gl_get(buf[1], buf[2], ret);
             return;
         }
         case glDeleteTextures_INDEX:

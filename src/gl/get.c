@@ -76,7 +76,7 @@ const GLubyte *glGetString(GLenum name) {
     }
 }
 
-static void gl_get(GLenum pname, GLenum type, GLvoid *params) {
+void gl_get(GLenum pname, GLenum type, GLvoid *params) {
     if (state.remote) {
         remote_gl_get(pname, type, params);
         return;
