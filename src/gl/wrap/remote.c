@@ -131,10 +131,6 @@ void remote_target_pre(GlouijaCall *c, GlouijaCall *response, packed_call_t *cal
         {
             return;
         }
-        case REMOTE_RENDER_RASTER:
-        {
-            return;
-        }
         case glDeleteTextures_INDEX:
             ((glDeleteTextures_PACKED *)call)->args.textures = first;
             break;

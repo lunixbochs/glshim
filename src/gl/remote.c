@@ -274,20 +274,6 @@ void remote_gl_get(GLenum pname, GLenum type, GLvoid *params) {
     remote_call_raw((packed_call_t *)buf, buf_size, params, param_size);
 }
 
-void remote_render_raster(glstate_t *state) {
-    viewport_state_t *v = &state->viewport;
-    size_t raster_size = v->nwidth * v->nheight * gl_pixel_sizeof(GL_RGBA, GL_UNSIGNED_BYTE);
-    uint32_t buf_size = sizeof(uint32_t) * 2;
-    void *buf = malloc(buf_size);
-    uintptr_t pos = (uintptr_t)buf;
-    write_uint32(&pos, REMOTE_RENDER_RASTER);
-    write_uint32(&pos, raster_size);
-    GlouijaCall c = GLOUIJA_CALL_INIT(0);
-    glouija_add_block(&c, buf, buf_size);
-    glouija_add_block(&c, state->raster.buf, raster_size);
-    glouija_command_write(&c);
-}
-
 void remote_glEnable(GLenum cap) {
     remote_call(pack_glEnable(cap), NULL);
 }

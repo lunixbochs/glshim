@@ -166,13 +166,9 @@ void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
 }
 
 void render_raster() {
-    if (!state.viewport.width || !state.viewport.height || !state.raster.buf)
+    if (!state.viewport.width || !state.viewport.height || !state.raster.buf || state.remote)
         return;
 
-    if (state.remote) {
-        remote_render_raster(&state);
-        return;
-    }
 // FIXME
 #ifndef USE_ES2
     glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT);
