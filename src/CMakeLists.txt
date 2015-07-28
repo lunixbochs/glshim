@@ -33,6 +33,11 @@ add_executable(remote EXCLUDE_FROM_ALL ${REMOTE_SOURCES})
 set_target_properties(remote PROPERTIES OUTPUT_NAME libgl_remote)
 target_link_libraries(remote GL_static X11 m dl)
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    target_link_libraries(GL rt)
+    target_link_libraries(remote rt)
+endif()
+
 INSTALL(TARGETS GL
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib

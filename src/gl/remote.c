@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <sys/mman.h>
 
 #include "block.h"
 #include "gl_helpers.h"
@@ -33,9 +34,9 @@ static void remote_sigchld(int sig) {
             if (pid == state.remote) {
                 state.remote = 0;
                 if (WIFSIGNALED(status)) {
-                    printf("libgl_remote killed with signal: %d\n", WTERMSIG(status));
+                    fprintf(stderr, "libgl_remote killed with signal: %d\n", WTERMSIG(status));
                 } else if (WIFEXITED(status)) {
-                    printf("libgl_remote exited with code: %d\n", WEXITSTATUS(status));
+                    fprintf(stderr, "libgl_remote exited with code: %d\n", WEXITSTATUS(status));
                 }
             }
         }
@@ -55,6 +56,7 @@ static void remote_sigchld(int sig) {
 }
 
 int remote_spawn(const char *path) {
+    unsetenv("LIBGL_REMOTE");
     static int first = 1;
     if (first) {
         first = 0;
@@ -64,29 +66,28 @@ int remote_spawn(const char *path) {
     if (path == NULL) {
         path = "libgl_remote";
     }
-    int fd = glouija_init_client();
+    char *shm_name = glouija_init_client();
+    if (! shm_name) {
+        fprintf(stderr, "libGL: failed to allocate shm for remote\n");
+        abort();
+    }
     int pid = fork();
     if (pid == 0) {
         char *gdb = getenv("LIBGL_REMOTE_GDB");
         const char *exec = gdb ? "gdb" : path;
         char **argv;
-        char **fd_pos;
-        char *argv_gdb[] = {"gdb", "--args", (char *)path, NULL, NULL};
-        char *argv_real[] = {(char *)path, NULL, NULL};
+        char *argv_gdb[] = {"gdb", "--args", (char *)path, shm_name, NULL};
+        char *argv_real[] = {(char *)path, shm_name, NULL};
         if (gdb) {
             argv = argv_gdb;
-            fd_pos = &argv[3];
         } else {
             argv = argv_real;
-            fd_pos = &argv[1];
         }
-        if (asprintf(fd_pos, "%d", fd) < 0) {
-            fprintf(stderr, "libGL: asprintf allocation failed\n");
-        } else {
-            execvp(exec, argv);
-            if (errno) {
-                fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
-            }
+        execvp(exec, argv);
+        if (errno) {
+            fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
+            shm_unlink(shm_name);
+            abort();
         }
     }
     return pid;
@@ -227,9 +228,9 @@ void remote_call(packed_call_t *call, void *ret_v) {
     }
 }
 
-int remote_serve(int fd) {
-    if (glouija_init_server(fd)) {
-        fprintf(stderr, "error mapping shared memory from fd %d\n", fd);
+int remote_serve(char *name) {
+    if (glouija_init_server(name)) {
+        fprintf(stderr, "Error mapping shared memory: %s\n", name);
         return 2;
     }
     char retbuf[8];

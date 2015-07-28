@@ -7,7 +7,7 @@
 #define REMOTE_BLOCK_DRAW -1
 #define REMOTE_GL_GET -2
 
-int remote_serve(int fd);
+int remote_serve(char *name);
 int remote_spawn(const char *path);
 void *remote_serialize_block(block_t *block, size_t *size);
 block_t *remote_deserialize_block(void *buf);

@@ -47,7 +47,6 @@ static struct {
     int send_size;
 
     /* Bookkeeping relevant to state destruction */
-    int fd;
     int buffsz;
 
     TagEntry *tag;
@@ -307,13 +306,14 @@ void glouija_command_free(GlouijaCall *c) {
     }
 }
 
-int glouija_init_server(int fd) {
+int glouija_init_server(char *name) {
+    int fd = shm_open(name, O_RDWR, 0700);
     int buffsz = SERVER_BUFFER_SIZE + CLIENT_BUFFER_SIZE + 4096;
     void *addr = mmap(NULL, buffsz, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (addr == MAP_FAILED) {
         return -1;
     }
-    global_state.fd = fd;
+    shm_unlink(name);
     global_state.buffsz = buffsz;
     global_state.stat = addr;
 
@@ -332,21 +332,27 @@ int glouija_init_server(int fd) {
     return 0;
 }
 
-int glouija_init_client() {
+char *glouija_init_client() {
     int buffsz = SERVER_BUFFER_SIZE + CLIENT_BUFFER_SIZE + 4096;
 
-    char name[] = "/tmp/libgl.XXXXXX";
-    int fd = mkstemp(name);
-    unlink(name);
-    lseek(fd, buffsz, SEEK_SET);
-    write(fd, &buffsz, 1);
-
+    char buf[32] = {0};
+    int i = 0;
+    int fd = -1;
+    while (fd < 0) {
+        snprintf(buf, 32, "/glshim.%d", i++);
+        fd = shm_open(buf, O_RDWR | O_CREAT, 0700);
+        if (i > 65535) {
+            fprintf(stderr, "Failed to shm_open() 65535 times, giving up.\n");
+            abort();
+        }
+    }
+    char *name = strdup(buf);
+    ftruncate(fd, buffsz);
     void *addr = mmap(NULL, buffsz, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (addr == MAP_FAILED) {
-        return -1;
+        return NULL;
     }
 
-    global_state.fd = fd;
     global_state.buffsz = buffsz;
     global_state.stat = addr;
 
@@ -365,5 +371,5 @@ int glouija_init_client() {
 
     global_state.tag = NULL;
     global_state.tags = 0;
-    return fd;
+    return name;
 }
