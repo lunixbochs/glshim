@@ -42,8 +42,9 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     if (width < 0 || height < 0) {
         ERROR(GL_INVALID_VALUE);
     }
-    gles_glViewport(x, y, width, height);
     update_viewport(x, y, width, height);
+    FORWARD_IF_REMOTE(glViewport);
+    gles_glViewport(x, y, width, height);
 }
 
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
