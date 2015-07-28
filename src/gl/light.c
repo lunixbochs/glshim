@@ -21,8 +21,8 @@ void glLightModelf(GLenum pname, GLfloat param) {
 }
 
 void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
-    FORWARD_IF_REMOTE(glMaterialfv);
     PUSH_IF_COMPILING(glMaterialfv);
+    FORWARD_IF_REMOTE(glMaterialfv);
     LOAD_GLES(glMaterialfv);
     gles_glMaterialfv(GL_FRONT_AND_BACK, pname, params);
 }

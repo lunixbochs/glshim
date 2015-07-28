@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 #include "block.h"
 #include "gl_helpers.h"
 #include "glouija/glouija.h"
 #include "remote.h"
 #include "wrap/glpack.h"
+#include "wrap/remote.h"
 #include "wrap/types.h"
 
 #define GLOUIJA_CALL_INIT(ret_size)                            \
@@ -19,19 +22,68 @@
         0},                                                    \
     }
 
+static int g_remote_noisy = 0;
+static void (*old_sigchld)(int);
+
+static void remote_sigchld(int sig) {
+    if (state.remote) {
+        int status;
+        pid_t pid;
+        while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+            if (pid == state.remote) {
+                state.remote = 0;
+                if (WIFSIGNALED(status)) {
+                    printf("libgl_remote killed with signal: %d\n", WTERMSIG(status));
+                } else if (WIFEXITED(status)) {
+                    printf("libgl_remote exited with code: %d\n", WEXITSTATUS(status));
+                }
+            }
+        }
+        if (! state.remote) {
+            abort();
+        }
+    }
+    if (old_sigchld == SIG_DFL) {
+        signal(sig, SIG_DFL);
+        raise(sig);
+        signal(sig, remote_sigchld);
+    } else if (old_sigchld == SIG_IGN) {
+        return;
+    } else {
+        old_sigchld(sig);
+    }
+}
 
 int remote_spawn(const char *path) {
+    static int first = 1;
+    if (first) {
+        first = 0;
+        old_sigchld = signal(SIGCHLD, remote_sigchld);
+        g_remote_noisy = !!getenv("LIBGL_REMOTE_NOISY");
+    }
     if (path == NULL) {
         path = "libgl_remote";
     }
     int fd = glouija_init_client();
     int pid = fork();
     if (pid == 0) {
-        char *argv[] = {(char *)path, NULL, NULL};
-        if (asprintf(&argv[1], "%d", fd) < 0) {
+        char *gdb = getenv("LIBGL_REMOTE_GDB");
+        const char *exec = gdb ? "gdb" : path;
+        char **argv;
+        char **fd_pos;
+        char *argv_gdb[] = {"gdb", "--args", (char *)path, NULL, NULL};
+        char *argv_real[] = {(char *)path, NULL, NULL};
+        if (gdb) {
+            argv = argv_gdb;
+            fd_pos = &argv[3];
+        } else {
+            argv = argv_real;
+            fd_pos = &argv[1];
+        }
+        if (asprintf(fd_pos, "%d", fd) < 0) {
             fprintf(stderr, "libGL: asprintf allocation failed\n");
         } else {
-            execvp(path, argv);
+            execvp(exec, argv);
             if (errno) {
                 fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
             }
@@ -68,19 +120,19 @@ void *remote_serialize_block(block_t *block, size_t *ret_size) {
     if (block->vert) {
         size += block->len * 3 * sizeof(GLfloat);
     }
-    size += sizeof(uint32_t);
     if (block->normal) {
         size += block->len * 3 * sizeof(GLfloat);
     }
-    size += sizeof(uint32_t);
     if (block->color) {
         size += block->len * 4 * sizeof(GLfloat);
     }
     for (int i = 0; i < MAX_TEX; i++) {
-        size += sizeof(uint32_t);
         if (block->tex[i]) {
             size += block->len * 2 * sizeof(GLfloat);
         }
+    }
+    if (block->indices) {
+        size += block->count * sizeof(GLushort);
     }
     if (ret_size) {
         *ret_size = size;
@@ -103,6 +155,9 @@ void *remote_serialize_block(block_t *block, size_t *ret_size) {
             write_memcpy(&pos, block->tex[i], block->len * 2 * sizeof(GLfloat));
         }
     }
+    if (block->indices) {
+        write_memcpy(&pos, block->indices, block->count * sizeof(GLushort));
+    }
     return buf;
 }
 
@@ -124,37 +179,26 @@ block_t *remote_deserialize_block(void *buf) {
             block->tex[i] = (GLfloat *)read_ptr(&pos, block->len * 2 * sizeof(GLfloat));
         }
     }
-    return block;
-}
-
-static void remote_call_preprocess(GlouijaCall *c, packed_call_t *call) {
-    switch (call->index) {
-        case glDeleteTextures_INDEX:
-        {
-            glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
-            glouija_add_block(c, n->args.textures, n->args.n * sizeof(GLuint), true);
-            break;
-        }
-        case glTexImage2D_INDEX:
-        {
-            glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
-            size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-            glouija_add_block(c, n->args.pixels, size, true);
-            break;
-        }
+    if (block->indices) {
+        block->indices = (GLushort *)read_ptr(&pos, block->count * sizeof(GLushort));
     }
+    return block;
 }
 
 static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
     GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
-    glouija_add_block(&c, call, pack_size, true);
-    remote_call_preprocess(&c, call);
+    glouija_add_block(&c, call, pack_size);
+    int extra = remote_local_pre(&c, call);
     glouija_command_write(&c);
-    if (ret_size) {
-        GlouijaCall ret = {0};
+    GlouijaCall ret = {0};
+    if (ret_size || extra) {
         glouija_command_read(&ret);
+    }
+    if (ret_size) {
         memcpy(ret_v, ret.arg[0].data.block.data, ret_size);
     }
+    remote_local_post(&c, &ret, call, ret_v, ret_size);
+    glouija_command_free(&ret);
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
@@ -163,7 +207,24 @@ void remote_call(packed_call_t *call, void *ret_v) {
     if (ret_v == NULL) {
         ret_size = 0;
     }
+    if (call->index >= 0 && g_remote_noisy) {
+        printf("client call: ");
+        glIndexedPrint(call);
+    }
     remote_call_raw(call, pack_size, ret_v, ret_size);
+    if (ret_size > 0 && g_remote_noisy) {
+        printf("returned (%d): ", ret_size);
+        if (ret_size == 4) {
+            printf("0x%x\n", *(uint32_t *)ret_v);
+        } else if (ret_size == 8) {
+            printf("0x%x\n", *(uint64_t *)ret_v);
+        } else {
+            for (int i = 0; i < ret_size; i++) {
+                printf("%x", ((unsigned char *)ret_v)[i]);
+            }
+            printf("\n");
+        }
+    }
 }
 
 int remote_serve(int fd) {
@@ -187,31 +248,20 @@ int remote_serve(int fd) {
         } else if (retsize > 0) {
             ret = retbuf;
         }
-        switch (call->index) {
-            case REMOTE_BLOCK_DRAW:
-            {
-                block_t *block = remote_deserialize_block((void *)call);
-                bl_draw(block);
-                break;
-            }
-            case REMOTE_GL_GET:
-            {
-                break;
-            }
-            case REMOTE_RENDER_RASTER:
-            {
-                break;
-            }
-            default:
-                glIndexedCall(call, (void *)ret);
-                break;
+        GlouijaCall response = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
+        if (call->index >= 0 && g_remote_noisy) {
+            printf("remote call: ");
+            glIndexedPrint(call);
         }
+        remote_target_pre(&c, &response, call, ret);
         if (retsize > 0) {
-            GlouijaCall ret = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
-            glouija_add_block(&ret, retbuf, retsize, true);
-            glouija_command_write(&ret);
+            glouija_add_block(&response, ret, retsize);
         }
-        free(call);
+        if (response.args > 0) {
+            glouija_command_write(&response);
+        }
+        remote_target_post(&c, &response, call, ret);
+        glouija_command_free(&c);
         if (retsize > 8) {
             free(ret);
         }
@@ -234,20 +284,6 @@ void remote_gl_get(GLenum pname, GLenum type, GLvoid *params) {
     write_uint32(&pos, type);
     size_t param_size = gl_sizeof(type) * gl_getv_length(pname);
     remote_call_raw((packed_call_t *)buf, buf_size, params, param_size);
-}
-
-void remote_render_raster(glstate_t *state) {
-    viewport_state_t *v = &state->viewport;
-    size_t raster_size = v->nwidth * v->nheight * gl_pixel_sizeof(GL_RGBA, GL_UNSIGNED_BYTE);
-    uint32_t buf_size = sizeof(uint32_t) * 2;
-    void *buf = malloc(buf_size);
-    uintptr_t pos = (uintptr_t)buf;
-    write_uint32(&pos, REMOTE_RENDER_RASTER);
-    write_uint32(&pos, raster_size);
-    GlouijaCall c = GLOUIJA_CALL_INIT(0);
-    glouija_add_block(&c, buf, buf_size, true);
-    glouija_add_block(&c, state->raster.buf, raster_size, true);
-    glouija_command_write(&c);
 }
 
 void remote_glEnable(GLenum cap) {

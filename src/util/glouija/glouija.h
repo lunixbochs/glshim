@@ -6,8 +6,9 @@
 #ifndef __GLOUIJA_H__
 #define __GLOUIJA_H__
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 #define SERVER_BUFFER_SIZE (1024*1024)
 #define CLIENT_BUFFER_SIZE (1024*1024)
@@ -65,9 +66,11 @@ typedef struct {
 uint32_t glouija_alloc_remote_tag(void *data, uint32_t size);
 void glouija_free_remote_tag(uint32_t tag);
 void glouija_await_incoming();
-void glouija_add_block(GlouijaCall *c, void *data, size_t size, int free);
+void glouija_add_block(GlouijaCall *c, void *data, size_t size);
+void glouija_copy_block(GlouijaCall *c, int pos, void *dst);
 int glouija_command_write(GlouijaCall *c);
 int glouija_command_read(GlouijaCall *c);
+void glouija_command_free(GlouijaCall *c);
 int glouija_init_server(int fd);
 int glouija_init_client();
 

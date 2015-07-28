@@ -1,6 +1,5 @@
-{% extends "base/wrap.c.j2" %}
-{% block headers %}
-{{ super() }}
+{% extends "base/base.j2" %}
+{% block main %}
 #include <stdio.h>
 #include "tack.h"
 
@@ -69,14 +68,13 @@ void *mock_pop() {
     return tack_pop(&mock);
 }
 
-{% endblock %}
-
-{% block func_prefix -%}
-{% if not func.name.startswith('glX') %}gles_{% endif %}
-{%- endblock %}
-{% block call %}
+{% for func in functions %}
+{{ func.return }} {% if not func.name.startswith('glX') %}gles_{% endif %}{{ func.name }}({{ func.args|args }}) {
     emit_{{ func.name }}({{ func.args|args(0) }});
     {% if not func.void %}
     return ({{ func.return }})0;
     {% endif %}
+}
+{% endfor %}
+
 {% endblock %}

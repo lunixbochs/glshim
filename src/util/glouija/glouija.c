@@ -147,7 +147,7 @@ int glouija_await_sendbuffer(int sendbuff_size) {
                 return 0;
         } else
             return 0;
-        fprintf(stderr, "Awaiting sendbuffer space %i %i %i\n", sendbuff_size, read_pos, *global_state.next_write);
+        // fprintf(stderr, "Awaiting sendbuffer space %i %i %i\n", sendbuff_size, read_pos, *global_state.next_write);
         usleep(1);
     }
 }
@@ -180,12 +180,17 @@ static int glouija_data_read(void *data, int size, int pos) {
     return -1;
 }
 
-void glouija_add_block(GlouijaCall *c, void *data, size_t size, int free) {
+void glouija_add_block(GlouijaCall *c, void *data, size_t size) {
     int i = c->args++;
     c->arg[i].type = GLO_ARG_TYPE_BLOCK;
     c->arg[i].data.block.data = data;
     c->arg[i].data.block.size = size;
-    c->arg[i].data.block.free = free;
+    c->arg[i].data.block.free = true;
+}
+
+void glouija_copy_block(GlouijaCall *c, int pos, void *dst) {
+    void *data = c->arg[pos].data.block.data;
+    memcpy(dst, data, c->arg[pos].data.block.size);
 }
 
 int glouija_command_write(GlouijaCall *c) {
@@ -291,6 +296,15 @@ int glouija_command_read(GlouijaCall *c) {
         return glouija_command_read(c);
     }
     return 0;
+}
+
+void glouija_command_free(GlouijaCall *c) {
+    for (int i = 0; i < GLO_CALL_ARG_MAX; i++) {
+        if (i < c->args && c->arg[i].type == GLO_ARG_TYPE_BLOCK && c->arg[i].data.block.free) {
+            free(c->arg[i].data.block.data);
+            c->arg[i].data.block.data = NULL;
+        }
+    }
 }
 
 int glouija_init_server(int fd) {

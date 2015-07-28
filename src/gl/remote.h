@@ -6,7 +6,6 @@
 
 #define REMOTE_BLOCK_DRAW -1
 #define REMOTE_GL_GET -2
-#define REMOTE_RENDER_RASTER -3
 
 int remote_serve(int fd);
 int remote_spawn(const char *path);
@@ -16,7 +15,6 @@ void remote_call(packed_call_t *call, void *ret_v);
 
 void remote_block_draw(block_t *block);
 void remote_gl_get(GLenum pname, GLenum type, GLvoid *params);
-void remote_render_raster(glstate_t *state);
 
 void remote_glEnable(GLenum cap);
 void remote_glDisable(GLenum cap);

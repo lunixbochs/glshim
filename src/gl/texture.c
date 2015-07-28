@@ -8,6 +8,7 @@
 #include "pixel.h"
 #include "texture.h"
 #include "types.h"
+#include "remote.h"
 
 // expand non-power-of-two sizes
 // TODO: what does this do to repeating textures?
@@ -91,13 +92,14 @@ static void *swizzle_texture(GLsizei width, GLsizei height,
     return (void *)data;
 }
 
-void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
+void glTexImage2D(GLenum target, GLint level, GLint internalformat,
                   GLsizei width, GLsizei height, GLint border,
                   GLenum format, GLenum type, const GLvoid *data) {
 
-    ERROR_IN_BLOCK();
-    gltexture_t *bound = state.texture.bound[state.texture.active];
     GLvoid *pixels = (GLvoid *)data;
+    ERROR_IN_BLOCK();
+    FORWARD_IF_REMOTE(glTexImage2D);
+    gltexture_t *bound = state.texture.bound[state.texture.active];
     if (data) {
         // implements GL_UNPACK_ROW_LENGTH
         if (state.texture.unpack_row_length && state.texture.unpack_row_length != width) {
@@ -187,10 +189,12 @@ void glTexImage2D(GLenum target, GLint level, GLint internalFormat,
 void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
                      GLsizei width, GLsizei height, GLenum format, GLenum type,
                      const GLvoid *data) {
-    LOAD_GLES(glTexSubImage2D);
+    const GLvoid *pixels = data;
     ERROR_IN_BLOCK();
+    FORWARD_IF_REMOTE(glTexSubImage2D);
+    LOAD_GLES(glTexSubImage2D);
     target = map_tex_target(target);
-    const GLvoid *pixels = swizzle_texture(width, height, &format, &type, data);
+    pixels = swizzle_texture(width, height, &format, &type, data);
     gles_glTexSubImage2D(target, level, xoffset, yoffset,
                          width, height, format, type, pixels);
     if (pixels != data)
@@ -198,12 +202,12 @@ void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
 }
 
 // 1d stubs
-void glTexImage1D(GLenum target, GLint level, GLint internalFormat,
+void glTexImage1D(GLenum target, GLint level, GLint internalformat,
                   GLsizei width, GLint border,
                   GLenum format, GLenum type, const GLvoid *data) {
 
     // TODO: maybe too naive to force GL_TEXTURE_2D here?
-    glTexImage2D(GL_TEXTURE_2D, level, internalFormat, width, 1,
+    glTexImage2D(GL_TEXTURE_2D, level, internalformat, width, 1,
                  border, format, type, data);
 }
 void glTexSubImage1D(GLenum target, GLint level, GLint xoffset,
@@ -214,12 +218,12 @@ void glTexSubImage1D(GLenum target, GLint level, GLint xoffset,
 }
 
 // 3d stubs
-void glTexImage3D(GLenum target, GLint level, GLint internalFormat,
+void glTexImage3D(GLenum target, GLint level, GLint internalformat,
                   GLsizei width, GLsizei height, GLsizei depth, GLint border,
                   GLenum format, GLenum type, const GLvoid *data) {
 
     // TODO: maybe too naive to force GL_TEXTURE_2D here?
-    glTexImage2D(GL_TEXTURE_2D, level, internalFormat, width, height, border, format, type, data);
+    glTexImage2D(GL_TEXTURE_2D, level, internalformat, width, height, border, format, type, data);
 }
 void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
                      GLsizei width, GLsizei height, GLsizei depth, GLenum format,
