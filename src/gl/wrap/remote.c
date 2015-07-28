@@ -127,10 +127,6 @@ void remote_local_post(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, vo
 }
 
 void remote_target_pre(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
-    if (call->index >= 0) {
-        printf("remote call: ");
-        glIndexedPrint(call);
-    }
     void *first = c->arg[2].data.block.data;
     switch (call->index) {
         case REMOTE_BLOCK_DRAW:

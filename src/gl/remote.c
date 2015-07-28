@@ -22,6 +22,7 @@
         0},                                                    \
     }
 
+static int g_remote_noisy = 0;
 static void (*old_sigchld)(int);
 
 static void remote_sigchld(int sig) {
@@ -58,6 +59,7 @@ int remote_spawn(const char *path) {
     if (first) {
         first = 0;
         old_sigchld = signal(SIGCHLD, remote_sigchld);
+        g_remote_noisy = !!getenv("LIBGL_REMOTE_NOISY");
     }
     if (path == NULL) {
         path = "libgl_remote";
@@ -199,12 +201,12 @@ void remote_call(packed_call_t *call, void *ret_v) {
     if (ret_v == NULL) {
         ret_size = 0;
     }
-    if (call->index >= 0) {
+    if (call->index >= 0 && g_remote_noisy) {
         printf("client call: ");
         glIndexedPrint(call);
     }
     remote_call_raw(call, pack_size, ret_v, ret_size);
-    if (ret_size > 0) {
+    if (ret_size > 0 && g_remote_noisy) {
         printf("returned (%d): ", ret_size);
         if (ret_size == 4) {
             printf("0x%x\n", *(uint32_t *)ret_v);
@@ -241,6 +243,10 @@ int remote_serve(int fd) {
             ret = retbuf;
         }
         GlouijaCall response = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
+        if (call->index >= 0 && g_remote_noisy) {
+            printf("remote call: ");
+            glIndexedPrint(call);
+        }
         remote_target_pre(&c, &response, call, ret);
         if (retsize > 0) {
             glouija_add_block(&response, ret, retsize);
