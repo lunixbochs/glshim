@@ -147,7 +147,7 @@ int glouija_await_sendbuffer(int sendbuff_size) {
                 return 0;
         } else
             return 0;
-        fprintf(stderr, "Awaiting sendbuffer space %i %i %i\n", sendbuff_size, read_pos, *global_state.next_write);
+        // fprintf(stderr, "Awaiting sendbuffer space %i %i %i\n", sendbuff_size, read_pos, *global_state.next_write);
         usleep(1);
     }
 }
