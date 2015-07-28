@@ -92,16 +92,16 @@ void bl_q2t(block_t *block) {
     // TODO: split to multiple blocks if block->len > 65535
 
     q2t_calc(block->len);
+    block->q2t = true;
+    block->count = block->len * 1.5;
     if (block->indices) {
-        GLushort *indices = malloc(block->len);
-        for (int i = 0; i < block->len; i++) {
+        GLushort *indices = malloc(block->count * sizeof(GLushort));
+        for (int i = 0; i < block->count; i++) {
             indices[i] = block->indices[q2t.cache[i]];
         }
         free(block->indices);
         block->indices = indices;
     }
-    block->q2t = true;
-    block->count = block->len * 1.5;
     return;
 }
 
