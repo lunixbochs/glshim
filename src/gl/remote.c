@@ -120,19 +120,19 @@ void *remote_serialize_block(block_t *block, size_t *ret_size) {
     if (block->vert) {
         size += block->len * 3 * sizeof(GLfloat);
     }
-    size += sizeof(uint32_t);
     if (block->normal) {
         size += block->len * 3 * sizeof(GLfloat);
     }
-    size += sizeof(uint32_t);
     if (block->color) {
         size += block->len * 4 * sizeof(GLfloat);
     }
     for (int i = 0; i < MAX_TEX; i++) {
-        size += sizeof(uint32_t);
         if (block->tex[i]) {
             size += block->len * 2 * sizeof(GLfloat);
         }
+    }
+    if (block->indices) {
+        size += block->count * sizeof(GLushort);
     }
     if (ret_size) {
         *ret_size = size;
@@ -155,6 +155,9 @@ void *remote_serialize_block(block_t *block, size_t *ret_size) {
             write_memcpy(&pos, block->tex[i], block->len * 2 * sizeof(GLfloat));
         }
     }
+    if (block->indices) {
+        write_memcpy(&pos, block->indices, block->count * sizeof(GLushort));
+    }
     return buf;
 }
 
@@ -175,6 +178,9 @@ block_t *remote_deserialize_block(void *buf) {
         if (block->tex[i]) {
             block->tex[i] = (GLfloat *)read_ptr(&pos, block->len * 2 * sizeof(GLfloat));
         }
+    }
+    if (block->indices) {
+        block->indices = (GLushort *)read_ptr(&pos, block->count * sizeof(GLushort));
     }
     return block;
 }
