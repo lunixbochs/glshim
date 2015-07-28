@@ -59,6 +59,19 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
         }
         case glGenTextures_INDEX:
             return 1;
+        case glBitmap_INDEX:
+        {
+            glBitmap_PACKED *n = (glBitmap_PACKED *)call;
+            size_t size = ((n->args.width + 7) / 8) * n->args.height;
+            glouija_add_block(c, n->args.bitmap, size);
+            break;
+        }
+        case glDrawPixels_INDEX:
+        {
+            glDrawPixels_PACKED *n = (glDrawPixels_PACKED *)call;
+            size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
+            glouija_add_block(c, n->args.pixels, size);
+        }
 #if 0
         // this is disabled to remove the X dependency for now
         // it looks like glXChooseVisual returns don't matter anyway
@@ -136,6 +149,12 @@ void remote_target_pre(GlouijaCall *c, GlouijaCall *response, packed_call_t *cal
             break;
         case glMaterialfv_INDEX:
             ((glMaterialfv_PACKED *)call)->args.params = first;
+            break;
+        case glBitmap_INDEX:
+            ((glBitmap_PACKED *)call)->args.bitmap = first;
+            break;
+        case glDrawPixels_INDEX:
+            ((glDrawPixels_PACKED *)call)->args.pixels = first;
             break;
         case glGenTextures_INDEX:
         {
