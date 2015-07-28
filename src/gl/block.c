@@ -304,8 +304,11 @@ void bl_draw(block_t *block) {
 
     GLushort *indices = block->indices;
     // if glDrawElements or glArrayElement was used, we should have already updated block->indices with q2t
-    if (block->q2t && !indices)
+    if (block->q2t && !indices) {
+        // make sure we resized q2t. this block might be from remote.
+        q2t_calc(block->len);
         indices = q2t.cache;
+    }
 
     if (indices) {
         gles_glDrawElements(block->mode, block->count, GL_UNSIGNED_SHORT, indices);
