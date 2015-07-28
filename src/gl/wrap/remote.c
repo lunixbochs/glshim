@@ -15,8 +15,19 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
         case glTexImage2D_INDEX:
         {
             glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
-            size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-            glouija_add_block(c, n->args.pixels, size);
+            if (n->args.pixels) {
+                size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
+                glouija_add_block(c, n->args.pixels, size);
+            }
+            break;
+        }
+        case glTexSubImage2D_INDEX:
+        {
+            glTexSubImage2D_PACKED *n = (glTexSubImage2D_PACKED *)call;
+            if (n->args.pixels) {
+                size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
+                glouija_add_block(c, n->args.pixels, size);
+            }
             break;
         }
         case glLoadMatrixf_INDEX:
@@ -138,8 +149,19 @@ void remote_target_pre(GlouijaCall *c, GlouijaCall *response, packed_call_t *cal
             ((glDeleteTextures_PACKED *)call)->args.textures = first;
             break;
         case glTexImage2D_INDEX:
-            ((glTexImage2D_PACKED *)call)->args.pixels = first;
+        {
+            glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
+            if (n->args.pixels)
+                n->args.pixels = first;
             break;
+        }
+        case glTexSubImage2D_INDEX:
+        {
+            glTexSubImage2D_PACKED *n = (glTexSubImage2D_PACKED *)call;
+            if (n->args.pixels)
+                n->args.pixels = first;
+            break;
+        }
         case glLoadMatrixf_INDEX:
             ((glLoadMatrixf_PACKED *)call)->args.m = first;
             break;
