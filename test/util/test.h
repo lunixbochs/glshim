@@ -1,4 +1,5 @@
 #define LOAD_RAW(...) {}
+#define LOAD_GLES(...) {}
 #define PROXY(...) {}
 
 #include <stdio.h>

@@ -4,7 +4,6 @@ extern "C" {
 #endif
 #include "gl_str.h"
 #include "wrap/glpack.h"
-
 #ifndef MOCK_H
 #define MOCK_H
 

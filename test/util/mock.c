@@ -1,5 +1,4 @@
 #include "mock.h"
-
 #include <stdio.h>
 #include "tack.h"
 

@@ -1,7 +1,6 @@
 #ifdef USE_ES2
 #include "glpack.h"
 #include "../loader.h"
-
 void glIndexedCall(const packed_call_t *packed, void *ret_v) {
     switch (packed->index) {
         #ifndef skip_index_glAccum

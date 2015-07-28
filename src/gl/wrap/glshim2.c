@@ -1422,4 +1422,445 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     gles_glViewport(x, y, width, height);
 }
 #endif
+
+void stub_glActiveTexture(GLenum texture) {
+    printf("stub glActiveTexture(0x%04X);\n", texture);
+}
+void stub_glAttachShader(GLuint program, GLuint shader) {
+    printf("stub glAttachShader(%u, %u);\n", program, shader);
+}
+void stub_glBindAttribLocation(GLuint program, GLuint index, const GLchar * name) {
+    printf("stub glBindAttribLocation(%u, %u, %p);\n", program, index, name);
+}
+void stub_glBindBuffer(GLenum target, GLuint buffer) {
+    printf("stub glBindBuffer(0x%04X, %u);\n", target, buffer);
+}
+void stub_glBindFramebuffer(GLenum target, GLuint framebuffer) {
+    printf("stub glBindFramebuffer(0x%04X, %u);\n", target, framebuffer);
+}
+void stub_glBindRenderbuffer(GLenum target, GLuint renderbuffer) {
+    printf("stub glBindRenderbuffer(0x%04X, %u);\n", target, renderbuffer);
+}
+void stub_glBindTexture(GLenum target, GLuint texture) {
+    printf("stub glBindTexture(0x%04X, %u);\n", target, texture);
+}
+void stub_glBlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
+    printf("stub glBlendColor(%0.2f, %0.2f, %0.2f, %0.2f);\n", red, green, blue, alpha);
+}
+void stub_glBlendEquation(GLenum mode) {
+    printf("stub glBlendEquation(0x%04X);\n", mode);
+}
+void stub_glBlendEquationSeparate(GLenum modeRGB, GLenum modeAlpha) {
+    printf("stub glBlendEquationSeparate(0x%04X, 0x%04X);\n", modeRGB, modeAlpha);
+}
+void stub_glBlendFunc(GLenum sfactor, GLenum dfactor) {
+    printf("stub glBlendFunc(0x%04X, 0x%04X);\n", sfactor, dfactor);
+}
+void stub_glBlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha) {
+    printf("stub glBlendFuncSeparate(0x%04X, 0x%04X, 0x%04X, 0x%04X);\n", sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+}
+void stub_glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage) {
+    printf("stub glBufferData(0x%04X, %td, %p, 0x%04X);\n", target, size, data, usage);
+}
+void stub_glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid * data) {
+    printf("stub glBufferSubData(0x%04X, %td, %td, %p);\n", target, offset, size, data);
+}
+GLenum stub_glCheckFramebufferStatus(GLenum target) {
+    printf("stub glCheckFramebufferStatus(0x%04X);\n", target);
+    return 0;
+}
+void stub_glClear(GLbitfield mask) {
+    printf("stub glClear(%d);\n", mask);
+}
+void stub_glClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
+    printf("stub glClearColor(%0.2f, %0.2f, %0.2f, %0.2f);\n", red, green, blue, alpha);
+}
+void stub_glClearDepthf(GLclampf depth) {
+    printf("stub glClearDepthf(%0.2f);\n", depth);
+}
+void stub_glClearStencil(GLint s) {
+    printf("stub glClearStencil(%d);\n", s);
+}
+void stub_glColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha) {
+    printf("stub glColorMask(%d, %d, %d, %d);\n", red, green, blue, alpha);
+}
+void stub_glCompileShader(GLuint shader) {
+    printf("stub glCompileShader(%u);\n", shader);
+}
+void stub_glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const GLvoid * data) {
+    printf("stub glCompressedTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %p);\n", target, level, internalformat, width, height, border, imageSize, data);
+}
+void stub_glCompressedTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid * data) {
+    printf("stub glCompressedTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, %d, %p);\n", target, level, xoffset, yoffset, width, height, format, imageSize, data);
+}
+void stub_glCopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border) {
+    printf("stub glCopyTexImage2D(0x%04X, %d, 0x%04X, %d, %d, %d, %d, %d);\n", target, level, internalformat, x, y, width, height, border);
+}
+void stub_glCopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height) {
+    printf("stub glCopyTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, %d, %d);\n", target, level, xoffset, yoffset, x, y, width, height);
+}
+GLuint stub_glCreateProgram() {
+    printf("stub glCreateProgram();\n");
+    return 0;
+}
+GLuint stub_glCreateShader(GLenum type) {
+    printf("stub glCreateShader(0x%04X);\n", type);
+    return 0;
+}
+void stub_glCullFace(GLenum mode) {
+    printf("stub glCullFace(0x%04X);\n", mode);
+}
+void stub_glDeleteBuffers(GLsizei n, const GLuint * buffers) {
+    printf("stub glDeleteBuffers(%d, %p);\n", n, buffers);
+}
+void stub_glDeleteFramebuffers(GLsizei n, const GLuint * framebuffers) {
+    printf("stub glDeleteFramebuffers(%d, %p);\n", n, framebuffers);
+}
+void stub_glDeleteProgram(GLuint program) {
+    printf("stub glDeleteProgram(%u);\n", program);
+}
+void stub_glDeleteRenderbuffers(GLsizei n, const GLuint * renderbuffers) {
+    printf("stub glDeleteRenderbuffers(%d, %p);\n", n, renderbuffers);
+}
+void stub_glDeleteShader(GLuint shader) {
+    printf("stub glDeleteShader(%u);\n", shader);
+}
+void stub_glDeleteTextures(GLsizei n, const GLuint * textures) {
+    printf("stub glDeleteTextures(%d, %p);\n", n, textures);
+}
+void stub_glDepthFunc(GLenum func) {
+    printf("stub glDepthFunc(0x%04X);\n", func);
+}
+void stub_glDepthMask(GLboolean flag) {
+    printf("stub glDepthMask(%d);\n", flag);
+}
+void stub_glDepthRangef(GLclampf near, GLclampf far) {
+    printf("stub glDepthRangef(%0.2f, %0.2f);\n", near, far);
+}
+void stub_glDetachShader(GLuint program, GLuint shader) {
+    printf("stub glDetachShader(%u, %u);\n", program, shader);
+}
+void stub_glDisable(GLenum cap) {
+    printf("stub glDisable(0x%04X);\n", cap);
+}
+void stub_glDisableVertexAttribArray(GLuint index) {
+    printf("stub glDisableVertexAttribArray(%u);\n", index);
+}
+void stub_glDrawArrays(GLenum mode, GLint first, GLsizei count) {
+    printf("stub glDrawArrays(0x%04X, %d, %d);\n", mode, first, count);
+}
+void stub_glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid * indices) {
+    printf("stub glDrawElements(0x%04X, %d, 0x%04X, %p);\n", mode, count, type, indices);
+}
+void stub_glEnable(GLenum cap) {
+    printf("stub glEnable(0x%04X);\n", cap);
+}
+void stub_glEnableVertexAttribArray(GLuint index) {
+    printf("stub glEnableVertexAttribArray(%u);\n", index);
+}
+void stub_glFinish() {
+    printf("stub glFinish();\n");
+}
+void stub_glFlush() {
+    printf("stub glFlush();\n");
+}
+void stub_glFramebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+    printf("stub glFramebufferRenderbuffer(0x%04X, 0x%04X, 0x%04X, %u);\n", target, attachment, renderbuffertarget, renderbuffer);
+}
+void stub_glFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
+    printf("stub glFramebufferTexture2D(0x%04X, 0x%04X, 0x%04X, %u, %d);\n", target, attachment, textarget, texture, level);
+}
+void stub_glFrontFace(GLenum mode) {
+    printf("stub glFrontFace(0x%04X);\n", mode);
+}
+void stub_glGenBuffers(GLsizei n, GLuint * buffers) {
+    printf("stub glGenBuffers(%d, %p);\n", n, buffers);
+}
+void stub_glGenFramebuffers(GLsizei n, GLuint * framebuffers) {
+    printf("stub glGenFramebuffers(%d, %p);\n", n, framebuffers);
+}
+void stub_glGenRenderbuffers(GLsizei n, GLuint * renderbuffers) {
+    printf("stub glGenRenderbuffers(%d, %p);\n", n, renderbuffers);
+}
+void stub_glGenTextures(GLsizei n, GLuint * textures) {
+    printf("stub glGenTextures(%d, %p);\n", n, textures);
+}
+void stub_glGenerateMipmap(GLenum target) {
+    printf("stub glGenerateMipmap(0x%04X);\n", target);
+}
+void stub_glGetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, GLsizei * length, GLint * size, GLenum * type, GLchar * name) {
+    printf("stub glGetActiveAttrib(%u, %u, %d, %p, %p, %p, %p);\n", program, index, bufSize, length, size, type, name);
+}
+void stub_glGetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, GLsizei * length, GLint * size, GLenum * type, GLchar * name) {
+    printf("stub glGetActiveUniform(%u, %u, %d, %p, %p, %p, %p);\n", program, index, bufSize, length, size, type, name);
+}
+void stub_glGetAttachedShaders(GLuint program, GLsizei maxCount, GLsizei * count, GLuint * obj) {
+    printf("stub glGetAttachedShaders(%u, %d, %p, %p);\n", program, maxCount, count, obj);
+}
+GLint stub_glGetAttribLocation(GLuint program, const GLchar * name) {
+    printf("stub glGetAttribLocation(%u, %p);\n", program, name);
+    return 0;
+}
+void stub_glGetBooleanv(GLenum pname, GLboolean * params) {
+    printf("stub glGetBooleanv(0x%04X, %p);\n", pname, params);
+}
+void stub_glGetBufferParameteriv(GLenum target, GLenum pname, GLint * params) {
+    printf("stub glGetBufferParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params);
+}
+GLenum stub_glGetError() {
+    printf("stub glGetError();\n");
+    return 0;
+}
+void stub_glGetFloatv(GLenum pname, GLfloat * params) {
+    printf("stub glGetFloatv(0x%04X, %p);\n", pname, params);
+}
+void stub_glGetFramebufferAttachmentParameteriv(GLenum target, GLenum attachment, GLenum pname, GLint * params) {
+    printf("stub glGetFramebufferAttachmentParameteriv(0x%04X, 0x%04X, 0x%04X, %p);\n", target, attachment, pname, params);
+}
+void stub_glGetIntegerv(GLenum pname, GLint * params) {
+    printf("stub glGetIntegerv(0x%04X, %p);\n", pname, params);
+}
+void stub_glGetProgramInfoLog(GLuint program, GLsizei bufSize, GLsizei * length, GLchar * infoLog) {
+    printf("stub glGetProgramInfoLog(%u, %d, %p, %p);\n", program, bufSize, length, infoLog);
+}
+void stub_glGetProgramiv(GLuint program, GLenum pname, GLint * params) {
+    printf("stub glGetProgramiv(%u, 0x%04X, %p);\n", program, pname, params);
+}
+void stub_glGetRenderbufferParameteriv(GLenum target, GLenum pname, GLint * params) {
+    printf("stub glGetRenderbufferParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params);
+}
+void stub_glGetShaderInfoLog(GLuint shader, GLsizei bufSize, GLsizei * length, GLchar * infoLog) {
+    printf("stub glGetShaderInfoLog(%u, %d, %p, %p);\n", shader, bufSize, length, infoLog);
+}
+void stub_glGetShaderPrecisionFormat(GLenum shadertype, GLenum precisiontype, GLint * range, GLint * precision) {
+    printf("stub glGetShaderPrecisionFormat(0x%04X, 0x%04X, %p, %p);\n", shadertype, precisiontype, range, precision);
+}
+void stub_glGetShaderSource(GLuint shader, GLsizei bufSize, GLsizei * length, GLchar * source) {
+    printf("stub glGetShaderSource(%u, %d, %p, %p);\n", shader, bufSize, length, source);
+}
+void stub_glGetShaderiv(GLuint shader, GLenum pname, GLint * params) {
+    printf("stub glGetShaderiv(%u, 0x%04X, %p);\n", shader, pname, params);
+}
+const GLubyte * stub_glGetString(GLenum name) {
+    printf("stub glGetString(0x%04X);\n", name);
+    return 0;
+}
+void stub_glGetTexParameterfv(GLenum target, GLenum pname, GLfloat * params) {
+    printf("stub glGetTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params);
+}
+void stub_glGetTexParameteriv(GLenum target, GLenum pname, GLint * params) {
+    printf("stub glGetTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params);
+}
+GLint stub_glGetUniformLocation(GLuint program, const GLchar * name) {
+    printf("stub glGetUniformLocation(%u, %p);\n", program, name);
+    return 0;
+}
+void stub_glGetUniformfv(GLuint program, GLint location, GLfloat * params) {
+    printf("stub glGetUniformfv(%u, %d, %p);\n", program, location, params);
+}
+void stub_glGetUniformiv(GLuint program, GLint location, GLint * params) {
+    printf("stub glGetUniformiv(%u, %d, %p);\n", program, location, params);
+}
+void stub_glGetVertexAttribPointerv(GLuint index, GLenum pname, GLvoid ** pointer) {
+    printf("stub glGetVertexAttribPointerv(%u, 0x%04X, %p);\n", index, pname, pointer);
+}
+void stub_glGetVertexAttribfv(GLuint index, GLenum pname, GLfloat * params) {
+    printf("stub glGetVertexAttribfv(%u, 0x%04X, %p);\n", index, pname, params);
+}
+void stub_glGetVertexAttribiv(GLuint index, GLenum pname, GLint * params) {
+    printf("stub glGetVertexAttribiv(%u, 0x%04X, %p);\n", index, pname, params);
+}
+void stub_glHint(GLenum target, GLenum mode) {
+    printf("stub glHint(0x%04X, 0x%04X);\n", target, mode);
+}
+GLboolean stub_glIsBuffer(GLuint buffer) {
+    printf("stub glIsBuffer(%u);\n", buffer);
+    return 0;
+}
+GLboolean stub_glIsEnabled(GLenum cap) {
+    printf("stub glIsEnabled(0x%04X);\n", cap);
+    return 0;
+}
+GLboolean stub_glIsFramebuffer(GLuint framebuffer) {
+    printf("stub glIsFramebuffer(%u);\n", framebuffer);
+    return 0;
+}
+GLboolean stub_glIsProgram(GLuint program) {
+    printf("stub glIsProgram(%u);\n", program);
+    return 0;
+}
+GLboolean stub_glIsRenderbuffer(GLuint renderbuffer) {
+    printf("stub glIsRenderbuffer(%u);\n", renderbuffer);
+    return 0;
+}
+GLboolean stub_glIsShader(GLuint shader) {
+    printf("stub glIsShader(%u);\n", shader);
+    return 0;
+}
+GLboolean stub_glIsTexture(GLuint texture) {
+    printf("stub glIsTexture(%u);\n", texture);
+    return 0;
+}
+void stub_glLineWidth(GLfloat width) {
+    printf("stub glLineWidth(%0.2f);\n", width);
+}
+void stub_glLinkProgram(GLuint program) {
+    printf("stub glLinkProgram(%u);\n", program);
+}
+void stub_glPixelStorei(GLenum pname, GLint param) {
+    printf("stub glPixelStorei(0x%04X, %d);\n", pname, param);
+}
+void stub_glPolygonOffset(GLfloat factor, GLfloat units) {
+    printf("stub glPolygonOffset(%0.2f, %0.2f);\n", factor, units);
+}
+void stub_glReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid * pixels) {
+    printf("stub glReadPixels(%d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", x, y, width, height, format, type, pixels);
+}
+void stub_glReleaseShaderCompiler() {
+    printf("stub glReleaseShaderCompiler();\n");
+}
+void stub_glRenderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+    printf("stub glRenderbufferStorage(0x%04X, 0x%04X, %d, %d);\n", target, internalformat, width, height);
+}
+void stub_glSampleCoverage(GLclampf value, GLboolean invert) {
+    printf("stub glSampleCoverage(%0.2f, %d);\n", value, invert);
+}
+void stub_glScissor(GLint x, GLint y, GLsizei width, GLsizei height) {
+    printf("stub glScissor(%d, %d, %d, %d);\n", x, y, width, height);
+}
+void stub_glShaderBinary(GLsizei count, const GLuint * shaders, GLenum binaryformat, const GLvoid * binary, GLsizei length) {
+    printf("stub glShaderBinary(%d, %p, 0x%04X, %p, %d);\n", count, shaders, binaryformat, binary, length);
+}
+void stub_glShaderSource(GLuint shader, GLsizei count, const GLchar * const * string, const GLint * length) {
+    printf("stub glShaderSource(%u, %d, %p, %p);\n", shader, count, string, length);
+}
+void stub_glStencilFunc(GLenum func, GLint ref, GLuint mask) {
+    printf("stub glStencilFunc(0x%04X, %d, %u);\n", func, ref, mask);
+}
+void stub_glStencilFuncSeparate(GLenum face, GLenum func, GLint ref, GLuint mask) {
+    printf("stub glStencilFuncSeparate(0x%04X, 0x%04X, %d, %u);\n", face, func, ref, mask);
+}
+void stub_glStencilMask(GLuint mask) {
+    printf("stub glStencilMask(%u);\n", mask);
+}
+void stub_glStencilMaskSeparate(GLenum face, GLuint mask) {
+    printf("stub glStencilMaskSeparate(0x%04X, %u);\n", face, mask);
+}
+void stub_glStencilOp(GLenum fail, GLenum zfail, GLenum zpass) {
+    printf("stub glStencilOp(0x%04X, 0x%04X, 0x%04X);\n", fail, zfail, zpass);
+}
+void stub_glStencilOpSeparate(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass) {
+    printf("stub glStencilOpSeparate(0x%04X, 0x%04X, 0x%04X, 0x%04X);\n", face, sfail, dpfail, dppass);
+}
+void stub_glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * pixels) {
+    printf("stub glTexImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, internalformat, width, height, border, format, type, pixels);
+}
+void stub_glTexParameterf(GLenum target, GLenum pname, GLfloat param) {
+    printf("stub glTexParameterf(0x%04X, 0x%04X, %0.2f);\n", target, pname, param);
+}
+void stub_glTexParameterfv(GLenum target, GLenum pname, const GLfloat * params) {
+    printf("stub glTexParameterfv(0x%04X, 0x%04X, %p);\n", target, pname, params);
+}
+void stub_glTexParameteri(GLenum target, GLenum pname, GLint param) {
+    printf("stub glTexParameteri(0x%04X, 0x%04X, %d);\n", target, pname, param);
+}
+void stub_glTexParameteriv(GLenum target, GLenum pname, const GLint * params) {
+    printf("stub glTexParameteriv(0x%04X, 0x%04X, %p);\n", target, pname, params);
+}
+void stub_glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid * pixels) {
+    printf("stub glTexSubImage2D(0x%04X, %d, %d, %d, %d, %d, 0x%04X, 0x%04X, %p);\n", target, level, xoffset, yoffset, width, height, format, type, pixels);
+}
+void stub_glUniform1f(GLint location, GLfloat v0) {
+    printf("stub glUniform1f(%d, %0.2f);\n", location, v0);
+}
+void stub_glUniform1fv(GLint location, GLsizei count, const GLfloat * value) {
+    printf("stub glUniform1fv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniform1i(GLint location, GLint v0) {
+    printf("stub glUniform1i(%d, %d);\n", location, v0);
+}
+void stub_glUniform1iv(GLint location, GLsizei count, const GLint * value) {
+    printf("stub glUniform1iv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniform2f(GLint location, GLfloat v0, GLfloat v1) {
+    printf("stub glUniform2f(%d, %0.2f, %0.2f);\n", location, v0, v1);
+}
+void stub_glUniform2fv(GLint location, GLsizei count, const GLfloat * value) {
+    printf("stub glUniform2fv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniform2i(GLint location, GLint v0, GLint v1) {
+    printf("stub glUniform2i(%d, %d, %d);\n", location, v0, v1);
+}
+void stub_glUniform2iv(GLint location, GLsizei count, const GLint * value) {
+    printf("stub glUniform2iv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2) {
+    printf("stub glUniform3f(%d, %0.2f, %0.2f, %0.2f);\n", location, v0, v1, v2);
+}
+void stub_glUniform3fv(GLint location, GLsizei count, const GLfloat * value) {
+    printf("stub glUniform3fv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniform3i(GLint location, GLint v0, GLint v1, GLint v2) {
+    printf("stub glUniform3i(%d, %d, %d, %d);\n", location, v0, v1, v2);
+}
+void stub_glUniform3iv(GLint location, GLsizei count, const GLint * value) {
+    printf("stub glUniform3iv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) {
+    printf("stub glUniform4f(%d, %0.2f, %0.2f, %0.2f, %0.2f);\n", location, v0, v1, v2, v3);
+}
+void stub_glUniform4fv(GLint location, GLsizei count, const GLfloat * value) {
+    printf("stub glUniform4fv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3) {
+    printf("stub glUniform4i(%d, %d, %d, %d, %d);\n", location, v0, v1, v2, v3);
+}
+void stub_glUniform4iv(GLint location, GLsizei count, const GLint * value) {
+    printf("stub glUniform4iv(%d, %d, %p);\n", location, count, value);
+}
+void stub_glUniformMatrix2fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat * value) {
+    printf("stub glUniformMatrix2fv(%d, %d, %d, %p);\n", location, count, transpose, value);
+}
+void stub_glUniformMatrix3fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat * value) {
+    printf("stub glUniformMatrix3fv(%d, %d, %d, %p);\n", location, count, transpose, value);
+}
+void stub_glUniformMatrix4fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat * value) {
+    printf("stub glUniformMatrix4fv(%d, %d, %d, %p);\n", location, count, transpose, value);
+}
+void stub_glUseProgram(GLuint program) {
+    printf("stub glUseProgram(%u);\n", program);
+}
+void stub_glValidateProgram(GLuint program) {
+    printf("stub glValidateProgram(%u);\n", program);
+}
+void stub_glVertexAttrib1f(GLuint index, GLfloat x) {
+    printf("stub glVertexAttrib1f(%u, %0.2f);\n", index, x);
+}
+void stub_glVertexAttrib1fv(GLuint index, const GLfloat * v) {
+    printf("stub glVertexAttrib1fv(%u, %p);\n", index, v);
+}
+void stub_glVertexAttrib2f(GLuint index, GLfloat x, GLfloat y) {
+    printf("stub glVertexAttrib2f(%u, %0.2f, %0.2f);\n", index, x, y);
+}
+void stub_glVertexAttrib2fv(GLuint index, const GLfloat * v) {
+    printf("stub glVertexAttrib2fv(%u, %p);\n", index, v);
+}
+void stub_glVertexAttrib3f(GLuint index, GLfloat x, GLfloat y, GLfloat z) {
+    printf("stub glVertexAttrib3f(%u, %0.2f, %0.2f, %0.2f);\n", index, x, y, z);
+}
+void stub_glVertexAttrib3fv(GLuint index, const GLfloat * v) {
+    printf("stub glVertexAttrib3fv(%u, %p);\n", index, v);
+}
+void stub_glVertexAttrib4f(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+    printf("stub glVertexAttrib4f(%u, %0.2f, %0.2f, %0.2f, %0.2f);\n", index, x, y, z, w);
+}
+void stub_glVertexAttrib4fv(GLuint index, const GLfloat * v) {
+    printf("stub glVertexAttrib4fv(%u, %p);\n", index, v);
+}
+void stub_glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer) {
+    printf("stub glVertexAttribPointer(%u, %d, 0x%04X, %d, %d, %p);\n", index, size, type, normalized, stride, pointer);
+}
+void stub_glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
+    printf("stub glViewport(%d, %d, %d, %d);\n", x, y, width, height);
+}
 #endif

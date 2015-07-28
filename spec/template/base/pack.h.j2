@@ -1,13 +1,4 @@
-{% macro args(f) -%}
-{% for arg in f.args -%}
-    args->{{ arg.name }}{% if not arg.last %}, {% endif %}
-{% endfor %}
-{%- endmacro %}
-
-{% macro call(f) -%}
-{{ f.name }}({{ args(f) }});
-{%- endmacro %}
-
+{% from "base/util.j2" import args, call %}
 {% extends "base/header.j2" %}
 {% block content %}
 
@@ -74,6 +65,7 @@ void glIndexedPrint(const packed_call_t *packed);
     {% endif %}
 } while(0)
 {{ func.return }} {{ func.name }}({{ func.name }}_ARG_EXPAND);
+{{ func.return }} stub_{{ func.name }}({{ func.name }}_ARG_EXPAND);
 typedef {{ func.return }} (*{{ func.name }}_PTR)({{ func.name }}_ARG_EXPAND);
 {% endfor %}
 

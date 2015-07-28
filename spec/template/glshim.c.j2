@@ -1,20 +1,27 @@
-{% extends "base/wrap.c.j2" %}
-{% block headers %}
-{{ super() }}
-{% endblock %}
-{% block definition %}
+{% from "base/util.j2" import fprint %}
+{% extends "base/base.j2" %}
+{% block main %}
+
+{% for func in functions %}
 #ifndef skip_{{ func.name }}
-{{ super() -}}
-#endif
-{% endblock %}
-{% block load %}
+{{ func.return }} {{ func.name }}({{ func.args|args }}) {
     LOAD_GLES({{ func.name }});
-{% endblock %}
-{% block call %}
+    {% block call scoped %}
 #ifndef direct_{{ func.name }}
     PUSH_IF_COMPILING({{ func.name }});
 #endif
     FORWARD_IF_REMOTE({{ func.name }});
-    {{ super() }}
+    {%+ if not func.void %}return {% endif %}gles_{{ func.name }}({{ func.args|args(0) }});
+    {% endblock %}
+}
+#endif
+{% endfor %}
+
+{% for func in functions %}
+{{ func.return }} stub_{{ func.name }}({{ func.args|args }}) {
+{{ fprint(func, prefix='stub ') }}
+{%- if not func.void %}    return 0;
+{% endif %}
+}
+{% endfor %}
 {% endblock %}
-{% block prefix %}gles{% endblock %}

@@ -1,9 +1,4 @@
-{% macro args(f) -%}
-{% for arg in f.args -%}
-    args->{{ arg.name }}{% if not arg.last %}, {% endif %}
-{% endfor %}
-{%- endmacro %}
-
+{% from "base/util.j2" import args %}
 void glIndexedCall(const packed_call_t *packed, void *ret_v) {
     switch (packed->index) {
         {% for f in functions %}

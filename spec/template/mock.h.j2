@@ -1,8 +1,10 @@
 {% extends "base/header.j2" %}
+{% block headers %}{% endblock %}
 {% block main %}
 #ifdef __cplusplus
 extern "C" {
 #endif
+{% include "base/headers.j2" %}
 {{ super() }}
 #ifdef __cplusplus
 } // extern "C"

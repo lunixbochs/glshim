@@ -64,9 +64,12 @@ extern void load_egl_lib();
 
 #define LOAD_LIB(lib, name) LOAD_RAW(lib, name, dlsym(lib, #name))
 
+#ifndef LOAD_GLES
 #define LOAD_GLES(name) \
     LOAD_GLES_SILENT(name); \
-    WARN_NULL(gles_##name);
+    WARN_NULL(gles_##name); \
+    if (gles_##name == NULL) gles_##name = stub_##name;
+#endif
 
 #define LOAD_GLES_SILENT(name) LOAD_LIB(gles, name)
 #define LOAD_EGL(name) LOAD_LIB(egl, name)
