@@ -141,7 +141,7 @@ block_t *remote_deserialize_block(void *buf) {
 
 static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
     GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
-    glouija_add_block(&c, call, pack_size, true);
+    glouija_add_block(&c, call, pack_size);
     int extra = remote_local_pre(&c, call);
     glouija_command_write(&c);
     GlouijaCall ret = {0};
@@ -152,6 +152,7 @@ static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, 
         memcpy(ret_v, ret.arg[0].data.block.data, ret_size);
     }
     remote_local_post(&c, &ret, call, ret_v, ret_size);
+    glouija_command_free(&ret);
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
@@ -202,14 +203,15 @@ int remote_serve(int fd) {
             ret = retbuf;
         }
         GlouijaCall response = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
-        remote_target_process(&c, &response, call, ret);
+        remote_target_pre(&c, &response, call, ret);
         if (retsize > 0) {
-            glouija_add_block(&response, ret, retsize, true);
+            glouija_add_block(&response, ret, retsize);
         }
         if (response.args > 0) {
             glouija_command_write(&response);
         }
-        free(call);
+        remote_target_post(&c, &response, call, ret);
+        glouija_command_free(&c);
         if (retsize > 8) {
             free(ret);
         }
@@ -243,8 +245,8 @@ void remote_render_raster(glstate_t *state) {
     write_uint32(&pos, REMOTE_RENDER_RASTER);
     write_uint32(&pos, raster_size);
     GlouijaCall c = GLOUIJA_CALL_INIT(0);
-    glouija_add_block(&c, buf, buf_size, true);
-    glouija_add_block(&c, state->raster.buf, raster_size, true);
+    glouija_add_block(&c, buf, buf_size);
+    glouija_add_block(&c, state->raster.buf, raster_size);
     glouija_command_write(&c);
 }
 

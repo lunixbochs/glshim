@@ -8,20 +8,20 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
         case glDeleteTextures_INDEX:
         {
             glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
-            glouija_add_block(c, n->args.textures, n->args.n * sizeof(GLuint), true);
+            glouija_add_block(c, n->args.textures, n->args.n * sizeof(GLuint));
             break;
         }
         case glTexImage2D_INDEX:
         {
             glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
             size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-            glouija_add_block(c, n->args.pixels, size, true);
+            glouija_add_block(c, n->args.pixels, size);
             break;
         }
         case glLoadMatrixf_INDEX:
         {
             glLoadMatrixf_PACKED *n = (glLoadMatrixf_PACKED *)call;
-            glouija_add_block(c, n->args.m, 16 * sizeof(GLfloat), true);
+            glouija_add_block(c, n->args.m, 16 * sizeof(GLfloat));
             break;
         }
         case glLightfv_INDEX:
@@ -39,7 +39,7 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
                     count = 3;
                     break;
             }
-            glouija_add_block(c, n->args.params, count * sizeof(GLfloat), true);
+            glouija_add_block(c, n->args.params, count * sizeof(GLfloat));
             break;
         }
         case glMaterialfv_INDEX:
@@ -54,7 +54,7 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
                     count = 3;
                     break;
             }
-            glouija_add_block(c, n->args.params, count * sizeof(GLfloat), true);
+            glouija_add_block(c, n->args.params, count * sizeof(GLfloat));
             break;
         }
         case glGenTextures_INDEX:
@@ -68,7 +68,7 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
             int *attribList = n->args.attribList;
             int size = 0;
             while (attribList[size++]) {}
-            glouija_add_block(c, attribList, size, true);
+            glouija_add_block(c, attribList, size);
             return 1;
         }
 #endif
@@ -79,11 +79,8 @@ int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
 void remote_local_post(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, void *ret_v, size_t ret_size) {
     switch (call->index) {
         case glGenTextures_INDEX:
-        {
-            glGenTextures_PACKED *n = (glGenTextures_PACKED *)call;
-            memcpy(n->args.textures, ret->arg[0].data.block.data, n->args.n * sizeof(GLuint));
+            glouija_copy_block(ret, 0, ((glGenTextures_PACKED *)call)->args.textures);
             break;
-        }
 #if 0
         // see above
         case glXChooseVisual_INDEX:
@@ -104,7 +101,7 @@ void remote_local_post(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, vo
     }
 }
 
-void remote_target_process(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
+void remote_target_pre(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
     if (call->index >= 0) {
         printf("remote call: ");
         glIndexedPrint(call);
@@ -146,7 +143,7 @@ void remote_target_process(GlouijaCall *c, GlouijaCall *response, packed_call_t 
             size_t size = n->args.n * sizeof(GLuint);
             n->args.textures = malloc(size);
             glIndexedCall(call, NULL);
-            glouija_add_block(response, n->args.textures, size, true);
+            glouija_add_block(response, n->args.textures, size);
             return;
         }
 #if 0
@@ -159,11 +156,19 @@ void remote_target_process(GlouijaCall *c, GlouijaCall *response, packed_call_t 
             XVisualInfo *info = NULL;
             glIndexedCall(call, (void *)&info);
             if (info) {
-                glouija_add_block(response, info, sizeof(XVisualInfo), true);
+                glouija_add_block(response, info, sizeof(XVisualInfo));
             }
             return;
         }
 #endif
     }
     glIndexedCall(call, (void *)ret);
+}
+
+void remote_target_post(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
+    switch (call->index) {
+        case glGenTextures_INDEX:
+            free(((glGenTextures_PACKED *)call)->args.textures);
+            break;
+    }
 }
