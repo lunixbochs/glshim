@@ -13,6 +13,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <semaphore.h>
 
 #include "glouija.h"
 
@@ -47,6 +48,8 @@ static struct {
     int send_size;
 
     /* Bookkeeping relevant to state destruction */
+    sem_t *read_sem;
+    sem_t *write_sem;
     int buffsz;
 
     TagEntry *tag;
@@ -126,29 +129,34 @@ void glouija_free_remote_tag(uint32_t tag) {
 }
 
 void glouija_await_incoming() {
-    while (*global_state.remote_write == *global_state.next_read)
-        usleep(1);
-    return;
+    // if empty, lock
+    if (*global_state.remote_write == *global_state.next_read)
+        sem_wait(global_state.read_sem);
 }
 
-int glouija_await_sendbuffer(int sendbuff_size) {
-    if (sendbuff_size > global_state.send_size)
-        return -1;
-    for (;;) {
-        int read_pos;
-        
-        read_pos = *global_state.remote_read;
-        if (read_pos < *global_state.next_write) {
-            if (global_state.send_size - (*global_state.next_write - read_pos) >= sendbuff_size)
-                return 0;
-        } else if (read_pos > *global_state.next_write) {
-            if (read_pos - *global_state.next_write >= sendbuff_size)
-                return 0;
-        } else
+int glouija_sendbuffer_full(int sendbuf_size) {
+    int read_pos;
+    read_pos = *global_state.remote_read;
+    if (read_pos < *global_state.next_write) {
+        if (global_state.send_size - (*global_state.next_write - read_pos) >= sendbuf_size)
             return 0;
-        // fprintf(stderr, "Awaiting sendbuffer space %i %i %i\n", sendbuff_size, read_pos, *global_state.next_write);
-        usleep(1);
+    } else if (read_pos > *global_state.next_write) {
+        if (read_pos - *global_state.next_write >= sendbuf_size)
+            return 0;
+    } else {
+        // this means it's empty
+        return 0;
     }
+    return -1;
+}
+
+int glouija_await_sendbuffer(int sendbuf_size) {
+    if (sendbuf_size > global_state.send_size)
+        return -1;
+    // if full, lock
+    if (glouija_sendbuffer_full(sendbuf_size))
+        sem_wait(global_state.write_sem);
+    return 0;
 }
 
 static int glouija_data_write(void *data, int size, int pos) {
@@ -231,7 +239,13 @@ int glouija_command_write(GlouijaCall *c) {
         }
     }
 
-    *global_state.next_write = pos;
+    if (*global_state.next_write == *global_state.remote_read) {
+        *global_state.next_write = pos;
+        if (sem_trywait(global_state.write_sem) == -1)
+            sem_post(global_state.write_sem);
+    } else {
+        *global_state.next_write = pos;
+    }
     return 0;
 }
 
@@ -279,7 +293,14 @@ int glouija_command_read(GlouijaCall *c) {
         }
     }
 
-    *global_state.next_read = pos;
+    if (*global_state.next_read != *global_state.remote_write) {
+        *global_state.next_read = pos;
+        if (sem_trywait(global_state.read_sem) == -1)
+            sem_post(global_state.read_sem);
+    } else {
+        *global_state.next_read = pos;
+    }
+
     if (c->type == GLO_CALL_TYPE_TAG_NEW) {
         if (!c->arg[1].data.block.free) {
             void *data;
@@ -307,6 +328,7 @@ void glouija_command_free(GlouijaCall *c) {
 }
 
 int glouija_init_server(char *name) {
+    // set up shm
     int fd = shm_open(name, O_RDWR, 0700);
     int buffsz = SERVER_BUFFER_SIZE + CLIENT_BUFFER_SIZE + 4096;
     void *addr = mmap(NULL, buffsz, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
@@ -314,6 +336,16 @@ int glouija_init_server(char *name) {
         return -1;
     }
     shm_unlink(name);
+
+    // set up semaphore
+    char buf[32];
+    snprintf(buf, 32, "%s.server", name);
+    global_state.write_sem = sem_open(buf, 0);
+    sem_unlink(buf);
+    snprintf(buf, 32, "%s.client", name);
+    global_state.read_sem = sem_open(buf, 0);
+    sem_unlink(buf);
+
     global_state.buffsz = buffsz;
     global_state.stat = addr;
 
@@ -325,7 +357,6 @@ int glouija_init_server(char *name) {
     global_state.remote_write = &global_state.stat->client_write;
     global_state.send_size = SERVER_BUFFER_SIZE;
     global_state.recv_size = CLIENT_BUFFER_SIZE;
-    *global_state.next_read = 0;
 
     global_state.tag = NULL;
     global_state.tags = 0;
@@ -335,6 +366,7 @@ int glouija_init_server(char *name) {
 char *glouija_init_client() {
     int buffsz = SERVER_BUFFER_SIZE + CLIENT_BUFFER_SIZE + 4096;
 
+    // set up shm
     char buf[32] = {0};
     int i = 0;
     int fd = -1;
@@ -353,6 +385,14 @@ char *glouija_init_client() {
         return NULL;
     }
 
+    // set up semaphore
+    snprintf(buf, 32, "%s.server", name);
+    sem_unlink(buf);
+    global_state.read_sem = sem_open(buf, O_CREAT, 0700, 0);
+    snprintf(buf, 32, "%s.client", name);
+    sem_unlink(buf);
+    global_state.write_sem = sem_open(buf, O_CREAT, 0700, 0);
+
     global_state.buffsz = buffsz;
     global_state.stat = addr;
 
@@ -364,11 +404,8 @@ char *glouija_init_client() {
     global_state.send_buffer = global_state.recv_buffer + SERVER_BUFFER_SIZE;
     global_state.recv_size = SERVER_BUFFER_SIZE;
     global_state.send_size = CLIENT_BUFFER_SIZE;
-    *global_state.next_read = 0;
 
-    global_state.stat->server_write = 0;
-    global_state.stat->client_write = 0;
-
+    memset(global_state.stat, 0, sizeof(StatusStruct));
     global_state.tag = NULL;
     global_state.tags = 0;
     return name;
