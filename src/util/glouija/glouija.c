@@ -130,7 +130,7 @@ void glouija_free_remote_tag(uint32_t tag) {
 
 void glouija_await_incoming() {
     // if empty, lock
-    if (*global_state.remote_write == *global_state.next_read)
+    while (*global_state.remote_write == *global_state.next_read)
         sem_wait(global_state.read_sem);
 }
 
@@ -154,7 +154,7 @@ int glouija_await_sendbuffer(int sendbuf_size) {
     if (sendbuf_size > global_state.send_size)
         return -1;
     // if full, lock
-    if (glouija_sendbuffer_full(sendbuf_size))
+    while (glouija_sendbuffer_full(sendbuf_size))
         sem_wait(global_state.write_sem);
     return 0;
 }
@@ -239,13 +239,9 @@ int glouija_command_write(GlouijaCall *c) {
         }
     }
 
-    if (*global_state.next_write == *global_state.remote_read) {
-        *global_state.next_write = pos;
-        if (sem_trywait(global_state.write_sem) == -1)
-            sem_post(global_state.write_sem);
-    } else {
-        *global_state.next_write = pos;
-    }
+    *global_state.next_write = pos;
+    if (sem_trywait(global_state.write_sem) == -1)
+        sem_post(global_state.write_sem);
     return 0;
 }
 
