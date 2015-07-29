@@ -117,7 +117,6 @@ static uint32_t read_uint32(uintptr_t *src) {
 
 void *remote_serialize_block(block_t *block, size_t *ret_size) {
     size_t size = sizeof(uint32_t) + sizeof(block_t);
-    size += sizeof(uint32_t);
     if (block->vert) {
         size += block->len * 3 * sizeof(GLfloat);
     }
