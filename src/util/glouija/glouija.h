@@ -71,7 +71,7 @@ void glouija_copy_block(GlouijaCall *c, int pos, void *dst);
 int glouija_command_write(GlouijaCall *c);
 int glouija_command_read(GlouijaCall *c);
 void glouija_command_free(GlouijaCall *c);
-int glouija_init_server(int fd);
-int glouija_init_client();
+int glouija_init_server(char *name);
+char *glouija_init_client();
 
 #endif

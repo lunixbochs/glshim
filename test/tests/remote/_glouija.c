@@ -29,9 +29,8 @@ int main(int argc, char **argv) {
             return 1;
         }
     } else {
-        int fd = atoi(argv[1]);
-        if (glouija_init_server(fd)) {
-            fprintf(stderr, "Error mapping shared memory from fd %d.\n", fd);
+        if (glouija_init_server(argv[1])) {
+            fprintf(stderr, "Error mapping shared memory: %s\n", argv[1]);
             return 2;
         }
         GlouijaCall c;
