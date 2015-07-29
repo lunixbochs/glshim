@@ -1,10 +1,11 @@
 #include <errno.h>
+#include <semaphore.h>
+#include <signal.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/wait.h>
 #include <sys/mman.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 #include "block.h"
 #include "gl_helpers.h"
@@ -59,10 +60,14 @@ int remote_spawn(const char *path) {
         path = "libgl_remote";
     }
     char *shm_name = ring_client(&ring, "glshim");
-    state.remote_ring = &ring;
     if (! shm_name) {
         fprintf(stderr, "libGL: failed to allocate shm for remote\n");
         abort();
+    }
+    state.remote_ring = &ring;
+    // this is how many frames will fit in the ringbuffer before it blocks
+    for (int i = 0; i < 2; i++) {
+        sem_post(ring.sync);
     }
     int pid = fork();
     if (pid == 0) {

@@ -1,3 +1,5 @@
+#include <semaphore.h>
+
 #include "../get.h"
 #include "../remote.h"
 #include "./glpack.h"
@@ -6,9 +8,10 @@
 
 int remote_local_pre(ring_t *ring, packed_call_t *call) {
     switch (call->index) {
-        // we want to serialize the queue every frame to fix buffer bloat
-        // case glXSwapBuffers_INDEX:
-        //     return 1;
+        // prevent too many frames from clogging up the ring buffer
+        case glXSwapBuffers_INDEX:
+            sem_wait(ring->sync);
+            break;
         case glDeleteTextures_INDEX:
         {
             glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
@@ -131,10 +134,9 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
 
 void remote_target_pre(ring_t *ring, packed_call_t *call, void *ret) {
     switch (call->index) {
-        // case glXSwapBuffers_INDEX:
-        //     glIndexedCall(call, NULL);
-        //     // TODO: poke frame sync semaphore here
-        //     break;
+        case glXSwapBuffers_INDEX:
+            sem_post(ring->sync);
+            break;
         case REMOTE_BLOCK_DRAW:
         {
             block_t *block = remote_deserialize_block((void *)call);

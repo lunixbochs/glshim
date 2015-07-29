@@ -6,7 +6,7 @@
 
 typedef struct {
     uint32_t *read, *mark, *write, *wrap;
-    sem_t *in, *out;
+    sem_t *in, *out, *sync;
     void *buf;
     size_t size;
     uint32_t me, *dir;

@@ -142,6 +142,9 @@ int ring_server(ring_t *ring, char *name) {
     snprintf(buf, 32, "%s.miso", name);
     ring->out = sem_open(buf, 1);
     sem_unlink(buf);
+    snprintf(buf, 32, "%s.sync", name);
+    ring->sync = sem_open(buf, 1);
+    sem_unlink(buf);
 
     ring->read = addr;
     ring->write = ring->read + sizeof(uint32_t);
@@ -183,6 +186,9 @@ char *ring_client(ring_t *ring, char *title) {
     snprintf(buf, 32, "%s.miso", name);
     sem_unlink(buf);
     ring->in = sem_open(buf, O_CREAT, 0700, 0);
+    snprintf(buf, 32, "%s.sync", name);
+    sem_unlink(buf);
+    ring->sync = sem_open(buf, O_CREAT, 0700, 0);
 
     ring->read = addr;
     ring->write = ring->read + sizeof(uint32_t);
