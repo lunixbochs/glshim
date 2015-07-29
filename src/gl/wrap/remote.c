@@ -6,6 +6,9 @@
 
 int remote_local_pre(GlouijaCall *c, packed_call_t *call) {
     switch (call->index) {
+        // we want to serialize the queue every frame to fix buffer bloat
+        case glXSwapBuffers_INDEX:
+            return 1;
         case glDeleteTextures_INDEX:
         {
             glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
@@ -129,6 +132,10 @@ void remote_local_post(GlouijaCall *c, GlouijaCall *ret, packed_call_t *call, vo
 void remote_target_pre(GlouijaCall *c, GlouijaCall *response, packed_call_t *call, void *ret) {
     void *first = c->arg[2].data.block.data;
     switch (call->index) {
+        case glXSwapBuffers_INDEX:
+            glIndexedCall(call, NULL);
+            glouija_add_block(response, 0, 0);
+            break;
         case REMOTE_BLOCK_DRAW:
         {
             block_t *block = remote_deserialize_block((void *)call);
