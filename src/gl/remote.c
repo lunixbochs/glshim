@@ -8,21 +8,13 @@
 
 #include "block.h"
 #include "gl_helpers.h"
-#include "glouija/glouija.h"
 #include "remote.h"
+#include "ring.h"
 #include "wrap/glpack.h"
 #include "wrap/remote.h"
 #include "wrap/types.h"
 
-#define GLOUIJA_CALL_INIT(ret_size)                            \
-    {                                                          \
-        .args = 1,                                             \
-        .type = GLO_CALL_TYPE_CALL,                            \
-        .arg = {                                               \
-            {.type = GLO_ARG_TYPE_UINT, .data.ui = ret_size},  \
-        0},                                                    \
-    }
-
+static ring_t ring = {0};
 static int g_remote_noisy = 0;
 static void (*old_sigchld)(int);
 
@@ -66,7 +58,8 @@ int remote_spawn(const char *path) {
     if (path == NULL) {
         path = "libgl_remote";
     }
-    char *shm_name = glouija_init_client();
+    char *shm_name = ring_client(&ring, "glshim");
+    state.remote_ring = &ring;
     if (! shm_name) {
         fprintf(stderr, "libGL: failed to allocate shm for remote\n");
         abort();
@@ -185,20 +178,15 @@ block_t *remote_deserialize_block(void *buf) {
     return block;
 }
 
-static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
-    GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
-    glouija_add_block(&c, call, pack_size);
-    int extra = remote_local_pre(&c, call);
-    glouija_command_write(&c);
-    GlouijaCall ret = {0};
-    if (ret_size || extra) {
-        glouija_command_read(&ret);
-    }
+static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, uint32_t ret_size) {
+    ring_write(&ring, &ret_size, sizeof(uint32_t));
+    ring_write(&ring, call, pack_size);
+    remote_local_pre(&ring, call);
     if (ret_size) {
-        memcpy(ret_v, ret.arg[0].data.block.data, ret_size);
+        memcpy(ret_v, ring_read(&ring, NULL), ret_size);
+        ring_advance(&ring);
     }
-    remote_local_post(&c, &ret, call, ret_v, ret_size);
-    glouija_command_free(&ret);
+    remote_local_post(&ring, call, ret_v, ret_size);
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
@@ -228,40 +216,30 @@ void remote_call(packed_call_t *call, void *ret_v) {
 }
 
 int remote_serve(char *name) {
-    if (glouija_init_server(name)) {
+    if (ring_server(&ring, name)) {
         fprintf(stderr, "Error mapping shared memory: %s\n", name);
         return 2;
     }
     char retbuf[8];
     while (1) {
-        GlouijaCall c = {0};
-        glouija_command_read(&c);
-        if (c.args < 2) {
-            fprintf(stderr, "Invalid remote command.\n");
-            return 3;
-        }
-        int retsize = c.arg[0].data.ui;
-        packed_call_t *call = c.arg[1].data.block.data;
+        uint32_t retsize = *(uint32_t *)ring_read(&ring, NULL);
+        packed_call_t *call = (packed_call_t *)ring_read(&ring, NULL);
         void *ret = NULL;
         if (retsize > 8) {
             ret = malloc(retsize);
         } else if (retsize > 0) {
             ret = retbuf;
         }
-        GlouijaCall response = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
         if (call->index >= 0 && g_remote_noisy) {
             printf("remote call: ");
             glIndexedPrint(call);
         }
-        remote_target_pre(&c, &response, call, ret);
+        remote_target_pre(&ring, call, ret);
         if (retsize > 0) {
-            glouija_add_block(&response, ret, retsize);
+            ring_write(&ring, ret, retsize);
         }
-        if (response.args > 0) {
-            glouija_command_write(&response);
-        }
-        remote_target_post(&c, &response, call, ret);
-        glouija_command_free(&c);
+        remote_target_post(&ring, call, ret);
+        ring_advance(&ring);
         if (retsize > 8) {
             free(ret);
         }

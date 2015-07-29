@@ -208,6 +208,8 @@ def run(args):
         print
 
         if test.output:
+            if 'ERROR' in test.output or 'Assertion failed' in test.output:
+                test.success = False
             if test.build_failed:
                 if test.output in duplicate_errors:
                     continue
@@ -215,9 +217,11 @@ def run(args):
                     duplicate_errors.add(test.output)
 
             for line in test.output.split('\n'):
+                ASSERT = term.bold(term.red('Assertion failed'))
                 ERROR = term.bold(term.red('ERROR:'))
                 WARNING = term.bold(term.yellow('WARNING:'))
                 line = line.decode('utf8', 'replace')
+                line = line.replace('Assertion failed', ASSERT)
                 if line.startswith('ERROR'):
                     line = line.replace('ERROR:', ERROR, 1)
                 elif line.startswith('WARNING'):

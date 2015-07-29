@@ -11,6 +11,7 @@
 #include "tack.h"
 #include "wrap/types.h"
 #include "../util/mat4.h"
+#include "ring.h"
 
 // block.h
 typedef struct {
@@ -230,6 +231,7 @@ typedef struct {
     displaylist_state_t list;
     tack_t lists;
     int64_t remote;
+    ring_t *remote_ring;
 
     GLenum error;
     block_state_t block;

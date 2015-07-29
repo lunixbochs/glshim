@@ -1,12 +1,13 @@
 #include <assert.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 
-#include "glouija/glouija.h"
 #include "remote.h"
 #include "wrap/glpack.h"
 #include "types.h"
+#include "ring.h"
 
 #define RACE_COUNT 100000
 
@@ -19,31 +20,49 @@ int main(int argc, char **argv) {
         }
         int status = 0;
         waitpid(pid, &status, 0);
-        if (status) {
+        if (WEXITSTATUS(status) || WTERMSIG(status)) {
             fprintf(stderr, "Error from libgl_remote: %d\n", status);
             return 1;
         }
     } else {
-        if (glouija_init_server(argv[1])) {
+        ring_t _ring = {0};
+        ring_t *ring = &_ring;
+        if (ring_server(ring, argv[1])) {
             fprintf(stderr, "Error mapping shared memory: %s\n", argv[1]);
             return 2;
         }
         for (int i = 0; i < RACE_COUNT - 1; i++) {
-            GlouijaCall c;
-            glouija_command_read(&c);
-            if (c.args != 2) {
-                fprintf(stderr, "Invalid remote_call received.\n");
+            // fprintf(stderr, "remote %d\n", i);
+            // fprintf(stderr, "reading retsize\n");
+            uint32_t *retsize = (uint32_t *)ring_read(ring, NULL);
+            // fprintf(stderr, "retsize=%d\n", *retsize);
+            if (*retsize != 0) {
+                unsigned char *c = retsize;
+                fprintf(stderr, "ERROR: Expected retsize=0. Got: %d\n", *retsize);
+                fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]);
+                kill(getppid(), SIGTERM);
                 return 1;
             }
-            packed_call_t *call = c.arg[1].data.block.data;
+            // fprintf(stderr, "reading call\n");
+            packed_call_t *call = (packed_call_t *)ring_read(ring, NULL);
+            unsigned char *c = call;
+            // fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
+
             if (call->index != REMOTE_BLOCK_DRAW) {
-                fprintf(stderr, "Expected REMOTE_BLOCK_DRAW.\nGot: ");
-                glIndexedPrint(call);
+                fprintf(stderr, "ERROR: Expected REMOTE_BLOCK_DRAW. Got: %d\n", call->index);
+                fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
+                kill(getppid(), SIGTERM);
                 return 1;
             }
-            void *buf = call;
-            block_t *block = remote_deserialize_block(buf);
-            assert(block->len == 4);
+            block_t *block = remote_deserialize_block((void *)call);
+            // fprintf(stderr, "block->len: %d\n", block->len);
+            if (block->len != 4) {
+                fprintf(stderr, "ERROR: Expected block->len == 4, got: %d\n", block->len);
+                fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
+                kill(getppid(), SIGTERM);
+                return 1;
+            }
+            ring_advance(ring);
         }
     }
     return 0;
