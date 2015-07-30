@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
                 kill(getppid(), SIGTERM);
                 return 1;
             }
-            block_t *block = remote_deserialize_block((void *)call);
+            block_t *block = remote_read_block(ring, (void *)call);
             // fprintf(stderr, "block->len: %d\n", block->len);
             if (block->len != 4) {
                 fprintf(stderr, "ERROR: Expected block->len == 4, got: %d\n", block->len);

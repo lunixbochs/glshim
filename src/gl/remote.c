@@ -113,73 +113,41 @@ static uint32_t read_uint32(uintptr_t *src) {
     return i;
 }
 
-void *remote_serialize_block(block_t *block, size_t *ret_size) {
-    size_t size = sizeof(uint32_t) + sizeof(block_t);
-    if (block->vert) {
-        size += block->len * 3 * sizeof(GLfloat);
-    }
-    if (block->normal) {
-        size += block->len * 3 * sizeof(GLfloat);
-    }
-    if (block->color) {
-        size += block->len * 4 * sizeof(GLfloat);
-    }
+void remote_write_block(ring_t *ring, block_t *block) {
+    uint32_t n = 0;
+    ring_write(ring, &n, sizeof(uint32_t));
+    void *tmp = malloc(sizeof(block_t) + sizeof(uint32_t));
+    n = REMOTE_BLOCK_DRAW;
+    memcpy(tmp, &n, sizeof(uint32_t));
+    memcpy(tmp + sizeof(uint32_t), block, sizeof(block_t));
+    ring_write(ring, tmp, sizeof(block_t) + sizeof(uint32_t));
+    free(tmp);
+    size_t elements = block->len * sizeof(GLfloat);
+    if (block->vert)
+        ring_write(ring, block->vert, 3 * elements);
+    if (block->normal)
+        ring_write(ring, block->normal, 3 * elements);
+    if (block->color)
+        ring_write(ring, block->color, 4 * elements);
     for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i]) {
-            size += block->len * 2 * sizeof(GLfloat);
-        }
+        if (block->tex[i])
+            ring_write(ring, block->tex[i], 2 * elements);
     }
-    if (block->indices) {
-        size += block->count * sizeof(GLushort);
-    }
-    if (ret_size) {
-        *ret_size = size;
-    }
-    void *buf = malloc(size);
-    uintptr_t pos = (uintptr_t)buf;
-    write_uint32(&pos, REMOTE_BLOCK_DRAW);
-    write_memcpy(&pos, block, sizeof(block_t));
-    if (block->vert) {
-        write_memcpy(&pos, block->vert, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->normal) {
-        write_memcpy(&pos, block->normal, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->color) {
-        write_memcpy(&pos, block->color, block->len * 4 * sizeof(GLfloat));
-    }
-    for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i]) {
-            write_memcpy(&pos, block->tex[i], block->len * 2 * sizeof(GLfloat));
-        }
-    }
-    if (block->indices) {
-        write_memcpy(&pos, block->indices, block->count * sizeof(GLushort));
-    }
-    return buf;
+    if (block->indices)
+        ring_write(ring, block->indices, block->count * sizeof(GLushort));
 }
 
-block_t *remote_deserialize_block(void *buf) {
-    uintptr_t pos = (uintptr_t)buf;
-    pos += sizeof(uint32_t);
-    block_t *block = (block_t *)read_ptr(&pos, sizeof(block_t));
-    if (block->vert) {
-        block->vert = (GLfloat *)read_ptr(&pos, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->normal) {
-        block->normal = (GLfloat *)read_ptr(&pos, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->color) {
-        block->color = (GLfloat *)read_ptr(&pos, block->len * 4 * sizeof(GLfloat));
-    }
+block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
+    block_t *block = (uintptr_t)call + sizeof(uint32_t);
+    if (block->vert)   block->vert = ring_read(ring, NULL);
+    if (block->normal) block->normal = ring_read(ring, NULL);
+    if (block->color)  block->color = ring_read(ring, NULL);
     for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i]) {
-            block->tex[i] = (GLfloat *)read_ptr(&pos, block->len * 2 * sizeof(GLfloat));
-        }
+        if (block->tex[i])
+            block->vert = ring_read(ring, NULL);
     }
-    if (block->indices) {
-        block->indices = (GLushort *)read_ptr(&pos, block->count * sizeof(GLushort));
-    }
+    if (block->indices)
+        block->indices = ring_read(ring, NULL);
     return block;
 }
 
@@ -225,6 +193,7 @@ int remote_serve(char *name) {
         fprintf(stderr, "Error mapping shared memory: %s\n", name);
         return 2;
     }
+    g_remote_noisy = !!getenv("LIBGL_REMOTE_NOISY");
     char retbuf[8];
     while (1) {
         uint32_t retsize = *(uint32_t *)ring_read(&ring, NULL);
@@ -252,10 +221,7 @@ int remote_serve(char *name) {
 }
 
 void remote_block_draw(block_t *block) {
-    size_t size = 0;
-    void *buf = remote_serialize_block(block, &size);
-    remote_call_raw(buf, size, NULL, 0);
-    free(buf);
+    remote_write_block(&ring, block);
 }
 
 void remote_gl_get(GLenum pname, GLenum type, GLvoid *params) {

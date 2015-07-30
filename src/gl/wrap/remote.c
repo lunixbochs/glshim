@@ -139,7 +139,7 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, void *ret) {
             break;
         case REMOTE_BLOCK_DRAW:
         {
-            block_t *block = remote_deserialize_block((void *)call);
+            block_t *block = remote_read_block(ring, (void *)call);
             bl_draw(block);
             return;
         }
