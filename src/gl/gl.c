@@ -452,8 +452,8 @@ void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
 
 #ifndef USE_ES2
     if (! block) {
-        FORWARD_IF_REMOTE(glColor4f);
         PUSH_IF_COMPILING(glColor4f);
+        FORWARD_IF_REMOTE(glColor4f);
         LOAD_GLES(glColor4f);
         gles_glColor4f(red, green, blue, alpha);
     }
