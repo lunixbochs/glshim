@@ -208,6 +208,9 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_NAME_STACK_DEPTH:
         case GL_PROJECTION_STACK_DEPTH:
         case GL_TEXTURE_STACK_DEPTH:
+        case GL_UNPACK_ROW_LENGTH:
+        case GL_UNPACK_SKIP_PIXELS:
+        case GL_UNPACK_SKIP_ROWS:
         {
             GLint tmp[4];
             GLint *out = tmp;
