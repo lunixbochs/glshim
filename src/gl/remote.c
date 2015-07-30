@@ -116,12 +116,12 @@ static uint32_t read_uint32(uintptr_t *src) {
 void remote_write_block(ring_t *ring, block_t *block) {
     uint32_t n = 0;
     ring_write(ring, &n, sizeof(uint32_t));
-    void *tmp = malloc(sizeof(block_t) + sizeof(uint32_t));
     n = REMOTE_BLOCK_DRAW;
-    memcpy(tmp, &n, sizeof(uint32_t));
-    memcpy(tmp + sizeof(uint32_t), block, sizeof(block_t));
-    ring_write(ring, tmp, sizeof(block_t) + sizeof(uint32_t));
-    free(tmp);
+    ring_val_t vals[] = {
+        {&n, sizeof(uint32_t)},
+        {block, sizeof(block_t)},
+    };
+    ring_write_multi(ring, vals, 2);
     size_t elements = block->len * sizeof(GLfloat);
     if (block->vert)
         ring_write(ring, block->vert, 3 * elements);
