@@ -94,14 +94,12 @@ void glDisable(GLenum cap) {
 
 #ifndef USE_ES2
 void glEnableClientState(GLenum array) {
-    FORWARD_IF_REMOTE(glEnableClientState);
     LOAD_GLES_SILENT(glEnableClientState);
     ERROR_IN_BLOCK();
     proxy_glEnable(array, true, gles_glEnableClientState);
 }
 
 void glDisableClientState(GLenum array) {
-    FORWARD_IF_REMOTE(glDisableClientState);
     LOAD_GLES_SILENT(glDisableClientState);
     ERROR_IN_BLOCK();
     proxy_glEnable(array, false, gles_glDisableClientState);
