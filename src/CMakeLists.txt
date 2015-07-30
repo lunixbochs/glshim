@@ -11,8 +11,11 @@ file(GLOB UTIL_SOURCES util/*.c util/math/*.c util/glouija/*.c)
 include_directories(glx)
 aux_source_directory(glx GLX_SOURCES)
 set(GL_SOURCES ${GL_SOURCES} ${GLX_SOURCES} ${UTIL_SOURCES})
+if(DUALMODE)
+    set(GL_SOURCES ${GL_SOURCES} ${REMOTE_SOURCES})
+endif()
 
-add_library(GL SHARED ${GL_SOURCES} ${REMOTE_SOURCES})
+add_library(GL SHARED ${GL_SOURCES})
 set_target_properties(GL PROPERTIES VERSION 1 SOVERSION 1.2.0)
 target_link_libraries(GL X11 m dl pthread)
 
@@ -35,7 +38,9 @@ target_link_libraries(preload X11)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(GL rt)
     target_link_libraries(remote rt)
-    target_link_libraries(GL -fPIE -pie)
+    if(DUALMODE)
+        target_link_libraries(GL -fPIE -pie)
+    endif()
 endif()
 
 INSTALL(TARGETS GL
