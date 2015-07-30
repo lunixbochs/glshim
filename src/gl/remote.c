@@ -144,7 +144,7 @@ block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
     if (block->color)  block->color = ring_read(ring, NULL);
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i])
-            block->vert = ring_read(ring, NULL);
+            block->tex[i] = ring_read(ring, NULL);
     }
     if (block->indices)
         block->indices = ring_read(ring, NULL);
