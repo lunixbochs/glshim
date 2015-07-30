@@ -96,7 +96,7 @@ static void write_memcpy(uintptr_t *dst, void *src, size_t size) {
 
 static void write_uint32(uintptr_t *dst, uint32_t i) {
     **(uint32_t **)dst = i;
-    *dst += 4;
+    *dst += sizeof(uint32_t);
 }
 
 static void *read_ptr(uintptr_t *src, size_t size) {
@@ -107,51 +107,55 @@ static void *read_ptr(uintptr_t *src, size_t size) {
 
 static uint32_t read_uint32(uintptr_t *src) {
     uint32_t i = *(uint32_t *)src;
-    *src += 4;
+    *src += sizeof(uint32_t);
     return i;
 }
 
 void remote_write_block(ring_t *ring, block_t *block) {
-    uint32_t n = 0;
-    ring_write(ring, &n, sizeof(uint32_t));
-    n = REMOTE_BLOCK_DRAW;
-    ring_val_t vals[] = {
-        {&n, sizeof(uint32_t)},
+    uint32_t retsize = 0;
+    uint32_t index = REMOTE_BLOCK_DRAW;
+    uint32_t elements = block->len * sizeof(GLfloat);
+    ring_val_t vals[7 + MAX_TEX] = {
+        {&retsize, sizeof(uint32_t)},
+        {&index, sizeof(uint32_t)},
         {block, sizeof(block_t)},
+        {block->vert, block->vert ? 3 * elements : 0},
+        {block->normal, block->normal ? 3 * elements : 0},
+        {block->color, block->color ? 4 * elements : 0},
+        {block->indices, block->indices ? block->count * sizeof(GLushort) : 0},
+        0,
     };
-    ring_write_multi(ring, vals, 2);
-    size_t elements = block->len * sizeof(GLfloat);
-    if (block->vert)
-        ring_write(ring, block->vert, 3 * elements);
-    if (block->normal)
-        ring_write(ring, block->normal, 3 * elements);
-    if (block->color)
-        ring_write(ring, block->color, 4 * elements);
     for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i])
-            ring_write(ring, block->tex[i], 2 * elements);
+        if (block->tex[i]) {
+            vals[7 + i].buf = block->tex[i];
+            vals[7 + i].size = 2 * elements;
+        }
     }
-    if (block->indices)
-        ring_write(ring, block->indices, block->count * sizeof(GLushort));
+    ring_write_multi(ring, vals, 7 + MAX_TEX);
 }
 
 block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
-    block_t *block = (block_t *)((uintptr_t)call + sizeof(uint32_t));
-    if (block->vert)   block->vert = ring_read(ring, NULL);
-    if (block->normal) block->normal = ring_read(ring, NULL);
-    if (block->color)  block->color = ring_read(ring, NULL);
+    uintptr_t pos = (uintptr_t)call;
+    pos += sizeof(uint32_t);
+    block_t *block = read_ptr(&pos, sizeof(block_t));
+    uint32_t elements = block->len * sizeof(GLfloat);
+    if (block->vert)    block->vert    = read_ptr(&pos, 3 * elements);
+    if (block->normal)  block->normal  = read_ptr(&pos, 3 * elements);
+    if (block->color)   block->color   = read_ptr(&pos, 4 * elements);
+    if (block->indices) block->indices = read_ptr(&pos, block->count * sizeof(GLushort));
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i])
-            block->tex[i] = ring_read(ring, NULL);
+            block->tex[i] = read_ptr(&pos, 2 * elements);
     }
-    if (block->indices)
-        block->indices = ring_read(ring, NULL);
     return block;
 }
 
 static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, uint32_t ret_size) {
-    ring_write(&ring, &ret_size, sizeof(uint32_t));
-    ring_write(&ring, call, pack_size);
+    ring_val_t vals[] = {
+        {&ret_size, sizeof(uint32_t)},
+        {call, pack_size},
+    };
+    ring_write_multi(&ring, vals, 2);
     remote_local_pre(&ring, call);
     if (ret_size) {
         memcpy(ret_v, ring_read(&ring, NULL), ret_size);
@@ -194,8 +198,9 @@ int remote_serve(char *name) {
     g_remote_noisy = !!getenv("LIBGL_REMOTE_NOISY");
     char retbuf[8];
     while (1) {
-        uint32_t retsize = *(uint32_t *)ring_read(&ring, NULL);
-        packed_call_t *call = (packed_call_t *)ring_read(&ring, NULL);
+        void *buf = ring_read(&ring, NULL);
+        uint32_t retsize = *(uint32_t *)buf;
+        packed_call_t *call = (packed_call_t *)(buf + sizeof(uint32_t));
         void *ret = NULL;
         if (retsize > 8) {
             ret = malloc(retsize);

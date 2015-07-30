@@ -34,17 +34,18 @@ int main(int argc, char **argv) {
         for (int i = 0; i < RACE_COUNT - 1; i++) {
             // fprintf(stderr, "remote %d\n", i);
             // fprintf(stderr, "reading retsize\n");
-            uint32_t *retsize = (uint32_t *)ring_read(ring, NULL);
-            // fprintf(stderr, "retsize=%d\n", *retsize);
-            if (*retsize != 0) {
-                unsigned char *c = retsize;
-                fprintf(stderr, "ERROR: Expected retsize=0. Got: %d\n", *retsize);
+            void *buf = ring_read(ring, NULL);
+            uint32_t retsize = *(uint32_t *)buf;
+            // fprintf(stderr, "retsize=%d\n", retsize);
+            if (retsize != 0) {
+                unsigned char *c = buf;
+                fprintf(stderr, "ERROR: Expected retsize=0. Got: %d\n", retsize);
                 fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]);
                 kill(getppid(), SIGTERM);
                 return 1;
             }
             // fprintf(stderr, "reading call\n");
-            packed_call_t *call = (packed_call_t *)ring_read(ring, NULL);
+            packed_call_t *call = buf + sizeof(uint32_t);
             unsigned char *c = call;
             // fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
 
