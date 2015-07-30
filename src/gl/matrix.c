@@ -80,7 +80,6 @@ static void upload_matrix() {
 
 // GL matrix functions
 void glLoadIdentity() {
-    FORWARD_IF_REMOTE(glLoadIdentity);
     PUSH_IF_COMPILING(glLoadIdentity);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -89,7 +88,6 @@ void glLoadIdentity() {
 }
 
 void glLoadMatrixf(const GLfloat *m) {
-    FORWARD_IF_REMOTE(glLoadMatrixf);
     PUSH_IF_COMPILING(glLoadMatrixf);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -98,7 +96,6 @@ void glLoadMatrixf(const GLfloat *m) {
 }
 
 void glLoadTransposeMatrixf(const GLfloat *m) {
-    FORWARD_IF_REMOTE(glLoadTransposeMatrixf);
     PUSH_IF_COMPILING(glLoadTransposeMatrixf);
     ERROR_IN_BLOCK();
     GLfloat tmp[16];
@@ -107,7 +104,6 @@ void glLoadTransposeMatrixf(const GLfloat *m) {
 }
 
 void glMatrixMode(GLenum mode) {
-    FORWARD_IF_REMOTE(glMatrixMode);
     PUSH_IF_COMPILING(glMatrixMode);
     ERROR_IN_BLOCK();
     switch (mode) {
@@ -124,7 +120,6 @@ void glMatrixMode(GLenum mode) {
 }
 
 void glMultMatrixf(const GLfloat *m) {
-    FORWARD_IF_REMOTE(glMultMatrixf);
     PUSH_IF_COMPILING(glMultMatrixf);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -135,7 +130,6 @@ void glMultMatrixf(const GLfloat *m) {
 }
 
 void glMultTransposeMatrixf(const GLfloat *m) {
-    FORWARD_IF_REMOTE(glMultTransposeMatrixf);
     PUSH_IF_COMPILING(glMultTransposeMatrixf);
     ERROR_IN_BLOCK();
     GLfloat tmp[16];
@@ -144,7 +138,6 @@ void glMultTransposeMatrixf(const GLfloat *m) {
 }
 
 void glPopMatrix() {
-    FORWARD_IF_REMOTE(glPopMatrix);
     PUSH_IF_COMPILING(glPopMatrix);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -159,7 +152,6 @@ void glPopMatrix() {
 }
 
 void glPushMatrix() {
-    FORWARD_IF_REMOTE(glPushMatrix);
     PUSH_IF_COMPILING(glPushMatrix);
     ERROR_IN_BLOCK();
     matrix_state_t *m = get_current_state();
@@ -170,7 +162,6 @@ void glPushMatrix() {
 
 // GL transform functions
 void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
-    FORWARD_IF_REMOTE(glRotatef);
     PUSH_IF_COMPILING(glRotatef);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -179,7 +170,6 @@ void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
 }
 
 void glScalef(GLfloat x, GLfloat y, GLfloat z) {
-    FORWARD_IF_REMOTE(glScalef);
     PUSH_IF_COMPILING(glScalef);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -188,7 +178,6 @@ void glScalef(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
-    FORWARD_IF_REMOTE(glTranslatef);
     PUSH_IF_COMPILING(glTranslatef);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -199,7 +188,6 @@ void glTranslatef(GLfloat x, GLfloat y, GLfloat z) {
 void glOrthof(GLfloat left, GLfloat right,
               GLfloat bottom, GLfloat top,
               GLfloat near, GLfloat far) {
-    FORWARD_IF_REMOTE(glOrthof);
     PUSH_IF_COMPILING(glOrthof);
     ERROR_IN_BLOCK();
     if (left == right || bottom == top || near == far) {
@@ -213,7 +201,6 @@ void glOrthof(GLfloat left, GLfloat right,
 void glFrustumf(GLfloat left, GLfloat right,
                 GLfloat bottom, GLfloat top,
                 GLfloat near, GLfloat far) {
-    FORWARD_IF_REMOTE(glFrustumf);
     PUSH_IF_COMPILING(glFrustumf);
     ERROR_IN_BLOCK();
     if (near < 0 || far < 0 || left == right || bottom == top || near == far) {

@@ -233,6 +233,7 @@ void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, G
 }
 
 void glPixelStorei(GLenum pname, GLint param) {
+    FORWARD_IF_REMOTE(glPixelStorei);
     // TODO: add to glGetIntegerv?
     switch (pname) {
         case GL_UNPACK_ROW_LENGTH:
@@ -249,7 +250,6 @@ void glPixelStorei(GLenum pname, GLint param) {
             break;
         default:
         {
-            FORWARD_IF_REMOTE(glPixelStorei);
             LOAD_GLES(glPixelStorei);
             gles_glPixelStorei(pname, param);
             break;
@@ -259,7 +259,6 @@ void glPixelStorei(GLenum pname, GLint param) {
 
 void glBindTexture(GLenum target, GLuint texture) {
     PUSH_IF_COMPILING(glBindTexture);
-    FORWARD_IF_REMOTE(glBindTexture);
     ERROR_IN_BLOCK();
     GLuint active = state.texture.active;
     if (texture) {
@@ -300,7 +299,6 @@ void glBindTexture(GLenum target, GLuint texture) {
 
 void glActiveTexture(GLenum texture) {
     PUSH_IF_COMPILING(glActiveTexture);
-    FORWARD_IF_REMOTE(glActiveTexture);
     if ((texture < GL_TEXTURE0) || (texture > GL_TEXTURE_MAX)) {
         // TODO: set the GL error flag?
         fprintf(stderr, "glActiveTexture: texture > GL_TEXTURE_MAX\n");
@@ -314,7 +312,6 @@ void glActiveTexture(GLenum texture) {
 
 void glClientActiveTexture(GLenum texture) {
     PUSH_IF_COMPILING(glClientActiveTexture);
-    FORWARD_IF_REMOTE(glClientActiveTexture);
     GLuint new = texture - GL_TEXTURE0;
     if (state.texture.client == new) {
         return;
@@ -332,14 +329,12 @@ void glClientActiveTexture(GLenum texture) {
 void glTexEnvf(GLenum target, GLenum pname, GLfloat param) {
     ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glTexEnvf);
-    FORWARD_IF_REMOTE(glTexEnvf);
     PROXY_GLES(glTexEnvf);
 }
 
 // TODO: also glTexParameterf(v)?
 void glTexParameteri(GLenum target, GLenum pname, GLint param) {
     PUSH_IF_COMPILING(glTexParameteri);
-    FORWARD_IF_REMOTE(glTexParameteri);
     LOAD_GLES(glTexParameteri);
     ERROR_IN_BLOCK();
     target = map_tex_target(target);
@@ -353,7 +348,6 @@ void glTexParameteri(GLenum target, GLenum pname, GLint param) {
 
 void glDeleteTextures(GLsizei n, const GLuint *textures) {
     PUSH_IF_COMPILING(glDeleteTextures);
-    FORWARD_IF_REMOTE(glDeleteTextures);
     khash_t(tex) *list = state.texture.list;
     if (list) {
         khint_t k;

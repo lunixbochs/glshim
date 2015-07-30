@@ -1,6 +1,7 @@
 #include <semaphore.h>
 
 #include "../get.h"
+#include "../list.h"
 #include "../remote.h"
 #include "./glpack.h"
 #include "./remote.h"
@@ -136,15 +137,23 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
     }
 }
 
-void remote_target_pre(ring_t *ring, packed_call_t *call, void *ret) {
+void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret) {
     switch (call->index) {
         case glXSwapBuffers_INDEX:
             sem_post(ring->sync);
             break;
         case REMOTE_BLOCK_DRAW:
         {
-            block_t *block = remote_read_block(ring, (void *)call);
-            bl_draw(block);
+            if (state.list.active) {
+                void *tmp = malloc(size);
+                memcpy(tmp, call, size);
+                block_t *block = remote_read_block(ring, tmp);
+                dl_append_block(state.list.active, block);
+                block->solid = tmp;
+            } else {
+                block_t *block = remote_read_block(ring, (void *)call);
+                bl_draw(block);
+            }
             return;
         }
         case REMOTE_GL_GET:

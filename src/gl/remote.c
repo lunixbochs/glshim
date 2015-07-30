@@ -198,7 +198,8 @@ int remote_serve(char *name) {
     g_remote_noisy = !!getenv("LIBGL_REMOTE_NOISY");
     char retbuf[8];
     while (1) {
-        void *buf = ring_read(&ring, NULL);
+        size_t size;
+        void *buf = ring_read(&ring, &size);
         uint32_t retsize = *(uint32_t *)buf;
         packed_call_t *call = (packed_call_t *)(buf + sizeof(uint32_t));
         void *ret = NULL;
@@ -211,7 +212,7 @@ int remote_serve(char *name) {
             printf("remote call: ");
             glIndexedPrint(call);
         }
-        remote_target_pre(&ring, call, ret);
+        remote_target_pre(&ring, call, size, ret);
         if (retsize > 0) {
             ring_write(&ring, ret, retsize);
         }

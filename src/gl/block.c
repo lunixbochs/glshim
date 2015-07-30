@@ -61,6 +61,10 @@ block_t *bl_new(GLenum mode) {
 }
 
 void bl_free(block_t *block) {
+    if (block->solid) {
+        free(block->solid);
+        return;
+    }
     free(block->vert);
     free(block->normal);
     free(block->color);

@@ -35,7 +35,6 @@ static void init_raster() {
 
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     PUSH_IF_COMPILING(glViewport);
-    FORWARD_IF_REMOTE(glViewport);
     PROXY_GLES(glViewport);
     if (state.raster.buf) {
         render_raster();
@@ -49,7 +48,7 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
 
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     ERROR_IN_BLOCK();
-    FORWARD_IF_REMOTE(glRasterPos3f);
+    PUSH_IF_COMPILING(glRasterPos3f);
     PROXY_GLES(glRasterPos3f);
     GLfloat v[3] = {x, y, z};
     gl_transform_vertex(v, v);
@@ -63,7 +62,7 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
 
 void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
     ERROR_IN_BLOCK();
-    FORWARD_IF_REMOTE(glWindowPos3f);
+    PUSH_IF_COMPILING(glWindowPos3f);
     PROXY_GLES(glWindowPos3f);
     raster_state_t *raster = &state.raster;
     raster->pos.x = x;
@@ -92,7 +91,7 @@ void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
 
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
               GLfloat xmove, GLfloat ymove, const GLubyte *bitmap) {
-    FORWARD_IF_REMOTE(glBitmap);
+    PUSH_IF_COMPILING(glBitmap);
     PROXY_GLES(glBitmap);
     raster_state_t *raster = &state.raster;
     if (! raster->valid) {
@@ -133,7 +132,7 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
 void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
                   GLenum type, const GLvoid *data) {
     const GLubyte *from, *pixels = data;
-    FORWARD_IF_REMOTE(glDrawPixels);
+    PUSH_IF_COMPILING(glDrawPixels);
     PROXY_GLES(glDrawPixels);
     raster_state_t *raster = &state.raster;
     if (! raster->valid) {

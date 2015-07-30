@@ -4,25 +4,21 @@
 #ifndef USE_ES2
 void glBlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
     PUSH_IF_COMPILING(glBlendColor);
-    FORWARD_IF_REMOTE(glBlendColor);
     PROXY_OES(glBlendColorOES);
 }
 
 void glBlendEquation(GLenum mode) {
     PUSH_IF_COMPILING(glBlendEquation);
-    FORWARD_IF_REMOTE(glBlendEquation);
     PROXY_OES(glBlendEquationOES);
 }
 
 void glBlendEquationSeparate(GLenum modeRGB, GLenum modeAlpha) {
     PUSH_IF_COMPILING(glBlendEquationSeparate);
-    FORWARD_IF_REMOTE(glBlendEquationSeparate);
     PROXY_OES(glBlendEquationSeparateOES);
 }
 
 void glBlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha) {
     PUSH_IF_COMPILING(glBlendFuncSeparate);
-    FORWARD_IF_REMOTE(glBlendFuncSeparate);
     PROXY_OES(glBlendFuncSeparateOES);
 }
 

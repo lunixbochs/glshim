@@ -41,6 +41,7 @@ typedef struct {
 
     GLboolean open;
     GLboolean artificial;
+    void *solid;
 } block_t;
 
 typedef struct {

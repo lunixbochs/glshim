@@ -7,9 +7,9 @@
 
 #ifndef USE_ES2
 void glLightModelf(GLenum pname, GLfloat param) {
-    FORWARD_IF_REMOTE(glLightModelf);
-    LOAD_GLES(glLightModelf);
     ERROR_IN_BLOCK();
+    PUSH_IF_COMPILING(glLightModelf);
+    LOAD_GLES(glLightModelf);
     switch (pname) {
         case GL_LIGHT_MODEL_AMBIENT:
         case GL_LIGHT_MODEL_TWO_SIDE:
@@ -22,16 +22,15 @@ void glLightModelf(GLenum pname, GLfloat param) {
 
 void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
     PUSH_IF_COMPILING(glMaterialfv);
-    FORWARD_IF_REMOTE(glMaterialfv);
     LOAD_GLES(glMaterialfv);
     gles_glMaterialfv(GL_FRONT_AND_BACK, pname, params);
 }
 
 #ifdef LOCAL_MATRIX
 void glLightfv(GLenum light, GLenum pname, const GLfloat *params) {
-    FORWARD_IF_REMOTE(glLightfv);
-    LOAD_GLES(glLightfv);
     ERROR_IN_BLOCK();
+    PUSH_IF_COMPILING(glLightfv);
+    LOAD_GLES(glLightfv);
     GLfloat tmp[4];
     switch (pname) {
         case GL_POSITION:
