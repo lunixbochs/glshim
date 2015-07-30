@@ -16,4 +16,7 @@ file(GLOB UTIL_SOURCES {{ project }}/src/util/*.c {{ project }}/src/util/math/*.
 set(GL_SOURCES ${GL_SOURCES} ${UTIL_SOURCES})
 
 add_executable(tmp ${GL_SOURCES} {{ sources }})
-target_link_libraries(tmp m dl)
+target_link_libraries(tmp m dl pthread)
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    target_link_libraries(tmp rt)
+endif()
