@@ -65,10 +65,8 @@ int remote_spawn(const char *path) {
         abort();
     }
     state.remote_ring = &ring;
-    // this is how many frames will fit in the ringbuffer before it blocks
-    for (int i = 0; i < 2; i++) {
-        sem_post(ring.sync);
-    }
+    // one frame will fit in the ringbuffer before it blocks
+    sem_post(ring.sync);
     int pid = fork();
     if (pid == 0) {
         char *gdb = getenv("LIBGL_REMOTE_GDB");
