@@ -1,8 +1,11 @@
 #include "error.h"
 #include "stack.h"
+#include "loader.h"
+#include "remote.h"
 
 void glPushAttrib(GLbitfield mask) {
     ERROR_IN_BLOCK();
+    FORWARD_IF_REMOTE(glPushAttrib);
     glstack_t *cur = malloc(sizeof(glstack_t));
 
     cur->mask = mask;
@@ -200,6 +203,7 @@ void glPushClientAttrib(GLbitfield mask) {
 
 void glPopAttrib() {
     ERROR_IN_BLOCK();
+    FORWARD_IF_REMOTE(glPopAttrib);
     glstack_t *cur = tack_pop(&state.stack.attrib);
     if (cur == NULL) {
         ERROR(GL_STACK_UNDERFLOW);
