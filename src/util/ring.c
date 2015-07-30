@@ -30,12 +30,13 @@ static void ring_wait_write(ring_t *ring, size_t size) {
     uint32_t read, write, mark, wrap;
     while (1) {
         // TODO: handle dir?
-        read = *ring->read;
-        write = *ring->write;
-        mark = *ring->mark;
-        wrap = *ring->wrap;
+        read = *ring->read, write = *ring->write;
+        mark = *ring->mark, wrap = *ring->wrap;
+        //    [0...(write)[ here ](read)...(mark)...(size)]
         if (write < mark) {
             avail = read - write;
+        //    [0...(read)...(mark)[ here ](write)...(size)]
+        // OR [0...(read|mark|write)[     here     ](size)]
         } else if (write > mark || (write == mark && wrap == 0)) {
             avail = ring->size - write;
             if (read > avail)
@@ -61,7 +62,7 @@ void *ring_read(ring_t *ring, size_t *size_ret) {
         abort();
     }
     if (size > ring->size) {
-        fprintf(stderr, "panic: ring data size %lu > ring size %lu\n", size, ring->size);
+        fprintf(stderr, "panic: ring data size %d > ring size %lu\n", size, ring->size);
         abort();
     }
     void *data;
@@ -69,6 +70,7 @@ void *ring_read(ring_t *ring, size_t *size_ret) {
         data = ring->buf + *ring->mark + sizeof(uint32_t);
         *ring->mark += size;
     } else {
+        // our read wrapped around
         data = ring->buf;
         *ring->mark = size;
     }
@@ -88,8 +90,13 @@ void ring_advance(ring_t *ring) {
     *ring->read = *ring->mark;
 }
 
-int ring_write(ring_t *ring, void *buf, size_t bufsize) {
-    size_t size = ALIGN(bufsize) + sizeof(uint32_t);
+int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
+    // measure the total size
+    size_t size = sizeof(uint32_t);
+    for (int i = 0; i < count; i++)
+        size += vals[i].size;
+    size = ALIGN(size);
+    // make sure we have enough unmarked free space
     uint32_t read = *ring->read, mark = *ring->mark;
     uint32_t marked;
     if (mark < read) {
@@ -99,29 +106,47 @@ int ring_write(ring_t *ring, void *buf, size_t bufsize) {
     }
     uint32_t unmarked = ring->size - marked;
     if (size > unmarked) {
-        fprintf(stderr, "panic: ring_write size %lu > unmarked %lu\n", size + 4, unmarked);
+        fprintf(stderr, "panic: ring_write size %lu > unmarked %u\n", size + 4, unmarked);
         abort();
     }
+    // wait for free space
     ring_wait_write(ring, size);
     size_t remain = ring->size - *ring->write;
+    void *dst;
+    uint32_t move = 0, wrap = 0;
+    // pick destination and wrap if necessary
     if (remain > size) {
-        uint32_t *size_write = ring->buf + *ring->write;
-        *size_write = size;
-        memcpy(ring->buf + *ring->write + sizeof(uint32_t), buf, bufsize);
-        *ring->write += size;
+        dst = ring->buf + *ring->write;
+        move = *ring->write + size;
     } else {
-        uint32_t *size_write = ring->buf;
-        *size_write = size;
-        memcpy(ring->buf + sizeof(uint32_t), buf, bufsize);
+        dst = ring->buf;
+        wrap = *ring->write;
+        move = size;
+    }
+    // write values
+    uint32_t *size_write = (uint32_t *)dst;
+    *size_write = size;
+    dst += sizeof(uint32_t);
+    for (int i = 0; i < count; i++) {
+        memcpy(dst, vals[i].buf, vals[i].size);
+        dst += vals[i].size;
+    }
+    // move position
+    if (wrap)
         *ring->wrap = *ring->write;
-        *ring->write = size;
-    }
-    if (*ring->dir == ring->me) {
+    *ring->write = move;
+    // set direction and notify semaphore
+    if (*ring->dir == ring->me)
         *ring->dir = !ring->me;
-    }
+    // we trywait first to keep the value in (0, 1)
     sem_trywait(ring->out);
     sem_post(ring->out);
     return 0;
+}
+
+int ring_write(ring_t *ring, void *buf, size_t bufsize) {
+    ring_val_t vals[] = {{buf, bufsize}};
+    return ring_write_multi(ring, vals, 1);
 }
 
 int ring_server(ring_t *ring, char *name) {
