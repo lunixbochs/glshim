@@ -37,6 +37,10 @@ int remote_local_pre(ring_t *ring, packed_call_t *call) {
             break;
         }
         case glLoadMatrixf_INDEX:
+        case glLoadTransposeMatrixf_INDEX:
+        case glMultMatrixf_INDEX:
+        case glMultTransposeMatrixf_INDEX:
+
         {
             glLoadMatrixf_PACKED *n = (glLoadMatrixf_PACKED *)call;
             ring_write(ring, n->args.m, 16 * sizeof(GLfloat));
@@ -167,6 +171,9 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, void *ret) {
             break;
         }
         case glLoadMatrixf_INDEX:
+        case glLoadTransposeMatrixf_INDEX:
+        case glMultMatrixf_INDEX:
+        case glMultTransposeMatrixf_INDEX:
             ((glLoadMatrixf_PACKED *)call)->args.m = ring_read(ring, NULL);
             break;
         case glLightfv_INDEX:
