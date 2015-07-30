@@ -1,5 +1,6 @@
-#include <stdio.h>
+#include <signal.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 
@@ -8,6 +9,7 @@
 
 int main(int argc, char **argv) {
     if (argc == 1) {
+        signal(SIGCHLD, SIG_IGN);
         int pid = remote_spawn(argv[0]);
         ring_t *ring = state.remote_ring;
         for (int i = 0; i < 100000; i++) {

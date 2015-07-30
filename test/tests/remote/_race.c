@@ -13,6 +13,7 @@
 
 int main(int argc, char **argv) {
     if (argc == 1) {
+        signal(SIGCHLD, SIG_IGN);
         int pid = remote_spawn(argv[0]);
         state.remote = 1;
         for (int i = 0; i < RACE_COUNT; i++) {
