@@ -138,7 +138,7 @@ void remote_write_block(ring_t *ring, block_t *block) {
 }
 
 block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
-    block_t *block = (uintptr_t)call + sizeof(uint32_t);
+    block_t *block = (block_t *)((uintptr_t)call + sizeof(uint32_t));
     if (block->vert)   block->vert = ring_read(ring, NULL);
     if (block->normal) block->normal = ring_read(ring, NULL);
     if (block->color)  block->color = ring_read(ring, NULL);

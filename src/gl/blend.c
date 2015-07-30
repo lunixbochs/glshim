@@ -1,4 +1,5 @@
 #include "loader.h"
+#include "remote.h"
 
 #ifndef USE_ES2
 void glBlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
