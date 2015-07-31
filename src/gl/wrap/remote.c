@@ -1,4 +1,5 @@
 #include <semaphore.h>
+#include <X11/Xlib.h>
 
 #include "../get.h"
 #include "../list.h"
@@ -9,8 +10,12 @@
 
 int remote_local_pre(ring_t *ring, packed_call_t *call) {
     switch (call->index) {
-        // prevent too many frames from clogging up the ring buffer
+        case glXMakeCurrent_INDEX:
+            // if the window create hasn't flushed yet, we can't init on the remote
+            XFlush(((glXMakeCurrent_PACKED *)call)->args.dpy);
+            break;
         case glXSwapBuffers_INDEX:
+            // prevent too many frames from clogging up the ring buffer
             sem_wait(ring->sync);
             break;
         case glDeleteTextures_INDEX:
