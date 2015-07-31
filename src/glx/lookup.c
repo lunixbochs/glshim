@@ -20,8 +20,12 @@
         return (void *)glXStub;               \
     }
 
-void glXStub(void *x, ...) {
-    return;
+void glXStub() {
+    static int first = 1;
+    if (first) {
+        first = false;
+        fprintf(stderr, "warning: invoking glX stub\n");
+    }
 }
 
 void *glXGetProcAddressARB(const GLubyte *name) {
@@ -291,7 +295,7 @@ void *glXGetProcAddressARB(const GLubyte *name) {
     STUB(glSelectBuffer);
 
     printf("glXGetProcAddress: %s not found.\n", name);
-    return NULL;
+    return glXStub;
 }
 
 void *glXGetProcAddress(const GLubyte *name) {
