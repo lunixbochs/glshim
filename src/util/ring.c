@@ -3,6 +3,7 @@
  */
 
 #include <fcntl.h>
+#include <sched.h>
 #include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,11 +18,11 @@
 
 static void ring_wait_read(ring_t *ring) {
     while (*ring->dir != ring->me) {
-        sem_wait(ring->in);
+        sched_yield();
     }
     while (*ring->mark == *ring->write && *ring->wrap == 0) {
         // TODO: make this time out
-        sem_wait(ring->in);
+        sched_yield();
     }
 }
 
@@ -45,7 +46,7 @@ static void ring_wait_write(ring_t *ring, size_t size) {
         if (avail >= size) {
             break;
         }
-        sem_wait(ring->in);
+        sched_yield();
     }
 }
 
@@ -85,8 +86,6 @@ void ring_read_into(ring_t *ring, void *dst) {
 }
 
 void ring_advance(ring_t *ring) {
-    sem_trywait(ring->out);
-    sem_post(ring->out);
     *ring->read = *ring->mark;
 }
 
@@ -135,12 +134,9 @@ int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
     if (wrap)
         *ring->wrap = *ring->write;
     *ring->write = move;
-    // set direction and notify semaphore
+    // update direction
     if (*ring->dir == ring->me)
         *ring->dir = !ring->me;
-    // we trywait first to keep the value in (0, 1)
-    sem_trywait(ring->out);
-    sem_post(ring->out);
     return 0;
 }
 
@@ -161,12 +157,6 @@ int ring_server(ring_t *ring, char *name) {
 
     // set up semaphore
     char buf[32];
-    snprintf(buf, 32, "%s.mosi", name);
-    ring->in = sem_open(buf, 1);
-    sem_unlink(buf);
-    snprintf(buf, 32, "%s.miso", name);
-    ring->out = sem_open(buf, 1);
-    sem_unlink(buf);
     snprintf(buf, 32, "%s.sync", name);
     ring->sync = sem_open(buf, 1);
     sem_unlink(buf);
@@ -205,12 +195,6 @@ char *ring_client(ring_t *ring, char *title) {
     }
 
     // set up semaphore
-    snprintf(buf, 32, "%s.mosi", name);
-    sem_unlink(buf);
-    ring->out = sem_open(buf, O_CREAT, 0700, 0);
-    snprintf(buf, 32, "%s.miso", name);
-    sem_unlink(buf);
-    ring->in = sem_open(buf, O_CREAT, 0700, 0);
     snprintf(buf, 32, "%s.sync", name);
     sem_unlink(buf);
     ring->sync = sem_open(buf, O_CREAT, 0700, 0);
