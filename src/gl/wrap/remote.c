@@ -10,6 +10,12 @@
 
 int remote_local_pre(ring_t *ring, packed_call_t *call) {
     switch (call->index) {
+        case glXCreateContext_INDEX:
+        {
+            glXCreateContext_PACKED *n = (glXCreateContext_PACKED *)call;
+            ring_write(ring, n->args.vis, sizeof(XVisualInfo));
+            break;
+        }
         case glXMakeCurrent_INDEX:
             // if the window create hasn't flushed yet, we can't init on the remote
             XFlush(((glXMakeCurrent_PACKED *)call)->args.dpy);
@@ -148,8 +154,12 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
     switch (call->index) {
         // can't pass a Display * through the proxy
         case glXCreateContext_INDEX:
-            ((glXCreateContext_PACKED *)call)->args.dpy = target_display;
+        {
+            glXCreateContext_PACKED *n = (glXCreateContext_PACKED *)call;
+            n->args.dpy = target_display;
+            n->args.vis = ring_read(ring, NULL);
             break;
+        }
         case glXMakeCurrent_INDEX:
             ((glXCreateContext_PACKED *)call)->args.dpy = target_display;
             break;
