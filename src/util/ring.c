@@ -32,11 +32,11 @@ static void ring_wait_write(ring_t *ring, size_t size) {
         // TODO: handle dir?
         read = *ring->read, write = *ring->write;
         mark = *ring->mark, wrap = *ring->wrap;
-        //    [0...(write)[ here ](read)...(mark)...(size)]
+        //    [...|write|[here]|read|...|mark|...]
         if (write < mark) {
             avail = read - write;
-        //    [0...(read)...(mark)[ here ](write)...(size)]
-        // OR [0...(read|mark|write)[     here     ](size)]
+        //    [[ here ]|read|...|mark|...|write|[ here ]]
+        // OR [...|read|mark|write|[ here ]]
         } else if (write > mark || (write == mark && wrap == 0)) {
             avail = ring->size - write;
             if (read > avail)
