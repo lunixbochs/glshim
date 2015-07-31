@@ -3,7 +3,7 @@ include_directories(. util)
 file(GLOB_RECURSE REMOTE_SOURCES remote/*.c)
 add_executable(remote EXCLUDE_FROM_ALL ${REMOTE_SOURCES})
 set_target_properties(remote PROPERTIES OUTPUT_NAME libgl_remote)
-target_link_libraries(remote GL_static X11 m dl)
+target_link_libraries(remote GL_static X11 m dl pthread)
 
 file(GLOB_RECURSE GL_SOURCES gl/*.c gl/*.cpp)
 file(GLOB UTIL_SOURCES util/*.c util/math/*.c util/glouija/*.c)
