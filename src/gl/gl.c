@@ -81,44 +81,28 @@ static void proxy_glEnable(GLenum cap, bool enable, void (*next)(GLenum)) {
 void glEnable(GLenum cap) {
     PUSH_IF_COMPILING(glEnable);
     LOAD_GLES_SILENT(glEnable);
-    void (*next_glEnable)(GLenum) = gles_glEnable;
-    if (state.remote) {
-        next_glEnable = remote_glEnable;
-    }
     ERROR_IN_BLOCK();
-    proxy_glEnable(cap, true, next_glEnable);
+    proxy_glEnable(cap, true, gles_glEnable);
 }
 
 void glDisable(GLenum cap) {
     PUSH_IF_COMPILING(glDisable);
     LOAD_GLES_SILENT(glDisable);
-    void (*next_glDisable)(GLenum) = gles_glDisable;
-    if (state.remote) {
-        next_glDisable = remote_glDisable;
-    }
     ERROR_IN_BLOCK();
-    proxy_glEnable(cap, false, next_glDisable);
+    proxy_glEnable(cap, false, gles_glDisable);
 }
 
 #ifndef USE_ES2
-void glEnableClientState(GLenum cap) {
+void glEnableClientState(GLenum array) {
     LOAD_GLES_SILENT(glEnableClientState);
-    void (*next_glEnableClientState)(GLenum) = gles_glEnableClientState;
     ERROR_IN_BLOCK();
-    if (state.remote) {
-        next_glEnableClientState = remote_glEnableClientState;
-    }
-    proxy_glEnable(cap, true, next_glEnableClientState);
+    proxy_glEnable(array, true, gles_glEnableClientState);
 }
 
-void glDisableClientState(GLenum cap) {
+void glDisableClientState(GLenum array) {
     LOAD_GLES_SILENT(glDisableClientState);
-    void (*next_glDisableClientState)(GLenum) = gles_glDisableClientState;
     ERROR_IN_BLOCK();
-    if (state.remote) {
-        next_glDisableClientState = remote_glDisableClientState;
-    }
-    proxy_glEnable(cap, false, next_glDisableClientState);
+    proxy_glEnable(array, false, gles_glDisableClientState);
 }
 #endif
 
@@ -127,6 +111,7 @@ GLboolean glIsEnabled(GLenum cap) {
         gl_set_error(GL_INVALID_OPERATION);
         return 0;
     }
+    FORWARD_IF_REMOTE(glIsEnabled);
     switch (cap) {
         case GL_LINE_STIPPLE:
             return state.enable.line_stipple;
@@ -138,7 +123,6 @@ GLboolean glIsEnabled(GLenum cap) {
             return state.enable.tex_coord_array[state.texture.client];
         default:
         {
-            FORWARD_IF_REMOTE(glIsEnabled);
             LOAD_GLES(glIsEnabled);
             return gles_glIsEnabled(cap);
         }
@@ -431,7 +415,6 @@ void glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz) {
     normal[2] = nz;
 
     if (! block) {
-        FORWARD_IF_REMOTE(glNormal3f);
         PUSH_IF_COMPILING(glNormal3f);
         LOAD_GLES(glNormal3f);
         gles_glNormal3f(nx, ny, nz);
@@ -452,7 +435,6 @@ void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
 
 #ifndef USE_ES2
     if (! block) {
-        FORWARD_IF_REMOTE(glColor4f);
         PUSH_IF_COMPILING(glColor4f);
         LOAD_GLES(glColor4f);
         gles_glColor4f(red, green, blue, alpha);
@@ -540,6 +522,7 @@ static displaylist_t *get_list(GLuint list) {
 }
 
 GLuint glGenLists(GLsizei range) {
+    FORWARD_IF_REMOTE(glGenLists);
     if (range < 0) {
         gl_set_error(GL_INVALID_VALUE);
         return 0;
@@ -556,6 +539,7 @@ GLuint glGenLists(GLsizei range) {
 }
 
 void glNewList(GLuint list, GLenum mode) {
+    FORWARD_IF_REMOTE(glNewList);
     // TODO: make sure this doesn't break anything
     if (list == 0) {
         ERROR(GL_INVALID_VALUE);
@@ -576,6 +560,7 @@ void glNewList(GLuint list, GLenum mode) {
 }
 
 void glEndList() {
+    FORWARD_IF_REMOTE(glEndList);
     GLuint list = state.list.name;
     displaylist_t *dl = state.list.active;
     if (!dl || state.block.active) {
@@ -656,27 +641,23 @@ void glCallLists(GLsizei n, GLenum type, const GLvoid *lists) {
     #undef call_bytes
 }
 
-void glDeleteList(GLuint list) {
-    displaylist_t *l = get_list(list);
-    if (l) {
-        if (state.list.active == l) {
-            state.list.active = NULL;
-        }
-        dl_free(l);
-        tack_set(&state.lists, list - 1, NULL);
-    }
-
-    // lists just grow upwards, maybe use a better storage mechanism?
-}
-
 void glDeleteLists(GLuint list, GLsizei range) {
+    FORWARD_IF_REMOTE(glDeleteLists);
     if (range < 0) {
         ERROR(GL_INVALID_VALUE);
     }
     ERROR_IN_BLOCK();
     for (int i = 0; i < range; i++) {
-        glDeleteList(list + i);
+        displaylist_t *l = get_list(list);
+        if (l) {
+            if (state.list.active == l) {
+                state.list.active = NULL;
+            }
+            dl_free(l);
+            tack_set(&state.lists, list - 1, NULL);
+        }
     }
+    // lists just grow upwards, maybe use a better storage mechanism?
 }
 
 void glListBase(GLuint base) {
@@ -684,6 +665,7 @@ void glListBase(GLuint base) {
 }
 
 GLboolean glIsList(GLuint list) {
+    FORWARD_IF_REMOTE(glIsList);
     if (state.block.active) {
         gl_set_error(GL_INVALID_OPERATION);
         return 0;

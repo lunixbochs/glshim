@@ -233,8 +233,8 @@ void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, G
 }
 
 void glPixelStorei(GLenum pname, GLint param) {
+    FORWARD_IF_REMOTE(glPixelStorei);
     // TODO: add to glGetIntegerv?
-    LOAD_GLES(glPixelStorei);
     switch (pname) {
         case GL_UNPACK_ROW_LENGTH:
             state.texture.unpack_row_length = param;
@@ -249,8 +249,11 @@ void glPixelStorei(GLenum pname, GLint param) {
             state.texture.unpack_lsb_first = param;
             break;
         default:
+        {
+            LOAD_GLES(glPixelStorei);
             gles_glPixelStorei(pname, param);
             break;
+        }
     }
 }
 

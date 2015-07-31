@@ -86,7 +86,7 @@ extern void load_egl_lib();
 #endif
 
 #ifndef PUSH_IF_COMPILING
-#define PUSH_IF_COMPILING(name) PUSH_IF_COMPILING_EXT(name, name##_ARG_NAMES)
+#define PUSH_IF_COMPILING(name) FORWARD_IF_REMOTE(name); PUSH_IF_COMPILING_EXT(name, name##_ARG_NAMES)
 #endif
 
 #ifndef FORWARD_IF_REMOTE_EXT

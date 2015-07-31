@@ -15,7 +15,13 @@ displaylist_t *dl_alloc() {
 void dl_free(displaylist_t *dl) {
     int len = tack_len(&dl->calls);
     for (int i = 0; i < len; i++) {
-        free(tack_get(&dl->calls, i));
+        packed_call_t *call = tack_get(&dl->calls, i);
+        if (call->index == RENDER_BLOCK_INDEX) {
+            block_call_t *blc = (block_call_t *)call;
+            bl_free(blc->block);
+        } else {
+            free(call);
+        }
     }
     free(dl);
 }

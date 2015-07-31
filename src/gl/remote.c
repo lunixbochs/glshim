@@ -1,28 +1,21 @@
 #include <errno.h>
+#include <semaphore.h>
+#include <signal.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/wait.h>
 #include <sys/mman.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 #include "block.h"
 #include "gl_helpers.h"
-#include "glouija/glouija.h"
 #include "remote.h"
+#include "ring.h"
 #include "wrap/glpack.h"
 #include "wrap/remote.h"
 #include "wrap/types.h"
 
-#define GLOUIJA_CALL_INIT(ret_size)                            \
-    {                                                          \
-        .args = 1,                                             \
-        .type = GLO_CALL_TYPE_CALL,                            \
-        .arg = {                                               \
-            {.type = GLO_ARG_TYPE_UINT, .data.ui = ret_size},  \
-        0},                                                    \
-    }
-
+static ring_t ring = {0};
 static int g_remote_noisy = 0;
 static void (*old_sigchld)(int);
 
@@ -66,10 +59,18 @@ int remote_spawn(const char *path) {
     if (path == NULL) {
         path = "libgl_remote";
     }
-    char *shm_name = glouija_init_client();
+    char *shm_name = ring_client(&ring, "glshim");
     if (! shm_name) {
         fprintf(stderr, "libGL: failed to allocate shm for remote\n");
         abort();
+    }
+    state.remote_ring = &ring;
+    // one frame will fit in the ringbuffer before it blocks
+    sem_post(ring.sync);
+    if (getenv("LIBGL_REMOTE_NOSPAWN")) {
+        signal(SIGCHLD, old_sigchld);
+        fprintf(stderr, "libGL: shm_name='%s'\n", shm_name);
+        return 1;
     }
     int pid = fork();
     if (pid == 0) {
@@ -100,7 +101,7 @@ static void write_memcpy(uintptr_t *dst, void *src, size_t size) {
 
 static void write_uint32(uintptr_t *dst, uint32_t i) {
     **(uint32_t **)dst = i;
-    *dst += 4;
+    *dst += sizeof(uint32_t);
 }
 
 static void *read_ptr(uintptr_t *src, size_t size) {
@@ -111,94 +112,61 @@ static void *read_ptr(uintptr_t *src, size_t size) {
 
 static uint32_t read_uint32(uintptr_t *src) {
     uint32_t i = *(uint32_t *)src;
-    *src += 4;
+    *src += sizeof(uint32_t);
     return i;
 }
 
-void *remote_serialize_block(block_t *block, size_t *ret_size) {
-    size_t size = sizeof(uint32_t) + sizeof(block_t);
-    if (block->vert) {
-        size += block->len * 3 * sizeof(GLfloat);
-    }
-    if (block->normal) {
-        size += block->len * 3 * sizeof(GLfloat);
-    }
-    if (block->color) {
-        size += block->len * 4 * sizeof(GLfloat);
-    }
+void remote_write_block(ring_t *ring, block_t *block) {
+    uint32_t retsize = 0;
+    uint32_t index = REMOTE_BLOCK_DRAW;
+    uint32_t elements = block->len * sizeof(GLfloat);
+    ring_val_t vals[7 + MAX_TEX] = {
+        {&retsize, sizeof(uint32_t)},
+        {&index, sizeof(uint32_t)},
+        {block, sizeof(block_t)},
+        {block->vert, block->vert ? 3 * elements : 0},
+        {block->normal, block->normal ? 3 * elements : 0},
+        {block->color, block->color ? 4 * elements : 0},
+        {block->indices, block->indices ? block->count * sizeof(GLushort) : 0},
+        0,
+    };
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i]) {
-            size += block->len * 2 * sizeof(GLfloat);
+            vals[7 + i].buf = block->tex[i];
+            vals[7 + i].size = 2 * elements;
         }
     }
-    if (block->indices) {
-        size += block->count * sizeof(GLushort);
-    }
-    if (ret_size) {
-        *ret_size = size;
-    }
-    void *buf = malloc(size);
-    uintptr_t pos = (uintptr_t)buf;
-    write_uint32(&pos, REMOTE_BLOCK_DRAW);
-    write_memcpy(&pos, block, sizeof(block_t));
-    if (block->vert) {
-        write_memcpy(&pos, block->vert, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->normal) {
-        write_memcpy(&pos, block->normal, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->color) {
-        write_memcpy(&pos, block->color, block->len * 4 * sizeof(GLfloat));
-    }
-    for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i]) {
-            write_memcpy(&pos, block->tex[i], block->len * 2 * sizeof(GLfloat));
-        }
-    }
-    if (block->indices) {
-        write_memcpy(&pos, block->indices, block->count * sizeof(GLushort));
-    }
-    return buf;
+    ring_write_multi(ring, vals, 7 + MAX_TEX);
 }
 
-block_t *remote_deserialize_block(void *buf) {
-    uintptr_t pos = (uintptr_t)buf;
+block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
+    uintptr_t pos = (uintptr_t)call;
     pos += sizeof(uint32_t);
-    block_t *block = (block_t *)read_ptr(&pos, sizeof(block_t));
-    if (block->vert) {
-        block->vert = (GLfloat *)read_ptr(&pos, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->normal) {
-        block->normal = (GLfloat *)read_ptr(&pos, block->len * 3 * sizeof(GLfloat));
-    }
-    if (block->color) {
-        block->color = (GLfloat *)read_ptr(&pos, block->len * 4 * sizeof(GLfloat));
-    }
+    block_t *block = read_ptr(&pos, sizeof(block_t));
+    uint32_t elements = block->len * sizeof(GLfloat);
+    if (block->vert)    block->vert    = read_ptr(&pos, 3 * elements);
+    if (block->normal)  block->normal  = read_ptr(&pos, 3 * elements);
+    if (block->color)   block->color   = read_ptr(&pos, 4 * elements);
+    if (block->indices) block->indices = read_ptr(&pos, block->count * sizeof(GLushort));
     for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i]) {
-            block->tex[i] = (GLfloat *)read_ptr(&pos, block->len * 2 * sizeof(GLfloat));
-        }
-    }
-    if (block->indices) {
-        block->indices = (GLushort *)read_ptr(&pos, block->count * sizeof(GLushort));
+        if (block->tex[i])
+            block->tex[i] = read_ptr(&pos, 2 * elements);
     }
     return block;
 }
 
-static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, size_t ret_size) {
-    GlouijaCall c = GLOUIJA_CALL_INIT(ret_size);
-    glouija_add_block(&c, call, pack_size);
-    int extra = remote_local_pre(&c, call);
-    glouija_command_write(&c);
-    GlouijaCall ret = {0};
-    if (ret_size || extra) {
-        glouija_command_read(&ret);
-    }
+static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, uint32_t ret_size) {
+    ring_val_t vals[] = {
+        {&ret_size, sizeof(uint32_t)},
+        {call, pack_size},
+    };
+    ring_write_multi(&ring, vals, 2);
+    remote_local_pre(&ring, call);
     if (ret_size) {
-        memcpy(ret_v, ret.arg[0].data.block.data, ret_size);
+        memcpy(ret_v, ring_read(&ring, NULL), ret_size);
+        ring_advance(&ring);
     }
-    remote_local_post(&c, &ret, call, ret_v, ret_size);
-    glouija_command_free(&ret);
+    remote_local_post(&ring, call, ret_v, ret_size);
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
@@ -228,40 +196,33 @@ void remote_call(packed_call_t *call, void *ret_v) {
 }
 
 int remote_serve(char *name) {
-    if (glouija_init_server(name)) {
+    if (ring_server(&ring, name)) {
         fprintf(stderr, "Error mapping shared memory: %s\n", name);
         return 2;
     }
+    g_remote_noisy = !!getenv("LIBGL_REMOTE_NOISY");
     char retbuf[8];
     while (1) {
-        GlouijaCall c = {0};
-        glouija_command_read(&c);
-        if (c.args < 2) {
-            fprintf(stderr, "Invalid remote command.\n");
-            return 3;
-        }
-        int retsize = c.arg[0].data.ui;
-        packed_call_t *call = c.arg[1].data.block.data;
+        size_t size;
+        void *buf = ring_read(&ring, &size);
+        uint32_t retsize = *(uint32_t *)buf;
+        packed_call_t *call = (packed_call_t *)(buf + sizeof(uint32_t));
         void *ret = NULL;
         if (retsize > 8) {
             ret = malloc(retsize);
         } else if (retsize > 0) {
             ret = retbuf;
         }
-        GlouijaCall response = {.args = 0, .type = GLO_CALL_TYPE_CALL, 0};
         if (call->index >= 0 && g_remote_noisy) {
             printf("remote call: ");
             glIndexedPrint(call);
         }
-        remote_target_pre(&c, &response, call, ret);
+        remote_target_pre(&ring, call, size, ret);
         if (retsize > 0) {
-            glouija_add_block(&response, ret, retsize);
+            ring_write(&ring, ret, retsize);
         }
-        if (response.args > 0) {
-            glouija_command_write(&response);
-        }
-        remote_target_post(&c, &response, call, ret);
-        glouija_command_free(&c);
+        remote_target_post(&ring, call, ret);
+        ring_advance(&ring);
         if (retsize > 8) {
             free(ret);
         }
@@ -269,10 +230,7 @@ int remote_serve(char *name) {
 }
 
 void remote_block_draw(block_t *block) {
-    size_t size = 0;
-    void *buf = remote_serialize_block(block, &size);
-    remote_call_raw(buf, size, NULL, 0);
-    free(buf);
+    remote_write_block(&ring, block);
 }
 
 void remote_gl_get(GLenum pname, GLenum type, GLvoid *params) {

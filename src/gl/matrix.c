@@ -84,7 +84,6 @@ void glLoadIdentity() {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_identity(get_current_matrix());
-    FORWARD_IF_REMOTE(glLoadIdentity);
     PROXY_MATRIX(glLoadIdentity);
 }
 
@@ -93,7 +92,6 @@ void glLoadMatrixf(const GLfloat *m) {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_load(get_current_matrix(), m);
-    FORWARD_IF_REMOTE(glLoadMatrixf);
     PROXY_MATRIX(glLoadMatrixf);
 }
 
@@ -118,7 +116,6 @@ void glMatrixMode(GLenum mode) {
             ERROR(GL_INVALID_ENUM);
     }
     state.matrix.mode = mode;
-    FORWARD_IF_REMOTE(glMatrixMode);
     PROXY_MATRIX(glMatrixMode);
 }
 

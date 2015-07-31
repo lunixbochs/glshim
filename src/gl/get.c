@@ -208,6 +208,9 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_NAME_STACK_DEPTH:
         case GL_PROJECTION_STACK_DEPTH:
         case GL_TEXTURE_STACK_DEPTH:
+        case GL_UNPACK_ROW_LENGTH:
+        case GL_UNPACK_SKIP_PIXELS:
+        case GL_UNPACK_SKIP_ROWS:
         {
             GLint tmp[4];
             GLint *out = tmp;
@@ -248,6 +251,16 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     break;
                 case GL_TEXTURE_STACK_DEPTH:
                     *out = tack_len(&state.matrix.texture[state.texture.active].stack);
+                    break;
+                // texture stuff
+                case GL_UNPACK_ROW_LENGTH:
+                    *out = state.texture.unpack_row_length;
+                    break;
+                case GL_UNPACK_SKIP_PIXELS:
+                    *out = state.texture.unpack_skip_pixels;
+                    break;
+                case GL_UNPACK_SKIP_ROWS:
+                    *out = state.texture.unpack_skip_rows;
                     break;
             }
             if (type != GL_INT) {

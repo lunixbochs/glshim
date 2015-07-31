@@ -121,12 +121,9 @@ char *tack_str_join(tack_t *stack, const char *sep) {
     for (int i = 0; i < stack->len; i++) {
         if (array[i] != NULL) {
             len += strlen(array[i]);
-            if (i < stack->len - 1) {
-                len += sep_len;
-            }
         }
     }
-    len -= sep_len;
+    len += sep_len * (stack->len - 1);
     char *out = malloc(len * sizeof(char) + 1);
     out[len] = '\0';
     char *pos = out;

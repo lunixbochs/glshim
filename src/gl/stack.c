@@ -1,8 +1,11 @@
 #include "error.h"
 #include "stack.h"
+#include "loader.h"
+#include "remote.h"
 
 void glPushAttrib(GLbitfield mask) {
     ERROR_IN_BLOCK();
+    FORWARD_IF_REMOTE(glPushAttrib);
     glstack_t *cur = malloc(sizeof(glstack_t));
 
     cur->mask = mask;
@@ -175,9 +178,9 @@ void glPushClientAttrib(GLbitfield mask) {
     if (mask & GL_CLIENT_PIXEL_STORE_BIT) {
         glGetIntegerv(GL_PACK_ALIGNMENT, &cur->pack_align);
         glGetIntegerv(GL_UNPACK_ALIGNMENT, &cur->unpack_align);
-        cur->unpack_row_length = state.texture.unpack_row_length;
-        cur->unpack_skip_pixels = state.texture.unpack_skip_pixels;
-        cur->unpack_skip_rows = state.texture.unpack_skip_rows;
+        glGetIntegerv(GL_UNPACK_ROW_LENGTH, &cur->unpack_row_length);
+        glGetIntegerv(GL_UNPACK_SKIP_PIXELS, &cur->unpack_skip_pixels);
+        glGetIntegerv(GL_UNPACK_SKIP_ROWS, &cur->unpack_skip_rows);
     }
 
     if (mask & GL_CLIENT_VERTEX_ARRAY_BIT) {
@@ -200,6 +203,7 @@ void glPushClientAttrib(GLbitfield mask) {
 
 void glPopAttrib() {
     ERROR_IN_BLOCK();
+    FORWARD_IF_REMOTE(glPopAttrib);
     glstack_t *cur = tack_pop(&state.stack.attrib);
     if (cur == NULL) {
         ERROR(GL_STACK_UNDERFLOW);
