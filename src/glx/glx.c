@@ -244,6 +244,7 @@ static void scan_env() {
     env(LIBGL_FPS, g_showfps, "fps counter enabled");
     env(LIBGL_FPS_OVERLAY, g_fps_overlay, "fps overlay enabled");
     env(LIBGL_VSYNC, g_vsync, "vsync enabled");
+    env(LIBGL_X11_REOPEN, g_x11_reopen, "reopening X11 display");
     if (g_vsync) {
         init_vsync();
     }
