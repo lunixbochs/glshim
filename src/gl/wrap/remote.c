@@ -143,9 +143,22 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
 }
 
 void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret) {
+    static Display *target_display = NULL;
+    if (! target_display) target_display = XOpenDisplay(NULL);
     switch (call->index) {
+        // can't pass a Display * through the proxy
+        case glXCreateContext_INDEX:
+            ((glXCreateContext_PACKED *)call)->args.dpy = target_display;
+            break;
+        case glXMakeCurrent_INDEX:
+            ((glXCreateContext_PACKED *)call)->args.dpy = target_display;
+            break;
+        case glXDestroyContext_INDEX:
+            ((glXDestroyContext_PACKED *)call)->args.dpy = target_display;
+            break;
         case glXSwapBuffers_INDEX:
             sem_post(ring->sync);
+            ((glXSwapBuffers_PACKED *)call)->args.dpy = target_display;
             break;
         case REMOTE_BLOCK_DRAW:
         {

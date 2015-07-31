@@ -19,7 +19,6 @@
 #include "liveinfo.h"
 
 bool eglInitialized = false;
-EGLDisplay eglDisplay;
 EGLSurface eglSurface;
 EGLConfig eglConfigs[1];
 
@@ -113,10 +112,8 @@ static int get_config_default(int attribute, int *value) {
     return 0;
 }
 
-// hmm...
 static EGLContext eglContext;
 static GLXContext glxContext;
-static Display *g_display;
 
 #ifdef __linux__
 #ifndef FBIO_WAITFORVSYNC
@@ -130,6 +127,7 @@ static bool g_usefb = false;
 static bool g_vsync = false;
 static bool g_xrefresh = false;
 static bool g_stacktrace = false;
+static bool g_x11_reopen = false;
 static bool g_bcm_active = false;
 #ifndef BCMHOST
 static bool g_bcmhost = false;
@@ -140,16 +138,29 @@ static bool g_bcmhost = true;
 static int fbdev = -1;
 static int swap_interval = 1;
 
-static void init_display(Display *display) {
+static Display *get_display(Display *display) {
+    static Display *x11_display = NULL;
+    if (! x11_display) {
+        if (g_x11_reopen) {
+            x11_display = XOpenDisplay(NULL);
+        } else {
+            x11_display = display;
+        }
+    }
+    return x11_display;
+}
+
+static EGLDisplay get_egl_display(Display *display) {
+    static EGLDisplay eglDisplay = NULL;
     LOAD_EGL(eglGetDisplay);
-    if (! g_display) {
-        g_display = XOpenDisplay(NULL);
+    if (! eglDisplay) {
+        if (g_usefb) {
+            eglDisplay = egl_eglGetDisplay(EGL_DEFAULT_DISPLAY);
+        } else {
+            eglDisplay = egl_eglGetDisplay(get_display(display));
+        }
     }
-    if (g_usefb) {
-        eglDisplay = egl_eglGetDisplay(EGL_DEFAULT_DISPLAY);
-    } else {
-        eglDisplay = egl_eglGetDisplay(g_display);
-    }
+    return eglDisplay;
 }
 
 static void init_vsync() {
@@ -297,29 +308,26 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
 #endif
 
     GLXContext fake = malloc(sizeof(struct __GLXContextRec));
-    if (eglDisplay != NULL) {
+    EGLDisplay eglDisplay = get_egl_display(dpy);
+    if (eglDisplay) {
         egl_eglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
-        if (eglContext != NULL) {
+        if (eglContext) {
             egl_eglDestroyContext(eglDisplay, eglContext);
             eglContext = NULL;
         }
-        if (eglSurface != NULL) {
+        if (eglSurface) {
             egl_eglDestroySurface(eglDisplay, eglSurface);
             eglSurface = NULL;
         }
     }
 
-    // make an egl context here...
-    EGLBoolean result;
-    if (eglDisplay == NULL || eglDisplay == EGL_NO_DISPLAY) {
-        init_display(dpy);
-        if (eglDisplay == EGL_NO_DISPLAY) {
-            printf("Unable to create EGL display.\n");
-            return fake;
-        }
+    if (eglDisplay == EGL_NO_DISPLAY) {
+        printf("Unable to create EGL display.\n");
+        return fake;
     }
 
     // first time?
+    EGLBoolean result;
     if (eglInitialized == false) {
         egl_eglBindAPI(EGL_OPENGL_ES_API);
         result = egl_eglInitialize(eglDisplay, NULL, NULL);
@@ -341,7 +349,7 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
     CheckEGLErrors();
 
     // need to return a glx context pointing at it
-    fake->display = g_display;
+    fake->display = get_display(dpy);
     fake->direct = true;
     fake->xid = 1;
     return fake;
@@ -357,6 +365,7 @@ void glXDestroyContext(Display *dpy, GLXContext ctx) {
     PROXY_GLES(glXDestroyContext);
     LOAD_EGL(eglDestroyContext);
     LOAD_EGL(eglDestroySurface);
+    EGLDisplay eglDisplay = get_egl_display(dpy);
     if (eglContext) {
         EGLBoolean result = egl_eglDestroyContext(eglDisplay, eglContext);
         if (eglSurface != NULL) {
@@ -376,22 +385,18 @@ void glXDestroyContext(Display *dpy, GLXContext ctx) {
 
 Display *glXGetCurrentDisplay() {
     PROXY_GLES(glXGetCurrentDisplay);
-    if (g_display && eglContext) {
-        return g_display;
-    }
+    Display *dpy = get_display(NULL);
+    if (dpy && eglContext)
+        return dpy;
     return NULL;
 }
 
 XVisualInfo *glXChooseVisual(Display *dpy, int screen, int *attribList) {
     PROXY_GLES(glXChooseVisual);
-
-    // apparently can't trust the Display I'm passed?
-    if (g_display == NULL) {
-        g_display = XOpenDisplay(NULL);
-    }
-    int depth = DefaultDepth(g_display, screen);
+    dpy = get_display(dpy);
+    int depth = DefaultDepth(dpy, screen);
     XVisualInfo *visual = (XVisualInfo *)malloc(sizeof(XVisualInfo));
-    XMatchVisualInfo(g_display, screen, depth, TrueColor, visual);
+    XMatchVisualInfo(dpy, screen, depth, TrueColor, visual);
     return visual;
 }
 
@@ -408,6 +413,7 @@ Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
     LOAD_EGL(eglCreateWindowSurface);
     LOAD_EGL(eglDestroySurface);
     LOAD_EGL(eglMakeCurrent);
+    EGLDisplay eglDisplay = get_egl_display(dpy);
     if (eglDisplay != NULL) {
         egl_eglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
         if (eglSurface != NULL) {
@@ -418,17 +424,9 @@ Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
     if (! ctx) {
         return true;
     }
-    if (eglDisplay == NULL) {
-        init_display(dpy);
-    }
-
     if (g_usefb)
         drawable = 0;
-    static EGLint const window_attribute_list[] = {
-        EGL_RENDER_BUFFER, EGL_BACK_BUFFER,
-        EGL_NONE,
-    };
-    eglSurface = egl_eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, window_attribute_list);
+    eglSurface = egl_eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, NULL);
     CheckEGLErrors();
 
     EGLBoolean result = egl_eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
@@ -508,7 +506,7 @@ void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
         }
     }
 #endif
-    egl_eglSwapBuffers(eglDisplay, eglSurface);
+    egl_eglSwapBuffers(get_egl_display(dpy), eglSurface);
     CheckEGLErrors();
 }
 
@@ -590,11 +588,8 @@ int glXGetFBConfigAttrib(Display *dpy, GLXFBConfig config, int attribute, int *v
 
 XVisualInfo *glXGetVisualFromFBConfig(Display *dpy, GLXFBConfig config) {
     PROXY_GLES(glXGetVisualFromFBConfig);
-    if (g_display == NULL) {
-        g_display = XOpenDisplay(NULL);
-    }
     XVisualInfo *visual = (XVisualInfo *)malloc(sizeof(XVisualInfo));
-    XMatchVisualInfo(g_display, 0, 16, TrueColor, visual);
+    XMatchVisualInfo(get_display(dpy), 0, 16, TrueColor, visual);
     return visual;
 }
 
