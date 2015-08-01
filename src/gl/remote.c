@@ -65,8 +65,6 @@ int remote_spawn(const char *path) {
         abort();
     }
     state.remote_ring = &ring;
-    // one frame will fit in the ringbuffer before it blocks
-    sem_post(ring.sync);
     if (getenv("LIBGL_REMOTE_NOSPAWN")) {
         signal(SIGCHLD, old_sigchld);
         fprintf(stderr, "libGL: shm_name='%s'\n", shm_name);

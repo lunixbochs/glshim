@@ -1,4 +1,3 @@
-#include <semaphore.h>
 #include <X11/Xlib.h>
 
 #include "../get.h"
@@ -22,10 +21,6 @@ int remote_local_pre(ring_t *ring, packed_call_t *call) {
         case glXMakeCurrent_INDEX:
             // if the window create hasn't flushed yet, we can't init on the remote
             XFlush(((glXMakeCurrent_PACKED *)call)->args.dpy);
-            break;
-        case glXSwapBuffers_INDEX:
-            // prevent too many frames from clogging up the ring buffer
-            sem_wait(ring->sync);
             break;
         case glDeleteTextures_INDEX:
         {
@@ -144,6 +139,10 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
         case glGenTextures_INDEX:
             ring_read_into(ring, ((glGenTextures_PACKED *)call)->args.textures);
             break;
+        case glXSwapBuffers_INDEX:
+            // prevent too many frames from clogging up the ring buffer
+            ring_read(ring, NULL);
+            break;
 #if 0
         // see above
         case glXChooseVisual_INDEX:
@@ -186,7 +185,7 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             ((glXDestroyContext_PACKED *)call)->args.dpy = target_display;
             break;
         case glXSwapBuffers_INDEX:
-            sem_post(ring->sync);
+            ring_write(ring, NULL, 0);
             ((glXSwapBuffers_PACKED *)call)->args.dpy = target_display;
             break;
         case REMOTE_BLOCK_DRAW:

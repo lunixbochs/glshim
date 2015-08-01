@@ -4,7 +4,6 @@
 
 #include <fcntl.h>
 #include <sched.h>
-#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -155,12 +154,6 @@ int ring_server(ring_t *ring, char *name) {
     }
     shm_unlink(name);
 
-    // set up semaphore
-    char buf[32];
-    snprintf(buf, 32, "%s.sync", name);
-    ring->sync = sem_open(buf, 1);
-    sem_unlink(buf);
-
     ring->read = addr;
     ring->write = ring->read + sizeof(uint32_t);
     ring->mark = ring->write + sizeof(uint32_t);
@@ -193,11 +186,6 @@ char *ring_client(ring_t *ring, char *title) {
     if (addr == MAP_FAILED) {
         return NULL;
     }
-
-    // set up semaphore
-    snprintf(buf, 32, "%s.sync", name);
-    sem_unlink(buf);
-    ring->sync = sem_open(buf, O_CREAT, 0700, 0);
 
     ring->read = addr;
     ring->write = ring->read + sizeof(uint32_t);

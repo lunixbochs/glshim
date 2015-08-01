@@ -1,12 +1,10 @@
 #ifndef RING_H
 #define RING_H
 
-#include <semaphore.h>
 #include <stdint.h>
 
 typedef struct {
     uint32_t *read, *mark, *write, *wrap;
-    sem_t *sync;
     void *buf;
     size_t size;
     uint32_t me, *dir;
