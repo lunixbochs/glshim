@@ -167,6 +167,7 @@ static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, 
         ring_advance(&ring);
     }
     remote_local_post(&ring, call, ret_v, ret_size);
+    free(call);
 }
 
 void remote_call(packed_call_t *call, void *ret_v) {
