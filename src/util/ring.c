@@ -90,12 +90,7 @@ void ring_advance(ring_t *ring) {
     *ring->read = *ring->mark;
 }
 
-int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
-    // measure the total size
-    size_t size = sizeof(uint32_t);
-    for (int i = 0; i < count; i++)
-        size += vals[i].size;
-    size = ALIGN4(size);
+void *ring_dma(ring_t *ring, size_t size) {
     // make sure we have enough unmarked free space
     uint32_t read = *ring->read, mark = *ring->mark;
     uint32_t marked;
@@ -117,12 +112,34 @@ int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
     // pick destination and wrap if necessary
     if (remain > size) {
         dst = ring->buf + *ring->write;
-        move = *ring->write + size;
+        ring->dma_write = *ring->write + size;
     } else {
         dst = ring->buf;
-        wrap = *ring->write;
-        move = size;
+        ring->dma_wrap = *ring->write;
+        ring->dma_write = size;
     }
+    return dst;
+}
+
+void ring_dma_done(ring_t *ring) {
+    // move position
+    if (ring->dma_wrap)
+        *ring->wrap = ring->dma_wrap;
+    *ring->write = ring->dma_write;
+    ring->dma_wrap = 0;
+    ring->dma_write = 0;
+    // update direction
+    if (*ring->dir == ring->me)
+        *ring->dir = !ring->me;
+}
+
+int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
+    // measure the total size
+    size_t size = sizeof(uint32_t);
+    for (int i = 0; i < count; i++)
+        size += vals[i].size;
+    size = ALIGN4(size);
+    void *dst = ring_dma(ring, size);
     // write values
     uint32_t *size_write = (uint32_t *)dst;
     *size_write = size;
@@ -131,13 +148,7 @@ int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
         memcpy(dst, vals[i].buf, vals[i].size);
         dst += vals[i].size;
     }
-    // move position
-    if (wrap)
-        *ring->wrap = *ring->write;
-    *ring->write = move;
-    // update direction
-    if (*ring->dir == ring->me)
-        *ring->dir = !ring->me;
+    ring_dma_done(ring);
     return 0;
 }
 
