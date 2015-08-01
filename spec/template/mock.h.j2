@@ -57,7 +57,7 @@ static int failed_test = 0;
 
 {% for func in functions %}
 #define emit_{{ func.name }}({{ func.args|args(0) }}) { \
-    mock_push(pack_{{ func.name }}({{ func.args|args(0) }})); \
+    mock_push(pack_{{ func.name }}(NULL{% if func.args %}, {{ func.args|args(0) }}{% endif %})); \
 }
 #define test_{{ func.name }}({{ func.args|args(0, '_') }}) { \
     {{ func.name }}_PACKED *packed = mock_cur(); \

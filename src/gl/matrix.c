@@ -71,7 +71,7 @@ static void upload_matrix() {
     GLfloat tmp[16];
     mat4_save(get_current_matrix(), tmp);
     if (state.remote) {
-        remote_call(pack_glLoadMatrixf(tmp), NULL);
+        forward_glLoadMatrixf(tmp);
     } else {
         LOAD_GLES(glLoadMatrixf);
         gles_glLoadMatrixf(tmp);

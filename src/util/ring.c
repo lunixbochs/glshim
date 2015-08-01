@@ -91,6 +91,7 @@ void ring_advance(ring_t *ring) {
 }
 
 void *ring_dma(ring_t *ring, size_t size) {
+    size += sizeof(uint32_t);
     // make sure we have enough unmarked free space
     uint32_t read = *ring->read, mark = *ring->mark;
     uint32_t marked;
@@ -118,7 +119,8 @@ void *ring_dma(ring_t *ring, size_t size) {
         ring->dma_wrap = *ring->write;
         ring->dma_write = size;
     }
-    return dst;
+    *(uint32_t *)dst = size;
+    return dst + sizeof(uint32_t);
 }
 
 void ring_dma_done(ring_t *ring) {
@@ -135,15 +137,12 @@ void ring_dma_done(ring_t *ring) {
 
 int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
     // measure the total size
-    size_t size = sizeof(uint32_t);
+    size_t size = 0;
     for (int i = 0; i < count; i++)
         size += vals[i].size;
     size = ALIGN4(size);
     void *dst = ring_dma(ring, size);
     // write values
-    uint32_t *size_write = (uint32_t *)dst;
-    *size_write = size;
-    dst += sizeof(uint32_t);
     for (int i = 0; i < count; i++) {
         memcpy(dst, vals[i].buf, vals[i].size);
         dst += vals[i].size;

@@ -8,14 +8,14 @@ typedef struct {
     {% for arg in f.args %}
     {{ arg.type|unconst }} {{ arg.name }}{% if arg.type == 'GLdouble' %} __attribute__ ((aligned(8))){% endif %};
     {% endfor %}
-} ARGS_{{ f.name }};
+} {{ f.name }}_ARGS;
 {% endif %}
 typedef struct {
     int index;
     {% if f.args %}
-    ARGS_{{ f.name }} args;
+    {{ f.name }}_ARGS args;
     {% endif %}
-} PACKED_{{ f.name }};
+} {{ f.name }}_PACKED;
 {% endfor %}
 
 extern const int INDEX_RET_SIZE[];
@@ -30,28 +30,25 @@ void glIndexedPrint(const packed_call_t *packed);
 #define {{ func.name }}_RETURN {{ func.return }}
 #define {{ func.name }}_ARG_NAMES {{ func.args|args(0) }}
 #define {{ func.name }}_ARG_EXPAND {{ func.args|args }}
-#define {{ func.name }}_PACKED PACKED_{{ func.name }}
-{% if func.void %}
-#define {{ func.name }}_VOID_ONLY_WRAP(...) { __VA_ARGS__ }
-#define {{ func.name }}_NOT_VOID_WRAP(...) {}
-{% else %}
-#define {{ func.name }}_VOID_ONLY_WRAP(...) {}
-#define {{ func.name }}_NOT_VOID_WRAP(...) { __VA_ARGS__ }
-{% endif %}
-#define pack_{{ func.name }}({{ func.args|args(0, '_') }}) ({ \
-    {{ func.name }}_PACKED *packed_data = malloc(sizeof({{ func.name }}_PACKED)); \
-    packed_data->index = {{ func.name }}_INDEX; \
-    {% if func.args %}
-    {% for arg in func.args %}
-    packed_data->args.{{ arg.name }} = ({{ arg.type|unconst }})_{{ arg.name }}; \
-    {% endfor %}
-    {% endif %}
-    (packed_call_t *)packed_data; \
-})
+#define {{ func.name }}_ARG_NAMES_TAIL {% if func.args %}, {{ func.args|args(0) }}{% endif %}
+
+#define {{ func.name }}_ARG_EXPAND_TAIL {% if func.args %}, {{ func.args|args }}{% endif %}
+
+#define forward_{{ func.name }}({{ func.args|args(0, '_') }}) \
+    ({ \
+        void *dst = remote_dma(sizeof({{ func.name }}_PACKED)); \
+        {% if func.void %}
+        remote_dma_send((packed_call_t *)pack_{{ func.name }}(dst{% if func.args %}, {% endif %}{{ func.args|args(0, '_') }}), NULL); \
+        {% else %}
+        {{ func.return }} ret = ({{ func.return }})0; \
+        remote_dma_send((packed_call_t *)pack_{{ func.name }}(dst{% if func.args %}, {% endif %}{{ func.args|args(0, '_') }}), &ret); \
+        ret; \
+        {% endif %}
+    });
 #define call_{{ func.name }}(packed, ret_v) do { \
     {% if func.args %}
-    PACKED_{{ func.name }} *unpacked = (PACKED_{{ func.name }} *)packed; \
-    ARGS_{{ func.name }} *args = (ARGS_{{ func.name }} *)&unpacked->args; \
+    {{ func.name }}_PACKED *unpacked = ({{ func.name }}_PACKED *)packed; \
+    {{ func.name }}_ARGS *args = ({{ func.name }}_ARGS *)&unpacked->args; \
     {% endif %}
     {% if not func.void %}
     {{ func.return }} *ret = ({{ func.return }} *)ret_v; \
@@ -65,6 +62,7 @@ void glIndexedPrint(const packed_call_t *packed);
     {% endif %}
 } while(0)
 {{ func.return }} {{ func.name }}({{ func.name }}_ARG_EXPAND);
+packed_call_t *pack_{{ func.name }}({{ func.name }}_PACKED *_dst {{ func.name }}_ARG_EXPAND_TAIL);
 {{ func.return }} stub_{{ func.name }}({{ func.name }}_ARG_EXPAND);
 typedef {{ func.return }} (*{{ func.name }}_PTR)({{ func.name }}_ARG_EXPAND);
 {% endfor %}

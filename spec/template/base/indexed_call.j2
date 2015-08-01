@@ -19,8 +19,8 @@ void glIndexedPrint(const packed_call_t *packed) {
         {% for f in functions %}
         case {{ f.name }}_INDEX: {
             {% if f.args %}
-            PACKED_{{ f.name }} *unpacked = (PACKED_{{ f.name }} *)packed;
-            ARGS_{{ f.name }} *args = (ARGS_{{ f.name }} *)&unpacked->args;
+            {{ f.name }}_PACKED *unpacked = ({{ f.name }}_PACKED *)packed;
+            {{ f.name }}_ARGS *args = ({{ f.name }}_ARGS *)&unpacked->args;
             printf("{{ f.name }}({{ f.args|printf }});\n", {{ args(f) }});
             {% else %}
             printf("{{ f.name }}();\n");

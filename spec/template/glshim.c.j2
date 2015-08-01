@@ -16,12 +16,4 @@
 }
 #endif
 {% endfor %}
-
-{% for func in functions %}
-{{ func.return }} stub_{{ func.name }}({{ func.args|args }}) {
-{{ fprint(func, prefix='stub ') }}
-{%- if not func.void %}    return 0;
-{% endif %}
-}
-{% endfor %}
 {% endblock %}

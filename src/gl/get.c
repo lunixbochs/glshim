@@ -10,7 +10,7 @@
 void gl_set_error(GLenum error) {
     // call upstream glGetError to clear the driver's error flag
     if (state.remote) {
-        remote_call(pack_glGetError(), NULL);
+        forward_glGetError();
     } else {
         LOAD_GLES(glGetError);
         gles_glGetError();
@@ -21,7 +21,7 @@ void gl_set_error(GLenum error) {
 // calls upstream glGetError and saves the flag for the next caller
 GLenum gl_get_error() {
     if (state.remote) {
-        remote_call(pack_glGetError(), &state.error);
+        state.error = forward_glGetError();
     } else {
         LOAD_GLES(glGetError);
         state.error = gles_glGetError();
@@ -35,7 +35,7 @@ GLenum glGetError() {
     }
     GLenum error;
     if (state.remote) {
-        remote_call(pack_glGetError(), &error);
+        error = forward_glGetError();
     } else {
         LOAD_GLES(glGetError);
         error = gles_glGetError();

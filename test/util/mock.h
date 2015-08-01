@@ -50,7 +50,7 @@ static int failed_test = 0;
 }
 
 #define emit_glActiveTexture(texture) { \
-    mock_push(pack_glActiveTexture(texture)); \
+    mock_push(pack_glActiveTexture(NULL, texture)); \
 }
 #define test_glActiveTexture(_texture) { \
     glActiveTexture_PACKED *packed = mock_cur(); \
@@ -88,7 +88,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glAlphaFunc(func, ref) { \
-    mock_push(pack_glAlphaFunc(func, ref)); \
+    mock_push(pack_glAlphaFunc(NULL, func, ref)); \
 }
 #define test_glAlphaFunc(_func, _ref) { \
     glAlphaFunc_PACKED *packed = mock_cur(); \
@@ -129,7 +129,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glAlphaFuncx(func, ref) { \
-    mock_push(pack_glAlphaFuncx(func, ref)); \
+    mock_push(pack_glAlphaFuncx(NULL, func, ref)); \
 }
 #define test_glAlphaFuncx(_func, _ref) { \
     glAlphaFuncx_PACKED *packed = mock_cur(); \
@@ -170,7 +170,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBindBuffer(target, buffer) { \
-    mock_push(pack_glBindBuffer(target, buffer)); \
+    mock_push(pack_glBindBuffer(NULL, target, buffer)); \
 }
 #define test_glBindBuffer(_target, _buffer) { \
     glBindBuffer_PACKED *packed = mock_cur(); \
@@ -211,7 +211,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBindTexture(target, texture) { \
-    mock_push(pack_glBindTexture(target, texture)); \
+    mock_push(pack_glBindTexture(NULL, target, texture)); \
 }
 #define test_glBindTexture(_target, _texture) { \
     glBindTexture_PACKED *packed = mock_cur(); \
@@ -252,7 +252,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBlendColorOES(red, green, blue, alpha) { \
-    mock_push(pack_glBlendColorOES(red, green, blue, alpha)); \
+    mock_push(pack_glBlendColorOES(NULL, red, green, blue, alpha)); \
 }
 #define test_glBlendColorOES(_red, _green, _blue, _alpha) { \
     glBlendColorOES_PACKED *packed = mock_cur(); \
@@ -299,7 +299,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBlendEquationOES(mode) { \
-    mock_push(pack_glBlendEquationOES(mode)); \
+    mock_push(pack_glBlendEquationOES(NULL, mode)); \
 }
 #define test_glBlendEquationOES(_mode) { \
     glBlendEquationOES_PACKED *packed = mock_cur(); \
@@ -337,7 +337,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBlendEquationSeparateOES(modeRGB, modeAlpha) { \
-    mock_push(pack_glBlendEquationSeparateOES(modeRGB, modeAlpha)); \
+    mock_push(pack_glBlendEquationSeparateOES(NULL, modeRGB, modeAlpha)); \
 }
 #define test_glBlendEquationSeparateOES(_modeRGB, _modeAlpha) { \
     glBlendEquationSeparateOES_PACKED *packed = mock_cur(); \
@@ -378,7 +378,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBlendFunc(sfactor, dfactor) { \
-    mock_push(pack_glBlendFunc(sfactor, dfactor)); \
+    mock_push(pack_glBlendFunc(NULL, sfactor, dfactor)); \
 }
 #define test_glBlendFunc(_sfactor, _dfactor) { \
     glBlendFunc_PACKED *packed = mock_cur(); \
@@ -419,7 +419,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha) { \
-    mock_push(pack_glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha)); \
+    mock_push(pack_glBlendFuncSeparateOES(NULL, sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha)); \
 }
 #define test_glBlendFuncSeparateOES(_sfactorRGB, _dfactorRGB, _sfactorAlpha, _dfactorAlpha) { \
     glBlendFuncSeparateOES_PACKED *packed = mock_cur(); \
@@ -466,7 +466,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBufferData(target, size, data, usage) { \
-    mock_push(pack_glBufferData(target, size, data, usage)); \
+    mock_push(pack_glBufferData(NULL, target, size, data, usage)); \
 }
 #define test_glBufferData(_target, _size, _data, _usage) { \
     glBufferData_PACKED *packed = mock_cur(); \
@@ -517,7 +517,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glBufferSubData(target, offset, size, data) { \
-    mock_push(pack_glBufferSubData(target, offset, size, data)); \
+    mock_push(pack_glBufferSubData(NULL, target, offset, size, data)); \
 }
 #define test_glBufferSubData(_target, _offset, _size, _data) { \
     glBufferSubData_PACKED *packed = mock_cur(); \
@@ -568,7 +568,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClear(mask) { \
-    mock_push(pack_glClear(mask)); \
+    mock_push(pack_glClear(NULL, mask)); \
 }
 #define test_glClear(_mask) { \
     glClear_PACKED *packed = mock_cur(); \
@@ -606,7 +606,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClearColor(red, green, blue, alpha) { \
-    mock_push(pack_glClearColor(red, green, blue, alpha)); \
+    mock_push(pack_glClearColor(NULL, red, green, blue, alpha)); \
 }
 #define test_glClearColor(_red, _green, _blue, _alpha) { \
     glClearColor_PACKED *packed = mock_cur(); \
@@ -653,7 +653,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClearColorx(red, green, blue, alpha) { \
-    mock_push(pack_glClearColorx(red, green, blue, alpha)); \
+    mock_push(pack_glClearColorx(NULL, red, green, blue, alpha)); \
 }
 #define test_glClearColorx(_red, _green, _blue, _alpha) { \
     glClearColorx_PACKED *packed = mock_cur(); \
@@ -700,7 +700,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClearDepthf(depth) { \
-    mock_push(pack_glClearDepthf(depth)); \
+    mock_push(pack_glClearDepthf(NULL, depth)); \
 }
 #define test_glClearDepthf(_depth) { \
     glClearDepthf_PACKED *packed = mock_cur(); \
@@ -738,7 +738,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClearDepthx(depth) { \
-    mock_push(pack_glClearDepthx(depth)); \
+    mock_push(pack_glClearDepthx(NULL, depth)); \
 }
 #define test_glClearDepthx(_depth) { \
     glClearDepthx_PACKED *packed = mock_cur(); \
@@ -776,7 +776,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClearStencil(s) { \
-    mock_push(pack_glClearStencil(s)); \
+    mock_push(pack_glClearStencil(NULL, s)); \
 }
 #define test_glClearStencil(_s) { \
     glClearStencil_PACKED *packed = mock_cur(); \
@@ -814,7 +814,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClientActiveTexture(texture) { \
-    mock_push(pack_glClientActiveTexture(texture)); \
+    mock_push(pack_glClientActiveTexture(NULL, texture)); \
 }
 #define test_glClientActiveTexture(_texture) { \
     glClientActiveTexture_PACKED *packed = mock_cur(); \
@@ -852,7 +852,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClipPlanef(plane, equation) { \
-    mock_push(pack_glClipPlanef(plane, equation)); \
+    mock_push(pack_glClipPlanef(NULL, plane, equation)); \
 }
 #define test_glClipPlanef(_plane, _equation) { \
     glClipPlanef_PACKED *packed = mock_cur(); \
@@ -897,7 +897,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glClipPlanex(plane, equation) { \
-    mock_push(pack_glClipPlanex(plane, equation)); \
+    mock_push(pack_glClipPlanex(NULL, plane, equation)); \
 }
 #define test_glClipPlanex(_plane, _equation) { \
     glClipPlanex_PACKED *packed = mock_cur(); \
@@ -942,7 +942,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glColor4f(red, green, blue, alpha) { \
-    mock_push(pack_glColor4f(red, green, blue, alpha)); \
+    mock_push(pack_glColor4f(NULL, red, green, blue, alpha)); \
 }
 #define test_glColor4f(_red, _green, _blue, _alpha) { \
     glColor4f_PACKED *packed = mock_cur(); \
@@ -989,7 +989,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glColor4ub(red, green, blue, alpha) { \
-    mock_push(pack_glColor4ub(red, green, blue, alpha)); \
+    mock_push(pack_glColor4ub(NULL, red, green, blue, alpha)); \
 }
 #define test_glColor4ub(_red, _green, _blue, _alpha) { \
     glColor4ub_PACKED *packed = mock_cur(); \
@@ -1036,7 +1036,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glColor4x(red, green, blue, alpha) { \
-    mock_push(pack_glColor4x(red, green, blue, alpha)); \
+    mock_push(pack_glColor4x(NULL, red, green, blue, alpha)); \
 }
 #define test_glColor4x(_red, _green, _blue, _alpha) { \
     glColor4x_PACKED *packed = mock_cur(); \
@@ -1083,7 +1083,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glColorMask(red, green, blue, alpha) { \
-    mock_push(pack_glColorMask(red, green, blue, alpha)); \
+    mock_push(pack_glColorMask(NULL, red, green, blue, alpha)); \
 }
 #define test_glColorMask(_red, _green, _blue, _alpha) { \
     glColorMask_PACKED *packed = mock_cur(); \
@@ -1130,7 +1130,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glColorPointer(size, type, stride, pointer) { \
-    mock_push(pack_glColorPointer(size, type, stride, pointer)); \
+    mock_push(pack_glColorPointer(NULL, size, type, stride, pointer)); \
 }
 #define test_glColorPointer(_size, _type, _stride, _pointer) { \
     glColorPointer_PACKED *packed = mock_cur(); \
@@ -1181,7 +1181,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data) { \
-    mock_push(pack_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data)); \
+    mock_push(pack_glCompressedTexImage2D(NULL, target, level, internalformat, width, height, border, imageSize, data)); \
 }
 #define test_glCompressedTexImage2D(_target, _level, _internalformat, _width, _height, _border, _imageSize, _data) { \
     glCompressedTexImage2D_PACKED *packed = mock_cur(); \
@@ -1244,7 +1244,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) { \
-    mock_push(pack_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data)); \
+    mock_push(pack_glCompressedTexSubImage2D(NULL, target, level, xoffset, yoffset, width, height, format, imageSize, data)); \
 }
 #define test_glCompressedTexSubImage2D(_target, _level, _xoffset, _yoffset, _width, _height, _format, _imageSize, _data) { \
     glCompressedTexSubImage2D_PACKED *packed = mock_cur(); \
@@ -1310,7 +1310,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border) { \
-    mock_push(pack_glCopyTexImage2D(target, level, internalformat, x, y, width, height, border)); \
+    mock_push(pack_glCopyTexImage2D(NULL, target, level, internalformat, x, y, width, height, border)); \
 }
 #define test_glCopyTexImage2D(_target, _level, _internalformat, _x, _y, _width, _height, _border) { \
     glCopyTexImage2D_PACKED *packed = mock_cur(); \
@@ -1369,7 +1369,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) { \
-    mock_push(pack_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height)); \
+    mock_push(pack_glCopyTexSubImage2D(NULL, target, level, xoffset, yoffset, x, y, width, height)); \
 }
 #define test_glCopyTexSubImage2D(_target, _level, _xoffset, _yoffset, _x, _y, _width, _height) { \
     glCopyTexSubImage2D_PACKED *packed = mock_cur(); \
@@ -1428,7 +1428,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glCullFace(mode) { \
-    mock_push(pack_glCullFace(mode)); \
+    mock_push(pack_glCullFace(NULL, mode)); \
 }
 #define test_glCullFace(_mode) { \
     glCullFace_PACKED *packed = mock_cur(); \
@@ -1466,7 +1466,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDeleteBuffers(n, buffers) { \
-    mock_push(pack_glDeleteBuffers(n, buffers)); \
+    mock_push(pack_glDeleteBuffers(NULL, n, buffers)); \
 }
 #define test_glDeleteBuffers(_n, _buffers) { \
     glDeleteBuffers_PACKED *packed = mock_cur(); \
@@ -1511,7 +1511,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDeleteTextures(n, textures) { \
-    mock_push(pack_glDeleteTextures(n, textures)); \
+    mock_push(pack_glDeleteTextures(NULL, n, textures)); \
 }
 #define test_glDeleteTextures(_n, _textures) { \
     glDeleteTextures_PACKED *packed = mock_cur(); \
@@ -1556,7 +1556,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDepthFunc(func) { \
-    mock_push(pack_glDepthFunc(func)); \
+    mock_push(pack_glDepthFunc(NULL, func)); \
 }
 #define test_glDepthFunc(_func) { \
     glDepthFunc_PACKED *packed = mock_cur(); \
@@ -1594,7 +1594,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDepthMask(flag) { \
-    mock_push(pack_glDepthMask(flag)); \
+    mock_push(pack_glDepthMask(NULL, flag)); \
 }
 #define test_glDepthMask(_flag) { \
     glDepthMask_PACKED *packed = mock_cur(); \
@@ -1632,7 +1632,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDepthRangef(near, far) { \
-    mock_push(pack_glDepthRangef(near, far)); \
+    mock_push(pack_glDepthRangef(NULL, near, far)); \
 }
 #define test_glDepthRangef(_near, _far) { \
     glDepthRangef_PACKED *packed = mock_cur(); \
@@ -1673,7 +1673,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDepthRangex(near, far) { \
-    mock_push(pack_glDepthRangex(near, far)); \
+    mock_push(pack_glDepthRangex(NULL, near, far)); \
 }
 #define test_glDepthRangex(_near, _far) { \
     glDepthRangex_PACKED *packed = mock_cur(); \
@@ -1714,7 +1714,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDisable(cap) { \
-    mock_push(pack_glDisable(cap)); \
+    mock_push(pack_glDisable(NULL, cap)); \
 }
 #define test_glDisable(_cap) { \
     glDisable_PACKED *packed = mock_cur(); \
@@ -1752,7 +1752,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDisableClientState(array) { \
-    mock_push(pack_glDisableClientState(array)); \
+    mock_push(pack_glDisableClientState(NULL, array)); \
 }
 #define test_glDisableClientState(_array) { \
     glDisableClientState_PACKED *packed = mock_cur(); \
@@ -1790,7 +1790,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDrawArrays(mode, first, count) { \
-    mock_push(pack_glDrawArrays(mode, first, count)); \
+    mock_push(pack_glDrawArrays(NULL, mode, first, count)); \
 }
 #define test_glDrawArrays(_mode, _first, _count) { \
     glDrawArrays_PACKED *packed = mock_cur(); \
@@ -1834,7 +1834,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glDrawElements(mode, count, type, indices) { \
-    mock_push(pack_glDrawElements(mode, count, type, indices)); \
+    mock_push(pack_glDrawElements(NULL, mode, count, type, indices)); \
 }
 #define test_glDrawElements(_mode, _count, _type, _indices) { \
     glDrawElements_PACKED *packed = mock_cur(); \
@@ -1885,7 +1885,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glEnable(cap) { \
-    mock_push(pack_glEnable(cap)); \
+    mock_push(pack_glEnable(NULL, cap)); \
 }
 #define test_glEnable(_cap) { \
     glEnable_PACKED *packed = mock_cur(); \
@@ -1923,7 +1923,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glEnableClientState(array) { \
-    mock_push(pack_glEnableClientState(array)); \
+    mock_push(pack_glEnableClientState(NULL, array)); \
 }
 #define test_glEnableClientState(_array) { \
     glEnableClientState_PACKED *packed = mock_cur(); \
@@ -1961,7 +1961,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFinish() { \
-    mock_push(pack_glFinish()); \
+    mock_push(pack_glFinish(NULL)); \
 }
 #define test_glFinish() { \
     glFinish_PACKED *packed = mock_cur(); \
@@ -1996,7 +1996,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFlush() { \
-    mock_push(pack_glFlush()); \
+    mock_push(pack_glFlush(NULL)); \
 }
 #define test_glFlush() { \
     glFlush_PACKED *packed = mock_cur(); \
@@ -2031,7 +2031,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFogf(pname, param) { \
-    mock_push(pack_glFogf(pname, param)); \
+    mock_push(pack_glFogf(NULL, pname, param)); \
 }
 #define test_glFogf(_pname, _param) { \
     glFogf_PACKED *packed = mock_cur(); \
@@ -2072,7 +2072,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFogfv(pname, params) { \
-    mock_push(pack_glFogfv(pname, params)); \
+    mock_push(pack_glFogfv(NULL, pname, params)); \
 }
 #define test_glFogfv(_pname, _params) { \
     glFogfv_PACKED *packed = mock_cur(); \
@@ -2117,7 +2117,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFogx(pname, param) { \
-    mock_push(pack_glFogx(pname, param)); \
+    mock_push(pack_glFogx(NULL, pname, param)); \
 }
 #define test_glFogx(_pname, _param) { \
     glFogx_PACKED *packed = mock_cur(); \
@@ -2158,7 +2158,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFogxv(pname, params) { \
-    mock_push(pack_glFogxv(pname, params)); \
+    mock_push(pack_glFogxv(NULL, pname, params)); \
 }
 #define test_glFogxv(_pname, _params) { \
     glFogxv_PACKED *packed = mock_cur(); \
@@ -2203,7 +2203,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFrontFace(mode) { \
-    mock_push(pack_glFrontFace(mode)); \
+    mock_push(pack_glFrontFace(NULL, mode)); \
 }
 #define test_glFrontFace(_mode) { \
     glFrontFace_PACKED *packed = mock_cur(); \
@@ -2241,7 +2241,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFrustumf(left, right, bottom, top, near, far) { \
-    mock_push(pack_glFrustumf(left, right, bottom, top, near, far)); \
+    mock_push(pack_glFrustumf(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glFrustumf(_left, _right, _bottom, _top, _near, _far) { \
     glFrustumf_PACKED *packed = mock_cur(); \
@@ -2294,7 +2294,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glFrustumx(left, right, bottom, top, near, far) { \
-    mock_push(pack_glFrustumx(left, right, bottom, top, near, far)); \
+    mock_push(pack_glFrustumx(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glFrustumx(_left, _right, _bottom, _top, _near, _far) { \
     glFrustumx_PACKED *packed = mock_cur(); \
@@ -2347,7 +2347,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGenBuffers(n, buffers) { \
-    mock_push(pack_glGenBuffers(n, buffers)); \
+    mock_push(pack_glGenBuffers(NULL, n, buffers)); \
 }
 #define test_glGenBuffers(_n, _buffers) { \
     glGenBuffers_PACKED *packed = mock_cur(); \
@@ -2392,7 +2392,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGenTextures(n, textures) { \
-    mock_push(pack_glGenTextures(n, textures)); \
+    mock_push(pack_glGenTextures(NULL, n, textures)); \
 }
 #define test_glGenTextures(_n, _textures) { \
     glGenTextures_PACKED *packed = mock_cur(); \
@@ -2437,7 +2437,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetBooleanv(pname, params) { \
-    mock_push(pack_glGetBooleanv(pname, params)); \
+    mock_push(pack_glGetBooleanv(NULL, pname, params)); \
 }
 #define test_glGetBooleanv(_pname, _params) { \
     glGetBooleanv_PACKED *packed = mock_cur(); \
@@ -2482,7 +2482,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetBufferParameteriv(target, pname, params) { \
-    mock_push(pack_glGetBufferParameteriv(target, pname, params)); \
+    mock_push(pack_glGetBufferParameteriv(NULL, target, pname, params)); \
 }
 #define test_glGetBufferParameteriv(_target, _pname, _params) { \
     glGetBufferParameteriv_PACKED *packed = mock_cur(); \
@@ -2530,7 +2530,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetClipPlanef(plane, equation) { \
-    mock_push(pack_glGetClipPlanef(plane, equation)); \
+    mock_push(pack_glGetClipPlanef(NULL, plane, equation)); \
 }
 #define test_glGetClipPlanef(_plane, _equation) { \
     glGetClipPlanef_PACKED *packed = mock_cur(); \
@@ -2575,7 +2575,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetClipPlanex(plane, equation) { \
-    mock_push(pack_glGetClipPlanex(plane, equation)); \
+    mock_push(pack_glGetClipPlanex(NULL, plane, equation)); \
 }
 #define test_glGetClipPlanex(_plane, _equation) { \
     glGetClipPlanex_PACKED *packed = mock_cur(); \
@@ -2620,7 +2620,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetError() { \
-    mock_push(pack_glGetError()); \
+    mock_push(pack_glGetError(NULL)); \
 }
 #define test_glGetError() { \
     glGetError_PACKED *packed = mock_cur(); \
@@ -2655,7 +2655,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetFixedv(pname, params) { \
-    mock_push(pack_glGetFixedv(pname, params)); \
+    mock_push(pack_glGetFixedv(NULL, pname, params)); \
 }
 #define test_glGetFixedv(_pname, _params) { \
     glGetFixedv_PACKED *packed = mock_cur(); \
@@ -2700,7 +2700,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetFloatv(pname, params) { \
-    mock_push(pack_glGetFloatv(pname, params)); \
+    mock_push(pack_glGetFloatv(NULL, pname, params)); \
 }
 #define test_glGetFloatv(_pname, _params) { \
     glGetFloatv_PACKED *packed = mock_cur(); \
@@ -2745,7 +2745,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetIntegerv(pname, params) { \
-    mock_push(pack_glGetIntegerv(pname, params)); \
+    mock_push(pack_glGetIntegerv(NULL, pname, params)); \
 }
 #define test_glGetIntegerv(_pname, _params) { \
     glGetIntegerv_PACKED *packed = mock_cur(); \
@@ -2790,7 +2790,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetLightfv(light, pname, params) { \
-    mock_push(pack_glGetLightfv(light, pname, params)); \
+    mock_push(pack_glGetLightfv(NULL, light, pname, params)); \
 }
 #define test_glGetLightfv(_light, _pname, _params) { \
     glGetLightfv_PACKED *packed = mock_cur(); \
@@ -2838,7 +2838,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetLightxv(light, pname, params) { \
-    mock_push(pack_glGetLightxv(light, pname, params)); \
+    mock_push(pack_glGetLightxv(NULL, light, pname, params)); \
 }
 #define test_glGetLightxv(_light, _pname, _params) { \
     glGetLightxv_PACKED *packed = mock_cur(); \
@@ -2886,7 +2886,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetMaterialfv(face, pname, params) { \
-    mock_push(pack_glGetMaterialfv(face, pname, params)); \
+    mock_push(pack_glGetMaterialfv(NULL, face, pname, params)); \
 }
 #define test_glGetMaterialfv(_face, _pname, _params) { \
     glGetMaterialfv_PACKED *packed = mock_cur(); \
@@ -2934,7 +2934,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetMaterialxv(face, pname, params) { \
-    mock_push(pack_glGetMaterialxv(face, pname, params)); \
+    mock_push(pack_glGetMaterialxv(NULL, face, pname, params)); \
 }
 #define test_glGetMaterialxv(_face, _pname, _params) { \
     glGetMaterialxv_PACKED *packed = mock_cur(); \
@@ -2982,7 +2982,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetPointerv(pname, params) { \
-    mock_push(pack_glGetPointerv(pname, params)); \
+    mock_push(pack_glGetPointerv(NULL, pname, params)); \
 }
 #define test_glGetPointerv(_pname, _params) { \
     glGetPointerv_PACKED *packed = mock_cur(); \
@@ -3027,7 +3027,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetString(name) { \
-    mock_push(pack_glGetString(name)); \
+    mock_push(pack_glGetString(NULL, name)); \
 }
 #define test_glGetString(_name) { \
     glGetString_PACKED *packed = mock_cur(); \
@@ -3065,7 +3065,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetTexEnvfv(target, pname, params) { \
-    mock_push(pack_glGetTexEnvfv(target, pname, params)); \
+    mock_push(pack_glGetTexEnvfv(NULL, target, pname, params)); \
 }
 #define test_glGetTexEnvfv(_target, _pname, _params) { \
     glGetTexEnvfv_PACKED *packed = mock_cur(); \
@@ -3113,7 +3113,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetTexEnviv(target, pname, params) { \
-    mock_push(pack_glGetTexEnviv(target, pname, params)); \
+    mock_push(pack_glGetTexEnviv(NULL, target, pname, params)); \
 }
 #define test_glGetTexEnviv(_target, _pname, _params) { \
     glGetTexEnviv_PACKED *packed = mock_cur(); \
@@ -3161,7 +3161,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetTexEnvxv(target, pname, params) { \
-    mock_push(pack_glGetTexEnvxv(target, pname, params)); \
+    mock_push(pack_glGetTexEnvxv(NULL, target, pname, params)); \
 }
 #define test_glGetTexEnvxv(_target, _pname, _params) { \
     glGetTexEnvxv_PACKED *packed = mock_cur(); \
@@ -3209,7 +3209,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetTexParameterfv(target, pname, params) { \
-    mock_push(pack_glGetTexParameterfv(target, pname, params)); \
+    mock_push(pack_glGetTexParameterfv(NULL, target, pname, params)); \
 }
 #define test_glGetTexParameterfv(_target, _pname, _params) { \
     glGetTexParameterfv_PACKED *packed = mock_cur(); \
@@ -3257,7 +3257,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetTexParameteriv(target, pname, params) { \
-    mock_push(pack_glGetTexParameteriv(target, pname, params)); \
+    mock_push(pack_glGetTexParameteriv(NULL, target, pname, params)); \
 }
 #define test_glGetTexParameteriv(_target, _pname, _params) { \
     glGetTexParameteriv_PACKED *packed = mock_cur(); \
@@ -3305,7 +3305,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glGetTexParameterxv(target, pname, params) { \
-    mock_push(pack_glGetTexParameterxv(target, pname, params)); \
+    mock_push(pack_glGetTexParameterxv(NULL, target, pname, params)); \
 }
 #define test_glGetTexParameterxv(_target, _pname, _params) { \
     glGetTexParameterxv_PACKED *packed = mock_cur(); \
@@ -3353,7 +3353,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glHint(target, mode) { \
-    mock_push(pack_glHint(target, mode)); \
+    mock_push(pack_glHint(NULL, target, mode)); \
 }
 #define test_glHint(_target, _mode) { \
     glHint_PACKED *packed = mock_cur(); \
@@ -3394,7 +3394,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glIsBuffer(buffer) { \
-    mock_push(pack_glIsBuffer(buffer)); \
+    mock_push(pack_glIsBuffer(NULL, buffer)); \
 }
 #define test_glIsBuffer(_buffer) { \
     glIsBuffer_PACKED *packed = mock_cur(); \
@@ -3432,7 +3432,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glIsEnabled(cap) { \
-    mock_push(pack_glIsEnabled(cap)); \
+    mock_push(pack_glIsEnabled(NULL, cap)); \
 }
 #define test_glIsEnabled(_cap) { \
     glIsEnabled_PACKED *packed = mock_cur(); \
@@ -3470,7 +3470,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glIsTexture(texture) { \
-    mock_push(pack_glIsTexture(texture)); \
+    mock_push(pack_glIsTexture(NULL, texture)); \
 }
 #define test_glIsTexture(_texture) { \
     glIsTexture_PACKED *packed = mock_cur(); \
@@ -3508,7 +3508,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightModelf(pname, param) { \
-    mock_push(pack_glLightModelf(pname, param)); \
+    mock_push(pack_glLightModelf(NULL, pname, param)); \
 }
 #define test_glLightModelf(_pname, _param) { \
     glLightModelf_PACKED *packed = mock_cur(); \
@@ -3549,7 +3549,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightModelfv(pname, params) { \
-    mock_push(pack_glLightModelfv(pname, params)); \
+    mock_push(pack_glLightModelfv(NULL, pname, params)); \
 }
 #define test_glLightModelfv(_pname, _params) { \
     glLightModelfv_PACKED *packed = mock_cur(); \
@@ -3594,7 +3594,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightModelx(pname, param) { \
-    mock_push(pack_glLightModelx(pname, param)); \
+    mock_push(pack_glLightModelx(NULL, pname, param)); \
 }
 #define test_glLightModelx(_pname, _param) { \
     glLightModelx_PACKED *packed = mock_cur(); \
@@ -3635,7 +3635,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightModelxv(pname, params) { \
-    mock_push(pack_glLightModelxv(pname, params)); \
+    mock_push(pack_glLightModelxv(NULL, pname, params)); \
 }
 #define test_glLightModelxv(_pname, _params) { \
     glLightModelxv_PACKED *packed = mock_cur(); \
@@ -3680,7 +3680,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightf(light, pname, param) { \
-    mock_push(pack_glLightf(light, pname, param)); \
+    mock_push(pack_glLightf(NULL, light, pname, param)); \
 }
 #define test_glLightf(_light, _pname, _param) { \
     glLightf_PACKED *packed = mock_cur(); \
@@ -3724,7 +3724,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightfv(light, pname, params) { \
-    mock_push(pack_glLightfv(light, pname, params)); \
+    mock_push(pack_glLightfv(NULL, light, pname, params)); \
 }
 #define test_glLightfv(_light, _pname, _params) { \
     glLightfv_PACKED *packed = mock_cur(); \
@@ -3772,7 +3772,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightx(light, pname, param) { \
-    mock_push(pack_glLightx(light, pname, param)); \
+    mock_push(pack_glLightx(NULL, light, pname, param)); \
 }
 #define test_glLightx(_light, _pname, _param) { \
     glLightx_PACKED *packed = mock_cur(); \
@@ -3816,7 +3816,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLightxv(light, pname, params) { \
-    mock_push(pack_glLightxv(light, pname, params)); \
+    mock_push(pack_glLightxv(NULL, light, pname, params)); \
 }
 #define test_glLightxv(_light, _pname, _params) { \
     glLightxv_PACKED *packed = mock_cur(); \
@@ -3864,7 +3864,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLineWidth(width) { \
-    mock_push(pack_glLineWidth(width)); \
+    mock_push(pack_glLineWidth(NULL, width)); \
 }
 #define test_glLineWidth(_width) { \
     glLineWidth_PACKED *packed = mock_cur(); \
@@ -3902,7 +3902,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLineWidthx(width) { \
-    mock_push(pack_glLineWidthx(width)); \
+    mock_push(pack_glLineWidthx(NULL, width)); \
 }
 #define test_glLineWidthx(_width) { \
     glLineWidthx_PACKED *packed = mock_cur(); \
@@ -3940,7 +3940,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLoadIdentity() { \
-    mock_push(pack_glLoadIdentity()); \
+    mock_push(pack_glLoadIdentity(NULL)); \
 }
 #define test_glLoadIdentity() { \
     glLoadIdentity_PACKED *packed = mock_cur(); \
@@ -3975,7 +3975,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLoadMatrixf(m) { \
-    mock_push(pack_glLoadMatrixf(m)); \
+    mock_push(pack_glLoadMatrixf(NULL, m)); \
 }
 #define test_glLoadMatrixf(_m) { \
     glLoadMatrixf_PACKED *packed = mock_cur(); \
@@ -4017,7 +4017,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLoadMatrixx(m) { \
-    mock_push(pack_glLoadMatrixx(m)); \
+    mock_push(pack_glLoadMatrixx(NULL, m)); \
 }
 #define test_glLoadMatrixx(_m) { \
     glLoadMatrixx_PACKED *packed = mock_cur(); \
@@ -4059,7 +4059,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glLogicOp(opcode) { \
-    mock_push(pack_glLogicOp(opcode)); \
+    mock_push(pack_glLogicOp(NULL, opcode)); \
 }
 #define test_glLogicOp(_opcode) { \
     glLogicOp_PACKED *packed = mock_cur(); \
@@ -4097,7 +4097,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMaterialf(face, pname, param) { \
-    mock_push(pack_glMaterialf(face, pname, param)); \
+    mock_push(pack_glMaterialf(NULL, face, pname, param)); \
 }
 #define test_glMaterialf(_face, _pname, _param) { \
     glMaterialf_PACKED *packed = mock_cur(); \
@@ -4141,7 +4141,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMaterialfv(face, pname, params) { \
-    mock_push(pack_glMaterialfv(face, pname, params)); \
+    mock_push(pack_glMaterialfv(NULL, face, pname, params)); \
 }
 #define test_glMaterialfv(_face, _pname, _params) { \
     glMaterialfv_PACKED *packed = mock_cur(); \
@@ -4189,7 +4189,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMaterialx(face, pname, param) { \
-    mock_push(pack_glMaterialx(face, pname, param)); \
+    mock_push(pack_glMaterialx(NULL, face, pname, param)); \
 }
 #define test_glMaterialx(_face, _pname, _param) { \
     glMaterialx_PACKED *packed = mock_cur(); \
@@ -4233,7 +4233,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMaterialxv(face, pname, params) { \
-    mock_push(pack_glMaterialxv(face, pname, params)); \
+    mock_push(pack_glMaterialxv(NULL, face, pname, params)); \
 }
 #define test_glMaterialxv(_face, _pname, _params) { \
     glMaterialxv_PACKED *packed = mock_cur(); \
@@ -4281,7 +4281,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMatrixMode(mode) { \
-    mock_push(pack_glMatrixMode(mode)); \
+    mock_push(pack_glMatrixMode(NULL, mode)); \
 }
 #define test_glMatrixMode(_mode) { \
     glMatrixMode_PACKED *packed = mock_cur(); \
@@ -4319,7 +4319,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMultMatrixf(m) { \
-    mock_push(pack_glMultMatrixf(m)); \
+    mock_push(pack_glMultMatrixf(NULL, m)); \
 }
 #define test_glMultMatrixf(_m) { \
     glMultMatrixf_PACKED *packed = mock_cur(); \
@@ -4361,7 +4361,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMultMatrixx(m) { \
-    mock_push(pack_glMultMatrixx(m)); \
+    mock_push(pack_glMultMatrixx(NULL, m)); \
 }
 #define test_glMultMatrixx(_m) { \
     glMultMatrixx_PACKED *packed = mock_cur(); \
@@ -4403,7 +4403,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMultiTexCoord4f(target, s, t, r, q) { \
-    mock_push(pack_glMultiTexCoord4f(target, s, t, r, q)); \
+    mock_push(pack_glMultiTexCoord4f(NULL, target, s, t, r, q)); \
 }
 #define test_glMultiTexCoord4f(_target, _s, _t, _r, _q) { \
     glMultiTexCoord4f_PACKED *packed = mock_cur(); \
@@ -4453,7 +4453,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glMultiTexCoord4x(target, s, t, r, q) { \
-    mock_push(pack_glMultiTexCoord4x(target, s, t, r, q)); \
+    mock_push(pack_glMultiTexCoord4x(NULL, target, s, t, r, q)); \
 }
 #define test_glMultiTexCoord4x(_target, _s, _t, _r, _q) { \
     glMultiTexCoord4x_PACKED *packed = mock_cur(); \
@@ -4503,7 +4503,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glNormal3f(nx, ny, nz) { \
-    mock_push(pack_glNormal3f(nx, ny, nz)); \
+    mock_push(pack_glNormal3f(NULL, nx, ny, nz)); \
 }
 #define test_glNormal3f(_nx, _ny, _nz) { \
     glNormal3f_PACKED *packed = mock_cur(); \
@@ -4547,7 +4547,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glNormal3x(nx, ny, nz) { \
-    mock_push(pack_glNormal3x(nx, ny, nz)); \
+    mock_push(pack_glNormal3x(NULL, nx, ny, nz)); \
 }
 #define test_glNormal3x(_nx, _ny, _nz) { \
     glNormal3x_PACKED *packed = mock_cur(); \
@@ -4591,7 +4591,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glNormalPointer(type, stride, pointer) { \
-    mock_push(pack_glNormalPointer(type, stride, pointer)); \
+    mock_push(pack_glNormalPointer(NULL, type, stride, pointer)); \
 }
 #define test_glNormalPointer(_type, _stride, _pointer) { \
     glNormalPointer_PACKED *packed = mock_cur(); \
@@ -4639,7 +4639,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glOrthof(left, right, bottom, top, near, far) { \
-    mock_push(pack_glOrthof(left, right, bottom, top, near, far)); \
+    mock_push(pack_glOrthof(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glOrthof(_left, _right, _bottom, _top, _near, _far) { \
     glOrthof_PACKED *packed = mock_cur(); \
@@ -4692,7 +4692,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glOrthox(left, right, bottom, top, near, far) { \
-    mock_push(pack_glOrthox(left, right, bottom, top, near, far)); \
+    mock_push(pack_glOrthox(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glOrthox(_left, _right, _bottom, _top, _near, _far) { \
     glOrthox_PACKED *packed = mock_cur(); \
@@ -4745,7 +4745,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPixelStorei(pname, param) { \
-    mock_push(pack_glPixelStorei(pname, param)); \
+    mock_push(pack_glPixelStorei(NULL, pname, param)); \
 }
 #define test_glPixelStorei(_pname, _param) { \
     glPixelStorei_PACKED *packed = mock_cur(); \
@@ -4786,7 +4786,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPointParameterf(pname, param) { \
-    mock_push(pack_glPointParameterf(pname, param)); \
+    mock_push(pack_glPointParameterf(NULL, pname, param)); \
 }
 #define test_glPointParameterf(_pname, _param) { \
     glPointParameterf_PACKED *packed = mock_cur(); \
@@ -4827,7 +4827,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPointParameterfv(pname, params) { \
-    mock_push(pack_glPointParameterfv(pname, params)); \
+    mock_push(pack_glPointParameterfv(NULL, pname, params)); \
 }
 #define test_glPointParameterfv(_pname, _params) { \
     glPointParameterfv_PACKED *packed = mock_cur(); \
@@ -4872,7 +4872,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPointParameterx(pname, param) { \
-    mock_push(pack_glPointParameterx(pname, param)); \
+    mock_push(pack_glPointParameterx(NULL, pname, param)); \
 }
 #define test_glPointParameterx(_pname, _param) { \
     glPointParameterx_PACKED *packed = mock_cur(); \
@@ -4913,7 +4913,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPointParameterxv(pname, params) { \
-    mock_push(pack_glPointParameterxv(pname, params)); \
+    mock_push(pack_glPointParameterxv(NULL, pname, params)); \
 }
 #define test_glPointParameterxv(_pname, _params) { \
     glPointParameterxv_PACKED *packed = mock_cur(); \
@@ -4958,7 +4958,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPointSize(size) { \
-    mock_push(pack_glPointSize(size)); \
+    mock_push(pack_glPointSize(NULL, size)); \
 }
 #define test_glPointSize(_size) { \
     glPointSize_PACKED *packed = mock_cur(); \
@@ -4996,7 +4996,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPointSizePointerOES(type, stride, pointer) { \
-    mock_push(pack_glPointSizePointerOES(type, stride, pointer)); \
+    mock_push(pack_glPointSizePointerOES(NULL, type, stride, pointer)); \
 }
 #define test_glPointSizePointerOES(_type, _stride, _pointer) { \
     glPointSizePointerOES_PACKED *packed = mock_cur(); \
@@ -5044,7 +5044,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPointSizex(size) { \
-    mock_push(pack_glPointSizex(size)); \
+    mock_push(pack_glPointSizex(NULL, size)); \
 }
 #define test_glPointSizex(_size) { \
     glPointSizex_PACKED *packed = mock_cur(); \
@@ -5082,7 +5082,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPolygonOffset(factor, units) { \
-    mock_push(pack_glPolygonOffset(factor, units)); \
+    mock_push(pack_glPolygonOffset(NULL, factor, units)); \
 }
 #define test_glPolygonOffset(_factor, _units) { \
     glPolygonOffset_PACKED *packed = mock_cur(); \
@@ -5123,7 +5123,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPolygonOffsetx(factor, units) { \
-    mock_push(pack_glPolygonOffsetx(factor, units)); \
+    mock_push(pack_glPolygonOffsetx(NULL, factor, units)); \
 }
 #define test_glPolygonOffsetx(_factor, _units) { \
     glPolygonOffsetx_PACKED *packed = mock_cur(); \
@@ -5164,7 +5164,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPopMatrix() { \
-    mock_push(pack_glPopMatrix()); \
+    mock_push(pack_glPopMatrix(NULL)); \
 }
 #define test_glPopMatrix() { \
     glPopMatrix_PACKED *packed = mock_cur(); \
@@ -5199,7 +5199,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glPushMatrix() { \
-    mock_push(pack_glPushMatrix()); \
+    mock_push(pack_glPushMatrix(NULL)); \
 }
 #define test_glPushMatrix() { \
     glPushMatrix_PACKED *packed = mock_cur(); \
@@ -5234,7 +5234,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glReadPixels(x, y, width, height, format, type, pixels) { \
-    mock_push(pack_glReadPixels(x, y, width, height, format, type, pixels)); \
+    mock_push(pack_glReadPixels(NULL, x, y, width, height, format, type, pixels)); \
 }
 #define test_glReadPixels(_x, _y, _width, _height, _format, _type, _pixels) { \
     glReadPixels_PACKED *packed = mock_cur(); \
@@ -5294,7 +5294,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glRotatef(angle, x, y, z) { \
-    mock_push(pack_glRotatef(angle, x, y, z)); \
+    mock_push(pack_glRotatef(NULL, angle, x, y, z)); \
 }
 #define test_glRotatef(_angle, _x, _y, _z) { \
     glRotatef_PACKED *packed = mock_cur(); \
@@ -5341,7 +5341,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glRotatex(angle, x, y, z) { \
-    mock_push(pack_glRotatex(angle, x, y, z)); \
+    mock_push(pack_glRotatex(NULL, angle, x, y, z)); \
 }
 #define test_glRotatex(_angle, _x, _y, _z) { \
     glRotatex_PACKED *packed = mock_cur(); \
@@ -5388,7 +5388,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glSampleCoverage(value, invert) { \
-    mock_push(pack_glSampleCoverage(value, invert)); \
+    mock_push(pack_glSampleCoverage(NULL, value, invert)); \
 }
 #define test_glSampleCoverage(_value, _invert) { \
     glSampleCoverage_PACKED *packed = mock_cur(); \
@@ -5429,7 +5429,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glSampleCoveragex(value, invert) { \
-    mock_push(pack_glSampleCoveragex(value, invert)); \
+    mock_push(pack_glSampleCoveragex(NULL, value, invert)); \
 }
 #define test_glSampleCoveragex(_value, _invert) { \
     glSampleCoveragex_PACKED *packed = mock_cur(); \
@@ -5470,7 +5470,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glScalef(x, y, z) { \
-    mock_push(pack_glScalef(x, y, z)); \
+    mock_push(pack_glScalef(NULL, x, y, z)); \
 }
 #define test_glScalef(_x, _y, _z) { \
     glScalef_PACKED *packed = mock_cur(); \
@@ -5514,7 +5514,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glScalex(x, y, z) { \
-    mock_push(pack_glScalex(x, y, z)); \
+    mock_push(pack_glScalex(NULL, x, y, z)); \
 }
 #define test_glScalex(_x, _y, _z) { \
     glScalex_PACKED *packed = mock_cur(); \
@@ -5558,7 +5558,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glScissor(x, y, width, height) { \
-    mock_push(pack_glScissor(x, y, width, height)); \
+    mock_push(pack_glScissor(NULL, x, y, width, height)); \
 }
 #define test_glScissor(_x, _y, _width, _height) { \
     glScissor_PACKED *packed = mock_cur(); \
@@ -5605,7 +5605,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glShadeModel(mode) { \
-    mock_push(pack_glShadeModel(mode)); \
+    mock_push(pack_glShadeModel(NULL, mode)); \
 }
 #define test_glShadeModel(_mode) { \
     glShadeModel_PACKED *packed = mock_cur(); \
@@ -5643,7 +5643,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glStencilFunc(func, ref, mask) { \
-    mock_push(pack_glStencilFunc(func, ref, mask)); \
+    mock_push(pack_glStencilFunc(NULL, func, ref, mask)); \
 }
 #define test_glStencilFunc(_func, _ref, _mask) { \
     glStencilFunc_PACKED *packed = mock_cur(); \
@@ -5687,7 +5687,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glStencilMask(mask) { \
-    mock_push(pack_glStencilMask(mask)); \
+    mock_push(pack_glStencilMask(NULL, mask)); \
 }
 #define test_glStencilMask(_mask) { \
     glStencilMask_PACKED *packed = mock_cur(); \
@@ -5725,7 +5725,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glStencilOp(fail, zfail, zpass) { \
-    mock_push(pack_glStencilOp(fail, zfail, zpass)); \
+    mock_push(pack_glStencilOp(NULL, fail, zfail, zpass)); \
 }
 #define test_glStencilOp(_fail, _zfail, _zpass) { \
     glStencilOp_PACKED *packed = mock_cur(); \
@@ -5769,7 +5769,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexCoordPointer(size, type, stride, pointer) { \
-    mock_push(pack_glTexCoordPointer(size, type, stride, pointer)); \
+    mock_push(pack_glTexCoordPointer(NULL, size, type, stride, pointer)); \
 }
 #define test_glTexCoordPointer(_size, _type, _stride, _pointer) { \
     glTexCoordPointer_PACKED *packed = mock_cur(); \
@@ -5820,7 +5820,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexEnvf(target, pname, param) { \
-    mock_push(pack_glTexEnvf(target, pname, param)); \
+    mock_push(pack_glTexEnvf(NULL, target, pname, param)); \
 }
 #define test_glTexEnvf(_target, _pname, _param) { \
     glTexEnvf_PACKED *packed = mock_cur(); \
@@ -5864,7 +5864,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexEnvfv(target, pname, params) { \
-    mock_push(pack_glTexEnvfv(target, pname, params)); \
+    mock_push(pack_glTexEnvfv(NULL, target, pname, params)); \
 }
 #define test_glTexEnvfv(_target, _pname, _params) { \
     glTexEnvfv_PACKED *packed = mock_cur(); \
@@ -5912,7 +5912,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexEnvi(target, pname, param) { \
-    mock_push(pack_glTexEnvi(target, pname, param)); \
+    mock_push(pack_glTexEnvi(NULL, target, pname, param)); \
 }
 #define test_glTexEnvi(_target, _pname, _param) { \
     glTexEnvi_PACKED *packed = mock_cur(); \
@@ -5956,7 +5956,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexEnviv(target, pname, params) { \
-    mock_push(pack_glTexEnviv(target, pname, params)); \
+    mock_push(pack_glTexEnviv(NULL, target, pname, params)); \
 }
 #define test_glTexEnviv(_target, _pname, _params) { \
     glTexEnviv_PACKED *packed = mock_cur(); \
@@ -6004,7 +6004,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexEnvx(target, pname, param) { \
-    mock_push(pack_glTexEnvx(target, pname, param)); \
+    mock_push(pack_glTexEnvx(NULL, target, pname, param)); \
 }
 #define test_glTexEnvx(_target, _pname, _param) { \
     glTexEnvx_PACKED *packed = mock_cur(); \
@@ -6048,7 +6048,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexEnvxv(target, pname, params) { \
-    mock_push(pack_glTexEnvxv(target, pname, params)); \
+    mock_push(pack_glTexEnvxv(NULL, target, pname, params)); \
 }
 #define test_glTexEnvxv(_target, _pname, _params) { \
     glTexEnvxv_PACKED *packed = mock_cur(); \
@@ -6096,7 +6096,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels) { \
-    mock_push(pack_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels)); \
+    mock_push(pack_glTexImage2D(NULL, target, level, internalformat, width, height, border, format, type, pixels)); \
 }
 #define test_glTexImage2D(_target, _level, _internalformat, _width, _height, _border, _format, _type, _pixels) { \
     glTexImage2D_PACKED *packed = mock_cur(); \
@@ -6162,7 +6162,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexParameterf(target, pname, param) { \
-    mock_push(pack_glTexParameterf(target, pname, param)); \
+    mock_push(pack_glTexParameterf(NULL, target, pname, param)); \
 }
 #define test_glTexParameterf(_target, _pname, _param) { \
     glTexParameterf_PACKED *packed = mock_cur(); \
@@ -6206,7 +6206,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexParameterfv(target, pname, params) { \
-    mock_push(pack_glTexParameterfv(target, pname, params)); \
+    mock_push(pack_glTexParameterfv(NULL, target, pname, params)); \
 }
 #define test_glTexParameterfv(_target, _pname, _params) { \
     glTexParameterfv_PACKED *packed = mock_cur(); \
@@ -6254,7 +6254,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexParameteri(target, pname, param) { \
-    mock_push(pack_glTexParameteri(target, pname, param)); \
+    mock_push(pack_glTexParameteri(NULL, target, pname, param)); \
 }
 #define test_glTexParameteri(_target, _pname, _param) { \
     glTexParameteri_PACKED *packed = mock_cur(); \
@@ -6298,7 +6298,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexParameteriv(target, pname, params) { \
-    mock_push(pack_glTexParameteriv(target, pname, params)); \
+    mock_push(pack_glTexParameteriv(NULL, target, pname, params)); \
 }
 #define test_glTexParameteriv(_target, _pname, _params) { \
     glTexParameteriv_PACKED *packed = mock_cur(); \
@@ -6346,7 +6346,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexParameterx(target, pname, param) { \
-    mock_push(pack_glTexParameterx(target, pname, param)); \
+    mock_push(pack_glTexParameterx(NULL, target, pname, param)); \
 }
 #define test_glTexParameterx(_target, _pname, _param) { \
     glTexParameterx_PACKED *packed = mock_cur(); \
@@ -6390,7 +6390,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexParameterxv(target, pname, params) { \
-    mock_push(pack_glTexParameterxv(target, pname, params)); \
+    mock_push(pack_glTexParameterxv(NULL, target, pname, params)); \
 }
 #define test_glTexParameterxv(_target, _pname, _params) { \
     glTexParameterxv_PACKED *packed = mock_cur(); \
@@ -6438,7 +6438,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) { \
-    mock_push(pack_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels)); \
+    mock_push(pack_glTexSubImage2D(NULL, target, level, xoffset, yoffset, width, height, format, type, pixels)); \
 }
 #define test_glTexSubImage2D(_target, _level, _xoffset, _yoffset, _width, _height, _format, _type, _pixels) { \
     glTexSubImage2D_PACKED *packed = mock_cur(); \
@@ -6504,7 +6504,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTranslatef(x, y, z) { \
-    mock_push(pack_glTranslatef(x, y, z)); \
+    mock_push(pack_glTranslatef(NULL, x, y, z)); \
 }
 #define test_glTranslatef(_x, _y, _z) { \
     glTranslatef_PACKED *packed = mock_cur(); \
@@ -6548,7 +6548,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glTranslatex(x, y, z) { \
-    mock_push(pack_glTranslatex(x, y, z)); \
+    mock_push(pack_glTranslatex(NULL, x, y, z)); \
 }
 #define test_glTranslatex(_x, _y, _z) { \
     glTranslatex_PACKED *packed = mock_cur(); \
@@ -6592,7 +6592,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glVertexPointer(size, type, stride, pointer) { \
-    mock_push(pack_glVertexPointer(size, type, stride, pointer)); \
+    mock_push(pack_glVertexPointer(NULL, size, type, stride, pointer)); \
 }
 #define test_glVertexPointer(_size, _type, _stride, _pointer) { \
     glVertexPointer_PACKED *packed = mock_cur(); \
@@ -6643,7 +6643,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glViewport(x, y, width, height) { \
-    mock_push(pack_glViewport(x, y, width, height)); \
+    mock_push(pack_glViewport(NULL, x, y, width, height)); \
 }
 #define test_glViewport(_x, _y, _width, _height) { \
     glViewport_PACKED *packed = mock_cur(); \
@@ -6690,7 +6690,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXAssociateDMPbufferSGIX(dpy, pbuffer, params, dmbuffer) { \
-    mock_push(pack_glXAssociateDMPbufferSGIX(dpy, pbuffer, params, dmbuffer)); \
+    mock_push(pack_glXAssociateDMPbufferSGIX(NULL, dpy, pbuffer, params, dmbuffer)); \
 }
 #define test_glXAssociateDMPbufferSGIX(_dpy, _pbuffer, _params, _dmbuffer) { \
     glXAssociateDMPbufferSGIX_PACKED *packed = mock_cur(); \
@@ -6745,7 +6745,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindChannelToWindowSGIX(display, screen, channel, window) { \
-    mock_push(pack_glXBindChannelToWindowSGIX(display, screen, channel, window)); \
+    mock_push(pack_glXBindChannelToWindowSGIX(NULL, display, screen, channel, window)); \
 }
 #define test_glXBindChannelToWindowSGIX(_display, _screen, _channel, _window) { \
     glXBindChannelToWindowSGIX_PACKED *packed = mock_cur(); \
@@ -6796,7 +6796,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindHyperpipeSGIX(dpy, hpId) { \
-    mock_push(pack_glXBindHyperpipeSGIX(dpy, hpId)); \
+    mock_push(pack_glXBindHyperpipeSGIX(NULL, dpy, hpId)); \
 }
 #define test_glXBindHyperpipeSGIX(_dpy, _hpId) { \
     glXBindHyperpipeSGIX_PACKED *packed = mock_cur(); \
@@ -6841,7 +6841,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindSwapBarrierNV(dpy, group, barrier) { \
-    mock_push(pack_glXBindSwapBarrierNV(dpy, group, barrier)); \
+    mock_push(pack_glXBindSwapBarrierNV(NULL, dpy, group, barrier)); \
 }
 #define test_glXBindSwapBarrierNV(_dpy, _group, _barrier) { \
     glXBindSwapBarrierNV_PACKED *packed = mock_cur(); \
@@ -6889,7 +6889,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindSwapBarrierSGIX(dpy, drawable, barrier) { \
-    mock_push(pack_glXBindSwapBarrierSGIX(dpy, drawable, barrier)); \
+    mock_push(pack_glXBindSwapBarrierSGIX(NULL, dpy, drawable, barrier)); \
 }
 #define test_glXBindSwapBarrierSGIX(_dpy, _drawable, _barrier) { \
     glXBindSwapBarrierSGIX_PACKED *packed = mock_cur(); \
@@ -6937,7 +6937,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindTexImageEXT(dpy, drawable, buffer, attrib_list) { \
-    mock_push(pack_glXBindTexImageEXT(dpy, drawable, buffer, attrib_list)); \
+    mock_push(pack_glXBindTexImageEXT(NULL, dpy, drawable, buffer, attrib_list)); \
 }
 #define test_glXBindTexImageEXT(_dpy, _drawable, _buffer, _attrib_list) { \
     glXBindTexImageEXT_PACKED *packed = mock_cur(); \
@@ -6992,7 +6992,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindVideoCaptureDeviceNV(dpy, video_capture_slot, device) { \
-    mock_push(pack_glXBindVideoCaptureDeviceNV(dpy, video_capture_slot, device)); \
+    mock_push(pack_glXBindVideoCaptureDeviceNV(NULL, dpy, video_capture_slot, device)); \
 }
 #define test_glXBindVideoCaptureDeviceNV(_dpy, _video_capture_slot, _device) { \
     glXBindVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
@@ -7040,7 +7040,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindVideoDeviceNV(dpy, video_slot, video_device, attrib_list) { \
-    mock_push(pack_glXBindVideoDeviceNV(dpy, video_slot, video_device, attrib_list)); \
+    mock_push(pack_glXBindVideoDeviceNV(NULL, dpy, video_slot, video_device, attrib_list)); \
 }
 #define test_glXBindVideoDeviceNV(_dpy, _video_slot, _video_device, _attrib_list) { \
     glXBindVideoDeviceNV_PACKED *packed = mock_cur(); \
@@ -7095,7 +7095,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXBindVideoImageNV(dpy, VideoDevice, pbuf, iVideoBuffer) { \
-    mock_push(pack_glXBindVideoImageNV(dpy, VideoDevice, pbuf, iVideoBuffer)); \
+    mock_push(pack_glXBindVideoImageNV(NULL, dpy, VideoDevice, pbuf, iVideoBuffer)); \
 }
 #define test_glXBindVideoImageNV(_dpy, _VideoDevice, _pbuf, _iVideoBuffer) { \
     glXBindVideoImageNV_PACKED *packed = mock_cur(); \
@@ -7146,7 +7146,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXChangeDrawableAttributes(drawable) { \
-    mock_push(pack_glXChangeDrawableAttributes(drawable)); \
+    mock_push(pack_glXChangeDrawableAttributes(NULL, drawable)); \
 }
 #define test_glXChangeDrawableAttributes(_drawable) { \
     glXChangeDrawableAttributes_PACKED *packed = mock_cur(); \
@@ -7184,7 +7184,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXChangeDrawableAttributesSGIX(drawable) { \
-    mock_push(pack_glXChangeDrawableAttributesSGIX(drawable)); \
+    mock_push(pack_glXChangeDrawableAttributesSGIX(NULL, drawable)); \
 }
 #define test_glXChangeDrawableAttributesSGIX(_drawable) { \
     glXChangeDrawableAttributesSGIX_PACKED *packed = mock_cur(); \
@@ -7222,7 +7222,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXChannelRectSGIX(display, screen, channel, x, y, w, h) { \
-    mock_push(pack_glXChannelRectSGIX(display, screen, channel, x, y, w, h)); \
+    mock_push(pack_glXChannelRectSGIX(NULL, display, screen, channel, x, y, w, h)); \
 }
 #define test_glXChannelRectSGIX(_display, _screen, _channel, _x, _y, _w, _h) { \
     glXChannelRectSGIX_PACKED *packed = mock_cur(); \
@@ -7282,7 +7282,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXChannelRectSyncSGIX(display, screen, channel, synctype) { \
-    mock_push(pack_glXChannelRectSyncSGIX(display, screen, channel, synctype)); \
+    mock_push(pack_glXChannelRectSyncSGIX(NULL, display, screen, channel, synctype)); \
 }
 #define test_glXChannelRectSyncSGIX(_display, _screen, _channel, _synctype) { \
     glXChannelRectSyncSGIX_PACKED *packed = mock_cur(); \
@@ -7333,7 +7333,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXChooseFBConfig(dpy, screen, attrib_list, nelements) { \
-    mock_push(pack_glXChooseFBConfig(dpy, screen, attrib_list, nelements)); \
+    mock_push(pack_glXChooseFBConfig(NULL, dpy, screen, attrib_list, nelements)); \
 }
 #define test_glXChooseFBConfig(_dpy, _screen, _attrib_list, _nelements) { \
     glXChooseFBConfig_PACKED *packed = mock_cur(); \
@@ -7392,7 +7392,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXChooseFBConfigSGIX(dpy, screen, attrib_list, nelements) { \
-    mock_push(pack_glXChooseFBConfigSGIX(dpy, screen, attrib_list, nelements)); \
+    mock_push(pack_glXChooseFBConfigSGIX(NULL, dpy, screen, attrib_list, nelements)); \
 }
 #define test_glXChooseFBConfigSGIX(_dpy, _screen, _attrib_list, _nelements) { \
     glXChooseFBConfigSGIX_PACKED *packed = mock_cur(); \
@@ -7451,7 +7451,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXChooseVisual(dpy, screen, attribList) { \
-    mock_push(pack_glXChooseVisual(dpy, screen, attribList)); \
+    mock_push(pack_glXChooseVisual(NULL, dpy, screen, attribList)); \
 }
 #define test_glXChooseVisual(_dpy, _screen, _attribList) { \
     glXChooseVisual_PACKED *packed = mock_cur(); \
@@ -7503,7 +7503,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXClientInfo() { \
-    mock_push(pack_glXClientInfo()); \
+    mock_push(pack_glXClientInfo(NULL)); \
 }
 #define test_glXClientInfo() { \
     glXClientInfo_PACKED *packed = mock_cur(); \
@@ -7538,7 +7538,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCopyContext(dpy, src, dst, mask) { \
-    mock_push(pack_glXCopyContext(dpy, src, dst, mask)); \
+    mock_push(pack_glXCopyContext(NULL, dpy, src, dst, mask)); \
 }
 #define test_glXCopyContext(_dpy, _src, _dst, _mask) { \
     glXCopyContext_PACKED *packed = mock_cur(); \
@@ -7589,7 +7589,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCopyImageSubDataNV(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth) { \
-    mock_push(pack_glXCopyImageSubDataNV(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth)); \
+    mock_push(pack_glXCopyImageSubDataNV(NULL, dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth)); \
 }
 #define test_glXCopyImageSubDataNV(_dpy, _srcCtx, _srcName, _srcTarget, _srcLevel, _srcX, _srcY, _srcZ, _dstCtx, _dstName, _dstTarget, _dstLevel, _dstX, _dstY, _dstZ, _width, _height, _depth) { \
     glXCopyImageSubDataNV_PACKED *packed = mock_cur(); \
@@ -7682,7 +7682,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCopySubBufferMESA(dpy, drawable, x, y, width, height) { \
-    mock_push(pack_glXCopySubBufferMESA(dpy, drawable, x, y, width, height)); \
+    mock_push(pack_glXCopySubBufferMESA(NULL, dpy, drawable, x, y, width, height)); \
 }
 #define test_glXCopySubBufferMESA(_dpy, _drawable, _x, _y, _width, _height) { \
     glXCopySubBufferMESA_PACKED *packed = mock_cur(); \
@@ -7739,7 +7739,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateContext(dpy, vis, shareList, direct) { \
-    mock_push(pack_glXCreateContext(dpy, vis, shareList, direct)); \
+    mock_push(pack_glXCreateContext(NULL, dpy, vis, shareList, direct)); \
 }
 #define test_glXCreateContext(_dpy, _vis, _shareList, _direct) { \
     glXCreateContext_PACKED *packed = mock_cur(); \
@@ -7794,7 +7794,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateContextAttribsARB(dpy, config, share_context, direct, attrib_list) { \
-    mock_push(pack_glXCreateContextAttribsARB(dpy, config, share_context, direct, attrib_list)); \
+    mock_push(pack_glXCreateContextAttribsARB(NULL, dpy, config, share_context, direct, attrib_list)); \
 }
 #define test_glXCreateContextAttribsARB(_dpy, _config, _share_context, _direct, _attrib_list) { \
     glXCreateContextAttribsARB_PACKED *packed = mock_cur(); \
@@ -7852,7 +7852,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateContextWithConfigSGIX(dpy, config, render_type, share_list, direct) { \
-    mock_push(pack_glXCreateContextWithConfigSGIX(dpy, config, render_type, share_list, direct)); \
+    mock_push(pack_glXCreateContextWithConfigSGIX(NULL, dpy, config, render_type, share_list, direct)); \
 }
 #define test_glXCreateContextWithConfigSGIX(_dpy, _config, _render_type, _share_list, _direct) { \
     glXCreateContextWithConfigSGIX_PACKED *packed = mock_cur(); \
@@ -7906,7 +7906,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateGLXPbufferSGIX(dpy, config, width, height, attrib_list) { \
-    mock_push(pack_glXCreateGLXPbufferSGIX(dpy, config, width, height, attrib_list)); \
+    mock_push(pack_glXCreateGLXPbufferSGIX(NULL, dpy, config, width, height, attrib_list)); \
 }
 #define test_glXCreateGLXPbufferSGIX(_dpy, _config, _width, _height, _attrib_list) { \
     glXCreateGLXPbufferSGIX_PACKED *packed = mock_cur(); \
@@ -7964,7 +7964,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateGLXPixmap(dpy, visual, pixmap) { \
-    mock_push(pack_glXCreateGLXPixmap(dpy, visual, pixmap)); \
+    mock_push(pack_glXCreateGLXPixmap(NULL, dpy, visual, pixmap)); \
 }
 #define test_glXCreateGLXPixmap(_dpy, _visual, _pixmap) { \
     glXCreateGLXPixmap_PACKED *packed = mock_cur(); \
@@ -8016,7 +8016,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateGLXPixmapMESA(dpy, visual, pixmap, cmap) { \
-    mock_push(pack_glXCreateGLXPixmapMESA(dpy, visual, pixmap, cmap)); \
+    mock_push(pack_glXCreateGLXPixmapMESA(NULL, dpy, visual, pixmap, cmap)); \
 }
 #define test_glXCreateGLXPixmapMESA(_dpy, _visual, _pixmap, _cmap) { \
     glXCreateGLXPixmapMESA_PACKED *packed = mock_cur(); \
@@ -8071,7 +8071,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateGLXPixmapWithConfigSGIX(dpy, config, pixmap) { \
-    mock_push(pack_glXCreateGLXPixmapWithConfigSGIX(dpy, config, pixmap)); \
+    mock_push(pack_glXCreateGLXPixmapWithConfigSGIX(NULL, dpy, config, pixmap)); \
 }
 #define test_glXCreateGLXPixmapWithConfigSGIX(_dpy, _config, _pixmap) { \
     glXCreateGLXPixmapWithConfigSGIX_PACKED *packed = mock_cur(); \
@@ -8119,7 +8119,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateGLXVideoSourceSGIX(display, screen, server, path, nodeClass, drainNode) { \
-    mock_push(pack_glXCreateGLXVideoSourceSGIX(display, screen, server, path, nodeClass, drainNode)); \
+    mock_push(pack_glXCreateGLXVideoSourceSGIX(NULL, display, screen, server, path, nodeClass, drainNode)); \
 }
 #define test_glXCreateGLXVideoSourceSGIX(_display, _screen, _server, _path, _nodeClass, _drainNode) { \
     glXCreateGLXVideoSourceSGIX_PACKED *packed = mock_cur(); \
@@ -8176,7 +8176,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateNewContext(dpy, config, render_type, share_list, direct) { \
-    mock_push(pack_glXCreateNewContext(dpy, config, render_type, share_list, direct)); \
+    mock_push(pack_glXCreateNewContext(NULL, dpy, config, render_type, share_list, direct)); \
 }
 #define test_glXCreateNewContext(_dpy, _config, _render_type, _share_list, _direct) { \
     glXCreateNewContext_PACKED *packed = mock_cur(); \
@@ -8230,7 +8230,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreatePbuffer(dpy, config, attrib_list) { \
-    mock_push(pack_glXCreatePbuffer(dpy, config, attrib_list)); \
+    mock_push(pack_glXCreatePbuffer(NULL, dpy, config, attrib_list)); \
 }
 #define test_glXCreatePbuffer(_dpy, _config, _attrib_list) { \
     glXCreatePbuffer_PACKED *packed = mock_cur(); \
@@ -8282,7 +8282,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreatePixmap(dpy, config, pixmap, attrib_list) { \
-    mock_push(pack_glXCreatePixmap(dpy, config, pixmap, attrib_list)); \
+    mock_push(pack_glXCreatePixmap(NULL, dpy, config, pixmap, attrib_list)); \
 }
 #define test_glXCreatePixmap(_dpy, _config, _pixmap, _attrib_list) { \
     glXCreatePixmap_PACKED *packed = mock_cur(); \
@@ -8337,7 +8337,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCreateWindow(dpy, config, win, attrib_list) { \
-    mock_push(pack_glXCreateWindow(dpy, config, win, attrib_list)); \
+    mock_push(pack_glXCreateWindow(NULL, dpy, config, win, attrib_list)); \
 }
 #define test_glXCreateWindow(_dpy, _config, _win, _attrib_list) { \
     glXCreateWindow_PACKED *packed = mock_cur(); \
@@ -8392,7 +8392,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXCushionSGI(dpy, window, cushion) { \
-    mock_push(pack_glXCushionSGI(dpy, window, cushion)); \
+    mock_push(pack_glXCushionSGI(NULL, dpy, window, cushion)); \
 }
 #define test_glXCushionSGI(_dpy, _window, _cushion) { \
     glXCushionSGI_PACKED *packed = mock_cur(); \
@@ -8440,7 +8440,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyContext(dpy, ctx) { \
-    mock_push(pack_glXDestroyContext(dpy, ctx)); \
+    mock_push(pack_glXDestroyContext(NULL, dpy, ctx)); \
 }
 #define test_glXDestroyContext(_dpy, _ctx) { \
     glXDestroyContext_PACKED *packed = mock_cur(); \
@@ -8485,7 +8485,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyGLXPbufferSGIX(dpy, pbuf) { \
-    mock_push(pack_glXDestroyGLXPbufferSGIX(dpy, pbuf)); \
+    mock_push(pack_glXDestroyGLXPbufferSGIX(NULL, dpy, pbuf)); \
 }
 #define test_glXDestroyGLXPbufferSGIX(_dpy, _pbuf) { \
     glXDestroyGLXPbufferSGIX_PACKED *packed = mock_cur(); \
@@ -8530,7 +8530,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyGLXPixmap(dpy, pixmap) { \
-    mock_push(pack_glXDestroyGLXPixmap(dpy, pixmap)); \
+    mock_push(pack_glXDestroyGLXPixmap(NULL, dpy, pixmap)); \
 }
 #define test_glXDestroyGLXPixmap(_dpy, _pixmap) { \
     glXDestroyGLXPixmap_PACKED *packed = mock_cur(); \
@@ -8575,7 +8575,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyGLXVideoSourceSGIX(dpy, glxvideosource) { \
-    mock_push(pack_glXDestroyGLXVideoSourceSGIX(dpy, glxvideosource)); \
+    mock_push(pack_glXDestroyGLXVideoSourceSGIX(NULL, dpy, glxvideosource)); \
 }
 #define test_glXDestroyGLXVideoSourceSGIX(_dpy, _glxvideosource) { \
     glXDestroyGLXVideoSourceSGIX_PACKED *packed = mock_cur(); \
@@ -8620,7 +8620,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyHyperpipeConfigSGIX(dpy, hpId) { \
-    mock_push(pack_glXDestroyHyperpipeConfigSGIX(dpy, hpId)); \
+    mock_push(pack_glXDestroyHyperpipeConfigSGIX(NULL, dpy, hpId)); \
 }
 #define test_glXDestroyHyperpipeConfigSGIX(_dpy, _hpId) { \
     glXDestroyHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
@@ -8665,7 +8665,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyPbuffer(dpy, pbuf) { \
-    mock_push(pack_glXDestroyPbuffer(dpy, pbuf)); \
+    mock_push(pack_glXDestroyPbuffer(NULL, dpy, pbuf)); \
 }
 #define test_glXDestroyPbuffer(_dpy, _pbuf) { \
     glXDestroyPbuffer_PACKED *packed = mock_cur(); \
@@ -8710,7 +8710,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyPixmap(dpy, pixmap) { \
-    mock_push(pack_glXDestroyPixmap(dpy, pixmap)); \
+    mock_push(pack_glXDestroyPixmap(NULL, dpy, pixmap)); \
 }
 #define test_glXDestroyPixmap(_dpy, _pixmap) { \
     glXDestroyPixmap_PACKED *packed = mock_cur(); \
@@ -8755,7 +8755,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXDestroyWindow(dpy, win) { \
-    mock_push(pack_glXDestroyWindow(dpy, win)); \
+    mock_push(pack_glXDestroyWindow(NULL, dpy, win)); \
 }
 #define test_glXDestroyWindow(_dpy, _win) { \
     glXDestroyWindow_PACKED *packed = mock_cur(); \
@@ -8800,7 +8800,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXEnumerateVideoCaptureDevicesNV(dpy, screen, nelements) { \
-    mock_push(pack_glXEnumerateVideoCaptureDevicesNV(dpy, screen, nelements)); \
+    mock_push(pack_glXEnumerateVideoCaptureDevicesNV(NULL, dpy, screen, nelements)); \
 }
 #define test_glXEnumerateVideoCaptureDevicesNV(_dpy, _screen, _nelements) { \
     glXEnumerateVideoCaptureDevicesNV_PACKED *packed = mock_cur(); \
@@ -8852,7 +8852,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXEnumerateVideoDevicesNV(dpy, screen, nelements) { \
-    mock_push(pack_glXEnumerateVideoDevicesNV(dpy, screen, nelements)); \
+    mock_push(pack_glXEnumerateVideoDevicesNV(NULL, dpy, screen, nelements)); \
 }
 #define test_glXEnumerateVideoDevicesNV(_dpy, _screen, _nelements) { \
     glXEnumerateVideoDevicesNV_PACKED *packed = mock_cur(); \
@@ -8904,7 +8904,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXFreeContextEXT(dpy, context) { \
-    mock_push(pack_glXFreeContextEXT(dpy, context)); \
+    mock_push(pack_glXFreeContextEXT(NULL, dpy, context)); \
 }
 #define test_glXFreeContextEXT(_dpy, _context) { \
     glXFreeContextEXT_PACKED *packed = mock_cur(); \
@@ -8949,7 +8949,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetAGPOffsetMESA(pointer) { \
-    mock_push(pack_glXGetAGPOffsetMESA(pointer)); \
+    mock_push(pack_glXGetAGPOffsetMESA(NULL, pointer)); \
 }
 #define test_glXGetAGPOffsetMESA(_pointer) { \
     glXGetAGPOffsetMESA_PACKED *packed = mock_cur(); \
@@ -8991,7 +8991,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetClientString(display, name) { \
-    mock_push(pack_glXGetClientString(display, name)); \
+    mock_push(pack_glXGetClientString(NULL, display, name)); \
 }
 #define test_glXGetClientString(_display, _name) { \
     glXGetClientString_PACKED *packed = mock_cur(); \
@@ -9036,7 +9036,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetConfig(display, visual, attribute, value) { \
-    mock_push(pack_glXGetConfig(display, visual, attribute, value)); \
+    mock_push(pack_glXGetConfig(NULL, display, visual, attribute, value)); \
 }
 #define test_glXGetConfig(_display, _visual, _attribute, _value) { \
     glXGetConfig_PACKED *packed = mock_cur(); \
@@ -9095,7 +9095,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetContextIDEXT(context) { \
-    mock_push(pack_glXGetContextIDEXT(context)); \
+    mock_push(pack_glXGetContextIDEXT(NULL, context)); \
 }
 #define test_glXGetContextIDEXT(_context) { \
     glXGetContextIDEXT_PACKED *packed = mock_cur(); \
@@ -9133,7 +9133,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetCurrentContext() { \
-    mock_push(pack_glXGetCurrentContext()); \
+    mock_push(pack_glXGetCurrentContext(NULL)); \
 }
 #define test_glXGetCurrentContext() { \
     glXGetCurrentContext_PACKED *packed = mock_cur(); \
@@ -9168,7 +9168,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetCurrentDisplay() { \
-    mock_push(pack_glXGetCurrentDisplay()); \
+    mock_push(pack_glXGetCurrentDisplay(NULL)); \
 }
 #define test_glXGetCurrentDisplay() { \
     glXGetCurrentDisplay_PACKED *packed = mock_cur(); \
@@ -9203,7 +9203,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetCurrentDisplayEXT() { \
-    mock_push(pack_glXGetCurrentDisplayEXT()); \
+    mock_push(pack_glXGetCurrentDisplayEXT(NULL)); \
 }
 #define test_glXGetCurrentDisplayEXT() { \
     glXGetCurrentDisplayEXT_PACKED *packed = mock_cur(); \
@@ -9238,7 +9238,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetCurrentDrawable() { \
-    mock_push(pack_glXGetCurrentDrawable()); \
+    mock_push(pack_glXGetCurrentDrawable(NULL)); \
 }
 #define test_glXGetCurrentDrawable() { \
     glXGetCurrentDrawable_PACKED *packed = mock_cur(); \
@@ -9273,7 +9273,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetCurrentReadDrawable() { \
-    mock_push(pack_glXGetCurrentReadDrawable()); \
+    mock_push(pack_glXGetCurrentReadDrawable(NULL)); \
 }
 #define test_glXGetCurrentReadDrawable() { \
     glXGetCurrentReadDrawable_PACKED *packed = mock_cur(); \
@@ -9308,7 +9308,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetCurrentReadDrawableSGI() { \
-    mock_push(pack_glXGetCurrentReadDrawableSGI()); \
+    mock_push(pack_glXGetCurrentReadDrawableSGI(NULL)); \
 }
 #define test_glXGetCurrentReadDrawableSGI() { \
     glXGetCurrentReadDrawableSGI_PACKED *packed = mock_cur(); \
@@ -9343,7 +9343,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetDrawableAttributes(drawable) { \
-    mock_push(pack_glXGetDrawableAttributes(drawable)); \
+    mock_push(pack_glXGetDrawableAttributes(NULL, drawable)); \
 }
 #define test_glXGetDrawableAttributes(_drawable) { \
     glXGetDrawableAttributes_PACKED *packed = mock_cur(); \
@@ -9381,7 +9381,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetDrawableAttributesSGIX(drawable) { \
-    mock_push(pack_glXGetDrawableAttributesSGIX(drawable)); \
+    mock_push(pack_glXGetDrawableAttributesSGIX(NULL, drawable)); \
 }
 #define test_glXGetDrawableAttributesSGIX(_drawable) { \
     glXGetDrawableAttributesSGIX_PACKED *packed = mock_cur(); \
@@ -9419,7 +9419,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetFBConfigAttrib(dpy, config, attribute, value) { \
-    mock_push(pack_glXGetFBConfigAttrib(dpy, config, attribute, value)); \
+    mock_push(pack_glXGetFBConfigAttrib(NULL, dpy, config, attribute, value)); \
 }
 #define test_glXGetFBConfigAttrib(_dpy, _config, _attribute, _value) { \
     glXGetFBConfigAttrib_PACKED *packed = mock_cur(); \
@@ -9474,7 +9474,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetFBConfigAttribSGIX(dpy, config, attribute, value) { \
-    mock_push(pack_glXGetFBConfigAttribSGIX(dpy, config, attribute, value)); \
+    mock_push(pack_glXGetFBConfigAttribSGIX(NULL, dpy, config, attribute, value)); \
 }
 #define test_glXGetFBConfigAttribSGIX(_dpy, _config, _attribute, _value) { \
     glXGetFBConfigAttribSGIX_PACKED *packed = mock_cur(); \
@@ -9529,7 +9529,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetFBConfigFromVisualSGIX(dpy, vis) { \
-    mock_push(pack_glXGetFBConfigFromVisualSGIX(dpy, vis)); \
+    mock_push(pack_glXGetFBConfigFromVisualSGIX(NULL, dpy, vis)); \
 }
 #define test_glXGetFBConfigFromVisualSGIX(_dpy, _vis) { \
     glXGetFBConfigFromVisualSGIX_PACKED *packed = mock_cur(); \
@@ -9578,7 +9578,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetFBConfigs(dpy, screen, nelements) { \
-    mock_push(pack_glXGetFBConfigs(dpy, screen, nelements)); \
+    mock_push(pack_glXGetFBConfigs(NULL, dpy, screen, nelements)); \
 }
 #define test_glXGetFBConfigs(_dpy, _screen, _nelements) { \
     glXGetFBConfigs_PACKED *packed = mock_cur(); \
@@ -9630,7 +9630,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetFBConfigsSGIX() { \
-    mock_push(pack_glXGetFBConfigsSGIX()); \
+    mock_push(pack_glXGetFBConfigsSGIX(NULL)); \
 }
 #define test_glXGetFBConfigsSGIX() { \
     glXGetFBConfigsSGIX_PACKED *packed = mock_cur(); \
@@ -9665,7 +9665,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetMscRateOML(dpy, drawable, numerator, denominator) { \
-    mock_push(pack_glXGetMscRateOML(dpy, drawable, numerator, denominator)); \
+    mock_push(pack_glXGetMscRateOML(NULL, dpy, drawable, numerator, denominator)); \
 }
 #define test_glXGetMscRateOML(_dpy, _drawable, _numerator, _denominator) { \
     glXGetMscRateOML_PACKED *packed = mock_cur(); \
@@ -9724,7 +9724,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetProcAddress(procName) { \
-    mock_push(pack_glXGetProcAddress(procName)); \
+    mock_push(pack_glXGetProcAddress(NULL, procName)); \
 }
 #define test_glXGetProcAddress(_procName) { \
     glXGetProcAddress_PACKED *packed = mock_cur(); \
@@ -9766,7 +9766,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetProcAddressARB(procName) { \
-    mock_push(pack_glXGetProcAddressARB(procName)); \
+    mock_push(pack_glXGetProcAddressARB(NULL, procName)); \
 }
 #define test_glXGetProcAddressARB(_procName) { \
     glXGetProcAddressARB_PACKED *packed = mock_cur(); \
@@ -9808,7 +9808,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetSelectedEvent(dpy, draw, event_mask) { \
-    mock_push(pack_glXGetSelectedEvent(dpy, draw, event_mask)); \
+    mock_push(pack_glXGetSelectedEvent(NULL, dpy, draw, event_mask)); \
 }
 #define test_glXGetSelectedEvent(_dpy, _draw, _event_mask) { \
     glXGetSelectedEvent_PACKED *packed = mock_cur(); \
@@ -9860,7 +9860,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetSelectedEventSGIX(dpy, drawable, mask) { \
-    mock_push(pack_glXGetSelectedEventSGIX(dpy, drawable, mask)); \
+    mock_push(pack_glXGetSelectedEventSGIX(NULL, dpy, drawable, mask)); \
 }
 #define test_glXGetSelectedEventSGIX(_dpy, _drawable, _mask) { \
     glXGetSelectedEventSGIX_PACKED *packed = mock_cur(); \
@@ -9912,7 +9912,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetSyncValuesOML(dpy, drawable, ust, msc, sbc) { \
-    mock_push(pack_glXGetSyncValuesOML(dpy, drawable, ust, msc, sbc)); \
+    mock_push(pack_glXGetSyncValuesOML(NULL, dpy, drawable, ust, msc, sbc)); \
 }
 #define test_glXGetSyncValuesOML(_dpy, _drawable, _ust, _msc, _sbc) { \
     glXGetSyncValuesOML_PACKED *packed = mock_cur(); \
@@ -9978,7 +9978,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetTransparentIndexSUN(dpy, overlay, underlay, pTransparentIndex) { \
-    mock_push(pack_glXGetTransparentIndexSUN(dpy, overlay, underlay, pTransparentIndex)); \
+    mock_push(pack_glXGetTransparentIndexSUN(NULL, dpy, overlay, underlay, pTransparentIndex)); \
 }
 #define test_glXGetTransparentIndexSUN(_dpy, _overlay, _underlay, _pTransparentIndex) { \
     glXGetTransparentIndexSUN_PACKED *packed = mock_cur(); \
@@ -10033,7 +10033,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetVideoDeviceNV(dpy, screen, numVideoDevices, pVideoDevice) { \
-    mock_push(pack_glXGetVideoDeviceNV(dpy, screen, numVideoDevices, pVideoDevice)); \
+    mock_push(pack_glXGetVideoDeviceNV(NULL, dpy, screen, numVideoDevices, pVideoDevice)); \
 }
 #define test_glXGetVideoDeviceNV(_dpy, _screen, _numVideoDevices, _pVideoDevice) { \
     glXGetVideoDeviceNV_PACKED *packed = mock_cur(); \
@@ -10088,7 +10088,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetVideoInfoNV(dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo) { \
-    mock_push(pack_glXGetVideoInfoNV(dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo)); \
+    mock_push(pack_glXGetVideoInfoNV(NULL, dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo)); \
 }
 #define test_glXGetVideoInfoNV(_dpy, _screen, _VideoDevice, _pulCounterOutputPbuffer, _pulCounterOutputVideo) { \
     glXGetVideoInfoNV_PACKED *packed = mock_cur(); \
@@ -10150,7 +10150,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetVideoSyncSGI(count) { \
-    mock_push(pack_glXGetVideoSyncSGI(count)); \
+    mock_push(pack_glXGetVideoSyncSGI(NULL, count)); \
 }
 #define test_glXGetVideoSyncSGI(_count) { \
     glXGetVideoSyncSGI_PACKED *packed = mock_cur(); \
@@ -10192,7 +10192,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetVisualConfigs() { \
-    mock_push(pack_glXGetVisualConfigs()); \
+    mock_push(pack_glXGetVisualConfigs(NULL)); \
 }
 #define test_glXGetVisualConfigs() { \
     glXGetVisualConfigs_PACKED *packed = mock_cur(); \
@@ -10227,7 +10227,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetVisualFromFBConfig(dpy, config) { \
-    mock_push(pack_glXGetVisualFromFBConfig(dpy, config)); \
+    mock_push(pack_glXGetVisualFromFBConfig(NULL, dpy, config)); \
 }
 #define test_glXGetVisualFromFBConfig(_dpy, _config) { \
     glXGetVisualFromFBConfig_PACKED *packed = mock_cur(); \
@@ -10272,7 +10272,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXGetVisualFromFBConfigSGIX(dpy, config) { \
-    mock_push(pack_glXGetVisualFromFBConfigSGIX(dpy, config)); \
+    mock_push(pack_glXGetVisualFromFBConfigSGIX(NULL, dpy, config)); \
 }
 #define test_glXGetVisualFromFBConfigSGIX(_dpy, _config) { \
     glXGetVisualFromFBConfigSGIX_PACKED *packed = mock_cur(); \
@@ -10317,7 +10317,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, attribList) { \
-    mock_push(pack_glXHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, attribList)); \
+    mock_push(pack_glXHyperpipeAttribSGIX(NULL, dpy, timeSlice, attrib, size, attribList)); \
 }
 #define test_glXHyperpipeAttribSGIX(_dpy, _timeSlice, _attrib, _size, _attribList) { \
     glXHyperpipeAttribSGIX_PACKED *packed = mock_cur(); \
@@ -10375,7 +10375,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXHyperpipeConfigSGIX(dpy, networkId, npipes, cfg, hpId) { \
-    mock_push(pack_glXHyperpipeConfigSGIX(dpy, networkId, npipes, cfg, hpId)); \
+    mock_push(pack_glXHyperpipeConfigSGIX(NULL, dpy, networkId, npipes, cfg, hpId)); \
 }
 #define test_glXHyperpipeConfigSGIX(_dpy, _networkId, _npipes, _cfg, _hpId) { \
     glXHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
@@ -10437,7 +10437,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXImportContextEXT(dpy, contextID) { \
-    mock_push(pack_glXImportContextEXT(dpy, contextID)); \
+    mock_push(pack_glXImportContextEXT(NULL, dpy, contextID)); \
 }
 #define test_glXImportContextEXT(_dpy, _contextID) { \
     glXImportContextEXT_PACKED *packed = mock_cur(); \
@@ -10482,7 +10482,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXIsDirect(dpy, ctx) { \
-    mock_push(pack_glXIsDirect(dpy, ctx)); \
+    mock_push(pack_glXIsDirect(NULL, dpy, ctx)); \
 }
 #define test_glXIsDirect(_dpy, _ctx) { \
     glXIsDirect_PACKED *packed = mock_cur(); \
@@ -10527,7 +10527,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXJoinSwapGroupNV(dpy, drawable, group) { \
-    mock_push(pack_glXJoinSwapGroupNV(dpy, drawable, group)); \
+    mock_push(pack_glXJoinSwapGroupNV(NULL, dpy, drawable, group)); \
 }
 #define test_glXJoinSwapGroupNV(_dpy, _drawable, _group) { \
     glXJoinSwapGroupNV_PACKED *packed = mock_cur(); \
@@ -10575,7 +10575,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXJoinSwapGroupSGIX(dpy, drawable, member) { \
-    mock_push(pack_glXJoinSwapGroupSGIX(dpy, drawable, member)); \
+    mock_push(pack_glXJoinSwapGroupSGIX(NULL, dpy, drawable, member)); \
 }
 #define test_glXJoinSwapGroupSGIX(_dpy, _drawable, _member) { \
     glXJoinSwapGroupSGIX_PACKED *packed = mock_cur(); \
@@ -10623,7 +10623,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXLockVideoCaptureDeviceNV(dpy, device) { \
-    mock_push(pack_glXLockVideoCaptureDeviceNV(dpy, device)); \
+    mock_push(pack_glXLockVideoCaptureDeviceNV(NULL, dpy, device)); \
 }
 #define test_glXLockVideoCaptureDeviceNV(_dpy, _device) { \
     glXLockVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
@@ -10668,7 +10668,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXMakeContextCurrent(dpy, draw, read, ctx) { \
-    mock_push(pack_glXMakeContextCurrent(dpy, draw, read, ctx)); \
+    mock_push(pack_glXMakeContextCurrent(NULL, dpy, draw, read, ctx)); \
 }
 #define test_glXMakeContextCurrent(_dpy, _draw, _read, _ctx) { \
     glXMakeContextCurrent_PACKED *packed = mock_cur(); \
@@ -10719,7 +10719,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXMakeCurrent(dpy, drawable, ctx) { \
-    mock_push(pack_glXMakeCurrent(dpy, drawable, ctx)); \
+    mock_push(pack_glXMakeCurrent(NULL, dpy, drawable, ctx)); \
 }
 #define test_glXMakeCurrent(_dpy, _drawable, _ctx) { \
     glXMakeCurrent_PACKED *packed = mock_cur(); \
@@ -10767,7 +10767,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXMakeCurrentReadSGI(dpy, draw, read, ctx) { \
-    mock_push(pack_glXMakeCurrentReadSGI(dpy, draw, read, ctx)); \
+    mock_push(pack_glXMakeCurrentReadSGI(NULL, dpy, draw, read, ctx)); \
 }
 #define test_glXMakeCurrentReadSGI(_dpy, _draw, _read, _ctx) { \
     glXMakeCurrentReadSGI_PACKED *packed = mock_cur(); \
@@ -10818,7 +10818,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryChannelDeltasSGIX(display, screen, channel, x, y, w, h) { \
-    mock_push(pack_glXQueryChannelDeltasSGIX(display, screen, channel, x, y, w, h)); \
+    mock_push(pack_glXQueryChannelDeltasSGIX(NULL, display, screen, channel, x, y, w, h)); \
 }
 #define test_glXQueryChannelDeltasSGIX(_display, _screen, _channel, _x, _y, _w, _h) { \
     glXQueryChannelDeltasSGIX_PACKED *packed = mock_cur(); \
@@ -10894,7 +10894,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryChannelRectSGIX(display, screen, channel, dx, dy, dw, dh) { \
-    mock_push(pack_glXQueryChannelRectSGIX(display, screen, channel, dx, dy, dw, dh)); \
+    mock_push(pack_glXQueryChannelRectSGIX(NULL, display, screen, channel, dx, dy, dw, dh)); \
 }
 #define test_glXQueryChannelRectSGIX(_display, _screen, _channel, _dx, _dy, _dw, _dh) { \
     glXQueryChannelRectSGIX_PACKED *packed = mock_cur(); \
@@ -10970,7 +10970,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryContext(dpy, ctx, attribute, value) { \
-    mock_push(pack_glXQueryContext(dpy, ctx, attribute, value)); \
+    mock_push(pack_glXQueryContext(NULL, dpy, ctx, attribute, value)); \
 }
 #define test_glXQueryContext(_dpy, _ctx, _attribute, _value) { \
     glXQueryContext_PACKED *packed = mock_cur(); \
@@ -11025,7 +11025,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryContextInfoEXT(dpy, context, attribute, value) { \
-    mock_push(pack_glXQueryContextInfoEXT(dpy, context, attribute, value)); \
+    mock_push(pack_glXQueryContextInfoEXT(NULL, dpy, context, attribute, value)); \
 }
 #define test_glXQueryContextInfoEXT(_dpy, _context, _attribute, _value) { \
     glXQueryContextInfoEXT_PACKED *packed = mock_cur(); \
@@ -11080,7 +11080,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryDrawable(dpy, draw, attribute, value) { \
-    mock_push(pack_glXQueryDrawable(dpy, draw, attribute, value)); \
+    mock_push(pack_glXQueryDrawable(NULL, dpy, draw, attribute, value)); \
 }
 #define test_glXQueryDrawable(_dpy, _draw, _attribute, _value) { \
     glXQueryDrawable_PACKED *packed = mock_cur(); \
@@ -11135,7 +11135,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryExtension(display, errorBase, eventBase) { \
-    mock_push(pack_glXQueryExtension(display, errorBase, eventBase)); \
+    mock_push(pack_glXQueryExtension(NULL, display, errorBase, eventBase)); \
 }
 #define test_glXQueryExtension(_display, _errorBase, _eventBase) { \
     glXQueryExtension_PACKED *packed = mock_cur(); \
@@ -11191,7 +11191,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryExtensionsString(dpy, screen) { \
-    mock_push(pack_glXQueryExtensionsString(dpy, screen)); \
+    mock_push(pack_glXQueryExtensionsString(NULL, dpy, screen)); \
 }
 #define test_glXQueryExtensionsString(_dpy, _screen) { \
     glXQueryExtensionsString_PACKED *packed = mock_cur(); \
@@ -11236,7 +11236,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryFrameCountNV(dpy, screen, count) { \
-    mock_push(pack_glXQueryFrameCountNV(dpy, screen, count)); \
+    mock_push(pack_glXQueryFrameCountNV(NULL, dpy, screen, count)); \
 }
 #define test_glXQueryFrameCountNV(_dpy, _screen, _count) { \
     glXQueryFrameCountNV_PACKED *packed = mock_cur(); \
@@ -11288,7 +11288,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryGLXPbufferSGIX(dpy, pbuf, attribute, value) { \
-    mock_push(pack_glXQueryGLXPbufferSGIX(dpy, pbuf, attribute, value)); \
+    mock_push(pack_glXQueryGLXPbufferSGIX(NULL, dpy, pbuf, attribute, value)); \
 }
 #define test_glXQueryGLXPbufferSGIX(_dpy, _pbuf, _attribute, _value) { \
     glXQueryGLXPbufferSGIX_PACKED *packed = mock_cur(); \
@@ -11343,7 +11343,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, returnAttribList) { \
-    mock_push(pack_glXQueryHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, returnAttribList)); \
+    mock_push(pack_glXQueryHyperpipeAttribSGIX(NULL, dpy, timeSlice, attrib, size, returnAttribList)); \
 }
 #define test_glXQueryHyperpipeAttribSGIX(_dpy, _timeSlice, _attrib, _size, _returnAttribList) { \
     glXQueryHyperpipeAttribSGIX_PACKED *packed = mock_cur(); \
@@ -11401,7 +11401,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryHyperpipeBestAttribSGIX(dpy, timeSlice, attrib, size, attribList, returnAttribList) { \
-    mock_push(pack_glXQueryHyperpipeBestAttribSGIX(dpy, timeSlice, attrib, size, attribList, returnAttribList)); \
+    mock_push(pack_glXQueryHyperpipeBestAttribSGIX(NULL, dpy, timeSlice, attrib, size, attribList, returnAttribList)); \
 }
 #define test_glXQueryHyperpipeBestAttribSGIX(_dpy, _timeSlice, _attrib, _size, _attribList, _returnAttribList) { \
     glXQueryHyperpipeBestAttribSGIX_PACKED *packed = mock_cur(); \
@@ -11466,7 +11466,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryHyperpipeConfigSGIX(dpy, hpId, npipes) { \
-    mock_push(pack_glXQueryHyperpipeConfigSGIX(dpy, hpId, npipes)); \
+    mock_push(pack_glXQueryHyperpipeConfigSGIX(NULL, dpy, hpId, npipes)); \
 }
 #define test_glXQueryHyperpipeConfigSGIX(_dpy, _hpId, _npipes) { \
     glXQueryHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
@@ -11518,7 +11518,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryHyperpipeNetworkSGIX(dpy, npipes) { \
-    mock_push(pack_glXQueryHyperpipeNetworkSGIX(dpy, npipes)); \
+    mock_push(pack_glXQueryHyperpipeNetworkSGIX(NULL, dpy, npipes)); \
 }
 #define test_glXQueryHyperpipeNetworkSGIX(_dpy, _npipes) { \
     glXQueryHyperpipeNetworkSGIX_PACKED *packed = mock_cur(); \
@@ -11567,7 +11567,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryMaxSwapBarriersSGIX(dpy, screen, max) { \
-    mock_push(pack_glXQueryMaxSwapBarriersSGIX(dpy, screen, max)); \
+    mock_push(pack_glXQueryMaxSwapBarriersSGIX(NULL, dpy, screen, max)); \
 }
 #define test_glXQueryMaxSwapBarriersSGIX(_dpy, _screen, _max) { \
     glXQueryMaxSwapBarriersSGIX_PACKED *packed = mock_cur(); \
@@ -11619,7 +11619,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryMaxSwapGroupsNV(dpy, screen, maxGroups, maxBarriers) { \
-    mock_push(pack_glXQueryMaxSwapGroupsNV(dpy, screen, maxGroups, maxBarriers)); \
+    mock_push(pack_glXQueryMaxSwapGroupsNV(NULL, dpy, screen, maxGroups, maxBarriers)); \
 }
 #define test_glXQueryMaxSwapGroupsNV(_dpy, _screen, _maxGroups, _maxBarriers) { \
     glXQueryMaxSwapGroupsNV_PACKED *packed = mock_cur(); \
@@ -11678,7 +11678,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryServerString(dpy, screen, name) { \
-    mock_push(pack_glXQueryServerString(dpy, screen, name)); \
+    mock_push(pack_glXQueryServerString(NULL, dpy, screen, name)); \
 }
 #define test_glXQueryServerString(_dpy, _screen, _name) { \
     glXQueryServerString_PACKED *packed = mock_cur(); \
@@ -11726,7 +11726,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQuerySwapGroupNV(dpy, drawable, group, barrier) { \
-    mock_push(pack_glXQuerySwapGroupNV(dpy, drawable, group, barrier)); \
+    mock_push(pack_glXQuerySwapGroupNV(NULL, dpy, drawable, group, barrier)); \
 }
 #define test_glXQuerySwapGroupNV(_dpy, _drawable, _group, _barrier) { \
     glXQuerySwapGroupNV_PACKED *packed = mock_cur(); \
@@ -11785,7 +11785,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryVersion(dpy, maj, min) { \
-    mock_push(pack_glXQueryVersion(dpy, maj, min)); \
+    mock_push(pack_glXQueryVersion(NULL, dpy, maj, min)); \
 }
 #define test_glXQueryVersion(_dpy, _maj, _min) { \
     glXQueryVersion_PACKED *packed = mock_cur(); \
@@ -11841,7 +11841,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXQueryVideoCaptureDeviceNV(dpy, device, attribute, value) { \
-    mock_push(pack_glXQueryVideoCaptureDeviceNV(dpy, device, attribute, value)); \
+    mock_push(pack_glXQueryVideoCaptureDeviceNV(NULL, dpy, device, attribute, value)); \
 }
 #define test_glXQueryVideoCaptureDeviceNV(_dpy, _device, _attribute, _value) { \
     glXQueryVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
@@ -11896,7 +11896,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXReleaseBuffersMESA(dpy, drawable) { \
-    mock_push(pack_glXReleaseBuffersMESA(dpy, drawable)); \
+    mock_push(pack_glXReleaseBuffersMESA(NULL, dpy, drawable)); \
 }
 #define test_glXReleaseBuffersMESA(_dpy, _drawable) { \
     glXReleaseBuffersMESA_PACKED *packed = mock_cur(); \
@@ -11941,7 +11941,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXReleaseTexImageEXT(dpy, drawable, buffer) { \
-    mock_push(pack_glXReleaseTexImageEXT(dpy, drawable, buffer)); \
+    mock_push(pack_glXReleaseTexImageEXT(NULL, dpy, drawable, buffer)); \
 }
 #define test_glXReleaseTexImageEXT(_dpy, _drawable, _buffer) { \
     glXReleaseTexImageEXT_PACKED *packed = mock_cur(); \
@@ -11989,7 +11989,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXReleaseVideoCaptureDeviceNV(dpy, device) { \
-    mock_push(pack_glXReleaseVideoCaptureDeviceNV(dpy, device)); \
+    mock_push(pack_glXReleaseVideoCaptureDeviceNV(NULL, dpy, device)); \
 }
 #define test_glXReleaseVideoCaptureDeviceNV(_dpy, _device) { \
     glXReleaseVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
@@ -12034,7 +12034,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXReleaseVideoDeviceNV(dpy, screen, VideoDevice) { \
-    mock_push(pack_glXReleaseVideoDeviceNV(dpy, screen, VideoDevice)); \
+    mock_push(pack_glXReleaseVideoDeviceNV(NULL, dpy, screen, VideoDevice)); \
 }
 #define test_glXReleaseVideoDeviceNV(_dpy, _screen, _VideoDevice) { \
     glXReleaseVideoDeviceNV_PACKED *packed = mock_cur(); \
@@ -12082,7 +12082,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXReleaseVideoImageNV(dpy, pbuf) { \
-    mock_push(pack_glXReleaseVideoImageNV(dpy, pbuf)); \
+    mock_push(pack_glXReleaseVideoImageNV(NULL, dpy, pbuf)); \
 }
 #define test_glXReleaseVideoImageNV(_dpy, _pbuf) { \
     glXReleaseVideoImageNV_PACKED *packed = mock_cur(); \
@@ -12127,7 +12127,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXRender() { \
-    mock_push(pack_glXRender()); \
+    mock_push(pack_glXRender(NULL)); \
 }
 #define test_glXRender() { \
     glXRender_PACKED *packed = mock_cur(); \
@@ -12162,7 +12162,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXRenderLarge() { \
-    mock_push(pack_glXRenderLarge()); \
+    mock_push(pack_glXRenderLarge(NULL)); \
 }
 #define test_glXRenderLarge() { \
     glXRenderLarge_PACKED *packed = mock_cur(); \
@@ -12197,7 +12197,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXResetFrameCountNV(dpy, screen) { \
-    mock_push(pack_glXResetFrameCountNV(dpy, screen)); \
+    mock_push(pack_glXResetFrameCountNV(NULL, dpy, screen)); \
 }
 #define test_glXResetFrameCountNV(_dpy, _screen) { \
     glXResetFrameCountNV_PACKED *packed = mock_cur(); \
@@ -12242,7 +12242,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSelectEvent(dpy, draw, event_mask) { \
-    mock_push(pack_glXSelectEvent(dpy, draw, event_mask)); \
+    mock_push(pack_glXSelectEvent(NULL, dpy, draw, event_mask)); \
 }
 #define test_glXSelectEvent(_dpy, _draw, _event_mask) { \
     glXSelectEvent_PACKED *packed = mock_cur(); \
@@ -12290,7 +12290,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSelectEventSGIX(dpy, drawable, mask) { \
-    mock_push(pack_glXSelectEventSGIX(dpy, drawable, mask)); \
+    mock_push(pack_glXSelectEventSGIX(NULL, dpy, drawable, mask)); \
 }
 #define test_glXSelectEventSGIX(_dpy, _drawable, _mask) { \
     glXSelectEventSGIX_PACKED *packed = mock_cur(); \
@@ -12338,7 +12338,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSendPbufferToVideoNV(dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock) { \
-    mock_push(pack_glXSendPbufferToVideoNV(dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock)); \
+    mock_push(pack_glXSendPbufferToVideoNV(NULL, dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock)); \
 }
 #define test_glXSendPbufferToVideoNV(_dpy, _pbuf, _iBufferType, _pulCounterPbuffer, _bBlock) { \
     glXSendPbufferToVideoNV_PACKED *packed = mock_cur(); \
@@ -12396,7 +12396,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSet3DfxModeMESA(mode) { \
-    mock_push(pack_glXSet3DfxModeMESA(mode)); \
+    mock_push(pack_glXSet3DfxModeMESA(NULL, mode)); \
 }
 #define test_glXSet3DfxModeMESA(_mode) { \
     glXSet3DfxModeMESA_PACKED *packed = mock_cur(); \
@@ -12434,7 +12434,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSwapBuffers(dpy, drawable) { \
-    mock_push(pack_glXSwapBuffers(dpy, drawable)); \
+    mock_push(pack_glXSwapBuffers(NULL, dpy, drawable)); \
 }
 #define test_glXSwapBuffers(_dpy, _drawable) { \
     glXSwapBuffers_PACKED *packed = mock_cur(); \
@@ -12479,7 +12479,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSwapBuffersMscOML(dpy, drawable, target_msc, divisor, remainder) { \
-    mock_push(pack_glXSwapBuffersMscOML(dpy, drawable, target_msc, divisor, remainder)); \
+    mock_push(pack_glXSwapBuffersMscOML(NULL, dpy, drawable, target_msc, divisor, remainder)); \
 }
 #define test_glXSwapBuffersMscOML(_dpy, _drawable, _target_msc, _divisor, _remainder) { \
     glXSwapBuffersMscOML_PACKED *packed = mock_cur(); \
@@ -12533,7 +12533,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSwapIntervalEXT(dpy, drawable, interval) { \
-    mock_push(pack_glXSwapIntervalEXT(dpy, drawable, interval)); \
+    mock_push(pack_glXSwapIntervalEXT(NULL, dpy, drawable, interval)); \
 }
 #define test_glXSwapIntervalEXT(_dpy, _drawable, _interval) { \
     glXSwapIntervalEXT_PACKED *packed = mock_cur(); \
@@ -12581,7 +12581,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSwapIntervalMESA(interval) { \
-    mock_push(pack_glXSwapIntervalMESA(interval)); \
+    mock_push(pack_glXSwapIntervalMESA(NULL, interval)); \
 }
 #define test_glXSwapIntervalMESA(_interval) { \
     glXSwapIntervalMESA_PACKED *packed = mock_cur(); \
@@ -12619,7 +12619,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXSwapIntervalSGI(interval) { \
-    mock_push(pack_glXSwapIntervalSGI(interval)); \
+    mock_push(pack_glXSwapIntervalSGI(NULL, interval)); \
 }
 #define test_glXSwapIntervalSGI(_interval) { \
     glXSwapIntervalSGI_PACKED *packed = mock_cur(); \
@@ -12657,7 +12657,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXUseXFont(font, first, count, listBase) { \
-    mock_push(pack_glXUseXFont(font, first, count, listBase)); \
+    mock_push(pack_glXUseXFont(NULL, font, first, count, listBase)); \
 }
 #define test_glXUseXFont(_font, _first, _count, _listBase) { \
     glXUseXFont_PACKED *packed = mock_cur(); \
@@ -12704,7 +12704,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXVendorPrivate() { \
-    mock_push(pack_glXVendorPrivate()); \
+    mock_push(pack_glXVendorPrivate(NULL)); \
 }
 #define test_glXVendorPrivate() { \
     glXVendorPrivate_PACKED *packed = mock_cur(); \
@@ -12739,7 +12739,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXVendorPrivateWithReply() { \
-    mock_push(pack_glXVendorPrivateWithReply()); \
+    mock_push(pack_glXVendorPrivateWithReply(NULL)); \
 }
 #define test_glXVendorPrivateWithReply() { \
     glXVendorPrivateWithReply_PACKED *packed = mock_cur(); \
@@ -12774,7 +12774,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXWaitForMscOML(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc) { \
-    mock_push(pack_glXWaitForMscOML(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc)); \
+    mock_push(pack_glXWaitForMscOML(NULL, dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc)); \
 }
 #define test_glXWaitForMscOML(_dpy, _drawable, _target_msc, _divisor, _remainder, _ust, _msc, _sbc) { \
     glXWaitForMscOML_PACKED *packed = mock_cur(); \
@@ -12849,7 +12849,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXWaitForSbcOML(dpy, drawable, target_sbc, ust, msc, sbc) { \
-    mock_push(pack_glXWaitForSbcOML(dpy, drawable, target_sbc, ust, msc, sbc)); \
+    mock_push(pack_glXWaitForSbcOML(NULL, dpy, drawable, target_sbc, ust, msc, sbc)); \
 }
 #define test_glXWaitForSbcOML(_dpy, _drawable, _target_sbc, _ust, _msc, _sbc) { \
     glXWaitForSbcOML_PACKED *packed = mock_cur(); \
@@ -12918,7 +12918,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXWaitGL() { \
-    mock_push(pack_glXWaitGL()); \
+    mock_push(pack_glXWaitGL(NULL)); \
 }
 #define test_glXWaitGL() { \
     glXWaitGL_PACKED *packed = mock_cur(); \
@@ -12953,7 +12953,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXWaitVideoSyncSGI(divisor, remainder, count) { \
-    mock_push(pack_glXWaitVideoSyncSGI(divisor, remainder, count)); \
+    mock_push(pack_glXWaitVideoSyncSGI(NULL, divisor, remainder, count)); \
 }
 #define test_glXWaitVideoSyncSGI(_divisor, _remainder, _count) { \
     glXWaitVideoSyncSGI_PACKED *packed = mock_cur(); \
@@ -13001,7 +13001,7 @@ static int failed_test = 0;
     } \
 }
 #define emit_glXWaitX() { \
-    mock_push(pack_glXWaitX()); \
+    mock_push(pack_glXWaitX(NULL)); \
 }
 #define test_glXWaitX() { \
     glXWaitX_PACKED *packed = mock_cur(); \

@@ -184,7 +184,7 @@ void remote_call(packed_call_t *call, void *ret_v) {
         if (ret_size == 4) {
             printf("0x%x\n", *(uint32_t *)ret_v);
         } else if (ret_size == 8) {
-            printf("0x%x\n", *(uint64_t *)ret_v);
+            printf("0x%llx\n", *(uint64_t *)ret_v);
         } else {
             for (int i = 0; i < ret_size; i++) {
                 printf("%x", ((unsigned char *)ret_v)[i]);
@@ -192,6 +192,35 @@ void remote_call(packed_call_t *call, void *ret_v) {
             printf("\n");
         }
     }
+}
+
+void *remote_dma(size_t size) {
+    return ring_dma(&ring, size + sizeof(uint32_t)) + sizeof(uint32_t);
+}
+
+void remote_dma_send(packed_call_t *call, void *ret_v) {
+    int ret_size = INDEX_RET_SIZE[call->index];
+    ((uint32_t *)call)[-1] = ret_size;
+    ring_dma_done(&ring);
+    remote_local_pre(&ring, call);
+    if (ret_size && ret_v) {
+        memcpy(ret_v, ring_read(&ring, NULL), ret_size);
+        ring_advance(&ring);
+        if (ret_size > 0 && g_remote_noisy) {
+            printf("returned (%d): ", ret_size);
+            if (ret_size == 4) {
+                printf("0x%x\n", *(uint32_t *)ret_v);
+            } else if (ret_size == 8) {
+                printf("0x%llx\n", *(uint64_t *)ret_v);
+            } else {
+                for (int i = 0; i < ret_size; i++) {
+                    printf("%x", ((unsigned char *)ret_v)[i]);
+                }
+                printf("\n");
+            }
+        }
+    }
+    remote_local_post(&ring, call, ret_v, ret_size);
 }
 
 int remote_serve(char *name) {
@@ -241,20 +270,4 @@ void remote_gl_get(GLenum pname, GLenum type, GLvoid *params) {
     write_uint32(&pos, type);
     size_t param_size = gl_sizeof(type) * gl_getv_length(pname);
     remote_call_raw((packed_call_t *)buf, buf_size, params, param_size);
-}
-
-void remote_glEnable(GLenum cap) {
-    remote_call(pack_glEnable(cap), NULL);
-}
-
-void remote_glDisable(GLenum cap) {
-    remote_call(pack_glDisable(cap), NULL);
-}
-
-void remote_glEnableClientState(GLenum cap) {
-    remote_call(pack_glEnableClientState(cap), NULL);
-}
-
-void remote_glDisableClientState(GLenum cap) {
-    remote_call(pack_glDisableClientState(cap), NULL);
 }

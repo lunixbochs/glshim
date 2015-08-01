@@ -51,32 +51,21 @@ extern void load_libs();
     LOAD_EGL(eglGetProcAddress); \
     LOAD_RAW(egl, name, egl_eglGetProcAddress(#name));
 
-#ifndef PUSH_IF_COMPILING_EXT
-#define PUSH_IF_COMPILING_EXT(name, ...)             \
-    if (state.list.active) {                         \
-        glPushCall(pack_##name(__VA_ARGS__));        \
-        return (name##_RETURN)0;                     \
+#ifndef PUSH_IF_COMPILING
+#define PUSH_IF_COMPILING(name) \
+    FORWARD_IF_REMOTE(name); \
+    if (state.list.active) { \
+        glPushCall(pack_##name(NULL name##_ARG_NAMES_TAIL)); \
+        return (name##_RETURN)0; \
     }
 #endif
 
-#ifndef PUSH_IF_COMPILING
-#define PUSH_IF_COMPILING(name) FORWARD_IF_REMOTE(name); PUSH_IF_COMPILING_EXT(name, name##_ARG_NAMES)
-#endif
-
 #ifndef FORWARD_IF_REMOTE_EXT
-#define FORWARD_IF_REMOTE_EXT(name, ...)                     \
-    do {                                                     \
-        if (state.remote) {                                  \
-            name##_VOID_ONLY_WRAP(                           \
-                remote_call(pack_##name(__VA_ARGS__), NULL); \
-                return;                                      \
-            );                                               \
-            name##_NOT_VOID_WRAP(                            \
-                name##_RETURN ret = (name##_RETURN)0;        \
-                remote_call(pack_##name(__VA_ARGS__), &ret); \
-                return ret;                                  \
-            );                                               \
-        }                                                    \
+#define FORWARD_IF_REMOTE_EXT(name, ...)        \
+    do {                                        \
+        if (state.remote) {                     \
+            return forward_##name(__VA_ARGS__); \
+        }                                       \
     } while (0)
 #endif
 

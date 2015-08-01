@@ -21,7 +21,7 @@ void mock_print(const packed_call_t *packed) {
     switch (packed->index) {
         {% for f in functions %}
         case {{ f.name }}_INDEX: {
-            PACKED_{{ f.name }} *unpacked = (PACKED_{{ f.name }} *)packed;
+            {{ f.name }}_PACKED *unpacked = ({{ f.name }}_PACKED *)packed;
             printf("{{ f.name }}({{ f.args|printf }});\n"
             {%- for arg in f.args %}, unpacked->args.{{ arg.name }}{% endfor -%});
             break;
