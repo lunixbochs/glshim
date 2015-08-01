@@ -8,25 +8,38 @@
 #include "remote.h"
 
 void gl_set_error(GLenum error) {
-    LOAD_GLES(glGetError);
     // call upstream glGetError to clear the driver's error flag
-    gles_glGetError();
+    if (state.remote) {
+        remote_call(pack_glGetError(), NULL);
+    } else {
+        LOAD_GLES(glGetError);
+        gles_glGetError();
+    }
     state.error = error;
 }
 
 // calls upstream glGetError and saves the flag for the next caller
 GLenum gl_get_error() {
-    LOAD_GLES(glGetError);
-    state.error = gles_glGetError();
+    if (state.remote) {
+        remote_call(pack_glGetError(), &state.error);
+    } else {
+        LOAD_GLES(glGetError);
+        state.error = gles_glGetError();
+    }
     return state.error;
 }
 
 GLenum glGetError() {
-    LOAD_GLES(glGetError);
     if (state.block.active) {
         return GL_INVALID_OPERATION;
     }
-    GLenum error = gles_glGetError();
+    GLenum error;
+    if (state.remote) {
+        remote_call(pack_glGetError(), &error);
+    } else {
+        LOAD_GLES(glGetError);
+        error = gles_glGetError();
+    }
     if (error == GL_NO_ERROR) {
         error = state.error;
     }
