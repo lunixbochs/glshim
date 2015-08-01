@@ -135,6 +135,8 @@ static bool g_stacktrace = false;
 static bool g_x11_reopen = false;
 static bool g_bcm_active = false;
 static bool g_create_window = false;
+static int g_window_width = 640;
+static int g_window_height = 480;
 #ifndef BCMHOST
 static bool g_bcmhost = false;
 #else
@@ -174,7 +176,7 @@ static GLXDrawable init_window(Display *dpy, GLXDrawable drawable)
 	if(drawable == g_saved_drawable) return g_real_drawable;
 	if(!g_real_drawable)
 	{
-		g_real_drawable=(GLXDrawable) XCreateSimpleWindow(dpy, RootWindow(dpy, 0), 0, 0, 1280, 1024, 0, BlackPixel(dpy, 0),BlackPixel(dpy, 0));
+		g_real_drawable=(GLXDrawable) XCreateSimpleWindow(dpy, RootWindow(dpy, 0), 0, 0, g_window_width, g_window_height, 0, BlackPixel(dpy, 0),BlackPixel(dpy, 0));
 		XMapWindow(dpy, (Window)g_real_drawable);
 		XFlush(dpy);
 	}
@@ -263,12 +265,12 @@ static void scan_env() {
     env(LIBGL_FPS, g_showfps, "fps counter enabled");
     env(LIBGL_FPS_OVERLAY, g_fps_overlay, "fps overlay enabled");
     env(LIBGL_VSYNC, g_vsync, "vsync enabled");
-    env(LIBGL_CREATE_WINDOW, g_create_window, "create window enabled");
     env(LIBGL_X11_REOPEN, g_x11_reopen, "reopening X11 display");
     if (g_vsync) {
         init_vsync();
     }
     const char *remote = getenv("LIBGL_REMOTE");
+    const char *create_window = getenv("LIBGL_CREATE_WINDOW");
     if (remote) {
         unsetenv("LIBGL_REMOTE");
         if (strcmp(remote, "1") == 0) {
@@ -280,6 +282,22 @@ static void scan_env() {
             printf("libGL: remote pid %d\n", pid);
         }
     }
+    else // Don't get window size if remote enabled
+    if(create_window) {
+		g_create_window = 1;
+		if(strcmp(create_window, "1")) {
+			g_window_width = atoi(create_window);
+			create_window = strchr(create_window, 'x');
+			if(create_window) {
+				g_window_height = atoi(++create_window);
+				printf("libGL: window size set to %dx%d\n", g_window_width, g_window_height);
+			}
+			else {
+				printf("libGL: use LIBGL_CREATE_WINDOW=<width>x<height>\n");
+				g_window_width = 640;
+			}
+		}
+	}
 }
 
 GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct) {
