@@ -17,19 +17,43 @@
 #define RING_SIZE (1024 * 4096)
 #define ALIGN4(x) (((x) & 3) ? (((x) & ~3) + 4) : (x))
 
+#define SPINLOCK_YIELD 2000
+#define SPINLOCK_COUNT 10000
+#define SPINLOCK_LOOP(cond) \
+    for (int i = 0; i < SPINLOCK_COUNT && (cond); i++) { \
+        if (i % SPINLOCK_YIELD == 0) sched_yield(); \
+    }
+#define SYNC_WHILE(cond) \
+    while ((cond)) { \
+        SPINLOCK_LOOP(cond); \
+        while ((cond)) ring_wait(ring); \
+    }
+
+void ring_wait(ring_t *ring) {
+    char c;
+    if (__sync_lock_test_and_set(ring->waiting, 1)) {
+        fprintf(stderr, "warning: both sides waiting?\n");
+    }
+    read(ring->sync, &c, 1);
+}
+
+void ring_post(ring_t *ring) {
+    // TODO: check if waiting first, or use nonblocking IO?
+    if (__sync_bool_compare_and_swap(ring->waiting, 1, 0)) {
+        char c = 0;
+        write(ring->sync, &c, 1);
+    }
+}
+
 static void ring_wait_read(ring_t *ring) {
-    while (*ring->dir != ring->me) {
-        sched_yield();
-    }
-    while (*ring->mark == *ring->write && *ring->wrap == 0) {
-        // TODO: make this time out
-        sched_yield();
-    }
+    SYNC_WHILE(*ring->dir != ring->me);
+    SYNC_WHILE(*ring->mark == *ring->write && *ring->wrap == 0);
 }
 
 static void ring_wait_write(ring_t *ring, size_t size) {
     size_t avail = 0;
     uint32_t read, write, wrap;
+    int i = 0;
     while (1) {
         // TODO: handle dir?
         read = *ring->read, write = *ring->write;
@@ -46,7 +70,9 @@ static void ring_wait_write(ring_t *ring, size_t size) {
         if (avail >= size) {
             break;
         }
-        sched_yield();
+        if (i % SPINLOCK_YIELD == 0) sched_yield();
+        if (i > SPINLOCK_COUNT) ring_wait(ring);
+        else i++;
     }
 }
 
@@ -83,6 +109,7 @@ void ring_read_into(ring_t *ring, void *dst) {
 
 void ring_advance(ring_t *ring) {
     *ring->read = *ring->mark;
+    ring_post(ring);
 }
 
 void *ring_dma(ring_t *ring, size_t size) {
@@ -124,6 +151,7 @@ void ring_dma_done(ring_t *ring) {
     // update direction
     if (*ring->dir == ring->me)
         *ring->dir = !ring->me;
+    ring_post(ring);
 }
 
 int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
@@ -172,11 +200,12 @@ static void ring_set_pointers(ring_t *ring, void *addr) {
     ring->mark  = next_line;
     ring->wrap  = next_line;
     ring->dir   = next_line;
+    ring->waiting = next_line;
 #undef next_line
     ring->buf   = addr + cache_line * 8;
 }
 
-int ring_server(ring_t *ring, char *name) {
+int ring_server(ring_t *ring, char *name, int sync_fd) {
     // set up shm
     int fd = shm_open(name, O_RDWR, 0700);
     int size = RING_SIZE + cache_line_size() * 8;
@@ -188,10 +217,11 @@ int ring_server(ring_t *ring, char *name) {
     ring_set_pointers(ring, addr);
     ring->size = RING_SIZE;
     ring->me = 0;
+    ring->sync = sync_fd;
     return 0;
 }
 
-char *ring_client(ring_t *ring, char *title) {
+char *ring_client(ring_t *ring, char *title, int sync_fd) {
     char buf[32] = {0};
     int i = 0;
     int fd = -1;
@@ -216,5 +246,6 @@ char *ring_client(ring_t *ring, char *title) {
     ring->size = RING_SIZE;
     ring->me = 1;
     memset(addr, 0, size);
+    ring->sync = sync_fd;
     return name;
 }

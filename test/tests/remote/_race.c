@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     } else {
         ring_t _ring = {0};
         ring_t *ring = &_ring;
-        if (ring_server(ring, argv[1])) {
+        if (ring_server(ring, argv[1], strtol(argv[2], NULL, 10))) {
             fprintf(stderr, "Error mapping shared memory: %s\n", argv[1]);
             return 2;
         }

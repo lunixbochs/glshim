@@ -7,7 +7,7 @@
 #define REMOTE_BLOCK_DRAW -1
 #define REMOTE_GL_GET -2
 
-int remote_serve(char *name);
+int remote_serve(char *name, int sync_fd);
 int remote_spawn(const char *path);
 void remote_write_block(ring_t *ring, block_t *block);
 block_t *remote_read_block(ring_t *ring, packed_call_t *call);

@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
         assert(strstr(glGetString(GL_VERSION), "glshim"));
         kill(pid, SIGTERM);
     } else {
-        if (remote_serve(argv[1])) {
+        if (remote_serve(argv[1], strtol(argv[2], NULL, 10))) {
             fprintf(stderr, "Error mapping shared memory: %s\n", argv[1]);
             return 2;
         }

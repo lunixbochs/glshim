@@ -21,7 +21,7 @@ typedef struct {
 void *remote_process(remote_args *args) {
     ring_t _ring = {0};
     ring_t *ring = &_ring;
-    if (ring_server(ring, args->shm_name /* , args->sync_fd */)) {
+    if (ring_server(ring, args->shm_name, args->sync_fd)) {
         fprintf(stderr, "Error mapping shared memory: %s\n", args->shm_name);
         return 2;
     }
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
     int pid = remote_spawn(argv[0]);
     state.remote = 1;
     pthread_t thread;
-    remote_args args = {"/glshim.0", 0}; // open("/tmp/glshim.0", O_RDWR)};
+    remote_args args = {"/glshim.0", open("/tmp/glshim.0", O_RDWR)};
     pthread_create(&thread, NULL, remote_process, &args);
     for (int i = 0; i < RACE_COUNT; i++) {
         glRectf(0, 0, 1, 1);

@@ -1,9 +1,11 @@
 #include <errno.h>
-#include <semaphore.h>
+#include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -59,24 +61,45 @@ int remote_spawn(const char *path) {
     if (path == NULL) {
         path = "libgl_remote";
     }
-    char *shm_name = ring_client(&ring, "glshim");
+    // create a pipe for syncing
+    char *nospawn_pipe = getenv("LIBGL_REMOTE_NOSPAWN");
+    int sync_fd[2];
+    if (nospawn_pipe) {
+        unlink(nospawn_pipe);
+        if (mkfifo(nospawn_pipe, 0700) || (sync_fd[0] = open(nospawn_pipe, O_RDWR)) < 0) {
+            fprintf(stderr, "error using named pipe '%s': %d (%s)\n", nospawn_pipe, errno, strerror(errno));
+            abort();
+        }
+    } else {
+        if (pipe(sync_fd)) {
+            fprintf(stderr, "error calling pipe(): %d, (%s)\n", errno, strerror(errno));
+        }
+    }
+    // set up the ring buffer
+    char *shm_name = ring_client(&ring, "glshim", sync_fd[0]);
     if (! shm_name) {
         fprintf(stderr, "libGL: failed to allocate shm for remote\n");
         abort();
     }
     state.remote_ring = &ring;
-    if (getenv("LIBGL_REMOTE_NOSPAWN")) {
+    // one frame will fit in the ringbuffer before it blocks
+    ring_post(&ring);
+    if (nospawn_pipe) {
         signal(SIGCHLD, old_sigchld);
-        fprintf(stderr, "libGL: shm_name='%s'\n", shm_name);
+        fprintf(stderr, "libGL: shm_name='%s', pipe='%s'\n", shm_name, nospawn_pipe);
         return 1;
     }
+    // launch the libgl_remote subproess
     int pid = fork();
     if (pid == 0) {
+        close(sync_fd[0]);
+        char fd_buf[32];
+        snprintf(fd_buf, 32, "%d", sync_fd[1]);
         char *gdb = getenv("LIBGL_REMOTE_GDB");
         const char *exec = gdb ? "gdb" : path;
         char **argv;
-        char *argv_gdb[] = {"gdb", "--args", (char *)path, shm_name, NULL};
-        char *argv_real[] = {(char *)path, shm_name, NULL};
+        char *argv_gdb[] = {"gdb", "--args", (char *)path, shm_name, fd_buf, NULL};
+        char *argv_real[] = {(char *)path, shm_name, fd_buf, NULL};
         if (gdb) {
             argv = argv_gdb;
         } else {
@@ -186,8 +209,8 @@ void remote_dma_send(packed_call_t *call, void *ret_v) {
     remote_dma_send_raw(call, ret_v, ret_size);
 }
 
-int remote_serve(char *name) {
-    if (ring_server(&ring, name)) {
+int remote_serve(char *name, int sync_fd) {
+    if (ring_server(&ring, name, sync_fd)) {
         fprintf(stderr, "Error mapping shared memory: %s\n", name);
         return 2;
     }
