@@ -322,4 +322,21 @@ static inline const size_t gl_getv_length(GLenum name) {
     }
 }
 
+static inline const size_t gl_fogv_length(GLenum name) {
+    switch (name) {
+        case GL_FOG_MODE:
+        case GL_FOG_DENSITY:
+        case GL_FOG_START:
+        case GL_FOG_END:
+        case GL_FOG_INDEX:
+        case GL_FOG_COORD_SRC:
+            return 1;
+        case GL_FOG_COLOR:
+            return 4;
+        default:
+            fprintf(stderr, "libGL: warning: gl_fogv_length unknown pname 0x%x\n", name);
+            return 1;
+    }
+}
+
 #endif

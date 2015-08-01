@@ -108,6 +108,19 @@ int remote_local_pre(ring_t *ring, packed_call_t *call) {
             glDrawPixels_PACKED *n = (glDrawPixels_PACKED *)call;
             size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
             ring_write(ring, n->args.pixels, size);
+            break;
+        }
+        case glFogiv_INDEX:
+        {
+            glFogiv_PACKED *n = (glFogiv_PACKED *)call;
+            ring_write(ring, n->args.params, gl_fogv_length(n->args.pname) * sizeof(GLint));
+            break;
+        }
+        case glFogfv_INDEX:
+        {
+            glFogfv_PACKED *n = (glFogfv_PACKED *)call;
+            ring_write(ring, n->args.params, gl_fogv_length(n->args.pname) * sizeof(GLint));
+            break;
         }
 #if 0
         // this is disabled to remove the X dependency for now
@@ -240,6 +253,12 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             ring_write(ring, n->args.textures, size);
             return;
         }
+        case glFogiv_INDEX:
+            ((glFogiv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            break;
+        case glFogfv_INDEX:
+            ((glFogfv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            break;
 #if 0
         // see above
         case glXChooseVisual_INDEX:
