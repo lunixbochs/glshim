@@ -91,16 +91,18 @@ void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
 
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
               GLfloat xmove, GLfloat ymove, const GLubyte *bitmap) {
+    // TODO: support xorig/yorig
     PUSH_IF_COMPILING(glBitmap);
     PROXY_GLES(glBitmap);
     raster_state_t *raster = &state.raster;
+    struct { GLfloat x, y, z, w } *pos = &raster->pos;
     if (! raster->valid) {
         return;
     }
     // TODO: negative width/height mirrors bitmap?
     if (!width && !height) {
-        raster->pos.x += xmove;
-        raster->pos.y -= ymove;
+        pos->x += xmove;
+        pos->y += ymove;
         return;
     }
     init_raster();
@@ -112,21 +114,27 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
     // copy to pixel data
     // TODO: strip blank lines and mirror vertically?
     for (y = 0; y < height; y++) {
-        to = (GLuint *)raster->buf + (GLuint)(raster->pos.x + ((raster->pos.y - y) * state.viewport.nwidth));
+        float dy = pos->y - y;
+        to = (GLuint *)raster->buf + (GLuint)(pos->x + (dy * state.viewport.nwidth));
         from = bitmap + (y * 2);
         for (x = 0; x < width; x += 8) {
-            if (raster->pos.x + x > state.viewport.width || raster->pos.y - y > state.viewport.height)
+            float dx = pos->x + x;
+            if (dx < 0 || dx > state.viewport.width ||
+                dy < 0 || dy > state.viewport.height)
                 continue;
+            int max = 8;
+            if (dx + 8 > state.viewport.width)
+                max = state.viewport.width - dx;
 
             GLubyte b = *from++;
-            for (int j = 8; j--; ) {
+            for (int j = max - 1; j >= 0; j--) {
                 *to++ = (b & (1 << j)) ? raster->pixel : 0;
             }
         }
     }
 
-    raster->pos.x += xmove;
-    raster->pos.y += ymove;
+    pos->x += xmove;
+    pos->y += ymove;
 }
 
 void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
@@ -150,13 +158,13 @@ void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
 
     // shrink our pixel ranges to stay inside the viewport
     int ystart = MAX(0, -raster->pos.y);
-    height = MIN(raster->pos.y, height);
+    height = MIN(state.viewport.height - raster->pos.y, height);
 
     int xstart = MAX(0, -raster->pos.x);
     int screen_width = MIN(state.viewport.width - raster->pos.x, width);
 
     for (int y = ystart; y < height; y++) {
-        to = raster->buf + 4 * (GLuint)(raster->pos.x + ((raster->pos.y - y) * state.viewport.nwidth));
+        to = raster->buf + 4 * (GLuint)(raster->pos.x + ((raster->pos.y + y) * state.viewport.nwidth));
         from = pixels + 4 * (xstart + y * width);
         memcpy(to, from, 4 * screen_width);
     }
