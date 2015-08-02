@@ -8,11 +8,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-# Raspberry PI
-if(BCMHOST)
-    link_directories(/opt/vc/lib)
-endif()
-
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     link_directories(/opt/X11/lib)
 endif()

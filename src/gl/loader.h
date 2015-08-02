@@ -10,32 +10,7 @@
 #include "wrap/gles.h"
 
 // will become references to dlopen'd gles and egl
-extern void *gles, *egl;
-
-static const char *lib_ext[] = {
-    "so",
-    "so.1",
-    "so.2",
-    "dylib",
-    "dll",
-    NULL,
-};
-
-static const char *gles_lib[] = {
-#ifdef USE_ES2
-    "libGLESv2_CM",
-    "libGLESv2",
-#else
-    "libGLESv1_CM",
-    "libGLES_CM",
-#endif // USE_ES2
-    NULL
-};
-
-static const char *egl_lib[] = {
-    "libEGL",
-    NULL
-};
+extern void *gles, *egl, *bcm_host, *vcos;
 
 extern void *open_lib(const char **names, const char *override);
 extern void load_gles_lib();
