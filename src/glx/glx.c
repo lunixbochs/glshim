@@ -153,10 +153,15 @@ static EGLDisplay get_egl_display(Display *display) {
     static EGLDisplay eglDisplay = NULL;
     LOAD_EGL(eglGetDisplay);
     if (! eglDisplay) {
-        if (g_usefb) {
-            eglDisplay = egl_eglGetDisplay(EGL_DEFAULT_DISPLAY);
-        } else {
+        if (! g_usefb) {
             eglDisplay = egl_eglGetDisplay(get_display(display));
+        } else {
+            eglDisplay = egl_eglGetDisplay(EGL_DEFAULT_DISPLAY);
+        }
+        if (! g_usefb && eglDisplay == EGL_NO_DISPLAY) {
+            fprintf(stderr, "libGL: Could not open display. Trying framebuffer.\n");
+            eglDisplay = egl_eglGetDisplay(EGL_DEFAULT_DISPLAY);
+            g_usefb = 1;
         }
     }
     return eglDisplay;
