@@ -25,12 +25,6 @@ set_target_properties(GL_static PROPERTIES OUTPUT_NAME GL)
 add_library(GL2 SHARED EXCLUDE_FROM_ALL ${GL_SOURCES})
 set_target_properties(GL2 PROPERTIES COMPILE_FLAGS -DUSE_ES2)
 
-if(BCMHOST)
-    set(PI_LIBS bcm_host vcos)
-    target_link_libraries(GL ${PI_LIBS} GLESv1_CM)
-    target_link_libraries(GL2 ${PI_LIBS} GLESv2)
-endif()
-
 aux_source_directory(preload PRELOAD_SOURCES)
 add_library(preload SHARED EXCLUDE_FROM_ALL ${PRELOAD_SOURCES})
 target_link_libraries(preload X11)

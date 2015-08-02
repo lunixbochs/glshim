@@ -1,7 +1,3 @@
-#ifdef BCMHOST
-#include "bcm_host.h"
-#endif
-
 #include <stdbool.h>
 #include <stdlib.h>
 #include <X11/Xlib.h>
