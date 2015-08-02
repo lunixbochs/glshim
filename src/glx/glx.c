@@ -115,6 +115,11 @@ static int get_config_default(int attribute, int *value) {
 static EGLContext eglContext;
 static GLXContext glxContext;
 
+/* When creating window, we should save given drawable 
+ * to prevent creating other window on next glxMakeCurrent */
+static GLXDrawable g_saved_drawable = 0;
+static GLXDrawable g_real_drawable = 0;
+
 #ifdef __linux__
 #ifndef FBIO_WAITFORVSYNC
 #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
@@ -129,6 +134,9 @@ static bool g_xrefresh = false;
 static bool g_stacktrace = false;
 static bool g_x11_reopen = false;
 static bool g_bcm_active = false;
+static bool g_create_window = false;
+static int g_window_width = 640;
+static int g_window_height = 480;
 #ifndef BCMHOST
 static bool g_bcmhost = false;
 #else
@@ -141,7 +149,7 @@ static int swap_interval = 1;
 static Display *get_display(Display *display) {
     static Display *x11_display = NULL;
     if (! x11_display) {
-        if (g_x11_reopen) {
+        if (g_x11_reopen || !display) { //Force reopen display if no display given
             x11_display = XOpenDisplay(NULL);
         } else {
             x11_display = display;
@@ -161,6 +169,19 @@ static EGLDisplay get_egl_display(Display *display) {
         }
     }
     return eglDisplay;
+}
+
+static GLXDrawable init_window(Display *dpy, GLXDrawable drawable)
+{
+	if(drawable == g_saved_drawable) return g_real_drawable;
+	if(!g_real_drawable)
+	{
+		g_real_drawable=(GLXDrawable) XCreateSimpleWindow(dpy, RootWindow(dpy, 0), 0, 0, g_window_width, g_window_height, 0, BlackPixel(dpy, 0),BlackPixel(dpy, 0));
+		XMapWindow(dpy, (Window)g_real_drawable);
+		XFlush(dpy);
+	}
+	g_saved_drawable = drawable;
+	return g_real_drawable;
 }
 
 static void init_vsync() {
@@ -249,6 +270,7 @@ static void scan_env() {
         init_vsync();
     }
     const char *remote = getenv("LIBGL_REMOTE");
+    const char *create_window = getenv("LIBGL_CREATE_WINDOW");
     if (remote) {
         unsetenv("LIBGL_REMOTE");
         if (strcmp(remote, "1") == 0) {
@@ -260,6 +282,22 @@ static void scan_env() {
             printf("libGL: remote pid %d\n", pid);
         }
     }
+    else // Don't get window size if remote enabled
+    if(create_window) {
+		g_create_window = 1;
+		if(strcmp(create_window, "1")) {
+			g_window_width = atoi(create_window);
+			create_window = strchr(create_window, 'x');
+			if(create_window) {
+				g_window_height = atoi(++create_window);
+				printf("libGL: window size set to %dx%d\n", g_window_width, g_window_height);
+			}
+			else {
+				printf("libGL: use LIBGL_CREATE_WINDOW=<width>x<height>\n");
+				g_window_width = 640;
+			}
+		}
+	}
 }
 
 GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct) {
@@ -427,7 +465,13 @@ Bool glXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx) {
     }
     if (g_usefb)
         drawable = 0;
-    eglSurface = egl_eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, NULL);
+    else if(g_create_window)
+		drawable = init_window(get_display(dpy), drawable);
+    static EGLint const window_attribute_list[] = {
+        EGL_RENDER_BUFFER, EGL_BACK_BUFFER,
+        EGL_NONE,
+    };
+    eglSurface = egl_eglCreateWindowSurface(eglDisplay, eglConfigs[0], drawable, window_attribute_list);
     CheckEGLErrors();
 
     EGLBoolean result = egl_eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
