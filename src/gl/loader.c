@@ -66,27 +66,22 @@ void *open_lib(const char **names, const char *override) {
     return lib;
 }
 
-void load_gles_lib() {
-    if (gles) {
-        return;
-    }
-    char *override = getenv("LIBGL_GLES");
+void load_libs() {
+    static int first = true;
+    if (! first) return;
+    first = false;
+    char *gles_override = getenv("LIBGL_GLES");
     // optimistically try to load the raspberry pi libs
-    if (! override) {
+    if (! gles_override) {
         const char *bcm_host_name[] = {"libbcm_host", NULL};
         const char *vcos_name[] = {"libvcos", NULL};
         bcm_host = open_lib(bcm_host_name, NULL);
         vcos = open_lib(vcos_name, NULL);
     }
-    gles = open_lib(gles_lib, override);
+    gles = open_lib(gles_lib, gles_override);
     WARN_NULL(gles);
-}
 
-void load_egl_lib() {
-    if (egl) {
-        return;
-    }
-    char *override = getenv("LIBGL_EGL");
-    egl = open_lib(egl_lib, override);
+    char *egl_override = getenv("LIBGL_EGL");
+    egl = open_lib(egl_lib, egl_override);
     WARN_NULL(egl);
 }

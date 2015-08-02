@@ -13,8 +13,7 @@
 extern void *gles, *egl, *bcm_host, *vcos;
 
 extern void *open_lib(const char **names, const char *override);
-extern void load_gles_lib();
-extern void load_egl_lib();
+extern void load_libs();
 
 #ifndef WARN_NULL
 #define WARN_NULL(name) if (name == NULL) printf("libGL: warning, " #name " is NULL\n");
@@ -28,7 +27,7 @@ extern void load_egl_lib();
         if (first) { \
             first = false; \
             if (lib == NULL) { \
-                load_##lib##_lib(); \
+                load_libs(); \
             } \
             if (lib != NULL) { \
                 lib##_##name = (name##_PTR)__VA_ARGS__; \
