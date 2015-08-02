@@ -88,7 +88,7 @@
 #define direct_glIsList
 #define direct_glNormalPointer
 #define direct_glPopClientAttrib
-#define direct_glPixelStore
+#define direct_glPixelStorei
 #define direct_glPushClientAttrib
 #define direct_glReadPixels
 #define direct_glRenderMode
