@@ -47,6 +47,7 @@ def walk(base):
 
 class Test:
     cmake_template = 'CMakeLists.j2'
+    build_dir = 'build/mock'
 
     def __init__(self, path, tail):
         self.path = path
@@ -101,7 +102,7 @@ class Test:
         return term.green if self.success else term.red
 
     def build(self, project):
-        junk_dir = os.path.join(TEST_ROOT, 'build')
+        junk_dir = os.path.join(TEST_ROOT, self.build_dir)
         bin_dir = os.path.join(TEST_ROOT, 'bin', self.dir)
         if not os.path.exists(junk_dir):
             os.makedirs(junk_dir)
@@ -154,6 +155,7 @@ class Test:
 
 
 class PureCTest(Test):
+    build_dir = 'build/pure'
     cmake_template = 'CMakeLists_pure.j2'
 
 
