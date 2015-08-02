@@ -95,7 +95,7 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
     PUSH_IF_COMPILING(glBitmap);
     PROXY_GLES(glBitmap);
     raster_state_t *raster = &state.raster;
-    struct { GLfloat x, y, z, w } *pos = &raster->pos;
+    struct { GLfloat x, y, z, w; } *pos = (void *)&raster->pos;
     if (! raster->valid) {
         return;
     }
