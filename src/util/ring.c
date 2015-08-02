@@ -8,12 +8,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
+#include <sys/sysctl.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #include "ring.h"
 
 #define RING_SIZE (1024 * 4096)
-#define ALIGN(x) (((x) & 3) ? (((x) & ~3) + 4) : (x))
+#define ALIGN4(x) (((x) & 3) ? (((x) & ~3) + 4) : (x))
 
 static void ring_wait_read(ring_t *ring) {
     while (*ring->dir != ring->me) {
@@ -93,7 +95,7 @@ int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
     size_t size = sizeof(uint32_t);
     for (int i = 0; i < count; i++)
         size += vals[i].size;
-    size = ALIGN(size);
+    size = ALIGN4(size);
     // make sure we have enough unmarked free space
     uint32_t read = *ring->read, mark = *ring->mark;
     uint32_t marked;
@@ -144,22 +146,41 @@ int ring_write(ring_t *ring, void *buf, size_t bufsize) {
     return ring_write_multi(ring, vals, 1);
 }
 
+const size_t cache_line_size() {
+    size_t size;
+#ifdef __linux__
+    size = sysconf(_SC_LEVEL1_DCACHE_LINESIZE);
+#elif __APPLE__
+    size_t ret_size = sizeof(size_t);
+    sysctlbyname("hw.cachelinesize", &size, &ret_size, 0, 0);
+#endif
+    if (size == 0) size = 64;
+    return size;
+}
+
+static void ring_set_pointers(ring_t *ring, void *addr) {
+    size_t cache_line = cache_line_size();
+    int i = 0;
+#define next_line (addr + cache_line * i++)
+    ring->read  = next_line;
+    ring->write = next_line;
+    ring->mark  = next_line;
+    ring->wrap  = next_line;
+    ring->dir   = next_line;
+#undef next_line
+    ring->buf   = addr + cache_line * 8;
+}
+
 int ring_server(ring_t *ring, char *name) {
     // set up shm
     int fd = shm_open(name, O_RDWR, 0700);
-    int size = 4096 + RING_SIZE;
+    int size = RING_SIZE + cache_line_size() * 8;
     void *addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (addr == MAP_FAILED) {
         return -1;
     }
     shm_unlink(name);
-
-    ring->read = addr;
-    ring->write = ring->read + sizeof(uint32_t);
-    ring->mark = ring->write + sizeof(uint32_t);
-    ring->wrap = ring->mark + sizeof(uint32_t);
-    ring->dir = ring->wrap + sizeof(uint32_t);
-    ring->buf = addr + 4096;
+    ring_set_pointers(ring, addr);
     ring->size = RING_SIZE;
     ring->me = 0;
     return 0;
@@ -179,22 +200,16 @@ char *ring_client(ring_t *ring, char *title) {
         }
     }
     // map it
-    int size = 4096 + RING_SIZE;
+    int size = RING_SIZE + cache_line_size() * 8;
     char *name = strdup(buf);
     ftruncate(fd, size);
     void *addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (addr == MAP_FAILED) {
         return NULL;
     }
-
-    ring->read = addr;
-    ring->write = ring->read + sizeof(uint32_t);
-    ring->mark = ring->write + sizeof(uint32_t);
-    ring->wrap = ring->mark + sizeof(uint32_t);
-    ring->dir = ring->wrap + sizeof(uint32_t);
-    ring->buf = addr + 4096;
+    ring_set_pointers(ring, addr);
     ring->size = RING_SIZE;
     ring->me = 1;
-    memset(ring->buf, 0, sizeof(size));
+    memset(addr, 0, size);
     return name;
 }
