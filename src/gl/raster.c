@@ -178,7 +178,7 @@ void render_raster() {
 
 // FIXME
 #ifndef USE_ES2
-    glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT);
+    glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_TRANSFORM_BIT | GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();

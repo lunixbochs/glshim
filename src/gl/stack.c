@@ -85,7 +85,6 @@ void glPushAttrib(GLbitfield mask) {
         cur->sample_coverage = glIsEnabled(GL_SAMPLE_COVERAGE);
         cur->scissor_test = glIsEnabled(GL_SCISSOR_TEST);
         cur->stencil_test = glIsEnabled(GL_STENCIL_TEST);
-        cur->texture_2d = glIsEnabled(GL_TEXTURE_2D);
     }
 
     // TODO: GL_EVAL_BIT
@@ -160,12 +159,36 @@ void glPushAttrib(GLbitfield mask) {
 
     // TODO: GL_STENCIL_BUFFER_BIT
 
-    // TODO: incomplete
-    if (mask & GL_TEXTURE_BIT) {
-        glGetIntegerv(GL_TEXTURE_BINDING_2D, &cur->texture);
+    // TODO: GL_TEXTURE_BIT (incomplete)
+    if (mask & GL_ENABLE_BIT || mask & GL_TEXTURE_BIT) {
+        glGetIntegerv(GL_ACTIVE_TEXTURE, &cur->active_texture);
+        for (int i = 0; i < MAX_TEX; i++) {
+            glActiveTexture(GL_TEXTURE0 + i);
+            cur->texture[i].texgen.s = state.enable.texgen_s[i];
+            cur->texture[i].texgen.t = state.enable.texgen_t[i];
+            cur->texture[i].texgen.r = state.enable.texgen_r[i];
+            cur->texture[i].texgen.q = state.enable.texgen_q[i];
+            cur->texture[i].enable_2d = glIsEnabled(GL_TEXTURE_2D);
+        }
+        if (mask & GL_TEXTURE_BIT) {
+            for (int i = 0; i < MAX_TEX; i++) {
+                glActiveTexture(GL_TEXTURE0 + i);
+                glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, &cur->texture[i].min_filter);
+                glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, &cur->texture[i].mag_filter);
+                glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, &cur->texture[i].wrap_s);
+                glGetTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, &cur->texture[i].wrap_t);
+                glGetIntegerv(GL_TEXTURE_BINDING_2D, &cur->texture[i].bind);
+                memcpy(&cur->texture[i].texgen.state, &state.texgen[i], sizeof(texgen_state_t));
+            }
+        }
+        glActiveTexture(cur->active_texture);
     }
 
-    // TODO: GL_TRANSFORM_BIT
+    // TODO: GL_TRANSFORM_BIT (incomplete)
+    if (mask & GL_TRANSFORM_BIT) {
+        glGetIntegerv(GL_MATRIX_MODE, &cur->matrix_mode);
+    }
+
     // TODO: GL_VIEWPORT_BIT
 
     tack_push(&state.stack.attrib, cur);
@@ -279,7 +302,6 @@ void glPopAttrib() {
         enable_disable(GL_SAMPLE_COVERAGE, cur->sample_coverage);
         enable_disable(GL_SCISSOR_TEST, cur->scissor_test);
         enable_disable(GL_STENCIL_TEST, cur->stencil_test);
-        enable_disable(GL_TEXTURE_2D, cur->texture_2d);
     }
 
 #ifndef USE_ES2
@@ -316,7 +338,9 @@ void glPopAttrib() {
 
 #ifndef USE_ES2
     if (cur->mask & GL_POINT_BIT) {
-        enable_disable(GL_POINT_SMOOTH, cur->point_smooth);
+        if (! cur->mask & GL_ENABLE_BIT) {
+            enable_disable(GL_POINT_SMOOTH, cur->point_smooth);
+        }
         glPointSize(cur->point_size);
     }
 #endif
@@ -326,8 +350,34 @@ void glPopAttrib() {
         glScissor(v4(cur->scissor_box));
     }
 
-    if (cur->mask & GL_TEXTURE_BIT) {
-        glBindTexture(GL_TEXTURE_2D, cur->texture);
+    if (cur->mask & GL_TEXTURE_BIT || cur->mask & GL_ENABLE_BIT) {
+        GLint active_texture;
+        glGetIntegerv(GL_ACTIVE_TEXTURE, &active_texture);
+        for (int i = 0; i < MAX_TEX; i++) {
+            glActiveTexture(GL_TEXTURE0 + i);
+            enable_disable(GL_TEXTURE_GEN_S, cur->texture[i].texgen.s);
+            enable_disable(GL_TEXTURE_GEN_T, cur->texture[i].texgen.t);
+            enable_disable(GL_TEXTURE_GEN_R, cur->texture[i].texgen.r);
+            enable_disable(GL_TEXTURE_GEN_Q, cur->texture[i].texgen.q);
+            enable_disable(GL_TEXTURE_2D, cur->texture[i].enable_2d);
+        }
+        if (cur->mask & GL_TEXTURE_BIT) {
+            for (int i = 0; i < MAX_TEX; i++) {
+                glActiveTexture(GL_TEXTURE0 + i);
+                glBindTexture(GL_TEXTURE_2D, cur->texture[i].bind);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, cur->texture[i].min_filter);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, cur->texture[i].mag_filter);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, cur->texture[i].wrap_s);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, cur->texture[i].wrap_t);
+            }
+            glActiveTexture(cur->active_texture);
+        } else {
+            glActiveTexture(active_texture);
+        }
+    }
+
+    if (cur->mask & GL_TRANSFORM_BIT) {
+        glMatrixMode(cur->matrix_mode);
     }
 
     free(cur->clip_planes_enabled);

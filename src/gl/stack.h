@@ -43,7 +43,6 @@ typedef struct {
     GLboolean normalize;
     GLboolean polygon_offset_fill;
     GLboolean stencil_test;
-    GLboolean texture_2d;
 
     // GL_FOG_BIT
     GLboolean fog;
@@ -96,9 +95,21 @@ typedef struct {
     // TODO: GL_STENCIL_BUFFER_BIT
 
     // GL_TEXTURE_BIT
-    GLint texture;
+    struct {
+        GLint bind;
+        GLboolean enable_2d;
+        GLint min_filter, mag_filter;
+        GLint wrap_s, wrap_t;
+        struct {
+            GLboolean s, t, r, q;
+            texgen_state_t state;
+        } texgen;
+    } texture[MAX_TEX];
+    GLint active_texture;
 
-    // TODO: GL_TRANSFORM_BIT
+    // TODO: GL_TRANSFORM_BIT (incomplete)
+    GLint matrix_mode;
+
     // TODO: GL_VIEWPORT_BIT
 
     // dynamically-sized shenanigans
@@ -112,9 +123,9 @@ typedef struct {
     // GL_CLIENT_PIXEL_STORE_BIT
     GLint pack_align;
     GLint unpack_align;
-    GLuint unpack_row_length;
-    GLuint unpack_skip_pixels;
-    GLuint unpack_skip_rows;
+    GLint unpack_row_length;
+    GLint unpack_skip_pixels;
+    GLint unpack_skip_rows;
 
     // GL_CLIENT_VERTEX_ARRAY_BIT
     GLboolean vert_enable;
