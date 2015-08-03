@@ -35,7 +35,6 @@ static void init_raster() {
 
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     PUSH_IF_COMPILING(glViewport);
-    PROXY_GLES(glViewport);
     if (state.raster.buf) {
         render_raster();
     }
@@ -43,6 +42,7 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
         ERROR(GL_INVALID_VALUE);
     }
     update_viewport(x, y, width, height);
+    LOAD_GLES(glViewport);
     gles_glViewport(x, y, width, height);
 }
 
