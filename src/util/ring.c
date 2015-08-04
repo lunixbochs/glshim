@@ -50,6 +50,16 @@ static void ring_wait_write(ring_t *ring, size_t size) {
     }
 }
 
+void hexdump(void *src, size_t size) {
+    for (int i = 0; i < size; i++) {
+        if (i > 0 && i % 16 == 0) {
+            printf("\n");
+        }
+        printf("%02X", ((unsigned char *)src)[i]);
+    }
+    printf("\n");
+}
+
 void *ring_read(ring_t *ring, size_t *size_ret) {
     // TODO: write magic bytes into the mess to mark new messages and signal memory problems?
     ring_wait_read(ring);
@@ -72,6 +82,8 @@ void *ring_read(ring_t *ring, size_t *size_ret) {
         *ring->mark = size;
     }
     if (size_ret) *size_ret = size - sizeof(uint32_t);
+    printf("ring_read %lu, %u\n", src - ring->buf - sizeof(uint32_t), size);
+    hexdump(src - sizeof(uint32_t), size);
     return src;
 }
 
@@ -118,6 +130,9 @@ void ring_dma_done(ring_t *ring) {
     // move position
     if (ring->dma_wrap)
         *ring->wrap = ring->dma_wrap;
+    size_t size = ring->dma_write - *ring->write;
+    printf("ring_dma_done %u, %u\n", *ring->write, size);
+    hexdump(ring->buf + *ring->write, size);
     *ring->write = ring->dma_write;
     ring->dma_wrap = 0;
     ring->dma_write = 0;
