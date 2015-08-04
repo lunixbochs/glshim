@@ -5,12 +5,12 @@
 {% for func in functions %}
 #ifndef skip_{{ func.name }}
 {{ func.return }} {{ func.name }}({{ func.args|args }}) {
-    LOAD_GLES({{ func.name }});
     {% block call scoped %}
 #ifndef direct_{{ func.name }}
     PUSH_IF_COMPILING({{ func.name }});
 #endif
     FORWARD_IF_REMOTE({{ func.name }});
+    LOAD_GLES({{ func.name }});
     {%+ if not func.void %}return {% endif %}gles_{{ func.name }}({{ func.args|args(0) }});
     {% endblock %}
 }
