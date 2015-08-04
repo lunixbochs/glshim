@@ -225,10 +225,12 @@ static void scan_env() {
 
     env(LIBGL_XREFRESH, g_xrefresh, "xrefresh will be called on cleanup");
     env(LIBGL_STACKTRACE, g_stacktrace, "stacktrace will be printed on crash");
-    bcm_host_init = dlsym(bcm_host, "bcm_host_init");
-    bcm_host_deinit = dlsym(bcm_host, "bcm_host_deinit");
-    if (bcm_host_init && bcm_host_deinit)
-        g_bcmhost = true;
+    if (bcm_host) {
+        bcm_host_init = dlsym(bcm_host, "bcm_host_init");
+        bcm_host_deinit = dlsym(bcm_host, "bcm_host_deinit");
+        if (bcm_host_init && bcm_host_deinit)
+            g_bcmhost = true;
+    }
     if (g_xrefresh || g_stacktrace || g_bcmhost) {
         // TODO: a bit gross. Maybe look at this: http://stackoverflow.com/a/13290134/293352
         signal(SIGBUS, signal_handler);
