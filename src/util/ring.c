@@ -156,7 +156,11 @@ const size_t cache_line_size() {
     sysctlbyname("hw.cachelinesize", &size, &ret_size, 0, 0);
 #endif
     if (size == 0) size = 64;
-    return size;
+    // TODO: forced to 64 for now because we can't trust both sides to be the same
+    // need a way to pick the largest of the cache line sizes
+    // I'd really like if they could negotiate through a pipe
+    // return size;
+    return 64;
 }
 
 static void ring_set_pointers(ring_t *ring, void *addr) {
