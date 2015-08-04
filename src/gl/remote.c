@@ -246,11 +246,11 @@ int remote_serve(char *name) {
             glIndexedPrint(call);
         }
         remote_target_pre(&ring, call, size, ret);
+        ring_advance(&ring);
         if (retsize > 0) {
             ring_write(&ring, ret, retsize);
         }
         remote_target_post(&ring, call, ret);
-        ring_advance(&ring);
         if (retsize > 8) {
             free(ret);
         }
