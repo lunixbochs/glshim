@@ -71,7 +71,7 @@ void *ring_read(ring_t *ring, size_t *size_ret) {
         src = ring->buf;
         *ring->mark = size;
     }
-    if (size_ret) *size_ret = size;
+    if (size_ret) *size_ret = size - sizeof(uint32_t);
     return src;
 }
 
