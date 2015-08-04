@@ -153,45 +153,6 @@ block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
     return block;
 }
 
-static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, uint32_t ret_size) {
-    ring_val_t vals[] = {
-        {&ret_size, sizeof(uint32_t)},
-        {call, pack_size},
-    };
-    ring_write_multi(&ring, vals, 2);
-    remote_local_pre(&ring, call);
-    if (ret_size) {
-        memcpy(ret_v, ring_read(&ring, NULL), ret_size);
-    }
-    remote_local_post(&ring, call, ret_v, ret_size);
-    free(call);
-}
-
-void remote_call(packed_call_t *call, void *ret_v) {
-    int ret_size = INDEX_RET_SIZE[call->index];
-    int pack_size = INDEX_PACKED_SIZE[call->index];
-    if (ret_v == NULL) {
-        ret_size = 0;
-    }
-    if (call->index >= 0 && g_remote_noisy) {
-        printf("client call: ");
-        glIndexedPrint(call);
-    }
-    remote_call_raw(call, pack_size, ret_v, ret_size);
-    if (ret_size > 0 && g_remote_noisy) {
-        printf("returned (%d): ", ret_size);
-        if (ret_size == 4) {
-            printf("0x%x\n", *(uint32_t *)ret_v);
-        } else if (ret_size == 8) {
-            printf("0x%llx\n", *(uint64_t *)ret_v);
-        } else {
-            for (int i = 0; i < ret_size; i++) {
-                printf("%x", ((unsigned char *)ret_v)[i]);
-            }
-            printf("\n");
-        }
-    }
-}
 
 void *remote_dma(size_t size) {
     return ring_dma(&ring, size + sizeof(uint32_t)) + sizeof(uint32_t);

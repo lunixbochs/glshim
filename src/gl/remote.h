@@ -11,7 +11,6 @@ int remote_serve(char *name);
 int remote_spawn(const char *path);
 void remote_write_block(ring_t *ring, block_t *block);
 block_t *remote_read_block(ring_t *ring, packed_call_t *call);
-void remote_call(packed_call_t *call, void *ret_v);
 void *remote_dma(size_t size);
 void remote_dma_send(packed_call_t *call, void *ret_v);
 
