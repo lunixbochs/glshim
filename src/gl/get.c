@@ -49,6 +49,7 @@ GLenum glGetError() {
 
 // config functions
 const GLubyte *glGetString(GLenum name) {
+    FORWARD_IF_REMOTE(glGetString);
     LOAD_GLES(glGetString);
     if (state.block.active) {
         gl_set_error(GL_INVALID_OPERATION);

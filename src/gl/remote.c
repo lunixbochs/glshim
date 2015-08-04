@@ -162,7 +162,6 @@ static void remote_call_raw(packed_call_t *call, size_t pack_size, void *ret_v, 
     remote_local_pre(&ring, call);
     if (ret_size) {
         memcpy(ret_v, ring_read(&ring, NULL), ret_size);
-        ring_advance(&ring);
     }
     remote_local_post(&ring, call, ret_v, ret_size);
     free(call);
@@ -205,7 +204,6 @@ void remote_dma_send(packed_call_t *call, void *ret_v) {
     remote_local_pre(&ring, call);
     if (ret_size && ret_v) {
         memcpy(ret_v, ring_read(&ring, NULL), ret_size);
-        ring_advance(&ring);
         if (ret_size > 0 && g_remote_noisy) {
             printf("returned (%d): ", ret_size);
             if (ret_size == 4) {
@@ -235,9 +233,9 @@ int remote_serve(char *name) {
         void *buf = ring_read(&ring, &size);
         uint32_t retsize = *(uint32_t *)buf;
         packed_call_t *call = (packed_call_t *)(buf + sizeof(uint32_t));
-        void *ret = NULL;
+        void *ret = NULL, *tofree = NULL;
         if (retsize > 8) {
-            ret = malloc(retsize);
+            tofree = ret = malloc(retsize);
         } else if (retsize > 0) {
             ret = retbuf;
         }
@@ -246,14 +244,15 @@ int remote_serve(char *name) {
             glIndexedPrint(call);
         }
         remote_target_pre(&ring, call, size, ret);
-        ring_advance(&ring);
         if (retsize > 0) {
             ring_write(&ring, ret, retsize);
         }
         remote_target_post(&ring, call, ret);
-        if (retsize > 8) {
+        ring_advance(&ring);
+        if (tofree)
+            free(tofree);
+        if (ret != tofree && ret != retbuf)
             free(ret);
-        }
     }
 }
 

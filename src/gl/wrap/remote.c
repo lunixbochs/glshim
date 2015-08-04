@@ -7,7 +7,7 @@
 #include "./remote.h"
 #include "gl_helpers.h"
 
-int remote_local_pre(ring_t *ring, packed_call_t *call) {
+void remote_local_pre(ring_t *ring, packed_call_t *call) {
     switch (call->index) {
         case glXCreateContext_INDEX:
         {
@@ -89,8 +89,6 @@ int remote_local_pre(ring_t *ring, packed_call_t *call) {
             ring_write(ring, n->args.params, count * sizeof(GLfloat));
             break;
         }
-        case glGenTextures_INDEX:
-            return 1;
         case glBitmap_INDEX:
         {
             glBitmap_PACKED *n = (glBitmap_PACKED *)call;
@@ -127,11 +125,10 @@ int remote_local_pre(ring_t *ring, packed_call_t *call) {
             int size = 0;
             while (attribList[size++]) {}
             ring_write(ring, attribList, size);
-            return 1;
+            break;
         }
 #endif
     }
-    return 0;
 }
 
 void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t ret_size) {
@@ -139,6 +136,15 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
         case glGenTextures_INDEX:
             ring_read_into(ring, ((glGenTextures_PACKED *)call)->args.textures);
             break;
+        case glGetString_INDEX:
+        {
+            char *str = ring_read(ring, NULL);
+            // TODO: somehow free this, or use a klist to preserve
+            char *ret = malloc(strlen(str));
+            strcpy(ret, str);
+            *(char **)ret_v = ret;
+            break;
+        }
         case glXSwapBuffers_INDEX:
             // prevent too many frames from clogging up the ring buffer
             ring_read(ring, NULL);
@@ -274,7 +280,7 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
         }
 #endif
     }
-    glIndexedCall(call, (void *)ret);
+    glIndexedCall(call, ret);
 }
 
 void remote_target_post(ring_t *ring, packed_call_t *call, void *ret) {
@@ -282,5 +288,11 @@ void remote_target_post(ring_t *ring, packed_call_t *call, void *ret) {
         case glGenTextures_INDEX:
             free(((glGenTextures_PACKED *)call)->args.textures);
             break;
+        case glGetString_INDEX:
+        {
+            char *str = *(char **)ret;
+            ring_write(ring, str, strlen(str) + 1);
+            return;
+        }
     }
 }
