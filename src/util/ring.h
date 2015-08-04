@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 typedef struct {
-    uint32_t *read, *mark, *write, *wrap;
+    volatile uint32_t *read, *mark, *write, *wrap;
     void *buf;
     size_t size;
     uint32_t me, *dir;

@@ -29,17 +29,16 @@ static void ring_wait_read(ring_t *ring) {
 
 static void ring_wait_write(ring_t *ring, size_t size) {
     size_t avail = 0;
-    uint32_t read, write, mark, wrap;
+    uint32_t read, write, wrap;
     while (1) {
         // TODO: handle dir?
         read = *ring->read, write = *ring->write;
-        mark = *ring->mark, wrap = *ring->wrap;
-        //    [...|write|[here]|read|...|mark|...]
-        if (write < mark) {
+        wrap = *ring->wrap;
+        //    [...|write|[here]|read|...]
+        if (write < read) {
             avail = read - write;
-        //    [[ here ]|read|...|mark|...|write|[ here ]]
-        // OR [...|read|mark|write|[ here ]]
-        } else if (write > mark || (write == mark && wrap == 0)) {
+        //    [[ here ]|read|.*|write|[ here ]]
+        } else if (write > read || (write == read && wrap == 0)) {
             avail = ring->size - write;
             if (read > avail)
                 avail = read;
@@ -59,25 +58,21 @@ void *ring_read(ring_t *ring, size_t *size_ret) {
         *ring->wrap = 0;
     }
     uint32_t size = *(uint32_t *)(ring->buf + *ring->mark);
-    if (size == 0) {
-        fprintf(stderr, "panic: ring data size (0)\n");
+    if (size == 0 || size > ring->size) {
+        fprintf(stderr, "panic: ring data size must be 0 < (%d) < %lu\n", size, ring->size);
         abort();
     }
-    if (size > ring->size) {
-        fprintf(stderr, "panic: ring data size %d > ring size %lu\n", size, ring->size);
-        abort();
-    }
-    void *data;
+    void *src;
     if (*ring->mark + size <= ring->size) {
-        data = ring->buf + *ring->mark + sizeof(uint32_t);
+        src = ring->buf + *ring->mark + sizeof(uint32_t);
         *ring->mark += size;
     } else {
         // our read wrapped around
-        data = ring->buf;
+        src = ring->buf;
         *ring->mark = size;
     }
     if (size_ret) *size_ret = size;
-    return data;
+    return src;
 }
 
 void ring_read_into(ring_t *ring, void *dst) {
@@ -91,16 +86,13 @@ void ring_advance(ring_t *ring) {
 }
 
 void *ring_dma(ring_t *ring, size_t size) {
+    // add an extra uint32_t to store the size
     size += sizeof(uint32_t);
     // make sure we have enough unmarked free space
     uint32_t read = *ring->read, mark = *ring->mark;
-    uint32_t marked;
-    if (mark < read) {
-        marked = ring->size - read + mark;
-    } else {
-        marked = mark - read;
-    }
-    uint32_t unmarked = ring->size - marked;
+    uint32_t unmarked;
+    if (read < mark) unmarked = read - mark;
+    else             unmarked = ring->size - mark + read;
     if (size > unmarked) {
         fprintf(stderr, "panic: ring_write size %lu > unmarked %u\n", size + 4, unmarked);
         abort();
@@ -108,9 +100,8 @@ void *ring_dma(ring_t *ring, size_t size) {
     // wait for free space
     ring_wait_write(ring, size);
     size_t remain = ring->size - *ring->write;
-    void *dst;
-    uint32_t move = 0, wrap = 0;
     // pick destination and wrap if necessary
+    void *dst;
     if (remain > size) {
         dst = ring->buf + *ring->write;
         ring->dma_write = *ring->write + size;
