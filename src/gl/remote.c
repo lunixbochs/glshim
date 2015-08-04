@@ -197,8 +197,7 @@ void *remote_dma(size_t size) {
     return ring_dma(&ring, size + sizeof(uint32_t)) + sizeof(uint32_t);
 }
 
-void remote_dma_send(packed_call_t *call, void *ret_v) {
-    int ret_size = INDEX_RET_SIZE[call->index];
+static void remote_dma_send_raw(packed_call_t *call, void *ret_v, size_t ret_size) {
     ((uint32_t *)call)[-1] = ret_size;
     ring_dma_done(&ring);
     remote_local_pre(&ring, call);
@@ -219,6 +218,11 @@ void remote_dma_send(packed_call_t *call, void *ret_v) {
         }
     }
     remote_local_post(&ring, call, ret_v, ret_size);
+}
+
+void remote_dma_send(packed_call_t *call, void *ret_v) {
+    int ret_size = INDEX_RET_SIZE[call->index];
+    remote_dma_send_raw(call, ret_v, ret_size);
 }
 
 int remote_serve(char *name) {
@@ -262,11 +266,11 @@ void remote_block_draw(block_t *block) {
 
 void remote_gl_get(GLenum pname, GLenum type, GLvoid *params) {
     size_t buf_size = sizeof(uint32_t) * 3;
-    void *buf = malloc(buf_size);
+    void *buf = remote_dma(buf_size);
     uintptr_t pos = (uintptr_t )buf;
     write_uint32(&pos, REMOTE_GL_GET);
     write_uint32(&pos, pname);
     write_uint32(&pos, type);
     size_t param_size = gl_sizeof(type) * gl_getv_length(pname);
-    remote_call_raw((packed_call_t *)buf, buf_size, params, param_size);
+    remote_dma_send_raw((packed_call_t *)buf, params, param_size);
 }
