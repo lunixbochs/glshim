@@ -253,9 +253,10 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
         {
             glGenTextures_PACKED *n = (glGenTextures_PACKED *)call;
             size_t size = n->args.n * sizeof(GLuint);
-            n->args.textures = malloc(size);
-            glIndexedCall(call, NULL);
-            ring_write(ring, n->args.textures, size);
+            GLuint *textures = ring_dma(ring, size);
+            glGenTextures_PACKED tmp = {glGenTextures_INDEX, {n->args.n, textures}};
+            glIndexedCall((packed_call_t *)&tmp, NULL);
+            ring_dma_done(ring);
             return;
         }
         case glFogiv_INDEX:
@@ -285,9 +286,6 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
 
 void remote_target_post(ring_t *ring, packed_call_t *call, void *ret) {
     switch (call->index) {
-        case glGenTextures_INDEX:
-            free(((glGenTextures_PACKED *)call)->args.textures);
-            break;
         case glGetString_INDEX:
         {
             char *str = *(char **)ret;
