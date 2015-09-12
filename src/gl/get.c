@@ -104,10 +104,14 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
     switch (pname) {
         // GL_BOOL
         case GL_CURRENT_RASTER_POSITION_VALID:
+        case GL_PACK_LSB_FIRST:
+        case GL_PACK_SWAP_BYTES:
         case GL_TEXTURE_GEN_Q:
         case GL_TEXTURE_GEN_R:
         case GL_TEXTURE_GEN_S:
         case GL_TEXTURE_GEN_T:
+        case GL_UNPACK_LSB_FIRST:
+        case GL_UNPACK_SWAP_BYTES:
         {
             enable_state_t *enable = &state.enable;
             GLboolean tmp[4];
@@ -130,6 +134,18 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     break;
                 case GL_TEXTURE_GEN_T:
                     *out = enable->texgen_t[state.texture.active];
+                    break;
+                case GL_PACK_LSB_FIRST:
+                    *out = state.texture.pack_lsb_first;
+                    break;
+                case GL_PACK_SWAP_BYTES:
+                    *out = state.texture.pack_swap_bytes;
+                    break;
+                case GL_UNPACK_LSB_FIRST:
+                    *out = state.texture.unpack_lsb_first;
+                    break;
+                case GL_UNPACK_SWAP_BYTES:
+                    *out = state.texture.unpack_swap_bytes;
                     break;
             }
             if (type != GL_BOOL) {
@@ -222,6 +238,9 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_MINOR_VERSION:
         case GL_MODELVIEW_STACK_DEPTH:
         case GL_NAME_STACK_DEPTH:
+        case GL_PACK_ROW_LENGTH:
+        case GL_PACK_SKIP_PIXELS:
+        case GL_PACK_SKIP_ROWS:
         case GL_PROJECTION_STACK_DEPTH:
         case GL_TEXTURE_STACK_DEPTH:
         case GL_UNPACK_ROW_LENGTH:
@@ -275,6 +294,15 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     *out = tack_len(&state.matrix.texture[state.texture.active].stack);
                     break;
                 // texture stuff
+                case GL_PACK_ROW_LENGTH:
+                    *out = state.texture.pack_row_length;
+                    break;
+                case GL_PACK_SKIP_PIXELS:
+                    *out = state.texture.pack_skip_pixels;
+                    break;
+                case GL_PACK_SKIP_ROWS:
+                    *out = state.texture.pack_skip_rows;
+                    break;
                 case GL_UNPACK_ROW_LENGTH:
                     *out = state.texture.unpack_row_length;
                     break;

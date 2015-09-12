@@ -120,10 +120,16 @@ typedef struct {
 } texgen_state_t;
 
 typedef struct {
-    GLuint unpack_row_length,
+    GLuint pack_row_length,
+           pack_skip_pixels,
+           pack_skip_rows,
+           unpack_row_length,
            unpack_skip_pixels,
            unpack_skip_rows;
-    GLboolean unpack_lsb_first;
+    GLboolean pack_swap_bytes,
+              pack_lsb_first,
+              unpack_swap_bytes,
+              unpack_lsb_first;
     // TODO: do we only need to worry about GL_TEXTURE_2D?
     GLboolean rect_arb[MAX_TEX];
     gltexture_t *bound[MAX_TEX];
