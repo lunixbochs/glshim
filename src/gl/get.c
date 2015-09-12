@@ -211,6 +211,7 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_ATTRIB_STACK_DEPTH:
         case GL_AUX_BUFFERS:
         case GL_CLIENT_ATTRIB_STACK_DEPTH:
+        case GL_MAJOR_VERSION:
         case GL_MAX_ATTRIB_STACK_DEPTH:
         case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
         case GL_MAX_ELEMENTS_INDICES:
@@ -218,6 +219,7 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_MAX_NAME_STACK_DEPTH:
         case GL_MAX_PROJECTION_STACK_DEPTH:
         case GL_MAX_TEXTURE_STACK_DEPTH:
+        case GL_MINOR_VERSION:
         case GL_MODELVIEW_STACK_DEPTH:
         case GL_NAME_STACK_DEPTH:
         case GL_PROJECTION_STACK_DEPTH:
@@ -243,6 +245,12 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     break;
                 case GL_MAX_LIST_NESTING:
                     *out = 64;
+                    break;
+                case GL_MAJOR_VERSION:
+                    *out = 1;
+                    break;
+                case GL_MINOR_VERSION:
+                    *out = 4;
                     break;
                 case GL_MAX_ATTRIB_STACK_DEPTH:
                 case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
