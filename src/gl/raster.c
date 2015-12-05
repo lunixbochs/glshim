@@ -128,7 +128,10 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
 
             GLubyte b = *from++;
             for (int j = max - 1; j >= 0; j--) {
-                *to++ = (b & (1 << j)) ? raster->pixel : 0;
+                if (b & (1 << j)) {
+                    *to = raster->pixel;
+                }
+                to++;
             }
         }
     }
