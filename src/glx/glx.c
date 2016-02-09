@@ -450,7 +450,6 @@ Bool glXMakeContextCurrent(Display *dpy, GLXDrawable draw, int read, GLXContext 
 
 void glXSwapBuffers(Display *dpy, GLXDrawable drawable) {
     FORWARD_IF_REMOTE(glXSwapBuffers);
-    static int frames = 0;
     if (g_showfps || g_liveinfo) {
         // framerate counter
         static float avg, fps = 0;
