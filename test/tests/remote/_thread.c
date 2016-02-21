@@ -4,6 +4,8 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 #include <sys/wait.h>
 
 #include "remote.h"
@@ -14,15 +16,16 @@
 #define RACE_COUNT 1000000
 
 typedef struct {
-    char *shm_name;
     int sync_fd;
 } remote_args;
 
 void *remote_process(remote_args *args) {
     ring_t _ring = {0};
     ring_t *ring = &_ring;
-    if (ring_server(ring, args->shm_name, args->sync_fd)) {
-        fprintf(stderr, "Error mapping shared memory: %s\n", args->shm_name);
+    int fd = accept(args->sync_fd, NULL, 0);
+    ring_setup(ring, fd);
+    if (ring_server_handshake(ring)) {
+        fprintf(stderr, "Error doing server handshake.\n");
         return 2;
     }
     for (int i = 0; i < RACE_COUNT - 1; i++) {
@@ -62,12 +65,36 @@ void *remote_process(remote_args *args) {
 }
 
 int main(int argc, char **argv) {
-    setenv("LIBGL_REMOTE_NOSPAWN", "/tmp/glshim.0", 1);
-    int pid = remote_spawn(argv[0]);
     state.remote = 1;
     pthread_t thread;
-    remote_args args = {"/glshim.0", open("/tmp/glshim.0", O_RDWR)};
+
+    // create listening socket
+    int s = socket(AF_LOCAL, SOCK_STREAM, 0);
+    struct sockaddr_un addr = {
+        .sun_family = AF_UNIX,
+        .sun_path = "/tmp/glshim.0",
+    };
+    unlink(addr.sun_path);
+    int enable = 1;
+    setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
+    if (bind(s, (struct sockaddr *)&addr, sizeof(addr))) {
+        perror("connect");
+        return 1;
+    }
+    if (listen(s, 1)) {
+        perror("listen");
+        return 1;
+    }
+
+    // spawn server thread
+    remote_args args = {s};
     pthread_create(&thread, NULL, remote_process, &args);
+
+    // start client connection
+    setenv("LIBGL_REMOTE_NOSPAWN", addr.sun_path, 1);
+    int pid = remote_spawn(argv[0]);
+
+    // run commands
     for (int i = 0; i < RACE_COUNT; i++) {
         glRectf(0, 0, 1, 1);
     }

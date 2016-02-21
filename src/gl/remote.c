@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/mman.h>
+#include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/un.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -62,44 +64,52 @@ int remote_spawn(const char *path) {
         path = "libgl_remote";
     }
     // create a pipe for syncing
-    char *nospawn_pipe = getenv("LIBGL_REMOTE_NOSPAWN");
+    char *nospawn_path = getenv("LIBGL_REMOTE_NOSPAWN");
     int sync_fd[2];
-    if (nospawn_pipe) {
-        unlink(nospawn_pipe);
-        if (mkfifo(nospawn_pipe, 0700) || (sync_fd[0] = open(nospawn_pipe, O_RDWR)) < 0) {
-            fprintf(stderr, "error using named pipe '%s': %d (%s)\n", nospawn_pipe, errno, strerror(errno));
+    if (nospawn_path) {
+        int s = socket(AF_LOCAL, SOCK_STREAM, 0);
+        struct sockaddr_un addr = {.sun_family = AF_UNIX};
+        if (nospawn_path[0] == '/') {
+            strncpy(addr.sun_path, nospawn_path, sizeof(addr.sun_path));
+        } else {
+            addr.sun_path[0] = '\0';
+            strncpy(addr.sun_path + 1, nospawn_path, sizeof(addr.sun_path) - 1);
+        }
+        if (connect(s, (struct sockaddr *)&addr, sizeof(addr))) {
+            perror("connect");
             abort();
         }
+        sync_fd[0] = s;
     } else {
-        if (pipe(sync_fd)) {
-            fprintf(stderr, "error calling pipe(): %d, (%s)\n", errno, strerror(errno));
+        if (socketpair(PF_LOCAL, SOCK_STREAM, 0, sync_fd)) {
+            perror("socketpair");
+            abort();
         }
     }
     // set up the ring buffer
-    char *shm_name = ring_client(&ring, "glshim", sync_fd[0]);
-    if (! shm_name) {
-        fprintf(stderr, "libGL: failed to allocate shm for remote\n");
-        abort();
-    }
     state.remote_ring = &ring;
+    ring_setup(&ring, sync_fd[0]);
     // one frame will fit in the ringbuffer before it blocks
-    ring_post(&ring);
-    if (nospawn_pipe) {
+    if (nospawn_path) {
         signal(SIGCHLD, old_sigchld);
-        fprintf(stderr, "libGL: shm_name='%s', pipe='%s'\n", shm_name, nospawn_pipe);
+        fprintf(stderr, "libGL: pipe='%s'\n", nospawn_path);
+        if (ring_client_handshake(&ring, "glshim")) {
+            fprintf(stderr, "libGL: remote client handshake failed\n");
+            return 0;
+        }
+        // fake pid of 1
         return 1;
     }
     // launch the libgl_remote subproess
     int pid = fork();
     if (pid == 0) {
-        close(sync_fd[0]);
         char fd_buf[32];
-        snprintf(fd_buf, 32, "%d", sync_fd[1]);
+        snprintf(fd_buf, 32, "#%d", sync_fd[1]);
         char *gdb = getenv("LIBGL_REMOTE_GDB");
         const char *exec = gdb ? "gdb" : path;
         char **argv;
-        char *argv_gdb[] = {"gdb", "--args", (char *)path, shm_name, fd_buf, NULL};
-        char *argv_real[] = {(char *)path, shm_name, fd_buf, NULL};
+        char *argv_gdb[] = {"gdb", "--args", (char *)path, fd_buf, NULL};
+        char *argv_real[] = {(char *)path, fd_buf, NULL};
         if (gdb) {
             argv = argv_gdb;
         } else {
@@ -108,9 +118,12 @@ int remote_spawn(const char *path) {
         execvp(exec, argv);
         if (errno) {
             fprintf(stderr, "libGL: launching '%s' failed with %d (%s)\n", path, errno, strerror(errno));
-            shm_unlink(shm_name);
             abort();
         }
+    }
+    if (ring_client_handshake(&ring, "glshim")) {
+        fprintf(stderr, "libGL: remote client handshake failed\n");
+        return 0;
     }
     return pid;
 }
@@ -188,7 +201,7 @@ static void remote_dma_send_raw(packed_call_t *call, void *ret_v, size_t ret_siz
     if (ret_size && ret_v) {
         memcpy(ret_v, ring_read(&ring, NULL), ret_size);
         if (ret_size > 0 && g_remote_noisy) {
-            printf("returned (%d): ", ret_size);
+            printf("returned (%zu): ", ret_size);
             if (ret_size == 4) {
                 printf("0x%x\n", *(uint32_t *)ret_v);
             } else if (ret_size == 8) {
@@ -209,9 +222,43 @@ void remote_dma_send(packed_call_t *call, void *ret_v) {
     remote_dma_send_raw(call, ret_v, ret_size);
 }
 
-int remote_serve(char *name, int sync_fd) {
-    if (ring_server(&ring, name, sync_fd)) {
-        fprintf(stderr, "Error mapping shared memory: %s\n", name);
+int remote_serve(char *listen_path) {
+    printf("remote_serve %s\n", listen_path);
+    int sync_fd = -1;
+    if (listen_path[0] == '#') {
+        sync_fd = strtol(listen_path + 1, NULL, 10);
+    } else {
+        int s = socket(AF_LOCAL, SOCK_STREAM, 0);
+        struct sockaddr_un addr = {.sun_family = AF_UNIX};
+        if (listen_path[0] == '/') {
+            strncpy(addr.sun_path, listen_path, sizeof(addr.sun_path));
+        } else {
+            addr.sun_path[0] = '\0';
+            strncpy(addr.sun_path + 1, listen_path, sizeof(addr.sun_path) - 1);
+        }
+        int enable = 1;
+        setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
+        if (bind(s, (struct sockaddr *)&addr, sizeof(addr))) {
+            perror("connect");
+            return 1;
+        }
+        if (listen(s, 1)) {
+            perror("listen");
+            return 1;
+        }
+        // TODO: timeout accept (using select?)
+        sync_fd = accept(s, NULL, 0);
+    }
+    // TODO: this check should never be hit
+    // actually it could if accept fails
+    if (sync_fd < 0) {
+        printf("failed to setup sync_fd\n");
+        return 1;
+    }
+    ring_setup(&ring, sync_fd);
+    if (ring_server_handshake(&ring)) {
+        perror("server handshake");
+        fprintf(stderr, "Error doing server handshake.\n");
         return 2;
     }
     g_remote_noisy = !!getenv("LIBGL_REMOTE_NOISY");

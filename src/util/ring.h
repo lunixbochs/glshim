@@ -6,8 +6,8 @@
 typedef struct {
     volatile uint32_t *read, *mark, *write, *wrap;
     volatile uint32_t *waiting;
-    // file descriptor for sync pipe
-    uint32_t sync;
+    // file descriptor for setup/sync
+    uint32_t fd;
     void *buf;
     size_t size;
     uint32_t me, *dir;
@@ -28,7 +28,8 @@ int ring_write_multi(ring_t *ring, ring_val_t *vals, int count);
 int ring_write(ring_t *ring, void *buf, size_t size);
 void *ring_dma(ring_t *ring, size_t size);
 void ring_dma_done(ring_t *ring);
-int ring_server(ring_t *ring, char *name, int sync_fd);
-char *ring_client(ring_t *ring, char *title, int sync_fd);
+void ring_setup(ring_t *ring, int sync_fd);
+int ring_server_handshake(ring_t *ring);
+int ring_client_handshake(ring_t *ring, char *title);
 
 #endif

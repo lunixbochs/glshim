@@ -34,14 +34,14 @@ void ring_wait(ring_t *ring) {
     if (__sync_lock_test_and_set(ring->waiting, 1)) {
         fprintf(stderr, "warning: both sides waiting?\n");
     }
-    read(ring->sync, &c, 1);
+    read(ring->fd, &c, 1);
 }
 
 void ring_post(ring_t *ring) {
     // TODO: check if waiting first, or use nonblocking IO?
     if (__sync_bool_compare_and_swap(ring->waiting, 1, 0)) {
         char c = 0;
-        write(ring->sync, &c, 1);
+        write(ring->fd, &c, 1);
     }
 }
 
@@ -184,15 +184,10 @@ const size_t cache_line_size() {
     sysctlbyname("hw.cachelinesize", &size, &ret_size, 0, 0);
 #endif
     if (size == 0) size = 64;
-    // TODO: forced to 64 for now because we can't trust both sides to be the same
-    // need a way to pick the largest of the cache line sizes
-    // I'd really like if they could negotiate through a pipe
-    // return size;
-    return 64;
+    return size;
 }
 
-static void ring_set_pointers(ring_t *ring, void *addr) {
-    size_t cache_line = cache_line_size();
+static void ring_set_pointers(ring_t *ring, void *addr, size_t cache_line) {
     int i = 0;
 #define next_line (addr + cache_line * i++)
     ring->read  = next_line;
@@ -205,47 +200,108 @@ static void ring_set_pointers(ring_t *ring, void *addr) {
     ring->buf   = addr + cache_line * 8;
 }
 
-int ring_server(ring_t *ring, char *name, int sync_fd) {
+void ring_setup(ring_t *ring, int sync_fd) {
+    ring->fd = sync_fd;
+}
+
+typedef struct {
+    uint32_t name_size;
+} handshake;
+
+#define write_check(fd, ptr, size) do { if (write(fd, ptr, size) < size) { printf("remote write failed\n"); return -1; }} while (0)
+#define read_check(fd, ptr, size) do { if (read(fd, ptr, size) < size) { printf("remote read failed\n"); return -1; }} while (0)
+
+uint32_t MAGIC = 0xBEEFCAFE;
+
+int ring_server_handshake(ring_t *ring) {
+    int n;
+    ring->me = 0;
+    // check magic number
+    // endianness is explicitly ignored for this part
+    // so endian disparity will fail handshake for now
+    uint32_t magic = MAGIC;
+    write_check(ring->fd, &magic, 4);
+    read_check(ring->fd, &magic, 4);
+    if (magic != MAGIC) {
+        fprintf(stderr, "server: magic mismatch\n");
+        return -1;
+    }
+
+    // always use server's cache line size
+    uint32_t line_size = htonl(cache_line_size());
+    write_check(ring->fd, &line_size, 4);
+    line_size = ntohl(line_size);
+
+    // get shm name
+    char name[33] = {0};
+    read_check(ring->fd, name, 32);
+    if (strlen(name) == 0) {
+        fprintf(stderr, "server: failed to get shm name\n");
+        return -1;
+    }
+
     // set up shm
     int fd = shm_open(name, O_RDWR, 0700);
-    int size = RING_SIZE + cache_line_size() * 8;
+    int size = RING_SIZE + line_size * 8;
     void *addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (addr == MAP_FAILED) {
+        shm_unlink(name);
+        fprintf(stderr, "server: failed to open shm '%s'\n", name);
         return -1;
     }
     shm_unlink(name);
-    ring_set_pointers(ring, addr);
+    ring_set_pointers(ring, addr, line_size);
     ring->size = RING_SIZE;
-    ring->me = 0;
-    ring->sync = sync_fd;
     return 0;
 }
 
-char *ring_client(ring_t *ring, char *title, int sync_fd) {
-    char buf[32] = {0};
+int ring_client_handshake(ring_t *ring, char *title) {
+    int n;
+    ring->me = 1;
+    // check magic number
+    uint32_t magic = 0;
+    read_check(ring->fd, &magic, 4);
+    if (magic != MAGIC) {
+        fprintf(stderr, "client: magic mismatch\n");
+        return -1;
+    }
+    write_check(ring->fd, &magic, 4);
+
+    // negotiate cache line size
+    uint32_t line_size = 0;
+    read_check(ring->fd, &line_size, 4);
+    line_size = ntohl(line_size);
+
+    // set up shm
     int i = 0;
     int fd = -1;
-    // set up shm
+    char buf[32] = {0};
     while (fd < 0) {
         snprintf(buf, 32, "/%s.%d", title, i++);
         fd = shm_open(buf, O_RDWR | O_CREAT, 0700);
         if (i > 65535) {
-            fprintf(stderr, "panic: failed to shm_open() 65535 times, giving up.\n");
-            abort();
+            memset(buf, 0, 32);
+            // write a null name so the other side knows we failed
+            write_check(ring->fd, buf, 32);
+            fprintf(stderr, "client: failed to shm_open() 65535 times, giving up.\n");
+            return -1;
         }
     }
+
     // map it
-    int size = RING_SIZE + cache_line_size() * 8;
+    int size = RING_SIZE + line_size * 8;
     char *name = strdup(buf);
     ftruncate(fd, size);
     void *addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (addr == MAP_FAILED) {
-        return NULL;
+        fprintf(stderr, "client: mmap failed\n");
+        return -1;
     }
-    ring_set_pointers(ring, addr);
+    ring_set_pointers(ring, addr, line_size);
     ring->size = RING_SIZE;
-    ring->me = 1;
     memset(addr, 0, size);
-    ring->sync = sync_fd;
-    return name;
+
+    // write shm name
+    write_check(ring->fd, buf, 32);
+    return 0;
 }

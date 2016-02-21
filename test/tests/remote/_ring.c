@@ -11,6 +11,10 @@ int main(int argc, char **argv) {
     if (argc == 1) {
         signal(SIGCHLD, SIG_IGN);
         int pid = remote_spawn(argv[0]);
+        if (pid < 1) {
+            fprintf(stderr, "failed to spawn remote\n");
+            return 1;
+        }
         ring_t *ring = state.remote_ring;
         for (int i = 0; i < 100000; i++) {
             uint32_t n = 42;
@@ -31,8 +35,9 @@ int main(int argc, char **argv) {
     } else {
         ring_t _ring = {0};
         ring_t *ring = &_ring;
-        if (ring_server(ring, argv[1], strtol(argv[2], NULL, 10))) {
-            fprintf(stderr, "Error mapping shared memory: %s\n", argv[1]);
+        ring_setup(ring, strtol(argv[1]+1, NULL, 10));
+        if (ring_server_handshake(ring)) {
+            fprintf(stderr, "Error doing server handshake\n", argv[1]);
             kill(getppid(), SIGTERM);
             return 2;
         }
