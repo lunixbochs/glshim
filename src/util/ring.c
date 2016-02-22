@@ -187,26 +187,39 @@ const size_t cache_line_size() {
     return size;
 }
 
-static void ring_set_pointers(ring_t *ring, void *addr, size_t cache_line) {
+static void ring_set_pointers(ring_t *ring, void *header, void *buf, size_t cache_line) {
     int i = 0;
-#define next_line (addr + cache_line * i++)
-    ring->read  = next_line;
-    ring->write = next_line;
-    ring->mark  = next_line;
-    ring->wrap  = next_line;
-    ring->dir   = next_line;
+#define next_line (header + cache_line * i++)
+    ring->read    = next_line;
+    ring->write   = next_line;
+    ring->mark    = next_line;
+    ring->wrap    = next_line;
+    ring->dir     = next_line;
     ring->waiting = next_line;
 #undef next_line
-    ring->buf   = addr + cache_line * 8;
+    ring->buf = buf;
 }
 
 void ring_setup(ring_t *ring, int sync_fd) {
     ring->fd = sync_fd;
 }
 
-typedef struct {
-    uint32_t name_size;
-} handshake;
+static void *ring_map(ring_t *ring, int fd, uint32_t header_size, uint32_t ring_size, uint32_t line_size) {
+    void *base = mmap(NULL, header_size + ring_size * 2, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (base == MAP_FAILED) {
+        perror("map1");
+        return MAP_FAILED;
+    }
+    void *header = mmap(base, header_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    void *buf = mmap(base + header_size, ring_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, header_size);
+    void *overflow = mmap(base + header_size + ring_size, ring_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, header_size);
+    if (header == MAP_FAILED || ring == MAP_FAILED || overflow == MAP_FAILED) {
+        return MAP_FAILED;
+    }
+    ring_set_pointers(ring, header, buf, line_size);
+    ring->size = ring_size;
+    return base;
+}
 
 #define write_check(fd, ptr, size) do { if (write(fd, ptr, size) < size) { printf("remote write failed\n"); return -1; }} while (0)
 #define read_check(fd, ptr, size) do { if (read(fd, ptr, size) < size) { printf("remote read failed\n"); return -1; }} while (0)
@@ -232,6 +245,15 @@ int ring_server_handshake(ring_t *ring) {
     write_check(ring->fd, &line_size, 4);
     line_size = ntohl(line_size);
 
+    // always use server's page size
+    uint32_t page_size = htonl(getpagesize());
+    write_check(ring->fd, &page_size, 4);
+    page_size = ntohl(page_size);
+
+    int mask = page_size - 1;
+    int header_size = ((line_size * 8) + mask) & ~mask;
+    int ring_size = (RING_SIZE + mask) & ~mask;
+
     // get shm name
     char name[33] = {0};
     read_check(ring->fd, name, 32);
@@ -242,15 +264,13 @@ int ring_server_handshake(ring_t *ring) {
 
     // set up shm
     int fd = shm_open(name, O_RDWR, 0700);
-    int size = RING_SIZE + line_size * 8;
-    void *addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    void *addr = ring_map(ring, fd, header_size, ring_size, line_size);
     if (addr == MAP_FAILED) {
         shm_unlink(name);
-        fprintf(stderr, "server: failed to open shm '%s'\n", name);
+        fprintf(stderr, "server: mapping failed from shm '%s'\n", name);
         return -1;
     }
     shm_unlink(name);
-    ring_set_pointers(ring, addr, line_size);
     ring->size = RING_SIZE;
     return 0;
 }
@@ -272,6 +292,15 @@ int ring_client_handshake(ring_t *ring, char *title) {
     read_check(ring->fd, &line_size, 4);
     line_size = ntohl(line_size);
 
+    // negotiate page size
+    uint32_t page_size = 0;
+    read_check(ring->fd, &page_size, 4);
+    page_size = ntohl(page_size);
+
+    int mask = page_size - 1;
+    int header_size = ((line_size * 8) + mask) & ~mask;
+    int ring_size = (RING_SIZE + mask) & ~mask;
+
     // set up shm
     int i = 0;
     int fd = -1;
@@ -287,19 +316,15 @@ int ring_client_handshake(ring_t *ring, char *title) {
             return -1;
         }
     }
+    ftruncate(fd, header_size + ring_size);
 
-    // map it
-    int size = RING_SIZE + line_size * 8;
-    char *name = strdup(buf);
-    ftruncate(fd, size);
-    void *addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    // map our memory
+    void *addr = ring_map(ring, fd, header_size, ring_size, line_size);
     if (addr == MAP_FAILED) {
         fprintf(stderr, "client: mmap failed\n");
         return -1;
     }
-    ring_set_pointers(ring, addr, line_size);
-    ring->size = RING_SIZE;
-    memset(addr, 0, size);
+    memset(addr, 0, header_size + ring_size);
 
     // write shm name
     write_check(ring->fd, buf, 32);
