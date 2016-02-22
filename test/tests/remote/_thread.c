@@ -37,18 +37,18 @@ void *remote_process(remote_args *args) {
         if (retsize != 0) {
             unsigned char *c = buf;
             fprintf(stderr, "ERROR: Expected retsize=0. Got: %d\n", retsize);
-            fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x\n", *ring->read, ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]);
+            fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]);
             kill(getppid(), SIGTERM);
             return 1;
         }
         // fprintf(stderr, "reading call\n");
         packed_call_t *call = buf + sizeof(uint32_t);
         unsigned char *c = call;
-        // fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
+        // fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
 
         if (call->index != REMOTE_BLOCK_DRAW) {
             fprintf(stderr, "ERROR: Expected REMOTE_BLOCK_DRAW. Got: %d\n", call->index);
-            fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
+            fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
             kill(getppid(), SIGTERM);
             return 1;
         }
@@ -56,7 +56,7 @@ void *remote_process(remote_args *args) {
         // fprintf(stderr, "block->len: %d\n", block->len);
         if (block->len != 4) {
             fprintf(stderr, "ERROR: Expected block->len == 4, got: %d\n", block->len);
-            fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
+            fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
             kill(getppid(), SIGTERM);
             return 1;
         }
