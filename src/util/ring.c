@@ -63,9 +63,7 @@ static void ring_wait_write(ring_t *ring, size_t size) {
             avail = read - write;
         //    [[ here ]|read|.*|write|[ here ]]
         } else if (write > read || (write == read && wrap == 0)) {
-            avail = ring->size - write;
-            if (read > avail)
-                avail = read;
+            avail = ring->size - (write - read);
         }
         if (avail >= size) {
             break;
@@ -79,23 +77,17 @@ static void ring_wait_write(ring_t *ring, size_t size) {
 void *ring_read(ring_t *ring, size_t *size_ret) {
     // TODO: write magic bytes into the mess to mark new messages and signal memory problems?
     ring_wait_read(ring);
-    if (*ring->mark > 0 && *ring->mark == *ring->wrap) {
-        *ring->mark = 0;
-        *ring->wrap = 0;
-    }
     uint32_t size = *(uint32_t *)(ring->buf + *ring->mark);
     if (size == 0 || size > ring->size) {
         fprintf(stderr, "panic: ring data size must be 0 < (%d) < %lu\n", size, ring->size);
         abort();
     }
-    void *src;
-    if (*ring->mark + size <= ring->size) {
-        src = ring->buf + *ring->mark + sizeof(uint32_t);
-        *ring->mark += size;
-    } else {
-        // our read wrapped around
-        src = ring->buf;
-        *ring->mark = size;
+    void *src = ring->buf + *ring->mark + sizeof(uint32_t);
+    *ring->mark += size;
+    // detect wraps
+    if (*ring->mark > ring->size) {
+        *ring->wrap = 0;
+        *ring->mark -= ring->size;
     }
     if (size_ret) *size_ret = size - sizeof(uint32_t);
     return src;
@@ -127,15 +119,14 @@ void *ring_dma(ring_t *ring, size_t size) {
     // wait for free space
     ring_wait_write(ring, size);
     size_t remain = ring->size - *ring->write;
-    // pick destination and wrap if necessary
-    void *dst;
-    if (remain > size) {
-        dst = ring->buf + *ring->write;
-        ring->dma_write = *ring->write + size;
-    } else {
-        dst = ring->buf;
-        ring->dma_wrap = *ring->write;
-        ring->dma_write = size;
+
+    // we're mapped twice, so writes to the end will auto-wrap
+    void *dst = ring->buf + *ring->write;
+    // modulo here ensures the dma target wraps
+    ring->dma_write = *ring->write + size;
+    if (ring->dma_write > ring->size) {
+        ring->dma_write -= ring->size;
+        ring->dma_wrap = 1;
     }
     *(uint32_t *)dst = size;
     return dst + sizeof(uint32_t);
@@ -144,7 +135,7 @@ void *ring_dma(ring_t *ring, size_t size) {
 void ring_dma_done(ring_t *ring) {
     // move position
     if (ring->dma_wrap)
-        *ring->wrap = ring->dma_wrap;
+        *ring->wrap = 1;
     *ring->write = ring->dma_write;
     ring->dma_wrap = 0;
     ring->dma_write = 0;
