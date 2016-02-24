@@ -15,18 +15,21 @@
 
 #define RACE_COUNT 1000000
 
+pthread_mutex_t thread_join = PTHREAD_MUTEX_INITIALIZER;
+
 typedef struct {
     int sync_fd;
 } remote_args;
 
 void *remote_process(remote_args *args) {
+    pthread_mutex_lock(&thread_join);
     ring_t _ring = {0};
     ring_t *ring = &_ring;
     int fd = accept(args->sync_fd, NULL, 0);
     ring_setup(ring, fd);
     if (ring_server_handshake(ring)) {
         fprintf(stderr, "Error doing server handshake.\n");
-        return 2;
+        goto error;
     }
     for (int i = 0; i < RACE_COUNT - 1; i++) {
         // fprintf(stderr, "remote %d\n", i);
@@ -50,7 +53,7 @@ void *remote_process(remote_args *args) {
             fprintf(stderr, "ERROR: Expected REMOTE_BLOCK_DRAW. Got: %d\n", call->index);
             fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
             kill(getppid(), SIGTERM);
-            return 1;
+            goto error;
         }
         block_t *block = remote_read_block(ring, (void *)call);
         // fprintf(stderr, "block->len: %d\n", block->len);
@@ -58,10 +61,15 @@ void *remote_process(remote_args *args) {
             fprintf(stderr, "ERROR: Expected block->len == 4, got: %d\n", block->len);
             fprintf(stderr, "read=%d, mark=%d, call=%d, write=%d, %02X%02X %02X%02X %02x%02x %02x%02x %d\n", *ring->read, *ring->mark, (uintptr_t)c - (uintptr_t)ring->buf, *ring->write, c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], call->index);
             kill(getppid(), SIGTERM);
-            return 1;
+            goto error;
         }
         ring_advance(ring);
     }
+    pthread_mutex_unlock(&thread_join);
+    return 0;
+error:
+    pthread_mutex_unlock(&thread_join);
+    return 1;
 }
 
 int main(int argc, char **argv) {
@@ -98,6 +106,6 @@ int main(int argc, char **argv) {
     for (int i = 0; i < RACE_COUNT; i++) {
         glRectf(0, 0, 1, 1);
     }
-    pthread_join(&thread, NULL);
+    pthread_mutex_lock(&thread_join);
     return 0;
 }
