@@ -11,7 +11,7 @@ typedef struct {
     void *buf;
     size_t size;
     uint32_t me, *dir;
-    uint32_t dma_write, dma_wrap;
+    uint32_t dma_write;
 } ring_t;
 
 typedef struct {

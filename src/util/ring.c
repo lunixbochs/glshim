@@ -85,8 +85,7 @@ void *ring_read(ring_t *ring, size_t *size_ret) {
     void *src = ring->buf + *ring->mark + sizeof(uint32_t);
     *ring->mark += size;
     // detect wraps
-    if (*ring->mark > ring->size) {
-        *ring->wrap = 0;
+    if (*ring->mark >= ring->size) {
         *ring->mark -= ring->size;
     }
     if (size_ret) *size_ret = size - sizeof(uint32_t);
@@ -100,6 +99,9 @@ void ring_read_into(ring_t *ring, void *dst) {
 }
 
 void ring_advance(ring_t *ring) {
+    if (*ring->wrap && *ring->mark < *ring->read) {
+        *ring->wrap = 0;
+    }
     *ring->read = *ring->mark;
     ring_post(ring);
 }
@@ -123,21 +125,16 @@ void *ring_dma(ring_t *ring, size_t size) {
     // we're mapped twice, so writes to the end will auto-wrap
     void *dst = ring->buf + *ring->write;
     // modulo here ensures the dma target wraps
-    ring->dma_write = *ring->write + size;
-    if (ring->dma_write > ring->size) {
-        ring->dma_write -= ring->size;
-        ring->dma_wrap = 1;
-    }
+    ring->dma_write = (*ring->write + size) % ring->size;
     *(uint32_t *)dst = size;
     return dst + sizeof(uint32_t);
 }
 
 void ring_dma_done(ring_t *ring) {
     // move position
-    if (ring->dma_wrap)
+    if (*ring->write > ring->dma_write)
         *ring->wrap = 1;
     *ring->write = ring->dma_write;
-    ring->dma_wrap = 0;
     ring->dma_write = 0;
     // update direction
     if (*ring->dir == ring->me)
@@ -198,12 +195,13 @@ void ring_setup(ring_t *ring, int sync_fd) {
 static void *ring_map(ring_t *ring, int fd, uint32_t header_size, uint32_t ring_size, uint32_t line_size) {
     void *base = mmap(NULL, header_size + ring_size * 2, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     if (base == MAP_FAILED) {
-        perror("map1");
         return MAP_FAILED;
     }
-    void *header = mmap(base, header_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    void *buf = mmap(base + header_size, ring_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, header_size);
-    void *overflow = mmap(base + header_size + ring_size, ring_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, header_size);
+    int prot = PROT_READ | PROT_WRITE;
+    int flags = MAP_SHARED | MAP_FIXED;
+    void *header   = mmap(base,                           header_size, prot, flags, fd, 0);
+    void *buf      = mmap(base + header_size,             ring_size,   prot, flags, fd, header_size);
+    void *overflow = mmap(base + header_size + ring_size, ring_size,   prot, flags, fd, header_size);
     if (header == MAP_FAILED || ring == MAP_FAILED || overflow == MAP_FAILED) {
         return MAP_FAILED;
     }
