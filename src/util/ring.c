@@ -159,8 +159,10 @@ int ring_write_multi(ring_t *ring, ring_val_t *vals, int count) {
 }
 
 int ring_write(ring_t *ring, void *buf, size_t bufsize) {
-    ring_val_t vals[] = {{buf, bufsize}};
-    return ring_write_multi(ring, vals, 1);
+    void *dst = ring_dma(ring, bufsize);
+    memcpy(dst, buf, bufsize);
+    ring_dma_done(ring);
+    return 0;
 }
 
 const size_t cache_line_size() {
