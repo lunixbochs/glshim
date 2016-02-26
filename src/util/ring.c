@@ -2,6 +2,7 @@
  * inspired by slaeshjag's Glouija
  */
 
+#include <arpa/inet.h>
 #include <fcntl.h>
 #include <sched.h>
 #include <stdio.h>
