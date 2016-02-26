@@ -169,6 +169,19 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
     }
 }
 
+static void *ring_read_retain(ring_t *ring) {
+    // when we're compiling into a display list, we need to retain ring pointers until the list is freed
+    size_t size;
+    void *data = ring_read(ring, &size);
+    if (state.list.active) {
+        void *tmp = malloc(size);
+        memcpy(tmp, data, size);
+        data = tmp;
+        tack_push(&state.list.active->retain, tmp);
+    }
+    return data;
+}
+
 void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret) {
     static Display *target_display = NULL;
     if (! target_display) target_display = XOpenDisplay(NULL);
@@ -221,33 +234,33 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
         {
             glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
             if (n->args.pixels)
-                n->args.pixels = ring_read(ring, NULL);
+                n->args.pixels = ring_read_retain(ring);
             break;
         }
         case glTexSubImage2D_INDEX:
         {
             glTexSubImage2D_PACKED *n = (glTexSubImage2D_PACKED *)call;
             if (n->args.pixels)
-                n->args.pixels = ring_read(ring, NULL);
+                n->args.pixels = ring_read_retain(ring);
             break;
         }
         case glLoadMatrixf_INDEX:
         case glLoadTransposeMatrixf_INDEX:
         case glMultMatrixf_INDEX:
         case glMultTransposeMatrixf_INDEX:
-            ((glLoadMatrixf_PACKED *)call)->args.m = ring_read(ring, NULL);
+            ((glLoadMatrixf_PACKED *)call)->args.m = ring_read_retain(ring);
             break;
         case glLightfv_INDEX:
-            ((glLightfv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            ((glLightfv_PACKED *)call)->args.params = ring_read_retain(ring);
             break;
         case glMaterialfv_INDEX:
-            ((glMaterialfv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            ((glMaterialfv_PACKED *)call)->args.params = ring_read_retain(ring);
             break;
         case glBitmap_INDEX:
-            ((glBitmap_PACKED *)call)->args.bitmap = ring_read(ring, NULL);
+            ((glBitmap_PACKED *)call)->args.bitmap = ring_read_retain(ring);
             break;
         case glDrawPixels_INDEX:
-            ((glDrawPixels_PACKED *)call)->args.pixels = ring_read(ring, NULL);
+            ((glDrawPixels_PACKED *)call)->args.pixels = ring_read_retain(ring);
             break;
         case glGenTextures_INDEX:
         {
@@ -260,10 +273,10 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             return;
         }
         case glFogiv_INDEX:
-            ((glFogiv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            ((glFogiv_PACKED *)call)->args.params = ring_read_retain(ring);
             break;
         case glFogfv_INDEX:
-            ((glFogfv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            ((glFogfv_PACKED *)call)->args.params = ring_read_retain(ring);
             break;
 #if 0
         // see above

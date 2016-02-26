@@ -84,6 +84,7 @@ typedef struct {
 typedef struct {
     bool open;
     tack_t calls;
+    tack_t retain;
 } displaylist_t;
 
 // texture.h

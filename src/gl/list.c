@@ -23,6 +23,10 @@ void dl_free(displaylist_t *dl) {
             free(call);
         }
     }
+    len = tack_len(&dl->retain);
+    for (int i = 0; i < len; i++) {
+        free(tack_get(&dl->retain, i));
+    }
     free(dl);
 }
 
