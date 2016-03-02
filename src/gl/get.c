@@ -7,6 +7,10 @@
 #include "matrix.h"
 #include "remote.h"
 
+void gl_clear_error() {
+    while (glGetError()) {}
+}
+
 void gl_set_error(GLenum error) {
     // call upstream glGetError to clear the driver's error flag
     if (state.remote) {
@@ -328,7 +332,7 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         }
         default:
         {
-            GLenum saved = glGetError();
+            gl_clear_error();
             switch (type) {
                 case GL_BOOL:
                     gles_glGetBooleanv(pname, params);
@@ -345,7 +349,6 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 fprintf(stderr, "libGL: GL_INVALID_ENUM when calling glGet<%s>(%s)\n", gl_str(type), gl_str(pname));
                 GL_TYPE_SWITCH(ret, params, type, *ret = 0;,);
             }
-            gl_set_error(error ? error : saved);
             break;
          }
     }
