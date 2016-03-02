@@ -176,28 +176,28 @@ void glGetMaterialiv(GLenum face, GLenum pname, GLint *param) {
     }
 }
 void glMultiTexCoord1f(GLenum target, GLfloat s) {
-    glMultiTexCoord4f(target, s, 0, 0, 0);
+    glMultiTexCoord4f(target, s, 0, 0, 1);
 }
 void glMultiTexCoord1fv(GLenum target, const GLfloat *t) {
-    glMultiTexCoord4f(target, t[0], 0, 0, 0);
+    glMultiTexCoord4f(target, t[0], 0, 0, 1);
 }
 void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
-    glMultiTexCoord4f(target, s, t, 0, 0);
+    glMultiTexCoord4f(target, s, t, 0, 1);
 }
 void glMultiTexCoord2fARB(GLenum target, GLfloat s, GLfloat t) {
-    glMultiTexCoord4f(target, s, t, 0, 0);
+    glMultiTexCoord4f(target, s, t, 0, 1);
 }
 void glMultiTexCoord2fv(GLenum target, const GLfloat *t) {
-    glMultiTexCoord4f(target, t[0], t[1], 0, 0);
+    glMultiTexCoord4f(target, t[0], t[1], 0, 1);
 }
 void glMultiTexCoord2fvARB(GLenum target, const GLfloat *t) {
-    glMultiTexCoord4f(target, t[0], t[1], 0, 0);
+    glMultiTexCoord4f(target, t[0], t[1], 0, 1);
 }
 void glMultiTexCoord3f(GLenum target, GLfloat s, GLfloat t, GLfloat r) {
-    glMultiTexCoord4f(target, s, t, r, 0);
+    glMultiTexCoord4f(target, s, t, r, 1);
 }
 void glMultiTexCoord3fv(GLenum target, const GLfloat *t) {
-    glMultiTexCoord4f(target, t[0], t[1], t[2], 0);
+    glMultiTexCoord4f(target, t[0], t[1], t[2], 1);
 }
 void glMultiTexCoord4fARB(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q) {
     glMultiTexCoord4f(target, s, t, r, q);
@@ -345,22 +345,22 @@ void glVertex4##suffix##v(const type *v) {                  \
 }                                                           \
 /* texture */                                               \
 void glTexCoord1##suffix(type s) {                          \
-    glTexCoord4f(s, 0, 0, 0);                               \
+    glTexCoord4f(s, 0, 0, 1);                               \
 }                                                           \
 void glTexCoord1##suffix##v(const type *t) {                \
-    glTexCoord4f(t[0], 0, 0, 0);                            \
+    glTexCoord4f(t[0], 0, 0, 1);                            \
 }                                                           \
 void glTexCoord2##suffix(type s, type t) {                  \
-    glTexCoord4f(s, t, 0, 0);                               \
+    glTexCoord4f(s, t, 0, 1);                               \
 }                                                           \
 void glTexCoord2##suffix##v(const type *t) {                \
-    glTexCoord4f(t[0], t[1], 0, 0);                         \
+    glTexCoord4f(t[0], t[1], 0, 1);                         \
 }                                                           \
 void glTexCoord3##suffix(type s, type t, type r) {          \
-    glTexCoord4f(s, t, r, 0);                               \
+    glTexCoord4f(s, t, r, 1);                               \
 }                                                           \
 void glTexCoord3##suffix##v(const type *t) {                \
-    glTexCoord4f(t[0], t[1], t[2], 0);                      \
+    glTexCoord4f(t[0], t[1], t[2], 1);                      \
 }                                                           \
 void glTexCoord4##suffix(type s, type t, type r, type q) {  \
     glTexCoord4f(s, t, r, q);                               \
@@ -369,22 +369,22 @@ void glTexCoord4##suffix##v(const type *t) {                \
     glTexCoord4f(t[0], t[1], t[2], t[3]);                   \
 }                                                           \
 void glMultiTexCoord1##suffix(GLenum target, type s) {      \
-    glMultiTexCoord4f(target, s, 0, 0, 0);                  \
+    glMultiTexCoord4f(target, s, 0, 0, 1);                  \
 }                                                                              \
 void glMultiTexCoord1##suffix##v(GLenum target, const type *v) {               \
-    glMultiTexCoord4f(target, v[0], 0, 0, 0);                                  \
+    glMultiTexCoord4f(target, v[0], 0, 0, 1);                                  \
 }                                                                              \
 void glMultiTexCoord2##suffix(GLenum target, type s, type t) {                 \
-    glMultiTexCoord4f(target, s, t, 0, 0);                                     \
+    glMultiTexCoord4f(target, s, t, 0, 1);                                     \
 }                                                                              \
 void glMultiTexCoord2##suffix##v(GLenum target, const type *v) {               \
-    glMultiTexCoord4f(target, v[0], v[1], 0, 0);                               \
+    glMultiTexCoord4f(target, v[0], v[1], 0, 1);                               \
 }                                                                              \
 void glMultiTexCoord3##suffix(GLenum target, type s, type t, type r) {         \
-    glMultiTexCoord4f(target, s, t, r, 0);                                     \
+    glMultiTexCoord4f(target, s, t, r, 1);                                     \
 }                                                                              \
 void glMultiTexCoord3##suffix##v(GLenum target, const type *v) {               \
-    glMultiTexCoord4f(target, v[0], v[1], v[2], 0);                            \
+    glMultiTexCoord4f(target, v[0], v[1], v[2], 1);                            \
 }                                                                              \
 void glMultiTexCoord4##suffix(GLenum target, type s, type t, type r, type q) { \
     glMultiTexCoord4f(target, s, t, r, q);                                     \
@@ -564,22 +564,22 @@ void glNormal3fv(const GLfloat *v) {
 
 // textures
 void glTexCoord1f(GLfloat s) {
-    glTexCoord4f(s, 0, 0, 0);
+    glTexCoord4f(s, 0, 0, 1);
 }
 void glTexCoord1fv(const GLfloat *t) {
-    glTexCoord4f(t[0], 0, 0, 0);
+    glTexCoord4f(t[0], 0, 0, 1);
 }
 void glTexCoord2f(GLfloat s, GLfloat t) {
-    glTexCoord4f(s, t, 0, 0);
+    glTexCoord4f(s, t, 0, 1);
 }
 void glTexCoord2fv(const GLfloat *t) {
-    glTexCoord4f(t[0], t[1], 0, 0);
+    glTexCoord4f(t[0], t[1], 0, 1);
 }
 void glTexCoord3f(GLfloat s, GLfloat t, GLfloat r) {
-    glTexCoord4f(s, t, r, 0);
+    glTexCoord4f(s, t, r, 1);
 }
 void glTexCoord3fv(const GLfloat *t) {
-    glTexCoord4f(t[0], t[1], t[2], 0);
+    glTexCoord4f(t[0], t[1], t[2], 1);
 }
 void glTexCoord4fv(const GLfloat *t) {
     glTexCoord4f(t[0], t[1], t[2], t[3]);
