@@ -10,6 +10,14 @@ void glAlphaFunc(GLenum func, GLclampf ref) {
     PROXY_GLES(glAlphaFunc);
 }
 
+void glBlendFunc(GLenum sfactor, GLenum dfactor) {
+    ERROR_IN_BLOCK();
+    PUSH_IF_COMPILING(glBlendFunc);
+    state.blend.src = sfactor;
+    state.blend.dst = dfactor;
+    PROXY_GLES(glBlendFunc);
+}
+
 #ifndef USE_ES2
 void glBlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
     ERROR_IN_BLOCK();

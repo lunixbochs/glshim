@@ -231,6 +231,8 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
         case GL_ALPHA_TEST_FUNC:
         case GL_ATTRIB_STACK_DEPTH:
         case GL_AUX_BUFFERS:
+        case GL_BLEND_DST:
+        case GL_BLEND_SRC:
         case GL_CLIENT_ATTRIB_STACK_DEPTH:
         case GL_MAJOR_VERSION:
         case GL_MAX_ATTRIB_STACK_DEPTH:
@@ -266,6 +268,12 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     break;
                 case GL_AUX_BUFFERS:
                     *out = 0;
+                    break;
+                case GL_BLEND_DST:
+                    *out = state.blend.dst;
+                    break;
+                case GL_BLEND_SRC:
+                    *out = state.blend.src;
                     break;
                 case GL_CLIENT_ATTRIB_STACK_DEPTH:
                     *out = tack_len(&state.stack.client);

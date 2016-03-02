@@ -3,6 +3,7 @@
 
 // blend.c
 #define skip_glAlphaFunc
+#define skip_glBlendFunc
 
 // clear.c
 #define skip_glClear
