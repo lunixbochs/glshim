@@ -167,7 +167,7 @@ void remote_write_block(ring_t *ring, block_t *block) {
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i]) {
             vals[7 + i].buf = block->tex[i];
-            vals[7 + i].size = 2 * elements;
+            vals[7 + i].size = 4 * elements;
         }
     }
     ring_write_multi(ring, vals, 7 + MAX_TEX);
@@ -184,7 +184,7 @@ block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
     if (block->indices) block->indices = read_ptr(&pos, block->count * sizeof(GLushort));
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i])
-            block->tex[i] = read_ptr(&pos, 2 * elements);
+            block->tex[i] = read_ptr(&pos, 4 * elements);
     }
     return block;
 }
