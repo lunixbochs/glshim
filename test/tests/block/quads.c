@@ -23,10 +23,10 @@ int main() {
     };
 
     GLfloat tex[] = {
-        0.4, 0.5,
-        0.4, 0.5,
-        0.4, 0.5,
-        0.4, 0.5,
+        0.4, 0.5, 0, 0,
+        0.4, 0.5, 0, 0,
+        0.4, 0.5, 0, 0,
+        0.4, 0.5, 0, 0,
     };
 
     GLushort indices[] = {
@@ -42,7 +42,7 @@ int main() {
     test_glEnableClientState(GL_COLOR_ARRAY);
     test_glColorPointer(4, GL_FLOAT, 0, color);
     test_glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    test_glTexCoordPointer(2, GL_FLOAT, 0, tex);
+    test_glTexCoordPointer(4, GL_FLOAT, 0, tex);
     test_glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 
     test_glDisableClientState(GL_VERTEX_ARRAY);

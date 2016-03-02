@@ -195,10 +195,7 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                     memcpy(out, &state.raster.pos, sizeof(GLfloat) * 4);
                     break;
                 case GL_CURRENT_TEXTURE_COORDS:
-                    memcpy(out, &CURRENT->tex, sizeof(GLfloat) * 2);
-                    // TODO: need to update this when I track 4d texture coordinates
-                    out[3] = 0;
-                    out[4] = 0;
+                    memcpy(out, &CURRENT->tex, sizeof(GLfloat) * 4);
                     break;
                 case GL_MODELVIEW_MATRIX:
                     gl_get_matrix(GL_MODELVIEW, out);

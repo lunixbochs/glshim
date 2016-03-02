@@ -17,16 +17,6 @@
 typedef struct {
     uint32_t len, count, cap;
     GLenum mode;
-    struct {
-        GLfloat tex[MAX_TEX][2];
-    } last;
-
-    // TODO: dynamic type support?
-    /*
-    struct {
-        GLenum vert, normal, color, tex;
-    } type;
-    */
 
     GLfloat *vert;
     GLfloat *normal;
@@ -154,7 +144,7 @@ typedef struct {
 typedef struct {
     GLfloat color[4];
     GLfloat normal[3];
-    GLfloat tex[MAX_TEX][2];
+    GLfloat tex[MAX_TEX][4];
 } current_state_t;
 
 typedef struct {
