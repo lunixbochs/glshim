@@ -76,9 +76,6 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         t_plane = simd4f_uload4(Tp);
     }
     for (int i = 0; i < block->len; i++) {
-        if (block->indices) {
-            vert = block->vert + (block->indices[i]) * 3;
-        }
         if (! block->normal) {
             normal = CURRENT->normal;
         }
@@ -160,16 +157,18 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
 void gen_tex_coords(block_t *block, GLuint texture) {
     // TODO: do less work when called from glDrawElements?
 
-    block->tex[texture] = (GLfloat *)malloc(block->len * 2 * sizeof(GLfloat));
+    block->tex[texture] = (GLfloat *)calloc(1, block->len * 2 * sizeof(GLfloat));
     texgen_state_t *texgen = &state.texgen[texture];
+    int s_single = texgen->S == GL_OBJECT_LINEAR || texgen->S == GL_EYE_LINEAR;
+    int t_single = texgen->T == GL_OBJECT_LINEAR || texgen->T == GL_EYE_LINEAR;
     if (state.enable.texgen_s[texture]) {
         if (texgen->S == texgen->T) {
             tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, texgen->Tv);
-        } else {
+        } else if (s_single) {
             tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, NULL);
         }
     }
-    if (state.enable.texgen_t[texture]) {
+    if (state.enable.texgen_t[texture] && t_single) {
         tex_coord_loop(block, block->tex[texture] + 1, texgen->T, texgen->Tv, NULL);
     }
 }
