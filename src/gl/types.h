@@ -168,15 +168,6 @@ typedef struct {
 } displaylist_state_t;
 
 typedef struct {
-    GLenum func;
-    GLclampf ref;
-} alpha_state_t;
-
-typedef struct {
-    GLenum src, dst;
-} blend_state_t;
-
-typedef struct {
     block_t *active;
     GLboolean locked;
 } block_state_t;
@@ -251,8 +242,6 @@ typedef struct {
     ring_t *remote_ring;
 
     GLenum error;
-    alpha_state_t alpha;
-    blend_state_t blend;
     block_state_t block;
     current_state_t current;
     enable_state_t enable;

@@ -5,16 +5,12 @@
 void glAlphaFunc(GLenum func, GLclampf ref) {
     ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glAlphaFunc);
-    state.alpha.func = func;
-    state.alpha.ref = ref;
     PROXY_GLES(glAlphaFunc);
 }
 
 void glBlendFunc(GLenum sfactor, GLenum dfactor) {
     ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glBlendFunc);
-    state.blend.src = sfactor;
-    state.blend.dst = dfactor;
     PROXY_GLES(glBlendFunc);
 }
 
