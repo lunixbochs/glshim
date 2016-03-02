@@ -1,6 +1,9 @@
 // don't auto-wrap these functions
 #define skip_glColor4ub
 
+// blend.c
+#define skip_glAlphaFunc
+
 // clear.c
 #define skip_glClear
 #define skip_glClearColor

@@ -1,23 +1,36 @@
+#include "error.h"
 #include "loader.h"
 #include "remote.h"
 
+void glAlphaFunc(GLenum func, GLclampf ref) {
+    ERROR_IN_BLOCK();
+    PUSH_IF_COMPILING(glAlphaFunc);
+    state.alpha.func = func;
+    state.alpha.ref = ref;
+    PROXY_GLES(glAlphaFunc);
+}
+
 #ifndef USE_ES2
 void glBlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
+    ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glBlendColor);
     PROXY_OES(glBlendColorOES);
 }
 
 void glBlendEquation(GLenum mode) {
+    ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glBlendEquation);
     PROXY_OES(glBlendEquationOES);
 }
 
 void glBlendEquationSeparate(GLenum modeRGB, GLenum modeAlpha) {
+    ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glBlendEquationSeparate);
     PROXY_OES(glBlendEquationSeparateOES);
 }
 
 void glBlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha) {
+    ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glBlendFuncSeparate);
     PROXY_OES(glBlendFuncSeparateOES);
 }

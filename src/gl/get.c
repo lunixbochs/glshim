@@ -162,6 +162,7 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             break;
         }
         // GL_FLOAT
+        case GL_ALPHA_TEST_REF:
         case GL_CURRENT_COLOR:
         case GL_CURRENT_NORMAL:
         case GL_CURRENT_RASTER_COLOR:
@@ -178,6 +179,9 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 out = params;
             }
             switch (pname) {
+                case GL_ALPHA_TEST_REF:
+                    *out = state.alpha.ref;
+                    break;
                 case GL_CURRENT_COLOR:
                     memcpy(out, &CURRENT->color, sizeof(GLfloat) * 4);
                     break;
@@ -224,6 +228,7 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
             break;
         }
         // GL_INT
+        case GL_ALPHA_TEST_FUNC:
         case GL_ATTRIB_STACK_DEPTH:
         case GL_AUX_BUFFERS:
         case GL_CLIENT_ATTRIB_STACK_DEPTH:
@@ -253,6 +258,9 @@ void gl_get(GLenum pname, GLenum type, GLvoid *params) {
                 out = params;
             }
             switch (pname) {
+                case GL_ALPHA_TEST_FUNC:
+                    *out = state.alpha.func;
+                    break;
                 case GL_ATTRIB_STACK_DEPTH:
                     *out = tack_len(&state.stack.attrib);
                     break;
