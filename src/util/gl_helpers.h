@@ -49,6 +49,7 @@ static const GLsizei gl_sizeof(GLenum type) {
         case GL_UNSIGNED_SHORT_5_6_5:
         case GL_UNSIGNED_SHORT_5_6_5_REV:
         case GL_2_BYTES:
+        case GL_SHORT:
             return 2;
         case GL_LUMINANCE:
         case GL_UNSIGNED_BYTE:
