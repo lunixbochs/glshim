@@ -60,21 +60,32 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
     }
 }
 
-static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *Sp, GLfloat *Tp) {
+static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *Sp, GLfloat *Tp, GLfloat *Rp) {
     GLfloat *vert = block->vert;
     GLfloat *normal = block->normal;
     // if we get sphere map and no normal, just barf and return?
 
-    simd4x4f matrix;
+    simd4x4f matrix, inverse;
     if (type != GL_OBJECT_LINEAR) {
-        // TODO: make sure this loads it properly
-        glGetFloatv(GL_MODELVIEW_MATRIX, (float *)&matrix);
+        float tmp[16];
+        glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+        simd4x4f_uload(&matrix, tmp);
+        simd4x4f_inverse(&matrix, &inverse);
     }
-    simd4f s_plane, t_plane;
+    simd4f s_plane, t_plane, r_plane;
     s_plane = simd4f_uload4(Sp);
     if (Tp != NULL) {
         t_plane = simd4f_uload4(Tp);
     }
+    if (Rp != NULL) {
+        r_plane = simd4f_uload4(Rp);
+    }
+
+    simd4f eyeplane;
+    if (type == GL_EYE_LINEAR) {
+        simd4x4f_matrix_vector_mul(&inverse, &s_plane, &eyeplane);
+    }
+
     for (int i = 0; i < block->len; i++) {
         if (! block->normal) {
             normal = CURRENT->normal;
@@ -85,41 +96,35 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
             case GL_OBJECT_LINEAR:
                 simd4f_ustore2(simd4f_dot4(v, s_plane), tmp);
                 out[0] = tmp[0];
-                if (Tp) {
-                    simd4f_ustore2(simd4f_dot4(v, t_plane), tmp);
-                    out[1] = tmp[0];
-                }
                 break;
             case GL_EYE_LINEAR: {
                 simd4f eye;
                 simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
-                simd4f_ustore2(simd4f_dot4(eye, s_plane), tmp);
+                simd4f_ustore2(simd4f_dot4(eye, eyeplane), tmp);
                 out[0] = tmp[0];
-                if (Tp) {
-                    simd4f_ustore2(simd4f_dot4(eye, t_plane), tmp);
-                    out[1] = tmp[0];
-                }
                 break;
             }
             case GL_SPHERE_MAP: {
-                simd4f norm = simd4f_create(normal[0], normal[1], normal[2], 1.0f);
-                simd4f eye;
+                simd4f eye, eye_normal, norm;
+
+                norm = simd4f_create(normal[0], normal[1], normal[2], 1.0f);
                 simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
                 eye = simd4f_normalize3(eye);
-                simd4f eye_normal;
 
-                simd4x4f inverse;
-                simd4x4f_inverse(&matrix, &inverse);
-                // TODO: better to use new registers to prevent stall?
-                simd4x4f_transpose_inplace(&inverse);
                 // TODO: is normal multiplied wrong here?
                 simd4x4f_matrix_vector_mul(&inverse, &norm, &eye_normal);
-                simd4f result = simd4f_mul(simd4f_dot4(eye, eye_normal), simd4f_create(2.0f, 2.0f, 2.0f, 2.0f));
-                simd4f reflection = simd4f_sub(eye, simd4f_mul(eye_normal, result));
-                reflection = simd4f_add(reflection, simd4f_create(0.0f, 0.0f, 1.0f, 0.0f));
-                float ref[4], dot[2];
-                simd4f_ustore2(reflection, ref);
-                simd4f_ustore2(simd4f_dot4(reflection, reflection), dot);
+
+                // eye - eye_normal * 2 * dot3d(eye, eye_normal)
+                simd4f reflect =
+                    simd4f_sub(eye,
+                        simd4f_mul(eye_normal,
+                                simd4f_mul(simd4f_create(2.0f, 2.0f, 2.0f, 1.0f), simd4f_dot4(eye, eye_normal))));
+
+                // reflect.z += 1
+                reflect = simd4f_add(reflect, simd4f_create(0.0f, 0.0f, 1.0f, 0.0f));
+                float ref[2], dot[2];
+                simd4f_ustore2(reflect, ref);
+                simd4f_ustore2(simd4f_dot4(reflect, reflect), dot);
                 float m = 1.0 / (2.0 * sqrt(dot[0]));
                 out[0] = ref[0] * m + 0.5;
                 out[1] = ref[1] * m + 0.5;
@@ -136,15 +141,13 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                 simd4f_ustore2(eye, eye_);
 
                 simd4f eye_normal;
-                simd4x4f inverse;
-                simd4x4f_inverse(&matrix, &inverse);
-                simd4x4f_transpose_inplace(&inverse);
                 simd4x4f_matrix_vector_mul(&inverse, &norm, &eye_normal);
                 simd4f_ustore2(eye_normal, eye_);
 
                 simd4f_ustore2(simd4f_dot4(eye, eye_normal), dot);
                 out[0] = eye_[0] - eye_normal_[0] * dot[0] * 2.0f;
                 out[1] = eye_[1] - eye_normal_[1] * dot[0] * 2.0f;
+                // TODO: need to switch to 3D or 4D texture coord system
                 // out[2] = eye.x - eye_normal.z * dot;
                 break;
             }
@@ -157,18 +160,21 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
 void gen_tex_coords(block_t *block, GLuint texture) {
     // TODO: do less work when called from glDrawElements?
 
+#define en(v) state.enable.texgen_##v[texture]
     block->tex[texture] = (GLfloat *)calloc(1, block->len * 2 * sizeof(GLfloat));
     texgen_state_t *texgen = &state.texgen[texture];
-    int s_single = texgen->S == GL_OBJECT_LINEAR || texgen->S == GL_EYE_LINEAR;
-    int t_single = texgen->T == GL_OBJECT_LINEAR || texgen->T == GL_EYE_LINEAR;
-    if (state.enable.texgen_s[texture]) {
-        if (texgen->S == texgen->T) {
-            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, texgen->Tv);
-        } else if (s_single) {
-            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, NULL);
+    if (en(s) && (texgen->S == GL_OBJECT_LINEAR || texgen->S == GL_EYE_LINEAR)) {
+        tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, NULL, NULL);
+    }
+    if (en(t) && (texgen->T == GL_OBJECT_LINEAR || texgen->T == GL_EYE_LINEAR)) {
+        tex_coord_loop(block, block->tex[texture] + 1, texgen->T, texgen->Tv, NULL, NULL);
+    }
+    if (en(s) && en(t) && texgen->S == texgen->T) {
+        if (texgen->S == GL_SPHERE_MAP) {
+            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, texgen->Tv, NULL);
+        } else if (en(r) && texgen->S == GL_REFLECTION_MAP && texgen->S == texgen->R) {
+            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, texgen->Tv, texgen->Rv);
         }
     }
-    if (state.enable.texgen_t[texture] && t_single) {
-        tex_coord_loop(block, block->tex[texture] + 1, texgen->T, texgen->Tv, NULL);
-    }
+#undef en
 }
