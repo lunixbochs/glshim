@@ -86,7 +86,7 @@ static inline void bl_grow(block_t *block) {
         realloc_sublist(block->normal, 3, GL_FLOAT, block->cap);
         realloc_sublist(block->color, 4, GL_FLOAT, block->cap);
         for (int i = 0; i < MAX_TEX; i++) {
-            realloc_sublist(block->tex[i], 2, GL_FLOAT, block->cap);
+            realloc_sublist(block->tex[i], 4, GL_FLOAT, block->cap);
         }
     }
 }
@@ -120,7 +120,7 @@ void bl_pollute(block_t *block) {
     int last = (block->len - 1);
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i]) {
-            glMultiTexCoord2fv(GL_TEXTURE0 + i, block->tex[i] + (2 * last));
+            glMultiTexCoord2fv(GL_TEXTURE0 + i, block->tex[i] + (4 * last));
         }
     }
     if (block->color) {
@@ -178,7 +178,7 @@ void bl_draw(block_t *block) {
     for (int i = 0; i < MAX_TEX; i++) {
         if ((pos = block->incomplete.tex[i]) >= 0) {
             for (int j = 0; j < block->len; j++) {
-                memcpy(block->tex[i] + (2 * j), CURRENT->tex[i], 2 * sizeof(GLfloat));
+                memcpy(block->tex[i] + (4 * j), CURRENT->tex[i], 4 * sizeof(GLfloat));
             }
         }
     }
@@ -214,9 +214,9 @@ void bl_draw(block_t *block) {
     }
     for (int t = 0; t < MAX_TEX; t++) {
         if (block->tex[t]) {
-            tex[t] = malloc(block->len * 2 * sizeof(GLfloat));
+            tex[t] = malloc(block->len * 4 * sizeof(GLfloat));
             for (int i = 0; i < block->len; i++) {
-                gl_transform_texture(GL_TEXTURE0 + t, &tex[t][i * 2], &block->tex[t][i * 2]);
+                gl_transform_texture(GL_TEXTURE0 + t, &tex[t][i * 4], &block->tex[t][i * 4]);
             }
         }
     }
@@ -297,7 +297,7 @@ void bl_draw(block_t *block) {
         if (tex[i]) {
             glClientActiveTexture(GL_TEXTURE0 + i);
             glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glTexCoordPointer(2, GL_FLOAT, 0, tex[i]);
+            glTexCoordPointer(4, GL_FLOAT, 0, tex[i]);
             glClientActiveTexture(old);
         } else if (state.enable.tex_coord_array[i]) {
             glClientActiveTexture(GL_TEXTURE0 + i);
@@ -348,8 +348,8 @@ void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
 
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i]) {
-            GLfloat *tex = block->tex[i] + (block->len * 2);
-            memcpy(tex, CURRENT->tex[i], sizeof(GLfloat) * 2);
+            GLfloat *tex = block->tex[i] + (block->len * 4);
+            memcpy(tex, CURRENT->tex[i], sizeof(GLfloat) * 4);
         }
     }
 
@@ -388,12 +388,12 @@ void bl_track_normal(block_t *block) {
 void bl_track_tex(block_t *block, GLenum target) {
     target -= GL_TEXTURE0;
     if (! block->tex[target]) {
-        block->tex[target] = alloc_sublist(2, GL_FLOAT, block->cap);
+        block->tex[target] = alloc_sublist(4, GL_FLOAT, block->cap);
         if (state.list.active) {
             block->incomplete.tex[target] = block->len - 1;
         } else {
             for (int j = 0; j < block->len; j++) {
-                memcpy(block->tex[target] + (2 * j), CURRENT->tex[target], 2 * sizeof(GLfloat));
+                memcpy(block->tex[target] + (4 * j), CURRENT->tex[target], 4 * sizeof(GLfloat));
             }
         }
     }

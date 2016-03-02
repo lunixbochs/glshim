@@ -119,9 +119,9 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                     simd4f_sub(eye,
                         simd4f_mul(eye_normal,
                                 simd4f_mul(simd4f_create(2.0f, 2.0f, 2.0f, 1.0f), simd4f_dot4(eye, eye_normal))));
-
                 // reflect.z += 1
                 reflect = simd4f_add(reflect, simd4f_create(0.0f, 0.0f, 1.0f, 0.0f));
+
                 float ref[2], dot[2];
                 simd4f_ustore2(reflect, ref);
                 simd4f_ustore2(simd4f_dot4(reflect, reflect), dot);
@@ -133,26 +133,25 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                 break;
             }
             case GL_REFLECTION_MAP: {
-                float eye_[2], eye_normal_[2], dot[2];
+                float eye_[4], eye_normal_[4], dot[2];
                 simd4f norm = simd4f_create(normal[0], normal[1], normal[2], 1.0f);
                 simd4f eye;
                 simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
                 eye = simd4f_normalize3(eye);
-                simd4f_ustore2(eye, eye_);
+                simd4f_ustore4(eye, eye_);
 
                 simd4f eye_normal;
                 simd4x4f_matrix_vector_mul(&inverse, &norm, &eye_normal);
-                simd4f_ustore2(eye_normal, eye_);
+                simd4f_ustore4(eye_normal, eye_);
 
                 simd4f_ustore2(simd4f_dot4(eye, eye_normal), dot);
                 out[0] = eye_[0] - eye_normal_[0] * dot[0] * 2.0f;
                 out[1] = eye_[1] - eye_normal_[1] * dot[0] * 2.0f;
-                // TODO: need to switch to 3D or 4D texture coord system
-                // out[2] = eye.x - eye_normal.z * dot;
+                out[2] = eye_[2] - eye_normal_[2] * dot[0] * 2.0f;
                 break;
             }
         }
-        out += 2;
+        out += 4;
         vert += 3;
     }
 }
@@ -161,7 +160,7 @@ void gen_tex_coords(block_t *block, GLuint texture) {
     // TODO: do less work when called from glDrawElements?
 
 #define en(v) state.enable.texgen_##v[texture]
-    block->tex[texture] = (GLfloat *)calloc(1, block->len * 2 * sizeof(GLfloat));
+    block->tex[texture] = (GLfloat *)calloc(1, block->len * 4 * sizeof(GLfloat));
     texgen_state_t *texgen = &state.texgen[texture];
     if (en(s) && (texgen->S == GL_OBJECT_LINEAR || texgen->S == GL_EYE_LINEAR)) {
         tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sv, NULL, NULL);

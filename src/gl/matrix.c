@@ -220,13 +220,15 @@ void gl_transform_light(GLfloat out[4], const GLfloat in[4]) {
     mat4_mul_vec4(model, out, in);
 }
 
-void gl_transform_texture(GLenum texture, GLfloat out[2], const GLfloat in[2]) {
+void gl_transform_texture(GLenum texture, GLfloat out[4], const GLfloat in[4]) {
     matrix_state_t *unit = &state.matrix.texture[texture - GL_TEXTURE0];
     if (! unit->init) {
         out[0] = in[0];
         out[1] = in[1];
+        out[3] = in[3];
+        out[4] = in[4];
     } else {
-        mat4_mul_vec2(&unit->matrix, out, in);
+        mat4_mul_vec4(&unit->matrix, out, in);
     }
 }
 

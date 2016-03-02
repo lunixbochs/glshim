@@ -145,7 +145,7 @@ static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
     }
     for (int i = 0; i < MAX_TEX; i++) {
         if (state.enable.tex_coord_array[i]) {
-            block->tex[i] = gl_copy_pointer(&state.pointers.tex_coord[i], 2, skip, count, false);
+            block->tex[i] = gl_copy_pointer(&state.pointers.tex_coord[i], 4, skip, count, false);
         }
     }
     return block;
@@ -442,11 +442,11 @@ void glColor4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
 #endif
 }
 
-void glTexCoord2f(GLfloat s, GLfloat t) {
-    glMultiTexCoord2f(GL_TEXTURE0, s, t);
+void glTexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q) {
+    glMultiTexCoord4f(GL_TEXTURE0, s, t, r, q);
 }
 
-void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
+void glMultiTexCoord4f(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q) {
     block_t *block = state.block.active;
     if (block) {
         bl_track_tex(block, target);
@@ -455,6 +455,8 @@ void glMultiTexCoord2f(GLenum target, GLfloat s, GLfloat t) {
     GLfloat *tex = CURRENT->tex[target - GL_TEXTURE0];
     tex[0] = s;
     tex[1] = t;
+    tex[2] = r;
+    tex[3] = q;
 
     if (! block) {
         PUSH_IF_COMPILING(glMultiTexCoord2f);

@@ -29,7 +29,7 @@ void tex_coord_rect_arb(GLfloat *tex, GLsizei len,
     for (int i = 0; i < len; i++) {
         tex[0] /= width;
         tex[1] /= height;
-        tex += 2;
+        tex += 4;
     }
 }
 
@@ -44,7 +44,7 @@ void tex_coord_npot(GLfloat *tex, GLsizei len,
     for (int i = 0; i < len; i++) {
         tex[0] *= wratio;
         tex[1] *= hratio;
-        tex += 2;
+        tex += 4;
     }
 }
 

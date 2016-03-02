@@ -38,7 +38,7 @@ void glPushAttrib(GLbitfield mask) {
         glGetFloatv(GL_CURRENT_COLOR, cur->color);
         glGetFloatv(GL_CURRENT_NORMAL, cur->normal);
         for (int i = 0; i < MAX_TEX; i++) {
-            memcpy(cur->tex[i], state.current.tex[i], 2 * sizeof(GLfloat));
+            memcpy(cur->tex[i], state.current.tex[i], 4 * sizeof(GLfloat));
         }
     }
 
@@ -258,7 +258,7 @@ void glPopAttrib() {
         glNormal3f(v3(cur->normal));
 #endif
         for (int i = 0; i < MAX_TEX; i++) {
-            glMultiTexCoord2f(GL_TEXTURE0 + i, v2(cur->tex[i]));
+            glMultiTexCoord4f(GL_TEXTURE0 + i, v4(cur->tex[i]));
         }
     }
 
