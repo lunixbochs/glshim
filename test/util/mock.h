@@ -35,10 +35,22 @@ static int failed_test = 0;
     } else { \
         char *ac = ptr, *bc = other; \
         for (size_t i = 0; i < size; i++) { \
-            if (i > 0 && i % 4 == 0)  printf(" "); \
-            if (i > 0 && i % 32 == 0) printf("\n"); \
+            if (i > 0 && i % 4 == 0) printf(" "); \
+            if (i > 0 && i % 32 == 0) { \
+                printf("| "); \
+                for (int j = i - 32; j < i; j += 4) { \
+                    printf("%f ", *(float *)&ac[j]); \
+                } \
+                printf("\n"); \
+            } \
             if (ac[i] == bc[i]) printf("%02X", (unsigned char)ac[i]); \
             else                printf(VT100_RED "%02X" VT100_CLEAR, (unsigned char)ac[i]); \
+        } \
+        if (size % 32 != 0) { \
+            printf(" | "); \
+            for (int j = size - (size % 32); j < size; j += 4) { \
+                printf("%f ", *(float *)&ac[j]); \
+            } \
         } \
     } \
     printf("\n");
