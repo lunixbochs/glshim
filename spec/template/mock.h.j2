@@ -31,14 +31,20 @@ static int failed_test = 0;
 #define mock_assert(cond, ...) { if (!(cond)) { mock_errorf(__VA_ARGS__); }}
 #define assert(cond) mock_assert(cond, "%s\n", #cond)
 
-#define mock_print_ptr(prefix, ptr, size) \
+#define VT100_RED "\e[1;31m"
+#define VT100_CLEAR "\e[0m"
+
+#define mock_print_ptr(prefix, ptr, other, size) \
     printf("%s ", prefix); \
     if (ptr == NULL) { \
         printf("NULL"); \
     } else { \
+        char *ac = ptr, *bc = other; \
         for (size_t i = 0; i < size; i++) { \
-            if (i > 0 && i % 4 == 0) printf(" "); \
-            printf("%02X", *(uint8_t *)(ptr+i)); \
+            if (i > 0 && i % 4 == 0)  printf(" "); \
+            if (i > 0 && i % 32 == 0) printf("\n"); \
+            if (ac[i] == bc[i]) printf("%02X", (unsigned char)ac[i]); \
+            else                printf(VT100_RED "%02X" VT100_CLEAR, (unsigned char)ac[i]); \
         } \
     } \
     printf("\n");
@@ -89,8 +95,8 @@ static int failed_test = 0;
         a = packed->args.{{ arg.name }}, b = _{{ arg.name }}; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_{{ arg.name }})) != 0))) { \
             printf("  ERROR: arg mismatch: {{ arg.name }}\n"); \
-            mock_print_ptr("  expected:", b, sizeof(_{{ arg.name }})); \
-            mock_print_ptr("     found:", a, sizeof(_{{ arg.name }})); \
+            mock_print_ptr("  expected:", b, a, sizeof(_{{ arg.name }})); \
+            mock_print_ptr("     found:", a, b, sizeof(_{{ arg.name }})); \
         {% elif 'float' in arg.type or 'double' in arg.type %}
         if (packed->args.{{ arg.name }} - _{{ arg.name }} >= 0.01) { \
         {% else %}
