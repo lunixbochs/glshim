@@ -33,10 +33,14 @@ glstate_t state = {
         .Q = GL_EYE_LINEAR,
         .S = GL_EYE_LINEAR,
         .T = GL_EYE_LINEAR,
-        .Rv = {0, 0, 0, 0},
-        .Qv = {0, 0, 0, 0},
-        .Sv = {1, 0, 0, 0},
-        .Tv = {0, 1, 0, 0},
+        .Seye = {1, 0, 0, 0},
+        .Teye = {0, 1, 0, 0},
+        .Reye = {0, 0, 0, 0},
+        .Qeye = {0, 0, 0, 0},
+        .Sobj = {1, 0, 0, 0},
+        .Tobj = {0, 1, 0, 0},
+        .Robj = {0, 0, 0, 0},
+        .Qobj = {0, 0, 0, 0},
     }},
 };
 
