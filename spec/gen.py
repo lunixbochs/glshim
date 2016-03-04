@@ -19,7 +19,6 @@ def args(args, add_type=True, prefix=''):
         for arg in args
     )
 
-f = '0.2f'
 printf_lookup = {
     'GLbitfield':    'd',
     'GLboolean':     'd',
@@ -34,7 +33,7 @@ printf_lookup = {
     'GLfloat':       '0.2f',
     'GLhalfNV':      'd',
     'GLint':         'd',
-    'GLint64EXT':    'lld',
+    'GLint64EXT':    '"PRIi64"',
     'GLintptr':      'td',
     'GLintptrARB':   'td',
     'GLhandleARB':   'u',
@@ -44,11 +43,37 @@ printf_lookup = {
     'GLsizeiptrARB': 'td',
     'GLubyte':       'c',
     'GLuint':        'u',
-    'GLuint64':      'llu',
-    'GLuint64EXT':   'llu',
+    'GLuint64':      '"PRIu64"',
+    'GLuint64EXT':   '"PRIu64"',
     'GLushort':      'u',
     'GLvoid':        'p',
-    'GLvdpauSurfaceNV': 'td'
+    'GLvdpauSurfaceNV': 'td',
+
+    'bool':      'd',
+    'double':    'lf',
+    'float':     'f',
+    'int':       'd',
+    'long long': 'll',
+    'long':      'l',
+    'unsigned int':       'u',
+    'unsigned long long': 'llu',
+    'unsigned long':      'lu',
+
+    'int8_t':   '"PRIi8"',
+    'int16_t':  '"PRIi16"',
+    'int32_t':  '"PRIi32"',
+    'int64_t':  '"PRIi64"',
+    'uint8_t':  '"PRIu8"',
+    'uint16_t': '"PRIu16"',
+    'uint32_t': '"PRIu32"',
+    'uint64_t': '"PRIu64"',
+
+    'Bool': 'd',
+    'Colormap': 'lu',
+    'Font': 'lu',
+    'GLXDrawable': 'd',
+    'Pixmap': 'lu',
+    'Window': 'lu',
 }
 
 def printf(args):

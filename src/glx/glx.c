@@ -626,6 +626,7 @@ void glXCopyContext(Display *dpy, GLXContext src, GLXContext dst, unsigned long 
 
 GLXPixmap glXCreateGLXPixmap(Display *dpy, XVisualInfo *visual, Pixmap pixmap) {
     PROXY_GLES(glXCreateGLXPixmap);
+    return 0;
 } // should return GLXPixmap
 
 void glXDestroyGLXPixmap(Display *dpy, void *pixmap) {
@@ -634,6 +635,7 @@ void glXDestroyGLXPixmap(Display *dpy, void *pixmap) {
 
 GLXDrawable glXGetCurrentDrawable() {
     PROXY_GLES(glXGetCurrentDrawable);
+    return 0;
 } // this should actually return GLXDrawable. Good luck.
 
 Bool glXIsDirect(Display *dpy, GLXContext ctx) {
@@ -643,6 +645,7 @@ Bool glXIsDirect(Display *dpy, GLXContext ctx) {
 
 GLXWindow glXCreateWindow(Display *dpy, GLXFBConfig config, Window win, const int *attrib_list) {
     PROXY_GLES(glXCreateWindow);
+    return 0;
 }
 
 void glXDestroyWindow(Display *dpy, GLXWindow win) {
@@ -674,4 +677,5 @@ void glXWaitX() {
 
 Bool glXReleaseBuffersMESA(Display *dpy, GLXDrawable drawable) {
     PROXY_GLES(glXReleaseBuffersMESA);
+    return 0;
 }

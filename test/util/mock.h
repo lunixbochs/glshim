@@ -6809,7 +6809,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXBindChannelToWindowSGIX(%p, %p, %p, %p);\n", _display, _screen, _channel, _window); \
+            printf("  want: glXBindChannelToWindowSGIX(%p, %d, %d, %lu);\n", _display, _screen, _channel, _window); \
         } \
     } \
 }
@@ -6854,7 +6854,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXBindHyperpipeSGIX(%p, %p);\n", _dpy, _hpId); \
+            printf("  want: glXBindHyperpipeSGIX(%p, %d);\n", _dpy, _hpId); \
         } \
     } \
 }
@@ -6950,7 +6950,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXBindSwapBarrierSGIX(%p, %p, %p);\n", _dpy, _drawable, _barrier); \
+            printf("  want: glXBindSwapBarrierSGIX(%p, %d, %d);\n", _dpy, _drawable, _barrier); \
         } \
     } \
 }
@@ -7005,7 +7005,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXBindTexImageEXT(%p, %p, %p, %p);\n", _dpy, _drawable, _buffer, _attrib_list); \
+            printf("  want: glXBindTexImageEXT(%p, %d, %d, %p);\n", _dpy, _drawable, _buffer, _attrib_list); \
         } \
     } \
 }
@@ -7053,7 +7053,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXBindVideoCaptureDeviceNV(%p, %p, %p);\n", _dpy, _video_capture_slot, _device); \
+            printf("  want: glXBindVideoCaptureDeviceNV(%p, %u, %p);\n", _dpy, _video_capture_slot, _device); \
         } \
     } \
 }
@@ -7108,7 +7108,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXBindVideoDeviceNV(%p, %p, %p, %p);\n", _dpy, _video_slot, _video_device, _attrib_list); \
+            printf("  want: glXBindVideoDeviceNV(%p, %u, %u, %p);\n", _dpy, _video_slot, _video_device, _attrib_list); \
         } \
     } \
 }
@@ -7159,7 +7159,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXBindVideoImageNV(%p, %p, %p, %p);\n", _dpy, _VideoDevice, _pbuf, _iVideoBuffer); \
+            printf("  want: glXBindVideoImageNV(%p, %p, %p, %d);\n", _dpy, _VideoDevice, _pbuf, _iVideoBuffer); \
         } \
     } \
 }
@@ -7197,7 +7197,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXChangeDrawableAttributes(%p);\n", _drawable); \
+            printf("  want: glXChangeDrawableAttributes(%"PRIu32");\n", _drawable); \
         } \
     } \
 }
@@ -7235,7 +7235,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXChangeDrawableAttributesSGIX(%p);\n", _drawable); \
+            printf("  want: glXChangeDrawableAttributesSGIX(%"PRIu32");\n", _drawable); \
         } \
     } \
 }
@@ -7295,7 +7295,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", _display, _screen, _channel, _x, _y, _w, _h); \
+            printf("  want: glXChannelRectSGIX(%p, %d, %d, %d, %d, %d, %d);\n", _display, _screen, _channel, _x, _y, _w, _h); \
         } \
     } \
 }
@@ -7346,7 +7346,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXChannelRectSyncSGIX(%p, %p, %p, 0x%04X);\n", _display, _screen, _channel, _synctype); \
+            printf("  want: glXChannelRectSyncSGIX(%p, %d, %d, 0x%04X);\n", _display, _screen, _channel, _synctype); \
         } \
     } \
 }
@@ -7405,7 +7405,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXChooseFBConfig(%p, %p, %p, %p);\n", _dpy, _screen, _attrib_list, _nelements); \
+            printf("  want: glXChooseFBConfig(%p, %d, %p, %p);\n", _dpy, _screen, _attrib_list, _nelements); \
         } \
     } \
 }
@@ -7464,7 +7464,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXChooseFBConfigSGIX(%p, %p, %p, %p);\n", _dpy, _screen, _attrib_list, _nelements); \
+            printf("  want: glXChooseFBConfigSGIX(%p, %d, %p, %p);\n", _dpy, _screen, _attrib_list, _nelements); \
         } \
     } \
 }
@@ -7516,7 +7516,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXChooseVisual(%p, %p, %p);\n", _dpy, _screen, _attribList); \
+            printf("  want: glXChooseVisual(%p, %d, %p);\n", _dpy, _screen, _attribList); \
         } \
     } \
 }
@@ -7602,7 +7602,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCopyContext(%p, %p, %p, %p);\n", _dpy, _src, _dst, _mask); \
+            printf("  want: glXCopyContext(%p, %p, %p, %lu);\n", _dpy, _src, _dst, _mask); \
         } \
     } \
 }
@@ -7752,7 +7752,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCopySubBufferMESA(%p, %p, %p, %p, %p, %p);\n", _dpy, _drawable, _x, _y, _width, _height); \
+            printf("  want: glXCopySubBufferMESA(%p, %d, %d, %d, %d, %d);\n", _dpy, _drawable, _x, _y, _width, _height); \
         } \
     } \
 }
@@ -7807,7 +7807,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateContext(%p, %p, %p, %p);\n", _dpy, _vis, _shareList, _direct); \
+            printf("  want: glXCreateContext(%p, %p, %p, %d);\n", _dpy, _vis, _shareList, _direct); \
         } \
     } \
 }
@@ -7865,7 +7865,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateContextAttribsARB(%p, %p, %p, %p, %p);\n", _dpy, _config, _share_context, _direct, _attrib_list); \
+            printf("  want: glXCreateContextAttribsARB(%p, %p, %p, %d, %p);\n", _dpy, _config, _share_context, _direct, _attrib_list); \
         } \
     } \
 }
@@ -7919,7 +7919,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateContextWithConfigSGIX(%p, %p, %p, %p, %p);\n", _dpy, _config, _render_type, _share_list, _direct); \
+            printf("  want: glXCreateContextWithConfigSGIX(%p, %p, %d, %p, %d);\n", _dpy, _config, _render_type, _share_list, _direct); \
         } \
     } \
 }
@@ -7977,7 +7977,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateGLXPbufferSGIX(%p, %p, %p, %p, %p);\n", _dpy, _config, _width, _height, _attrib_list); \
+            printf("  want: glXCreateGLXPbufferSGIX(%p, %p, %u, %u, %p);\n", _dpy, _config, _width, _height, _attrib_list); \
         } \
     } \
 }
@@ -8029,7 +8029,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateGLXPixmap(%p, %p, %p);\n", _dpy, _visual, _pixmap); \
+            printf("  want: glXCreateGLXPixmap(%p, %p, %lu);\n", _dpy, _visual, _pixmap); \
         } \
     } \
 }
@@ -8084,7 +8084,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateGLXPixmapMESA(%p, %p, %p, %p);\n", _dpy, _visual, _pixmap, _cmap); \
+            printf("  want: glXCreateGLXPixmapMESA(%p, %p, %lu, %lu);\n", _dpy, _visual, _pixmap, _cmap); \
         } \
     } \
 }
@@ -8132,7 +8132,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateGLXPixmapWithConfigSGIX(%p, %p, %p);\n", _dpy, _config, _pixmap); \
+            printf("  want: glXCreateGLXPixmapWithConfigSGIX(%p, %p, %lu);\n", _dpy, _config, _pixmap); \
         } \
     } \
 }
@@ -8189,7 +8189,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateGLXVideoSourceSGIX(%p, %p, %p, %p, %p, %p);\n", _display, _screen, _server, _path, _nodeClass, _drainNode); \
+            printf("  want: glXCreateGLXVideoSourceSGIX(%p, %d, %p, %p, %d, %p);\n", _display, _screen, _server, _path, _nodeClass, _drainNode); \
         } \
     } \
 }
@@ -8243,7 +8243,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateNewContext(%p, %p, %p, %p, %p);\n", _dpy, _config, _render_type, _share_list, _direct); \
+            printf("  want: glXCreateNewContext(%p, %p, %d, %p, %d);\n", _dpy, _config, _render_type, _share_list, _direct); \
         } \
     } \
 }
@@ -8350,7 +8350,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreatePixmap(%p, %p, %p, %p);\n", _dpy, _config, _pixmap, _attrib_list); \
+            printf("  want: glXCreatePixmap(%p, %p, %lu, %p);\n", _dpy, _config, _pixmap, _attrib_list); \
         } \
     } \
 }
@@ -8405,7 +8405,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCreateWindow(%p, %p, %p, %p);\n", _dpy, _config, _win, _attrib_list); \
+            printf("  want: glXCreateWindow(%p, %p, %lu, %p);\n", _dpy, _config, _win, _attrib_list); \
         } \
     } \
 }
@@ -8453,7 +8453,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXCushionSGI(%p, %p, %p);\n", _dpy, _window, _cushion); \
+            printf("  want: glXCushionSGI(%p, %lu, %f);\n", _dpy, _window, _cushion); \
         } \
     } \
 }
@@ -8678,7 +8678,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXDestroyHyperpipeConfigSGIX(%p, %p);\n", _dpy, _hpId); \
+            printf("  want: glXDestroyHyperpipeConfigSGIX(%p, %d);\n", _dpy, _hpId); \
         } \
     } \
 }
@@ -8865,7 +8865,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXEnumerateVideoCaptureDevicesNV(%p, %p, %p);\n", _dpy, _screen, _nelements); \
+            printf("  want: glXEnumerateVideoCaptureDevicesNV(%p, %d, %p);\n", _dpy, _screen, _nelements); \
         } \
     } \
 }
@@ -8917,7 +8917,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXEnumerateVideoDevicesNV(%p, %p, %p);\n", _dpy, _screen, _nelements); \
+            printf("  want: glXEnumerateVideoDevicesNV(%p, %d, %p);\n", _dpy, _screen, _nelements); \
         } \
     } \
 }
@@ -9049,7 +9049,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetClientString(%p, %p);\n", _display, _name); \
+            printf("  want: glXGetClientString(%p, %d);\n", _display, _name); \
         } \
     } \
 }
@@ -9108,7 +9108,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetConfig(%p, %p, %p, %p);\n", _display, _visual, _attribute, _value); \
+            printf("  want: glXGetConfig(%p, %p, %d, %p);\n", _display, _visual, _attribute, _value); \
         } \
     } \
 }
@@ -9394,7 +9394,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetDrawableAttributes(%p);\n", _drawable); \
+            printf("  want: glXGetDrawableAttributes(%"PRIu32");\n", _drawable); \
         } \
     } \
 }
@@ -9432,7 +9432,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetDrawableAttributesSGIX(%p);\n", _drawable); \
+            printf("  want: glXGetDrawableAttributesSGIX(%"PRIu32");\n", _drawable); \
         } \
     } \
 }
@@ -9487,7 +9487,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetFBConfigAttrib(%p, %p, %p, %p);\n", _dpy, _config, _attribute, _value); \
+            printf("  want: glXGetFBConfigAttrib(%p, %p, %d, %p);\n", _dpy, _config, _attribute, _value); \
         } \
     } \
 }
@@ -9542,7 +9542,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetFBConfigAttribSGIX(%p, %p, %p, %p);\n", _dpy, _config, _attribute, _value); \
+            printf("  want: glXGetFBConfigAttribSGIX(%p, %p, %d, %p);\n", _dpy, _config, _attribute, _value); \
         } \
     } \
 }
@@ -9643,7 +9643,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetFBConfigs(%p, %p, %p);\n", _dpy, _screen, _nelements); \
+            printf("  want: glXGetFBConfigs(%p, %d, %p);\n", _dpy, _screen, _nelements); \
         } \
     } \
 }
@@ -9737,7 +9737,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetMscRateOML(%p, %p, %p, %p);\n", _dpy, _drawable, _numerator, _denominator); \
+            printf("  want: glXGetMscRateOML(%p, %d, %p, %p);\n", _dpy, _drawable, _numerator, _denominator); \
         } \
     } \
 }
@@ -9873,7 +9873,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetSelectedEvent(%p, %p, %p);\n", _dpy, _draw, _event_mask); \
+            printf("  want: glXGetSelectedEvent(%p, %d, %p);\n", _dpy, _draw, _event_mask); \
         } \
     } \
 }
@@ -9925,7 +9925,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetSelectedEventSGIX(%p, %p, %p);\n", _dpy, _drawable, _mask); \
+            printf("  want: glXGetSelectedEventSGIX(%p, %d, %p);\n", _dpy, _drawable, _mask); \
         } \
     } \
 }
@@ -9991,7 +9991,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetSyncValuesOML(%p, %p, %p, %p, %p);\n", _dpy, _drawable, _ust, _msc, _sbc); \
+            printf("  want: glXGetSyncValuesOML(%p, %d, %p, %p, %p);\n", _dpy, _drawable, _ust, _msc, _sbc); \
         } \
     } \
 }
@@ -10046,7 +10046,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetTransparentIndexSUN(%p, %p, %p, %p);\n", _dpy, _overlay, _underlay, _pTransparentIndex); \
+            printf("  want: glXGetTransparentIndexSUN(%p, %lu, %lu, %p);\n", _dpy, _overlay, _underlay, _pTransparentIndex); \
         } \
     } \
 }
@@ -10101,7 +10101,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetVideoDeviceNV(%p, %p, %p, %p);\n", _dpy, _screen, _numVideoDevices, _pVideoDevice); \
+            printf("  want: glXGetVideoDeviceNV(%p, %d, %d, %p);\n", _dpy, _screen, _numVideoDevices, _pVideoDevice); \
         } \
     } \
 }
@@ -10163,7 +10163,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetVideoInfoNV(%p, %p, %p, %p, %p);\n", _dpy, _screen, _VideoDevice, _pulCounterOutputPbuffer, _pulCounterOutputVideo); \
+            printf("  want: glXGetVideoInfoNV(%p, %d, %p, %p, %p);\n", _dpy, _screen, _VideoDevice, _pulCounterOutputPbuffer, _pulCounterOutputVideo); \
         } \
     } \
 }
@@ -10388,7 +10388,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", _dpy, _timeSlice, _attrib, _size, _attribList); \
+            printf("  want: glXHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", _dpy, _timeSlice, _attrib, _size, _attribList); \
         } \
     } \
 }
@@ -10450,7 +10450,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXHyperpipeConfigSGIX(%p, %p, %p, %p, %p);\n", _dpy, _networkId, _npipes, _cfg, _hpId); \
+            printf("  want: glXHyperpipeConfigSGIX(%p, %d, %d, %p, %p);\n", _dpy, _networkId, _npipes, _cfg, _hpId); \
         } \
     } \
 }
@@ -10588,7 +10588,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXJoinSwapGroupNV(%p, %p, %u);\n", _dpy, _drawable, _group); \
+            printf("  want: glXJoinSwapGroupNV(%p, %d, %u);\n", _dpy, _drawable, _group); \
         } \
     } \
 }
@@ -10636,7 +10636,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXJoinSwapGroupSGIX(%p, %p, %p);\n", _dpy, _drawable, _member); \
+            printf("  want: glXJoinSwapGroupSGIX(%p, %d, %d);\n", _dpy, _drawable, _member); \
         } \
     } \
 }
@@ -10732,7 +10732,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXMakeContextCurrent(%p, %p, %p, %p);\n", _dpy, _draw, _read, _ctx); \
+            printf("  want: glXMakeContextCurrent(%p, %d, %d, %p);\n", _dpy, _draw, _read, _ctx); \
         } \
     } \
 }
@@ -10780,7 +10780,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXMakeCurrent(%p, %p, %p);\n", _dpy, _drawable, _ctx); \
+            printf("  want: glXMakeCurrent(%p, %d, %p);\n", _dpy, _drawable, _ctx); \
         } \
     } \
 }
@@ -10831,7 +10831,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXMakeCurrentReadSGI(%p, %p, %p, %p);\n", _dpy, _draw, _read, _ctx); \
+            printf("  want: glXMakeCurrentReadSGI(%p, %d, %d, %p);\n", _dpy, _draw, _read, _ctx); \
         } \
     } \
 }
@@ -10907,7 +10907,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryChannelDeltasSGIX(%p, %p, %p, %p, %p, %p, %p);\n", _display, _screen, _channel, _x, _y, _w, _h); \
+            printf("  want: glXQueryChannelDeltasSGIX(%p, %d, %d, %p, %p, %p, %p);\n", _display, _screen, _channel, _x, _y, _w, _h); \
         } \
     } \
 }
@@ -10983,7 +10983,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", _display, _screen, _channel, _dx, _dy, _dw, _dh); \
+            printf("  want: glXQueryChannelRectSGIX(%p, %d, %d, %p, %p, %p, %p);\n", _display, _screen, _channel, _dx, _dy, _dw, _dh); \
         } \
     } \
 }
@@ -11038,7 +11038,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryContext(%p, %p, %p, %p);\n", _dpy, _ctx, _attribute, _value); \
+            printf("  want: glXQueryContext(%p, %p, %d, %p);\n", _dpy, _ctx, _attribute, _value); \
         } \
     } \
 }
@@ -11093,7 +11093,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryContextInfoEXT(%p, %p, %p, %p);\n", _dpy, _context, _attribute, _value); \
+            printf("  want: glXQueryContextInfoEXT(%p, %p, %d, %p);\n", _dpy, _context, _attribute, _value); \
         } \
     } \
 }
@@ -11148,7 +11148,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryDrawable(%p, %p, %p, %p);\n", _dpy, _draw, _attribute, _value); \
+            printf("  want: glXQueryDrawable(%p, %d, %d, %p);\n", _dpy, _draw, _attribute, _value); \
         } \
     } \
 }
@@ -11249,7 +11249,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryExtensionsString(%p, %p);\n", _dpy, _screen); \
+            printf("  want: glXQueryExtensionsString(%p, %d);\n", _dpy, _screen); \
         } \
     } \
 }
@@ -11301,7 +11301,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryFrameCountNV(%p, %p, %p);\n", _dpy, _screen, _count); \
+            printf("  want: glXQueryFrameCountNV(%p, %d, %p);\n", _dpy, _screen, _count); \
         } \
     } \
 }
@@ -11356,7 +11356,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryGLXPbufferSGIX(%p, %p, %p, %p);\n", _dpy, _pbuf, _attribute, _value); \
+            printf("  want: glXQueryGLXPbufferSGIX(%p, %p, %d, %p);\n", _dpy, _pbuf, _attribute, _value); \
         } \
     } \
 }
@@ -11414,7 +11414,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", _dpy, _timeSlice, _attrib, _size, _returnAttribList); \
+            printf("  want: glXQueryHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", _dpy, _timeSlice, _attrib, _size, _returnAttribList); \
         } \
     } \
 }
@@ -11479,7 +11479,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryHyperpipeBestAttribSGIX(%p, %p, %p, %p, %p, %p);\n", _dpy, _timeSlice, _attrib, _size, _attribList, _returnAttribList); \
+            printf("  want: glXQueryHyperpipeBestAttribSGIX(%p, %d, %d, %d, %p, %p);\n", _dpy, _timeSlice, _attrib, _size, _attribList, _returnAttribList); \
         } \
     } \
 }
@@ -11531,7 +11531,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryHyperpipeConfigSGIX(%p, %p, %p);\n", _dpy, _hpId, _npipes); \
+            printf("  want: glXQueryHyperpipeConfigSGIX(%p, %d, %p);\n", _dpy, _hpId, _npipes); \
         } \
     } \
 }
@@ -11632,7 +11632,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryMaxSwapBarriersSGIX(%p, %p, %p);\n", _dpy, _screen, _max); \
+            printf("  want: glXQueryMaxSwapBarriersSGIX(%p, %d, %p);\n", _dpy, _screen, _max); \
         } \
     } \
 }
@@ -11691,7 +11691,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryMaxSwapGroupsNV(%p, %p, %p, %p);\n", _dpy, _screen, _maxGroups, _maxBarriers); \
+            printf("  want: glXQueryMaxSwapGroupsNV(%p, %d, %p, %p);\n", _dpy, _screen, _maxGroups, _maxBarriers); \
         } \
     } \
 }
@@ -11739,7 +11739,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryServerString(%p, %p, %p);\n", _dpy, _screen, _name); \
+            printf("  want: glXQueryServerString(%p, %d, %d);\n", _dpy, _screen, _name); \
         } \
     } \
 }
@@ -11798,7 +11798,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQuerySwapGroupNV(%p, %p, %p, %p);\n", _dpy, _drawable, _group, _barrier); \
+            printf("  want: glXQuerySwapGroupNV(%p, %d, %p, %p);\n", _dpy, _drawable, _group, _barrier); \
         } \
     } \
 }
@@ -11909,7 +11909,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXQueryVideoCaptureDeviceNV(%p, %p, %p, %p);\n", _dpy, _device, _attribute, _value); \
+            printf("  want: glXQueryVideoCaptureDeviceNV(%p, %p, %d, %p);\n", _dpy, _device, _attribute, _value); \
         } \
     } \
 }
@@ -11954,7 +11954,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXReleaseBuffersMESA(%p, %p);\n", _dpy, _drawable); \
+            printf("  want: glXReleaseBuffersMESA(%p, %d);\n", _dpy, _drawable); \
         } \
     } \
 }
@@ -12002,7 +12002,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXReleaseTexImageEXT(%p, %p, %p);\n", _dpy, _drawable, _buffer); \
+            printf("  want: glXReleaseTexImageEXT(%p, %d, %d);\n", _dpy, _drawable, _buffer); \
         } \
     } \
 }
@@ -12095,7 +12095,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXReleaseVideoDeviceNV(%p, %p, %p);\n", _dpy, _screen, _VideoDevice); \
+            printf("  want: glXReleaseVideoDeviceNV(%p, %d, %p);\n", _dpy, _screen, _VideoDevice); \
         } \
     } \
 }
@@ -12255,7 +12255,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXResetFrameCountNV(%p, %p);\n", _dpy, _screen); \
+            printf("  want: glXResetFrameCountNV(%p, %d);\n", _dpy, _screen); \
         } \
     } \
 }
@@ -12303,7 +12303,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSelectEvent(%p, %p, %p);\n", _dpy, _draw, _event_mask); \
+            printf("  want: glXSelectEvent(%p, %d, %lu);\n", _dpy, _draw, _event_mask); \
         } \
     } \
 }
@@ -12351,7 +12351,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSelectEventSGIX(%p, %p, %p);\n", _dpy, _drawable, _mask); \
+            printf("  want: glXSelectEventSGIX(%p, %d, %lu);\n", _dpy, _drawable, _mask); \
         } \
     } \
 }
@@ -12409,7 +12409,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSendPbufferToVideoNV(%p, %p, %p, %p, %d);\n", _dpy, _pbuf, _iBufferType, _pulCounterPbuffer, _bBlock); \
+            printf("  want: glXSendPbufferToVideoNV(%p, %p, %d, %p, %d);\n", _dpy, _pbuf, _iBufferType, _pulCounterPbuffer, _bBlock); \
         } \
     } \
 }
@@ -12447,7 +12447,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSet3DfxModeMESA(%p);\n", _mode); \
+            printf("  want: glXSet3DfxModeMESA(%d);\n", _mode); \
         } \
     } \
 }
@@ -12492,7 +12492,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSwapBuffers(%p, %p);\n", _dpy, _drawable); \
+            printf("  want: glXSwapBuffers(%p, %d);\n", _dpy, _drawable); \
         } \
     } \
 }
@@ -12546,7 +12546,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSwapBuffersMscOML(%p, %p, %p, %p, %p);\n", _dpy, _drawable, _target_msc, _divisor, _remainder); \
+            printf("  want: glXSwapBuffersMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64");\n", _dpy, _drawable, _target_msc, _divisor, _remainder); \
         } \
     } \
 }
@@ -12594,7 +12594,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSwapIntervalEXT(%p, %p, %p);\n", _dpy, _drawable, _interval); \
+            printf("  want: glXSwapIntervalEXT(%p, %d, %d);\n", _dpy, _drawable, _interval); \
         } \
     } \
 }
@@ -12632,7 +12632,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSwapIntervalMESA(%p);\n", _interval); \
+            printf("  want: glXSwapIntervalMESA(%u);\n", _interval); \
         } \
     } \
 }
@@ -12670,7 +12670,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXSwapIntervalSGI(%p);\n", _interval); \
+            printf("  want: glXSwapIntervalSGI(%d);\n", _interval); \
         } \
     } \
 }
@@ -12717,7 +12717,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXUseXFont(%p, %p, %p, %p);\n", _font, _first, _count, _listBase); \
+            printf("  want: glXUseXFont(%lu, %d, %d, %d);\n", _font, _first, _count, _listBase); \
         } \
     } \
 }
@@ -12862,7 +12862,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXWaitForMscOML(%p, %p, %p, %p, %p, %p, %p, %p);\n", _dpy, _drawable, _target_msc, _divisor, _remainder, _ust, _msc, _sbc); \
+            printf("  want: glXWaitForMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64", %p, %p, %p);\n", _dpy, _drawable, _target_msc, _divisor, _remainder, _ust, _msc, _sbc); \
         } \
     } \
 }
@@ -12931,7 +12931,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXWaitForSbcOML(%p, %p, %p, %p, %p, %p);\n", _dpy, _drawable, _target_sbc, _ust, _msc, _sbc); \
+            printf("  want: glXWaitForSbcOML(%p, %d, %"PRIi64", %p, %p, %p);\n", _dpy, _drawable, _target_sbc, _ust, _msc, _sbc); \
         } \
     } \
 }
@@ -13014,7 +13014,7 @@ static int failed_test = 0;
         if (! match) { \
             mock_errorf("calls do not match:\n"); \
             printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXWaitVideoSyncSGI(%p, %p, %p);\n", _divisor, _remainder, _count); \
+            printf("  want: glXWaitVideoSyncSGI(%d, %d, %p);\n", _divisor, _remainder, _count); \
         } \
     } \
 }

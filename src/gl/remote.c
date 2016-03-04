@@ -203,9 +203,9 @@ static void remote_dma_send_raw(packed_call_t *call, void *ret_v, size_t ret_siz
         if (ret_size > 0 && g_remote_noisy) {
             printf("returned (%zu): ", ret_size);
             if (ret_size == 4) {
-                printf("0x%x\n", *(uint32_t *)ret_v);
+                printf("0x%" PRIu32 "\n", *(uint32_t *)ret_v);
             } else if (ret_size == 8) {
-                printf("0x%llx\n", *(uint64_t *)ret_v);
+                printf("0x%" PRIu64 "\n", *(uint64_t *)ret_v);
             } else {
                 for (int i = 0; i < ret_size; i++) {
                     printf("%x", ((unsigned char *)ret_v)[i]);

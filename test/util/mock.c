@@ -1044,12 +1044,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXBindChannelToWindowSGIX_INDEX: {
             glXBindChannelToWindowSGIX_PACKED *unpacked = (glXBindChannelToWindowSGIX_PACKED *)packed;
-            printf("glXBindChannelToWindowSGIX(%p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.window);
+            printf("glXBindChannelToWindowSGIX(%p, %d, %d, %lu);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.window);
             break;
         }
         case glXBindHyperpipeSGIX_INDEX: {
             glXBindHyperpipeSGIX_PACKED *unpacked = (glXBindHyperpipeSGIX_PACKED *)packed;
-            printf("glXBindHyperpipeSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.hpId);
+            printf("glXBindHyperpipeSGIX(%p, %d);\n", unpacked->args.dpy, unpacked->args.hpId);
             break;
         }
         case glXBindSwapBarrierNV_INDEX: {
@@ -1059,62 +1059,62 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXBindSwapBarrierSGIX_INDEX: {
             glXBindSwapBarrierSGIX_PACKED *unpacked = (glXBindSwapBarrierSGIX_PACKED *)packed;
-            printf("glXBindSwapBarrierSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.barrier);
+            printf("glXBindSwapBarrierSGIX(%p, %d, %d);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.barrier);
             break;
         }
         case glXBindTexImageEXT_INDEX: {
             glXBindTexImageEXT_PACKED *unpacked = (glXBindTexImageEXT_PACKED *)packed;
-            printf("glXBindTexImageEXT(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.buffer, unpacked->args.attrib_list);
+            printf("glXBindTexImageEXT(%p, %d, %d, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.buffer, unpacked->args.attrib_list);
             break;
         }
         case glXBindVideoCaptureDeviceNV_INDEX: {
             glXBindVideoCaptureDeviceNV_PACKED *unpacked = (glXBindVideoCaptureDeviceNV_PACKED *)packed;
-            printf("glXBindVideoCaptureDeviceNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.video_capture_slot, unpacked->args.device);
+            printf("glXBindVideoCaptureDeviceNV(%p, %u, %p);\n", unpacked->args.dpy, unpacked->args.video_capture_slot, unpacked->args.device);
             break;
         }
         case glXBindVideoDeviceNV_INDEX: {
             glXBindVideoDeviceNV_PACKED *unpacked = (glXBindVideoDeviceNV_PACKED *)packed;
-            printf("glXBindVideoDeviceNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.video_slot, unpacked->args.video_device, unpacked->args.attrib_list);
+            printf("glXBindVideoDeviceNV(%p, %u, %u, %p);\n", unpacked->args.dpy, unpacked->args.video_slot, unpacked->args.video_device, unpacked->args.attrib_list);
             break;
         }
         case glXBindVideoImageNV_INDEX: {
             glXBindVideoImageNV_PACKED *unpacked = (glXBindVideoImageNV_PACKED *)packed;
-            printf("glXBindVideoImageNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.VideoDevice, unpacked->args.pbuf, unpacked->args.iVideoBuffer);
+            printf("glXBindVideoImageNV(%p, %p, %p, %d);\n", unpacked->args.dpy, unpacked->args.VideoDevice, unpacked->args.pbuf, unpacked->args.iVideoBuffer);
             break;
         }
         case glXChangeDrawableAttributes_INDEX: {
             glXChangeDrawableAttributes_PACKED *unpacked = (glXChangeDrawableAttributes_PACKED *)packed;
-            printf("glXChangeDrawableAttributes(%p);\n", unpacked->args.drawable);
+            printf("glXChangeDrawableAttributes(%"PRIu32");\n", unpacked->args.drawable);
             break;
         }
         case glXChangeDrawableAttributesSGIX_INDEX: {
             glXChangeDrawableAttributesSGIX_PACKED *unpacked = (glXChangeDrawableAttributesSGIX_PACKED *)packed;
-            printf("glXChangeDrawableAttributesSGIX(%p);\n", unpacked->args.drawable);
+            printf("glXChangeDrawableAttributesSGIX(%"PRIu32");\n", unpacked->args.drawable);
             break;
         }
         case glXChannelRectSGIX_INDEX: {
             glXChannelRectSGIX_PACKED *unpacked = (glXChannelRectSGIX_PACKED *)packed;
-            printf("glXChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.x, unpacked->args.y, unpacked->args.w, unpacked->args.h);
+            printf("glXChannelRectSGIX(%p, %d, %d, %d, %d, %d, %d);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.x, unpacked->args.y, unpacked->args.w, unpacked->args.h);
             break;
         }
         case glXChannelRectSyncSGIX_INDEX: {
             glXChannelRectSyncSGIX_PACKED *unpacked = (glXChannelRectSyncSGIX_PACKED *)packed;
-            printf("glXChannelRectSyncSGIX(%p, %p, %p, 0x%04X);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.synctype);
+            printf("glXChannelRectSyncSGIX(%p, %d, %d, 0x%04X);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.synctype);
             break;
         }
         case glXChooseFBConfig_INDEX: {
             glXChooseFBConfig_PACKED *unpacked = (glXChooseFBConfig_PACKED *)packed;
-            printf("glXChooseFBConfig(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attrib_list, unpacked->args.nelements);
+            printf("glXChooseFBConfig(%p, %d, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attrib_list, unpacked->args.nelements);
             break;
         }
         case glXChooseFBConfigSGIX_INDEX: {
             glXChooseFBConfigSGIX_PACKED *unpacked = (glXChooseFBConfigSGIX_PACKED *)packed;
-            printf("glXChooseFBConfigSGIX(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attrib_list, unpacked->args.nelements);
+            printf("glXChooseFBConfigSGIX(%p, %d, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attrib_list, unpacked->args.nelements);
             break;
         }
         case glXChooseVisual_INDEX: {
             glXChooseVisual_PACKED *unpacked = (glXChooseVisual_PACKED *)packed;
-            printf("glXChooseVisual(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attribList);
+            printf("glXChooseVisual(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.attribList);
             break;
         }
         case glXClientInfo_INDEX: {
@@ -1124,7 +1124,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXCopyContext_INDEX: {
             glXCopyContext_PACKED *unpacked = (glXCopyContext_PACKED *)packed;
-            printf("glXCopyContext(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.src, unpacked->args.dst, unpacked->args.mask);
+            printf("glXCopyContext(%p, %p, %p, %lu);\n", unpacked->args.dpy, unpacked->args.src, unpacked->args.dst, unpacked->args.mask);
             break;
         }
         case glXCopyImageSubDataNV_INDEX: {
@@ -1134,52 +1134,52 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXCopySubBufferMESA_INDEX: {
             glXCopySubBufferMESA_PACKED *unpacked = (glXCopySubBufferMESA_PACKED *)packed;
-            printf("glXCopySubBufferMESA(%p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.x, unpacked->args.y, unpacked->args.width, unpacked->args.height);
+            printf("glXCopySubBufferMESA(%p, %d, %d, %d, %d, %d);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.x, unpacked->args.y, unpacked->args.width, unpacked->args.height);
             break;
         }
         case glXCreateContext_INDEX: {
             glXCreateContext_PACKED *unpacked = (glXCreateContext_PACKED *)packed;
-            printf("glXCreateContext(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.vis, unpacked->args.shareList, unpacked->args.direct);
+            printf("glXCreateContext(%p, %p, %p, %d);\n", unpacked->args.dpy, unpacked->args.vis, unpacked->args.shareList, unpacked->args.direct);
             break;
         }
         case glXCreateContextAttribsARB_INDEX: {
             glXCreateContextAttribsARB_PACKED *unpacked = (glXCreateContextAttribsARB_PACKED *)packed;
-            printf("glXCreateContextAttribsARB(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.share_context, unpacked->args.direct, unpacked->args.attrib_list);
+            printf("glXCreateContextAttribsARB(%p, %p, %p, %d, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.share_context, unpacked->args.direct, unpacked->args.attrib_list);
             break;
         }
         case glXCreateContextWithConfigSGIX_INDEX: {
             glXCreateContextWithConfigSGIX_PACKED *unpacked = (glXCreateContextWithConfigSGIX_PACKED *)packed;
-            printf("glXCreateContextWithConfigSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.render_type, unpacked->args.share_list, unpacked->args.direct);
+            printf("glXCreateContextWithConfigSGIX(%p, %p, %d, %p, %d);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.render_type, unpacked->args.share_list, unpacked->args.direct);
             break;
         }
         case glXCreateGLXPbufferSGIX_INDEX: {
             glXCreateGLXPbufferSGIX_PACKED *unpacked = (glXCreateGLXPbufferSGIX_PACKED *)packed;
-            printf("glXCreateGLXPbufferSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.width, unpacked->args.height, unpacked->args.attrib_list);
+            printf("glXCreateGLXPbufferSGIX(%p, %p, %u, %u, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.width, unpacked->args.height, unpacked->args.attrib_list);
             break;
         }
         case glXCreateGLXPixmap_INDEX: {
             glXCreateGLXPixmap_PACKED *unpacked = (glXCreateGLXPixmap_PACKED *)packed;
-            printf("glXCreateGLXPixmap(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.visual, unpacked->args.pixmap);
+            printf("glXCreateGLXPixmap(%p, %p, %lu);\n", unpacked->args.dpy, unpacked->args.visual, unpacked->args.pixmap);
             break;
         }
         case glXCreateGLXPixmapMESA_INDEX: {
             glXCreateGLXPixmapMESA_PACKED *unpacked = (glXCreateGLXPixmapMESA_PACKED *)packed;
-            printf("glXCreateGLXPixmapMESA(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.visual, unpacked->args.pixmap, unpacked->args.cmap);
+            printf("glXCreateGLXPixmapMESA(%p, %p, %lu, %lu);\n", unpacked->args.dpy, unpacked->args.visual, unpacked->args.pixmap, unpacked->args.cmap);
             break;
         }
         case glXCreateGLXPixmapWithConfigSGIX_INDEX: {
             glXCreateGLXPixmapWithConfigSGIX_PACKED *unpacked = (glXCreateGLXPixmapWithConfigSGIX_PACKED *)packed;
-            printf("glXCreateGLXPixmapWithConfigSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.pixmap);
+            printf("glXCreateGLXPixmapWithConfigSGIX(%p, %p, %lu);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.pixmap);
             break;
         }
         case glXCreateGLXVideoSourceSGIX_INDEX: {
             glXCreateGLXVideoSourceSGIX_PACKED *unpacked = (glXCreateGLXVideoSourceSGIX_PACKED *)packed;
-            printf("glXCreateGLXVideoSourceSGIX(%p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.server, unpacked->args.path, unpacked->args.nodeClass, unpacked->args.drainNode);
+            printf("glXCreateGLXVideoSourceSGIX(%p, %d, %p, %p, %d, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.server, unpacked->args.path, unpacked->args.nodeClass, unpacked->args.drainNode);
             break;
         }
         case glXCreateNewContext_INDEX: {
             glXCreateNewContext_PACKED *unpacked = (glXCreateNewContext_PACKED *)packed;
-            printf("glXCreateNewContext(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.render_type, unpacked->args.share_list, unpacked->args.direct);
+            printf("glXCreateNewContext(%p, %p, %d, %p, %d);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.render_type, unpacked->args.share_list, unpacked->args.direct);
             break;
         }
         case glXCreatePbuffer_INDEX: {
@@ -1189,17 +1189,17 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXCreatePixmap_INDEX: {
             glXCreatePixmap_PACKED *unpacked = (glXCreatePixmap_PACKED *)packed;
-            printf("glXCreatePixmap(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.pixmap, unpacked->args.attrib_list);
+            printf("glXCreatePixmap(%p, %p, %lu, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.pixmap, unpacked->args.attrib_list);
             break;
         }
         case glXCreateWindow_INDEX: {
             glXCreateWindow_PACKED *unpacked = (glXCreateWindow_PACKED *)packed;
-            printf("glXCreateWindow(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.win, unpacked->args.attrib_list);
+            printf("glXCreateWindow(%p, %p, %lu, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.win, unpacked->args.attrib_list);
             break;
         }
         case glXCushionSGI_INDEX: {
             glXCushionSGI_PACKED *unpacked = (glXCushionSGI_PACKED *)packed;
-            printf("glXCushionSGI(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.window, unpacked->args.cushion);
+            printf("glXCushionSGI(%p, %lu, %f);\n", unpacked->args.dpy, unpacked->args.window, unpacked->args.cushion);
             break;
         }
         case glXDestroyContext_INDEX: {
@@ -1224,7 +1224,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXDestroyHyperpipeConfigSGIX_INDEX: {
             glXDestroyHyperpipeConfigSGIX_PACKED *unpacked = (glXDestroyHyperpipeConfigSGIX_PACKED *)packed;
-            printf("glXDestroyHyperpipeConfigSGIX(%p, %p);\n", unpacked->args.dpy, unpacked->args.hpId);
+            printf("glXDestroyHyperpipeConfigSGIX(%p, %d);\n", unpacked->args.dpy, unpacked->args.hpId);
             break;
         }
         case glXDestroyPbuffer_INDEX: {
@@ -1244,12 +1244,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXEnumerateVideoCaptureDevicesNV_INDEX: {
             glXEnumerateVideoCaptureDevicesNV_PACKED *unpacked = (glXEnumerateVideoCaptureDevicesNV_PACKED *)packed;
-            printf("glXEnumerateVideoCaptureDevicesNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
+            printf("glXEnumerateVideoCaptureDevicesNV(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
             break;
         }
         case glXEnumerateVideoDevicesNV_INDEX: {
             glXEnumerateVideoDevicesNV_PACKED *unpacked = (glXEnumerateVideoDevicesNV_PACKED *)packed;
-            printf("glXEnumerateVideoDevicesNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
+            printf("glXEnumerateVideoDevicesNV(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
             break;
         }
         case glXFreeContextEXT_INDEX: {
@@ -1264,12 +1264,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXGetClientString_INDEX: {
             glXGetClientString_PACKED *unpacked = (glXGetClientString_PACKED *)packed;
-            printf("glXGetClientString(%p, %p);\n", unpacked->args.display, unpacked->args.name);
+            printf("glXGetClientString(%p, %d);\n", unpacked->args.display, unpacked->args.name);
             break;
         }
         case glXGetConfig_INDEX: {
             glXGetConfig_PACKED *unpacked = (glXGetConfig_PACKED *)packed;
-            printf("glXGetConfig(%p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.visual, unpacked->args.attribute, unpacked->args.value);
+            printf("glXGetConfig(%p, %p, %d, %p);\n", unpacked->args.display, unpacked->args.visual, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXGetContextIDEXT_INDEX: {
@@ -1309,22 +1309,22 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXGetDrawableAttributes_INDEX: {
             glXGetDrawableAttributes_PACKED *unpacked = (glXGetDrawableAttributes_PACKED *)packed;
-            printf("glXGetDrawableAttributes(%p);\n", unpacked->args.drawable);
+            printf("glXGetDrawableAttributes(%"PRIu32");\n", unpacked->args.drawable);
             break;
         }
         case glXGetDrawableAttributesSGIX_INDEX: {
             glXGetDrawableAttributesSGIX_PACKED *unpacked = (glXGetDrawableAttributesSGIX_PACKED *)packed;
-            printf("glXGetDrawableAttributesSGIX(%p);\n", unpacked->args.drawable);
+            printf("glXGetDrawableAttributesSGIX(%"PRIu32");\n", unpacked->args.drawable);
             break;
         }
         case glXGetFBConfigAttrib_INDEX: {
             glXGetFBConfigAttrib_PACKED *unpacked = (glXGetFBConfigAttrib_PACKED *)packed;
-            printf("glXGetFBConfigAttrib(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.attribute, unpacked->args.value);
+            printf("glXGetFBConfigAttrib(%p, %p, %d, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXGetFBConfigAttribSGIX_INDEX: {
             glXGetFBConfigAttribSGIX_PACKED *unpacked = (glXGetFBConfigAttribSGIX_PACKED *)packed;
-            printf("glXGetFBConfigAttribSGIX(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.attribute, unpacked->args.value);
+            printf("glXGetFBConfigAttribSGIX(%p, %p, %d, %p);\n", unpacked->args.dpy, unpacked->args.config, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXGetFBConfigFromVisualSGIX_INDEX: {
@@ -1334,7 +1334,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXGetFBConfigs_INDEX: {
             glXGetFBConfigs_PACKED *unpacked = (glXGetFBConfigs_PACKED *)packed;
-            printf("glXGetFBConfigs(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
+            printf("glXGetFBConfigs(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.nelements);
             break;
         }
         case glXGetFBConfigsSGIX_INDEX: {
@@ -1344,7 +1344,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXGetMscRateOML_INDEX: {
             glXGetMscRateOML_PACKED *unpacked = (glXGetMscRateOML_PACKED *)packed;
-            printf("glXGetMscRateOML(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.numerator, unpacked->args.denominator);
+            printf("glXGetMscRateOML(%p, %d, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.numerator, unpacked->args.denominator);
             break;
         }
         case glXGetProcAddress_INDEX: {
@@ -1359,32 +1359,32 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXGetSelectedEvent_INDEX: {
             glXGetSelectedEvent_PACKED *unpacked = (glXGetSelectedEvent_PACKED *)packed;
-            printf("glXGetSelectedEvent(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.event_mask);
+            printf("glXGetSelectedEvent(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.event_mask);
             break;
         }
         case glXGetSelectedEventSGIX_INDEX: {
             glXGetSelectedEventSGIX_PACKED *unpacked = (glXGetSelectedEventSGIX_PACKED *)packed;
-            printf("glXGetSelectedEventSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.mask);
+            printf("glXGetSelectedEventSGIX(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.mask);
             break;
         }
         case glXGetSyncValuesOML_INDEX: {
             glXGetSyncValuesOML_PACKED *unpacked = (glXGetSyncValuesOML_PACKED *)packed;
-            printf("glXGetSyncValuesOML(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
+            printf("glXGetSyncValuesOML(%p, %d, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
             break;
         }
         case glXGetTransparentIndexSUN_INDEX: {
             glXGetTransparentIndexSUN_PACKED *unpacked = (glXGetTransparentIndexSUN_PACKED *)packed;
-            printf("glXGetTransparentIndexSUN(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.overlay, unpacked->args.underlay, unpacked->args.pTransparentIndex);
+            printf("glXGetTransparentIndexSUN(%p, %lu, %lu, %p);\n", unpacked->args.dpy, unpacked->args.overlay, unpacked->args.underlay, unpacked->args.pTransparentIndex);
             break;
         }
         case glXGetVideoDeviceNV_INDEX: {
             glXGetVideoDeviceNV_PACKED *unpacked = (glXGetVideoDeviceNV_PACKED *)packed;
-            printf("glXGetVideoDeviceNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.numVideoDevices, unpacked->args.pVideoDevice);
+            printf("glXGetVideoDeviceNV(%p, %d, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.numVideoDevices, unpacked->args.pVideoDevice);
             break;
         }
         case glXGetVideoInfoNV_INDEX: {
             glXGetVideoInfoNV_PACKED *unpacked = (glXGetVideoInfoNV_PACKED *)packed;
-            printf("glXGetVideoInfoNV(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.VideoDevice, unpacked->args.pulCounterOutputPbuffer, unpacked->args.pulCounterOutputVideo);
+            printf("glXGetVideoInfoNV(%p, %d, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.VideoDevice, unpacked->args.pulCounterOutputPbuffer, unpacked->args.pulCounterOutputVideo);
             break;
         }
         case glXGetVideoSyncSGI_INDEX: {
@@ -1409,12 +1409,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXHyperpipeAttribSGIX_INDEX: {
             glXHyperpipeAttribSGIX_PACKED *unpacked = (glXHyperpipeAttribSGIX_PACKED *)packed;
-            printf("glXHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.attribList);
+            printf("glXHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.attribList);
             break;
         }
         case glXHyperpipeConfigSGIX_INDEX: {
             glXHyperpipeConfigSGIX_PACKED *unpacked = (glXHyperpipeConfigSGIX_PACKED *)packed;
-            printf("glXHyperpipeConfigSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.networkId, unpacked->args.npipes, unpacked->args.cfg, unpacked->args.hpId);
+            printf("glXHyperpipeConfigSGIX(%p, %d, %d, %p, %p);\n", unpacked->args.dpy, unpacked->args.networkId, unpacked->args.npipes, unpacked->args.cfg, unpacked->args.hpId);
             break;
         }
         case glXImportContextEXT_INDEX: {
@@ -1429,12 +1429,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXJoinSwapGroupNV_INDEX: {
             glXJoinSwapGroupNV_PACKED *unpacked = (glXJoinSwapGroupNV_PACKED *)packed;
-            printf("glXJoinSwapGroupNV(%p, %p, %u);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.group);
+            printf("glXJoinSwapGroupNV(%p, %d, %u);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.group);
             break;
         }
         case glXJoinSwapGroupSGIX_INDEX: {
             glXJoinSwapGroupSGIX_PACKED *unpacked = (glXJoinSwapGroupSGIX_PACKED *)packed;
-            printf("glXJoinSwapGroupSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.member);
+            printf("glXJoinSwapGroupSGIX(%p, %d, %d);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.member);
             break;
         }
         case glXLockVideoCaptureDeviceNV_INDEX: {
@@ -1444,42 +1444,42 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXMakeContextCurrent_INDEX: {
             glXMakeContextCurrent_PACKED *unpacked = (glXMakeContextCurrent_PACKED *)packed;
-            printf("glXMakeContextCurrent(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.read, unpacked->args.ctx);
+            printf("glXMakeContextCurrent(%p, %d, %d, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.read, unpacked->args.ctx);
             break;
         }
         case glXMakeCurrent_INDEX: {
             glXMakeCurrent_PACKED *unpacked = (glXMakeCurrent_PACKED *)packed;
-            printf("glXMakeCurrent(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.ctx);
+            printf("glXMakeCurrent(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.ctx);
             break;
         }
         case glXMakeCurrentReadSGI_INDEX: {
             glXMakeCurrentReadSGI_PACKED *unpacked = (glXMakeCurrentReadSGI_PACKED *)packed;
-            printf("glXMakeCurrentReadSGI(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.read, unpacked->args.ctx);
+            printf("glXMakeCurrentReadSGI(%p, %d, %d, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.read, unpacked->args.ctx);
             break;
         }
         case glXQueryChannelDeltasSGIX_INDEX: {
             glXQueryChannelDeltasSGIX_PACKED *unpacked = (glXQueryChannelDeltasSGIX_PACKED *)packed;
-            printf("glXQueryChannelDeltasSGIX(%p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.x, unpacked->args.y, unpacked->args.w, unpacked->args.h);
+            printf("glXQueryChannelDeltasSGIX(%p, %d, %d, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.x, unpacked->args.y, unpacked->args.w, unpacked->args.h);
             break;
         }
         case glXQueryChannelRectSGIX_INDEX: {
             glXQueryChannelRectSGIX_PACKED *unpacked = (glXQueryChannelRectSGIX_PACKED *)packed;
-            printf("glXQueryChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.dx, unpacked->args.dy, unpacked->args.dw, unpacked->args.dh);
+            printf("glXQueryChannelRectSGIX(%p, %d, %d, %p, %p, %p, %p);\n", unpacked->args.display, unpacked->args.screen, unpacked->args.channel, unpacked->args.dx, unpacked->args.dy, unpacked->args.dw, unpacked->args.dh);
             break;
         }
         case glXQueryContext_INDEX: {
             glXQueryContext_PACKED *unpacked = (glXQueryContext_PACKED *)packed;
-            printf("glXQueryContext(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.ctx, unpacked->args.attribute, unpacked->args.value);
+            printf("glXQueryContext(%p, %p, %d, %p);\n", unpacked->args.dpy, unpacked->args.ctx, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXQueryContextInfoEXT_INDEX: {
             glXQueryContextInfoEXT_PACKED *unpacked = (glXQueryContextInfoEXT_PACKED *)packed;
-            printf("glXQueryContextInfoEXT(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.context, unpacked->args.attribute, unpacked->args.value);
+            printf("glXQueryContextInfoEXT(%p, %p, %d, %p);\n", unpacked->args.dpy, unpacked->args.context, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXQueryDrawable_INDEX: {
             glXQueryDrawable_PACKED *unpacked = (glXQueryDrawable_PACKED *)packed;
-            printf("glXQueryDrawable(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.attribute, unpacked->args.value);
+            printf("glXQueryDrawable(%p, %d, %d, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXQueryExtension_INDEX: {
@@ -1489,32 +1489,32 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXQueryExtensionsString_INDEX: {
             glXQueryExtensionsString_PACKED *unpacked = (glXQueryExtensionsString_PACKED *)packed;
-            printf("glXQueryExtensionsString(%p, %p);\n", unpacked->args.dpy, unpacked->args.screen);
+            printf("glXQueryExtensionsString(%p, %d);\n", unpacked->args.dpy, unpacked->args.screen);
             break;
         }
         case glXQueryFrameCountNV_INDEX: {
             glXQueryFrameCountNV_PACKED *unpacked = (glXQueryFrameCountNV_PACKED *)packed;
-            printf("glXQueryFrameCountNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.count);
+            printf("glXQueryFrameCountNV(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.count);
             break;
         }
         case glXQueryGLXPbufferSGIX_INDEX: {
             glXQueryGLXPbufferSGIX_PACKED *unpacked = (glXQueryGLXPbufferSGIX_PACKED *)packed;
-            printf("glXQueryGLXPbufferSGIX(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.pbuf, unpacked->args.attribute, unpacked->args.value);
+            printf("glXQueryGLXPbufferSGIX(%p, %p, %d, %p);\n", unpacked->args.dpy, unpacked->args.pbuf, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXQueryHyperpipeAttribSGIX_INDEX: {
             glXQueryHyperpipeAttribSGIX_PACKED *unpacked = (glXQueryHyperpipeAttribSGIX_PACKED *)packed;
-            printf("glXQueryHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.returnAttribList);
+            printf("glXQueryHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.returnAttribList);
             break;
         }
         case glXQueryHyperpipeBestAttribSGIX_INDEX: {
             glXQueryHyperpipeBestAttribSGIX_PACKED *unpacked = (glXQueryHyperpipeBestAttribSGIX_PACKED *)packed;
-            printf("glXQueryHyperpipeBestAttribSGIX(%p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.attribList, unpacked->args.returnAttribList);
+            printf("glXQueryHyperpipeBestAttribSGIX(%p, %d, %d, %d, %p, %p);\n", unpacked->args.dpy, unpacked->args.timeSlice, unpacked->args.attrib, unpacked->args.size, unpacked->args.attribList, unpacked->args.returnAttribList);
             break;
         }
         case glXQueryHyperpipeConfigSGIX_INDEX: {
             glXQueryHyperpipeConfigSGIX_PACKED *unpacked = (glXQueryHyperpipeConfigSGIX_PACKED *)packed;
-            printf("glXQueryHyperpipeConfigSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.hpId, unpacked->args.npipes);
+            printf("glXQueryHyperpipeConfigSGIX(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.hpId, unpacked->args.npipes);
             break;
         }
         case glXQueryHyperpipeNetworkSGIX_INDEX: {
@@ -1524,22 +1524,22 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXQueryMaxSwapBarriersSGIX_INDEX: {
             glXQueryMaxSwapBarriersSGIX_PACKED *unpacked = (glXQueryMaxSwapBarriersSGIX_PACKED *)packed;
-            printf("glXQueryMaxSwapBarriersSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.max);
+            printf("glXQueryMaxSwapBarriersSGIX(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.max);
             break;
         }
         case glXQueryMaxSwapGroupsNV_INDEX: {
             glXQueryMaxSwapGroupsNV_PACKED *unpacked = (glXQueryMaxSwapGroupsNV_PACKED *)packed;
-            printf("glXQueryMaxSwapGroupsNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.maxGroups, unpacked->args.maxBarriers);
+            printf("glXQueryMaxSwapGroupsNV(%p, %d, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.maxGroups, unpacked->args.maxBarriers);
             break;
         }
         case glXQueryServerString_INDEX: {
             glXQueryServerString_PACKED *unpacked = (glXQueryServerString_PACKED *)packed;
-            printf("glXQueryServerString(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.name);
+            printf("glXQueryServerString(%p, %d, %d);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.name);
             break;
         }
         case glXQuerySwapGroupNV_INDEX: {
             glXQuerySwapGroupNV_PACKED *unpacked = (glXQuerySwapGroupNV_PACKED *)packed;
-            printf("glXQuerySwapGroupNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.group, unpacked->args.barrier);
+            printf("glXQuerySwapGroupNV(%p, %d, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.group, unpacked->args.barrier);
             break;
         }
         case glXQueryVersion_INDEX: {
@@ -1549,17 +1549,17 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXQueryVideoCaptureDeviceNV_INDEX: {
             glXQueryVideoCaptureDeviceNV_PACKED *unpacked = (glXQueryVideoCaptureDeviceNV_PACKED *)packed;
-            printf("glXQueryVideoCaptureDeviceNV(%p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.device, unpacked->args.attribute, unpacked->args.value);
+            printf("glXQueryVideoCaptureDeviceNV(%p, %p, %d, %p);\n", unpacked->args.dpy, unpacked->args.device, unpacked->args.attribute, unpacked->args.value);
             break;
         }
         case glXReleaseBuffersMESA_INDEX: {
             glXReleaseBuffersMESA_PACKED *unpacked = (glXReleaseBuffersMESA_PACKED *)packed;
-            printf("glXReleaseBuffersMESA(%p, %p);\n", unpacked->args.dpy, unpacked->args.drawable);
+            printf("glXReleaseBuffersMESA(%p, %d);\n", unpacked->args.dpy, unpacked->args.drawable);
             break;
         }
         case glXReleaseTexImageEXT_INDEX: {
             glXReleaseTexImageEXT_PACKED *unpacked = (glXReleaseTexImageEXT_PACKED *)packed;
-            printf("glXReleaseTexImageEXT(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.buffer);
+            printf("glXReleaseTexImageEXT(%p, %d, %d);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.buffer);
             break;
         }
         case glXReleaseVideoCaptureDeviceNV_INDEX: {
@@ -1569,7 +1569,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXReleaseVideoDeviceNV_INDEX: {
             glXReleaseVideoDeviceNV_PACKED *unpacked = (glXReleaseVideoDeviceNV_PACKED *)packed;
-            printf("glXReleaseVideoDeviceNV(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.VideoDevice);
+            printf("glXReleaseVideoDeviceNV(%p, %d, %p);\n", unpacked->args.dpy, unpacked->args.screen, unpacked->args.VideoDevice);
             break;
         }
         case glXReleaseVideoImageNV_INDEX: {
@@ -1589,57 +1589,57 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXResetFrameCountNV_INDEX: {
             glXResetFrameCountNV_PACKED *unpacked = (glXResetFrameCountNV_PACKED *)packed;
-            printf("glXResetFrameCountNV(%p, %p);\n", unpacked->args.dpy, unpacked->args.screen);
+            printf("glXResetFrameCountNV(%p, %d);\n", unpacked->args.dpy, unpacked->args.screen);
             break;
         }
         case glXSelectEvent_INDEX: {
             glXSelectEvent_PACKED *unpacked = (glXSelectEvent_PACKED *)packed;
-            printf("glXSelectEvent(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.event_mask);
+            printf("glXSelectEvent(%p, %d, %lu);\n", unpacked->args.dpy, unpacked->args.draw, unpacked->args.event_mask);
             break;
         }
         case glXSelectEventSGIX_INDEX: {
             glXSelectEventSGIX_PACKED *unpacked = (glXSelectEventSGIX_PACKED *)packed;
-            printf("glXSelectEventSGIX(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.mask);
+            printf("glXSelectEventSGIX(%p, %d, %lu);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.mask);
             break;
         }
         case glXSendPbufferToVideoNV_INDEX: {
             glXSendPbufferToVideoNV_PACKED *unpacked = (glXSendPbufferToVideoNV_PACKED *)packed;
-            printf("glXSendPbufferToVideoNV(%p, %p, %p, %p, %d);\n", unpacked->args.dpy, unpacked->args.pbuf, unpacked->args.iBufferType, unpacked->args.pulCounterPbuffer, unpacked->args.bBlock);
+            printf("glXSendPbufferToVideoNV(%p, %p, %d, %p, %d);\n", unpacked->args.dpy, unpacked->args.pbuf, unpacked->args.iBufferType, unpacked->args.pulCounterPbuffer, unpacked->args.bBlock);
             break;
         }
         case glXSet3DfxModeMESA_INDEX: {
             glXSet3DfxModeMESA_PACKED *unpacked = (glXSet3DfxModeMESA_PACKED *)packed;
-            printf("glXSet3DfxModeMESA(%p);\n", unpacked->args.mode);
+            printf("glXSet3DfxModeMESA(%d);\n", unpacked->args.mode);
             break;
         }
         case glXSwapBuffers_INDEX: {
             glXSwapBuffers_PACKED *unpacked = (glXSwapBuffers_PACKED *)packed;
-            printf("glXSwapBuffers(%p, %p);\n", unpacked->args.dpy, unpacked->args.drawable);
+            printf("glXSwapBuffers(%p, %d);\n", unpacked->args.dpy, unpacked->args.drawable);
             break;
         }
         case glXSwapBuffersMscOML_INDEX: {
             glXSwapBuffersMscOML_PACKED *unpacked = (glXSwapBuffersMscOML_PACKED *)packed;
-            printf("glXSwapBuffersMscOML(%p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_msc, unpacked->args.divisor, unpacked->args.remainder);
+            printf("glXSwapBuffersMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64");\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_msc, unpacked->args.divisor, unpacked->args.remainder);
             break;
         }
         case glXSwapIntervalEXT_INDEX: {
             glXSwapIntervalEXT_PACKED *unpacked = (glXSwapIntervalEXT_PACKED *)packed;
-            printf("glXSwapIntervalEXT(%p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.interval);
+            printf("glXSwapIntervalEXT(%p, %d, %d);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.interval);
             break;
         }
         case glXSwapIntervalMESA_INDEX: {
             glXSwapIntervalMESA_PACKED *unpacked = (glXSwapIntervalMESA_PACKED *)packed;
-            printf("glXSwapIntervalMESA(%p);\n", unpacked->args.interval);
+            printf("glXSwapIntervalMESA(%u);\n", unpacked->args.interval);
             break;
         }
         case glXSwapIntervalSGI_INDEX: {
             glXSwapIntervalSGI_PACKED *unpacked = (glXSwapIntervalSGI_PACKED *)packed;
-            printf("glXSwapIntervalSGI(%p);\n", unpacked->args.interval);
+            printf("glXSwapIntervalSGI(%d);\n", unpacked->args.interval);
             break;
         }
         case glXUseXFont_INDEX: {
             glXUseXFont_PACKED *unpacked = (glXUseXFont_PACKED *)packed;
-            printf("glXUseXFont(%p, %p, %p, %p);\n", unpacked->args.font, unpacked->args.first, unpacked->args.count, unpacked->args.listBase);
+            printf("glXUseXFont(%lu, %d, %d, %d);\n", unpacked->args.font, unpacked->args.first, unpacked->args.count, unpacked->args.listBase);
             break;
         }
         case glXVendorPrivate_INDEX: {
@@ -1654,12 +1654,12 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXWaitForMscOML_INDEX: {
             glXWaitForMscOML_PACKED *unpacked = (glXWaitForMscOML_PACKED *)packed;
-            printf("glXWaitForMscOML(%p, %p, %p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_msc, unpacked->args.divisor, unpacked->args.remainder, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
+            printf("glXWaitForMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64", %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_msc, unpacked->args.divisor, unpacked->args.remainder, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
             break;
         }
         case glXWaitForSbcOML_INDEX: {
             glXWaitForSbcOML_PACKED *unpacked = (glXWaitForSbcOML_PACKED *)packed;
-            printf("glXWaitForSbcOML(%p, %p, %p, %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_sbc, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
+            printf("glXWaitForSbcOML(%p, %d, %"PRIi64", %p, %p, %p);\n", unpacked->args.dpy, unpacked->args.drawable, unpacked->args.target_sbc, unpacked->args.ust, unpacked->args.msc, unpacked->args.sbc);
             break;
         }
         case glXWaitGL_INDEX: {
@@ -1669,7 +1669,7 @@ void mock_print(const packed_call_t *packed) {
         }
         case glXWaitVideoSyncSGI_INDEX: {
             glXWaitVideoSyncSGI_PACKED *unpacked = (glXWaitVideoSyncSGI_PACKED *)packed;
-            printf("glXWaitVideoSyncSGI(%p, %p, %p);\n", unpacked->args.divisor, unpacked->args.remainder, unpacked->args.count);
+            printf("glXWaitVideoSyncSGI(%d, %d, %p);\n", unpacked->args.divisor, unpacked->args.remainder, unpacked->args.count);
             break;
         }
         case glXWaitX_INDEX: {

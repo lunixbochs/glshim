@@ -14534,7 +14534,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glBufferAddressRangeNV_INDEX: {
             glBufferAddressRangeNV_PACKED *unpacked = (glBufferAddressRangeNV_PACKED *)packed;
             glBufferAddressRangeNV_ARGS *args = (glBufferAddressRangeNV_ARGS *)&unpacked->args;
-            printf("glBufferAddressRangeNV(0x%04X, %u, %llu, %td);\n", args->pname, args->index, args->address, args->length);
+            printf("glBufferAddressRangeNV(0x%04X, %u, %"PRIu64", %td);\n", args->pname, args->index, args->address, args->length);
             break;
         }
         case glBufferData_INDEX: {
@@ -14780,7 +14780,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glClientWaitSync_INDEX: {
             glClientWaitSync_PACKED *unpacked = (glClientWaitSync_PACKED *)packed;
             glClientWaitSync_ARGS *args = (glClientWaitSync_ARGS *)&unpacked->args;
-            printf("glClientWaitSync(%p, %d, %llu);\n", args->sync, args->flags, args->timeout);
+            printf("glClientWaitSync(%p, %d, %"PRIu64");\n", args->sync, args->flags, args->timeout);
             break;
         }
         case glClipPlane_INDEX: {
@@ -20140,7 +20140,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glIsImageHandleResidentNV_INDEX: {
             glIsImageHandleResidentNV_PACKED *unpacked = (glIsImageHandleResidentNV_PACKED *)packed;
             glIsImageHandleResidentNV_ARGS *args = (glIsImageHandleResidentNV_ARGS *)&unpacked->args;
-            printf("glIsImageHandleResidentNV(%llu);\n", args->handle);
+            printf("glIsImageHandleResidentNV(%"PRIu64");\n", args->handle);
             break;
         }
         case glIsList_INDEX: {
@@ -20278,7 +20278,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glIsTextureHandleResidentNV_INDEX: {
             glIsTextureHandleResidentNV_PACKED *unpacked = (glIsTextureHandleResidentNV_PACKED *)packed;
             glIsTextureHandleResidentNV_ARGS *args = (glIsTextureHandleResidentNV_ARGS *)&unpacked->args;
-            printf("glIsTextureHandleResidentNV(%llu);\n", args->handle);
+            printf("glIsTextureHandleResidentNV(%"PRIu64");\n", args->handle);
             break;
         }
         case glIsTransformFeedback_INDEX: {
@@ -20588,13 +20588,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMakeImageHandleNonResidentNV_INDEX: {
             glMakeImageHandleNonResidentNV_PACKED *unpacked = (glMakeImageHandleNonResidentNV_PACKED *)packed;
             glMakeImageHandleNonResidentNV_ARGS *args = (glMakeImageHandleNonResidentNV_ARGS *)&unpacked->args;
-            printf("glMakeImageHandleNonResidentNV(%llu);\n", args->handle);
+            printf("glMakeImageHandleNonResidentNV(%"PRIu64");\n", args->handle);
             break;
         }
         case glMakeImageHandleResidentNV_INDEX: {
             glMakeImageHandleResidentNV_PACKED *unpacked = (glMakeImageHandleResidentNV_PACKED *)packed;
             glMakeImageHandleResidentNV_ARGS *args = (glMakeImageHandleResidentNV_ARGS *)&unpacked->args;
-            printf("glMakeImageHandleResidentNV(%llu, 0x%04X);\n", args->handle, args->access);
+            printf("glMakeImageHandleResidentNV(%"PRIu64", 0x%04X);\n", args->handle, args->access);
             break;
         }
         case glMakeNamedBufferNonResidentNV_INDEX: {
@@ -20612,13 +20612,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glMakeTextureHandleNonResidentNV_INDEX: {
             glMakeTextureHandleNonResidentNV_PACKED *unpacked = (glMakeTextureHandleNonResidentNV_PACKED *)packed;
             glMakeTextureHandleNonResidentNV_ARGS *args = (glMakeTextureHandleNonResidentNV_ARGS *)&unpacked->args;
-            printf("glMakeTextureHandleNonResidentNV(%llu);\n", args->handle);
+            printf("glMakeTextureHandleNonResidentNV(%"PRIu64");\n", args->handle);
             break;
         }
         case glMakeTextureHandleResidentNV_INDEX: {
             glMakeTextureHandleResidentNV_PACKED *unpacked = (glMakeTextureHandleResidentNV_PACKED *)packed;
             glMakeTextureHandleResidentNV_ARGS *args = (glMakeTextureHandleResidentNV_ARGS *)&unpacked->args;
-            printf("glMakeTextureHandleResidentNV(%llu);\n", args->handle);
+            printf("glMakeTextureHandleResidentNV(%"PRIu64");\n", args->handle);
             break;
         }
         case glMap1d_INDEX: {
@@ -22782,13 +22782,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glPresentFrameDualFillNV_INDEX: {
             glPresentFrameDualFillNV_PACKED *unpacked = (glPresentFrameDualFillNV_PACKED *)packed;
             glPresentFrameDualFillNV_ARGS *args = (glPresentFrameDualFillNV_ARGS *)&unpacked->args;
-            printf("glPresentFrameDualFillNV(%u, %llu, %u, %u, 0x%04X, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u);\n", args->video_slot, args->minPresentTime, args->beginPresentTimeId, args->presentDurationId, args->type, args->target0, args->fill0, args->target1, args->fill1, args->target2, args->fill2, args->target3, args->fill3);
+            printf("glPresentFrameDualFillNV(%u, %"PRIu64", %u, %u, 0x%04X, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u);\n", args->video_slot, args->minPresentTime, args->beginPresentTimeId, args->presentDurationId, args->type, args->target0, args->fill0, args->target1, args->fill1, args->target2, args->fill2, args->target3, args->fill3);
             break;
         }
         case glPresentFrameKeyedNV_INDEX: {
             glPresentFrameKeyedNV_PACKED *unpacked = (glPresentFrameKeyedNV_PACKED *)packed;
             glPresentFrameKeyedNV_ARGS *args = (glPresentFrameKeyedNV_ARGS *)&unpacked->args;
-            printf("glPresentFrameKeyedNV(%u, %llu, %u, %u, 0x%04X, 0x%04X, %u, %u, 0x%04X, %u, %u);\n", args->video_slot, args->minPresentTime, args->beginPresentTimeId, args->presentDurationId, args->type, args->target0, args->fill0, args->key0, args->target1, args->fill1, args->key1);
+            printf("glPresentFrameKeyedNV(%u, %"PRIu64", %u, %u, 0x%04X, 0x%04X, %u, %u, 0x%04X, %u, %u);\n", args->video_slot, args->minPresentTime, args->beginPresentTimeId, args->presentDurationId, args->type, args->target0, args->fill0, args->key0, args->target1, args->fill1, args->key1);
             break;
         }
         case glPrimitiveRestartIndex_INDEX: {
@@ -23128,7 +23128,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform1i64NV_INDEX: {
             glProgramUniform1i64NV_PACKED *unpacked = (glProgramUniform1i64NV_PACKED *)packed;
             glProgramUniform1i64NV_ARGS *args = (glProgramUniform1i64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform1i64NV(%u, %d, %lld);\n", args->program, args->location, args->x);
+            printf("glProgramUniform1i64NV(%u, %d, %"PRIi64");\n", args->program, args->location, args->x);
             break;
         }
         case glProgramUniform1i64vNV_INDEX: {
@@ -23164,7 +23164,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform1ui64NV_INDEX: {
             glProgramUniform1ui64NV_PACKED *unpacked = (glProgramUniform1ui64NV_PACKED *)packed;
             glProgramUniform1ui64NV_ARGS *args = (glProgramUniform1ui64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform1ui64NV(%u, %d, %llu);\n", args->program, args->location, args->x);
+            printf("glProgramUniform1ui64NV(%u, %d, %"PRIu64");\n", args->program, args->location, args->x);
             break;
         }
         case glProgramUniform1ui64vNV_INDEX: {
@@ -23248,7 +23248,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform2i64NV_INDEX: {
             glProgramUniform2i64NV_PACKED *unpacked = (glProgramUniform2i64NV_PACKED *)packed;
             glProgramUniform2i64NV_ARGS *args = (glProgramUniform2i64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform2i64NV(%u, %d, %lld, %lld);\n", args->program, args->location, args->x, args->y);
+            printf("glProgramUniform2i64NV(%u, %d, %"PRIi64", %"PRIi64");\n", args->program, args->location, args->x, args->y);
             break;
         }
         case glProgramUniform2i64vNV_INDEX: {
@@ -23284,7 +23284,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform2ui64NV_INDEX: {
             glProgramUniform2ui64NV_PACKED *unpacked = (glProgramUniform2ui64NV_PACKED *)packed;
             glProgramUniform2ui64NV_ARGS *args = (glProgramUniform2ui64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform2ui64NV(%u, %d, %llu, %llu);\n", args->program, args->location, args->x, args->y);
+            printf("glProgramUniform2ui64NV(%u, %d, %"PRIu64", %"PRIu64");\n", args->program, args->location, args->x, args->y);
             break;
         }
         case glProgramUniform2ui64vNV_INDEX: {
@@ -23368,7 +23368,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform3i64NV_INDEX: {
             glProgramUniform3i64NV_PACKED *unpacked = (glProgramUniform3i64NV_PACKED *)packed;
             glProgramUniform3i64NV_ARGS *args = (glProgramUniform3i64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform3i64NV(%u, %d, %lld, %lld, %lld);\n", args->program, args->location, args->x, args->y, args->z);
+            printf("glProgramUniform3i64NV(%u, %d, %"PRIi64", %"PRIi64", %"PRIi64");\n", args->program, args->location, args->x, args->y, args->z);
             break;
         }
         case glProgramUniform3i64vNV_INDEX: {
@@ -23404,7 +23404,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform3ui64NV_INDEX: {
             glProgramUniform3ui64NV_PACKED *unpacked = (glProgramUniform3ui64NV_PACKED *)packed;
             glProgramUniform3ui64NV_ARGS *args = (glProgramUniform3ui64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform3ui64NV(%u, %d, %llu, %llu, %llu);\n", args->program, args->location, args->x, args->y, args->z);
+            printf("glProgramUniform3ui64NV(%u, %d, %"PRIu64", %"PRIu64", %"PRIu64");\n", args->program, args->location, args->x, args->y, args->z);
             break;
         }
         case glProgramUniform3ui64vNV_INDEX: {
@@ -23488,7 +23488,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform4i64NV_INDEX: {
             glProgramUniform4i64NV_PACKED *unpacked = (glProgramUniform4i64NV_PACKED *)packed;
             glProgramUniform4i64NV_ARGS *args = (glProgramUniform4i64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform4i64NV(%u, %d, %lld, %lld, %lld, %lld);\n", args->program, args->location, args->x, args->y, args->z, args->w);
+            printf("glProgramUniform4i64NV(%u, %d, %"PRIi64", %"PRIi64", %"PRIi64", %"PRIi64");\n", args->program, args->location, args->x, args->y, args->z, args->w);
             break;
         }
         case glProgramUniform4i64vNV_INDEX: {
@@ -23524,7 +23524,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniform4ui64NV_INDEX: {
             glProgramUniform4ui64NV_PACKED *unpacked = (glProgramUniform4ui64NV_PACKED *)packed;
             glProgramUniform4ui64NV_ARGS *args = (glProgramUniform4ui64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniform4ui64NV(%u, %d, %llu, %llu, %llu, %llu);\n", args->program, args->location, args->x, args->y, args->z, args->w);
+            printf("glProgramUniform4ui64NV(%u, %d, %"PRIu64", %"PRIu64", %"PRIu64", %"PRIu64");\n", args->program, args->location, args->x, args->y, args->z, args->w);
             break;
         }
         case glProgramUniform4ui64vNV_INDEX: {
@@ -23554,7 +23554,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniformHandleui64NV_INDEX: {
             glProgramUniformHandleui64NV_PACKED *unpacked = (glProgramUniformHandleui64NV_PACKED *)packed;
             glProgramUniformHandleui64NV_ARGS *args = (glProgramUniformHandleui64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniformHandleui64NV(%u, %d, %llu);\n", args->program, args->location, args->value);
+            printf("glProgramUniformHandleui64NV(%u, %d, %"PRIu64");\n", args->program, args->location, args->value);
             break;
         }
         case glProgramUniformHandleui64vNV_INDEX: {
@@ -23782,7 +23782,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glProgramUniformui64NV_INDEX: {
             glProgramUniformui64NV_PACKED *unpacked = (glProgramUniformui64NV_PACKED *)packed;
             glProgramUniformui64NV_ARGS *args = (glProgramUniformui64NV_ARGS *)&unpacked->args;
-            printf("glProgramUniformui64NV(%u, %d, %llu);\n", args->program, args->location, args->value);
+            printf("glProgramUniformui64NV(%u, %d, %"PRIu64");\n", args->program, args->location, args->value);
             break;
         }
         case glProgramUniformui64vNV_INDEX: {
@@ -26262,7 +26262,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform1i64NV_INDEX: {
             glUniform1i64NV_PACKED *unpacked = (glUniform1i64NV_PACKED *)packed;
             glUniform1i64NV_ARGS *args = (glUniform1i64NV_ARGS *)&unpacked->args;
-            printf("glUniform1i64NV(%d, %lld);\n", args->location, args->x);
+            printf("glUniform1i64NV(%d, %"PRIi64");\n", args->location, args->x);
             break;
         }
         case glUniform1i64vNV_INDEX: {
@@ -26298,7 +26298,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform1ui64NV_INDEX: {
             glUniform1ui64NV_PACKED *unpacked = (glUniform1ui64NV_PACKED *)packed;
             glUniform1ui64NV_ARGS *args = (glUniform1ui64NV_ARGS *)&unpacked->args;
-            printf("glUniform1ui64NV(%d, %llu);\n", args->location, args->x);
+            printf("glUniform1ui64NV(%d, %"PRIu64");\n", args->location, args->x);
             break;
         }
         case glUniform1ui64vNV_INDEX: {
@@ -26370,7 +26370,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform2i64NV_INDEX: {
             glUniform2i64NV_PACKED *unpacked = (glUniform2i64NV_PACKED *)packed;
             glUniform2i64NV_ARGS *args = (glUniform2i64NV_ARGS *)&unpacked->args;
-            printf("glUniform2i64NV(%d, %lld, %lld);\n", args->location, args->x, args->y);
+            printf("glUniform2i64NV(%d, %"PRIi64", %"PRIi64");\n", args->location, args->x, args->y);
             break;
         }
         case glUniform2i64vNV_INDEX: {
@@ -26406,7 +26406,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform2ui64NV_INDEX: {
             glUniform2ui64NV_PACKED *unpacked = (glUniform2ui64NV_PACKED *)packed;
             glUniform2ui64NV_ARGS *args = (glUniform2ui64NV_ARGS *)&unpacked->args;
-            printf("glUniform2ui64NV(%d, %llu, %llu);\n", args->location, args->x, args->y);
+            printf("glUniform2ui64NV(%d, %"PRIu64", %"PRIu64");\n", args->location, args->x, args->y);
             break;
         }
         case glUniform2ui64vNV_INDEX: {
@@ -26478,7 +26478,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform3i64NV_INDEX: {
             glUniform3i64NV_PACKED *unpacked = (glUniform3i64NV_PACKED *)packed;
             glUniform3i64NV_ARGS *args = (glUniform3i64NV_ARGS *)&unpacked->args;
-            printf("glUniform3i64NV(%d, %lld, %lld, %lld);\n", args->location, args->x, args->y, args->z);
+            printf("glUniform3i64NV(%d, %"PRIi64", %"PRIi64", %"PRIi64");\n", args->location, args->x, args->y, args->z);
             break;
         }
         case glUniform3i64vNV_INDEX: {
@@ -26514,7 +26514,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform3ui64NV_INDEX: {
             glUniform3ui64NV_PACKED *unpacked = (glUniform3ui64NV_PACKED *)packed;
             glUniform3ui64NV_ARGS *args = (glUniform3ui64NV_ARGS *)&unpacked->args;
-            printf("glUniform3ui64NV(%d, %llu, %llu, %llu);\n", args->location, args->x, args->y, args->z);
+            printf("glUniform3ui64NV(%d, %"PRIu64", %"PRIu64", %"PRIu64");\n", args->location, args->x, args->y, args->z);
             break;
         }
         case glUniform3ui64vNV_INDEX: {
@@ -26586,7 +26586,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform4i64NV_INDEX: {
             glUniform4i64NV_PACKED *unpacked = (glUniform4i64NV_PACKED *)packed;
             glUniform4i64NV_ARGS *args = (glUniform4i64NV_ARGS *)&unpacked->args;
-            printf("glUniform4i64NV(%d, %lld, %lld, %lld, %lld);\n", args->location, args->x, args->y, args->z, args->w);
+            printf("glUniform4i64NV(%d, %"PRIi64", %"PRIi64", %"PRIi64", %"PRIi64");\n", args->location, args->x, args->y, args->z, args->w);
             break;
         }
         case glUniform4i64vNV_INDEX: {
@@ -26622,7 +26622,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniform4ui64NV_INDEX: {
             glUniform4ui64NV_PACKED *unpacked = (glUniform4ui64NV_PACKED *)packed;
             glUniform4ui64NV_ARGS *args = (glUniform4ui64NV_ARGS *)&unpacked->args;
-            printf("glUniform4ui64NV(%d, %llu, %llu, %llu, %llu);\n", args->location, args->x, args->y, args->z, args->w);
+            printf("glUniform4ui64NV(%d, %"PRIu64", %"PRIu64", %"PRIu64", %"PRIu64");\n", args->location, args->x, args->y, args->z, args->w);
             break;
         }
         case glUniform4ui64vNV_INDEX: {
@@ -26664,7 +26664,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniformHandleui64NV_INDEX: {
             glUniformHandleui64NV_PACKED *unpacked = (glUniformHandleui64NV_PACKED *)packed;
             glUniformHandleui64NV_ARGS *args = (glUniformHandleui64NV_ARGS *)&unpacked->args;
-            printf("glUniformHandleui64NV(%d, %llu);\n", args->location, args->value);
+            printf("glUniformHandleui64NV(%d, %"PRIu64");\n", args->location, args->value);
             break;
         }
         case glUniformHandleui64vNV_INDEX: {
@@ -26808,7 +26808,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glUniformui64NV_INDEX: {
             glUniformui64NV_PACKED *unpacked = (glUniformui64NV_PACKED *)packed;
             glUniformui64NV_ARGS *args = (glUniformui64NV_ARGS *)&unpacked->args;
-            printf("glUniformui64NV(%d, %llu);\n", args->location, args->value);
+            printf("glUniformui64NV(%d, %"PRIu64");\n", args->location, args->value);
             break;
         }
         case glUniformui64vNV_INDEX: {
@@ -28358,7 +28358,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL1i64NV_INDEX: {
             glVertexAttribL1i64NV_PACKED *unpacked = (glVertexAttribL1i64NV_PACKED *)packed;
             glVertexAttribL1i64NV_ARGS *args = (glVertexAttribL1i64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL1i64NV(%u, %lld);\n", args->index, args->x);
+            printf("glVertexAttribL1i64NV(%u, %"PRIi64");\n", args->index, args->x);
             break;
         }
         case glVertexAttribL1i64vNV_INDEX: {
@@ -28370,7 +28370,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL1ui64NV_INDEX: {
             glVertexAttribL1ui64NV_PACKED *unpacked = (glVertexAttribL1ui64NV_PACKED *)packed;
             glVertexAttribL1ui64NV_ARGS *args = (glVertexAttribL1ui64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL1ui64NV(%u, %llu);\n", args->index, args->x);
+            printf("glVertexAttribL1ui64NV(%u, %"PRIu64");\n", args->index, args->x);
             break;
         }
         case glVertexAttribL1ui64vNV_INDEX: {
@@ -28406,7 +28406,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL2i64NV_INDEX: {
             glVertexAttribL2i64NV_PACKED *unpacked = (glVertexAttribL2i64NV_PACKED *)packed;
             glVertexAttribL2i64NV_ARGS *args = (glVertexAttribL2i64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL2i64NV(%u, %lld, %lld);\n", args->index, args->x, args->y);
+            printf("glVertexAttribL2i64NV(%u, %"PRIi64", %"PRIi64");\n", args->index, args->x, args->y);
             break;
         }
         case glVertexAttribL2i64vNV_INDEX: {
@@ -28418,7 +28418,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL2ui64NV_INDEX: {
             glVertexAttribL2ui64NV_PACKED *unpacked = (glVertexAttribL2ui64NV_PACKED *)packed;
             glVertexAttribL2ui64NV_ARGS *args = (glVertexAttribL2ui64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL2ui64NV(%u, %llu, %llu);\n", args->index, args->x, args->y);
+            printf("glVertexAttribL2ui64NV(%u, %"PRIu64", %"PRIu64");\n", args->index, args->x, args->y);
             break;
         }
         case glVertexAttribL2ui64vNV_INDEX: {
@@ -28454,7 +28454,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL3i64NV_INDEX: {
             glVertexAttribL3i64NV_PACKED *unpacked = (glVertexAttribL3i64NV_PACKED *)packed;
             glVertexAttribL3i64NV_ARGS *args = (glVertexAttribL3i64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL3i64NV(%u, %lld, %lld, %lld);\n", args->index, args->x, args->y, args->z);
+            printf("glVertexAttribL3i64NV(%u, %"PRIi64", %"PRIi64", %"PRIi64");\n", args->index, args->x, args->y, args->z);
             break;
         }
         case glVertexAttribL3i64vNV_INDEX: {
@@ -28466,7 +28466,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL3ui64NV_INDEX: {
             glVertexAttribL3ui64NV_PACKED *unpacked = (glVertexAttribL3ui64NV_PACKED *)packed;
             glVertexAttribL3ui64NV_ARGS *args = (glVertexAttribL3ui64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL3ui64NV(%u, %llu, %llu, %llu);\n", args->index, args->x, args->y, args->z);
+            printf("glVertexAttribL3ui64NV(%u, %"PRIu64", %"PRIu64", %"PRIu64");\n", args->index, args->x, args->y, args->z);
             break;
         }
         case glVertexAttribL3ui64vNV_INDEX: {
@@ -28502,7 +28502,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL4i64NV_INDEX: {
             glVertexAttribL4i64NV_PACKED *unpacked = (glVertexAttribL4i64NV_PACKED *)packed;
             glVertexAttribL4i64NV_ARGS *args = (glVertexAttribL4i64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL4i64NV(%u, %lld, %lld, %lld, %lld);\n", args->index, args->x, args->y, args->z, args->w);
+            printf("glVertexAttribL4i64NV(%u, %"PRIi64", %"PRIi64", %"PRIi64", %"PRIi64");\n", args->index, args->x, args->y, args->z, args->w);
             break;
         }
         case glVertexAttribL4i64vNV_INDEX: {
@@ -28514,7 +28514,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glVertexAttribL4ui64NV_INDEX: {
             glVertexAttribL4ui64NV_PACKED *unpacked = (glVertexAttribL4ui64NV_PACKED *)packed;
             glVertexAttribL4ui64NV_ARGS *args = (glVertexAttribL4ui64NV_ARGS *)&unpacked->args;
-            printf("glVertexAttribL4ui64NV(%u, %llu, %llu, %llu, %llu);\n", args->index, args->x, args->y, args->z, args->w);
+            printf("glVertexAttribL4ui64NV(%u, %"PRIu64", %"PRIu64", %"PRIu64", %"PRIu64");\n", args->index, args->x, args->y, args->z, args->w);
             break;
         }
         case glVertexAttribL4ui64vNV_INDEX: {
@@ -29078,7 +29078,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glWaitSync_INDEX: {
             glWaitSync_PACKED *unpacked = (glWaitSync_PACKED *)packed;
             glWaitSync_ARGS *args = (glWaitSync_ARGS *)&unpacked->args;
-            printf("glWaitSync(%p, %d, %llu);\n", args->sync, args->flags, args->timeout);
+            printf("glWaitSync(%p, %d, %"PRIu64");\n", args->sync, args->flags, args->timeout);
             break;
         }
         case glWeightPathsNV_INDEX: {
@@ -29492,13 +29492,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXBindChannelToWindowSGIX_INDEX: {
             glXBindChannelToWindowSGIX_PACKED *unpacked = (glXBindChannelToWindowSGIX_PACKED *)packed;
             glXBindChannelToWindowSGIX_ARGS *args = (glXBindChannelToWindowSGIX_ARGS *)&unpacked->args;
-            printf("glXBindChannelToWindowSGIX(%p, %p, %p, %p);\n", args->display, args->screen, args->channel, args->window);
+            printf("glXBindChannelToWindowSGIX(%p, %d, %d, %lu);\n", args->display, args->screen, args->channel, args->window);
             break;
         }
         case glXBindHyperpipeSGIX_INDEX: {
             glXBindHyperpipeSGIX_PACKED *unpacked = (glXBindHyperpipeSGIX_PACKED *)packed;
             glXBindHyperpipeSGIX_ARGS *args = (glXBindHyperpipeSGIX_ARGS *)&unpacked->args;
-            printf("glXBindHyperpipeSGIX(%p, %p);\n", args->dpy, args->hpId);
+            printf("glXBindHyperpipeSGIX(%p, %d);\n", args->dpy, args->hpId);
             break;
         }
         case glXBindSwapBarrierNV_INDEX: {
@@ -29510,73 +29510,73 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXBindSwapBarrierSGIX_INDEX: {
             glXBindSwapBarrierSGIX_PACKED *unpacked = (glXBindSwapBarrierSGIX_PACKED *)packed;
             glXBindSwapBarrierSGIX_ARGS *args = (glXBindSwapBarrierSGIX_ARGS *)&unpacked->args;
-            printf("glXBindSwapBarrierSGIX(%p, %p, %p);\n", args->dpy, args->drawable, args->barrier);
+            printf("glXBindSwapBarrierSGIX(%p, %d, %d);\n", args->dpy, args->drawable, args->barrier);
             break;
         }
         case glXBindTexImageEXT_INDEX: {
             glXBindTexImageEXT_PACKED *unpacked = (glXBindTexImageEXT_PACKED *)packed;
             glXBindTexImageEXT_ARGS *args = (glXBindTexImageEXT_ARGS *)&unpacked->args;
-            printf("glXBindTexImageEXT(%p, %p, %p, %p);\n", args->dpy, args->drawable, args->buffer, args->attrib_list);
+            printf("glXBindTexImageEXT(%p, %d, %d, %p);\n", args->dpy, args->drawable, args->buffer, args->attrib_list);
             break;
         }
         case glXBindVideoCaptureDeviceNV_INDEX: {
             glXBindVideoCaptureDeviceNV_PACKED *unpacked = (glXBindVideoCaptureDeviceNV_PACKED *)packed;
             glXBindVideoCaptureDeviceNV_ARGS *args = (glXBindVideoCaptureDeviceNV_ARGS *)&unpacked->args;
-            printf("glXBindVideoCaptureDeviceNV(%p, %p, %p);\n", args->dpy, args->video_capture_slot, args->device);
+            printf("glXBindVideoCaptureDeviceNV(%p, %u, %p);\n", args->dpy, args->video_capture_slot, args->device);
             break;
         }
         case glXBindVideoDeviceNV_INDEX: {
             glXBindVideoDeviceNV_PACKED *unpacked = (glXBindVideoDeviceNV_PACKED *)packed;
             glXBindVideoDeviceNV_ARGS *args = (glXBindVideoDeviceNV_ARGS *)&unpacked->args;
-            printf("glXBindVideoDeviceNV(%p, %p, %p, %p);\n", args->dpy, args->video_slot, args->video_device, args->attrib_list);
+            printf("glXBindVideoDeviceNV(%p, %u, %u, %p);\n", args->dpy, args->video_slot, args->video_device, args->attrib_list);
             break;
         }
         case glXBindVideoImageNV_INDEX: {
             glXBindVideoImageNV_PACKED *unpacked = (glXBindVideoImageNV_PACKED *)packed;
             glXBindVideoImageNV_ARGS *args = (glXBindVideoImageNV_ARGS *)&unpacked->args;
-            printf("glXBindVideoImageNV(%p, %p, %p, %p);\n", args->dpy, args->VideoDevice, args->pbuf, args->iVideoBuffer);
+            printf("glXBindVideoImageNV(%p, %p, %p, %d);\n", args->dpy, args->VideoDevice, args->pbuf, args->iVideoBuffer);
             break;
         }
         case glXChangeDrawableAttributes_INDEX: {
             glXChangeDrawableAttributes_PACKED *unpacked = (glXChangeDrawableAttributes_PACKED *)packed;
             glXChangeDrawableAttributes_ARGS *args = (glXChangeDrawableAttributes_ARGS *)&unpacked->args;
-            printf("glXChangeDrawableAttributes(%p);\n", args->drawable);
+            printf("glXChangeDrawableAttributes(%"PRIu32");\n", args->drawable);
             break;
         }
         case glXChangeDrawableAttributesSGIX_INDEX: {
             glXChangeDrawableAttributesSGIX_PACKED *unpacked = (glXChangeDrawableAttributesSGIX_PACKED *)packed;
             glXChangeDrawableAttributesSGIX_ARGS *args = (glXChangeDrawableAttributesSGIX_ARGS *)&unpacked->args;
-            printf("glXChangeDrawableAttributesSGIX(%p);\n", args->drawable);
+            printf("glXChangeDrawableAttributesSGIX(%"PRIu32");\n", args->drawable);
             break;
         }
         case glXChannelRectSGIX_INDEX: {
             glXChannelRectSGIX_PACKED *unpacked = (glXChannelRectSGIX_PACKED *)packed;
             glXChannelRectSGIX_ARGS *args = (glXChannelRectSGIX_ARGS *)&unpacked->args;
-            printf("glXChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", args->display, args->screen, args->channel, args->x, args->y, args->w, args->h);
+            printf("glXChannelRectSGIX(%p, %d, %d, %d, %d, %d, %d);\n", args->display, args->screen, args->channel, args->x, args->y, args->w, args->h);
             break;
         }
         case glXChannelRectSyncSGIX_INDEX: {
             glXChannelRectSyncSGIX_PACKED *unpacked = (glXChannelRectSyncSGIX_PACKED *)packed;
             glXChannelRectSyncSGIX_ARGS *args = (glXChannelRectSyncSGIX_ARGS *)&unpacked->args;
-            printf("glXChannelRectSyncSGIX(%p, %p, %p, 0x%04X);\n", args->display, args->screen, args->channel, args->synctype);
+            printf("glXChannelRectSyncSGIX(%p, %d, %d, 0x%04X);\n", args->display, args->screen, args->channel, args->synctype);
             break;
         }
         case glXChooseFBConfig_INDEX: {
             glXChooseFBConfig_PACKED *unpacked = (glXChooseFBConfig_PACKED *)packed;
             glXChooseFBConfig_ARGS *args = (glXChooseFBConfig_ARGS *)&unpacked->args;
-            printf("glXChooseFBConfig(%p, %p, %p, %p);\n", args->dpy, args->screen, args->attrib_list, args->nelements);
+            printf("glXChooseFBConfig(%p, %d, %p, %p);\n", args->dpy, args->screen, args->attrib_list, args->nelements);
             break;
         }
         case glXChooseFBConfigSGIX_INDEX: {
             glXChooseFBConfigSGIX_PACKED *unpacked = (glXChooseFBConfigSGIX_PACKED *)packed;
             glXChooseFBConfigSGIX_ARGS *args = (glXChooseFBConfigSGIX_ARGS *)&unpacked->args;
-            printf("glXChooseFBConfigSGIX(%p, %p, %p, %p);\n", args->dpy, args->screen, args->attrib_list, args->nelements);
+            printf("glXChooseFBConfigSGIX(%p, %d, %p, %p);\n", args->dpy, args->screen, args->attrib_list, args->nelements);
             break;
         }
         case glXChooseVisual_INDEX: {
             glXChooseVisual_PACKED *unpacked = (glXChooseVisual_PACKED *)packed;
             glXChooseVisual_ARGS *args = (glXChooseVisual_ARGS *)&unpacked->args;
-            printf("glXChooseVisual(%p, %p, %p);\n", args->dpy, args->screen, args->attribList);
+            printf("glXChooseVisual(%p, %d, %p);\n", args->dpy, args->screen, args->attribList);
             break;
         }
         case glXClientInfo_INDEX: {
@@ -29586,7 +29586,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXCopyContext_INDEX: {
             glXCopyContext_PACKED *unpacked = (glXCopyContext_PACKED *)packed;
             glXCopyContext_ARGS *args = (glXCopyContext_ARGS *)&unpacked->args;
-            printf("glXCopyContext(%p, %p, %p, %p);\n", args->dpy, args->src, args->dst, args->mask);
+            printf("glXCopyContext(%p, %p, %p, %lu);\n", args->dpy, args->src, args->dst, args->mask);
             break;
         }
         case glXCopyImageSubDataNV_INDEX: {
@@ -29598,61 +29598,61 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXCopySubBufferMESA_INDEX: {
             glXCopySubBufferMESA_PACKED *unpacked = (glXCopySubBufferMESA_PACKED *)packed;
             glXCopySubBufferMESA_ARGS *args = (glXCopySubBufferMESA_ARGS *)&unpacked->args;
-            printf("glXCopySubBufferMESA(%p, %p, %p, %p, %p, %p);\n", args->dpy, args->drawable, args->x, args->y, args->width, args->height);
+            printf("glXCopySubBufferMESA(%p, %d, %d, %d, %d, %d);\n", args->dpy, args->drawable, args->x, args->y, args->width, args->height);
             break;
         }
         case glXCreateContext_INDEX: {
             glXCreateContext_PACKED *unpacked = (glXCreateContext_PACKED *)packed;
             glXCreateContext_ARGS *args = (glXCreateContext_ARGS *)&unpacked->args;
-            printf("glXCreateContext(%p, %p, %p, %p);\n", args->dpy, args->vis, args->shareList, args->direct);
+            printf("glXCreateContext(%p, %p, %p, %d);\n", args->dpy, args->vis, args->shareList, args->direct);
             break;
         }
         case glXCreateContextAttribsARB_INDEX: {
             glXCreateContextAttribsARB_PACKED *unpacked = (glXCreateContextAttribsARB_PACKED *)packed;
             glXCreateContextAttribsARB_ARGS *args = (glXCreateContextAttribsARB_ARGS *)&unpacked->args;
-            printf("glXCreateContextAttribsARB(%p, %p, %p, %p, %p);\n", args->dpy, args->config, args->share_context, args->direct, args->attrib_list);
+            printf("glXCreateContextAttribsARB(%p, %p, %p, %d, %p);\n", args->dpy, args->config, args->share_context, args->direct, args->attrib_list);
             break;
         }
         case glXCreateContextWithConfigSGIX_INDEX: {
             glXCreateContextWithConfigSGIX_PACKED *unpacked = (glXCreateContextWithConfigSGIX_PACKED *)packed;
             glXCreateContextWithConfigSGIX_ARGS *args = (glXCreateContextWithConfigSGIX_ARGS *)&unpacked->args;
-            printf("glXCreateContextWithConfigSGIX(%p, %p, %p, %p, %p);\n", args->dpy, args->config, args->render_type, args->share_list, args->direct);
+            printf("glXCreateContextWithConfigSGIX(%p, %p, %d, %p, %d);\n", args->dpy, args->config, args->render_type, args->share_list, args->direct);
             break;
         }
         case glXCreateGLXPbufferSGIX_INDEX: {
             glXCreateGLXPbufferSGIX_PACKED *unpacked = (glXCreateGLXPbufferSGIX_PACKED *)packed;
             glXCreateGLXPbufferSGIX_ARGS *args = (glXCreateGLXPbufferSGIX_ARGS *)&unpacked->args;
-            printf("glXCreateGLXPbufferSGIX(%p, %p, %p, %p, %p);\n", args->dpy, args->config, args->width, args->height, args->attrib_list);
+            printf("glXCreateGLXPbufferSGIX(%p, %p, %u, %u, %p);\n", args->dpy, args->config, args->width, args->height, args->attrib_list);
             break;
         }
         case glXCreateGLXPixmap_INDEX: {
             glXCreateGLXPixmap_PACKED *unpacked = (glXCreateGLXPixmap_PACKED *)packed;
             glXCreateGLXPixmap_ARGS *args = (glXCreateGLXPixmap_ARGS *)&unpacked->args;
-            printf("glXCreateGLXPixmap(%p, %p, %p);\n", args->dpy, args->visual, args->pixmap);
+            printf("glXCreateGLXPixmap(%p, %p, %lu);\n", args->dpy, args->visual, args->pixmap);
             break;
         }
         case glXCreateGLXPixmapMESA_INDEX: {
             glXCreateGLXPixmapMESA_PACKED *unpacked = (glXCreateGLXPixmapMESA_PACKED *)packed;
             glXCreateGLXPixmapMESA_ARGS *args = (glXCreateGLXPixmapMESA_ARGS *)&unpacked->args;
-            printf("glXCreateGLXPixmapMESA(%p, %p, %p, %p);\n", args->dpy, args->visual, args->pixmap, args->cmap);
+            printf("glXCreateGLXPixmapMESA(%p, %p, %lu, %lu);\n", args->dpy, args->visual, args->pixmap, args->cmap);
             break;
         }
         case glXCreateGLXPixmapWithConfigSGIX_INDEX: {
             glXCreateGLXPixmapWithConfigSGIX_PACKED *unpacked = (glXCreateGLXPixmapWithConfigSGIX_PACKED *)packed;
             glXCreateGLXPixmapWithConfigSGIX_ARGS *args = (glXCreateGLXPixmapWithConfigSGIX_ARGS *)&unpacked->args;
-            printf("glXCreateGLXPixmapWithConfigSGIX(%p, %p, %p);\n", args->dpy, args->config, args->pixmap);
+            printf("glXCreateGLXPixmapWithConfigSGIX(%p, %p, %lu);\n", args->dpy, args->config, args->pixmap);
             break;
         }
         case glXCreateGLXVideoSourceSGIX_INDEX: {
             glXCreateGLXVideoSourceSGIX_PACKED *unpacked = (glXCreateGLXVideoSourceSGIX_PACKED *)packed;
             glXCreateGLXVideoSourceSGIX_ARGS *args = (glXCreateGLXVideoSourceSGIX_ARGS *)&unpacked->args;
-            printf("glXCreateGLXVideoSourceSGIX(%p, %p, %p, %p, %p, %p);\n", args->display, args->screen, args->server, args->path, args->nodeClass, args->drainNode);
+            printf("glXCreateGLXVideoSourceSGIX(%p, %d, %p, %p, %d, %p);\n", args->display, args->screen, args->server, args->path, args->nodeClass, args->drainNode);
             break;
         }
         case glXCreateNewContext_INDEX: {
             glXCreateNewContext_PACKED *unpacked = (glXCreateNewContext_PACKED *)packed;
             glXCreateNewContext_ARGS *args = (glXCreateNewContext_ARGS *)&unpacked->args;
-            printf("glXCreateNewContext(%p, %p, %p, %p, %p);\n", args->dpy, args->config, args->render_type, args->share_list, args->direct);
+            printf("glXCreateNewContext(%p, %p, %d, %p, %d);\n", args->dpy, args->config, args->render_type, args->share_list, args->direct);
             break;
         }
         case glXCreatePbuffer_INDEX: {
@@ -29664,19 +29664,19 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXCreatePixmap_INDEX: {
             glXCreatePixmap_PACKED *unpacked = (glXCreatePixmap_PACKED *)packed;
             glXCreatePixmap_ARGS *args = (glXCreatePixmap_ARGS *)&unpacked->args;
-            printf("glXCreatePixmap(%p, %p, %p, %p);\n", args->dpy, args->config, args->pixmap, args->attrib_list);
+            printf("glXCreatePixmap(%p, %p, %lu, %p);\n", args->dpy, args->config, args->pixmap, args->attrib_list);
             break;
         }
         case glXCreateWindow_INDEX: {
             glXCreateWindow_PACKED *unpacked = (glXCreateWindow_PACKED *)packed;
             glXCreateWindow_ARGS *args = (glXCreateWindow_ARGS *)&unpacked->args;
-            printf("glXCreateWindow(%p, %p, %p, %p);\n", args->dpy, args->config, args->win, args->attrib_list);
+            printf("glXCreateWindow(%p, %p, %lu, %p);\n", args->dpy, args->config, args->win, args->attrib_list);
             break;
         }
         case glXCushionSGI_INDEX: {
             glXCushionSGI_PACKED *unpacked = (glXCushionSGI_PACKED *)packed;
             glXCushionSGI_ARGS *args = (glXCushionSGI_ARGS *)&unpacked->args;
-            printf("glXCushionSGI(%p, %p, %p);\n", args->dpy, args->window, args->cushion);
+            printf("glXCushionSGI(%p, %lu, %f);\n", args->dpy, args->window, args->cushion);
             break;
         }
         case glXDestroyContext_INDEX: {
@@ -29706,7 +29706,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXDestroyHyperpipeConfigSGIX_INDEX: {
             glXDestroyHyperpipeConfigSGIX_PACKED *unpacked = (glXDestroyHyperpipeConfigSGIX_PACKED *)packed;
             glXDestroyHyperpipeConfigSGIX_ARGS *args = (glXDestroyHyperpipeConfigSGIX_ARGS *)&unpacked->args;
-            printf("glXDestroyHyperpipeConfigSGIX(%p, %p);\n", args->dpy, args->hpId);
+            printf("glXDestroyHyperpipeConfigSGIX(%p, %d);\n", args->dpy, args->hpId);
             break;
         }
         case glXDestroyPbuffer_INDEX: {
@@ -29730,13 +29730,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXEnumerateVideoCaptureDevicesNV_INDEX: {
             glXEnumerateVideoCaptureDevicesNV_PACKED *unpacked = (glXEnumerateVideoCaptureDevicesNV_PACKED *)packed;
             glXEnumerateVideoCaptureDevicesNV_ARGS *args = (glXEnumerateVideoCaptureDevicesNV_ARGS *)&unpacked->args;
-            printf("glXEnumerateVideoCaptureDevicesNV(%p, %p, %p);\n", args->dpy, args->screen, args->nelements);
+            printf("glXEnumerateVideoCaptureDevicesNV(%p, %d, %p);\n", args->dpy, args->screen, args->nelements);
             break;
         }
         case glXEnumerateVideoDevicesNV_INDEX: {
             glXEnumerateVideoDevicesNV_PACKED *unpacked = (glXEnumerateVideoDevicesNV_PACKED *)packed;
             glXEnumerateVideoDevicesNV_ARGS *args = (glXEnumerateVideoDevicesNV_ARGS *)&unpacked->args;
-            printf("glXEnumerateVideoDevicesNV(%p, %p, %p);\n", args->dpy, args->screen, args->nelements);
+            printf("glXEnumerateVideoDevicesNV(%p, %d, %p);\n", args->dpy, args->screen, args->nelements);
             break;
         }
         case glXFreeContextEXT_INDEX: {
@@ -29754,13 +29754,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXGetClientString_INDEX: {
             glXGetClientString_PACKED *unpacked = (glXGetClientString_PACKED *)packed;
             glXGetClientString_ARGS *args = (glXGetClientString_ARGS *)&unpacked->args;
-            printf("glXGetClientString(%p, %p);\n", args->display, args->name);
+            printf("glXGetClientString(%p, %d);\n", args->display, args->name);
             break;
         }
         case glXGetConfig_INDEX: {
             glXGetConfig_PACKED *unpacked = (glXGetConfig_PACKED *)packed;
             glXGetConfig_ARGS *args = (glXGetConfig_ARGS *)&unpacked->args;
-            printf("glXGetConfig(%p, %p, %p, %p);\n", args->display, args->visual, args->attribute, args->value);
+            printf("glXGetConfig(%p, %p, %d, %p);\n", args->display, args->visual, args->attribute, args->value);
             break;
         }
         case glXGetContextIDEXT_INDEX: {
@@ -29796,25 +29796,25 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXGetDrawableAttributes_INDEX: {
             glXGetDrawableAttributes_PACKED *unpacked = (glXGetDrawableAttributes_PACKED *)packed;
             glXGetDrawableAttributes_ARGS *args = (glXGetDrawableAttributes_ARGS *)&unpacked->args;
-            printf("glXGetDrawableAttributes(%p);\n", args->drawable);
+            printf("glXGetDrawableAttributes(%"PRIu32");\n", args->drawable);
             break;
         }
         case glXGetDrawableAttributesSGIX_INDEX: {
             glXGetDrawableAttributesSGIX_PACKED *unpacked = (glXGetDrawableAttributesSGIX_PACKED *)packed;
             glXGetDrawableAttributesSGIX_ARGS *args = (glXGetDrawableAttributesSGIX_ARGS *)&unpacked->args;
-            printf("glXGetDrawableAttributesSGIX(%p);\n", args->drawable);
+            printf("glXGetDrawableAttributesSGIX(%"PRIu32");\n", args->drawable);
             break;
         }
         case glXGetFBConfigAttrib_INDEX: {
             glXGetFBConfigAttrib_PACKED *unpacked = (glXGetFBConfigAttrib_PACKED *)packed;
             glXGetFBConfigAttrib_ARGS *args = (glXGetFBConfigAttrib_ARGS *)&unpacked->args;
-            printf("glXGetFBConfigAttrib(%p, %p, %p, %p);\n", args->dpy, args->config, args->attribute, args->value);
+            printf("glXGetFBConfigAttrib(%p, %p, %d, %p);\n", args->dpy, args->config, args->attribute, args->value);
             break;
         }
         case glXGetFBConfigAttribSGIX_INDEX: {
             glXGetFBConfigAttribSGIX_PACKED *unpacked = (glXGetFBConfigAttribSGIX_PACKED *)packed;
             glXGetFBConfigAttribSGIX_ARGS *args = (glXGetFBConfigAttribSGIX_ARGS *)&unpacked->args;
-            printf("glXGetFBConfigAttribSGIX(%p, %p, %p, %p);\n", args->dpy, args->config, args->attribute, args->value);
+            printf("glXGetFBConfigAttribSGIX(%p, %p, %d, %p);\n", args->dpy, args->config, args->attribute, args->value);
             break;
         }
         case glXGetFBConfigFromVisualSGIX_INDEX: {
@@ -29826,7 +29826,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXGetFBConfigs_INDEX: {
             glXGetFBConfigs_PACKED *unpacked = (glXGetFBConfigs_PACKED *)packed;
             glXGetFBConfigs_ARGS *args = (glXGetFBConfigs_ARGS *)&unpacked->args;
-            printf("glXGetFBConfigs(%p, %p, %p);\n", args->dpy, args->screen, args->nelements);
+            printf("glXGetFBConfigs(%p, %d, %p);\n", args->dpy, args->screen, args->nelements);
             break;
         }
         case glXGetFBConfigsSGIX_INDEX: {
@@ -29836,7 +29836,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXGetMscRateOML_INDEX: {
             glXGetMscRateOML_PACKED *unpacked = (glXGetMscRateOML_PACKED *)packed;
             glXGetMscRateOML_ARGS *args = (glXGetMscRateOML_ARGS *)&unpacked->args;
-            printf("glXGetMscRateOML(%p, %p, %p, %p);\n", args->dpy, args->drawable, args->numerator, args->denominator);
+            printf("glXGetMscRateOML(%p, %d, %p, %p);\n", args->dpy, args->drawable, args->numerator, args->denominator);
             break;
         }
         case glXGetProcAddress_INDEX: {
@@ -29854,37 +29854,37 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXGetSelectedEvent_INDEX: {
             glXGetSelectedEvent_PACKED *unpacked = (glXGetSelectedEvent_PACKED *)packed;
             glXGetSelectedEvent_ARGS *args = (glXGetSelectedEvent_ARGS *)&unpacked->args;
-            printf("glXGetSelectedEvent(%p, %p, %p);\n", args->dpy, args->draw, args->event_mask);
+            printf("glXGetSelectedEvent(%p, %d, %p);\n", args->dpy, args->draw, args->event_mask);
             break;
         }
         case glXGetSelectedEventSGIX_INDEX: {
             glXGetSelectedEventSGIX_PACKED *unpacked = (glXGetSelectedEventSGIX_PACKED *)packed;
             glXGetSelectedEventSGIX_ARGS *args = (glXGetSelectedEventSGIX_ARGS *)&unpacked->args;
-            printf("glXGetSelectedEventSGIX(%p, %p, %p);\n", args->dpy, args->drawable, args->mask);
+            printf("glXGetSelectedEventSGIX(%p, %d, %p);\n", args->dpy, args->drawable, args->mask);
             break;
         }
         case glXGetSyncValuesOML_INDEX: {
             glXGetSyncValuesOML_PACKED *unpacked = (glXGetSyncValuesOML_PACKED *)packed;
             glXGetSyncValuesOML_ARGS *args = (glXGetSyncValuesOML_ARGS *)&unpacked->args;
-            printf("glXGetSyncValuesOML(%p, %p, %p, %p, %p);\n", args->dpy, args->drawable, args->ust, args->msc, args->sbc);
+            printf("glXGetSyncValuesOML(%p, %d, %p, %p, %p);\n", args->dpy, args->drawable, args->ust, args->msc, args->sbc);
             break;
         }
         case glXGetTransparentIndexSUN_INDEX: {
             glXGetTransparentIndexSUN_PACKED *unpacked = (glXGetTransparentIndexSUN_PACKED *)packed;
             glXGetTransparentIndexSUN_ARGS *args = (glXGetTransparentIndexSUN_ARGS *)&unpacked->args;
-            printf("glXGetTransparentIndexSUN(%p, %p, %p, %p);\n", args->dpy, args->overlay, args->underlay, args->pTransparentIndex);
+            printf("glXGetTransparentIndexSUN(%p, %lu, %lu, %p);\n", args->dpy, args->overlay, args->underlay, args->pTransparentIndex);
             break;
         }
         case glXGetVideoDeviceNV_INDEX: {
             glXGetVideoDeviceNV_PACKED *unpacked = (glXGetVideoDeviceNV_PACKED *)packed;
             glXGetVideoDeviceNV_ARGS *args = (glXGetVideoDeviceNV_ARGS *)&unpacked->args;
-            printf("glXGetVideoDeviceNV(%p, %p, %p, %p);\n", args->dpy, args->screen, args->numVideoDevices, args->pVideoDevice);
+            printf("glXGetVideoDeviceNV(%p, %d, %d, %p);\n", args->dpy, args->screen, args->numVideoDevices, args->pVideoDevice);
             break;
         }
         case glXGetVideoInfoNV_INDEX: {
             glXGetVideoInfoNV_PACKED *unpacked = (glXGetVideoInfoNV_PACKED *)packed;
             glXGetVideoInfoNV_ARGS *args = (glXGetVideoInfoNV_ARGS *)&unpacked->args;
-            printf("glXGetVideoInfoNV(%p, %p, %p, %p, %p);\n", args->dpy, args->screen, args->VideoDevice, args->pulCounterOutputPbuffer, args->pulCounterOutputVideo);
+            printf("glXGetVideoInfoNV(%p, %d, %p, %p, %p);\n", args->dpy, args->screen, args->VideoDevice, args->pulCounterOutputPbuffer, args->pulCounterOutputVideo);
             break;
         }
         case glXGetVideoSyncSGI_INDEX: {
@@ -29912,13 +29912,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXHyperpipeAttribSGIX_INDEX: {
             glXHyperpipeAttribSGIX_PACKED *unpacked = (glXHyperpipeAttribSGIX_PACKED *)packed;
             glXHyperpipeAttribSGIX_ARGS *args = (glXHyperpipeAttribSGIX_ARGS *)&unpacked->args;
-            printf("glXHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", args->dpy, args->timeSlice, args->attrib, args->size, args->attribList);
+            printf("glXHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", args->dpy, args->timeSlice, args->attrib, args->size, args->attribList);
             break;
         }
         case glXHyperpipeConfigSGIX_INDEX: {
             glXHyperpipeConfigSGIX_PACKED *unpacked = (glXHyperpipeConfigSGIX_PACKED *)packed;
             glXHyperpipeConfigSGIX_ARGS *args = (glXHyperpipeConfigSGIX_ARGS *)&unpacked->args;
-            printf("glXHyperpipeConfigSGIX(%p, %p, %p, %p, %p);\n", args->dpy, args->networkId, args->npipes, args->cfg, args->hpId);
+            printf("glXHyperpipeConfigSGIX(%p, %d, %d, %p, %p);\n", args->dpy, args->networkId, args->npipes, args->cfg, args->hpId);
             break;
         }
         case glXImportContextEXT_INDEX: {
@@ -29936,13 +29936,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXJoinSwapGroupNV_INDEX: {
             glXJoinSwapGroupNV_PACKED *unpacked = (glXJoinSwapGroupNV_PACKED *)packed;
             glXJoinSwapGroupNV_ARGS *args = (glXJoinSwapGroupNV_ARGS *)&unpacked->args;
-            printf("glXJoinSwapGroupNV(%p, %p, %u);\n", args->dpy, args->drawable, args->group);
+            printf("glXJoinSwapGroupNV(%p, %d, %u);\n", args->dpy, args->drawable, args->group);
             break;
         }
         case glXJoinSwapGroupSGIX_INDEX: {
             glXJoinSwapGroupSGIX_PACKED *unpacked = (glXJoinSwapGroupSGIX_PACKED *)packed;
             glXJoinSwapGroupSGIX_ARGS *args = (glXJoinSwapGroupSGIX_ARGS *)&unpacked->args;
-            printf("glXJoinSwapGroupSGIX(%p, %p, %p);\n", args->dpy, args->drawable, args->member);
+            printf("glXJoinSwapGroupSGIX(%p, %d, %d);\n", args->dpy, args->drawable, args->member);
             break;
         }
         case glXLockVideoCaptureDeviceNV_INDEX: {
@@ -29954,49 +29954,49 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXMakeContextCurrent_INDEX: {
             glXMakeContextCurrent_PACKED *unpacked = (glXMakeContextCurrent_PACKED *)packed;
             glXMakeContextCurrent_ARGS *args = (glXMakeContextCurrent_ARGS *)&unpacked->args;
-            printf("glXMakeContextCurrent(%p, %p, %p, %p);\n", args->dpy, args->draw, args->read, args->ctx);
+            printf("glXMakeContextCurrent(%p, %d, %d, %p);\n", args->dpy, args->draw, args->read, args->ctx);
             break;
         }
         case glXMakeCurrent_INDEX: {
             glXMakeCurrent_PACKED *unpacked = (glXMakeCurrent_PACKED *)packed;
             glXMakeCurrent_ARGS *args = (glXMakeCurrent_ARGS *)&unpacked->args;
-            printf("glXMakeCurrent(%p, %p, %p);\n", args->dpy, args->drawable, args->ctx);
+            printf("glXMakeCurrent(%p, %d, %p);\n", args->dpy, args->drawable, args->ctx);
             break;
         }
         case glXMakeCurrentReadSGI_INDEX: {
             glXMakeCurrentReadSGI_PACKED *unpacked = (glXMakeCurrentReadSGI_PACKED *)packed;
             glXMakeCurrentReadSGI_ARGS *args = (glXMakeCurrentReadSGI_ARGS *)&unpacked->args;
-            printf("glXMakeCurrentReadSGI(%p, %p, %p, %p);\n", args->dpy, args->draw, args->read, args->ctx);
+            printf("glXMakeCurrentReadSGI(%p, %d, %d, %p);\n", args->dpy, args->draw, args->read, args->ctx);
             break;
         }
         case glXQueryChannelDeltasSGIX_INDEX: {
             glXQueryChannelDeltasSGIX_PACKED *unpacked = (glXQueryChannelDeltasSGIX_PACKED *)packed;
             glXQueryChannelDeltasSGIX_ARGS *args = (glXQueryChannelDeltasSGIX_ARGS *)&unpacked->args;
-            printf("glXQueryChannelDeltasSGIX(%p, %p, %p, %p, %p, %p, %p);\n", args->display, args->screen, args->channel, args->x, args->y, args->w, args->h);
+            printf("glXQueryChannelDeltasSGIX(%p, %d, %d, %p, %p, %p, %p);\n", args->display, args->screen, args->channel, args->x, args->y, args->w, args->h);
             break;
         }
         case glXQueryChannelRectSGIX_INDEX: {
             glXQueryChannelRectSGIX_PACKED *unpacked = (glXQueryChannelRectSGIX_PACKED *)packed;
             glXQueryChannelRectSGIX_ARGS *args = (glXQueryChannelRectSGIX_ARGS *)&unpacked->args;
-            printf("glXQueryChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", args->display, args->screen, args->channel, args->dx, args->dy, args->dw, args->dh);
+            printf("glXQueryChannelRectSGIX(%p, %d, %d, %p, %p, %p, %p);\n", args->display, args->screen, args->channel, args->dx, args->dy, args->dw, args->dh);
             break;
         }
         case glXQueryContext_INDEX: {
             glXQueryContext_PACKED *unpacked = (glXQueryContext_PACKED *)packed;
             glXQueryContext_ARGS *args = (glXQueryContext_ARGS *)&unpacked->args;
-            printf("glXQueryContext(%p, %p, %p, %p);\n", args->dpy, args->ctx, args->attribute, args->value);
+            printf("glXQueryContext(%p, %p, %d, %p);\n", args->dpy, args->ctx, args->attribute, args->value);
             break;
         }
         case glXQueryContextInfoEXT_INDEX: {
             glXQueryContextInfoEXT_PACKED *unpacked = (glXQueryContextInfoEXT_PACKED *)packed;
             glXQueryContextInfoEXT_ARGS *args = (glXQueryContextInfoEXT_ARGS *)&unpacked->args;
-            printf("glXQueryContextInfoEXT(%p, %p, %p, %p);\n", args->dpy, args->context, args->attribute, args->value);
+            printf("glXQueryContextInfoEXT(%p, %p, %d, %p);\n", args->dpy, args->context, args->attribute, args->value);
             break;
         }
         case glXQueryDrawable_INDEX: {
             glXQueryDrawable_PACKED *unpacked = (glXQueryDrawable_PACKED *)packed;
             glXQueryDrawable_ARGS *args = (glXQueryDrawable_ARGS *)&unpacked->args;
-            printf("glXQueryDrawable(%p, %p, %p, %p);\n", args->dpy, args->draw, args->attribute, args->value);
+            printf("glXQueryDrawable(%p, %d, %d, %p);\n", args->dpy, args->draw, args->attribute, args->value);
             break;
         }
         case glXQueryExtension_INDEX: {
@@ -30008,37 +30008,37 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXQueryExtensionsString_INDEX: {
             glXQueryExtensionsString_PACKED *unpacked = (glXQueryExtensionsString_PACKED *)packed;
             glXQueryExtensionsString_ARGS *args = (glXQueryExtensionsString_ARGS *)&unpacked->args;
-            printf("glXQueryExtensionsString(%p, %p);\n", args->dpy, args->screen);
+            printf("glXQueryExtensionsString(%p, %d);\n", args->dpy, args->screen);
             break;
         }
         case glXQueryFrameCountNV_INDEX: {
             glXQueryFrameCountNV_PACKED *unpacked = (glXQueryFrameCountNV_PACKED *)packed;
             glXQueryFrameCountNV_ARGS *args = (glXQueryFrameCountNV_ARGS *)&unpacked->args;
-            printf("glXQueryFrameCountNV(%p, %p, %p);\n", args->dpy, args->screen, args->count);
+            printf("glXQueryFrameCountNV(%p, %d, %p);\n", args->dpy, args->screen, args->count);
             break;
         }
         case glXQueryGLXPbufferSGIX_INDEX: {
             glXQueryGLXPbufferSGIX_PACKED *unpacked = (glXQueryGLXPbufferSGIX_PACKED *)packed;
             glXQueryGLXPbufferSGIX_ARGS *args = (glXQueryGLXPbufferSGIX_ARGS *)&unpacked->args;
-            printf("glXQueryGLXPbufferSGIX(%p, %p, %p, %p);\n", args->dpy, args->pbuf, args->attribute, args->value);
+            printf("glXQueryGLXPbufferSGIX(%p, %p, %d, %p);\n", args->dpy, args->pbuf, args->attribute, args->value);
             break;
         }
         case glXQueryHyperpipeAttribSGIX_INDEX: {
             glXQueryHyperpipeAttribSGIX_PACKED *unpacked = (glXQueryHyperpipeAttribSGIX_PACKED *)packed;
             glXQueryHyperpipeAttribSGIX_ARGS *args = (glXQueryHyperpipeAttribSGIX_ARGS *)&unpacked->args;
-            printf("glXQueryHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", args->dpy, args->timeSlice, args->attrib, args->size, args->returnAttribList);
+            printf("glXQueryHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", args->dpy, args->timeSlice, args->attrib, args->size, args->returnAttribList);
             break;
         }
         case glXQueryHyperpipeBestAttribSGIX_INDEX: {
             glXQueryHyperpipeBestAttribSGIX_PACKED *unpacked = (glXQueryHyperpipeBestAttribSGIX_PACKED *)packed;
             glXQueryHyperpipeBestAttribSGIX_ARGS *args = (glXQueryHyperpipeBestAttribSGIX_ARGS *)&unpacked->args;
-            printf("glXQueryHyperpipeBestAttribSGIX(%p, %p, %p, %p, %p, %p);\n", args->dpy, args->timeSlice, args->attrib, args->size, args->attribList, args->returnAttribList);
+            printf("glXQueryHyperpipeBestAttribSGIX(%p, %d, %d, %d, %p, %p);\n", args->dpy, args->timeSlice, args->attrib, args->size, args->attribList, args->returnAttribList);
             break;
         }
         case glXQueryHyperpipeConfigSGIX_INDEX: {
             glXQueryHyperpipeConfigSGIX_PACKED *unpacked = (glXQueryHyperpipeConfigSGIX_PACKED *)packed;
             glXQueryHyperpipeConfigSGIX_ARGS *args = (glXQueryHyperpipeConfigSGIX_ARGS *)&unpacked->args;
-            printf("glXQueryHyperpipeConfigSGIX(%p, %p, %p);\n", args->dpy, args->hpId, args->npipes);
+            printf("glXQueryHyperpipeConfigSGIX(%p, %d, %p);\n", args->dpy, args->hpId, args->npipes);
             break;
         }
         case glXQueryHyperpipeNetworkSGIX_INDEX: {
@@ -30050,25 +30050,25 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXQueryMaxSwapBarriersSGIX_INDEX: {
             glXQueryMaxSwapBarriersSGIX_PACKED *unpacked = (glXQueryMaxSwapBarriersSGIX_PACKED *)packed;
             glXQueryMaxSwapBarriersSGIX_ARGS *args = (glXQueryMaxSwapBarriersSGIX_ARGS *)&unpacked->args;
-            printf("glXQueryMaxSwapBarriersSGIX(%p, %p, %p);\n", args->dpy, args->screen, args->max);
+            printf("glXQueryMaxSwapBarriersSGIX(%p, %d, %p);\n", args->dpy, args->screen, args->max);
             break;
         }
         case glXQueryMaxSwapGroupsNV_INDEX: {
             glXQueryMaxSwapGroupsNV_PACKED *unpacked = (glXQueryMaxSwapGroupsNV_PACKED *)packed;
             glXQueryMaxSwapGroupsNV_ARGS *args = (glXQueryMaxSwapGroupsNV_ARGS *)&unpacked->args;
-            printf("glXQueryMaxSwapGroupsNV(%p, %p, %p, %p);\n", args->dpy, args->screen, args->maxGroups, args->maxBarriers);
+            printf("glXQueryMaxSwapGroupsNV(%p, %d, %p, %p);\n", args->dpy, args->screen, args->maxGroups, args->maxBarriers);
             break;
         }
         case glXQueryServerString_INDEX: {
             glXQueryServerString_PACKED *unpacked = (glXQueryServerString_PACKED *)packed;
             glXQueryServerString_ARGS *args = (glXQueryServerString_ARGS *)&unpacked->args;
-            printf("glXQueryServerString(%p, %p, %p);\n", args->dpy, args->screen, args->name);
+            printf("glXQueryServerString(%p, %d, %d);\n", args->dpy, args->screen, args->name);
             break;
         }
         case glXQuerySwapGroupNV_INDEX: {
             glXQuerySwapGroupNV_PACKED *unpacked = (glXQuerySwapGroupNV_PACKED *)packed;
             glXQuerySwapGroupNV_ARGS *args = (glXQuerySwapGroupNV_ARGS *)&unpacked->args;
-            printf("glXQuerySwapGroupNV(%p, %p, %p, %p);\n", args->dpy, args->drawable, args->group, args->barrier);
+            printf("glXQuerySwapGroupNV(%p, %d, %p, %p);\n", args->dpy, args->drawable, args->group, args->barrier);
             break;
         }
         case glXQueryVersion_INDEX: {
@@ -30080,19 +30080,19 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXQueryVideoCaptureDeviceNV_INDEX: {
             glXQueryVideoCaptureDeviceNV_PACKED *unpacked = (glXQueryVideoCaptureDeviceNV_PACKED *)packed;
             glXQueryVideoCaptureDeviceNV_ARGS *args = (glXQueryVideoCaptureDeviceNV_ARGS *)&unpacked->args;
-            printf("glXQueryVideoCaptureDeviceNV(%p, %p, %p, %p);\n", args->dpy, args->device, args->attribute, args->value);
+            printf("glXQueryVideoCaptureDeviceNV(%p, %p, %d, %p);\n", args->dpy, args->device, args->attribute, args->value);
             break;
         }
         case glXReleaseBuffersMESA_INDEX: {
             glXReleaseBuffersMESA_PACKED *unpacked = (glXReleaseBuffersMESA_PACKED *)packed;
             glXReleaseBuffersMESA_ARGS *args = (glXReleaseBuffersMESA_ARGS *)&unpacked->args;
-            printf("glXReleaseBuffersMESA(%p, %p);\n", args->dpy, args->drawable);
+            printf("glXReleaseBuffersMESA(%p, %d);\n", args->dpy, args->drawable);
             break;
         }
         case glXReleaseTexImageEXT_INDEX: {
             glXReleaseTexImageEXT_PACKED *unpacked = (glXReleaseTexImageEXT_PACKED *)packed;
             glXReleaseTexImageEXT_ARGS *args = (glXReleaseTexImageEXT_ARGS *)&unpacked->args;
-            printf("glXReleaseTexImageEXT(%p, %p, %p);\n", args->dpy, args->drawable, args->buffer);
+            printf("glXReleaseTexImageEXT(%p, %d, %d);\n", args->dpy, args->drawable, args->buffer);
             break;
         }
         case glXReleaseVideoCaptureDeviceNV_INDEX: {
@@ -30104,7 +30104,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXReleaseVideoDeviceNV_INDEX: {
             glXReleaseVideoDeviceNV_PACKED *unpacked = (glXReleaseVideoDeviceNV_PACKED *)packed;
             glXReleaseVideoDeviceNV_ARGS *args = (glXReleaseVideoDeviceNV_ARGS *)&unpacked->args;
-            printf("glXReleaseVideoDeviceNV(%p, %p, %p);\n", args->dpy, args->screen, args->VideoDevice);
+            printf("glXReleaseVideoDeviceNV(%p, %d, %p);\n", args->dpy, args->screen, args->VideoDevice);
             break;
         }
         case glXReleaseVideoImageNV_INDEX: {
@@ -30124,67 +30124,67 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXResetFrameCountNV_INDEX: {
             glXResetFrameCountNV_PACKED *unpacked = (glXResetFrameCountNV_PACKED *)packed;
             glXResetFrameCountNV_ARGS *args = (glXResetFrameCountNV_ARGS *)&unpacked->args;
-            printf("glXResetFrameCountNV(%p, %p);\n", args->dpy, args->screen);
+            printf("glXResetFrameCountNV(%p, %d);\n", args->dpy, args->screen);
             break;
         }
         case glXSelectEvent_INDEX: {
             glXSelectEvent_PACKED *unpacked = (glXSelectEvent_PACKED *)packed;
             glXSelectEvent_ARGS *args = (glXSelectEvent_ARGS *)&unpacked->args;
-            printf("glXSelectEvent(%p, %p, %p);\n", args->dpy, args->draw, args->event_mask);
+            printf("glXSelectEvent(%p, %d, %lu);\n", args->dpy, args->draw, args->event_mask);
             break;
         }
         case glXSelectEventSGIX_INDEX: {
             glXSelectEventSGIX_PACKED *unpacked = (glXSelectEventSGIX_PACKED *)packed;
             glXSelectEventSGIX_ARGS *args = (glXSelectEventSGIX_ARGS *)&unpacked->args;
-            printf("glXSelectEventSGIX(%p, %p, %p);\n", args->dpy, args->drawable, args->mask);
+            printf("glXSelectEventSGIX(%p, %d, %lu);\n", args->dpy, args->drawable, args->mask);
             break;
         }
         case glXSendPbufferToVideoNV_INDEX: {
             glXSendPbufferToVideoNV_PACKED *unpacked = (glXSendPbufferToVideoNV_PACKED *)packed;
             glXSendPbufferToVideoNV_ARGS *args = (glXSendPbufferToVideoNV_ARGS *)&unpacked->args;
-            printf("glXSendPbufferToVideoNV(%p, %p, %p, %p, %d);\n", args->dpy, args->pbuf, args->iBufferType, args->pulCounterPbuffer, args->bBlock);
+            printf("glXSendPbufferToVideoNV(%p, %p, %d, %p, %d);\n", args->dpy, args->pbuf, args->iBufferType, args->pulCounterPbuffer, args->bBlock);
             break;
         }
         case glXSet3DfxModeMESA_INDEX: {
             glXSet3DfxModeMESA_PACKED *unpacked = (glXSet3DfxModeMESA_PACKED *)packed;
             glXSet3DfxModeMESA_ARGS *args = (glXSet3DfxModeMESA_ARGS *)&unpacked->args;
-            printf("glXSet3DfxModeMESA(%p);\n", args->mode);
+            printf("glXSet3DfxModeMESA(%d);\n", args->mode);
             break;
         }
         case glXSwapBuffers_INDEX: {
             glXSwapBuffers_PACKED *unpacked = (glXSwapBuffers_PACKED *)packed;
             glXSwapBuffers_ARGS *args = (glXSwapBuffers_ARGS *)&unpacked->args;
-            printf("glXSwapBuffers(%p, %p);\n", args->dpy, args->drawable);
+            printf("glXSwapBuffers(%p, %d);\n", args->dpy, args->drawable);
             break;
         }
         case glXSwapBuffersMscOML_INDEX: {
             glXSwapBuffersMscOML_PACKED *unpacked = (glXSwapBuffersMscOML_PACKED *)packed;
             glXSwapBuffersMscOML_ARGS *args = (glXSwapBuffersMscOML_ARGS *)&unpacked->args;
-            printf("glXSwapBuffersMscOML(%p, %p, %p, %p, %p);\n", args->dpy, args->drawable, args->target_msc, args->divisor, args->remainder);
+            printf("glXSwapBuffersMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64");\n", args->dpy, args->drawable, args->target_msc, args->divisor, args->remainder);
             break;
         }
         case glXSwapIntervalEXT_INDEX: {
             glXSwapIntervalEXT_PACKED *unpacked = (glXSwapIntervalEXT_PACKED *)packed;
             glXSwapIntervalEXT_ARGS *args = (glXSwapIntervalEXT_ARGS *)&unpacked->args;
-            printf("glXSwapIntervalEXT(%p, %p, %p);\n", args->dpy, args->drawable, args->interval);
+            printf("glXSwapIntervalEXT(%p, %d, %d);\n", args->dpy, args->drawable, args->interval);
             break;
         }
         case glXSwapIntervalMESA_INDEX: {
             glXSwapIntervalMESA_PACKED *unpacked = (glXSwapIntervalMESA_PACKED *)packed;
             glXSwapIntervalMESA_ARGS *args = (glXSwapIntervalMESA_ARGS *)&unpacked->args;
-            printf("glXSwapIntervalMESA(%p);\n", args->interval);
+            printf("glXSwapIntervalMESA(%u);\n", args->interval);
             break;
         }
         case glXSwapIntervalSGI_INDEX: {
             glXSwapIntervalSGI_PACKED *unpacked = (glXSwapIntervalSGI_PACKED *)packed;
             glXSwapIntervalSGI_ARGS *args = (glXSwapIntervalSGI_ARGS *)&unpacked->args;
-            printf("glXSwapIntervalSGI(%p);\n", args->interval);
+            printf("glXSwapIntervalSGI(%d);\n", args->interval);
             break;
         }
         case glXUseXFont_INDEX: {
             glXUseXFont_PACKED *unpacked = (glXUseXFont_PACKED *)packed;
             glXUseXFont_ARGS *args = (glXUseXFont_ARGS *)&unpacked->args;
-            printf("glXUseXFont(%p, %p, %p, %p);\n", args->font, args->first, args->count, args->listBase);
+            printf("glXUseXFont(%lu, %d, %d, %d);\n", args->font, args->first, args->count, args->listBase);
             break;
         }
         case glXVendorPrivate_INDEX: {
@@ -30198,13 +30198,13 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXWaitForMscOML_INDEX: {
             glXWaitForMscOML_PACKED *unpacked = (glXWaitForMscOML_PACKED *)packed;
             glXWaitForMscOML_ARGS *args = (glXWaitForMscOML_ARGS *)&unpacked->args;
-            printf("glXWaitForMscOML(%p, %p, %p, %p, %p, %p, %p, %p);\n", args->dpy, args->drawable, args->target_msc, args->divisor, args->remainder, args->ust, args->msc, args->sbc);
+            printf("glXWaitForMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64", %p, %p, %p);\n", args->dpy, args->drawable, args->target_msc, args->divisor, args->remainder, args->ust, args->msc, args->sbc);
             break;
         }
         case glXWaitForSbcOML_INDEX: {
             glXWaitForSbcOML_PACKED *unpacked = (glXWaitForSbcOML_PACKED *)packed;
             glXWaitForSbcOML_ARGS *args = (glXWaitForSbcOML_ARGS *)&unpacked->args;
-            printf("glXWaitForSbcOML(%p, %p, %p, %p, %p, %p);\n", args->dpy, args->drawable, args->target_sbc, args->ust, args->msc, args->sbc);
+            printf("glXWaitForSbcOML(%p, %d, %"PRIi64", %p, %p, %p);\n", args->dpy, args->drawable, args->target_sbc, args->ust, args->msc, args->sbc);
             break;
         }
         case glXWaitGL_INDEX: {
@@ -30214,7 +30214,7 @@ void glIndexedPrint(const packed_call_t *packed) {
         case glXWaitVideoSyncSGI_INDEX: {
             glXWaitVideoSyncSGI_PACKED *unpacked = (glXWaitVideoSyncSGI_PACKED *)packed;
             glXWaitVideoSyncSGI_ARGS *args = (glXWaitVideoSyncSGI_ARGS *)&unpacked->args;
-            printf("glXWaitVideoSyncSGI(%p, %p, %p);\n", args->divisor, args->remainder, args->count);
+            printf("glXWaitVideoSyncSGI(%d, %d, %p);\n", args->divisor, args->remainder, args->count);
             break;
         }
         case glXWaitX_INDEX: {
@@ -39847,7 +39847,7 @@ packed_call_t *pack_glBlitFramebufferEXT(glBlitFramebufferEXT_PACKED *_dst, GLin
     return (packed_call_t *)_dst;
 }
 void stub_glBufferAddressRangeNV(GLenum pname, GLuint index, GLuint64EXT address, GLsizeiptr length) {
-        printf("stub glBufferAddressRangeNV(0x%04X, %u, %llu, %td);\n", pname, index, address, length);
+        printf("stub glBufferAddressRangeNV(0x%04X, %u, %"PRIu64", %td);\n", pname, index, address, length);
 }
 packed_call_t *pack_glBufferAddressRangeNV(glBufferAddressRangeNV_PACKED *_dst, GLenum pname, GLuint index, GLuint64EXT address, GLsizeiptr length) {
     if (_dst == NULL) _dst = malloc(sizeof(glBufferAddressRangeNV_PACKED));
@@ -40291,7 +40291,7 @@ packed_call_t *pack_glClientAttribDefaultEXT(glClientAttribDefaultEXT_PACKED *_d
     return (packed_call_t *)_dst;
 }
 GLenum stub_glClientWaitSync(GLsync sync, GLbitfield flags, GLuint64 timeout) {
-        printf("stub glClientWaitSync(%p, %d, %llu);\n", sync, flags, timeout);
+        printf("stub glClientWaitSync(%p, %d, %"PRIu64");\n", sync, flags, timeout);
     return 0;
 }
 packed_call_t *pack_glClientWaitSync(glClientWaitSync_PACKED *_dst, GLsync sync, GLbitfield flags, GLuint64 timeout) {
@@ -50531,7 +50531,7 @@ packed_call_t *pack_glIsFramebufferEXT(glIsFramebufferEXT_PACKED *_dst, GLuint f
     return (packed_call_t *)_dst;
 }
 GLboolean stub_glIsImageHandleResidentNV(GLuint64 handle) {
-        printf("stub glIsImageHandleResidentNV(%llu);\n", handle);
+        printf("stub glIsImageHandleResidentNV(%"PRIu64");\n", handle);
     return 0;
 }
 packed_call_t *pack_glIsImageHandleResidentNV(glIsImageHandleResidentNV_PACKED *_dst, GLuint64 handle) {
@@ -50768,7 +50768,7 @@ packed_call_t *pack_glIsTextureEXT(glIsTextureEXT_PACKED *_dst, GLuint texture) 
     return (packed_call_t *)_dst;
 }
 GLboolean stub_glIsTextureHandleResidentNV(GLuint64 handle) {
-        printf("stub glIsTextureHandleResidentNV(%llu);\n", handle);
+        printf("stub glIsTextureHandleResidentNV(%"PRIu64");\n", handle);
     return 0;
 }
 packed_call_t *pack_glIsTextureHandleResidentNV(glIsTextureHandleResidentNV_PACKED *_dst, GLuint64 handle) {
@@ -51283,7 +51283,7 @@ packed_call_t *pack_glMakeBufferResidentNV(glMakeBufferResidentNV_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 void stub_glMakeImageHandleNonResidentNV(GLuint64 handle) {
-        printf("stub glMakeImageHandleNonResidentNV(%llu);\n", handle);
+        printf("stub glMakeImageHandleNonResidentNV(%"PRIu64");\n", handle);
 }
 packed_call_t *pack_glMakeImageHandleNonResidentNV(glMakeImageHandleNonResidentNV_PACKED *_dst, GLuint64 handle) {
     if (_dst == NULL) _dst = malloc(sizeof(glMakeImageHandleNonResidentNV_PACKED));
@@ -51292,7 +51292,7 @@ packed_call_t *pack_glMakeImageHandleNonResidentNV(glMakeImageHandleNonResidentN
     return (packed_call_t *)_dst;
 }
 void stub_glMakeImageHandleResidentNV(GLuint64 handle, GLenum access) {
-        printf("stub glMakeImageHandleResidentNV(%llu, 0x%04X);\n", handle, access);
+        printf("stub glMakeImageHandleResidentNV(%"PRIu64", 0x%04X);\n", handle, access);
 }
 packed_call_t *pack_glMakeImageHandleResidentNV(glMakeImageHandleResidentNV_PACKED *_dst, GLuint64 handle, GLenum access) {
     if (_dst == NULL) _dst = malloc(sizeof(glMakeImageHandleResidentNV_PACKED));
@@ -51321,7 +51321,7 @@ packed_call_t *pack_glMakeNamedBufferResidentNV(glMakeNamedBufferResidentNV_PACK
     return (packed_call_t *)_dst;
 }
 void stub_glMakeTextureHandleNonResidentNV(GLuint64 handle) {
-        printf("stub glMakeTextureHandleNonResidentNV(%llu);\n", handle);
+        printf("stub glMakeTextureHandleNonResidentNV(%"PRIu64");\n", handle);
 }
 packed_call_t *pack_glMakeTextureHandleNonResidentNV(glMakeTextureHandleNonResidentNV_PACKED *_dst, GLuint64 handle) {
     if (_dst == NULL) _dst = malloc(sizeof(glMakeTextureHandleNonResidentNV_PACKED));
@@ -51330,7 +51330,7 @@ packed_call_t *pack_glMakeTextureHandleNonResidentNV(glMakeTextureHandleNonResid
     return (packed_call_t *)_dst;
 }
 void stub_glMakeTextureHandleResidentNV(GLuint64 handle) {
-        printf("stub glMakeTextureHandleResidentNV(%llu);\n", handle);
+        printf("stub glMakeTextureHandleResidentNV(%"PRIu64");\n", handle);
 }
 packed_call_t *pack_glMakeTextureHandleResidentNV(glMakeTextureHandleResidentNV_PACKED *_dst, GLuint64 handle) {
     if (_dst == NULL) _dst = malloc(sizeof(glMakeTextureHandleResidentNV_PACKED));
@@ -55444,7 +55444,7 @@ packed_call_t *pack_glPopName(glPopName_PACKED *_dst) {
     return (packed_call_t *)_dst;
 }
 void stub_glPresentFrameDualFillNV(GLuint video_slot, GLuint64EXT minPresentTime, GLuint beginPresentTimeId, GLuint presentDurationId, GLenum type, GLenum target0, GLuint fill0, GLenum target1, GLuint fill1, GLenum target2, GLuint fill2, GLenum target3, GLuint fill3) {
-        printf("stub glPresentFrameDualFillNV(%u, %llu, %u, %u, 0x%04X, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u);\n", video_slot, minPresentTime, beginPresentTimeId, presentDurationId, type, target0, fill0, target1, fill1, target2, fill2, target3, fill3);
+        printf("stub glPresentFrameDualFillNV(%u, %"PRIu64", %u, %u, 0x%04X, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u, 0x%04X, %u);\n", video_slot, minPresentTime, beginPresentTimeId, presentDurationId, type, target0, fill0, target1, fill1, target2, fill2, target3, fill3);
 }
 packed_call_t *pack_glPresentFrameDualFillNV(glPresentFrameDualFillNV_PACKED *_dst, GLuint video_slot, GLuint64EXT minPresentTime, GLuint beginPresentTimeId, GLuint presentDurationId, GLenum type, GLenum target0, GLuint fill0, GLenum target1, GLuint fill1, GLenum target2, GLuint fill2, GLenum target3, GLuint fill3) {
     if (_dst == NULL) _dst = malloc(sizeof(glPresentFrameDualFillNV_PACKED));
@@ -55465,7 +55465,7 @@ packed_call_t *pack_glPresentFrameDualFillNV(glPresentFrameDualFillNV_PACKED *_d
     return (packed_call_t *)_dst;
 }
 void stub_glPresentFrameKeyedNV(GLuint video_slot, GLuint64EXT minPresentTime, GLuint beginPresentTimeId, GLuint presentDurationId, GLenum type, GLenum target0, GLuint fill0, GLuint key0, GLenum target1, GLuint fill1, GLuint key1) {
-        printf("stub glPresentFrameKeyedNV(%u, %llu, %u, %u, 0x%04X, 0x%04X, %u, %u, 0x%04X, %u, %u);\n", video_slot, minPresentTime, beginPresentTimeId, presentDurationId, type, target0, fill0, key0, target1, fill1, key1);
+        printf("stub glPresentFrameKeyedNV(%u, %"PRIu64", %u, %u, 0x%04X, 0x%04X, %u, %u, 0x%04X, %u, %u);\n", video_slot, minPresentTime, beginPresentTimeId, presentDurationId, type, target0, fill0, key0, target1, fill1, key1);
 }
 packed_call_t *pack_glPresentFrameKeyedNV(glPresentFrameKeyedNV_PACKED *_dst, GLuint video_slot, GLuint64EXT minPresentTime, GLuint beginPresentTimeId, GLuint presentDurationId, GLenum type, GLenum target0, GLuint fill0, GLuint key0, GLenum target1, GLuint fill1, GLuint key1) {
     if (_dst == NULL) _dst = malloc(sizeof(glPresentFrameKeyedNV_PACKED));
@@ -56153,7 +56153,7 @@ packed_call_t *pack_glProgramUniform1i(glProgramUniform1i_PACKED *_dst, GLuint p
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform1i64NV(GLuint program, GLint location, GLint64EXT x) {
-        printf("stub glProgramUniform1i64NV(%u, %d, %lld);\n", program, location, x);
+        printf("stub glProgramUniform1i64NV(%u, %d, %"PRIi64");\n", program, location, x);
 }
 packed_call_t *pack_glProgramUniform1i64NV(glProgramUniform1i64NV_PACKED *_dst, GLuint program, GLint location, GLint64EXT x) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform1i64NV_PACKED));
@@ -56222,7 +56222,7 @@ packed_call_t *pack_glProgramUniform1ui(glProgramUniform1ui_PACKED *_dst, GLuint
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform1ui64NV(GLuint program, GLint location, GLuint64EXT x) {
-        printf("stub glProgramUniform1ui64NV(%u, %d, %llu);\n", program, location, x);
+        printf("stub glProgramUniform1ui64NV(%u, %d, %"PRIu64");\n", program, location, x);
 }
 packed_call_t *pack_glProgramUniform1ui64NV(glProgramUniform1ui64NV_PACKED *_dst, GLuint program, GLint location, GLuint64EXT x) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform1ui64NV_PACKED));
@@ -56388,7 +56388,7 @@ packed_call_t *pack_glProgramUniform2i(glProgramUniform2i_PACKED *_dst, GLuint p
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform2i64NV(GLuint program, GLint location, GLint64EXT x, GLint64EXT y) {
-        printf("stub glProgramUniform2i64NV(%u, %d, %lld, %lld);\n", program, location, x, y);
+        printf("stub glProgramUniform2i64NV(%u, %d, %"PRIi64", %"PRIi64");\n", program, location, x, y);
 }
 packed_call_t *pack_glProgramUniform2i64NV(glProgramUniform2i64NV_PACKED *_dst, GLuint program, GLint location, GLint64EXT x, GLint64EXT y) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform2i64NV_PACKED));
@@ -56460,7 +56460,7 @@ packed_call_t *pack_glProgramUniform2ui(glProgramUniform2ui_PACKED *_dst, GLuint
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform2ui64NV(GLuint program, GLint location, GLuint64EXT x, GLuint64EXT y) {
-        printf("stub glProgramUniform2ui64NV(%u, %d, %llu, %llu);\n", program, location, x, y);
+        printf("stub glProgramUniform2ui64NV(%u, %d, %"PRIu64", %"PRIu64");\n", program, location, x, y);
 }
 packed_call_t *pack_glProgramUniform2ui64NV(glProgramUniform2ui64NV_PACKED *_dst, GLuint program, GLint location, GLuint64EXT x, GLuint64EXT y) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform2ui64NV_PACKED));
@@ -56633,7 +56633,7 @@ packed_call_t *pack_glProgramUniform3i(glProgramUniform3i_PACKED *_dst, GLuint p
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform3i64NV(GLuint program, GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z) {
-        printf("stub glProgramUniform3i64NV(%u, %d, %lld, %lld, %lld);\n", program, location, x, y, z);
+        printf("stub glProgramUniform3i64NV(%u, %d, %"PRIi64", %"PRIi64", %"PRIi64");\n", program, location, x, y, z);
 }
 packed_call_t *pack_glProgramUniform3i64NV(glProgramUniform3i64NV_PACKED *_dst, GLuint program, GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform3i64NV_PACKED));
@@ -56708,7 +56708,7 @@ packed_call_t *pack_glProgramUniform3ui(glProgramUniform3ui_PACKED *_dst, GLuint
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform3ui64NV(GLuint program, GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z) {
-        printf("stub glProgramUniform3ui64NV(%u, %d, %llu, %llu, %llu);\n", program, location, x, y, z);
+        printf("stub glProgramUniform3ui64NV(%u, %d, %"PRIu64", %"PRIu64", %"PRIu64");\n", program, location, x, y, z);
 }
 packed_call_t *pack_glProgramUniform3ui64NV(glProgramUniform3ui64NV_PACKED *_dst, GLuint program, GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform3ui64NV_PACKED));
@@ -56888,7 +56888,7 @@ packed_call_t *pack_glProgramUniform4i(glProgramUniform4i_PACKED *_dst, GLuint p
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform4i64NV(GLuint program, GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z, GLint64EXT w) {
-        printf("stub glProgramUniform4i64NV(%u, %d, %lld, %lld, %lld, %lld);\n", program, location, x, y, z, w);
+        printf("stub glProgramUniform4i64NV(%u, %d, %"PRIi64", %"PRIi64", %"PRIi64", %"PRIi64");\n", program, location, x, y, z, w);
 }
 packed_call_t *pack_glProgramUniform4i64NV(glProgramUniform4i64NV_PACKED *_dst, GLuint program, GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z, GLint64EXT w) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform4i64NV_PACKED));
@@ -56966,7 +56966,7 @@ packed_call_t *pack_glProgramUniform4ui(glProgramUniform4ui_PACKED *_dst, GLuint
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniform4ui64NV(GLuint program, GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z, GLuint64EXT w) {
-        printf("stub glProgramUniform4ui64NV(%u, %d, %llu, %llu, %llu, %llu);\n", program, location, x, y, z, w);
+        printf("stub glProgramUniform4ui64NV(%u, %d, %"PRIu64", %"PRIu64", %"PRIu64", %"PRIu64");\n", program, location, x, y, z, w);
 }
 packed_call_t *pack_glProgramUniform4ui64NV(glProgramUniform4ui64NV_PACKED *_dst, GLuint program, GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z, GLuint64EXT w) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniform4ui64NV_PACKED));
@@ -57030,7 +57030,7 @@ packed_call_t *pack_glProgramUniform4uivEXT(glProgramUniform4uivEXT_PACKED *_dst
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniformHandleui64NV(GLuint program, GLint location, GLuint64 value) {
-        printf("stub glProgramUniformHandleui64NV(%u, %d, %llu);\n", program, location, value);
+        printf("stub glProgramUniformHandleui64NV(%u, %d, %"PRIu64");\n", program, location, value);
 }
 packed_call_t *pack_glProgramUniformHandleui64NV(glProgramUniformHandleui64NV_PACKED *_dst, GLuint program, GLint location, GLuint64 value) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniformHandleui64NV_PACKED));
@@ -57521,7 +57521,7 @@ packed_call_t *pack_glProgramUniformMatrix4x3fvEXT(glProgramUniformMatrix4x3fvEX
     return (packed_call_t *)_dst;
 }
 void stub_glProgramUniformui64NV(GLuint program, GLint location, GLuint64EXT value) {
-        printf("stub glProgramUniformui64NV(%u, %d, %llu);\n", program, location, value);
+        printf("stub glProgramUniformui64NV(%u, %d, %"PRIu64");\n", program, location, value);
 }
 packed_call_t *pack_glProgramUniformui64NV(glProgramUniformui64NV_PACKED *_dst, GLuint program, GLint location, GLuint64EXT value) {
     if (_dst == NULL) _dst = malloc(sizeof(glProgramUniformui64NV_PACKED));
@@ -62206,7 +62206,7 @@ packed_call_t *pack_glUniform1i(glUniform1i_PACKED *_dst, GLint location, GLint 
     return (packed_call_t *)_dst;
 }
 void stub_glUniform1i64NV(GLint location, GLint64EXT x) {
-        printf("stub glUniform1i64NV(%d, %lld);\n", location, x);
+        printf("stub glUniform1i64NV(%d, %"PRIi64");\n", location, x);
 }
 packed_call_t *pack_glUniform1i64NV(glUniform1i64NV_PACKED *_dst, GLint location, GLint64EXT x) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform1i64NV_PACKED));
@@ -62269,7 +62269,7 @@ packed_call_t *pack_glUniform1ui(glUniform1ui_PACKED *_dst, GLint location, GLui
     return (packed_call_t *)_dst;
 }
 void stub_glUniform1ui64NV(GLint location, GLuint64EXT x) {
-        printf("stub glUniform1ui64NV(%d, %llu);\n", location, x);
+        printf("stub glUniform1ui64NV(%d, %"PRIu64");\n", location, x);
 }
 packed_call_t *pack_glUniform1ui64NV(glUniform1ui64NV_PACKED *_dst, GLint location, GLuint64EXT x) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform1ui64NV_PACKED));
@@ -62399,7 +62399,7 @@ packed_call_t *pack_glUniform2i(glUniform2i_PACKED *_dst, GLint location, GLint 
     return (packed_call_t *)_dst;
 }
 void stub_glUniform2i64NV(GLint location, GLint64EXT x, GLint64EXT y) {
-        printf("stub glUniform2i64NV(%d, %lld, %lld);\n", location, x, y);
+        printf("stub glUniform2i64NV(%d, %"PRIi64", %"PRIi64");\n", location, x, y);
 }
 packed_call_t *pack_glUniform2i64NV(glUniform2i64NV_PACKED *_dst, GLint location, GLint64EXT x, GLint64EXT y) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform2i64NV_PACKED));
@@ -62465,7 +62465,7 @@ packed_call_t *pack_glUniform2ui(glUniform2ui_PACKED *_dst, GLint location, GLui
     return (packed_call_t *)_dst;
 }
 void stub_glUniform2ui64NV(GLint location, GLuint64EXT x, GLuint64EXT y) {
-        printf("stub glUniform2ui64NV(%d, %llu, %llu);\n", location, x, y);
+        printf("stub glUniform2ui64NV(%d, %"PRIu64", %"PRIu64");\n", location, x, y);
 }
 packed_call_t *pack_glUniform2ui64NV(glUniform2ui64NV_PACKED *_dst, GLint location, GLuint64EXT x, GLuint64EXT y) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform2ui64NV_PACKED));
@@ -62601,7 +62601,7 @@ packed_call_t *pack_glUniform3i(glUniform3i_PACKED *_dst, GLint location, GLint 
     return (packed_call_t *)_dst;
 }
 void stub_glUniform3i64NV(GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z) {
-        printf("stub glUniform3i64NV(%d, %lld, %lld, %lld);\n", location, x, y, z);
+        printf("stub glUniform3i64NV(%d, %"PRIi64", %"PRIi64", %"PRIi64");\n", location, x, y, z);
 }
 packed_call_t *pack_glUniform3i64NV(glUniform3i64NV_PACKED *_dst, GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform3i64NV_PACKED));
@@ -62670,7 +62670,7 @@ packed_call_t *pack_glUniform3ui(glUniform3ui_PACKED *_dst, GLint location, GLui
     return (packed_call_t *)_dst;
 }
 void stub_glUniform3ui64NV(GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z) {
-        printf("stub glUniform3ui64NV(%d, %llu, %llu, %llu);\n", location, x, y, z);
+        printf("stub glUniform3ui64NV(%d, %"PRIu64", %"PRIu64", %"PRIu64");\n", location, x, y, z);
 }
 packed_call_t *pack_glUniform3ui64NV(glUniform3ui64NV_PACKED *_dst, GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform3ui64NV_PACKED));
@@ -62812,7 +62812,7 @@ packed_call_t *pack_glUniform4i(glUniform4i_PACKED *_dst, GLint location, GLint 
     return (packed_call_t *)_dst;
 }
 void stub_glUniform4i64NV(GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z, GLint64EXT w) {
-        printf("stub glUniform4i64NV(%d, %lld, %lld, %lld, %lld);\n", location, x, y, z, w);
+        printf("stub glUniform4i64NV(%d, %"PRIi64", %"PRIi64", %"PRIi64", %"PRIi64");\n", location, x, y, z, w);
 }
 packed_call_t *pack_glUniform4i64NV(glUniform4i64NV_PACKED *_dst, GLint location, GLint64EXT x, GLint64EXT y, GLint64EXT z, GLint64EXT w) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform4i64NV_PACKED));
@@ -62884,7 +62884,7 @@ packed_call_t *pack_glUniform4ui(glUniform4ui_PACKED *_dst, GLint location, GLui
     return (packed_call_t *)_dst;
 }
 void stub_glUniform4ui64NV(GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z, GLuint64EXT w) {
-        printf("stub glUniform4ui64NV(%d, %llu, %llu, %llu, %llu);\n", location, x, y, z, w);
+        printf("stub glUniform4ui64NV(%d, %"PRIu64", %"PRIu64", %"PRIu64", %"PRIu64");\n", location, x, y, z, w);
 }
 packed_call_t *pack_glUniform4ui64NV(glUniform4ui64NV_PACKED *_dst, GLint location, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z, GLuint64EXT w) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniform4ui64NV_PACKED));
@@ -62965,7 +62965,7 @@ packed_call_t *pack_glUniformBufferEXT(glUniformBufferEXT_PACKED *_dst, GLuint p
     return (packed_call_t *)_dst;
 }
 void stub_glUniformHandleui64NV(GLint location, GLuint64 value) {
-        printf("stub glUniformHandleui64NV(%d, %llu);\n", location, value);
+        printf("stub glUniformHandleui64NV(%d, %"PRIu64");\n", location, value);
 }
 packed_call_t *pack_glUniformHandleui64NV(glUniformHandleui64NV_PACKED *_dst, GLint location, GLuint64 value) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniformHandleui64NV_PACKED));
@@ -63249,7 +63249,7 @@ packed_call_t *pack_glUniformSubroutinesuiv(glUniformSubroutinesuiv_PACKED *_dst
     return (packed_call_t *)_dst;
 }
 void stub_glUniformui64NV(GLint location, GLuint64EXT value) {
-        printf("stub glUniformui64NV(%d, %llu);\n", location, value);
+        printf("stub glUniformui64NV(%d, %"PRIu64");\n", location, value);
 }
 packed_call_t *pack_glUniformui64NV(glUniformui64NV_PACKED *_dst, GLint location, GLuint64EXT value) {
     if (_dst == NULL) _dst = malloc(sizeof(glUniformui64NV_PACKED));
@@ -66017,7 +66017,7 @@ packed_call_t *pack_glVertexAttribL1dvEXT(glVertexAttribL1dvEXT_PACKED *_dst, GL
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL1i64NV(GLuint index, GLint64EXT x) {
-        printf("stub glVertexAttribL1i64NV(%u, %lld);\n", index, x);
+        printf("stub glVertexAttribL1i64NV(%u, %"PRIi64");\n", index, x);
 }
 packed_call_t *pack_glVertexAttribL1i64NV(glVertexAttribL1i64NV_PACKED *_dst, GLuint index, GLint64EXT x) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL1i64NV_PACKED));
@@ -66037,7 +66037,7 @@ packed_call_t *pack_glVertexAttribL1i64vNV(glVertexAttribL1i64vNV_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL1ui64NV(GLuint index, GLuint64EXT x) {
-        printf("stub glVertexAttribL1ui64NV(%u, %llu);\n", index, x);
+        printf("stub glVertexAttribL1ui64NV(%u, %"PRIu64");\n", index, x);
 }
 packed_call_t *pack_glVertexAttribL1ui64NV(glVertexAttribL1ui64NV_PACKED *_dst, GLuint index, GLuint64EXT x) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL1ui64NV_PACKED));
@@ -66099,7 +66099,7 @@ packed_call_t *pack_glVertexAttribL2dvEXT(glVertexAttribL2dvEXT_PACKED *_dst, GL
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL2i64NV(GLuint index, GLint64EXT x, GLint64EXT y) {
-        printf("stub glVertexAttribL2i64NV(%u, %lld, %lld);\n", index, x, y);
+        printf("stub glVertexAttribL2i64NV(%u, %"PRIi64", %"PRIi64");\n", index, x, y);
 }
 packed_call_t *pack_glVertexAttribL2i64NV(glVertexAttribL2i64NV_PACKED *_dst, GLuint index, GLint64EXT x, GLint64EXT y) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL2i64NV_PACKED));
@@ -66120,7 +66120,7 @@ packed_call_t *pack_glVertexAttribL2i64vNV(glVertexAttribL2i64vNV_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL2ui64NV(GLuint index, GLuint64EXT x, GLuint64EXT y) {
-        printf("stub glVertexAttribL2ui64NV(%u, %llu, %llu);\n", index, x, y);
+        printf("stub glVertexAttribL2ui64NV(%u, %"PRIu64", %"PRIu64");\n", index, x, y);
 }
 packed_call_t *pack_glVertexAttribL2ui64NV(glVertexAttribL2ui64NV_PACKED *_dst, GLuint index, GLuint64EXT x, GLuint64EXT y) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL2ui64NV_PACKED));
@@ -66185,7 +66185,7 @@ packed_call_t *pack_glVertexAttribL3dvEXT(glVertexAttribL3dvEXT_PACKED *_dst, GL
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL3i64NV(GLuint index, GLint64EXT x, GLint64EXT y, GLint64EXT z) {
-        printf("stub glVertexAttribL3i64NV(%u, %lld, %lld, %lld);\n", index, x, y, z);
+        printf("stub glVertexAttribL3i64NV(%u, %"PRIi64", %"PRIi64", %"PRIi64");\n", index, x, y, z);
 }
 packed_call_t *pack_glVertexAttribL3i64NV(glVertexAttribL3i64NV_PACKED *_dst, GLuint index, GLint64EXT x, GLint64EXT y, GLint64EXT z) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL3i64NV_PACKED));
@@ -66207,7 +66207,7 @@ packed_call_t *pack_glVertexAttribL3i64vNV(glVertexAttribL3i64vNV_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL3ui64NV(GLuint index, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z) {
-        printf("stub glVertexAttribL3ui64NV(%u, %llu, %llu, %llu);\n", index, x, y, z);
+        printf("stub glVertexAttribL3ui64NV(%u, %"PRIu64", %"PRIu64", %"PRIu64");\n", index, x, y, z);
 }
 packed_call_t *pack_glVertexAttribL3ui64NV(glVertexAttribL3ui64NV_PACKED *_dst, GLuint index, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL3ui64NV_PACKED));
@@ -66275,7 +66275,7 @@ packed_call_t *pack_glVertexAttribL4dvEXT(glVertexAttribL4dvEXT_PACKED *_dst, GL
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL4i64NV(GLuint index, GLint64EXT x, GLint64EXT y, GLint64EXT z, GLint64EXT w) {
-        printf("stub glVertexAttribL4i64NV(%u, %lld, %lld, %lld, %lld);\n", index, x, y, z, w);
+        printf("stub glVertexAttribL4i64NV(%u, %"PRIi64", %"PRIi64", %"PRIi64", %"PRIi64");\n", index, x, y, z, w);
 }
 packed_call_t *pack_glVertexAttribL4i64NV(glVertexAttribL4i64NV_PACKED *_dst, GLuint index, GLint64EXT x, GLint64EXT y, GLint64EXT z, GLint64EXT w) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL4i64NV_PACKED));
@@ -66298,7 +66298,7 @@ packed_call_t *pack_glVertexAttribL4i64vNV(glVertexAttribL4i64vNV_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 void stub_glVertexAttribL4ui64NV(GLuint index, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z, GLuint64EXT w) {
-        printf("stub glVertexAttribL4ui64NV(%u, %llu, %llu, %llu, %llu);\n", index, x, y, z, w);
+        printf("stub glVertexAttribL4ui64NV(%u, %"PRIu64", %"PRIu64", %"PRIu64", %"PRIu64");\n", index, x, y, z, w);
 }
 packed_call_t *pack_glVertexAttribL4ui64NV(glVertexAttribL4ui64NV_PACKED *_dst, GLuint index, GLuint64EXT x, GLuint64EXT y, GLuint64EXT z, GLuint64EXT w) {
     if (_dst == NULL) _dst = malloc(sizeof(glVertexAttribL4ui64NV_PACKED));
@@ -67340,7 +67340,7 @@ packed_call_t *pack_glViewportIndexedfv(glViewportIndexedfv_PACKED *_dst, GLuint
     return (packed_call_t *)_dst;
 }
 void stub_glWaitSync(GLsync sync, GLbitfield flags, GLuint64 timeout) {
-        printf("stub glWaitSync(%p, %d, %llu);\n", sync, flags, timeout);
+        printf("stub glWaitSync(%p, %d, %"PRIu64");\n", sync, flags, timeout);
 }
 packed_call_t *pack_glWaitSync(glWaitSync_PACKED *_dst, GLsync sync, GLbitfield flags, GLuint64 timeout) {
     if (_dst == NULL) _dst = malloc(sizeof(glWaitSync_PACKED));
@@ -68034,7 +68034,7 @@ packed_call_t *pack_glXAssociateDMPbufferSGIX(glXAssociateDMPbufferSGIX_PACKED *
     return (packed_call_t *)_dst;
 }
 int stub_glXBindChannelToWindowSGIX(Display * display, int screen, int channel, Window window) {
-        printf("stub glXBindChannelToWindowSGIX(%p, %p, %p, %p);\n", display, screen, channel, window);
+        printf("stub glXBindChannelToWindowSGIX(%p, %d, %d, %lu);\n", display, screen, channel, window);
     return 0;
 }
 packed_call_t *pack_glXBindChannelToWindowSGIX(glXBindChannelToWindowSGIX_PACKED *_dst, Display * display, int screen, int channel, Window window) {
@@ -68047,7 +68047,7 @@ packed_call_t *pack_glXBindChannelToWindowSGIX(glXBindChannelToWindowSGIX_PACKED
     return (packed_call_t *)_dst;
 }
 int stub_glXBindHyperpipeSGIX(Display * dpy, int hpId) {
-        printf("stub glXBindHyperpipeSGIX(%p, %p);\n", dpy, hpId);
+        printf("stub glXBindHyperpipeSGIX(%p, %d);\n", dpy, hpId);
     return 0;
 }
 packed_call_t *pack_glXBindHyperpipeSGIX(glXBindHyperpipeSGIX_PACKED *_dst, Display * dpy, int hpId) {
@@ -68070,7 +68070,7 @@ packed_call_t *pack_glXBindSwapBarrierNV(glXBindSwapBarrierNV_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 void stub_glXBindSwapBarrierSGIX(Display * dpy, GLXDrawable drawable, int barrier) {
-        printf("stub glXBindSwapBarrierSGIX(%p, %p, %p);\n", dpy, drawable, barrier);
+        printf("stub glXBindSwapBarrierSGIX(%p, %d, %d);\n", dpy, drawable, barrier);
 }
 packed_call_t *pack_glXBindSwapBarrierSGIX(glXBindSwapBarrierSGIX_PACKED *_dst, Display * dpy, GLXDrawable drawable, int barrier) {
     if (_dst == NULL) _dst = malloc(sizeof(glXBindSwapBarrierSGIX_PACKED));
@@ -68081,7 +68081,7 @@ packed_call_t *pack_glXBindSwapBarrierSGIX(glXBindSwapBarrierSGIX_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 void stub_glXBindTexImageEXT(Display * dpy, GLXDrawable drawable, int buffer, const int * attrib_list) {
-        printf("stub glXBindTexImageEXT(%p, %p, %p, %p);\n", dpy, drawable, buffer, attrib_list);
+        printf("stub glXBindTexImageEXT(%p, %d, %d, %p);\n", dpy, drawable, buffer, attrib_list);
 }
 packed_call_t *pack_glXBindTexImageEXT(glXBindTexImageEXT_PACKED *_dst, Display * dpy, GLXDrawable drawable, int buffer, const int * attrib_list) {
     if (_dst == NULL) _dst = malloc(sizeof(glXBindTexImageEXT_PACKED));
@@ -68093,7 +68093,7 @@ packed_call_t *pack_glXBindTexImageEXT(glXBindTexImageEXT_PACKED *_dst, Display 
     return (packed_call_t *)_dst;
 }
 int stub_glXBindVideoCaptureDeviceNV(Display * dpy, unsigned int video_capture_slot, GLXVideoCaptureDeviceNV device) {
-        printf("stub glXBindVideoCaptureDeviceNV(%p, %p, %p);\n", dpy, video_capture_slot, device);
+        printf("stub glXBindVideoCaptureDeviceNV(%p, %u, %p);\n", dpy, video_capture_slot, device);
     return 0;
 }
 packed_call_t *pack_glXBindVideoCaptureDeviceNV(glXBindVideoCaptureDeviceNV_PACKED *_dst, Display * dpy, unsigned int video_capture_slot, GLXVideoCaptureDeviceNV device) {
@@ -68105,7 +68105,7 @@ packed_call_t *pack_glXBindVideoCaptureDeviceNV(glXBindVideoCaptureDeviceNV_PACK
     return (packed_call_t *)_dst;
 }
 int stub_glXBindVideoDeviceNV(Display * dpy, unsigned int video_slot, unsigned int video_device, const int * attrib_list) {
-        printf("stub glXBindVideoDeviceNV(%p, %p, %p, %p);\n", dpy, video_slot, video_device, attrib_list);
+        printf("stub glXBindVideoDeviceNV(%p, %u, %u, %p);\n", dpy, video_slot, video_device, attrib_list);
     return 0;
 }
 packed_call_t *pack_glXBindVideoDeviceNV(glXBindVideoDeviceNV_PACKED *_dst, Display * dpy, unsigned int video_slot, unsigned int video_device, const int * attrib_list) {
@@ -68118,7 +68118,7 @@ packed_call_t *pack_glXBindVideoDeviceNV(glXBindVideoDeviceNV_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 int stub_glXBindVideoImageNV(Display * dpy, GLXVideoDeviceNV VideoDevice, GLXPbuffer pbuf, int iVideoBuffer) {
-        printf("stub glXBindVideoImageNV(%p, %p, %p, %p);\n", dpy, VideoDevice, pbuf, iVideoBuffer);
+        printf("stub glXBindVideoImageNV(%p, %p, %p, %d);\n", dpy, VideoDevice, pbuf, iVideoBuffer);
     return 0;
 }
 packed_call_t *pack_glXBindVideoImageNV(glXBindVideoImageNV_PACKED *_dst, Display * dpy, GLXVideoDeviceNV VideoDevice, GLXPbuffer pbuf, int iVideoBuffer) {
@@ -68131,7 +68131,7 @@ packed_call_t *pack_glXBindVideoImageNV(glXBindVideoImageNV_PACKED *_dst, Displa
     return (packed_call_t *)_dst;
 }
 void stub_glXChangeDrawableAttributes(uint32_t drawable) {
-        printf("stub glXChangeDrawableAttributes(%p);\n", drawable);
+        printf("stub glXChangeDrawableAttributes(%"PRIu32");\n", drawable);
 }
 packed_call_t *pack_glXChangeDrawableAttributes(glXChangeDrawableAttributes_PACKED *_dst, uint32_t drawable) {
     if (_dst == NULL) _dst = malloc(sizeof(glXChangeDrawableAttributes_PACKED));
@@ -68140,7 +68140,7 @@ packed_call_t *pack_glXChangeDrawableAttributes(glXChangeDrawableAttributes_PACK
     return (packed_call_t *)_dst;
 }
 void stub_glXChangeDrawableAttributesSGIX(uint32_t drawable) {
-        printf("stub glXChangeDrawableAttributesSGIX(%p);\n", drawable);
+        printf("stub glXChangeDrawableAttributesSGIX(%"PRIu32");\n", drawable);
 }
 packed_call_t *pack_glXChangeDrawableAttributesSGIX(glXChangeDrawableAttributesSGIX_PACKED *_dst, uint32_t drawable) {
     if (_dst == NULL) _dst = malloc(sizeof(glXChangeDrawableAttributesSGIX_PACKED));
@@ -68149,7 +68149,7 @@ packed_call_t *pack_glXChangeDrawableAttributesSGIX(glXChangeDrawableAttributesS
     return (packed_call_t *)_dst;
 }
 int stub_glXChannelRectSGIX(Display * display, int screen, int channel, int x, int y, int w, int h) {
-        printf("stub glXChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", display, screen, channel, x, y, w, h);
+        printf("stub glXChannelRectSGIX(%p, %d, %d, %d, %d, %d, %d);\n", display, screen, channel, x, y, w, h);
     return 0;
 }
 packed_call_t *pack_glXChannelRectSGIX(glXChannelRectSGIX_PACKED *_dst, Display * display, int screen, int channel, int x, int y, int w, int h) {
@@ -68165,7 +68165,7 @@ packed_call_t *pack_glXChannelRectSGIX(glXChannelRectSGIX_PACKED *_dst, Display 
     return (packed_call_t *)_dst;
 }
 int stub_glXChannelRectSyncSGIX(Display * display, int screen, int channel, GLenum synctype) {
-        printf("stub glXChannelRectSyncSGIX(%p, %p, %p, 0x%04X);\n", display, screen, channel, synctype);
+        printf("stub glXChannelRectSyncSGIX(%p, %d, %d, 0x%04X);\n", display, screen, channel, synctype);
     return 0;
 }
 packed_call_t *pack_glXChannelRectSyncSGIX(glXChannelRectSyncSGIX_PACKED *_dst, Display * display, int screen, int channel, GLenum synctype) {
@@ -68178,7 +68178,7 @@ packed_call_t *pack_glXChannelRectSyncSGIX(glXChannelRectSyncSGIX_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 GLXFBConfig * stub_glXChooseFBConfig(Display * dpy, int screen, const int * attrib_list, int * nelements) {
-        printf("stub glXChooseFBConfig(%p, %p, %p, %p);\n", dpy, screen, attrib_list, nelements);
+        printf("stub glXChooseFBConfig(%p, %d, %p, %p);\n", dpy, screen, attrib_list, nelements);
     return 0;
 }
 packed_call_t *pack_glXChooseFBConfig(glXChooseFBConfig_PACKED *_dst, Display * dpy, int screen, const int * attrib_list, int * nelements) {
@@ -68191,7 +68191,7 @@ packed_call_t *pack_glXChooseFBConfig(glXChooseFBConfig_PACKED *_dst, Display * 
     return (packed_call_t *)_dst;
 }
 GLXFBConfigSGIX * stub_glXChooseFBConfigSGIX(Display * dpy, int screen, int * attrib_list, int * nelements) {
-        printf("stub glXChooseFBConfigSGIX(%p, %p, %p, %p);\n", dpy, screen, attrib_list, nelements);
+        printf("stub glXChooseFBConfigSGIX(%p, %d, %p, %p);\n", dpy, screen, attrib_list, nelements);
     return 0;
 }
 packed_call_t *pack_glXChooseFBConfigSGIX(glXChooseFBConfigSGIX_PACKED *_dst, Display * dpy, int screen, int * attrib_list, int * nelements) {
@@ -68204,7 +68204,7 @@ packed_call_t *pack_glXChooseFBConfigSGIX(glXChooseFBConfigSGIX_PACKED *_dst, Di
     return (packed_call_t *)_dst;
 }
 XVisualInfo * stub_glXChooseVisual(Display * dpy, int screen, int * attribList) {
-        printf("stub glXChooseVisual(%p, %p, %p);\n", dpy, screen, attribList);
+        printf("stub glXChooseVisual(%p, %d, %p);\n", dpy, screen, attribList);
     return 0;
 }
 packed_call_t *pack_glXChooseVisual(glXChooseVisual_PACKED *_dst, Display * dpy, int screen, int * attribList) {
@@ -68224,7 +68224,7 @@ packed_call_t *pack_glXClientInfo(glXClientInfo_PACKED *_dst) {
     return (packed_call_t *)_dst;
 }
 void stub_glXCopyContext(Display * dpy, GLXContext src, GLXContext dst, unsigned long mask) {
-        printf("stub glXCopyContext(%p, %p, %p, %p);\n", dpy, src, dst, mask);
+        printf("stub glXCopyContext(%p, %p, %p, %lu);\n", dpy, src, dst, mask);
 }
 packed_call_t *pack_glXCopyContext(glXCopyContext_PACKED *_dst, Display * dpy, GLXContext src, GLXContext dst, unsigned long mask) {
     if (_dst == NULL) _dst = malloc(sizeof(glXCopyContext_PACKED));
@@ -68262,7 +68262,7 @@ packed_call_t *pack_glXCopyImageSubDataNV(glXCopyImageSubDataNV_PACKED *_dst, Di
     return (packed_call_t *)_dst;
 }
 void stub_glXCopySubBufferMESA(Display * dpy, GLXDrawable drawable, int x, int y, int width, int height) {
-        printf("stub glXCopySubBufferMESA(%p, %p, %p, %p, %p, %p);\n", dpy, drawable, x, y, width, height);
+        printf("stub glXCopySubBufferMESA(%p, %d, %d, %d, %d, %d);\n", dpy, drawable, x, y, width, height);
 }
 packed_call_t *pack_glXCopySubBufferMESA(glXCopySubBufferMESA_PACKED *_dst, Display * dpy, GLXDrawable drawable, int x, int y, int width, int height) {
     if (_dst == NULL) _dst = malloc(sizeof(glXCopySubBufferMESA_PACKED));
@@ -68276,7 +68276,7 @@ packed_call_t *pack_glXCopySubBufferMESA(glXCopySubBufferMESA_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 GLXContext stub_glXCreateContext(Display * dpy, XVisualInfo * vis, GLXContext shareList, Bool direct) {
-        printf("stub glXCreateContext(%p, %p, %p, %p);\n", dpy, vis, shareList, direct);
+        printf("stub glXCreateContext(%p, %p, %p, %d);\n", dpy, vis, shareList, direct);
     return 0;
 }
 packed_call_t *pack_glXCreateContext(glXCreateContext_PACKED *_dst, Display * dpy, XVisualInfo * vis, GLXContext shareList, Bool direct) {
@@ -68289,7 +68289,7 @@ packed_call_t *pack_glXCreateContext(glXCreateContext_PACKED *_dst, Display * dp
     return (packed_call_t *)_dst;
 }
 GLXContext stub_glXCreateContextAttribsARB(Display * dpy, GLXFBConfig config, GLXContext share_context, Bool direct, const int * attrib_list) {
-        printf("stub glXCreateContextAttribsARB(%p, %p, %p, %p, %p);\n", dpy, config, share_context, direct, attrib_list);
+        printf("stub glXCreateContextAttribsARB(%p, %p, %p, %d, %p);\n", dpy, config, share_context, direct, attrib_list);
     return 0;
 }
 packed_call_t *pack_glXCreateContextAttribsARB(glXCreateContextAttribsARB_PACKED *_dst, Display * dpy, GLXFBConfig config, GLXContext share_context, Bool direct, const int * attrib_list) {
@@ -68303,7 +68303,7 @@ packed_call_t *pack_glXCreateContextAttribsARB(glXCreateContextAttribsARB_PACKED
     return (packed_call_t *)_dst;
 }
 GLXContext stub_glXCreateContextWithConfigSGIX(Display * dpy, GLXFBConfigSGIX config, int render_type, GLXContext share_list, Bool direct) {
-        printf("stub glXCreateContextWithConfigSGIX(%p, %p, %p, %p, %p);\n", dpy, config, render_type, share_list, direct);
+        printf("stub glXCreateContextWithConfigSGIX(%p, %p, %d, %p, %d);\n", dpy, config, render_type, share_list, direct);
     return 0;
 }
 packed_call_t *pack_glXCreateContextWithConfigSGIX(glXCreateContextWithConfigSGIX_PACKED *_dst, Display * dpy, GLXFBConfigSGIX config, int render_type, GLXContext share_list, Bool direct) {
@@ -68317,7 +68317,7 @@ packed_call_t *pack_glXCreateContextWithConfigSGIX(glXCreateContextWithConfigSGI
     return (packed_call_t *)_dst;
 }
 GLXPbufferSGIX stub_glXCreateGLXPbufferSGIX(Display * dpy, GLXFBConfigSGIX config, unsigned int width, unsigned int height, int * attrib_list) {
-        printf("stub glXCreateGLXPbufferSGIX(%p, %p, %p, %p, %p);\n", dpy, config, width, height, attrib_list);
+        printf("stub glXCreateGLXPbufferSGIX(%p, %p, %u, %u, %p);\n", dpy, config, width, height, attrib_list);
     return 0;
 }
 packed_call_t *pack_glXCreateGLXPbufferSGIX(glXCreateGLXPbufferSGIX_PACKED *_dst, Display * dpy, GLXFBConfigSGIX config, unsigned int width, unsigned int height, int * attrib_list) {
@@ -68331,7 +68331,7 @@ packed_call_t *pack_glXCreateGLXPbufferSGIX(glXCreateGLXPbufferSGIX_PACKED *_dst
     return (packed_call_t *)_dst;
 }
 GLXPixmap stub_glXCreateGLXPixmap(Display * dpy, XVisualInfo * visual, Pixmap pixmap) {
-        printf("stub glXCreateGLXPixmap(%p, %p, %p);\n", dpy, visual, pixmap);
+        printf("stub glXCreateGLXPixmap(%p, %p, %lu);\n", dpy, visual, pixmap);
     return 0;
 }
 packed_call_t *pack_glXCreateGLXPixmap(glXCreateGLXPixmap_PACKED *_dst, Display * dpy, XVisualInfo * visual, Pixmap pixmap) {
@@ -68343,7 +68343,7 @@ packed_call_t *pack_glXCreateGLXPixmap(glXCreateGLXPixmap_PACKED *_dst, Display 
     return (packed_call_t *)_dst;
 }
 GLXPixmap stub_glXCreateGLXPixmapMESA(Display * dpy, XVisualInfo * visual, Pixmap pixmap, Colormap cmap) {
-        printf("stub glXCreateGLXPixmapMESA(%p, %p, %p, %p);\n", dpy, visual, pixmap, cmap);
+        printf("stub glXCreateGLXPixmapMESA(%p, %p, %lu, %lu);\n", dpy, visual, pixmap, cmap);
     return 0;
 }
 packed_call_t *pack_glXCreateGLXPixmapMESA(glXCreateGLXPixmapMESA_PACKED *_dst, Display * dpy, XVisualInfo * visual, Pixmap pixmap, Colormap cmap) {
@@ -68356,7 +68356,7 @@ packed_call_t *pack_glXCreateGLXPixmapMESA(glXCreateGLXPixmapMESA_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 GLXPixmap stub_glXCreateGLXPixmapWithConfigSGIX(Display * dpy, GLXFBConfigSGIX config, Pixmap pixmap) {
-        printf("stub glXCreateGLXPixmapWithConfigSGIX(%p, %p, %p);\n", dpy, config, pixmap);
+        printf("stub glXCreateGLXPixmapWithConfigSGIX(%p, %p, %lu);\n", dpy, config, pixmap);
     return 0;
 }
 packed_call_t *pack_glXCreateGLXPixmapWithConfigSGIX(glXCreateGLXPixmapWithConfigSGIX_PACKED *_dst, Display * dpy, GLXFBConfigSGIX config, Pixmap pixmap) {
@@ -68368,7 +68368,7 @@ packed_call_t *pack_glXCreateGLXPixmapWithConfigSGIX(glXCreateGLXPixmapWithConfi
     return (packed_call_t *)_dst;
 }
 GLXVideoSourceSGIX stub_glXCreateGLXVideoSourceSGIX(Display * display, int screen, VLServer server, VLPath path, int nodeClass, VLNode drainNode) {
-        printf("stub glXCreateGLXVideoSourceSGIX(%p, %p, %p, %p, %p, %p);\n", display, screen, server, path, nodeClass, drainNode);
+        printf("stub glXCreateGLXVideoSourceSGIX(%p, %d, %p, %p, %d, %p);\n", display, screen, server, path, nodeClass, drainNode);
     return 0;
 }
 packed_call_t *pack_glXCreateGLXVideoSourceSGIX(glXCreateGLXVideoSourceSGIX_PACKED *_dst, Display * display, int screen, VLServer server, VLPath path, int nodeClass, VLNode drainNode) {
@@ -68383,7 +68383,7 @@ packed_call_t *pack_glXCreateGLXVideoSourceSGIX(glXCreateGLXVideoSourceSGIX_PACK
     return (packed_call_t *)_dst;
 }
 GLXContext stub_glXCreateNewContext(Display * dpy, GLXFBConfig config, int render_type, GLXContext share_list, Bool direct) {
-        printf("stub glXCreateNewContext(%p, %p, %p, %p, %p);\n", dpy, config, render_type, share_list, direct);
+        printf("stub glXCreateNewContext(%p, %p, %d, %p, %d);\n", dpy, config, render_type, share_list, direct);
     return 0;
 }
 packed_call_t *pack_glXCreateNewContext(glXCreateNewContext_PACKED *_dst, Display * dpy, GLXFBConfig config, int render_type, GLXContext share_list, Bool direct) {
@@ -68409,7 +68409,7 @@ packed_call_t *pack_glXCreatePbuffer(glXCreatePbuffer_PACKED *_dst, Display * dp
     return (packed_call_t *)_dst;
 }
 GLXPixmap stub_glXCreatePixmap(Display * dpy, GLXFBConfig config, Pixmap pixmap, const int * attrib_list) {
-        printf("stub glXCreatePixmap(%p, %p, %p, %p);\n", dpy, config, pixmap, attrib_list);
+        printf("stub glXCreatePixmap(%p, %p, %lu, %p);\n", dpy, config, pixmap, attrib_list);
     return 0;
 }
 packed_call_t *pack_glXCreatePixmap(glXCreatePixmap_PACKED *_dst, Display * dpy, GLXFBConfig config, Pixmap pixmap, const int * attrib_list) {
@@ -68422,7 +68422,7 @@ packed_call_t *pack_glXCreatePixmap(glXCreatePixmap_PACKED *_dst, Display * dpy,
     return (packed_call_t *)_dst;
 }
 GLXWindow stub_glXCreateWindow(Display * dpy, GLXFBConfig config, Window win, const int * attrib_list) {
-        printf("stub glXCreateWindow(%p, %p, %p, %p);\n", dpy, config, win, attrib_list);
+        printf("stub glXCreateWindow(%p, %p, %lu, %p);\n", dpy, config, win, attrib_list);
     return 0;
 }
 packed_call_t *pack_glXCreateWindow(glXCreateWindow_PACKED *_dst, Display * dpy, GLXFBConfig config, Window win, const int * attrib_list) {
@@ -68435,7 +68435,7 @@ packed_call_t *pack_glXCreateWindow(glXCreateWindow_PACKED *_dst, Display * dpy,
     return (packed_call_t *)_dst;
 }
 void stub_glXCushionSGI(Display * dpy, Window window, float cushion) {
-        printf("stub glXCushionSGI(%p, %p, %p);\n", dpy, window, cushion);
+        printf("stub glXCushionSGI(%p, %lu, %f);\n", dpy, window, cushion);
 }
 packed_call_t *pack_glXCushionSGI(glXCushionSGI_PACKED *_dst, Display * dpy, Window window, float cushion) {
     if (_dst == NULL) _dst = malloc(sizeof(glXCushionSGI_PACKED));
@@ -68486,7 +68486,7 @@ packed_call_t *pack_glXDestroyGLXVideoSourceSGIX(glXDestroyGLXVideoSourceSGIX_PA
     return (packed_call_t *)_dst;
 }
 int stub_glXDestroyHyperpipeConfigSGIX(Display * dpy, int hpId) {
-        printf("stub glXDestroyHyperpipeConfigSGIX(%p, %p);\n", dpy, hpId);
+        printf("stub glXDestroyHyperpipeConfigSGIX(%p, %d);\n", dpy, hpId);
     return 0;
 }
 packed_call_t *pack_glXDestroyHyperpipeConfigSGIX(glXDestroyHyperpipeConfigSGIX_PACKED *_dst, Display * dpy, int hpId) {
@@ -68527,7 +68527,7 @@ packed_call_t *pack_glXDestroyWindow(glXDestroyWindow_PACKED *_dst, Display * dp
     return (packed_call_t *)_dst;
 }
 GLXVideoCaptureDeviceNV * stub_glXEnumerateVideoCaptureDevicesNV(Display * dpy, int screen, int * nelements) {
-        printf("stub glXEnumerateVideoCaptureDevicesNV(%p, %p, %p);\n", dpy, screen, nelements);
+        printf("stub glXEnumerateVideoCaptureDevicesNV(%p, %d, %p);\n", dpy, screen, nelements);
     return 0;
 }
 packed_call_t *pack_glXEnumerateVideoCaptureDevicesNV(glXEnumerateVideoCaptureDevicesNV_PACKED *_dst, Display * dpy, int screen, int * nelements) {
@@ -68539,7 +68539,7 @@ packed_call_t *pack_glXEnumerateVideoCaptureDevicesNV(glXEnumerateVideoCaptureDe
     return (packed_call_t *)_dst;
 }
 unsigned int * stub_glXEnumerateVideoDevicesNV(Display * dpy, int screen, int * nelements) {
-        printf("stub glXEnumerateVideoDevicesNV(%p, %p, %p);\n", dpy, screen, nelements);
+        printf("stub glXEnumerateVideoDevicesNV(%p, %d, %p);\n", dpy, screen, nelements);
     return 0;
 }
 packed_call_t *pack_glXEnumerateVideoDevicesNV(glXEnumerateVideoDevicesNV_PACKED *_dst, Display * dpy, int screen, int * nelements) {
@@ -68571,7 +68571,7 @@ packed_call_t *pack_glXGetAGPOffsetMESA(glXGetAGPOffsetMESA_PACKED *_dst, const 
     return (packed_call_t *)_dst;
 }
 const char * stub_glXGetClientString(Display * display, int name) {
-        printf("stub glXGetClientString(%p, %p);\n", display, name);
+        printf("stub glXGetClientString(%p, %d);\n", display, name);
     return 0;
 }
 packed_call_t *pack_glXGetClientString(glXGetClientString_PACKED *_dst, Display * display, int name) {
@@ -68582,7 +68582,7 @@ packed_call_t *pack_glXGetClientString(glXGetClientString_PACKED *_dst, Display 
     return (packed_call_t *)_dst;
 }
 int stub_glXGetConfig(Display * display, XVisualInfo * visual, int attribute, int * value) {
-        printf("stub glXGetConfig(%p, %p, %p, %p);\n", display, visual, attribute, value);
+        printf("stub glXGetConfig(%p, %p, %d, %p);\n", display, visual, attribute, value);
     return 0;
 }
 packed_call_t *pack_glXGetConfig(glXGetConfig_PACKED *_dst, Display * display, XVisualInfo * visual, int attribute, int * value) {
@@ -68659,7 +68659,7 @@ packed_call_t *pack_glXGetCurrentReadDrawableSGI(glXGetCurrentReadDrawableSGI_PA
     return (packed_call_t *)_dst;
 }
 void stub_glXGetDrawableAttributes(uint32_t drawable) {
-        printf("stub glXGetDrawableAttributes(%p);\n", drawable);
+        printf("stub glXGetDrawableAttributes(%"PRIu32");\n", drawable);
 }
 packed_call_t *pack_glXGetDrawableAttributes(glXGetDrawableAttributes_PACKED *_dst, uint32_t drawable) {
     if (_dst == NULL) _dst = malloc(sizeof(glXGetDrawableAttributes_PACKED));
@@ -68668,7 +68668,7 @@ packed_call_t *pack_glXGetDrawableAttributes(glXGetDrawableAttributes_PACKED *_d
     return (packed_call_t *)_dst;
 }
 void stub_glXGetDrawableAttributesSGIX(uint32_t drawable) {
-        printf("stub glXGetDrawableAttributesSGIX(%p);\n", drawable);
+        printf("stub glXGetDrawableAttributesSGIX(%"PRIu32");\n", drawable);
 }
 packed_call_t *pack_glXGetDrawableAttributesSGIX(glXGetDrawableAttributesSGIX_PACKED *_dst, uint32_t drawable) {
     if (_dst == NULL) _dst = malloc(sizeof(glXGetDrawableAttributesSGIX_PACKED));
@@ -68677,7 +68677,7 @@ packed_call_t *pack_glXGetDrawableAttributesSGIX(glXGetDrawableAttributesSGIX_PA
     return (packed_call_t *)_dst;
 }
 int stub_glXGetFBConfigAttrib(Display * dpy, GLXFBConfig config, int attribute, int * value) {
-        printf("stub glXGetFBConfigAttrib(%p, %p, %p, %p);\n", dpy, config, attribute, value);
+        printf("stub glXGetFBConfigAttrib(%p, %p, %d, %p);\n", dpy, config, attribute, value);
     return 0;
 }
 packed_call_t *pack_glXGetFBConfigAttrib(glXGetFBConfigAttrib_PACKED *_dst, Display * dpy, GLXFBConfig config, int attribute, int * value) {
@@ -68690,7 +68690,7 @@ packed_call_t *pack_glXGetFBConfigAttrib(glXGetFBConfigAttrib_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 int stub_glXGetFBConfigAttribSGIX(Display * dpy, GLXFBConfigSGIX config, int attribute, int * value) {
-        printf("stub glXGetFBConfigAttribSGIX(%p, %p, %p, %p);\n", dpy, config, attribute, value);
+        printf("stub glXGetFBConfigAttribSGIX(%p, %p, %d, %p);\n", dpy, config, attribute, value);
     return 0;
 }
 packed_call_t *pack_glXGetFBConfigAttribSGIX(glXGetFBConfigAttribSGIX_PACKED *_dst, Display * dpy, GLXFBConfigSGIX config, int attribute, int * value) {
@@ -68714,7 +68714,7 @@ packed_call_t *pack_glXGetFBConfigFromVisualSGIX(glXGetFBConfigFromVisualSGIX_PA
     return (packed_call_t *)_dst;
 }
 GLXFBConfig * stub_glXGetFBConfigs(Display * dpy, int screen, int * nelements) {
-        printf("stub glXGetFBConfigs(%p, %p, %p);\n", dpy, screen, nelements);
+        printf("stub glXGetFBConfigs(%p, %d, %p);\n", dpy, screen, nelements);
     return 0;
 }
 packed_call_t *pack_glXGetFBConfigs(glXGetFBConfigs_PACKED *_dst, Display * dpy, int screen, int * nelements) {
@@ -68734,7 +68734,7 @@ packed_call_t *pack_glXGetFBConfigsSGIX(glXGetFBConfigsSGIX_PACKED *_dst) {
     return (packed_call_t *)_dst;
 }
 Bool stub_glXGetMscRateOML(Display * dpy, GLXDrawable drawable, int32_t * numerator, int32_t * denominator) {
-        printf("stub glXGetMscRateOML(%p, %p, %p, %p);\n", dpy, drawable, numerator, denominator);
+        printf("stub glXGetMscRateOML(%p, %d, %p, %p);\n", dpy, drawable, numerator, denominator);
     return 0;
 }
 packed_call_t *pack_glXGetMscRateOML(glXGetMscRateOML_PACKED *_dst, Display * dpy, GLXDrawable drawable, int32_t * numerator, int32_t * denominator) {
@@ -68767,7 +68767,7 @@ packed_call_t *pack_glXGetProcAddressARB(glXGetProcAddressARB_PACKED *_dst, cons
     return (packed_call_t *)_dst;
 }
 void stub_glXGetSelectedEvent(Display * dpy, GLXDrawable draw, unsigned long * event_mask) {
-        printf("stub glXGetSelectedEvent(%p, %p, %p);\n", dpy, draw, event_mask);
+        printf("stub glXGetSelectedEvent(%p, %d, %p);\n", dpy, draw, event_mask);
 }
 packed_call_t *pack_glXGetSelectedEvent(glXGetSelectedEvent_PACKED *_dst, Display * dpy, GLXDrawable draw, unsigned long * event_mask) {
     if (_dst == NULL) _dst = malloc(sizeof(glXGetSelectedEvent_PACKED));
@@ -68778,7 +68778,7 @@ packed_call_t *pack_glXGetSelectedEvent(glXGetSelectedEvent_PACKED *_dst, Displa
     return (packed_call_t *)_dst;
 }
 void stub_glXGetSelectedEventSGIX(Display * dpy, GLXDrawable drawable, unsigned long * mask) {
-        printf("stub glXGetSelectedEventSGIX(%p, %p, %p);\n", dpy, drawable, mask);
+        printf("stub glXGetSelectedEventSGIX(%p, %d, %p);\n", dpy, drawable, mask);
 }
 packed_call_t *pack_glXGetSelectedEventSGIX(glXGetSelectedEventSGIX_PACKED *_dst, Display * dpy, GLXDrawable drawable, unsigned long * mask) {
     if (_dst == NULL) _dst = malloc(sizeof(glXGetSelectedEventSGIX_PACKED));
@@ -68789,7 +68789,7 @@ packed_call_t *pack_glXGetSelectedEventSGIX(glXGetSelectedEventSGIX_PACKED *_dst
     return (packed_call_t *)_dst;
 }
 Bool stub_glXGetSyncValuesOML(Display * dpy, GLXDrawable drawable, int64_t * ust, int64_t * msc, int64_t * sbc) {
-        printf("stub glXGetSyncValuesOML(%p, %p, %p, %p, %p);\n", dpy, drawable, ust, msc, sbc);
+        printf("stub glXGetSyncValuesOML(%p, %d, %p, %p, %p);\n", dpy, drawable, ust, msc, sbc);
     return 0;
 }
 packed_call_t *pack_glXGetSyncValuesOML(glXGetSyncValuesOML_PACKED *_dst, Display * dpy, GLXDrawable drawable, int64_t * ust, int64_t * msc, int64_t * sbc) {
@@ -68803,7 +68803,7 @@ packed_call_t *pack_glXGetSyncValuesOML(glXGetSyncValuesOML_PACKED *_dst, Displa
     return (packed_call_t *)_dst;
 }
 Status stub_glXGetTransparentIndexSUN(Display * dpy, Window overlay, Window underlay, long * pTransparentIndex) {
-        printf("stub glXGetTransparentIndexSUN(%p, %p, %p, %p);\n", dpy, overlay, underlay, pTransparentIndex);
+        printf("stub glXGetTransparentIndexSUN(%p, %lu, %lu, %p);\n", dpy, overlay, underlay, pTransparentIndex);
     return 0;
 }
 packed_call_t *pack_glXGetTransparentIndexSUN(glXGetTransparentIndexSUN_PACKED *_dst, Display * dpy, Window overlay, Window underlay, long * pTransparentIndex) {
@@ -68816,7 +68816,7 @@ packed_call_t *pack_glXGetTransparentIndexSUN(glXGetTransparentIndexSUN_PACKED *
     return (packed_call_t *)_dst;
 }
 int stub_glXGetVideoDeviceNV(Display * dpy, int screen, int numVideoDevices, GLXVideoDeviceNV * pVideoDevice) {
-        printf("stub glXGetVideoDeviceNV(%p, %p, %p, %p);\n", dpy, screen, numVideoDevices, pVideoDevice);
+        printf("stub glXGetVideoDeviceNV(%p, %d, %d, %p);\n", dpy, screen, numVideoDevices, pVideoDevice);
     return 0;
 }
 packed_call_t *pack_glXGetVideoDeviceNV(glXGetVideoDeviceNV_PACKED *_dst, Display * dpy, int screen, int numVideoDevices, GLXVideoDeviceNV * pVideoDevice) {
@@ -68829,7 +68829,7 @@ packed_call_t *pack_glXGetVideoDeviceNV(glXGetVideoDeviceNV_PACKED *_dst, Displa
     return (packed_call_t *)_dst;
 }
 int stub_glXGetVideoInfoNV(Display * dpy, int screen, GLXVideoDeviceNV VideoDevice, unsigned long * pulCounterOutputPbuffer, unsigned long * pulCounterOutputVideo) {
-        printf("stub glXGetVideoInfoNV(%p, %p, %p, %p, %p);\n", dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
+        printf("stub glXGetVideoInfoNV(%p, %d, %p, %p, %p);\n", dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
     return 0;
 }
 packed_call_t *pack_glXGetVideoInfoNV(glXGetVideoInfoNV_PACKED *_dst, Display * dpy, int screen, GLXVideoDeviceNV VideoDevice, unsigned long * pulCounterOutputPbuffer, unsigned long * pulCounterOutputVideo) {
@@ -68883,7 +68883,7 @@ packed_call_t *pack_glXGetVisualFromFBConfigSGIX(glXGetVisualFromFBConfigSGIX_PA
     return (packed_call_t *)_dst;
 }
 int stub_glXHyperpipeAttribSGIX(Display * dpy, int timeSlice, int attrib, int size, void * attribList) {
-        printf("stub glXHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", dpy, timeSlice, attrib, size, attribList);
+        printf("stub glXHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", dpy, timeSlice, attrib, size, attribList);
     return 0;
 }
 packed_call_t *pack_glXHyperpipeAttribSGIX(glXHyperpipeAttribSGIX_PACKED *_dst, Display * dpy, int timeSlice, int attrib, int size, void * attribList) {
@@ -68897,7 +68897,7 @@ packed_call_t *pack_glXHyperpipeAttribSGIX(glXHyperpipeAttribSGIX_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 int stub_glXHyperpipeConfigSGIX(Display * dpy, int networkId, int npipes, GLXHyperpipeConfigSGIX * cfg, int * hpId) {
-        printf("stub glXHyperpipeConfigSGIX(%p, %p, %p, %p, %p);\n", dpy, networkId, npipes, cfg, hpId);
+        printf("stub glXHyperpipeConfigSGIX(%p, %d, %d, %p, %p);\n", dpy, networkId, npipes, cfg, hpId);
     return 0;
 }
 packed_call_t *pack_glXHyperpipeConfigSGIX(glXHyperpipeConfigSGIX_PACKED *_dst, Display * dpy, int networkId, int npipes, GLXHyperpipeConfigSGIX * cfg, int * hpId) {
@@ -68933,7 +68933,7 @@ packed_call_t *pack_glXIsDirect(glXIsDirect_PACKED *_dst, Display * dpy, GLXCont
     return (packed_call_t *)_dst;
 }
 Bool stub_glXJoinSwapGroupNV(Display * dpy, GLXDrawable drawable, GLuint group) {
-        printf("stub glXJoinSwapGroupNV(%p, %p, %u);\n", dpy, drawable, group);
+        printf("stub glXJoinSwapGroupNV(%p, %d, %u);\n", dpy, drawable, group);
     return 0;
 }
 packed_call_t *pack_glXJoinSwapGroupNV(glXJoinSwapGroupNV_PACKED *_dst, Display * dpy, GLXDrawable drawable, GLuint group) {
@@ -68945,7 +68945,7 @@ packed_call_t *pack_glXJoinSwapGroupNV(glXJoinSwapGroupNV_PACKED *_dst, Display 
     return (packed_call_t *)_dst;
 }
 void stub_glXJoinSwapGroupSGIX(Display * dpy, GLXDrawable drawable, GLXDrawable member) {
-        printf("stub glXJoinSwapGroupSGIX(%p, %p, %p);\n", dpy, drawable, member);
+        printf("stub glXJoinSwapGroupSGIX(%p, %d, %d);\n", dpy, drawable, member);
 }
 packed_call_t *pack_glXJoinSwapGroupSGIX(glXJoinSwapGroupSGIX_PACKED *_dst, Display * dpy, GLXDrawable drawable, GLXDrawable member) {
     if (_dst == NULL) _dst = malloc(sizeof(glXJoinSwapGroupSGIX_PACKED));
@@ -68966,7 +68966,7 @@ packed_call_t *pack_glXLockVideoCaptureDeviceNV(glXLockVideoCaptureDeviceNV_PACK
     return (packed_call_t *)_dst;
 }
 Bool stub_glXMakeContextCurrent(Display * dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx) {
-        printf("stub glXMakeContextCurrent(%p, %p, %p, %p);\n", dpy, draw, read, ctx);
+        printf("stub glXMakeContextCurrent(%p, %d, %d, %p);\n", dpy, draw, read, ctx);
     return 0;
 }
 packed_call_t *pack_glXMakeContextCurrent(glXMakeContextCurrent_PACKED *_dst, Display * dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx) {
@@ -68979,7 +68979,7 @@ packed_call_t *pack_glXMakeContextCurrent(glXMakeContextCurrent_PACKED *_dst, Di
     return (packed_call_t *)_dst;
 }
 Bool stub_glXMakeCurrent(Display * dpy, GLXDrawable drawable, GLXContext ctx) {
-        printf("stub glXMakeCurrent(%p, %p, %p);\n", dpy, drawable, ctx);
+        printf("stub glXMakeCurrent(%p, %d, %p);\n", dpy, drawable, ctx);
     return 0;
 }
 packed_call_t *pack_glXMakeCurrent(glXMakeCurrent_PACKED *_dst, Display * dpy, GLXDrawable drawable, GLXContext ctx) {
@@ -68991,7 +68991,7 @@ packed_call_t *pack_glXMakeCurrent(glXMakeCurrent_PACKED *_dst, Display * dpy, G
     return (packed_call_t *)_dst;
 }
 Bool stub_glXMakeCurrentReadSGI(Display * dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx) {
-        printf("stub glXMakeCurrentReadSGI(%p, %p, %p, %p);\n", dpy, draw, read, ctx);
+        printf("stub glXMakeCurrentReadSGI(%p, %d, %d, %p);\n", dpy, draw, read, ctx);
     return 0;
 }
 packed_call_t *pack_glXMakeCurrentReadSGI(glXMakeCurrentReadSGI_PACKED *_dst, Display * dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx) {
@@ -69004,7 +69004,7 @@ packed_call_t *pack_glXMakeCurrentReadSGI(glXMakeCurrentReadSGI_PACKED *_dst, Di
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryChannelDeltasSGIX(Display * display, int screen, int channel, int * x, int * y, int * w, int * h) {
-        printf("stub glXQueryChannelDeltasSGIX(%p, %p, %p, %p, %p, %p, %p);\n", display, screen, channel, x, y, w, h);
+        printf("stub glXQueryChannelDeltasSGIX(%p, %d, %d, %p, %p, %p, %p);\n", display, screen, channel, x, y, w, h);
     return 0;
 }
 packed_call_t *pack_glXQueryChannelDeltasSGIX(glXQueryChannelDeltasSGIX_PACKED *_dst, Display * display, int screen, int channel, int * x, int * y, int * w, int * h) {
@@ -69020,7 +69020,7 @@ packed_call_t *pack_glXQueryChannelDeltasSGIX(glXQueryChannelDeltasSGIX_PACKED *
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryChannelRectSGIX(Display * display, int screen, int channel, int * dx, int * dy, int * dw, int * dh) {
-        printf("stub glXQueryChannelRectSGIX(%p, %p, %p, %p, %p, %p, %p);\n", display, screen, channel, dx, dy, dw, dh);
+        printf("stub glXQueryChannelRectSGIX(%p, %d, %d, %p, %p, %p, %p);\n", display, screen, channel, dx, dy, dw, dh);
     return 0;
 }
 packed_call_t *pack_glXQueryChannelRectSGIX(glXQueryChannelRectSGIX_PACKED *_dst, Display * display, int screen, int channel, int * dx, int * dy, int * dw, int * dh) {
@@ -69036,7 +69036,7 @@ packed_call_t *pack_glXQueryChannelRectSGIX(glXQueryChannelRectSGIX_PACKED *_dst
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryContext(Display * dpy, GLXContext ctx, int attribute, int * value) {
-        printf("stub glXQueryContext(%p, %p, %p, %p);\n", dpy, ctx, attribute, value);
+        printf("stub glXQueryContext(%p, %p, %d, %p);\n", dpy, ctx, attribute, value);
     return 0;
 }
 packed_call_t *pack_glXQueryContext(glXQueryContext_PACKED *_dst, Display * dpy, GLXContext ctx, int attribute, int * value) {
@@ -69049,7 +69049,7 @@ packed_call_t *pack_glXQueryContext(glXQueryContext_PACKED *_dst, Display * dpy,
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryContextInfoEXT(Display * dpy, GLXContext context, int attribute, int * value) {
-        printf("stub glXQueryContextInfoEXT(%p, %p, %p, %p);\n", dpy, context, attribute, value);
+        printf("stub glXQueryContextInfoEXT(%p, %p, %d, %p);\n", dpy, context, attribute, value);
     return 0;
 }
 packed_call_t *pack_glXQueryContextInfoEXT(glXQueryContextInfoEXT_PACKED *_dst, Display * dpy, GLXContext context, int attribute, int * value) {
@@ -69062,7 +69062,7 @@ packed_call_t *pack_glXQueryContextInfoEXT(glXQueryContextInfoEXT_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 void stub_glXQueryDrawable(Display * dpy, GLXDrawable draw, int attribute, unsigned int * value) {
-        printf("stub glXQueryDrawable(%p, %p, %p, %p);\n", dpy, draw, attribute, value);
+        printf("stub glXQueryDrawable(%p, %d, %d, %p);\n", dpy, draw, attribute, value);
 }
 packed_call_t *pack_glXQueryDrawable(glXQueryDrawable_PACKED *_dst, Display * dpy, GLXDrawable draw, int attribute, unsigned int * value) {
     if (_dst == NULL) _dst = malloc(sizeof(glXQueryDrawable_PACKED));
@@ -69086,7 +69086,7 @@ packed_call_t *pack_glXQueryExtension(glXQueryExtension_PACKED *_dst, Display * 
     return (packed_call_t *)_dst;
 }
 const char * stub_glXQueryExtensionsString(Display * dpy, int screen) {
-        printf("stub glXQueryExtensionsString(%p, %p);\n", dpy, screen);
+        printf("stub glXQueryExtensionsString(%p, %d);\n", dpy, screen);
     return 0;
 }
 packed_call_t *pack_glXQueryExtensionsString(glXQueryExtensionsString_PACKED *_dst, Display * dpy, int screen) {
@@ -69097,7 +69097,7 @@ packed_call_t *pack_glXQueryExtensionsString(glXQueryExtensionsString_PACKED *_d
     return (packed_call_t *)_dst;
 }
 Bool stub_glXQueryFrameCountNV(Display * dpy, int screen, GLuint * count) {
-        printf("stub glXQueryFrameCountNV(%p, %p, %p);\n", dpy, screen, count);
+        printf("stub glXQueryFrameCountNV(%p, %d, %p);\n", dpy, screen, count);
     return 0;
 }
 packed_call_t *pack_glXQueryFrameCountNV(glXQueryFrameCountNV_PACKED *_dst, Display * dpy, int screen, GLuint * count) {
@@ -69109,7 +69109,7 @@ packed_call_t *pack_glXQueryFrameCountNV(glXQueryFrameCountNV_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryGLXPbufferSGIX(Display * dpy, GLXPbufferSGIX pbuf, int attribute, unsigned int * value) {
-        printf("stub glXQueryGLXPbufferSGIX(%p, %p, %p, %p);\n", dpy, pbuf, attribute, value);
+        printf("stub glXQueryGLXPbufferSGIX(%p, %p, %d, %p);\n", dpy, pbuf, attribute, value);
     return 0;
 }
 packed_call_t *pack_glXQueryGLXPbufferSGIX(glXQueryGLXPbufferSGIX_PACKED *_dst, Display * dpy, GLXPbufferSGIX pbuf, int attribute, unsigned int * value) {
@@ -69122,7 +69122,7 @@ packed_call_t *pack_glXQueryGLXPbufferSGIX(glXQueryGLXPbufferSGIX_PACKED *_dst, 
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryHyperpipeAttribSGIX(Display * dpy, int timeSlice, int attrib, int size, void * returnAttribList) {
-        printf("stub glXQueryHyperpipeAttribSGIX(%p, %p, %p, %p, %p);\n", dpy, timeSlice, attrib, size, returnAttribList);
+        printf("stub glXQueryHyperpipeAttribSGIX(%p, %d, %d, %d, %p);\n", dpy, timeSlice, attrib, size, returnAttribList);
     return 0;
 }
 packed_call_t *pack_glXQueryHyperpipeAttribSGIX(glXQueryHyperpipeAttribSGIX_PACKED *_dst, Display * dpy, int timeSlice, int attrib, int size, void * returnAttribList) {
@@ -69136,7 +69136,7 @@ packed_call_t *pack_glXQueryHyperpipeAttribSGIX(glXQueryHyperpipeAttribSGIX_PACK
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryHyperpipeBestAttribSGIX(Display * dpy, int timeSlice, int attrib, int size, void * attribList, void * returnAttribList) {
-        printf("stub glXQueryHyperpipeBestAttribSGIX(%p, %p, %p, %p, %p, %p);\n", dpy, timeSlice, attrib, size, attribList, returnAttribList);
+        printf("stub glXQueryHyperpipeBestAttribSGIX(%p, %d, %d, %d, %p, %p);\n", dpy, timeSlice, attrib, size, attribList, returnAttribList);
     return 0;
 }
 packed_call_t *pack_glXQueryHyperpipeBestAttribSGIX(glXQueryHyperpipeBestAttribSGIX_PACKED *_dst, Display * dpy, int timeSlice, int attrib, int size, void * attribList, void * returnAttribList) {
@@ -69151,7 +69151,7 @@ packed_call_t *pack_glXQueryHyperpipeBestAttribSGIX(glXQueryHyperpipeBestAttribS
     return (packed_call_t *)_dst;
 }
 GLXHyperpipeConfigSGIX * stub_glXQueryHyperpipeConfigSGIX(Display * dpy, int hpId, int * npipes) {
-        printf("stub glXQueryHyperpipeConfigSGIX(%p, %p, %p);\n", dpy, hpId, npipes);
+        printf("stub glXQueryHyperpipeConfigSGIX(%p, %d, %p);\n", dpy, hpId, npipes);
     return 0;
 }
 packed_call_t *pack_glXQueryHyperpipeConfigSGIX(glXQueryHyperpipeConfigSGIX_PACKED *_dst, Display * dpy, int hpId, int * npipes) {
@@ -69174,7 +69174,7 @@ packed_call_t *pack_glXQueryHyperpipeNetworkSGIX(glXQueryHyperpipeNetworkSGIX_PA
     return (packed_call_t *)_dst;
 }
 Bool stub_glXQueryMaxSwapBarriersSGIX(Display * dpy, int screen, int * max) {
-        printf("stub glXQueryMaxSwapBarriersSGIX(%p, %p, %p);\n", dpy, screen, max);
+        printf("stub glXQueryMaxSwapBarriersSGIX(%p, %d, %p);\n", dpy, screen, max);
     return 0;
 }
 packed_call_t *pack_glXQueryMaxSwapBarriersSGIX(glXQueryMaxSwapBarriersSGIX_PACKED *_dst, Display * dpy, int screen, int * max) {
@@ -69186,7 +69186,7 @@ packed_call_t *pack_glXQueryMaxSwapBarriersSGIX(glXQueryMaxSwapBarriersSGIX_PACK
     return (packed_call_t *)_dst;
 }
 Bool stub_glXQueryMaxSwapGroupsNV(Display * dpy, int screen, GLuint * maxGroups, GLuint * maxBarriers) {
-        printf("stub glXQueryMaxSwapGroupsNV(%p, %p, %p, %p);\n", dpy, screen, maxGroups, maxBarriers);
+        printf("stub glXQueryMaxSwapGroupsNV(%p, %d, %p, %p);\n", dpy, screen, maxGroups, maxBarriers);
     return 0;
 }
 packed_call_t *pack_glXQueryMaxSwapGroupsNV(glXQueryMaxSwapGroupsNV_PACKED *_dst, Display * dpy, int screen, GLuint * maxGroups, GLuint * maxBarriers) {
@@ -69199,7 +69199,7 @@ packed_call_t *pack_glXQueryMaxSwapGroupsNV(glXQueryMaxSwapGroupsNV_PACKED *_dst
     return (packed_call_t *)_dst;
 }
 const char * stub_glXQueryServerString(Display * dpy, int screen, int name) {
-        printf("stub glXQueryServerString(%p, %p, %p);\n", dpy, screen, name);
+        printf("stub glXQueryServerString(%p, %d, %d);\n", dpy, screen, name);
     return 0;
 }
 packed_call_t *pack_glXQueryServerString(glXQueryServerString_PACKED *_dst, Display * dpy, int screen, int name) {
@@ -69211,7 +69211,7 @@ packed_call_t *pack_glXQueryServerString(glXQueryServerString_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 Bool stub_glXQuerySwapGroupNV(Display * dpy, GLXDrawable drawable, GLuint * group, GLuint * barrier) {
-        printf("stub glXQuerySwapGroupNV(%p, %p, %p, %p);\n", dpy, drawable, group, barrier);
+        printf("stub glXQuerySwapGroupNV(%p, %d, %p, %p);\n", dpy, drawable, group, barrier);
     return 0;
 }
 packed_call_t *pack_glXQuerySwapGroupNV(glXQuerySwapGroupNV_PACKED *_dst, Display * dpy, GLXDrawable drawable, GLuint * group, GLuint * barrier) {
@@ -69236,7 +69236,7 @@ packed_call_t *pack_glXQueryVersion(glXQueryVersion_PACKED *_dst, Display * dpy,
     return (packed_call_t *)_dst;
 }
 int stub_glXQueryVideoCaptureDeviceNV(Display * dpy, GLXVideoCaptureDeviceNV device, int attribute, int * value) {
-        printf("stub glXQueryVideoCaptureDeviceNV(%p, %p, %p, %p);\n", dpy, device, attribute, value);
+        printf("stub glXQueryVideoCaptureDeviceNV(%p, %p, %d, %p);\n", dpy, device, attribute, value);
     return 0;
 }
 packed_call_t *pack_glXQueryVideoCaptureDeviceNV(glXQueryVideoCaptureDeviceNV_PACKED *_dst, Display * dpy, GLXVideoCaptureDeviceNV device, int attribute, int * value) {
@@ -69249,7 +69249,7 @@ packed_call_t *pack_glXQueryVideoCaptureDeviceNV(glXQueryVideoCaptureDeviceNV_PA
     return (packed_call_t *)_dst;
 }
 Bool stub_glXReleaseBuffersMESA(Display * dpy, GLXDrawable drawable) {
-        printf("stub glXReleaseBuffersMESA(%p, %p);\n", dpy, drawable);
+        printf("stub glXReleaseBuffersMESA(%p, %d);\n", dpy, drawable);
     return 0;
 }
 packed_call_t *pack_glXReleaseBuffersMESA(glXReleaseBuffersMESA_PACKED *_dst, Display * dpy, GLXDrawable drawable) {
@@ -69260,7 +69260,7 @@ packed_call_t *pack_glXReleaseBuffersMESA(glXReleaseBuffersMESA_PACKED *_dst, Di
     return (packed_call_t *)_dst;
 }
 void stub_glXReleaseTexImageEXT(Display * dpy, GLXDrawable drawable, int buffer) {
-        printf("stub glXReleaseTexImageEXT(%p, %p, %p);\n", dpy, drawable, buffer);
+        printf("stub glXReleaseTexImageEXT(%p, %d, %d);\n", dpy, drawable, buffer);
 }
 packed_call_t *pack_glXReleaseTexImageEXT(glXReleaseTexImageEXT_PACKED *_dst, Display * dpy, GLXDrawable drawable, int buffer) {
     if (_dst == NULL) _dst = malloc(sizeof(glXReleaseTexImageEXT_PACKED));
@@ -69281,7 +69281,7 @@ packed_call_t *pack_glXReleaseVideoCaptureDeviceNV(glXReleaseVideoCaptureDeviceN
     return (packed_call_t *)_dst;
 }
 int stub_glXReleaseVideoDeviceNV(Display * dpy, int screen, GLXVideoDeviceNV VideoDevice) {
-        printf("stub glXReleaseVideoDeviceNV(%p, %p, %p);\n", dpy, screen, VideoDevice);
+        printf("stub glXReleaseVideoDeviceNV(%p, %d, %p);\n", dpy, screen, VideoDevice);
     return 0;
 }
 packed_call_t *pack_glXReleaseVideoDeviceNV(glXReleaseVideoDeviceNV_PACKED *_dst, Display * dpy, int screen, GLXVideoDeviceNV VideoDevice) {
@@ -69320,7 +69320,7 @@ packed_call_t *pack_glXRenderLarge(glXRenderLarge_PACKED *_dst) {
     return (packed_call_t *)_dst;
 }
 Bool stub_glXResetFrameCountNV(Display * dpy, int screen) {
-        printf("stub glXResetFrameCountNV(%p, %p);\n", dpy, screen);
+        printf("stub glXResetFrameCountNV(%p, %d);\n", dpy, screen);
     return 0;
 }
 packed_call_t *pack_glXResetFrameCountNV(glXResetFrameCountNV_PACKED *_dst, Display * dpy, int screen) {
@@ -69331,7 +69331,7 @@ packed_call_t *pack_glXResetFrameCountNV(glXResetFrameCountNV_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 void stub_glXSelectEvent(Display * dpy, GLXDrawable draw, unsigned long event_mask) {
-        printf("stub glXSelectEvent(%p, %p, %p);\n", dpy, draw, event_mask);
+        printf("stub glXSelectEvent(%p, %d, %lu);\n", dpy, draw, event_mask);
 }
 packed_call_t *pack_glXSelectEvent(glXSelectEvent_PACKED *_dst, Display * dpy, GLXDrawable draw, unsigned long event_mask) {
     if (_dst == NULL) _dst = malloc(sizeof(glXSelectEvent_PACKED));
@@ -69342,7 +69342,7 @@ packed_call_t *pack_glXSelectEvent(glXSelectEvent_PACKED *_dst, Display * dpy, G
     return (packed_call_t *)_dst;
 }
 void stub_glXSelectEventSGIX(Display * dpy, GLXDrawable drawable, unsigned long mask) {
-        printf("stub glXSelectEventSGIX(%p, %p, %p);\n", dpy, drawable, mask);
+        printf("stub glXSelectEventSGIX(%p, %d, %lu);\n", dpy, drawable, mask);
 }
 packed_call_t *pack_glXSelectEventSGIX(glXSelectEventSGIX_PACKED *_dst, Display * dpy, GLXDrawable drawable, unsigned long mask) {
     if (_dst == NULL) _dst = malloc(sizeof(glXSelectEventSGIX_PACKED));
@@ -69353,7 +69353,7 @@ packed_call_t *pack_glXSelectEventSGIX(glXSelectEventSGIX_PACKED *_dst, Display 
     return (packed_call_t *)_dst;
 }
 int stub_glXSendPbufferToVideoNV(Display * dpy, GLXPbuffer pbuf, int iBufferType, unsigned long * pulCounterPbuffer, GLboolean bBlock) {
-        printf("stub glXSendPbufferToVideoNV(%p, %p, %p, %p, %d);\n", dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock);
+        printf("stub glXSendPbufferToVideoNV(%p, %p, %d, %p, %d);\n", dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock);
     return 0;
 }
 packed_call_t *pack_glXSendPbufferToVideoNV(glXSendPbufferToVideoNV_PACKED *_dst, Display * dpy, GLXPbuffer pbuf, int iBufferType, unsigned long * pulCounterPbuffer, GLboolean bBlock) {
@@ -69367,7 +69367,7 @@ packed_call_t *pack_glXSendPbufferToVideoNV(glXSendPbufferToVideoNV_PACKED *_dst
     return (packed_call_t *)_dst;
 }
 Bool stub_glXSet3DfxModeMESA(int mode) {
-        printf("stub glXSet3DfxModeMESA(%p);\n", mode);
+        printf("stub glXSet3DfxModeMESA(%d);\n", mode);
     return 0;
 }
 packed_call_t *pack_glXSet3DfxModeMESA(glXSet3DfxModeMESA_PACKED *_dst, int mode) {
@@ -69377,7 +69377,7 @@ packed_call_t *pack_glXSet3DfxModeMESA(glXSet3DfxModeMESA_PACKED *_dst, int mode
     return (packed_call_t *)_dst;
 }
 void stub_glXSwapBuffers(Display * dpy, GLXDrawable drawable) {
-        printf("stub glXSwapBuffers(%p, %p);\n", dpy, drawable);
+        printf("stub glXSwapBuffers(%p, %d);\n", dpy, drawable);
 }
 packed_call_t *pack_glXSwapBuffers(glXSwapBuffers_PACKED *_dst, Display * dpy, GLXDrawable drawable) {
     if (_dst == NULL) _dst = malloc(sizeof(glXSwapBuffers_PACKED));
@@ -69387,7 +69387,7 @@ packed_call_t *pack_glXSwapBuffers(glXSwapBuffers_PACKED *_dst, Display * dpy, G
     return (packed_call_t *)_dst;
 }
 int64_t stub_glXSwapBuffersMscOML(Display * dpy, GLXDrawable drawable, int64_t target_msc, int64_t divisor, int64_t remainder) {
-        printf("stub glXSwapBuffersMscOML(%p, %p, %p, %p, %p);\n", dpy, drawable, target_msc, divisor, remainder);
+        printf("stub glXSwapBuffersMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64");\n", dpy, drawable, target_msc, divisor, remainder);
     return 0;
 }
 packed_call_t *pack_glXSwapBuffersMscOML(glXSwapBuffersMscOML_PACKED *_dst, Display * dpy, GLXDrawable drawable, int64_t target_msc, int64_t divisor, int64_t remainder) {
@@ -69401,7 +69401,7 @@ packed_call_t *pack_glXSwapBuffersMscOML(glXSwapBuffersMscOML_PACKED *_dst, Disp
     return (packed_call_t *)_dst;
 }
 void stub_glXSwapIntervalEXT(Display * dpy, GLXDrawable drawable, int interval) {
-        printf("stub glXSwapIntervalEXT(%p, %p, %p);\n", dpy, drawable, interval);
+        printf("stub glXSwapIntervalEXT(%p, %d, %d);\n", dpy, drawable, interval);
 }
 packed_call_t *pack_glXSwapIntervalEXT(glXSwapIntervalEXT_PACKED *_dst, Display * dpy, GLXDrawable drawable, int interval) {
     if (_dst == NULL) _dst = malloc(sizeof(glXSwapIntervalEXT_PACKED));
@@ -69412,7 +69412,7 @@ packed_call_t *pack_glXSwapIntervalEXT(glXSwapIntervalEXT_PACKED *_dst, Display 
     return (packed_call_t *)_dst;
 }
 int stub_glXSwapIntervalMESA(unsigned int interval) {
-        printf("stub glXSwapIntervalMESA(%p);\n", interval);
+        printf("stub glXSwapIntervalMESA(%u);\n", interval);
     return 0;
 }
 packed_call_t *pack_glXSwapIntervalMESA(glXSwapIntervalMESA_PACKED *_dst, unsigned int interval) {
@@ -69422,7 +69422,7 @@ packed_call_t *pack_glXSwapIntervalMESA(glXSwapIntervalMESA_PACKED *_dst, unsign
     return (packed_call_t *)_dst;
 }
 int stub_glXSwapIntervalSGI(int interval) {
-        printf("stub glXSwapIntervalSGI(%p);\n", interval);
+        printf("stub glXSwapIntervalSGI(%d);\n", interval);
     return 0;
 }
 packed_call_t *pack_glXSwapIntervalSGI(glXSwapIntervalSGI_PACKED *_dst, int interval) {
@@ -69432,7 +69432,7 @@ packed_call_t *pack_glXSwapIntervalSGI(glXSwapIntervalSGI_PACKED *_dst, int inte
     return (packed_call_t *)_dst;
 }
 void stub_glXUseXFont(Font font, int first, int count, int listBase) {
-        printf("stub glXUseXFont(%p, %p, %p, %p);\n", font, first, count, listBase);
+        printf("stub glXUseXFont(%lu, %d, %d, %d);\n", font, first, count, listBase);
 }
 packed_call_t *pack_glXUseXFont(glXUseXFont_PACKED *_dst, Font font, int first, int count, int listBase) {
     if (_dst == NULL) _dst = malloc(sizeof(glXUseXFont_PACKED));
@@ -69460,7 +69460,7 @@ packed_call_t *pack_glXVendorPrivateWithReply(glXVendorPrivateWithReply_PACKED *
     return (packed_call_t *)_dst;
 }
 Bool stub_glXWaitForMscOML(Display * dpy, GLXDrawable drawable, int64_t target_msc, int64_t divisor, int64_t remainder, int64_t * ust, int64_t * msc, int64_t * sbc) {
-        printf("stub glXWaitForMscOML(%p, %p, %p, %p, %p, %p, %p, %p);\n", dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc);
+        printf("stub glXWaitForMscOML(%p, %d, %"PRIi64", %"PRIi64", %"PRIi64", %p, %p, %p);\n", dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc);
     return 0;
 }
 packed_call_t *pack_glXWaitForMscOML(glXWaitForMscOML_PACKED *_dst, Display * dpy, GLXDrawable drawable, int64_t target_msc, int64_t divisor, int64_t remainder, int64_t * ust, int64_t * msc, int64_t * sbc) {
@@ -69477,7 +69477,7 @@ packed_call_t *pack_glXWaitForMscOML(glXWaitForMscOML_PACKED *_dst, Display * dp
     return (packed_call_t *)_dst;
 }
 Bool stub_glXWaitForSbcOML(Display * dpy, GLXDrawable drawable, int64_t target_sbc, int64_t * ust, int64_t * msc, int64_t * sbc) {
-        printf("stub glXWaitForSbcOML(%p, %p, %p, %p, %p, %p);\n", dpy, drawable, target_sbc, ust, msc, sbc);
+        printf("stub glXWaitForSbcOML(%p, %d, %"PRIi64", %p, %p, %p);\n", dpy, drawable, target_sbc, ust, msc, sbc);
     return 0;
 }
 packed_call_t *pack_glXWaitForSbcOML(glXWaitForSbcOML_PACKED *_dst, Display * dpy, GLXDrawable drawable, int64_t target_sbc, int64_t * ust, int64_t * msc, int64_t * sbc) {
@@ -69500,7 +69500,7 @@ packed_call_t *pack_glXWaitGL(glXWaitGL_PACKED *_dst) {
     return (packed_call_t *)_dst;
 }
 int stub_glXWaitVideoSyncSGI(int divisor, int remainder, unsigned int * count) {
-        printf("stub glXWaitVideoSyncSGI(%p, %p, %p);\n", divisor, remainder, count);
+        printf("stub glXWaitVideoSyncSGI(%d, %d, %p);\n", divisor, remainder, count);
     return 0;
 }
 packed_call_t *pack_glXWaitVideoSyncSGI(glXWaitVideoSyncSGI_PACKED *_dst, int divisor, int remainder, unsigned int * count) {
