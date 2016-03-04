@@ -3,7 +3,6 @@ int main() {
         glRectf(0, 0, 1, 1);
 
         test_glEnableClientState(GL_VERTEX_ARRAY);
-        // TODO: pointers are skipped in verification
         GLfloat verts[] = {
             0, 0, 0,
             1, 0, 0,
