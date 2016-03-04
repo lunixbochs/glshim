@@ -42,15 +42,18 @@ static int failed_test = 0;
                     printf("%f ", *(float *)&ac[j]); \
                 } \
                 printf("\n"); \
+                printf("            "); \
             } \
             if (ac[i] == bc[i]) printf("%02X", (unsigned char)ac[i]); \
             else                printf(VT100_RED "%02X" VT100_CLEAR, (unsigned char)ac[i]); \
         } \
+        int start = size - 32; \
         if (size % 32 != 0) { \
-            printf(" | "); \
-            for (int j = size - (size % 32); j < size; j += 4) { \
-                printf("%f ", *(float *)&ac[j]); \
-            } \
+            size - (size % 32); \
+        } \
+        printf(" | "); \
+        for (int j = start; j < size; j += 4) { \
+            printf("%f ", *(float *)&ac[j]); \
         } \
     } \
     printf("\n");
