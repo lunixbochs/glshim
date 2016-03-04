@@ -174,20 +174,8 @@ static inline bool should_intercept_render(GLenum mode) {
 void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindices) {
     // TODO: split for count > 65535?
     GLushort *indices = gl_copy_array(uindices, type, 1, 0, GL_UNSIGNED_SHORT, 1, 0, count, false);
-    // TODO: do this in a more direct fashion.
-    if (should_intercept_render(mode)) {
-        glBegin(mode);
-        state.block.active->artificial = true;
-        for (int i = 0; i < count; i++) {
-            glArrayElement(indices[i]);
-        }
-        glEnd();
-        free(indices);
-        return;
-    }
-
     displaylist_t *list = state.list.active;
-    if (list) {
+    if (list || should_intercept_render(mode)) {
         GLsizei min, max;
 
         normalize_indices(indices, &max, &min, count);
