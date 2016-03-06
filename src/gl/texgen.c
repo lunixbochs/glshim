@@ -45,11 +45,13 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
             ERROR(GL_INVALID_ENUM);
         }
 
+// pcase is used below in glGetTexGenfv as well
 #define pcase(coord) \
     case GL_##coord: \
     if (pname == GL_OBJECT_PLANE) target = texgen->coord##obj; \
     else target = texgen->coord##eye; \
     break
+
         GLfloat *target = NULL;
         switch (coord) {
             pcase(S);
@@ -59,8 +61,36 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
             default:
                 ERROR(GL_INVALID_ENUM);
         }
-#undef pcase
         memcpy(target, param, 4 * sizeof(GLfloat));
+    }
+}
+
+void glGetTexGenfv(GLenum coord, GLenum pname, GLfloat *param) {
+    texgen_state_t *texgen = &state.texgen[state.texture.active];
+    if (pname == GL_TEXTURE_GEN_MODE) {
+        switch (coord) {
+            case GL_S: *param = texgen->S; break;
+            case GL_T: *param = texgen->T; break;
+            case GL_R: *param = texgen->R; break;
+            case GL_Q: *param = texgen->Q; break;
+        }
+    } else {
+        if (pname != GL_OBJECT_PLANE && pname != GL_EYE_PLANE) {
+            ERROR(GL_INVALID_ENUM);
+        }
+
+        GLfloat *target = NULL;
+        switch (coord) {
+            pcase(S);
+            pcase(T);
+            pcase(R);
+            pcase(Q);
+            default:
+                ERROR(GL_INVALID_ENUM);
+        }
+        memcpy(param, target, 4 * sizeof(GLfloat));
+// defined one function up
+#undef pcase
     }
 }
 
