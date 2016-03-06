@@ -7,9 +7,8 @@
 #include "vectorial/simd4x4f.h"
 
 void glTexGeni(GLenum coord, GLenum pname, GLint param) {
-    if (param != GL_TEXTURE_GEN_MODE) {
-        gl_set_error(GL_INVALID_ENUM);
-        return;
+    if (pname != GL_TEXTURE_GEN_MODE) {
+        ERROR(GL_INVALID_ENUM);
     }
     GLfloat fp = param;
     glTexGenfv(coord, pname, &fp);
@@ -43,8 +42,7 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
         }
     } else {
         if (pname != GL_OBJECT_PLANE && pname != GL_EYE_PLANE) {
-            gl_set_error(GL_INVALID_ENUM);
-            return;
+            ERROR(GL_INVALID_ENUM);
         }
 
 #define pcase(coord) \
@@ -60,7 +58,6 @@ void glTexGenfv(GLenum coord, GLenum pname, const GLfloat *param) {
             pcase(Q);
             default:
                 ERROR(GL_INVALID_ENUM);
-                return;
         }
 #undef pcase
         memcpy(target, param, 4 * sizeof(GLfloat));
@@ -79,10 +76,12 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         simd4x4f_uload(&matrix, tmp);
         simd4x4f_inverse(&matrix, &inverse);
     }
-    simd4f plane = simd4f_uload4(plane_in);
-    simd4f eyeplane;
-    if (type == GL_EYE_LINEAR) {
-        simd4x4f_matrix_vector_mul(&inverse, &plane, &eyeplane);
+    simd4f plane, eyeplane;
+    if (plane_in) {
+        simd4f plane = simd4f_uload4(plane_in);
+        if (type == GL_EYE_LINEAR) {
+            simd4x4f_matrix_vector_mul(&inverse, &plane, &eyeplane);
+        }
     }
 
     for (int i = 0; i < block->len; i++) {

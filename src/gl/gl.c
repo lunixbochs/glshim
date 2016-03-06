@@ -203,8 +203,7 @@ void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindi
 
 void glDrawRangeElements(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const GLvoid *indices) {
     if (end < start || count < 0) {
-        gl_set_error(GL_INVALID_VALUE);
-        return;
+        ERROR(GL_INVALID_VALUE);
     }
     glDrawElements(mode, count, type, indices);
 }
