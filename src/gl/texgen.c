@@ -172,7 +172,7 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
                 simd4x4f_matrix_vector_mul(&inverse, &norm, &eye_normal);
                 simd4f_ustore4(eye_normal, eye_);
 
-                simd4f_ustore2(simd4f_dot4(eye, eye_normal), dot);
+                simd4f_ustore4(simd4f_dot4(eye, eye_normal), dot);
                 out[0] = eye_[0] - eye_normal_[0] * dot[0] * 2.0f;
                 out[1] = eye_[1] - eye_normal_[1] * dot[0] * 2.0f;
                 out[2] = eye_[2] - eye_normal_[2] * dot[0] * 2.0f;
@@ -188,28 +188,36 @@ void gen_tex_coords(block_t *block, GLuint texture) {
     // TODO: do less work when called from glDrawElements?
 
 #define en(v) state.enable.texgen_##v[texture]
-    block->tex[texture] = (GLfloat *)calloc(1, block->len * 4 * sizeof(GLfloat));
+    GLfloat *coords =
+        block->tex[texture] = (GLfloat *)calloc(1, block->len * 4 * sizeof(GLfloat));
     texgen_state_t *texgen = &state.texgen[texture];
+    if (en(s) && en(t) && texgen->S == texgen->T) {
+        if (texgen->S == GL_SPHERE_MAP) {
+            tex_coord_loop(block, coords, texgen->S, NULL);
+            return;
+        } else if (en(r) && texgen->S == GL_REFLECTION_MAP && texgen->S == texgen->R) {
+            tex_coord_loop(block, coords, texgen->S, NULL);
+            return;
+        }
+    }
     if (en(s)) {
         if (texgen->S == GL_OBJECT_LINEAR) {
-            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Sobj);
+            tex_coord_loop(block, coords, texgen->S, texgen->Sobj);
         } else if (texgen->S == GL_EYE_LINEAR) {
-            tex_coord_loop(block, block->tex[texture], texgen->S, texgen->Seye);
+            tex_coord_loop(block, coords, texgen->S, texgen->Seye);
         }
     }
     if (en(t)) {
         if (texgen->T == GL_OBJECT_LINEAR) {
-            tex_coord_loop(block, block->tex[texture], texgen->T, texgen->Tobj);
+            tex_coord_loop(block, coords + 1, texgen->T, texgen->Tobj);
         } else if (texgen->T == GL_EYE_LINEAR) {
-            tex_coord_loop(block, block->tex[texture], texgen->T, texgen->Teye);
+            tex_coord_loop(block, coords + 1, texgen->T, texgen->Teye);
         }
     }
-    if (en(s) && en(t) && texgen->S == texgen->T) {
-        if (texgen->S == GL_SPHERE_MAP) {
-            tex_coord_loop(block, block->tex[texture], texgen->S, NULL);
-        } else if (en(r) && texgen->S == GL_REFLECTION_MAP && texgen->S == texgen->R) {
-            tex_coord_loop(block, block->tex[texture], texgen->S, NULL);
-        }
+    // fill in R, Q
+    for (int i = 0; i < block->len; i++) {
+        coords[i * 4 + 2] = 0.0f;
+        coords[i * 4 + 3] = 1.0f;
     }
 #undef en
 }
