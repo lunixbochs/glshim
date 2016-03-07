@@ -22,6 +22,9 @@ void *mock_slide(int func);
 void mock_print(const packed_call_t *packed);
 void mock_push(void *call);
 
+packed_call_t *_mock_expect(char *name, int index);
+#define mock_expect(name) _mock_expect(#name, name##_INDEX);
+
 static int verbose_test = 0;
 static int failed_test = 0;
 #define verbose { verbose_test = 1; }
@@ -81,27 +84,7 @@ static int failed_test = 0;
     mock_push(pack_{{ func.name }}(NULL{% if func.args %}, {{ func.args|args(0) }}{% endif %})); \
 }
 #define test_{{ func.name }}({{ func.args|args(0, '_') }}) { \
-    {{ func.name }}_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("{{ func.name }} missing (no calls left)\n"); \
-    } else if (packed->index != {{ func.name }}_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide({{ func.name }}_INDEX); \
-        if (! packed) { \
-            mock_errorf("{{ func.name }} missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for {{ func.name }}:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    {{ func.name }}_PACKED *packed = mock_expect({{ func.name }}); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \

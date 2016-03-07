@@ -16,6 +16,9 @@ void *mock_slide(int func);
 void mock_print(const packed_call_t *packed);
 void mock_push(void *call);
 
+packed_call_t *_mock_expect(char *name, int index);
+#define mock_expect(name) _mock_expect(#name, name##_INDEX);
+
 static int verbose_test = 0;
 static int failed_test = 0;
 #define verbose { verbose_test = 1; }
@@ -74,27 +77,7 @@ static int failed_test = 0;
     mock_push(pack_glActiveTexture(NULL, texture)); \
 }
 #define test_glActiveTexture(_texture) { \
-    glActiveTexture_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glActiveTexture missing (no calls left)\n"); \
-    } else if (packed->index != glActiveTexture_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glActiveTexture_INDEX); \
-        if (! packed) { \
-            mock_errorf("glActiveTexture missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glActiveTexture:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glActiveTexture_PACKED *packed = mock_expect(glActiveTexture); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -112,27 +95,7 @@ static int failed_test = 0;
     mock_push(pack_glAlphaFunc(NULL, func, ref)); \
 }
 #define test_glAlphaFunc(_func, _ref) { \
-    glAlphaFunc_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glAlphaFunc missing (no calls left)\n"); \
-    } else if (packed->index != glAlphaFunc_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glAlphaFunc_INDEX); \
-        if (! packed) { \
-            mock_errorf("glAlphaFunc missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glAlphaFunc:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glAlphaFunc_PACKED *packed = mock_expect(glAlphaFunc); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -153,27 +116,7 @@ static int failed_test = 0;
     mock_push(pack_glAlphaFuncx(NULL, func, ref)); \
 }
 #define test_glAlphaFuncx(_func, _ref) { \
-    glAlphaFuncx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glAlphaFuncx missing (no calls left)\n"); \
-    } else if (packed->index != glAlphaFuncx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glAlphaFuncx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glAlphaFuncx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glAlphaFuncx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glAlphaFuncx_PACKED *packed = mock_expect(glAlphaFuncx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -194,27 +137,7 @@ static int failed_test = 0;
     mock_push(pack_glBindBuffer(NULL, target, buffer)); \
 }
 #define test_glBindBuffer(_target, _buffer) { \
-    glBindBuffer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBindBuffer missing (no calls left)\n"); \
-    } else if (packed->index != glBindBuffer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBindBuffer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBindBuffer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBindBuffer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBindBuffer_PACKED *packed = mock_expect(glBindBuffer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -235,27 +158,7 @@ static int failed_test = 0;
     mock_push(pack_glBindTexture(NULL, target, texture)); \
 }
 #define test_glBindTexture(_target, _texture) { \
-    glBindTexture_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBindTexture missing (no calls left)\n"); \
-    } else if (packed->index != glBindTexture_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBindTexture_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBindTexture missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBindTexture:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBindTexture_PACKED *packed = mock_expect(glBindTexture); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -276,27 +179,7 @@ static int failed_test = 0;
     mock_push(pack_glBlendColorOES(NULL, red, green, blue, alpha)); \
 }
 #define test_glBlendColorOES(_red, _green, _blue, _alpha) { \
-    glBlendColorOES_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBlendColorOES missing (no calls left)\n"); \
-    } else if (packed->index != glBlendColorOES_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBlendColorOES_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBlendColorOES missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBlendColorOES:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBlendColorOES_PACKED *packed = mock_expect(glBlendColorOES); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -323,27 +206,7 @@ static int failed_test = 0;
     mock_push(pack_glBlendEquationOES(NULL, mode)); \
 }
 #define test_glBlendEquationOES(_mode) { \
-    glBlendEquationOES_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBlendEquationOES missing (no calls left)\n"); \
-    } else if (packed->index != glBlendEquationOES_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBlendEquationOES_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBlendEquationOES missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBlendEquationOES:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBlendEquationOES_PACKED *packed = mock_expect(glBlendEquationOES); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -361,27 +224,7 @@ static int failed_test = 0;
     mock_push(pack_glBlendEquationSeparateOES(NULL, modeRGB, modeAlpha)); \
 }
 #define test_glBlendEquationSeparateOES(_modeRGB, _modeAlpha) { \
-    glBlendEquationSeparateOES_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBlendEquationSeparateOES missing (no calls left)\n"); \
-    } else if (packed->index != glBlendEquationSeparateOES_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBlendEquationSeparateOES_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBlendEquationSeparateOES missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBlendEquationSeparateOES:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBlendEquationSeparateOES_PACKED *packed = mock_expect(glBlendEquationSeparateOES); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -402,27 +245,7 @@ static int failed_test = 0;
     mock_push(pack_glBlendFunc(NULL, sfactor, dfactor)); \
 }
 #define test_glBlendFunc(_sfactor, _dfactor) { \
-    glBlendFunc_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBlendFunc missing (no calls left)\n"); \
-    } else if (packed->index != glBlendFunc_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBlendFunc_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBlendFunc missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBlendFunc:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBlendFunc_PACKED *packed = mock_expect(glBlendFunc); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -443,27 +266,7 @@ static int failed_test = 0;
     mock_push(pack_glBlendFuncSeparateOES(NULL, sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha)); \
 }
 #define test_glBlendFuncSeparateOES(_sfactorRGB, _dfactorRGB, _sfactorAlpha, _dfactorAlpha) { \
-    glBlendFuncSeparateOES_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBlendFuncSeparateOES missing (no calls left)\n"); \
-    } else if (packed->index != glBlendFuncSeparateOES_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBlendFuncSeparateOES_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBlendFuncSeparateOES missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBlendFuncSeparateOES:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBlendFuncSeparateOES_PACKED *packed = mock_expect(glBlendFuncSeparateOES); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -490,27 +293,7 @@ static int failed_test = 0;
     mock_push(pack_glBufferData(NULL, target, size, data, usage)); \
 }
 #define test_glBufferData(_target, _size, _data, _usage) { \
-    glBufferData_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBufferData missing (no calls left)\n"); \
-    } else if (packed->index != glBufferData_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBufferData_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBufferData missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBufferData:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBufferData_PACKED *packed = mock_expect(glBufferData); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -541,27 +324,7 @@ static int failed_test = 0;
     mock_push(pack_glBufferSubData(NULL, target, offset, size, data)); \
 }
 #define test_glBufferSubData(_target, _offset, _size, _data) { \
-    glBufferSubData_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glBufferSubData missing (no calls left)\n"); \
-    } else if (packed->index != glBufferSubData_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glBufferSubData_INDEX); \
-        if (! packed) { \
-            mock_errorf("glBufferSubData missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glBufferSubData:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glBufferSubData_PACKED *packed = mock_expect(glBufferSubData); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -592,27 +355,7 @@ static int failed_test = 0;
     mock_push(pack_glClear(NULL, mask)); \
 }
 #define test_glClear(_mask) { \
-    glClear_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClear missing (no calls left)\n"); \
-    } else if (packed->index != glClear_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClear_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClear missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClear:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClear_PACKED *packed = mock_expect(glClear); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -630,27 +373,7 @@ static int failed_test = 0;
     mock_push(pack_glClearColor(NULL, red, green, blue, alpha)); \
 }
 #define test_glClearColor(_red, _green, _blue, _alpha) { \
-    glClearColor_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClearColor missing (no calls left)\n"); \
-    } else if (packed->index != glClearColor_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClearColor_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClearColor missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClearColor:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClearColor_PACKED *packed = mock_expect(glClearColor); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -677,27 +400,7 @@ static int failed_test = 0;
     mock_push(pack_glClearColorx(NULL, red, green, blue, alpha)); \
 }
 #define test_glClearColorx(_red, _green, _blue, _alpha) { \
-    glClearColorx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClearColorx missing (no calls left)\n"); \
-    } else if (packed->index != glClearColorx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClearColorx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClearColorx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClearColorx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClearColorx_PACKED *packed = mock_expect(glClearColorx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -724,27 +427,7 @@ static int failed_test = 0;
     mock_push(pack_glClearDepthf(NULL, depth)); \
 }
 #define test_glClearDepthf(_depth) { \
-    glClearDepthf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClearDepthf missing (no calls left)\n"); \
-    } else if (packed->index != glClearDepthf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClearDepthf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClearDepthf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClearDepthf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClearDepthf_PACKED *packed = mock_expect(glClearDepthf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -762,27 +445,7 @@ static int failed_test = 0;
     mock_push(pack_glClearDepthx(NULL, depth)); \
 }
 #define test_glClearDepthx(_depth) { \
-    glClearDepthx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClearDepthx missing (no calls left)\n"); \
-    } else if (packed->index != glClearDepthx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClearDepthx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClearDepthx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClearDepthx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClearDepthx_PACKED *packed = mock_expect(glClearDepthx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -800,27 +463,7 @@ static int failed_test = 0;
     mock_push(pack_glClearStencil(NULL, s)); \
 }
 #define test_glClearStencil(_s) { \
-    glClearStencil_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClearStencil missing (no calls left)\n"); \
-    } else if (packed->index != glClearStencil_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClearStencil_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClearStencil missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClearStencil:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClearStencil_PACKED *packed = mock_expect(glClearStencil); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -838,27 +481,7 @@ static int failed_test = 0;
     mock_push(pack_glClientActiveTexture(NULL, texture)); \
 }
 #define test_glClientActiveTexture(_texture) { \
-    glClientActiveTexture_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClientActiveTexture missing (no calls left)\n"); \
-    } else if (packed->index != glClientActiveTexture_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClientActiveTexture_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClientActiveTexture missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClientActiveTexture:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClientActiveTexture_PACKED *packed = mock_expect(glClientActiveTexture); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -876,27 +499,7 @@ static int failed_test = 0;
     mock_push(pack_glClipPlanef(NULL, plane, equation)); \
 }
 #define test_glClipPlanef(_plane, _equation) { \
-    glClipPlanef_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClipPlanef missing (no calls left)\n"); \
-    } else if (packed->index != glClipPlanef_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClipPlanef_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClipPlanef missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClipPlanef:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClipPlanef_PACKED *packed = mock_expect(glClipPlanef); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -921,27 +524,7 @@ static int failed_test = 0;
     mock_push(pack_glClipPlanex(NULL, plane, equation)); \
 }
 #define test_glClipPlanex(_plane, _equation) { \
-    glClipPlanex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glClipPlanex missing (no calls left)\n"); \
-    } else if (packed->index != glClipPlanex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glClipPlanex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glClipPlanex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glClipPlanex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glClipPlanex_PACKED *packed = mock_expect(glClipPlanex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -966,27 +549,7 @@ static int failed_test = 0;
     mock_push(pack_glColor4f(NULL, red, green, blue, alpha)); \
 }
 #define test_glColor4f(_red, _green, _blue, _alpha) { \
-    glColor4f_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glColor4f missing (no calls left)\n"); \
-    } else if (packed->index != glColor4f_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glColor4f_INDEX); \
-        if (! packed) { \
-            mock_errorf("glColor4f missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glColor4f:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glColor4f_PACKED *packed = mock_expect(glColor4f); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1013,27 +576,7 @@ static int failed_test = 0;
     mock_push(pack_glColor4ub(NULL, red, green, blue, alpha)); \
 }
 #define test_glColor4ub(_red, _green, _blue, _alpha) { \
-    glColor4ub_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glColor4ub missing (no calls left)\n"); \
-    } else if (packed->index != glColor4ub_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glColor4ub_INDEX); \
-        if (! packed) { \
-            mock_errorf("glColor4ub missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glColor4ub:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glColor4ub_PACKED *packed = mock_expect(glColor4ub); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1060,27 +603,7 @@ static int failed_test = 0;
     mock_push(pack_glColor4x(NULL, red, green, blue, alpha)); \
 }
 #define test_glColor4x(_red, _green, _blue, _alpha) { \
-    glColor4x_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glColor4x missing (no calls left)\n"); \
-    } else if (packed->index != glColor4x_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glColor4x_INDEX); \
-        if (! packed) { \
-            mock_errorf("glColor4x missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glColor4x:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glColor4x_PACKED *packed = mock_expect(glColor4x); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1107,27 +630,7 @@ static int failed_test = 0;
     mock_push(pack_glColorMask(NULL, red, green, blue, alpha)); \
 }
 #define test_glColorMask(_red, _green, _blue, _alpha) { \
-    glColorMask_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glColorMask missing (no calls left)\n"); \
-    } else if (packed->index != glColorMask_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glColorMask_INDEX); \
-        if (! packed) { \
-            mock_errorf("glColorMask missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glColorMask:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glColorMask_PACKED *packed = mock_expect(glColorMask); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1154,27 +657,7 @@ static int failed_test = 0;
     mock_push(pack_glColorPointer(NULL, size, type, stride, pointer)); \
 }
 #define test_glColorPointer(_size, _type, _stride, _pointer) { \
-    glColorPointer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glColorPointer missing (no calls left)\n"); \
-    } else if (packed->index != glColorPointer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glColorPointer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glColorPointer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glColorPointer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glColorPointer_PACKED *packed = mock_expect(glColorPointer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1205,27 +688,7 @@ static int failed_test = 0;
     mock_push(pack_glCompressedTexImage2D(NULL, target, level, internalformat, width, height, border, imageSize, data)); \
 }
 #define test_glCompressedTexImage2D(_target, _level, _internalformat, _width, _height, _border, _imageSize, _data) { \
-    glCompressedTexImage2D_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glCompressedTexImage2D missing (no calls left)\n"); \
-    } else if (packed->index != glCompressedTexImage2D_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glCompressedTexImage2D_INDEX); \
-        if (! packed) { \
-            mock_errorf("glCompressedTexImage2D missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glCompressedTexImage2D:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glCompressedTexImage2D_PACKED *packed = mock_expect(glCompressedTexImage2D); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1268,27 +731,7 @@ static int failed_test = 0;
     mock_push(pack_glCompressedTexSubImage2D(NULL, target, level, xoffset, yoffset, width, height, format, imageSize, data)); \
 }
 #define test_glCompressedTexSubImage2D(_target, _level, _xoffset, _yoffset, _width, _height, _format, _imageSize, _data) { \
-    glCompressedTexSubImage2D_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glCompressedTexSubImage2D missing (no calls left)\n"); \
-    } else if (packed->index != glCompressedTexSubImage2D_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glCompressedTexSubImage2D_INDEX); \
-        if (! packed) { \
-            mock_errorf("glCompressedTexSubImage2D missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glCompressedTexSubImage2D:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glCompressedTexSubImage2D_PACKED *packed = mock_expect(glCompressedTexSubImage2D); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1334,27 +777,7 @@ static int failed_test = 0;
     mock_push(pack_glCopyTexImage2D(NULL, target, level, internalformat, x, y, width, height, border)); \
 }
 #define test_glCopyTexImage2D(_target, _level, _internalformat, _x, _y, _width, _height, _border) { \
-    glCopyTexImage2D_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glCopyTexImage2D missing (no calls left)\n"); \
-    } else if (packed->index != glCopyTexImage2D_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glCopyTexImage2D_INDEX); \
-        if (! packed) { \
-            mock_errorf("glCopyTexImage2D missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glCopyTexImage2D:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glCopyTexImage2D_PACKED *packed = mock_expect(glCopyTexImage2D); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1393,27 +816,7 @@ static int failed_test = 0;
     mock_push(pack_glCopyTexSubImage2D(NULL, target, level, xoffset, yoffset, x, y, width, height)); \
 }
 #define test_glCopyTexSubImage2D(_target, _level, _xoffset, _yoffset, _x, _y, _width, _height) { \
-    glCopyTexSubImage2D_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glCopyTexSubImage2D missing (no calls left)\n"); \
-    } else if (packed->index != glCopyTexSubImage2D_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glCopyTexSubImage2D_INDEX); \
-        if (! packed) { \
-            mock_errorf("glCopyTexSubImage2D missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glCopyTexSubImage2D:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glCopyTexSubImage2D_PACKED *packed = mock_expect(glCopyTexSubImage2D); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1452,27 +855,7 @@ static int failed_test = 0;
     mock_push(pack_glCullFace(NULL, mode)); \
 }
 #define test_glCullFace(_mode) { \
-    glCullFace_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glCullFace missing (no calls left)\n"); \
-    } else if (packed->index != glCullFace_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glCullFace_INDEX); \
-        if (! packed) { \
-            mock_errorf("glCullFace missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glCullFace:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glCullFace_PACKED *packed = mock_expect(glCullFace); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1490,27 +873,7 @@ static int failed_test = 0;
     mock_push(pack_glDeleteBuffers(NULL, n, buffers)); \
 }
 #define test_glDeleteBuffers(_n, _buffers) { \
-    glDeleteBuffers_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDeleteBuffers missing (no calls left)\n"); \
-    } else if (packed->index != glDeleteBuffers_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDeleteBuffers_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDeleteBuffers missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDeleteBuffers:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDeleteBuffers_PACKED *packed = mock_expect(glDeleteBuffers); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1535,27 +898,7 @@ static int failed_test = 0;
     mock_push(pack_glDeleteTextures(NULL, n, textures)); \
 }
 #define test_glDeleteTextures(_n, _textures) { \
-    glDeleteTextures_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDeleteTextures missing (no calls left)\n"); \
-    } else if (packed->index != glDeleteTextures_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDeleteTextures_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDeleteTextures missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDeleteTextures:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDeleteTextures_PACKED *packed = mock_expect(glDeleteTextures); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1580,27 +923,7 @@ static int failed_test = 0;
     mock_push(pack_glDepthFunc(NULL, func)); \
 }
 #define test_glDepthFunc(_func) { \
-    glDepthFunc_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDepthFunc missing (no calls left)\n"); \
-    } else if (packed->index != glDepthFunc_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDepthFunc_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDepthFunc missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDepthFunc:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDepthFunc_PACKED *packed = mock_expect(glDepthFunc); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1618,27 +941,7 @@ static int failed_test = 0;
     mock_push(pack_glDepthMask(NULL, flag)); \
 }
 #define test_glDepthMask(_flag) { \
-    glDepthMask_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDepthMask missing (no calls left)\n"); \
-    } else if (packed->index != glDepthMask_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDepthMask_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDepthMask missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDepthMask:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDepthMask_PACKED *packed = mock_expect(glDepthMask); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1656,27 +959,7 @@ static int failed_test = 0;
     mock_push(pack_glDepthRangef(NULL, near, far)); \
 }
 #define test_glDepthRangef(_near, _far) { \
-    glDepthRangef_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDepthRangef missing (no calls left)\n"); \
-    } else if (packed->index != glDepthRangef_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDepthRangef_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDepthRangef missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDepthRangef:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDepthRangef_PACKED *packed = mock_expect(glDepthRangef); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1697,27 +980,7 @@ static int failed_test = 0;
     mock_push(pack_glDepthRangex(NULL, near, far)); \
 }
 #define test_glDepthRangex(_near, _far) { \
-    glDepthRangex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDepthRangex missing (no calls left)\n"); \
-    } else if (packed->index != glDepthRangex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDepthRangex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDepthRangex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDepthRangex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDepthRangex_PACKED *packed = mock_expect(glDepthRangex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1738,27 +1001,7 @@ static int failed_test = 0;
     mock_push(pack_glDisable(NULL, cap)); \
 }
 #define test_glDisable(_cap) { \
-    glDisable_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDisable missing (no calls left)\n"); \
-    } else if (packed->index != glDisable_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDisable_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDisable missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDisable:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDisable_PACKED *packed = mock_expect(glDisable); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1776,27 +1019,7 @@ static int failed_test = 0;
     mock_push(pack_glDisableClientState(NULL, array)); \
 }
 #define test_glDisableClientState(_array) { \
-    glDisableClientState_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDisableClientState missing (no calls left)\n"); \
-    } else if (packed->index != glDisableClientState_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDisableClientState_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDisableClientState missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDisableClientState:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDisableClientState_PACKED *packed = mock_expect(glDisableClientState); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1814,27 +1037,7 @@ static int failed_test = 0;
     mock_push(pack_glDrawArrays(NULL, mode, first, count)); \
 }
 #define test_glDrawArrays(_mode, _first, _count) { \
-    glDrawArrays_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDrawArrays missing (no calls left)\n"); \
-    } else if (packed->index != glDrawArrays_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDrawArrays_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDrawArrays missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDrawArrays:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDrawArrays_PACKED *packed = mock_expect(glDrawArrays); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1858,27 +1061,7 @@ static int failed_test = 0;
     mock_push(pack_glDrawElements(NULL, mode, count, type, indices)); \
 }
 #define test_glDrawElements(_mode, _count, _type, _indices) { \
-    glDrawElements_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glDrawElements missing (no calls left)\n"); \
-    } else if (packed->index != glDrawElements_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glDrawElements_INDEX); \
-        if (! packed) { \
-            mock_errorf("glDrawElements missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glDrawElements:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glDrawElements_PACKED *packed = mock_expect(glDrawElements); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1909,27 +1092,7 @@ static int failed_test = 0;
     mock_push(pack_glEnable(NULL, cap)); \
 }
 #define test_glEnable(_cap) { \
-    glEnable_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glEnable missing (no calls left)\n"); \
-    } else if (packed->index != glEnable_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glEnable_INDEX); \
-        if (! packed) { \
-            mock_errorf("glEnable missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glEnable:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glEnable_PACKED *packed = mock_expect(glEnable); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1947,27 +1110,7 @@ static int failed_test = 0;
     mock_push(pack_glEnableClientState(NULL, array)); \
 }
 #define test_glEnableClientState(_array) { \
-    glEnableClientState_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glEnableClientState missing (no calls left)\n"); \
-    } else if (packed->index != glEnableClientState_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glEnableClientState_INDEX); \
-        if (! packed) { \
-            mock_errorf("glEnableClientState missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glEnableClientState:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glEnableClientState_PACKED *packed = mock_expect(glEnableClientState); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -1985,27 +1128,7 @@ static int failed_test = 0;
     mock_push(pack_glFinish(NULL)); \
 }
 #define test_glFinish() { \
-    glFinish_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFinish missing (no calls left)\n"); \
-    } else if (packed->index != glFinish_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFinish_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFinish missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFinish:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFinish_PACKED *packed = mock_expect(glFinish); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2020,27 +1143,7 @@ static int failed_test = 0;
     mock_push(pack_glFlush(NULL)); \
 }
 #define test_glFlush() { \
-    glFlush_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFlush missing (no calls left)\n"); \
-    } else if (packed->index != glFlush_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFlush_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFlush missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFlush:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFlush_PACKED *packed = mock_expect(glFlush); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2055,27 +1158,7 @@ static int failed_test = 0;
     mock_push(pack_glFogf(NULL, pname, param)); \
 }
 #define test_glFogf(_pname, _param) { \
-    glFogf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFogf missing (no calls left)\n"); \
-    } else if (packed->index != glFogf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFogf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFogf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFogf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFogf_PACKED *packed = mock_expect(glFogf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2096,27 +1179,7 @@ static int failed_test = 0;
     mock_push(pack_glFogfv(NULL, pname, params)); \
 }
 #define test_glFogfv(_pname, _params) { \
-    glFogfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFogfv missing (no calls left)\n"); \
-    } else if (packed->index != glFogfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFogfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFogfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFogfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFogfv_PACKED *packed = mock_expect(glFogfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2141,27 +1204,7 @@ static int failed_test = 0;
     mock_push(pack_glFogx(NULL, pname, param)); \
 }
 #define test_glFogx(_pname, _param) { \
-    glFogx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFogx missing (no calls left)\n"); \
-    } else if (packed->index != glFogx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFogx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFogx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFogx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFogx_PACKED *packed = mock_expect(glFogx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2182,27 +1225,7 @@ static int failed_test = 0;
     mock_push(pack_glFogxv(NULL, pname, params)); \
 }
 #define test_glFogxv(_pname, _params) { \
-    glFogxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFogxv missing (no calls left)\n"); \
-    } else if (packed->index != glFogxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFogxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFogxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFogxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFogxv_PACKED *packed = mock_expect(glFogxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2227,27 +1250,7 @@ static int failed_test = 0;
     mock_push(pack_glFrontFace(NULL, mode)); \
 }
 #define test_glFrontFace(_mode) { \
-    glFrontFace_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFrontFace missing (no calls left)\n"); \
-    } else if (packed->index != glFrontFace_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFrontFace_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFrontFace missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFrontFace:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFrontFace_PACKED *packed = mock_expect(glFrontFace); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2265,27 +1268,7 @@ static int failed_test = 0;
     mock_push(pack_glFrustumf(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glFrustumf(_left, _right, _bottom, _top, _near, _far) { \
-    glFrustumf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFrustumf missing (no calls left)\n"); \
-    } else if (packed->index != glFrustumf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFrustumf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFrustumf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFrustumf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFrustumf_PACKED *packed = mock_expect(glFrustumf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2318,27 +1301,7 @@ static int failed_test = 0;
     mock_push(pack_glFrustumx(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glFrustumx(_left, _right, _bottom, _top, _near, _far) { \
-    glFrustumx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glFrustumx missing (no calls left)\n"); \
-    } else if (packed->index != glFrustumx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glFrustumx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glFrustumx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glFrustumx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glFrustumx_PACKED *packed = mock_expect(glFrustumx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2371,27 +1334,7 @@ static int failed_test = 0;
     mock_push(pack_glGenBuffers(NULL, n, buffers)); \
 }
 #define test_glGenBuffers(_n, _buffers) { \
-    glGenBuffers_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGenBuffers missing (no calls left)\n"); \
-    } else if (packed->index != glGenBuffers_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGenBuffers_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGenBuffers missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGenBuffers:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGenBuffers_PACKED *packed = mock_expect(glGenBuffers); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2416,27 +1359,7 @@ static int failed_test = 0;
     mock_push(pack_glGenTextures(NULL, n, textures)); \
 }
 #define test_glGenTextures(_n, _textures) { \
-    glGenTextures_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGenTextures missing (no calls left)\n"); \
-    } else if (packed->index != glGenTextures_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGenTextures_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGenTextures missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGenTextures:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGenTextures_PACKED *packed = mock_expect(glGenTextures); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2461,27 +1384,7 @@ static int failed_test = 0;
     mock_push(pack_glGetBooleanv(NULL, pname, params)); \
 }
 #define test_glGetBooleanv(_pname, _params) { \
-    glGetBooleanv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetBooleanv missing (no calls left)\n"); \
-    } else if (packed->index != glGetBooleanv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetBooleanv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetBooleanv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetBooleanv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetBooleanv_PACKED *packed = mock_expect(glGetBooleanv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2506,27 +1409,7 @@ static int failed_test = 0;
     mock_push(pack_glGetBufferParameteriv(NULL, target, pname, params)); \
 }
 #define test_glGetBufferParameteriv(_target, _pname, _params) { \
-    glGetBufferParameteriv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetBufferParameteriv missing (no calls left)\n"); \
-    } else if (packed->index != glGetBufferParameteriv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetBufferParameteriv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetBufferParameteriv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetBufferParameteriv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetBufferParameteriv_PACKED *packed = mock_expect(glGetBufferParameteriv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2554,27 +1437,7 @@ static int failed_test = 0;
     mock_push(pack_glGetClipPlanef(NULL, plane, equation)); \
 }
 #define test_glGetClipPlanef(_plane, _equation) { \
-    glGetClipPlanef_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetClipPlanef missing (no calls left)\n"); \
-    } else if (packed->index != glGetClipPlanef_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetClipPlanef_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetClipPlanef missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetClipPlanef:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetClipPlanef_PACKED *packed = mock_expect(glGetClipPlanef); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2599,27 +1462,7 @@ static int failed_test = 0;
     mock_push(pack_glGetClipPlanex(NULL, plane, equation)); \
 }
 #define test_glGetClipPlanex(_plane, _equation) { \
-    glGetClipPlanex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetClipPlanex missing (no calls left)\n"); \
-    } else if (packed->index != glGetClipPlanex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetClipPlanex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetClipPlanex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetClipPlanex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetClipPlanex_PACKED *packed = mock_expect(glGetClipPlanex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2644,27 +1487,7 @@ static int failed_test = 0;
     mock_push(pack_glGetError(NULL)); \
 }
 #define test_glGetError() { \
-    glGetError_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetError missing (no calls left)\n"); \
-    } else if (packed->index != glGetError_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetError_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetError missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetError:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetError_PACKED *packed = mock_expect(glGetError); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2679,27 +1502,7 @@ static int failed_test = 0;
     mock_push(pack_glGetFixedv(NULL, pname, params)); \
 }
 #define test_glGetFixedv(_pname, _params) { \
-    glGetFixedv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetFixedv missing (no calls left)\n"); \
-    } else if (packed->index != glGetFixedv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetFixedv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetFixedv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetFixedv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetFixedv_PACKED *packed = mock_expect(glGetFixedv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2724,27 +1527,7 @@ static int failed_test = 0;
     mock_push(pack_glGetFloatv(NULL, pname, params)); \
 }
 #define test_glGetFloatv(_pname, _params) { \
-    glGetFloatv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetFloatv missing (no calls left)\n"); \
-    } else if (packed->index != glGetFloatv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetFloatv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetFloatv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetFloatv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetFloatv_PACKED *packed = mock_expect(glGetFloatv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2769,27 +1552,7 @@ static int failed_test = 0;
     mock_push(pack_glGetIntegerv(NULL, pname, params)); \
 }
 #define test_glGetIntegerv(_pname, _params) { \
-    glGetIntegerv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetIntegerv missing (no calls left)\n"); \
-    } else if (packed->index != glGetIntegerv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetIntegerv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetIntegerv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetIntegerv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetIntegerv_PACKED *packed = mock_expect(glGetIntegerv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2814,27 +1577,7 @@ static int failed_test = 0;
     mock_push(pack_glGetLightfv(NULL, light, pname, params)); \
 }
 #define test_glGetLightfv(_light, _pname, _params) { \
-    glGetLightfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetLightfv missing (no calls left)\n"); \
-    } else if (packed->index != glGetLightfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetLightfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetLightfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetLightfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetLightfv_PACKED *packed = mock_expect(glGetLightfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2862,27 +1605,7 @@ static int failed_test = 0;
     mock_push(pack_glGetLightxv(NULL, light, pname, params)); \
 }
 #define test_glGetLightxv(_light, _pname, _params) { \
-    glGetLightxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetLightxv missing (no calls left)\n"); \
-    } else if (packed->index != glGetLightxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetLightxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetLightxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetLightxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetLightxv_PACKED *packed = mock_expect(glGetLightxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2910,27 +1633,7 @@ static int failed_test = 0;
     mock_push(pack_glGetMaterialfv(NULL, face, pname, params)); \
 }
 #define test_glGetMaterialfv(_face, _pname, _params) { \
-    glGetMaterialfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetMaterialfv missing (no calls left)\n"); \
-    } else if (packed->index != glGetMaterialfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetMaterialfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetMaterialfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetMaterialfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetMaterialfv_PACKED *packed = mock_expect(glGetMaterialfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -2958,27 +1661,7 @@ static int failed_test = 0;
     mock_push(pack_glGetMaterialxv(NULL, face, pname, params)); \
 }
 #define test_glGetMaterialxv(_face, _pname, _params) { \
-    glGetMaterialxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetMaterialxv missing (no calls left)\n"); \
-    } else if (packed->index != glGetMaterialxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetMaterialxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetMaterialxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetMaterialxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetMaterialxv_PACKED *packed = mock_expect(glGetMaterialxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3006,27 +1689,7 @@ static int failed_test = 0;
     mock_push(pack_glGetPointerv(NULL, pname, params)); \
 }
 #define test_glGetPointerv(_pname, _params) { \
-    glGetPointerv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetPointerv missing (no calls left)\n"); \
-    } else if (packed->index != glGetPointerv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetPointerv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetPointerv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetPointerv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetPointerv_PACKED *packed = mock_expect(glGetPointerv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3051,27 +1714,7 @@ static int failed_test = 0;
     mock_push(pack_glGetString(NULL, name)); \
 }
 #define test_glGetString(_name) { \
-    glGetString_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetString missing (no calls left)\n"); \
-    } else if (packed->index != glGetString_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetString_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetString missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetString:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetString_PACKED *packed = mock_expect(glGetString); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3089,27 +1732,7 @@ static int failed_test = 0;
     mock_push(pack_glGetTexEnvfv(NULL, target, pname, params)); \
 }
 #define test_glGetTexEnvfv(_target, _pname, _params) { \
-    glGetTexEnvfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetTexEnvfv missing (no calls left)\n"); \
-    } else if (packed->index != glGetTexEnvfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetTexEnvfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetTexEnvfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetTexEnvfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetTexEnvfv_PACKED *packed = mock_expect(glGetTexEnvfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3137,27 +1760,7 @@ static int failed_test = 0;
     mock_push(pack_glGetTexEnviv(NULL, target, pname, params)); \
 }
 #define test_glGetTexEnviv(_target, _pname, _params) { \
-    glGetTexEnviv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetTexEnviv missing (no calls left)\n"); \
-    } else if (packed->index != glGetTexEnviv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetTexEnviv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetTexEnviv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetTexEnviv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetTexEnviv_PACKED *packed = mock_expect(glGetTexEnviv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3185,27 +1788,7 @@ static int failed_test = 0;
     mock_push(pack_glGetTexEnvxv(NULL, target, pname, params)); \
 }
 #define test_glGetTexEnvxv(_target, _pname, _params) { \
-    glGetTexEnvxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetTexEnvxv missing (no calls left)\n"); \
-    } else if (packed->index != glGetTexEnvxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetTexEnvxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetTexEnvxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetTexEnvxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetTexEnvxv_PACKED *packed = mock_expect(glGetTexEnvxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3233,27 +1816,7 @@ static int failed_test = 0;
     mock_push(pack_glGetTexParameterfv(NULL, target, pname, params)); \
 }
 #define test_glGetTexParameterfv(_target, _pname, _params) { \
-    glGetTexParameterfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetTexParameterfv missing (no calls left)\n"); \
-    } else if (packed->index != glGetTexParameterfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetTexParameterfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetTexParameterfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetTexParameterfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetTexParameterfv_PACKED *packed = mock_expect(glGetTexParameterfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3281,27 +1844,7 @@ static int failed_test = 0;
     mock_push(pack_glGetTexParameteriv(NULL, target, pname, params)); \
 }
 #define test_glGetTexParameteriv(_target, _pname, _params) { \
-    glGetTexParameteriv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetTexParameteriv missing (no calls left)\n"); \
-    } else if (packed->index != glGetTexParameteriv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetTexParameteriv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetTexParameteriv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetTexParameteriv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetTexParameteriv_PACKED *packed = mock_expect(glGetTexParameteriv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3329,27 +1872,7 @@ static int failed_test = 0;
     mock_push(pack_glGetTexParameterxv(NULL, target, pname, params)); \
 }
 #define test_glGetTexParameterxv(_target, _pname, _params) { \
-    glGetTexParameterxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glGetTexParameterxv missing (no calls left)\n"); \
-    } else if (packed->index != glGetTexParameterxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glGetTexParameterxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glGetTexParameterxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glGetTexParameterxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glGetTexParameterxv_PACKED *packed = mock_expect(glGetTexParameterxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3377,27 +1900,7 @@ static int failed_test = 0;
     mock_push(pack_glHint(NULL, target, mode)); \
 }
 #define test_glHint(_target, _mode) { \
-    glHint_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glHint missing (no calls left)\n"); \
-    } else if (packed->index != glHint_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glHint_INDEX); \
-        if (! packed) { \
-            mock_errorf("glHint missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glHint:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glHint_PACKED *packed = mock_expect(glHint); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3418,27 +1921,7 @@ static int failed_test = 0;
     mock_push(pack_glIsBuffer(NULL, buffer)); \
 }
 #define test_glIsBuffer(_buffer) { \
-    glIsBuffer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glIsBuffer missing (no calls left)\n"); \
-    } else if (packed->index != glIsBuffer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glIsBuffer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glIsBuffer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glIsBuffer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glIsBuffer_PACKED *packed = mock_expect(glIsBuffer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3456,27 +1939,7 @@ static int failed_test = 0;
     mock_push(pack_glIsEnabled(NULL, cap)); \
 }
 #define test_glIsEnabled(_cap) { \
-    glIsEnabled_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glIsEnabled missing (no calls left)\n"); \
-    } else if (packed->index != glIsEnabled_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glIsEnabled_INDEX); \
-        if (! packed) { \
-            mock_errorf("glIsEnabled missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glIsEnabled:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glIsEnabled_PACKED *packed = mock_expect(glIsEnabled); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3494,27 +1957,7 @@ static int failed_test = 0;
     mock_push(pack_glIsTexture(NULL, texture)); \
 }
 #define test_glIsTexture(_texture) { \
-    glIsTexture_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glIsTexture missing (no calls left)\n"); \
-    } else if (packed->index != glIsTexture_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glIsTexture_INDEX); \
-        if (! packed) { \
-            mock_errorf("glIsTexture missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glIsTexture:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glIsTexture_PACKED *packed = mock_expect(glIsTexture); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3532,27 +1975,7 @@ static int failed_test = 0;
     mock_push(pack_glLightModelf(NULL, pname, param)); \
 }
 #define test_glLightModelf(_pname, _param) { \
-    glLightModelf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightModelf missing (no calls left)\n"); \
-    } else if (packed->index != glLightModelf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightModelf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightModelf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightModelf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightModelf_PACKED *packed = mock_expect(glLightModelf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3573,27 +1996,7 @@ static int failed_test = 0;
     mock_push(pack_glLightModelfv(NULL, pname, params)); \
 }
 #define test_glLightModelfv(_pname, _params) { \
-    glLightModelfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightModelfv missing (no calls left)\n"); \
-    } else if (packed->index != glLightModelfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightModelfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightModelfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightModelfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightModelfv_PACKED *packed = mock_expect(glLightModelfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3618,27 +2021,7 @@ static int failed_test = 0;
     mock_push(pack_glLightModelx(NULL, pname, param)); \
 }
 #define test_glLightModelx(_pname, _param) { \
-    glLightModelx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightModelx missing (no calls left)\n"); \
-    } else if (packed->index != glLightModelx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightModelx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightModelx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightModelx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightModelx_PACKED *packed = mock_expect(glLightModelx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3659,27 +2042,7 @@ static int failed_test = 0;
     mock_push(pack_glLightModelxv(NULL, pname, params)); \
 }
 #define test_glLightModelxv(_pname, _params) { \
-    glLightModelxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightModelxv missing (no calls left)\n"); \
-    } else if (packed->index != glLightModelxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightModelxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightModelxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightModelxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightModelxv_PACKED *packed = mock_expect(glLightModelxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3704,27 +2067,7 @@ static int failed_test = 0;
     mock_push(pack_glLightf(NULL, light, pname, param)); \
 }
 #define test_glLightf(_light, _pname, _param) { \
-    glLightf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightf missing (no calls left)\n"); \
-    } else if (packed->index != glLightf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightf_PACKED *packed = mock_expect(glLightf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3748,27 +2091,7 @@ static int failed_test = 0;
     mock_push(pack_glLightfv(NULL, light, pname, params)); \
 }
 #define test_glLightfv(_light, _pname, _params) { \
-    glLightfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightfv missing (no calls left)\n"); \
-    } else if (packed->index != glLightfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightfv_PACKED *packed = mock_expect(glLightfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3796,27 +2119,7 @@ static int failed_test = 0;
     mock_push(pack_glLightx(NULL, light, pname, param)); \
 }
 #define test_glLightx(_light, _pname, _param) { \
-    glLightx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightx missing (no calls left)\n"); \
-    } else if (packed->index != glLightx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightx_PACKED *packed = mock_expect(glLightx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3840,27 +2143,7 @@ static int failed_test = 0;
     mock_push(pack_glLightxv(NULL, light, pname, params)); \
 }
 #define test_glLightxv(_light, _pname, _params) { \
-    glLightxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLightxv missing (no calls left)\n"); \
-    } else if (packed->index != glLightxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLightxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLightxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLightxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLightxv_PACKED *packed = mock_expect(glLightxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3888,27 +2171,7 @@ static int failed_test = 0;
     mock_push(pack_glLineWidth(NULL, width)); \
 }
 #define test_glLineWidth(_width) { \
-    glLineWidth_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLineWidth missing (no calls left)\n"); \
-    } else if (packed->index != glLineWidth_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLineWidth_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLineWidth missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLineWidth:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLineWidth_PACKED *packed = mock_expect(glLineWidth); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3926,27 +2189,7 @@ static int failed_test = 0;
     mock_push(pack_glLineWidthx(NULL, width)); \
 }
 #define test_glLineWidthx(_width) { \
-    glLineWidthx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLineWidthx missing (no calls left)\n"); \
-    } else if (packed->index != glLineWidthx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLineWidthx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLineWidthx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLineWidthx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLineWidthx_PACKED *packed = mock_expect(glLineWidthx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3964,27 +2207,7 @@ static int failed_test = 0;
     mock_push(pack_glLoadIdentity(NULL)); \
 }
 #define test_glLoadIdentity() { \
-    glLoadIdentity_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLoadIdentity missing (no calls left)\n"); \
-    } else if (packed->index != glLoadIdentity_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLoadIdentity_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLoadIdentity missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLoadIdentity:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLoadIdentity_PACKED *packed = mock_expect(glLoadIdentity); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -3999,27 +2222,7 @@ static int failed_test = 0;
     mock_push(pack_glLoadMatrixf(NULL, m)); \
 }
 #define test_glLoadMatrixf(_m) { \
-    glLoadMatrixf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLoadMatrixf missing (no calls left)\n"); \
-    } else if (packed->index != glLoadMatrixf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLoadMatrixf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLoadMatrixf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLoadMatrixf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLoadMatrixf_PACKED *packed = mock_expect(glLoadMatrixf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4041,27 +2244,7 @@ static int failed_test = 0;
     mock_push(pack_glLoadMatrixx(NULL, m)); \
 }
 #define test_glLoadMatrixx(_m) { \
-    glLoadMatrixx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLoadMatrixx missing (no calls left)\n"); \
-    } else if (packed->index != glLoadMatrixx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLoadMatrixx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLoadMatrixx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLoadMatrixx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLoadMatrixx_PACKED *packed = mock_expect(glLoadMatrixx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4083,27 +2266,7 @@ static int failed_test = 0;
     mock_push(pack_glLogicOp(NULL, opcode)); \
 }
 #define test_glLogicOp(_opcode) { \
-    glLogicOp_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glLogicOp missing (no calls left)\n"); \
-    } else if (packed->index != glLogicOp_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glLogicOp_INDEX); \
-        if (! packed) { \
-            mock_errorf("glLogicOp missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glLogicOp:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glLogicOp_PACKED *packed = mock_expect(glLogicOp); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4121,27 +2284,7 @@ static int failed_test = 0;
     mock_push(pack_glMaterialf(NULL, face, pname, param)); \
 }
 #define test_glMaterialf(_face, _pname, _param) { \
-    glMaterialf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMaterialf missing (no calls left)\n"); \
-    } else if (packed->index != glMaterialf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMaterialf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMaterialf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMaterialf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMaterialf_PACKED *packed = mock_expect(glMaterialf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4165,27 +2308,7 @@ static int failed_test = 0;
     mock_push(pack_glMaterialfv(NULL, face, pname, params)); \
 }
 #define test_glMaterialfv(_face, _pname, _params) { \
-    glMaterialfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMaterialfv missing (no calls left)\n"); \
-    } else if (packed->index != glMaterialfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMaterialfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMaterialfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMaterialfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMaterialfv_PACKED *packed = mock_expect(glMaterialfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4213,27 +2336,7 @@ static int failed_test = 0;
     mock_push(pack_glMaterialx(NULL, face, pname, param)); \
 }
 #define test_glMaterialx(_face, _pname, _param) { \
-    glMaterialx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMaterialx missing (no calls left)\n"); \
-    } else if (packed->index != glMaterialx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMaterialx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMaterialx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMaterialx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMaterialx_PACKED *packed = mock_expect(glMaterialx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4257,27 +2360,7 @@ static int failed_test = 0;
     mock_push(pack_glMaterialxv(NULL, face, pname, params)); \
 }
 #define test_glMaterialxv(_face, _pname, _params) { \
-    glMaterialxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMaterialxv missing (no calls left)\n"); \
-    } else if (packed->index != glMaterialxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMaterialxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMaterialxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMaterialxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMaterialxv_PACKED *packed = mock_expect(glMaterialxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4305,27 +2388,7 @@ static int failed_test = 0;
     mock_push(pack_glMatrixMode(NULL, mode)); \
 }
 #define test_glMatrixMode(_mode) { \
-    glMatrixMode_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMatrixMode missing (no calls left)\n"); \
-    } else if (packed->index != glMatrixMode_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMatrixMode_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMatrixMode missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMatrixMode:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMatrixMode_PACKED *packed = mock_expect(glMatrixMode); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4343,27 +2406,7 @@ static int failed_test = 0;
     mock_push(pack_glMultMatrixf(NULL, m)); \
 }
 #define test_glMultMatrixf(_m) { \
-    glMultMatrixf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMultMatrixf missing (no calls left)\n"); \
-    } else if (packed->index != glMultMatrixf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMultMatrixf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMultMatrixf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMultMatrixf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMultMatrixf_PACKED *packed = mock_expect(glMultMatrixf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4385,27 +2428,7 @@ static int failed_test = 0;
     mock_push(pack_glMultMatrixx(NULL, m)); \
 }
 #define test_glMultMatrixx(_m) { \
-    glMultMatrixx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMultMatrixx missing (no calls left)\n"); \
-    } else if (packed->index != glMultMatrixx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMultMatrixx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMultMatrixx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMultMatrixx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMultMatrixx_PACKED *packed = mock_expect(glMultMatrixx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4427,27 +2450,7 @@ static int failed_test = 0;
     mock_push(pack_glMultiTexCoord4f(NULL, target, s, t, r, q)); \
 }
 #define test_glMultiTexCoord4f(_target, _s, _t, _r, _q) { \
-    glMultiTexCoord4f_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMultiTexCoord4f missing (no calls left)\n"); \
-    } else if (packed->index != glMultiTexCoord4f_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMultiTexCoord4f_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMultiTexCoord4f missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMultiTexCoord4f:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMultiTexCoord4f_PACKED *packed = mock_expect(glMultiTexCoord4f); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4477,27 +2480,7 @@ static int failed_test = 0;
     mock_push(pack_glMultiTexCoord4x(NULL, target, s, t, r, q)); \
 }
 #define test_glMultiTexCoord4x(_target, _s, _t, _r, _q) { \
-    glMultiTexCoord4x_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glMultiTexCoord4x missing (no calls left)\n"); \
-    } else if (packed->index != glMultiTexCoord4x_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glMultiTexCoord4x_INDEX); \
-        if (! packed) { \
-            mock_errorf("glMultiTexCoord4x missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glMultiTexCoord4x:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glMultiTexCoord4x_PACKED *packed = mock_expect(glMultiTexCoord4x); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4527,27 +2510,7 @@ static int failed_test = 0;
     mock_push(pack_glNormal3f(NULL, nx, ny, nz)); \
 }
 #define test_glNormal3f(_nx, _ny, _nz) { \
-    glNormal3f_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glNormal3f missing (no calls left)\n"); \
-    } else if (packed->index != glNormal3f_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glNormal3f_INDEX); \
-        if (! packed) { \
-            mock_errorf("glNormal3f missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glNormal3f:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glNormal3f_PACKED *packed = mock_expect(glNormal3f); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4571,27 +2534,7 @@ static int failed_test = 0;
     mock_push(pack_glNormal3x(NULL, nx, ny, nz)); \
 }
 #define test_glNormal3x(_nx, _ny, _nz) { \
-    glNormal3x_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glNormal3x missing (no calls left)\n"); \
-    } else if (packed->index != glNormal3x_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glNormal3x_INDEX); \
-        if (! packed) { \
-            mock_errorf("glNormal3x missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glNormal3x:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glNormal3x_PACKED *packed = mock_expect(glNormal3x); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4615,27 +2558,7 @@ static int failed_test = 0;
     mock_push(pack_glNormalPointer(NULL, type, stride, pointer)); \
 }
 #define test_glNormalPointer(_type, _stride, _pointer) { \
-    glNormalPointer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glNormalPointer missing (no calls left)\n"); \
-    } else if (packed->index != glNormalPointer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glNormalPointer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glNormalPointer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glNormalPointer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glNormalPointer_PACKED *packed = mock_expect(glNormalPointer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4663,27 +2586,7 @@ static int failed_test = 0;
     mock_push(pack_glOrthof(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glOrthof(_left, _right, _bottom, _top, _near, _far) { \
-    glOrthof_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glOrthof missing (no calls left)\n"); \
-    } else if (packed->index != glOrthof_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glOrthof_INDEX); \
-        if (! packed) { \
-            mock_errorf("glOrthof missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glOrthof:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glOrthof_PACKED *packed = mock_expect(glOrthof); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4716,27 +2619,7 @@ static int failed_test = 0;
     mock_push(pack_glOrthox(NULL, left, right, bottom, top, near, far)); \
 }
 #define test_glOrthox(_left, _right, _bottom, _top, _near, _far) { \
-    glOrthox_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glOrthox missing (no calls left)\n"); \
-    } else if (packed->index != glOrthox_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glOrthox_INDEX); \
-        if (! packed) { \
-            mock_errorf("glOrthox missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glOrthox:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glOrthox_PACKED *packed = mock_expect(glOrthox); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4769,27 +2652,7 @@ static int failed_test = 0;
     mock_push(pack_glPixelStorei(NULL, pname, param)); \
 }
 #define test_glPixelStorei(_pname, _param) { \
-    glPixelStorei_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPixelStorei missing (no calls left)\n"); \
-    } else if (packed->index != glPixelStorei_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPixelStorei_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPixelStorei missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPixelStorei:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPixelStorei_PACKED *packed = mock_expect(glPixelStorei); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4810,27 +2673,7 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterf(NULL, pname, param)); \
 }
 #define test_glPointParameterf(_pname, _param) { \
-    glPointParameterf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPointParameterf missing (no calls left)\n"); \
-    } else if (packed->index != glPointParameterf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPointParameterf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPointParameterf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPointParameterf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPointParameterf_PACKED *packed = mock_expect(glPointParameterf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4851,27 +2694,7 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterfv(NULL, pname, params)); \
 }
 #define test_glPointParameterfv(_pname, _params) { \
-    glPointParameterfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPointParameterfv missing (no calls left)\n"); \
-    } else if (packed->index != glPointParameterfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPointParameterfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPointParameterfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPointParameterfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPointParameterfv_PACKED *packed = mock_expect(glPointParameterfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4896,27 +2719,7 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterx(NULL, pname, param)); \
 }
 #define test_glPointParameterx(_pname, _param) { \
-    glPointParameterx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPointParameterx missing (no calls left)\n"); \
-    } else if (packed->index != glPointParameterx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPointParameterx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPointParameterx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPointParameterx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPointParameterx_PACKED *packed = mock_expect(glPointParameterx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4937,27 +2740,7 @@ static int failed_test = 0;
     mock_push(pack_glPointParameterxv(NULL, pname, params)); \
 }
 #define test_glPointParameterxv(_pname, _params) { \
-    glPointParameterxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPointParameterxv missing (no calls left)\n"); \
-    } else if (packed->index != glPointParameterxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPointParameterxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPointParameterxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPointParameterxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPointParameterxv_PACKED *packed = mock_expect(glPointParameterxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -4982,27 +2765,7 @@ static int failed_test = 0;
     mock_push(pack_glPointSize(NULL, size)); \
 }
 #define test_glPointSize(_size) { \
-    glPointSize_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPointSize missing (no calls left)\n"); \
-    } else if (packed->index != glPointSize_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPointSize_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPointSize missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPointSize:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPointSize_PACKED *packed = mock_expect(glPointSize); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5020,27 +2783,7 @@ static int failed_test = 0;
     mock_push(pack_glPointSizePointerOES(NULL, type, stride, pointer)); \
 }
 #define test_glPointSizePointerOES(_type, _stride, _pointer) { \
-    glPointSizePointerOES_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPointSizePointerOES missing (no calls left)\n"); \
-    } else if (packed->index != glPointSizePointerOES_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPointSizePointerOES_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPointSizePointerOES missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPointSizePointerOES:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPointSizePointerOES_PACKED *packed = mock_expect(glPointSizePointerOES); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5068,27 +2811,7 @@ static int failed_test = 0;
     mock_push(pack_glPointSizex(NULL, size)); \
 }
 #define test_glPointSizex(_size) { \
-    glPointSizex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPointSizex missing (no calls left)\n"); \
-    } else if (packed->index != glPointSizex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPointSizex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPointSizex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPointSizex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPointSizex_PACKED *packed = mock_expect(glPointSizex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5106,27 +2829,7 @@ static int failed_test = 0;
     mock_push(pack_glPolygonOffset(NULL, factor, units)); \
 }
 #define test_glPolygonOffset(_factor, _units) { \
-    glPolygonOffset_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPolygonOffset missing (no calls left)\n"); \
-    } else if (packed->index != glPolygonOffset_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPolygonOffset_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPolygonOffset missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPolygonOffset:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPolygonOffset_PACKED *packed = mock_expect(glPolygonOffset); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5147,27 +2850,7 @@ static int failed_test = 0;
     mock_push(pack_glPolygonOffsetx(NULL, factor, units)); \
 }
 #define test_glPolygonOffsetx(_factor, _units) { \
-    glPolygonOffsetx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPolygonOffsetx missing (no calls left)\n"); \
-    } else if (packed->index != glPolygonOffsetx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPolygonOffsetx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPolygonOffsetx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPolygonOffsetx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPolygonOffsetx_PACKED *packed = mock_expect(glPolygonOffsetx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5188,27 +2871,7 @@ static int failed_test = 0;
     mock_push(pack_glPopMatrix(NULL)); \
 }
 #define test_glPopMatrix() { \
-    glPopMatrix_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPopMatrix missing (no calls left)\n"); \
-    } else if (packed->index != glPopMatrix_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPopMatrix_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPopMatrix missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPopMatrix:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPopMatrix_PACKED *packed = mock_expect(glPopMatrix); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5223,27 +2886,7 @@ static int failed_test = 0;
     mock_push(pack_glPushMatrix(NULL)); \
 }
 #define test_glPushMatrix() { \
-    glPushMatrix_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glPushMatrix missing (no calls left)\n"); \
-    } else if (packed->index != glPushMatrix_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glPushMatrix_INDEX); \
-        if (! packed) { \
-            mock_errorf("glPushMatrix missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glPushMatrix:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glPushMatrix_PACKED *packed = mock_expect(glPushMatrix); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5258,27 +2901,7 @@ static int failed_test = 0;
     mock_push(pack_glReadPixels(NULL, x, y, width, height, format, type, pixels)); \
 }
 #define test_glReadPixels(_x, _y, _width, _height, _format, _type, _pixels) { \
-    glReadPixels_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glReadPixels missing (no calls left)\n"); \
-    } else if (packed->index != glReadPixels_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glReadPixels_INDEX); \
-        if (! packed) { \
-            mock_errorf("glReadPixels missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glReadPixels:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glReadPixels_PACKED *packed = mock_expect(glReadPixels); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5318,27 +2941,7 @@ static int failed_test = 0;
     mock_push(pack_glRotatef(NULL, angle, x, y, z)); \
 }
 #define test_glRotatef(_angle, _x, _y, _z) { \
-    glRotatef_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glRotatef missing (no calls left)\n"); \
-    } else if (packed->index != glRotatef_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glRotatef_INDEX); \
-        if (! packed) { \
-            mock_errorf("glRotatef missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glRotatef:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glRotatef_PACKED *packed = mock_expect(glRotatef); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5365,27 +2968,7 @@ static int failed_test = 0;
     mock_push(pack_glRotatex(NULL, angle, x, y, z)); \
 }
 #define test_glRotatex(_angle, _x, _y, _z) { \
-    glRotatex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glRotatex missing (no calls left)\n"); \
-    } else if (packed->index != glRotatex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glRotatex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glRotatex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glRotatex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glRotatex_PACKED *packed = mock_expect(glRotatex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5412,27 +2995,7 @@ static int failed_test = 0;
     mock_push(pack_glSampleCoverage(NULL, value, invert)); \
 }
 #define test_glSampleCoverage(_value, _invert) { \
-    glSampleCoverage_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glSampleCoverage missing (no calls left)\n"); \
-    } else if (packed->index != glSampleCoverage_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glSampleCoverage_INDEX); \
-        if (! packed) { \
-            mock_errorf("glSampleCoverage missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glSampleCoverage:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glSampleCoverage_PACKED *packed = mock_expect(glSampleCoverage); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5453,27 +3016,7 @@ static int failed_test = 0;
     mock_push(pack_glSampleCoveragex(NULL, value, invert)); \
 }
 #define test_glSampleCoveragex(_value, _invert) { \
-    glSampleCoveragex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glSampleCoveragex missing (no calls left)\n"); \
-    } else if (packed->index != glSampleCoveragex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glSampleCoveragex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glSampleCoveragex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glSampleCoveragex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glSampleCoveragex_PACKED *packed = mock_expect(glSampleCoveragex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5494,27 +3037,7 @@ static int failed_test = 0;
     mock_push(pack_glScalef(NULL, x, y, z)); \
 }
 #define test_glScalef(_x, _y, _z) { \
-    glScalef_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glScalef missing (no calls left)\n"); \
-    } else if (packed->index != glScalef_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glScalef_INDEX); \
-        if (! packed) { \
-            mock_errorf("glScalef missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glScalef:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glScalef_PACKED *packed = mock_expect(glScalef); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5538,27 +3061,7 @@ static int failed_test = 0;
     mock_push(pack_glScalex(NULL, x, y, z)); \
 }
 #define test_glScalex(_x, _y, _z) { \
-    glScalex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glScalex missing (no calls left)\n"); \
-    } else if (packed->index != glScalex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glScalex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glScalex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glScalex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glScalex_PACKED *packed = mock_expect(glScalex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5582,27 +3085,7 @@ static int failed_test = 0;
     mock_push(pack_glScissor(NULL, x, y, width, height)); \
 }
 #define test_glScissor(_x, _y, _width, _height) { \
-    glScissor_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glScissor missing (no calls left)\n"); \
-    } else if (packed->index != glScissor_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glScissor_INDEX); \
-        if (! packed) { \
-            mock_errorf("glScissor missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glScissor:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glScissor_PACKED *packed = mock_expect(glScissor); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5629,27 +3112,7 @@ static int failed_test = 0;
     mock_push(pack_glShadeModel(NULL, mode)); \
 }
 #define test_glShadeModel(_mode) { \
-    glShadeModel_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glShadeModel missing (no calls left)\n"); \
-    } else if (packed->index != glShadeModel_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glShadeModel_INDEX); \
-        if (! packed) { \
-            mock_errorf("glShadeModel missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glShadeModel:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glShadeModel_PACKED *packed = mock_expect(glShadeModel); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5667,27 +3130,7 @@ static int failed_test = 0;
     mock_push(pack_glStencilFunc(NULL, func, ref, mask)); \
 }
 #define test_glStencilFunc(_func, _ref, _mask) { \
-    glStencilFunc_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glStencilFunc missing (no calls left)\n"); \
-    } else if (packed->index != glStencilFunc_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glStencilFunc_INDEX); \
-        if (! packed) { \
-            mock_errorf("glStencilFunc missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glStencilFunc:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glStencilFunc_PACKED *packed = mock_expect(glStencilFunc); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5711,27 +3154,7 @@ static int failed_test = 0;
     mock_push(pack_glStencilMask(NULL, mask)); \
 }
 #define test_glStencilMask(_mask) { \
-    glStencilMask_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glStencilMask missing (no calls left)\n"); \
-    } else if (packed->index != glStencilMask_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glStencilMask_INDEX); \
-        if (! packed) { \
-            mock_errorf("glStencilMask missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glStencilMask:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glStencilMask_PACKED *packed = mock_expect(glStencilMask); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5749,27 +3172,7 @@ static int failed_test = 0;
     mock_push(pack_glStencilOp(NULL, fail, zfail, zpass)); \
 }
 #define test_glStencilOp(_fail, _zfail, _zpass) { \
-    glStencilOp_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glStencilOp missing (no calls left)\n"); \
-    } else if (packed->index != glStencilOp_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glStencilOp_INDEX); \
-        if (! packed) { \
-            mock_errorf("glStencilOp missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glStencilOp:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glStencilOp_PACKED *packed = mock_expect(glStencilOp); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5793,27 +3196,7 @@ static int failed_test = 0;
     mock_push(pack_glTexCoordPointer(NULL, size, type, stride, pointer)); \
 }
 #define test_glTexCoordPointer(_size, _type, _stride, _pointer) { \
-    glTexCoordPointer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexCoordPointer missing (no calls left)\n"); \
-    } else if (packed->index != glTexCoordPointer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexCoordPointer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexCoordPointer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexCoordPointer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexCoordPointer_PACKED *packed = mock_expect(glTexCoordPointer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5844,27 +3227,7 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvf(NULL, target, pname, param)); \
 }
 #define test_glTexEnvf(_target, _pname, _param) { \
-    glTexEnvf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexEnvf missing (no calls left)\n"); \
-    } else if (packed->index != glTexEnvf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexEnvf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexEnvf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexEnvf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexEnvf_PACKED *packed = mock_expect(glTexEnvf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5888,27 +3251,7 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvfv(NULL, target, pname, params)); \
 }
 #define test_glTexEnvfv(_target, _pname, _params) { \
-    glTexEnvfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexEnvfv missing (no calls left)\n"); \
-    } else if (packed->index != glTexEnvfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexEnvfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexEnvfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexEnvfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexEnvfv_PACKED *packed = mock_expect(glTexEnvfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5936,27 +3279,7 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvi(NULL, target, pname, param)); \
 }
 #define test_glTexEnvi(_target, _pname, _param) { \
-    glTexEnvi_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexEnvi missing (no calls left)\n"); \
-    } else if (packed->index != glTexEnvi_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexEnvi_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexEnvi missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexEnvi:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexEnvi_PACKED *packed = mock_expect(glTexEnvi); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -5980,27 +3303,7 @@ static int failed_test = 0;
     mock_push(pack_glTexEnviv(NULL, target, pname, params)); \
 }
 #define test_glTexEnviv(_target, _pname, _params) { \
-    glTexEnviv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexEnviv missing (no calls left)\n"); \
-    } else if (packed->index != glTexEnviv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexEnviv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexEnviv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexEnviv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexEnviv_PACKED *packed = mock_expect(glTexEnviv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6028,27 +3331,7 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvx(NULL, target, pname, param)); \
 }
 #define test_glTexEnvx(_target, _pname, _param) { \
-    glTexEnvx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexEnvx missing (no calls left)\n"); \
-    } else if (packed->index != glTexEnvx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexEnvx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexEnvx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexEnvx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexEnvx_PACKED *packed = mock_expect(glTexEnvx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6072,27 +3355,7 @@ static int failed_test = 0;
     mock_push(pack_glTexEnvxv(NULL, target, pname, params)); \
 }
 #define test_glTexEnvxv(_target, _pname, _params) { \
-    glTexEnvxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexEnvxv missing (no calls left)\n"); \
-    } else if (packed->index != glTexEnvxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexEnvxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexEnvxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexEnvxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexEnvxv_PACKED *packed = mock_expect(glTexEnvxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6120,27 +3383,7 @@ static int failed_test = 0;
     mock_push(pack_glTexImage2D(NULL, target, level, internalformat, width, height, border, format, type, pixels)); \
 }
 #define test_glTexImage2D(_target, _level, _internalformat, _width, _height, _border, _format, _type, _pixels) { \
-    glTexImage2D_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexImage2D missing (no calls left)\n"); \
-    } else if (packed->index != glTexImage2D_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexImage2D_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexImage2D missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexImage2D:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexImage2D_PACKED *packed = mock_expect(glTexImage2D); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6186,27 +3429,7 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterf(NULL, target, pname, param)); \
 }
 #define test_glTexParameterf(_target, _pname, _param) { \
-    glTexParameterf_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexParameterf missing (no calls left)\n"); \
-    } else if (packed->index != glTexParameterf_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexParameterf_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexParameterf missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexParameterf:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexParameterf_PACKED *packed = mock_expect(glTexParameterf); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6230,27 +3453,7 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterfv(NULL, target, pname, params)); \
 }
 #define test_glTexParameterfv(_target, _pname, _params) { \
-    glTexParameterfv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexParameterfv missing (no calls left)\n"); \
-    } else if (packed->index != glTexParameterfv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexParameterfv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexParameterfv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexParameterfv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexParameterfv_PACKED *packed = mock_expect(glTexParameterfv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6278,27 +3481,7 @@ static int failed_test = 0;
     mock_push(pack_glTexParameteri(NULL, target, pname, param)); \
 }
 #define test_glTexParameteri(_target, _pname, _param) { \
-    glTexParameteri_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexParameteri missing (no calls left)\n"); \
-    } else if (packed->index != glTexParameteri_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexParameteri_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexParameteri missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexParameteri:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexParameteri_PACKED *packed = mock_expect(glTexParameteri); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6322,27 +3505,7 @@ static int failed_test = 0;
     mock_push(pack_glTexParameteriv(NULL, target, pname, params)); \
 }
 #define test_glTexParameteriv(_target, _pname, _params) { \
-    glTexParameteriv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexParameteriv missing (no calls left)\n"); \
-    } else if (packed->index != glTexParameteriv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexParameteriv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexParameteriv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexParameteriv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexParameteriv_PACKED *packed = mock_expect(glTexParameteriv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6370,27 +3533,7 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterx(NULL, target, pname, param)); \
 }
 #define test_glTexParameterx(_target, _pname, _param) { \
-    glTexParameterx_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexParameterx missing (no calls left)\n"); \
-    } else if (packed->index != glTexParameterx_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexParameterx_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexParameterx missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexParameterx:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexParameterx_PACKED *packed = mock_expect(glTexParameterx); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6414,27 +3557,7 @@ static int failed_test = 0;
     mock_push(pack_glTexParameterxv(NULL, target, pname, params)); \
 }
 #define test_glTexParameterxv(_target, _pname, _params) { \
-    glTexParameterxv_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexParameterxv missing (no calls left)\n"); \
-    } else if (packed->index != glTexParameterxv_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexParameterxv_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexParameterxv missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexParameterxv:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexParameterxv_PACKED *packed = mock_expect(glTexParameterxv); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6462,27 +3585,7 @@ static int failed_test = 0;
     mock_push(pack_glTexSubImage2D(NULL, target, level, xoffset, yoffset, width, height, format, type, pixels)); \
 }
 #define test_glTexSubImage2D(_target, _level, _xoffset, _yoffset, _width, _height, _format, _type, _pixels) { \
-    glTexSubImage2D_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTexSubImage2D missing (no calls left)\n"); \
-    } else if (packed->index != glTexSubImage2D_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTexSubImage2D_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTexSubImage2D missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTexSubImage2D:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTexSubImage2D_PACKED *packed = mock_expect(glTexSubImage2D); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6528,27 +3631,7 @@ static int failed_test = 0;
     mock_push(pack_glTranslatef(NULL, x, y, z)); \
 }
 #define test_glTranslatef(_x, _y, _z) { \
-    glTranslatef_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTranslatef missing (no calls left)\n"); \
-    } else if (packed->index != glTranslatef_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTranslatef_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTranslatef missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTranslatef:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTranslatef_PACKED *packed = mock_expect(glTranslatef); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6572,27 +3655,7 @@ static int failed_test = 0;
     mock_push(pack_glTranslatex(NULL, x, y, z)); \
 }
 #define test_glTranslatex(_x, _y, _z) { \
-    glTranslatex_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glTranslatex missing (no calls left)\n"); \
-    } else if (packed->index != glTranslatex_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glTranslatex_INDEX); \
-        if (! packed) { \
-            mock_errorf("glTranslatex missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glTranslatex:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glTranslatex_PACKED *packed = mock_expect(glTranslatex); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6616,27 +3679,7 @@ static int failed_test = 0;
     mock_push(pack_glVertexPointer(NULL, size, type, stride, pointer)); \
 }
 #define test_glVertexPointer(_size, _type, _stride, _pointer) { \
-    glVertexPointer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glVertexPointer missing (no calls left)\n"); \
-    } else if (packed->index != glVertexPointer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glVertexPointer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glVertexPointer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glVertexPointer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glVertexPointer_PACKED *packed = mock_expect(glVertexPointer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6667,27 +3710,7 @@ static int failed_test = 0;
     mock_push(pack_glViewport(NULL, x, y, width, height)); \
 }
 #define test_glViewport(_x, _y, _width, _height) { \
-    glViewport_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glViewport missing (no calls left)\n"); \
-    } else if (packed->index != glViewport_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glViewport_INDEX); \
-        if (! packed) { \
-            mock_errorf("glViewport missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glViewport:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glViewport_PACKED *packed = mock_expect(glViewport); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6714,27 +3737,7 @@ static int failed_test = 0;
     mock_push(pack_glXAssociateDMPbufferSGIX(NULL, dpy, pbuffer, params, dmbuffer)); \
 }
 #define test_glXAssociateDMPbufferSGIX(_dpy, _pbuffer, _params, _dmbuffer) { \
-    glXAssociateDMPbufferSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXAssociateDMPbufferSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXAssociateDMPbufferSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXAssociateDMPbufferSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXAssociateDMPbufferSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXAssociateDMPbufferSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXAssociateDMPbufferSGIX_PACKED *packed = mock_expect(glXAssociateDMPbufferSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6769,27 +3772,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindChannelToWindowSGIX(NULL, display, screen, channel, window)); \
 }
 #define test_glXBindChannelToWindowSGIX(_display, _screen, _channel, _window) { \
-    glXBindChannelToWindowSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindChannelToWindowSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXBindChannelToWindowSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindChannelToWindowSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindChannelToWindowSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindChannelToWindowSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindChannelToWindowSGIX_PACKED *packed = mock_expect(glXBindChannelToWindowSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6820,27 +3803,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindHyperpipeSGIX(NULL, dpy, hpId)); \
 }
 #define test_glXBindHyperpipeSGIX(_dpy, _hpId) { \
-    glXBindHyperpipeSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindHyperpipeSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXBindHyperpipeSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindHyperpipeSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindHyperpipeSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindHyperpipeSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindHyperpipeSGIX_PACKED *packed = mock_expect(glXBindHyperpipeSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6865,27 +3828,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindSwapBarrierNV(NULL, dpy, group, barrier)); \
 }
 #define test_glXBindSwapBarrierNV(_dpy, _group, _barrier) { \
-    glXBindSwapBarrierNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindSwapBarrierNV missing (no calls left)\n"); \
-    } else if (packed->index != glXBindSwapBarrierNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindSwapBarrierNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindSwapBarrierNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindSwapBarrierNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindSwapBarrierNV_PACKED *packed = mock_expect(glXBindSwapBarrierNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6913,27 +3856,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindSwapBarrierSGIX(NULL, dpy, drawable, barrier)); \
 }
 #define test_glXBindSwapBarrierSGIX(_dpy, _drawable, _barrier) { \
-    glXBindSwapBarrierSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindSwapBarrierSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXBindSwapBarrierSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindSwapBarrierSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindSwapBarrierSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindSwapBarrierSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindSwapBarrierSGIX_PACKED *packed = mock_expect(glXBindSwapBarrierSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -6961,27 +3884,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindTexImageEXT(NULL, dpy, drawable, buffer, attrib_list)); \
 }
 #define test_glXBindTexImageEXT(_dpy, _drawable, _buffer, _attrib_list) { \
-    glXBindTexImageEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindTexImageEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXBindTexImageEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindTexImageEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindTexImageEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindTexImageEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindTexImageEXT_PACKED *packed = mock_expect(glXBindTexImageEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7016,27 +3919,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindVideoCaptureDeviceNV(NULL, dpy, video_capture_slot, device)); \
 }
 #define test_glXBindVideoCaptureDeviceNV(_dpy, _video_capture_slot, _device) { \
-    glXBindVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindVideoCaptureDeviceNV missing (no calls left)\n"); \
-    } else if (packed->index != glXBindVideoCaptureDeviceNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindVideoCaptureDeviceNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindVideoCaptureDeviceNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindVideoCaptureDeviceNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindVideoCaptureDeviceNV_PACKED *packed = mock_expect(glXBindVideoCaptureDeviceNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7064,27 +3947,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindVideoDeviceNV(NULL, dpy, video_slot, video_device, attrib_list)); \
 }
 #define test_glXBindVideoDeviceNV(_dpy, _video_slot, _video_device, _attrib_list) { \
-    glXBindVideoDeviceNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindVideoDeviceNV missing (no calls left)\n"); \
-    } else if (packed->index != glXBindVideoDeviceNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindVideoDeviceNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindVideoDeviceNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindVideoDeviceNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindVideoDeviceNV_PACKED *packed = mock_expect(glXBindVideoDeviceNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7119,27 +3982,7 @@ static int failed_test = 0;
     mock_push(pack_glXBindVideoImageNV(NULL, dpy, VideoDevice, pbuf, iVideoBuffer)); \
 }
 #define test_glXBindVideoImageNV(_dpy, _VideoDevice, _pbuf, _iVideoBuffer) { \
-    glXBindVideoImageNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXBindVideoImageNV missing (no calls left)\n"); \
-    } else if (packed->index != glXBindVideoImageNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXBindVideoImageNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXBindVideoImageNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXBindVideoImageNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXBindVideoImageNV_PACKED *packed = mock_expect(glXBindVideoImageNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7170,27 +4013,7 @@ static int failed_test = 0;
     mock_push(pack_glXChangeDrawableAttributes(NULL, drawable)); \
 }
 #define test_glXChangeDrawableAttributes(_drawable) { \
-    glXChangeDrawableAttributes_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXChangeDrawableAttributes missing (no calls left)\n"); \
-    } else if (packed->index != glXChangeDrawableAttributes_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXChangeDrawableAttributes_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXChangeDrawableAttributes missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXChangeDrawableAttributes:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXChangeDrawableAttributes_PACKED *packed = mock_expect(glXChangeDrawableAttributes); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7208,27 +4031,7 @@ static int failed_test = 0;
     mock_push(pack_glXChangeDrawableAttributesSGIX(NULL, drawable)); \
 }
 #define test_glXChangeDrawableAttributesSGIX(_drawable) { \
-    glXChangeDrawableAttributesSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXChangeDrawableAttributesSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXChangeDrawableAttributesSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXChangeDrawableAttributesSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXChangeDrawableAttributesSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXChangeDrawableAttributesSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXChangeDrawableAttributesSGIX_PACKED *packed = mock_expect(glXChangeDrawableAttributesSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7246,27 +4049,7 @@ static int failed_test = 0;
     mock_push(pack_glXChannelRectSGIX(NULL, display, screen, channel, x, y, w, h)); \
 }
 #define test_glXChannelRectSGIX(_display, _screen, _channel, _x, _y, _w, _h) { \
-    glXChannelRectSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXChannelRectSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXChannelRectSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXChannelRectSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXChannelRectSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXChannelRectSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXChannelRectSGIX_PACKED *packed = mock_expect(glXChannelRectSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7306,27 +4089,7 @@ static int failed_test = 0;
     mock_push(pack_glXChannelRectSyncSGIX(NULL, display, screen, channel, synctype)); \
 }
 #define test_glXChannelRectSyncSGIX(_display, _screen, _channel, _synctype) { \
-    glXChannelRectSyncSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXChannelRectSyncSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXChannelRectSyncSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXChannelRectSyncSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXChannelRectSyncSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXChannelRectSyncSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXChannelRectSyncSGIX_PACKED *packed = mock_expect(glXChannelRectSyncSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7357,27 +4120,7 @@ static int failed_test = 0;
     mock_push(pack_glXChooseFBConfig(NULL, dpy, screen, attrib_list, nelements)); \
 }
 #define test_glXChooseFBConfig(_dpy, _screen, _attrib_list, _nelements) { \
-    glXChooseFBConfig_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXChooseFBConfig missing (no calls left)\n"); \
-    } else if (packed->index != glXChooseFBConfig_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXChooseFBConfig_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXChooseFBConfig missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXChooseFBConfig:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXChooseFBConfig_PACKED *packed = mock_expect(glXChooseFBConfig); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7416,27 +4159,7 @@ static int failed_test = 0;
     mock_push(pack_glXChooseFBConfigSGIX(NULL, dpy, screen, attrib_list, nelements)); \
 }
 #define test_glXChooseFBConfigSGIX(_dpy, _screen, _attrib_list, _nelements) { \
-    glXChooseFBConfigSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXChooseFBConfigSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXChooseFBConfigSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXChooseFBConfigSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXChooseFBConfigSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXChooseFBConfigSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXChooseFBConfigSGIX_PACKED *packed = mock_expect(glXChooseFBConfigSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7475,27 +4198,7 @@ static int failed_test = 0;
     mock_push(pack_glXChooseVisual(NULL, dpy, screen, attribList)); \
 }
 #define test_glXChooseVisual(_dpy, _screen, _attribList) { \
-    glXChooseVisual_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXChooseVisual missing (no calls left)\n"); \
-    } else if (packed->index != glXChooseVisual_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXChooseVisual_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXChooseVisual missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXChooseVisual:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXChooseVisual_PACKED *packed = mock_expect(glXChooseVisual); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7527,27 +4230,7 @@ static int failed_test = 0;
     mock_push(pack_glXClientInfo(NULL)); \
 }
 #define test_glXClientInfo() { \
-    glXClientInfo_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXClientInfo missing (no calls left)\n"); \
-    } else if (packed->index != glXClientInfo_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXClientInfo_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXClientInfo missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXClientInfo:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXClientInfo_PACKED *packed = mock_expect(glXClientInfo); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7562,27 +4245,7 @@ static int failed_test = 0;
     mock_push(pack_glXCopyContext(NULL, dpy, src, dst, mask)); \
 }
 #define test_glXCopyContext(_dpy, _src, _dst, _mask) { \
-    glXCopyContext_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCopyContext missing (no calls left)\n"); \
-    } else if (packed->index != glXCopyContext_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCopyContext_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCopyContext missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCopyContext:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCopyContext_PACKED *packed = mock_expect(glXCopyContext); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7613,27 +4276,7 @@ static int failed_test = 0;
     mock_push(pack_glXCopyImageSubDataNV(NULL, dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth)); \
 }
 #define test_glXCopyImageSubDataNV(_dpy, _srcCtx, _srcName, _srcTarget, _srcLevel, _srcX, _srcY, _srcZ, _dstCtx, _dstName, _dstTarget, _dstLevel, _dstX, _dstY, _dstZ, _width, _height, _depth) { \
-    glXCopyImageSubDataNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCopyImageSubDataNV missing (no calls left)\n"); \
-    } else if (packed->index != glXCopyImageSubDataNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCopyImageSubDataNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCopyImageSubDataNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCopyImageSubDataNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCopyImageSubDataNV_PACKED *packed = mock_expect(glXCopyImageSubDataNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7706,27 +4349,7 @@ static int failed_test = 0;
     mock_push(pack_glXCopySubBufferMESA(NULL, dpy, drawable, x, y, width, height)); \
 }
 #define test_glXCopySubBufferMESA(_dpy, _drawable, _x, _y, _width, _height) { \
-    glXCopySubBufferMESA_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCopySubBufferMESA missing (no calls left)\n"); \
-    } else if (packed->index != glXCopySubBufferMESA_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCopySubBufferMESA_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCopySubBufferMESA missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCopySubBufferMESA:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCopySubBufferMESA_PACKED *packed = mock_expect(glXCopySubBufferMESA); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7763,27 +4386,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateContext(NULL, dpy, vis, shareList, direct)); \
 }
 #define test_glXCreateContext(_dpy, _vis, _shareList, _direct) { \
-    glXCreateContext_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateContext missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateContext_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateContext_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateContext missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateContext:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateContext_PACKED *packed = mock_expect(glXCreateContext); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7818,27 +4421,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateContextAttribsARB(NULL, dpy, config, share_context, direct, attrib_list)); \
 }
 #define test_glXCreateContextAttribsARB(_dpy, _config, _share_context, _direct, _attrib_list) { \
-    glXCreateContextAttribsARB_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateContextAttribsARB missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateContextAttribsARB_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateContextAttribsARB_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateContextAttribsARB missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateContextAttribsARB:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateContextAttribsARB_PACKED *packed = mock_expect(glXCreateContextAttribsARB); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7876,27 +4459,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateContextWithConfigSGIX(NULL, dpy, config, render_type, share_list, direct)); \
 }
 #define test_glXCreateContextWithConfigSGIX(_dpy, _config, _render_type, _share_list, _direct) { \
-    glXCreateContextWithConfigSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateContextWithConfigSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateContextWithConfigSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateContextWithConfigSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateContextWithConfigSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateContextWithConfigSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateContextWithConfigSGIX_PACKED *packed = mock_expect(glXCreateContextWithConfigSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7930,27 +4493,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateGLXPbufferSGIX(NULL, dpy, config, width, height, attrib_list)); \
 }
 #define test_glXCreateGLXPbufferSGIX(_dpy, _config, _width, _height, _attrib_list) { \
-    glXCreateGLXPbufferSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateGLXPbufferSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateGLXPbufferSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateGLXPbufferSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateGLXPbufferSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateGLXPbufferSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateGLXPbufferSGIX_PACKED *packed = mock_expect(glXCreateGLXPbufferSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -7988,27 +4531,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateGLXPixmap(NULL, dpy, visual, pixmap)); \
 }
 #define test_glXCreateGLXPixmap(_dpy, _visual, _pixmap) { \
-    glXCreateGLXPixmap_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateGLXPixmap missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateGLXPixmap_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateGLXPixmap_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateGLXPixmap missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateGLXPixmap:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateGLXPixmap_PACKED *packed = mock_expect(glXCreateGLXPixmap); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8040,27 +4563,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateGLXPixmapMESA(NULL, dpy, visual, pixmap, cmap)); \
 }
 #define test_glXCreateGLXPixmapMESA(_dpy, _visual, _pixmap, _cmap) { \
-    glXCreateGLXPixmapMESA_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateGLXPixmapMESA missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateGLXPixmapMESA_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateGLXPixmapMESA_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateGLXPixmapMESA missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateGLXPixmapMESA:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateGLXPixmapMESA_PACKED *packed = mock_expect(glXCreateGLXPixmapMESA); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8095,27 +4598,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateGLXPixmapWithConfigSGIX(NULL, dpy, config, pixmap)); \
 }
 #define test_glXCreateGLXPixmapWithConfigSGIX(_dpy, _config, _pixmap) { \
-    glXCreateGLXPixmapWithConfigSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateGLXPixmapWithConfigSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateGLXPixmapWithConfigSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateGLXPixmapWithConfigSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateGLXPixmapWithConfigSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateGLXPixmapWithConfigSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateGLXPixmapWithConfigSGIX_PACKED *packed = mock_expect(glXCreateGLXPixmapWithConfigSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8143,27 +4626,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateGLXVideoSourceSGIX(NULL, display, screen, server, path, nodeClass, drainNode)); \
 }
 #define test_glXCreateGLXVideoSourceSGIX(_display, _screen, _server, _path, _nodeClass, _drainNode) { \
-    glXCreateGLXVideoSourceSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateGLXVideoSourceSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateGLXVideoSourceSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateGLXVideoSourceSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateGLXVideoSourceSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateGLXVideoSourceSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateGLXVideoSourceSGIX_PACKED *packed = mock_expect(glXCreateGLXVideoSourceSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8200,27 +4663,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateNewContext(NULL, dpy, config, render_type, share_list, direct)); \
 }
 #define test_glXCreateNewContext(_dpy, _config, _render_type, _share_list, _direct) { \
-    glXCreateNewContext_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateNewContext missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateNewContext_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateNewContext_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateNewContext missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateNewContext:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateNewContext_PACKED *packed = mock_expect(glXCreateNewContext); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8254,27 +4697,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreatePbuffer(NULL, dpy, config, attrib_list)); \
 }
 #define test_glXCreatePbuffer(_dpy, _config, _attrib_list) { \
-    glXCreatePbuffer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreatePbuffer missing (no calls left)\n"); \
-    } else if (packed->index != glXCreatePbuffer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreatePbuffer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreatePbuffer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreatePbuffer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreatePbuffer_PACKED *packed = mock_expect(glXCreatePbuffer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8306,27 +4729,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreatePixmap(NULL, dpy, config, pixmap, attrib_list)); \
 }
 #define test_glXCreatePixmap(_dpy, _config, _pixmap, _attrib_list) { \
-    glXCreatePixmap_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreatePixmap missing (no calls left)\n"); \
-    } else if (packed->index != glXCreatePixmap_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreatePixmap_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreatePixmap missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreatePixmap:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreatePixmap_PACKED *packed = mock_expect(glXCreatePixmap); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8361,27 +4764,7 @@ static int failed_test = 0;
     mock_push(pack_glXCreateWindow(NULL, dpy, config, win, attrib_list)); \
 }
 #define test_glXCreateWindow(_dpy, _config, _win, _attrib_list) { \
-    glXCreateWindow_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCreateWindow missing (no calls left)\n"); \
-    } else if (packed->index != glXCreateWindow_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCreateWindow_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCreateWindow missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCreateWindow:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCreateWindow_PACKED *packed = mock_expect(glXCreateWindow); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8416,27 +4799,7 @@ static int failed_test = 0;
     mock_push(pack_glXCushionSGI(NULL, dpy, window, cushion)); \
 }
 #define test_glXCushionSGI(_dpy, _window, _cushion) { \
-    glXCushionSGI_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXCushionSGI missing (no calls left)\n"); \
-    } else if (packed->index != glXCushionSGI_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXCushionSGI_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXCushionSGI missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXCushionSGI:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXCushionSGI_PACKED *packed = mock_expect(glXCushionSGI); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8464,27 +4827,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyContext(NULL, dpy, ctx)); \
 }
 #define test_glXDestroyContext(_dpy, _ctx) { \
-    glXDestroyContext_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyContext missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyContext_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyContext_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyContext missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyContext:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyContext_PACKED *packed = mock_expect(glXDestroyContext); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8509,27 +4852,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyGLXPbufferSGIX(NULL, dpy, pbuf)); \
 }
 #define test_glXDestroyGLXPbufferSGIX(_dpy, _pbuf) { \
-    glXDestroyGLXPbufferSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyGLXPbufferSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyGLXPbufferSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyGLXPbufferSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyGLXPbufferSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyGLXPbufferSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyGLXPbufferSGIX_PACKED *packed = mock_expect(glXDestroyGLXPbufferSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8554,27 +4877,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyGLXPixmap(NULL, dpy, pixmap)); \
 }
 #define test_glXDestroyGLXPixmap(_dpy, _pixmap) { \
-    glXDestroyGLXPixmap_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyGLXPixmap missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyGLXPixmap_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyGLXPixmap_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyGLXPixmap missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyGLXPixmap:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyGLXPixmap_PACKED *packed = mock_expect(glXDestroyGLXPixmap); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8599,27 +4902,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyGLXVideoSourceSGIX(NULL, dpy, glxvideosource)); \
 }
 #define test_glXDestroyGLXVideoSourceSGIX(_dpy, _glxvideosource) { \
-    glXDestroyGLXVideoSourceSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyGLXVideoSourceSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyGLXVideoSourceSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyGLXVideoSourceSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyGLXVideoSourceSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyGLXVideoSourceSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyGLXVideoSourceSGIX_PACKED *packed = mock_expect(glXDestroyGLXVideoSourceSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8644,27 +4927,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyHyperpipeConfigSGIX(NULL, dpy, hpId)); \
 }
 #define test_glXDestroyHyperpipeConfigSGIX(_dpy, _hpId) { \
-    glXDestroyHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyHyperpipeConfigSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyHyperpipeConfigSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyHyperpipeConfigSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyHyperpipeConfigSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyHyperpipeConfigSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyHyperpipeConfigSGIX_PACKED *packed = mock_expect(glXDestroyHyperpipeConfigSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8689,27 +4952,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyPbuffer(NULL, dpy, pbuf)); \
 }
 #define test_glXDestroyPbuffer(_dpy, _pbuf) { \
-    glXDestroyPbuffer_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyPbuffer missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyPbuffer_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyPbuffer_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyPbuffer missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyPbuffer:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyPbuffer_PACKED *packed = mock_expect(glXDestroyPbuffer); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8734,27 +4977,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyPixmap(NULL, dpy, pixmap)); \
 }
 #define test_glXDestroyPixmap(_dpy, _pixmap) { \
-    glXDestroyPixmap_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyPixmap missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyPixmap_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyPixmap_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyPixmap missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyPixmap:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyPixmap_PACKED *packed = mock_expect(glXDestroyPixmap); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8779,27 +5002,7 @@ static int failed_test = 0;
     mock_push(pack_glXDestroyWindow(NULL, dpy, win)); \
 }
 #define test_glXDestroyWindow(_dpy, _win) { \
-    glXDestroyWindow_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXDestroyWindow missing (no calls left)\n"); \
-    } else if (packed->index != glXDestroyWindow_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXDestroyWindow_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXDestroyWindow missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXDestroyWindow:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXDestroyWindow_PACKED *packed = mock_expect(glXDestroyWindow); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8824,27 +5027,7 @@ static int failed_test = 0;
     mock_push(pack_glXEnumerateVideoCaptureDevicesNV(NULL, dpy, screen, nelements)); \
 }
 #define test_glXEnumerateVideoCaptureDevicesNV(_dpy, _screen, _nelements) { \
-    glXEnumerateVideoCaptureDevicesNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXEnumerateVideoCaptureDevicesNV missing (no calls left)\n"); \
-    } else if (packed->index != glXEnumerateVideoCaptureDevicesNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXEnumerateVideoCaptureDevicesNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXEnumerateVideoCaptureDevicesNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXEnumerateVideoCaptureDevicesNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXEnumerateVideoCaptureDevicesNV_PACKED *packed = mock_expect(glXEnumerateVideoCaptureDevicesNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8876,27 +5059,7 @@ static int failed_test = 0;
     mock_push(pack_glXEnumerateVideoDevicesNV(NULL, dpy, screen, nelements)); \
 }
 #define test_glXEnumerateVideoDevicesNV(_dpy, _screen, _nelements) { \
-    glXEnumerateVideoDevicesNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXEnumerateVideoDevicesNV missing (no calls left)\n"); \
-    } else if (packed->index != glXEnumerateVideoDevicesNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXEnumerateVideoDevicesNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXEnumerateVideoDevicesNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXEnumerateVideoDevicesNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXEnumerateVideoDevicesNV_PACKED *packed = mock_expect(glXEnumerateVideoDevicesNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8928,27 +5091,7 @@ static int failed_test = 0;
     mock_push(pack_glXFreeContextEXT(NULL, dpy, context)); \
 }
 #define test_glXFreeContextEXT(_dpy, _context) { \
-    glXFreeContextEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXFreeContextEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXFreeContextEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXFreeContextEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXFreeContextEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXFreeContextEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXFreeContextEXT_PACKED *packed = mock_expect(glXFreeContextEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -8973,27 +5116,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetAGPOffsetMESA(NULL, pointer)); \
 }
 #define test_glXGetAGPOffsetMESA(_pointer) { \
-    glXGetAGPOffsetMESA_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetAGPOffsetMESA missing (no calls left)\n"); \
-    } else if (packed->index != glXGetAGPOffsetMESA_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetAGPOffsetMESA_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetAGPOffsetMESA missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetAGPOffsetMESA:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetAGPOffsetMESA_PACKED *packed = mock_expect(glXGetAGPOffsetMESA); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9015,27 +5138,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetClientString(NULL, display, name)); \
 }
 #define test_glXGetClientString(_display, _name) { \
-    glXGetClientString_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetClientString missing (no calls left)\n"); \
-    } else if (packed->index != glXGetClientString_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetClientString_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetClientString missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetClientString:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetClientString_PACKED *packed = mock_expect(glXGetClientString); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9060,27 +5163,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetConfig(NULL, display, visual, attribute, value)); \
 }
 #define test_glXGetConfig(_display, _visual, _attribute, _value) { \
-    glXGetConfig_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetConfig missing (no calls left)\n"); \
-    } else if (packed->index != glXGetConfig_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetConfig_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetConfig missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetConfig:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetConfig_PACKED *packed = mock_expect(glXGetConfig); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9119,27 +5202,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetContextIDEXT(NULL, context)); \
 }
 #define test_glXGetContextIDEXT(_context) { \
-    glXGetContextIDEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetContextIDEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXGetContextIDEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetContextIDEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetContextIDEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetContextIDEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetContextIDEXT_PACKED *packed = mock_expect(glXGetContextIDEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9157,27 +5220,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetCurrentContext(NULL)); \
 }
 #define test_glXGetCurrentContext() { \
-    glXGetCurrentContext_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetCurrentContext missing (no calls left)\n"); \
-    } else if (packed->index != glXGetCurrentContext_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetCurrentContext_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetCurrentContext missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetCurrentContext:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetCurrentContext_PACKED *packed = mock_expect(glXGetCurrentContext); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9192,27 +5235,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetCurrentDisplay(NULL)); \
 }
 #define test_glXGetCurrentDisplay() { \
-    glXGetCurrentDisplay_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetCurrentDisplay missing (no calls left)\n"); \
-    } else if (packed->index != glXGetCurrentDisplay_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetCurrentDisplay_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetCurrentDisplay missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetCurrentDisplay:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetCurrentDisplay_PACKED *packed = mock_expect(glXGetCurrentDisplay); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9227,27 +5250,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetCurrentDisplayEXT(NULL)); \
 }
 #define test_glXGetCurrentDisplayEXT() { \
-    glXGetCurrentDisplayEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetCurrentDisplayEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXGetCurrentDisplayEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetCurrentDisplayEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetCurrentDisplayEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetCurrentDisplayEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetCurrentDisplayEXT_PACKED *packed = mock_expect(glXGetCurrentDisplayEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9262,27 +5265,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetCurrentDrawable(NULL)); \
 }
 #define test_glXGetCurrentDrawable() { \
-    glXGetCurrentDrawable_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetCurrentDrawable missing (no calls left)\n"); \
-    } else if (packed->index != glXGetCurrentDrawable_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetCurrentDrawable_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetCurrentDrawable missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetCurrentDrawable:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetCurrentDrawable_PACKED *packed = mock_expect(glXGetCurrentDrawable); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9297,27 +5280,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetCurrentReadDrawable(NULL)); \
 }
 #define test_glXGetCurrentReadDrawable() { \
-    glXGetCurrentReadDrawable_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetCurrentReadDrawable missing (no calls left)\n"); \
-    } else if (packed->index != glXGetCurrentReadDrawable_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetCurrentReadDrawable_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetCurrentReadDrawable missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetCurrentReadDrawable:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetCurrentReadDrawable_PACKED *packed = mock_expect(glXGetCurrentReadDrawable); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9332,27 +5295,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetCurrentReadDrawableSGI(NULL)); \
 }
 #define test_glXGetCurrentReadDrawableSGI() { \
-    glXGetCurrentReadDrawableSGI_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetCurrentReadDrawableSGI missing (no calls left)\n"); \
-    } else if (packed->index != glXGetCurrentReadDrawableSGI_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetCurrentReadDrawableSGI_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetCurrentReadDrawableSGI missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetCurrentReadDrawableSGI:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetCurrentReadDrawableSGI_PACKED *packed = mock_expect(glXGetCurrentReadDrawableSGI); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9367,27 +5310,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetDrawableAttributes(NULL, drawable)); \
 }
 #define test_glXGetDrawableAttributes(_drawable) { \
-    glXGetDrawableAttributes_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetDrawableAttributes missing (no calls left)\n"); \
-    } else if (packed->index != glXGetDrawableAttributes_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetDrawableAttributes_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetDrawableAttributes missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetDrawableAttributes:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetDrawableAttributes_PACKED *packed = mock_expect(glXGetDrawableAttributes); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9405,27 +5328,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetDrawableAttributesSGIX(NULL, drawable)); \
 }
 #define test_glXGetDrawableAttributesSGIX(_drawable) { \
-    glXGetDrawableAttributesSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetDrawableAttributesSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXGetDrawableAttributesSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetDrawableAttributesSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetDrawableAttributesSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetDrawableAttributesSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetDrawableAttributesSGIX_PACKED *packed = mock_expect(glXGetDrawableAttributesSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9443,27 +5346,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetFBConfigAttrib(NULL, dpy, config, attribute, value)); \
 }
 #define test_glXGetFBConfigAttrib(_dpy, _config, _attribute, _value) { \
-    glXGetFBConfigAttrib_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetFBConfigAttrib missing (no calls left)\n"); \
-    } else if (packed->index != glXGetFBConfigAttrib_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetFBConfigAttrib_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetFBConfigAttrib missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetFBConfigAttrib:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetFBConfigAttrib_PACKED *packed = mock_expect(glXGetFBConfigAttrib); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9498,27 +5381,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetFBConfigAttribSGIX(NULL, dpy, config, attribute, value)); \
 }
 #define test_glXGetFBConfigAttribSGIX(_dpy, _config, _attribute, _value) { \
-    glXGetFBConfigAttribSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetFBConfigAttribSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXGetFBConfigAttribSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetFBConfigAttribSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetFBConfigAttribSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetFBConfigAttribSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetFBConfigAttribSGIX_PACKED *packed = mock_expect(glXGetFBConfigAttribSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9553,27 +5416,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetFBConfigFromVisualSGIX(NULL, dpy, vis)); \
 }
 #define test_glXGetFBConfigFromVisualSGIX(_dpy, _vis) { \
-    glXGetFBConfigFromVisualSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetFBConfigFromVisualSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXGetFBConfigFromVisualSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetFBConfigFromVisualSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetFBConfigFromVisualSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetFBConfigFromVisualSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetFBConfigFromVisualSGIX_PACKED *packed = mock_expect(glXGetFBConfigFromVisualSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9602,27 +5445,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetFBConfigs(NULL, dpy, screen, nelements)); \
 }
 #define test_glXGetFBConfigs(_dpy, _screen, _nelements) { \
-    glXGetFBConfigs_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetFBConfigs missing (no calls left)\n"); \
-    } else if (packed->index != glXGetFBConfigs_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetFBConfigs_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetFBConfigs missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetFBConfigs:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetFBConfigs_PACKED *packed = mock_expect(glXGetFBConfigs); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9654,27 +5477,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetFBConfigsSGIX(NULL)); \
 }
 #define test_glXGetFBConfigsSGIX() { \
-    glXGetFBConfigsSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetFBConfigsSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXGetFBConfigsSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetFBConfigsSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetFBConfigsSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetFBConfigsSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetFBConfigsSGIX_PACKED *packed = mock_expect(glXGetFBConfigsSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9689,27 +5492,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetMscRateOML(NULL, dpy, drawable, numerator, denominator)); \
 }
 #define test_glXGetMscRateOML(_dpy, _drawable, _numerator, _denominator) { \
-    glXGetMscRateOML_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetMscRateOML missing (no calls left)\n"); \
-    } else if (packed->index != glXGetMscRateOML_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetMscRateOML_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetMscRateOML missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetMscRateOML:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetMscRateOML_PACKED *packed = mock_expect(glXGetMscRateOML); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9748,27 +5531,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetProcAddress(NULL, procName)); \
 }
 #define test_glXGetProcAddress(_procName) { \
-    glXGetProcAddress_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetProcAddress missing (no calls left)\n"); \
-    } else if (packed->index != glXGetProcAddress_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetProcAddress_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetProcAddress missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetProcAddress:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetProcAddress_PACKED *packed = mock_expect(glXGetProcAddress); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9790,27 +5553,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetProcAddressARB(NULL, procName)); \
 }
 #define test_glXGetProcAddressARB(_procName) { \
-    glXGetProcAddressARB_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetProcAddressARB missing (no calls left)\n"); \
-    } else if (packed->index != glXGetProcAddressARB_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetProcAddressARB_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetProcAddressARB missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetProcAddressARB:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetProcAddressARB_PACKED *packed = mock_expect(glXGetProcAddressARB); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9832,27 +5575,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetSelectedEvent(NULL, dpy, draw, event_mask)); \
 }
 #define test_glXGetSelectedEvent(_dpy, _draw, _event_mask) { \
-    glXGetSelectedEvent_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetSelectedEvent missing (no calls left)\n"); \
-    } else if (packed->index != glXGetSelectedEvent_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetSelectedEvent_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetSelectedEvent missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetSelectedEvent:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetSelectedEvent_PACKED *packed = mock_expect(glXGetSelectedEvent); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9884,27 +5607,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetSelectedEventSGIX(NULL, dpy, drawable, mask)); \
 }
 #define test_glXGetSelectedEventSGIX(_dpy, _drawable, _mask) { \
-    glXGetSelectedEventSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetSelectedEventSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXGetSelectedEventSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetSelectedEventSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetSelectedEventSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetSelectedEventSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetSelectedEventSGIX_PACKED *packed = mock_expect(glXGetSelectedEventSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -9936,27 +5639,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetSyncValuesOML(NULL, dpy, drawable, ust, msc, sbc)); \
 }
 #define test_glXGetSyncValuesOML(_dpy, _drawable, _ust, _msc, _sbc) { \
-    glXGetSyncValuesOML_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetSyncValuesOML missing (no calls left)\n"); \
-    } else if (packed->index != glXGetSyncValuesOML_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetSyncValuesOML_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetSyncValuesOML missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetSyncValuesOML:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetSyncValuesOML_PACKED *packed = mock_expect(glXGetSyncValuesOML); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10002,27 +5685,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetTransparentIndexSUN(NULL, dpy, overlay, underlay, pTransparentIndex)); \
 }
 #define test_glXGetTransparentIndexSUN(_dpy, _overlay, _underlay, _pTransparentIndex) { \
-    glXGetTransparentIndexSUN_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetTransparentIndexSUN missing (no calls left)\n"); \
-    } else if (packed->index != glXGetTransparentIndexSUN_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetTransparentIndexSUN_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetTransparentIndexSUN missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetTransparentIndexSUN:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetTransparentIndexSUN_PACKED *packed = mock_expect(glXGetTransparentIndexSUN); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10057,27 +5720,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetVideoDeviceNV(NULL, dpy, screen, numVideoDevices, pVideoDevice)); \
 }
 #define test_glXGetVideoDeviceNV(_dpy, _screen, _numVideoDevices, _pVideoDevice) { \
-    glXGetVideoDeviceNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetVideoDeviceNV missing (no calls left)\n"); \
-    } else if (packed->index != glXGetVideoDeviceNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetVideoDeviceNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetVideoDeviceNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetVideoDeviceNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetVideoDeviceNV_PACKED *packed = mock_expect(glXGetVideoDeviceNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10112,27 +5755,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetVideoInfoNV(NULL, dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo)); \
 }
 #define test_glXGetVideoInfoNV(_dpy, _screen, _VideoDevice, _pulCounterOutputPbuffer, _pulCounterOutputVideo) { \
-    glXGetVideoInfoNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetVideoInfoNV missing (no calls left)\n"); \
-    } else if (packed->index != glXGetVideoInfoNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetVideoInfoNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetVideoInfoNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetVideoInfoNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetVideoInfoNV_PACKED *packed = mock_expect(glXGetVideoInfoNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10174,27 +5797,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetVideoSyncSGI(NULL, count)); \
 }
 #define test_glXGetVideoSyncSGI(_count) { \
-    glXGetVideoSyncSGI_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetVideoSyncSGI missing (no calls left)\n"); \
-    } else if (packed->index != glXGetVideoSyncSGI_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetVideoSyncSGI_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetVideoSyncSGI missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetVideoSyncSGI:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetVideoSyncSGI_PACKED *packed = mock_expect(glXGetVideoSyncSGI); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10216,27 +5819,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetVisualConfigs(NULL)); \
 }
 #define test_glXGetVisualConfigs() { \
-    glXGetVisualConfigs_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetVisualConfigs missing (no calls left)\n"); \
-    } else if (packed->index != glXGetVisualConfigs_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetVisualConfigs_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetVisualConfigs missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetVisualConfigs:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetVisualConfigs_PACKED *packed = mock_expect(glXGetVisualConfigs); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10251,27 +5834,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetVisualFromFBConfig(NULL, dpy, config)); \
 }
 #define test_glXGetVisualFromFBConfig(_dpy, _config) { \
-    glXGetVisualFromFBConfig_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetVisualFromFBConfig missing (no calls left)\n"); \
-    } else if (packed->index != glXGetVisualFromFBConfig_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetVisualFromFBConfig_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetVisualFromFBConfig missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetVisualFromFBConfig:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetVisualFromFBConfig_PACKED *packed = mock_expect(glXGetVisualFromFBConfig); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10296,27 +5859,7 @@ static int failed_test = 0;
     mock_push(pack_glXGetVisualFromFBConfigSGIX(NULL, dpy, config)); \
 }
 #define test_glXGetVisualFromFBConfigSGIX(_dpy, _config) { \
-    glXGetVisualFromFBConfigSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXGetVisualFromFBConfigSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXGetVisualFromFBConfigSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXGetVisualFromFBConfigSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXGetVisualFromFBConfigSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXGetVisualFromFBConfigSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXGetVisualFromFBConfigSGIX_PACKED *packed = mock_expect(glXGetVisualFromFBConfigSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10341,27 +5884,7 @@ static int failed_test = 0;
     mock_push(pack_glXHyperpipeAttribSGIX(NULL, dpy, timeSlice, attrib, size, attribList)); \
 }
 #define test_glXHyperpipeAttribSGIX(_dpy, _timeSlice, _attrib, _size, _attribList) { \
-    glXHyperpipeAttribSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXHyperpipeAttribSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXHyperpipeAttribSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXHyperpipeAttribSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXHyperpipeAttribSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXHyperpipeAttribSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXHyperpipeAttribSGIX_PACKED *packed = mock_expect(glXHyperpipeAttribSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10399,27 +5922,7 @@ static int failed_test = 0;
     mock_push(pack_glXHyperpipeConfigSGIX(NULL, dpy, networkId, npipes, cfg, hpId)); \
 }
 #define test_glXHyperpipeConfigSGIX(_dpy, _networkId, _npipes, _cfg, _hpId) { \
-    glXHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXHyperpipeConfigSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXHyperpipeConfigSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXHyperpipeConfigSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXHyperpipeConfigSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXHyperpipeConfigSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXHyperpipeConfigSGIX_PACKED *packed = mock_expect(glXHyperpipeConfigSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10461,27 +5964,7 @@ static int failed_test = 0;
     mock_push(pack_glXImportContextEXT(NULL, dpy, contextID)); \
 }
 #define test_glXImportContextEXT(_dpy, _contextID) { \
-    glXImportContextEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXImportContextEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXImportContextEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXImportContextEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXImportContextEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXImportContextEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXImportContextEXT_PACKED *packed = mock_expect(glXImportContextEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10506,27 +5989,7 @@ static int failed_test = 0;
     mock_push(pack_glXIsDirect(NULL, dpy, ctx)); \
 }
 #define test_glXIsDirect(_dpy, _ctx) { \
-    glXIsDirect_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXIsDirect missing (no calls left)\n"); \
-    } else if (packed->index != glXIsDirect_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXIsDirect_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXIsDirect missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXIsDirect:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXIsDirect_PACKED *packed = mock_expect(glXIsDirect); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10551,27 +6014,7 @@ static int failed_test = 0;
     mock_push(pack_glXJoinSwapGroupNV(NULL, dpy, drawable, group)); \
 }
 #define test_glXJoinSwapGroupNV(_dpy, _drawable, _group) { \
-    glXJoinSwapGroupNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXJoinSwapGroupNV missing (no calls left)\n"); \
-    } else if (packed->index != glXJoinSwapGroupNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXJoinSwapGroupNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXJoinSwapGroupNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXJoinSwapGroupNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXJoinSwapGroupNV_PACKED *packed = mock_expect(glXJoinSwapGroupNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10599,27 +6042,7 @@ static int failed_test = 0;
     mock_push(pack_glXJoinSwapGroupSGIX(NULL, dpy, drawable, member)); \
 }
 #define test_glXJoinSwapGroupSGIX(_dpy, _drawable, _member) { \
-    glXJoinSwapGroupSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXJoinSwapGroupSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXJoinSwapGroupSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXJoinSwapGroupSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXJoinSwapGroupSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXJoinSwapGroupSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXJoinSwapGroupSGIX_PACKED *packed = mock_expect(glXJoinSwapGroupSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10647,27 +6070,7 @@ static int failed_test = 0;
     mock_push(pack_glXLockVideoCaptureDeviceNV(NULL, dpy, device)); \
 }
 #define test_glXLockVideoCaptureDeviceNV(_dpy, _device) { \
-    glXLockVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXLockVideoCaptureDeviceNV missing (no calls left)\n"); \
-    } else if (packed->index != glXLockVideoCaptureDeviceNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXLockVideoCaptureDeviceNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXLockVideoCaptureDeviceNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXLockVideoCaptureDeviceNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXLockVideoCaptureDeviceNV_PACKED *packed = mock_expect(glXLockVideoCaptureDeviceNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10692,27 +6095,7 @@ static int failed_test = 0;
     mock_push(pack_glXMakeContextCurrent(NULL, dpy, draw, read, ctx)); \
 }
 #define test_glXMakeContextCurrent(_dpy, _draw, _read, _ctx) { \
-    glXMakeContextCurrent_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXMakeContextCurrent missing (no calls left)\n"); \
-    } else if (packed->index != glXMakeContextCurrent_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXMakeContextCurrent_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXMakeContextCurrent missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXMakeContextCurrent:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXMakeContextCurrent_PACKED *packed = mock_expect(glXMakeContextCurrent); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10743,27 +6126,7 @@ static int failed_test = 0;
     mock_push(pack_glXMakeCurrent(NULL, dpy, drawable, ctx)); \
 }
 #define test_glXMakeCurrent(_dpy, _drawable, _ctx) { \
-    glXMakeCurrent_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXMakeCurrent missing (no calls left)\n"); \
-    } else if (packed->index != glXMakeCurrent_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXMakeCurrent_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXMakeCurrent missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXMakeCurrent:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXMakeCurrent_PACKED *packed = mock_expect(glXMakeCurrent); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10791,27 +6154,7 @@ static int failed_test = 0;
     mock_push(pack_glXMakeCurrentReadSGI(NULL, dpy, draw, read, ctx)); \
 }
 #define test_glXMakeCurrentReadSGI(_dpy, _draw, _read, _ctx) { \
-    glXMakeCurrentReadSGI_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXMakeCurrentReadSGI missing (no calls left)\n"); \
-    } else if (packed->index != glXMakeCurrentReadSGI_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXMakeCurrentReadSGI_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXMakeCurrentReadSGI missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXMakeCurrentReadSGI:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXMakeCurrentReadSGI_PACKED *packed = mock_expect(glXMakeCurrentReadSGI); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10842,27 +6185,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryChannelDeltasSGIX(NULL, display, screen, channel, x, y, w, h)); \
 }
 #define test_glXQueryChannelDeltasSGIX(_display, _screen, _channel, _x, _y, _w, _h) { \
-    glXQueryChannelDeltasSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryChannelDeltasSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryChannelDeltasSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryChannelDeltasSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryChannelDeltasSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryChannelDeltasSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryChannelDeltasSGIX_PACKED *packed = mock_expect(glXQueryChannelDeltasSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10918,27 +6241,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryChannelRectSGIX(NULL, display, screen, channel, dx, dy, dw, dh)); \
 }
 #define test_glXQueryChannelRectSGIX(_display, _screen, _channel, _dx, _dy, _dw, _dh) { \
-    glXQueryChannelRectSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryChannelRectSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryChannelRectSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryChannelRectSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryChannelRectSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryChannelRectSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryChannelRectSGIX_PACKED *packed = mock_expect(glXQueryChannelRectSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -10994,27 +6297,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryContext(NULL, dpy, ctx, attribute, value)); \
 }
 #define test_glXQueryContext(_dpy, _ctx, _attribute, _value) { \
-    glXQueryContext_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryContext missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryContext_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryContext_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryContext missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryContext:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryContext_PACKED *packed = mock_expect(glXQueryContext); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11049,27 +6332,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryContextInfoEXT(NULL, dpy, context, attribute, value)); \
 }
 #define test_glXQueryContextInfoEXT(_dpy, _context, _attribute, _value) { \
-    glXQueryContextInfoEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryContextInfoEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryContextInfoEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryContextInfoEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryContextInfoEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryContextInfoEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryContextInfoEXT_PACKED *packed = mock_expect(glXQueryContextInfoEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11104,27 +6367,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryDrawable(NULL, dpy, draw, attribute, value)); \
 }
 #define test_glXQueryDrawable(_dpy, _draw, _attribute, _value) { \
-    glXQueryDrawable_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryDrawable missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryDrawable_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryDrawable_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryDrawable missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryDrawable:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryDrawable_PACKED *packed = mock_expect(glXQueryDrawable); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11159,27 +6402,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryExtension(NULL, display, errorBase, eventBase)); \
 }
 #define test_glXQueryExtension(_display, _errorBase, _eventBase) { \
-    glXQueryExtension_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryExtension missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryExtension_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryExtension_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryExtension missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryExtension:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryExtension_PACKED *packed = mock_expect(glXQueryExtension); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11215,27 +6438,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryExtensionsString(NULL, dpy, screen)); \
 }
 #define test_glXQueryExtensionsString(_dpy, _screen) { \
-    glXQueryExtensionsString_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryExtensionsString missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryExtensionsString_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryExtensionsString_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryExtensionsString missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryExtensionsString:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryExtensionsString_PACKED *packed = mock_expect(glXQueryExtensionsString); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11260,27 +6463,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryFrameCountNV(NULL, dpy, screen, count)); \
 }
 #define test_glXQueryFrameCountNV(_dpy, _screen, _count) { \
-    glXQueryFrameCountNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryFrameCountNV missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryFrameCountNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryFrameCountNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryFrameCountNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryFrameCountNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryFrameCountNV_PACKED *packed = mock_expect(glXQueryFrameCountNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11312,27 +6495,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryGLXPbufferSGIX(NULL, dpy, pbuf, attribute, value)); \
 }
 #define test_glXQueryGLXPbufferSGIX(_dpy, _pbuf, _attribute, _value) { \
-    glXQueryGLXPbufferSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryGLXPbufferSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryGLXPbufferSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryGLXPbufferSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryGLXPbufferSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryGLXPbufferSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryGLXPbufferSGIX_PACKED *packed = mock_expect(glXQueryGLXPbufferSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11367,27 +6530,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryHyperpipeAttribSGIX(NULL, dpy, timeSlice, attrib, size, returnAttribList)); \
 }
 #define test_glXQueryHyperpipeAttribSGIX(_dpy, _timeSlice, _attrib, _size, _returnAttribList) { \
-    glXQueryHyperpipeAttribSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryHyperpipeAttribSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryHyperpipeAttribSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryHyperpipeAttribSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryHyperpipeAttribSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryHyperpipeAttribSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryHyperpipeAttribSGIX_PACKED *packed = mock_expect(glXQueryHyperpipeAttribSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11425,27 +6568,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryHyperpipeBestAttribSGIX(NULL, dpy, timeSlice, attrib, size, attribList, returnAttribList)); \
 }
 #define test_glXQueryHyperpipeBestAttribSGIX(_dpy, _timeSlice, _attrib, _size, _attribList, _returnAttribList) { \
-    glXQueryHyperpipeBestAttribSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryHyperpipeBestAttribSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryHyperpipeBestAttribSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryHyperpipeBestAttribSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryHyperpipeBestAttribSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryHyperpipeBestAttribSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryHyperpipeBestAttribSGIX_PACKED *packed = mock_expect(glXQueryHyperpipeBestAttribSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11490,27 +6613,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryHyperpipeConfigSGIX(NULL, dpy, hpId, npipes)); \
 }
 #define test_glXQueryHyperpipeConfigSGIX(_dpy, _hpId, _npipes) { \
-    glXQueryHyperpipeConfigSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryHyperpipeConfigSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryHyperpipeConfigSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryHyperpipeConfigSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryHyperpipeConfigSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryHyperpipeConfigSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryHyperpipeConfigSGIX_PACKED *packed = mock_expect(glXQueryHyperpipeConfigSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11542,27 +6645,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryHyperpipeNetworkSGIX(NULL, dpy, npipes)); \
 }
 #define test_glXQueryHyperpipeNetworkSGIX(_dpy, _npipes) { \
-    glXQueryHyperpipeNetworkSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryHyperpipeNetworkSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryHyperpipeNetworkSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryHyperpipeNetworkSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryHyperpipeNetworkSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryHyperpipeNetworkSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryHyperpipeNetworkSGIX_PACKED *packed = mock_expect(glXQueryHyperpipeNetworkSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11591,27 +6674,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryMaxSwapBarriersSGIX(NULL, dpy, screen, max)); \
 }
 #define test_glXQueryMaxSwapBarriersSGIX(_dpy, _screen, _max) { \
-    glXQueryMaxSwapBarriersSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryMaxSwapBarriersSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryMaxSwapBarriersSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryMaxSwapBarriersSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryMaxSwapBarriersSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryMaxSwapBarriersSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryMaxSwapBarriersSGIX_PACKED *packed = mock_expect(glXQueryMaxSwapBarriersSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11643,27 +6706,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryMaxSwapGroupsNV(NULL, dpy, screen, maxGroups, maxBarriers)); \
 }
 #define test_glXQueryMaxSwapGroupsNV(_dpy, _screen, _maxGroups, _maxBarriers) { \
-    glXQueryMaxSwapGroupsNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryMaxSwapGroupsNV missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryMaxSwapGroupsNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryMaxSwapGroupsNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryMaxSwapGroupsNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryMaxSwapGroupsNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryMaxSwapGroupsNV_PACKED *packed = mock_expect(glXQueryMaxSwapGroupsNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11702,27 +6745,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryServerString(NULL, dpy, screen, name)); \
 }
 #define test_glXQueryServerString(_dpy, _screen, _name) { \
-    glXQueryServerString_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryServerString missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryServerString_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryServerString_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryServerString missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryServerString:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryServerString_PACKED *packed = mock_expect(glXQueryServerString); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11750,27 +6773,7 @@ static int failed_test = 0;
     mock_push(pack_glXQuerySwapGroupNV(NULL, dpy, drawable, group, barrier)); \
 }
 #define test_glXQuerySwapGroupNV(_dpy, _drawable, _group, _barrier) { \
-    glXQuerySwapGroupNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQuerySwapGroupNV missing (no calls left)\n"); \
-    } else if (packed->index != glXQuerySwapGroupNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQuerySwapGroupNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQuerySwapGroupNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQuerySwapGroupNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQuerySwapGroupNV_PACKED *packed = mock_expect(glXQuerySwapGroupNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11809,27 +6812,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryVersion(NULL, dpy, maj, min)); \
 }
 #define test_glXQueryVersion(_dpy, _maj, _min) { \
-    glXQueryVersion_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryVersion missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryVersion_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryVersion_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryVersion missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryVersion:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryVersion_PACKED *packed = mock_expect(glXQueryVersion); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11865,27 +6848,7 @@ static int failed_test = 0;
     mock_push(pack_glXQueryVideoCaptureDeviceNV(NULL, dpy, device, attribute, value)); \
 }
 #define test_glXQueryVideoCaptureDeviceNV(_dpy, _device, _attribute, _value) { \
-    glXQueryVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXQueryVideoCaptureDeviceNV missing (no calls left)\n"); \
-    } else if (packed->index != glXQueryVideoCaptureDeviceNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXQueryVideoCaptureDeviceNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXQueryVideoCaptureDeviceNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXQueryVideoCaptureDeviceNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXQueryVideoCaptureDeviceNV_PACKED *packed = mock_expect(glXQueryVideoCaptureDeviceNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11920,27 +6883,7 @@ static int failed_test = 0;
     mock_push(pack_glXReleaseBuffersMESA(NULL, dpy, drawable)); \
 }
 #define test_glXReleaseBuffersMESA(_dpy, _drawable) { \
-    glXReleaseBuffersMESA_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXReleaseBuffersMESA missing (no calls left)\n"); \
-    } else if (packed->index != glXReleaseBuffersMESA_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXReleaseBuffersMESA_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXReleaseBuffersMESA missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXReleaseBuffersMESA:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXReleaseBuffersMESA_PACKED *packed = mock_expect(glXReleaseBuffersMESA); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -11965,27 +6908,7 @@ static int failed_test = 0;
     mock_push(pack_glXReleaseTexImageEXT(NULL, dpy, drawable, buffer)); \
 }
 #define test_glXReleaseTexImageEXT(_dpy, _drawable, _buffer) { \
-    glXReleaseTexImageEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXReleaseTexImageEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXReleaseTexImageEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXReleaseTexImageEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXReleaseTexImageEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXReleaseTexImageEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXReleaseTexImageEXT_PACKED *packed = mock_expect(glXReleaseTexImageEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12013,27 +6936,7 @@ static int failed_test = 0;
     mock_push(pack_glXReleaseVideoCaptureDeviceNV(NULL, dpy, device)); \
 }
 #define test_glXReleaseVideoCaptureDeviceNV(_dpy, _device) { \
-    glXReleaseVideoCaptureDeviceNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXReleaseVideoCaptureDeviceNV missing (no calls left)\n"); \
-    } else if (packed->index != glXReleaseVideoCaptureDeviceNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXReleaseVideoCaptureDeviceNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXReleaseVideoCaptureDeviceNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXReleaseVideoCaptureDeviceNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXReleaseVideoCaptureDeviceNV_PACKED *packed = mock_expect(glXReleaseVideoCaptureDeviceNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12058,27 +6961,7 @@ static int failed_test = 0;
     mock_push(pack_glXReleaseVideoDeviceNV(NULL, dpy, screen, VideoDevice)); \
 }
 #define test_glXReleaseVideoDeviceNV(_dpy, _screen, _VideoDevice) { \
-    glXReleaseVideoDeviceNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXReleaseVideoDeviceNV missing (no calls left)\n"); \
-    } else if (packed->index != glXReleaseVideoDeviceNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXReleaseVideoDeviceNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXReleaseVideoDeviceNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXReleaseVideoDeviceNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXReleaseVideoDeviceNV_PACKED *packed = mock_expect(glXReleaseVideoDeviceNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12106,27 +6989,7 @@ static int failed_test = 0;
     mock_push(pack_glXReleaseVideoImageNV(NULL, dpy, pbuf)); \
 }
 #define test_glXReleaseVideoImageNV(_dpy, _pbuf) { \
-    glXReleaseVideoImageNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXReleaseVideoImageNV missing (no calls left)\n"); \
-    } else if (packed->index != glXReleaseVideoImageNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXReleaseVideoImageNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXReleaseVideoImageNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXReleaseVideoImageNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXReleaseVideoImageNV_PACKED *packed = mock_expect(glXReleaseVideoImageNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12151,27 +7014,7 @@ static int failed_test = 0;
     mock_push(pack_glXRender(NULL)); \
 }
 #define test_glXRender() { \
-    glXRender_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXRender missing (no calls left)\n"); \
-    } else if (packed->index != glXRender_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXRender_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXRender missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXRender:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXRender_PACKED *packed = mock_expect(glXRender); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12186,27 +7029,7 @@ static int failed_test = 0;
     mock_push(pack_glXRenderLarge(NULL)); \
 }
 #define test_glXRenderLarge() { \
-    glXRenderLarge_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXRenderLarge missing (no calls left)\n"); \
-    } else if (packed->index != glXRenderLarge_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXRenderLarge_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXRenderLarge missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXRenderLarge:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXRenderLarge_PACKED *packed = mock_expect(glXRenderLarge); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12221,27 +7044,7 @@ static int failed_test = 0;
     mock_push(pack_glXResetFrameCountNV(NULL, dpy, screen)); \
 }
 #define test_glXResetFrameCountNV(_dpy, _screen) { \
-    glXResetFrameCountNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXResetFrameCountNV missing (no calls left)\n"); \
-    } else if (packed->index != glXResetFrameCountNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXResetFrameCountNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXResetFrameCountNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXResetFrameCountNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXResetFrameCountNV_PACKED *packed = mock_expect(glXResetFrameCountNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12266,27 +7069,7 @@ static int failed_test = 0;
     mock_push(pack_glXSelectEvent(NULL, dpy, draw, event_mask)); \
 }
 #define test_glXSelectEvent(_dpy, _draw, _event_mask) { \
-    glXSelectEvent_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSelectEvent missing (no calls left)\n"); \
-    } else if (packed->index != glXSelectEvent_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSelectEvent_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSelectEvent missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSelectEvent:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSelectEvent_PACKED *packed = mock_expect(glXSelectEvent); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12314,27 +7097,7 @@ static int failed_test = 0;
     mock_push(pack_glXSelectEventSGIX(NULL, dpy, drawable, mask)); \
 }
 #define test_glXSelectEventSGIX(_dpy, _drawable, _mask) { \
-    glXSelectEventSGIX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSelectEventSGIX missing (no calls left)\n"); \
-    } else if (packed->index != glXSelectEventSGIX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSelectEventSGIX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSelectEventSGIX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSelectEventSGIX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSelectEventSGIX_PACKED *packed = mock_expect(glXSelectEventSGIX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12362,27 +7125,7 @@ static int failed_test = 0;
     mock_push(pack_glXSendPbufferToVideoNV(NULL, dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock)); \
 }
 #define test_glXSendPbufferToVideoNV(_dpy, _pbuf, _iBufferType, _pulCounterPbuffer, _bBlock) { \
-    glXSendPbufferToVideoNV_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSendPbufferToVideoNV missing (no calls left)\n"); \
-    } else if (packed->index != glXSendPbufferToVideoNV_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSendPbufferToVideoNV_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSendPbufferToVideoNV missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSendPbufferToVideoNV:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSendPbufferToVideoNV_PACKED *packed = mock_expect(glXSendPbufferToVideoNV); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12420,27 +7163,7 @@ static int failed_test = 0;
     mock_push(pack_glXSet3DfxModeMESA(NULL, mode)); \
 }
 #define test_glXSet3DfxModeMESA(_mode) { \
-    glXSet3DfxModeMESA_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSet3DfxModeMESA missing (no calls left)\n"); \
-    } else if (packed->index != glXSet3DfxModeMESA_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSet3DfxModeMESA_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSet3DfxModeMESA missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSet3DfxModeMESA:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSet3DfxModeMESA_PACKED *packed = mock_expect(glXSet3DfxModeMESA); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12458,27 +7181,7 @@ static int failed_test = 0;
     mock_push(pack_glXSwapBuffers(NULL, dpy, drawable)); \
 }
 #define test_glXSwapBuffers(_dpy, _drawable) { \
-    glXSwapBuffers_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSwapBuffers missing (no calls left)\n"); \
-    } else if (packed->index != glXSwapBuffers_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSwapBuffers_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSwapBuffers missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSwapBuffers:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSwapBuffers_PACKED *packed = mock_expect(glXSwapBuffers); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12503,27 +7206,7 @@ static int failed_test = 0;
     mock_push(pack_glXSwapBuffersMscOML(NULL, dpy, drawable, target_msc, divisor, remainder)); \
 }
 #define test_glXSwapBuffersMscOML(_dpy, _drawable, _target_msc, _divisor, _remainder) { \
-    glXSwapBuffersMscOML_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSwapBuffersMscOML missing (no calls left)\n"); \
-    } else if (packed->index != glXSwapBuffersMscOML_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSwapBuffersMscOML_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSwapBuffersMscOML missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSwapBuffersMscOML:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSwapBuffersMscOML_PACKED *packed = mock_expect(glXSwapBuffersMscOML); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12557,27 +7240,7 @@ static int failed_test = 0;
     mock_push(pack_glXSwapIntervalEXT(NULL, dpy, drawable, interval)); \
 }
 #define test_glXSwapIntervalEXT(_dpy, _drawable, _interval) { \
-    glXSwapIntervalEXT_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSwapIntervalEXT missing (no calls left)\n"); \
-    } else if (packed->index != glXSwapIntervalEXT_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSwapIntervalEXT_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSwapIntervalEXT missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSwapIntervalEXT:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSwapIntervalEXT_PACKED *packed = mock_expect(glXSwapIntervalEXT); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12605,27 +7268,7 @@ static int failed_test = 0;
     mock_push(pack_glXSwapIntervalMESA(NULL, interval)); \
 }
 #define test_glXSwapIntervalMESA(_interval) { \
-    glXSwapIntervalMESA_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSwapIntervalMESA missing (no calls left)\n"); \
-    } else if (packed->index != glXSwapIntervalMESA_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSwapIntervalMESA_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSwapIntervalMESA missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSwapIntervalMESA:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSwapIntervalMESA_PACKED *packed = mock_expect(glXSwapIntervalMESA); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12643,27 +7286,7 @@ static int failed_test = 0;
     mock_push(pack_glXSwapIntervalSGI(NULL, interval)); \
 }
 #define test_glXSwapIntervalSGI(_interval) { \
-    glXSwapIntervalSGI_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXSwapIntervalSGI missing (no calls left)\n"); \
-    } else if (packed->index != glXSwapIntervalSGI_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXSwapIntervalSGI_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXSwapIntervalSGI missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXSwapIntervalSGI:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXSwapIntervalSGI_PACKED *packed = mock_expect(glXSwapIntervalSGI); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12681,27 +7304,7 @@ static int failed_test = 0;
     mock_push(pack_glXUseXFont(NULL, font, first, count, listBase)); \
 }
 #define test_glXUseXFont(_font, _first, _count, _listBase) { \
-    glXUseXFont_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXUseXFont missing (no calls left)\n"); \
-    } else if (packed->index != glXUseXFont_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXUseXFont_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXUseXFont missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXUseXFont:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXUseXFont_PACKED *packed = mock_expect(glXUseXFont); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12728,27 +7331,7 @@ static int failed_test = 0;
     mock_push(pack_glXVendorPrivate(NULL)); \
 }
 #define test_glXVendorPrivate() { \
-    glXVendorPrivate_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXVendorPrivate missing (no calls left)\n"); \
-    } else if (packed->index != glXVendorPrivate_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXVendorPrivate_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXVendorPrivate missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXVendorPrivate:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXVendorPrivate_PACKED *packed = mock_expect(glXVendorPrivate); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12763,27 +7346,7 @@ static int failed_test = 0;
     mock_push(pack_glXVendorPrivateWithReply(NULL)); \
 }
 #define test_glXVendorPrivateWithReply() { \
-    glXVendorPrivateWithReply_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXVendorPrivateWithReply missing (no calls left)\n"); \
-    } else if (packed->index != glXVendorPrivateWithReply_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXVendorPrivateWithReply_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXVendorPrivateWithReply missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXVendorPrivateWithReply:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXVendorPrivateWithReply_PACKED *packed = mock_expect(glXVendorPrivateWithReply); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12798,27 +7361,7 @@ static int failed_test = 0;
     mock_push(pack_glXWaitForMscOML(NULL, dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc)); \
 }
 #define test_glXWaitForMscOML(_dpy, _drawable, _target_msc, _divisor, _remainder, _ust, _msc, _sbc) { \
-    glXWaitForMscOML_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXWaitForMscOML missing (no calls left)\n"); \
-    } else if (packed->index != glXWaitForMscOML_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXWaitForMscOML_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXWaitForMscOML missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXWaitForMscOML:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXWaitForMscOML_PACKED *packed = mock_expect(glXWaitForMscOML); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12873,27 +7416,7 @@ static int failed_test = 0;
     mock_push(pack_glXWaitForSbcOML(NULL, dpy, drawable, target_sbc, ust, msc, sbc)); \
 }
 #define test_glXWaitForSbcOML(_dpy, _drawable, _target_sbc, _ust, _msc, _sbc) { \
-    glXWaitForSbcOML_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXWaitForSbcOML missing (no calls left)\n"); \
-    } else if (packed->index != glXWaitForSbcOML_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXWaitForSbcOML_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXWaitForSbcOML missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXWaitForSbcOML:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXWaitForSbcOML_PACKED *packed = mock_expect(glXWaitForSbcOML); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12942,27 +7465,7 @@ static int failed_test = 0;
     mock_push(pack_glXWaitGL(NULL)); \
 }
 #define test_glXWaitGL() { \
-    glXWaitGL_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXWaitGL missing (no calls left)\n"); \
-    } else if (packed->index != glXWaitGL_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXWaitGL_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXWaitGL missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXWaitGL:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXWaitGL_PACKED *packed = mock_expect(glXWaitGL); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -12977,27 +7480,7 @@ static int failed_test = 0;
     mock_push(pack_glXWaitVideoSyncSGI(NULL, divisor, remainder, count)); \
 }
 #define test_glXWaitVideoSyncSGI(_divisor, _remainder, _count) { \
-    glXWaitVideoSyncSGI_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXWaitVideoSyncSGI missing (no calls left)\n"); \
-    } else if (packed->index != glXWaitVideoSyncSGI_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXWaitVideoSyncSGI_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXWaitVideoSyncSGI missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXWaitVideoSyncSGI:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXWaitVideoSyncSGI_PACKED *packed = mock_expect(glXWaitVideoSyncSGI); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \
@@ -13025,27 +7508,7 @@ static int failed_test = 0;
     mock_push(pack_glXWaitX(NULL)); \
 }
 #define test_glXWaitX() { \
-    glXWaitX_PACKED *packed = mock_cur(); \
-    if (packed == NULL) { \
-        mock_errorf("glXWaitX missing (no calls left)\n"); \
-    } else if (packed->index != glXWaitX_INDEX) { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        packed_call_t *tmp = (packed_call_t *)packed; \
-        packed = mock_slide(glXWaitX_INDEX); \
-        if (! packed) { \
-            mock_errorf("glXWaitX missing\n"); \
-        } else { \
-            mock_warningf("unexpected call while looking for glXWaitX:\n  "); \
-            mock_print(tmp); \
-        }\
-    } else { \
-        if (verbose_test) { \
-            mock_print(mock_cur()); \
-        } \
-        mock_shift(); \
-    } \
+    glXWaitX_PACKED *packed = mock_expect(glXWaitX); \
     if (packed) { \
         int match = 1; \
         void *a, *b; \

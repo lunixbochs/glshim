@@ -1680,6 +1680,31 @@ void mock_print(const packed_call_t *packed) {
     }
 }
 
+packed_call_t *_mock_expect(char *name, int index) {
+    packed_call_t *packed = mock_cur();
+    if (packed == NULL) {
+        mock_errorf("%s missing (no calls left)\n", name);
+    } else if (packed->index != index) {
+        if (verbose_test) {
+            mock_print(mock_cur());
+        }
+        packed_call_t *tmp = packed;
+        packed = mock_slide(index);
+        if (! packed) {
+            mock_errorf("%s missing\n", name);
+        } else {
+            mock_warningf("unexpected call while looking for %s:\n  ", name);
+            mock_print(tmp);
+        }
+    } else {
+        if (verbose_test) {
+            mock_print(mock_cur());
+        }
+        mock_shift();
+    }
+    return packed;
+}
+
 void *mock_get(int idx) {
     return tack_get(&mock, idx);
 }
