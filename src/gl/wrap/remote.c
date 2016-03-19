@@ -136,6 +136,9 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
         case glGenTextures_INDEX:
             ring_read_into(ring, ((glGenTextures_PACKED *)call)->args.textures);
             break;
+        case glXGetConfig_INDEX:
+            ring_read_into(ring, ((glXGetConfig_PACKED *)call)->args.value);
+            break;
         case glGetString_INDEX:
         {
             char *str = ring_read(ring, NULL);
@@ -207,6 +210,11 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             ring_write(ring, NULL, 0);
             ((glXSwapBuffers_PACKED *)call)->args.dpy = target_display;
             break;
+        case glXGetConfig_INDEX:
+            ((glXGetConfig_PACKED *)call)->args.value = ring_dma(ring, sizeof(int));
+            glIndexedCall(call, ret);
+            ring_dma_done(ring);
+            return;
         case REMOTE_BLOCK_DRAW:
         {
             if (state.list.active) {
