@@ -183,12 +183,12 @@ void bl_draw(block_t *block) {
         }
     }
     if ((pos = block->incomplete.color) >= 0) {
-        for (int i = 0; i < pos; i++) {
+        for (int i = 0; i <= pos; i++) {
             memcpy(block->color + (4 * i), CURRENT->color, 4 * sizeof(GLfloat));
         }
     }
     if ((pos = block->incomplete.normal) >= 0) {
-        for (int i = 0; i < pos; i++) {
+        for (int i = 0; i <= pos; i++) {
             memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
         }
     }
