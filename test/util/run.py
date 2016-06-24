@@ -87,6 +87,8 @@ class Test:
 
     @property
     def status(self):
+        if self.output and ('ERROR' in self.output or 'Assertion failed' in self.output):
+            self.success = False
         if self.build_failed:
             return 'build failed'
         elif not self.ran:
@@ -210,8 +212,6 @@ def run(args):
         print
 
         if test.output:
-            if 'ERROR' in test.output or 'Assertion failed' in test.output:
-                test.success = False
             if test.build_failed:
                 if test.output in duplicate_errors:
                     continue
