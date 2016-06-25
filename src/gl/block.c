@@ -8,13 +8,6 @@
 #include "texture.h"
 #include "remote.h"
 
-#define alloc_sublist(n, type, cap) \
-    (GLfloat *)malloc(n * gl_sizeof(type) * cap)
-
-#define realloc_sublist(ref, n, type, cap) \
-    if (ref)                         \
-        ref = (GLfloat *)realloc(ref, n * gl_sizeof(type) * cap)
-
 // q2t winding doesn't change, so we can globally precalculate/cache it
 struct {
     GLushort *cache;
@@ -48,6 +41,7 @@ static void q2t_calc(int len) {
 block_t *bl_new(GLenum mode) {
     block_t *block = calloc(1, sizeof(block_t));
     block->cap = DEFAULT_BLOCK_CAPACITY;
+    block->attr = calloc(1, block->cap * sizeof(block_attr_t));
     block->open = true;
     block->mode = mode;
 
@@ -65,34 +59,20 @@ void bl_free(block_t *block) {
         free(block->solid);
         return;
     }
-    free(block->vert);
-    free(block->normal);
-    free(block->color);
-    for (int i = 0; i < MAX_TEX; i++) {
-        free(block->tex[i]);
-    }
+    free(block->attr);
     free(block->indices);
     free(block);
 }
 
 static inline void bl_grow(block_t *block) {
-    if (! block->vert) {
-        block->vert = alloc_sublist(3, GL_FLOAT, block->cap);
-    }
     if (block->len >= block->cap) {
         block->cap += DEFAULT_BLOCK_CAPACITY;
-        // TODO: store list types on block and use block->types.vert, etc directly?
-        realloc_sublist(block->vert, 3, GL_FLOAT, block->cap);
-        realloc_sublist(block->normal, 3, GL_FLOAT, block->cap);
-        realloc_sublist(block->color, 4, GL_FLOAT, block->cap);
-        for (int i = 0; i < MAX_TEX; i++) {
-            realloc_sublist(block->tex[i], 4, GL_FLOAT, block->cap);
-        }
+        block->attr = realloc(block->attr, block->cap * sizeof(block_attr_t));
     }
 }
 
 void bl_q2t(block_t *block) {
-    if (!block->len || !block->vert || block->q2t) return;
+    if (!block->len || !block->attr || block->q2t) return;
     // TODO: split to multiple blocks if block->len > 65535
 
     q2t_calc(block->len);
@@ -118,16 +98,16 @@ void bl_pollute(block_t *block) {
         return;
     }
     int last = (block->len - 1);
-    for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i]) {
-            glMultiTexCoord2fv(GL_TEXTURE0 + i, block->tex[i] + (4 * last));
+    for (int t = 0; t < MAX_TEX; t++) {
+        if (block->tex[t]) {
+            glMultiTexCoord4fv(GL_TEXTURE0 + t, block->attr[last].tex[t]);
         }
     }
     if (block->color) {
-        glColor4fv(block->color + (4 * last));
+        glColor4fv(block->attr[last].color);
     }
     if (block->normal) {
-        glNormal3fv(block->normal + (3 * last));
+        glNormal3fv(block->attr[last].normal);
     }
 }
 
@@ -141,15 +121,15 @@ void bl_end(block_t *block) {
     }
 
     block->open = false;
-    for (int i = 0; i < MAX_TEX; i++) {
-        gltexture_t *bound = state.texture.bound[i];
-        if (block->tex[i] && bound) {
+    for (int t = 0; t < MAX_TEX; t++) {
+        gltexture_t *bound = state.texture.bound[t];
+        if (block->tex[t] && bound) {
             if (bound->width != bound->nwidth || bound->height != bound->nheight) {
-                tex_coord_npot(block->tex[i], block->len, bound->width, bound->height, bound->nwidth, bound->nheight);
+                tex_coord_npot(block->attr, t, block->len, bound->width, bound->height, bound->nwidth, bound->nheight);
             }
             // GL_ARB_texture_rectangle
-            if (state.texture.rect_arb[i]) {
-                tex_coord_rect_arb(block->tex[i], block->len, bound->width, bound->height);
+            if (state.texture.rect_arb[t]) {
+                tex_coord_rect_arb(block->attr, t, block->len, bound->width, bound->height);
             }
         }
     }
@@ -168,28 +148,28 @@ void bl_end(block_t *block) {
 }
 
 void bl_draw(block_t *block) {
-    if (! block || block->len == 0) {
+    if (!block || block->len == 0 || !block->attr) {
         return;
     }
 
     int pos;
     // texture is never incomplete, because we check enabled state on start?
     // TODO: the texture array could exist but be incomplete :(
-    for (int i = 0; i < MAX_TEX; i++) {
-        if ((pos = block->incomplete.tex[i]) >= 0) {
-            for (int j = 0; j < block->len; j++) {
-                memcpy(block->tex[i] + (4 * j), CURRENT->tex[i], 4 * sizeof(GLfloat));
+    for (int t = 0; t < MAX_TEX; t++) {
+        if ((pos = block->incomplete.tex[t]) >= 0) {
+            for (int i = 0; i < block->len; i++) {
+                memcpy(block->attr[i].tex[t], CURRENT->tex[t], 4 * sizeof(GLfloat));
             }
         }
     }
     if ((pos = block->incomplete.color) >= 0) {
         for (int i = 0; i <= pos; i++) {
-            memcpy(block->color + (4 * i), CURRENT->color, 4 * sizeof(GLfloat));
+            memcpy(block->attr[i].color, CURRENT->color, 4 * sizeof(GLfloat));
         }
     }
     if ((pos = block->incomplete.normal) >= 0) {
         for (int i = 0; i <= pos; i++) {
-            memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
+            memcpy(block->attr[i].normal, CURRENT->normal, 3 * sizeof(GLfloat));
         }
     }
     if (state.render.mode == GL_SELECT) {
@@ -198,50 +178,43 @@ void bl_draw(block_t *block) {
         return gl_feedback_block(block);
     }
 
+    block_attr_t *attr = block->attr;
     // glTexGen
     for (int i = 0; i < MAX_TEX; i++) {
-        if (state.enable.texgen_s[i] || state.enable.texgen_t[i]) {
-            gen_tex_coords(block, i);
+        if (attr == block->attr) {
+            attr = malloc(block->len * sizeof(block_attr_t));
+            memcpy(attr, block->attr, block->len * sizeof(block_attr_t));
+        }
+        if (state.enable.texgen_s[i] || state.enable.texgen_t[i] || state.enable.texgen_r[i] || state.enable.texgen_q[i]) {
+            gen_tex_coords(block, attr, i);
         }
     }
 
-    // copy vertex data for local matrix calculations
-    GLfloat *vert, *tex[MAX_TEX] = {0};
 #ifdef LOCAL_MATRIX
-    vert = malloc(block->len * 3 * sizeof(GLfloat));
+    if (attr == block->attr) {
+        attr = malloc(block->len * sizeof(block_attr_t));
+        memcpy(attr, block->attr, block->len * sizeof(block_attr_t));
+    }
     for (int i = 0; i < block->len; i++) {
-        gl_transform_vertex(&vert[i * 3], &block->vert[i * 3]);
+        gl_transform_vertex(attr[i].vert, block->attr[i].vert);
     }
     for (int t = 0; t < MAX_TEX; t++) {
         if (block->tex[t]) {
-            tex[t] = malloc(block->len * 4 * sizeof(GLfloat));
             for (int i = 0; i < block->len; i++) {
-                gl_transform_texture(GL_TEXTURE0 + t, &tex[t][i * 4], &block->tex[t][i * 4]);
+                gl_transform_texture(GL_TEXTURE0 + t, attr[i]->tex[t], attr[i]->tex[t]);
             }
         }
     }
-#else
-    vert = block->vert;
-    for (int i = 0; i < MAX_TEX; i++) {
-        tex[i] = block->tex[i];
-    }
 #endif
     if (state.remote) {
-#ifdef LOCAL_MATRIX
-        void *tmp = malloc(sizeof(block_t));
-        memcpy(tmp, block, sizeof(block_t));
-        tmp->vert = vert;
-        for (int i = 0; i < MAX_TEX; i++) {
-            tmp->tex[i] = tex[i];
+        if (attr != block->attr) {
+            block_t tmp = *block;
+            tmp.attr = attr;
+            remote_block_draw(&tmp);
+            free(attr);
+        } else {
+            remote_block_draw(block);
         }
-        remote_block_draw(tmp);
-        free(vert);
-        for (int i = 0; i < MAX_TEX; i++) {
-            free(tex[i]);
-        }
-#else
-        remote_block_draw(block);
-#endif
         return;
     }
 
@@ -250,33 +223,26 @@ void bl_draw(block_t *block) {
 
     glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 #ifdef USE_ES2
-    if (block->vert) {
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, block->vert);
-    }
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(block_attr_t), attr);
     gles_glDrawArrays(block->mode, 0, block->len);
 #else
-    if (vert) {
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(3, GL_FLOAT, 0, vert);
-    } else {
-        glDisableClientState(GL_VERTEX_ARRAY);
-    }
-
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, sizeof(block_attr_t), &attr[0].vert);
     if (block->normal) {
         glEnableClientState(GL_NORMAL_ARRAY);
-        glNormalPointer(GL_FLOAT, 0, block->normal);
+        glNormalPointer(GL_FLOAT, sizeof(block_attr_t), &attr[0].normal);
     } else {
         glDisableClientState(GL_NORMAL_ARRAY);
     }
-
     if (block->color) {
         glEnableClientState(GL_COLOR_ARRAY);
-        glColorPointer(4, GL_FLOAT, 0, block->color);
+        glColorPointer(4, GL_FLOAT, sizeof(block_attr_t), &attr[0].color);
     } else {
         glDisableClientState(GL_COLOR_ARRAY);
     }
 
+    /*
     bool stipple = false;
     // TODO: how do I stipple with texture?
     // TODO: what about multitexturing?
@@ -292,12 +258,13 @@ void bl_draw(block_t *block) {
             bind_stipple_tex();
         }
     }
+    */
     for (int i = 0; i < MAX_TEX; i++) {
         GLuint old = state.texture.client + GL_TEXTURE0;
-        if (tex[i]) {
+        if (block->tex[i]) {
             glClientActiveTexture(GL_TEXTURE0 + i);
             glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glTexCoordPointer(4, GL_FLOAT, 0, tex[i]);
+            glTexCoordPointer(4, GL_FLOAT, sizeof(block_attr_t), &block->attr[0].tex);
             glClientActiveTexture(old);
         } else if (state.enable.tex_coord_array[i]) {
             glClientActiveTexture(GL_TEXTURE0 + i);
@@ -319,41 +286,38 @@ void bl_draw(block_t *block) {
     } else {
         gles_glDrawArrays(block->mode, 0, block->len);
     }
+    /*
     if (stipple) {
         glPopAttrib();
         free(tex[0]);
     }
+    */
 #endif
     glPopClientAttrib();
-#ifdef LOCAL_MATRIX
-    free(vert);
-    for (int i = 0; i < MAX_TEX; i++) {
-        free(tex[i]);
+    if (attr != block->attr) {
+        free(attr);
     }
-#endif
 }
 
 void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
     bl_grow(block);
 
+    block_attr_t *attr = &block->attr[block->len++];
     if (block->normal) {
-        GLfloat *normal = block->normal + (block->len * 3);
-        memcpy(normal, CURRENT->normal, sizeof(GLfloat) * 3);
+        memcpy(attr->normal, CURRENT->normal, sizeof(GLfloat) * 3);
     }
 
     if (block->color) {
-        GLfloat *color = block->color + (block->len * 4);
-        memcpy(color, CURRENT->color, sizeof(GLfloat) * 4);
+        memcpy(attr->color, CURRENT->color, sizeof(GLfloat) * 4);
     }
 
     for (int i = 0; i < MAX_TEX; i++) {
         if (block->tex[i]) {
-            GLfloat *tex = block->tex[i] + (block->len * 4);
-            memcpy(tex, CURRENT->tex[i], sizeof(GLfloat) * 4);
+            memcpy(attr->tex[i], CURRENT->tex[i], sizeof(GLfloat) * 4);
         }
     }
 
-    GLfloat *vert = block->vert + (block->len++ * 3);
+    GLfloat *vert = attr->vert;
     vert[0] = x;
     vert[1] = y;
     vert[2] = z;
@@ -361,12 +325,12 @@ void bl_vertex3f(block_t *block, GLfloat x, GLfloat y, GLfloat z) {
 
 void bl_track_color(block_t *block) {
     if (! block->color) {
-        block->color = alloc_sublist(4, GL_FLOAT, block->cap);
+        block->color = true;
         if (state.list.active) {
             block->incomplete.color = block->len - 1;
         } else {
             for (int i = 0; i < block->len; i++) {
-                memcpy(block->color + (4 * i), CURRENT->color, 4 * sizeof(GLfloat));
+                memcpy(block->attr[i].color, CURRENT->color, 4 * sizeof(GLfloat));
             }
         }
     }
@@ -374,12 +338,12 @@ void bl_track_color(block_t *block) {
 
 void bl_track_normal(block_t *block) {
     if (! block->normal) {
-        block->normal = alloc_sublist(3, GL_FLOAT, block->cap);
+        block->normal = true;
         if (state.list.active) {
             block->incomplete.normal = block->len - 1;
-        } else if (! block->normal) {
+        } else {
             for (int i = 0; i < block->len; i++) {
-                memcpy(block->normal + (3 * i), CURRENT->normal, 3 * sizeof(GLfloat));
+                memcpy(block->attr[i].normal, CURRENT->normal, 3 * sizeof(GLfloat));
             }
         }
     }
@@ -388,12 +352,12 @@ void bl_track_normal(block_t *block) {
 void bl_track_tex(block_t *block, GLenum target) {
     target -= GL_TEXTURE0;
     if (! block->tex[target]) {
-        block->tex[target] = alloc_sublist(4, GL_FLOAT, block->cap);
+        block->tex[target] = true;
         if (state.list.active) {
             block->incomplete.tex[target] = block->len - 1;
         } else {
-            for (int j = 0; j < block->len; j++) {
-                memcpy(block->tex[target] + (4 * j), CURRENT->tex[target], 4 * sizeof(GLfloat));
+            for (int i = 0; i < block->len; i++) {
+                memcpy(block->attr[i].tex[target], CURRENT->tex[target], 4 * sizeof(GLfloat));
             }
         }
     }

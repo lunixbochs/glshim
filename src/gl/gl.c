@@ -138,18 +138,29 @@ static block_t *block_from_arrays(GLenum mode, GLsizei skip, GLsizei count) {
     block->artificial = true;
 
     block->len = block->cap = count;
+    block->attr = malloc(count * sizeof(block_attr_t));
+
+    pointer_state_t attr = {.type = GL_FLOAT, .stride = sizeof(block_attr_t)};
     if (state.enable.vertex_array) {
-        block->vert = gl_copy_pointer(&state.pointers.vertex, 3, skip, count, false);
+        attr.ptr = &block->attr[0].vert;
+        attr.size = 3;
+        gl_copy_ptr(&attr, &state.pointers.vertex, skip, count, false);
     }
     if (state.enable.color_array) {
-        block->color = gl_copy_pointer(&state.pointers.color, 4, skip, count, true);
+        attr.ptr = &block->attr[0].color;
+        attr.size = 4;
+        gl_copy_ptr(&attr, &state.pointers.color, skip, count, false);
     }
     if (state.enable.normal_array) {
-        block->normal = gl_copy_pointer(&state.pointers.normal, 3, skip, count, false);
+        attr.ptr = &block->attr[0].normal;
+        attr.size = 3;
+        gl_copy_ptr(&attr, &state.pointers.normal, skip, count, false);
     }
     for (int i = 0; i < MAX_TEX; i++) {
         if (state.enable.tex_coord_array[i]) {
-            block->tex[i] = gl_copy_pointer(&state.pointers.tex_coord[i], 4, skip, count, false);
+            attr.ptr = &block->attr[0].tex[i];
+            attr.size = 4;
+            gl_copy_ptr(&attr, &state.pointers.tex_coord[i], skip, count, false);
         }
     }
     return block;
@@ -177,7 +188,9 @@ static inline bool should_intercept_render(GLenum mode) {
 
 void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *uindices) {
     // TODO: split for count > 65535?
-    GLushort *indices = gl_copy_array(uindices, type, 1, 0, GL_UNSIGNED_SHORT, 1, 0, count, false);
+    pointer_state_t dst_attr = {.size = 1, .type = GL_UNSIGNED_SHORT, .stride = 0, .ptr = NULL},
+                    src_attr = {.size = 1, .type = type, .stride = 0, .ptr = uindices};
+    GLushort *indices = gl_copy_ptr(&dst_attr, &src_attr, 0, count, false);
     displaylist_t *list = state.list.active;
     if (list || should_intercept_render(mode)) {
         GLsizei min, max;
@@ -233,7 +246,7 @@ void glDrawArrays(GLenum mode, GLint first, GLsizei count) {
 
 #ifndef USE_ES2
 #define clone_gl_pointer(t, s)\
-    t.size = s; t.type = type; t.stride = stride; t.pointer = pointer;
+    t.size = s; t.type = type; t.stride = stride; t.ptr = pointer;
 void glVertexPointer(GLint size, GLenum type,
                      GLsizei stride, const GLvoid *pointer) {
     clone_gl_pointer(state.pointers.vertex, size);
@@ -461,7 +474,7 @@ void glArrayElement(GLint i) {
     GLfloat *v;
     pointer_state_t *p;
     p = &state.pointers.color;
-    if (state.enable.color_array && p->pointer) {
+    if (state.enable.color_array && p->ptr) {
         v = gl_pointer_index(p, i);
         GLuint scale = gl_max_value(p->type);
         // color[3] defaults to 1.0f
@@ -475,19 +488,19 @@ void glArrayElement(GLint i) {
         glColor4fv(v);
     }
     p = &state.pointers.normal;
-    if (state.enable.normal_array && p->pointer) {
+    if (state.enable.normal_array && p->ptr) {
         v = gl_pointer_index(p, i);
         glNormal3fv(v);
     }
     for (int i = 0; i < MAX_TEX; i++) {
         p = &state.pointers.tex_coord[i];
-        if (state.enable.tex_coord_array[i] && p->pointer) {
+        if (state.enable.tex_coord_array[i] && p->ptr) {
             v = gl_pointer_index(p, i);
             glMultiTexCoord2fv(GL_TEXTURE0 + i, v);
         }
     }
     p = &state.pointers.vertex;
-    if (state.enable.vertex_array && p->pointer) {
+    if (state.enable.vertex_array && p->ptr) {
         v = gl_pointer_index(p, i);
         if (p->size == 4) {
             glVertex4fv(v);

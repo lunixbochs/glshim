@@ -13,15 +13,22 @@
 #include "../util/mat4.h"
 #include "ring.h"
 
+typedef struct __attribute__((packed)) {
+    GLfloat vert[3],
+            color[4],
+            normal[3],
+            tex[MAX_TEX][4];
+} block_attr_t;
+
+// vert, normal, color, tex*MAX_TEX
+
 // block.h
 typedef struct {
     uint32_t len, count, cap;
     GLenum mode;
 
-    GLfloat *vert;
-    GLfloat *normal;
-    GLfloat *color;
-    GLfloat *tex[MAX_TEX];
+    bool color, normal, tex[MAX_TEX];
+    block_attr_t *attr;
     GLushort *indices;
     GLboolean q2t;
 
@@ -137,7 +144,7 @@ typedef struct {
     GLint size;
     GLenum type;
     GLsizei stride;
-    const GLvoid *pointer;
+    const GLvoid *ptr;
 } pointer_state_t;
 
 typedef struct {

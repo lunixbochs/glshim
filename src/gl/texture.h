@@ -20,11 +20,12 @@ void glDeleteTextures(GLsizei n, const GLuint * textures);
 void glTexParameteri(GLenum target, GLenum pname, GLint param);
 GLboolean glAreTexturesResident(GLsizei n, const GLuint *textures, GLboolean *residences);
 
-void tex_coord_rect_arb(GLfloat *tex, GLsizei len,
+void tex_coord_rect_arb(block_attr_t *attr, GLuint texture, GLsizei len,
                         GLsizei width, GLsizei height);
-void tex_coord_npot(GLfloat *tex, GLsizei len,
+void tex_coord_npot(block_attr_t *attr, GLuint texture, GLsizei len,
                     GLsizei width, GLsizei height,
                     GLsizei nwidth, GLsizei nheight);
+
 int npot(int n);
 
 static inline GLenum map_tex_target(GLenum target) {

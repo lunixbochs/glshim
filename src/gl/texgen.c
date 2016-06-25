@@ -94,9 +94,7 @@ void glGetTexGenfv(GLenum coord, GLenum pname, GLfloat *param) {
     }
 }
 
-static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLfloat *plane_in) {
-    GLfloat *vert = block->vert;
-    GLfloat *normal = block->normal;
+static inline void tex_coord_loop(block_t *block, block_attr_t *attrs, GLuint texture, GLuint offset, GLenum type, GLfloat *plane_in) {
     // if we get sphere map and no normal, just barf and return?
 
     simd4x4f matrix, inverse;
@@ -113,8 +111,11 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
             simd4x4f_matrix_vector_mul(&inverse, &plane, &eyeplane);
         }
     }
-
     for (int i = 0; i < block->len; i++) {
+        block_attr_t *attr = &attrs[i];
+        GLfloat *vert = attr->vert;
+        GLfloat *normal = attr->normal;
+        GLfloat *out = attr->tex[texture];
         if (! block->normal) {
             normal = CURRENT->normal;
         }
@@ -123,13 +124,13 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
         switch (type) {
             case GL_OBJECT_LINEAR:
                 simd4f_ustore2(simd4f_dot4(v, plane), tmp);
-                out[0] = tmp[0];
+                out[offset] = tmp[0];
                 break;
             case GL_EYE_LINEAR: {
                 simd4f eye;
                 simd4x4f_matrix_vector_mul(&matrix, &v, &eye);
                 simd4f_ustore2(simd4f_dot4(eye, eyeplane), tmp);
-                out[0] = tmp[0];
+                out[offset] = tmp[0];
                 break;
             }
             case GL_SPHERE_MAP: {
@@ -184,40 +185,38 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
     }
 }
 
-void gen_tex_coords(block_t *block, GLuint texture) {
+void gen_tex_coords(block_t *block, block_attr_t *attr, GLuint texture) {
     // TODO: do less work when called from glDrawElements?
 
 #define en(v) state.enable.texgen_##v[texture]
-    GLfloat *coords =
-        block->tex[texture] = (GLfloat *)calloc(1, block->len * 4 * sizeof(GLfloat));
     texgen_state_t *texgen = &state.texgen[texture];
     if (en(s) && en(t) && texgen->S == texgen->T) {
         if (texgen->S == GL_SPHERE_MAP) {
-            tex_coord_loop(block, coords, texgen->S, NULL);
+            tex_coord_loop(block, attr, texture, 0, texgen->S, NULL);
             return;
         } else if (en(r) && texgen->S == GL_REFLECTION_MAP && texgen->S == texgen->R) {
-            tex_coord_loop(block, coords, texgen->S, NULL);
+            tex_coord_loop(block, attr, texture, 0, texgen->S, NULL);
             return;
         }
     }
     if (en(s)) {
         if (texgen->S == GL_OBJECT_LINEAR) {
-            tex_coord_loop(block, coords, texgen->S, texgen->Sobj);
+            tex_coord_loop(block, attr, texture, 0, texgen->S, texgen->Sobj);
         } else if (texgen->S == GL_EYE_LINEAR) {
-            tex_coord_loop(block, coords, texgen->S, texgen->Seye);
+            tex_coord_loop(block, attr, texture, 0, texgen->S, texgen->Seye);
         }
     }
     if (en(t)) {
         if (texgen->T == GL_OBJECT_LINEAR) {
-            tex_coord_loop(block, coords + 1, texgen->T, texgen->Tobj);
+            tex_coord_loop(block, attr, texture, 0, texgen->T, texgen->Tobj);
         } else if (texgen->T == GL_EYE_LINEAR) {
-            tex_coord_loop(block, coords + 1, texgen->T, texgen->Teye);
+            tex_coord_loop(block, attr, texture, 0, texgen->T, texgen->Teye);
         }
     }
     // fill in R, Q
     for (int i = 0; i < block->len; i++) {
-        coords[i * 4 + 2] = 0.0f;
-        coords[i * 4 + 3] = 1.0f;
+        block->attr[i].tex[texture][2] = 0.0f;
+        block->attr[i].tex[texture][3] = 1.0f;
     }
 #undef en
 }

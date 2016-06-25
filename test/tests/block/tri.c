@@ -6,12 +6,12 @@ int main() {
     glEnd();
 
     test_glEnableClientState(GL_VERTEX_ARRAY);
-    GLfloat verts[] = {
-        0, 1, 2,
-        3, 4, 5,
-        6, 7, 8,
+    block_attr_t attr[] = {
+        {.vert={0, 1, 2}},
+        {.vert={3, 4, 5}},
+        {.vert={6, 7, 8}},
     };
-    test_glVertexPointer(3, GL_FLOAT, 0, verts);
+    test_glVertexPointer(3, GL_FLOAT, sizeof(block_attr_t), attr);
     test_glDrawArrays(GL_TRIANGLES, 0, 3);
     test_glDisableClientState(GL_VERTEX_ARRAY);
     mock_return;

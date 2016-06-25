@@ -153,39 +153,22 @@ static uint32_t read_uint32(uintptr_t *src) {
 void remote_write_block(ring_t *ring, block_t *block) {
     uint32_t retsize = 0;
     uint32_t index = REMOTE_BLOCK_DRAW;
-    uint32_t elements = block->len * sizeof(GLfloat);
-    ring_val_t vals[7 + MAX_TEX] = {
+    ring_val_t vals[5] = {
         {&retsize, sizeof(uint32_t)},
         {&index, sizeof(uint32_t)},
         {block, sizeof(block_t)},
-        {block->vert, block->vert ? 3 * elements : 0},
-        {block->normal, block->normal ? 3 * elements : 0},
-        {block->color, block->color ? 4 * elements : 0},
+        {block->attr, block->len * sizeof(block_attr_t)},
         {block->indices, block->indices ? block->count * sizeof(GLushort) : 0},
-        0,
     };
-    for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i]) {
-            vals[7 + i].buf = block->tex[i];
-            vals[7 + i].size = 4 * elements;
-        }
-    }
-    ring_write_multi(ring, vals, 7 + MAX_TEX);
+    ring_write_multi(ring, vals, 5);
 }
 
 block_t *remote_read_block(ring_t *ring, packed_call_t *call) {
     uintptr_t pos = (uintptr_t)call;
     pos += sizeof(uint32_t);
     block_t *block = read_ptr(&pos, sizeof(block_t));
-    uint32_t elements = block->len * sizeof(GLfloat);
-    if (block->vert)    block->vert    = read_ptr(&pos, 3 * elements);
-    if (block->normal)  block->normal  = read_ptr(&pos, 3 * elements);
-    if (block->color)   block->color   = read_ptr(&pos, 4 * elements);
+    if (block->attr) block->attr = read_ptr(&pos, block->len * sizeof(block_attr_t));
     if (block->indices) block->indices = read_ptr(&pos, block->count * sizeof(GLushort));
-    for (int i = 0; i < MAX_TEX; i++) {
-        if (block->tex[i])
-            block->tex[i] = read_ptr(&pos, 4 * elements);
-    }
     return block;
 }
 

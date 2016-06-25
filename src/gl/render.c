@@ -151,7 +151,7 @@ static inline int _index(block_t *block, int i) {
 }
 
 static inline GLfloat *_vert(block_t *block, int i) {
-    return &block->vert[_index(block, i) * 3];
+    return block->attr[i].vert;
 }
 
 static void select_match(block_t *block, GLfloat zmin, GLfloat zmax, int i) {
@@ -329,15 +329,16 @@ static int feedback_sizeof(GLenum type) {
 }
 
 static void feedback_vertex(block_t *block, int i) {
+    block_attr_t *attr = &block->attr[i];
     static GLfloat color[] = {0, 0, 0, 1};
     static GLfloat tex[] = {0, 0, 0, 0};
     GLfloat v[4], *c, *t;
-    c = block->color ?: color;
+    c = block->color ? attr->color : color;
     // glFeedbackBuffer returns only the texture coordinate of texture unit GL_TEXTURE0.
-    t = block->tex[0] ?: tex;
+    t = block->tex[0] ? attr->tex[0] : tex;
 
     // TODO: this will be called extra times on stuff like triangle strips
-    gl_transform_vertex(v, &block->vert[i * 3]);
+    gl_transform_vertex(v, attr->vert);
     switch (state.feedback.type) {
         case GL_2D:
             feedback_push_n(v, 2);

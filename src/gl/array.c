@@ -2,86 +2,71 @@
 #include "eval.h"
 #include "gl_str.h"
 
-GLvoid *gl_copy_array(const GLvoid *src,
-                      GLenum from, GLsizei width, GLsizei stride,
-                      GLenum to, GLsizei to_width, GLsizei skip, GLsizei count,
-                      GLboolean normalize) {
-    if (! src || !count)
+GLvoid *gl_copy_ptr(pointer_state_t *dst,
+                    pointer_state_t *src,
+                    GLsizei skip, GLsizei count,
+                    GLboolean normalize) {
+    if (!src->ptr || !count) {
         return NULL;
-
-    if (! stride)
-        stride = width * gl_sizeof(from);
+    }
+    GLsizei dst_size = gl_sizeof(dst->type) * dst->size,
+            src_size = gl_sizeof(src->type) * src->size;
+    GLsizei dst_stride = (dst->stride) ? (dst->stride) : (dst_size),
+            src_stride = (src->stride) ? (src->stride) : (src_size);
 
     const char *unknown_str = "libGL: gl_copy_array -> unsupported type %s\n";
-    GLvoid *dst = malloc(count * to_width * gl_sizeof(to));
-    GLsizei from_size = gl_sizeof(from) * width;
-    GLsizei to_size = gl_sizeof(to) * to_width;
-
-    if (to_width < width) {
-        printf("Warning: gl_copy_array: %i < %i\n", to_width, width);
+    if (dst->size < src->size) {
+        printf("Warning: gl_copy_ptr: %i < %i\n", dst->size, src->size);
         return NULL;
+    }
+    if (dst->ptr == NULL) {
+        dst->ptr = calloc(1, count * dst_stride);
     }
 
     // if stride is weird, we need to be able to arbitrarily shift src
     // so we leave it in a uintptr_t and cast after incrementing
-    uintptr_t in = (uintptr_t)src;
-    in += stride * skip;
-    if (from == to && to_width >= width) {
-        GL_TYPE_SWITCH(out, dst, to,
-            for (int i = skip; i < (skip + count); i++) {
-                memcpy(out, (GLvoid *)in, from_size);
-                for (int j = width; j < to_width; j++) {
-                    out[j] = 0;
+    uintptr_t in = (uintptr_t)src->ptr;
+    uintptr_t out = (uintptr_t)dst->ptr;
+    in += src_stride * skip;
+
+    GL_TYPE_SWITCH(output, out, dst->type,
+        for (int i = skip; i < (skip + count); i++) {
+            GL_TYPE_SWITCH(input, in, src->type,
+                output = out;
+                input = in;
+                for (int j = 0; j < src->size; j++) {
+                    if (src->type != dst->type && normalize) {
+                        // TODO: make sure this isn't clamping, maybe do in float space
+                        output[j] = input[j] * gl_max_value(dst->type);
+                        output[j] /= gl_max_value(src->type);
+                    } else {
+                        output[j] = input[j];
+                    }
                 }
-                out += to_width;
-                in += stride;
-            },
-            default:
-                printf(unknown_str, gl_str(from));
-                return NULL;
-        )
-    } else {
-        GL_TYPE_SWITCH(out, dst, to,
-            for (int i = skip; i < (skip + count); i++) {
-                GL_TYPE_SWITCH(input, in, from,
-                    for (int j = 0; j < width; j++) {
-                        if (from != to && normalize) {
-                            out[j] = input[j] * gl_max_value(to);
-                            out[j] /= gl_max_value(from);
-                        } else {
-                            out[j] = input[j];
-                        }
-                    }
-                    for (int j = width; j < to_width; j++) {
-                        if (j == 3) out[j] = 1;
-                        else out[j] = 0;
-                    }
-                    out += to_width;
-                    in += stride;
-                ,
-                    default:
-                        printf(unknown_str, gl_str(from));
-                        return NULL;
-                )
-            },
-            default:
-                printf(unknown_str, gl_str(to));
-                return NULL;
-        )
-    }
-
-    return dst;
-}
-
-GLvoid *gl_copy_pointer(pointer_state_t *ptr, GLsizei width, GLsizei skip, GLsizei count, GLboolean normalize) {
-    return gl_copy_array(ptr->pointer, ptr->type, ptr->size, ptr->stride, GL_FLOAT, width, skip, count, normalize);
+                for (int j = src->size; j < dst->size; j++) {
+                    if (j == 3) output[j] = 1;
+                    else output[j] = 0;
+                }
+                out += dst_stride;
+                in += src_stride;
+            ,
+                default:
+                    printf(unknown_str, gl_str(src->type));
+                    return NULL;
+            )
+        },
+        default:
+            printf(unknown_str, gl_str(dst->type));
+            return NULL;
+    )
+    return dst->ptr;
 }
 
 GLfloat *gl_pointer_index(pointer_state_t *p, GLint index) {
     static GLfloat buf[4];
     GLsizei size = gl_sizeof(p->type);
     GLsizei stride = p->stride ? p->stride : size * p->size;
-    uintptr_t ptr = (uintptr_t)p->pointer + (stride * index);
+    uintptr_t ptr = (uintptr_t)p->ptr + (stride * index);
 
     GL_TYPE_SWITCH(src, ptr, p->type,
         for (int i = 0; i < p->size; i++) {

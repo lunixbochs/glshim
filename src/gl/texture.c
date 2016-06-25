@@ -22,30 +22,28 @@ int npot(int n) {
 }
 
 // conversions for GL_ARB_texture_rectangle
-void tex_coord_rect_arb(GLfloat *tex, GLsizei len,
+void tex_coord_rect_arb(block_attr_t *attr, GLuint texture, GLsizei len,
                         GLsizei width, GLsizei height) {
-    if (!tex || !width || !height)
+    if (!attr || !width || !height)
         return;
 
     for (int i = 0; i < len; i++) {
-        tex[0] /= width;
-        tex[1] /= height;
-        tex += 4;
+        attr[i].tex[texture][0] /= width;
+        attr[i].tex[texture][1] /= height;
     }
 }
 
-void tex_coord_npot(GLfloat *tex, GLsizei len,
+void tex_coord_npot(block_attr_t *attr, GLuint texture, GLsizei len,
                     GLsizei width, GLsizei height,
                     GLsizei nwidth, GLsizei nheight) {
-    if (!tex || !width || !height)
+    if (!attr || !width || !height)
         return;
 
     GLfloat wratio = (width / (GLfloat)nwidth);
     GLfloat hratio = (height / (GLfloat)nheight);
     for (int i = 0; i < len; i++) {
-        tex[0] *= wratio;
-        tex[1] *= hratio;
-        tex += 4;
+        attr[i].tex[texture][0] *= wratio;
+        attr[i].tex[texture][1] *= hratio;
     }
 }
 
