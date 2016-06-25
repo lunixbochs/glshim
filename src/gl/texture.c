@@ -4,6 +4,7 @@
 #include "error.h"
 #include "gl_helpers.h"
 #include "gl_str.h"
+#include "list.h"
 #include "loader.h"
 #include "pixel.h"
 #include "texture.h"
@@ -99,6 +100,11 @@ void glTexImage2D(GLenum target, GLint level, GLint internalformat,
     GLvoid *pixels = (GLvoid *)data;
     ERROR_IN_BLOCK();
     FORWARD_IF_REMOTE(glTexImage2D);
+    if (! (target == GL_PROXY_TEXTURE_1D || target == GL_PROXY_TEXTURE_2D)) {
+        size_t size = width * height * gl_pixel_sizeof(format, type);
+        pixels = dl_retain(state.list.active, pixels, size);
+        PUSH_IF_COMPILING(glTexImage2D);
+    }
     gltexture_t *bound = state.texture.bound[state.texture.active];
     if (data) {
         // implements GL_UNPACK_ROW_LENGTH
@@ -192,6 +198,11 @@ void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
     const GLvoid *pixels = data;
     ERROR_IN_BLOCK();
     FORWARD_IF_REMOTE(glTexSubImage2D);
+    if (! (target == GL_PROXY_TEXTURE_1D || target == GL_PROXY_TEXTURE_2D)) {
+        size_t size = width * height * gl_pixel_sizeof(format, type);
+        pixels = dl_retain(state.list.active, pixels, size);
+        PUSH_IF_COMPILING(glTexSubImage2D);
+    }
     LOAD_GLES(glTexSubImage2D);
     target = map_tex_target(target);
     pixels = swizzle_texture(width, height, &format, &type, data);

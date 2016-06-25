@@ -81,7 +81,10 @@ extern void load_libs();
     }
 #endif
 
+#define PROXY_GL(name) PROXY(GLES_SILENT, gles, name)
+#ifndef PROXY_GLES
 #define PROXY_GLES(name) PROXY(GLES_SILENT, gles, name)
+#endif
 #define PROXY_EGL(name) PROXY(EGL, egl, name)
 #define PROXY_OES(name) PROXY(OES, egl, name)
 

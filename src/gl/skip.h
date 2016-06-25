@@ -49,6 +49,8 @@
 #define skip_glLightfv
 #endif
 #define skip_glMaterialfv
+#define skip_glFogfv
+#define skip_glLightfv
 
 // raster.c
 #define skip_glViewport

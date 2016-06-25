@@ -5,6 +5,7 @@
 #include "texture.h"
 #include "matrix.h"
 #include "remote.h"
+#include "list.h"
 
 /* raster engine:
     we render pixels to memory somewhere
@@ -49,7 +50,7 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) {
 void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
     ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glRasterPos3f);
-    PROXY_GLES(glRasterPos3f);
+    PROXY_GL(glRasterPos3f);
     GLfloat v[3] = {x, y, z};
     gl_transform_vertex(v, v);
     init_raster();
@@ -63,7 +64,7 @@ void glRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {
 void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
     ERROR_IN_BLOCK();
     PUSH_IF_COMPILING(glWindowPos3f);
-    PROXY_GLES(glWindowPos3f);
+    PROXY_GL(glWindowPos3f);
     raster_state_t *raster = &state.raster;
     raster->pos.x = x;
     raster->pos.y = y;
@@ -92,8 +93,10 @@ void glWindowPos3f(GLfloat x, GLfloat y, GLfloat z) {
 void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
               GLfloat xmove, GLfloat ymove, const GLubyte *bitmap) {
     // TODO: support xorig/yorig
+    size_t size = ((width + 7) / 8) * height;
+    bitmap = dl_retain(state.list.active, bitmap, size);
     PUSH_IF_COMPILING(glBitmap);
-    PROXY_GLES(glBitmap);
+    PROXY_GL(glBitmap);
     raster_state_t *raster = &state.raster;
     struct { GLfloat x, y, z, w; } *pos = (void *)&raster->pos;
     if (! raster->valid) {
@@ -140,8 +143,10 @@ void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig,
 void glDrawPixels(GLsizei width, GLsizei height, GLenum format,
                   GLenum type, const GLvoid *data) {
     const GLubyte *from, *pixels = data;
+    size_t size = width * height * gl_pixel_sizeof(format, type);
+    pixels = dl_retain(state.list.active, pixels, size);
     PUSH_IF_COMPILING(glDrawPixels);
-    PROXY_GLES(glDrawPixels);
+    PROXY_GL(glDrawPixels);
     raster_state_t *raster = &state.raster;
     if (! raster->valid) {
         return;

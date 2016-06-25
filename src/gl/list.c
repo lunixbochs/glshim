@@ -73,3 +73,13 @@ void dl_call(displaylist_t *dl) {
         }
     }
 }
+
+void *dl_retain(displaylist_t *dl, const void *ptr, size_t size) {
+    if (dl && ptr) {
+        void *tmp = malloc(size);
+        memcpy(tmp, ptr, size);
+        ptr = tmp;
+        tack_push(&dl->retain, tmp);
+    }
+    return (void *)ptr;
+}

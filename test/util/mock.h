@@ -1132,11 +1132,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glFinish();\n", ); \
-        } \
     } \
 }
 #define emit_glFlush() { \
@@ -1147,11 +1142,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glFlush();\n", ); \
-        } \
     } \
 }
 #define emit_glFogf(pname, param) { \
@@ -1491,11 +1481,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glGetError();\n", ); \
-        } \
     } \
 }
 #define emit_glGetFixedv(pname, params) { \
@@ -2211,11 +2196,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glLoadIdentity();\n", ); \
-        } \
     } \
 }
 #define emit_glLoadMatrixf(m) { \
@@ -2875,11 +2855,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glPopMatrix();\n", ); \
-        } \
     } \
 }
 #define emit_glPushMatrix() { \
@@ -2890,11 +2865,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glPushMatrix();\n", ); \
-        } \
     } \
 }
 #define emit_glReadPixels(x, y, width, height, format, type, pixels) { \
@@ -4234,11 +4204,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXClientInfo();\n", ); \
-        } \
     } \
 }
 #define emit_glXCopyContext(dpy, src, dst, mask) { \
@@ -5224,11 +5189,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetCurrentContext();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetCurrentDisplay() { \
@@ -5239,11 +5199,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetCurrentDisplay();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetCurrentDisplayEXT() { \
@@ -5254,11 +5209,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetCurrentDisplayEXT();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetCurrentDrawable() { \
@@ -5269,11 +5219,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetCurrentDrawable();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetCurrentReadDrawable() { \
@@ -5284,11 +5229,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetCurrentReadDrawable();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetCurrentReadDrawableSGI() { \
@@ -5299,11 +5239,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetCurrentReadDrawableSGI();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetDrawableAttributes(drawable) { \
@@ -5481,11 +5416,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetFBConfigsSGIX();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetMscRateOML(dpy, drawable, numerator, denominator) { \
@@ -5823,11 +5753,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXGetVisualConfigs();\n", ); \
-        } \
     } \
 }
 #define emit_glXGetVisualFromFBConfig(dpy, config) { \
@@ -7018,11 +6943,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXRender();\n", ); \
-        } \
     } \
 }
 #define emit_glXRenderLarge() { \
@@ -7033,11 +6953,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXRenderLarge();\n", ); \
-        } \
     } \
 }
 #define emit_glXResetFrameCountNV(dpy, screen) { \
@@ -7335,11 +7250,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXVendorPrivate();\n", ); \
-        } \
     } \
 }
 #define emit_glXVendorPrivateWithReply() { \
@@ -7350,11 +7260,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXVendorPrivateWithReply();\n", ); \
-        } \
     } \
 }
 #define emit_glXWaitForMscOML(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc) { \
@@ -7469,11 +7374,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXWaitGL();\n", ); \
-        } \
     } \
 }
 #define emit_glXWaitVideoSyncSGI(divisor, remainder, count) { \
@@ -7512,11 +7412,6 @@ static int failed_test = 0;
     if (packed) { \
         int match = 1; \
         void *a, *b; \
-        if (! match) { \
-            mock_errorf("calls do not match:\n"); \
-            printf("  have: "); mock_print((const packed_call_t *)packed); \
-            printf("  want: glXWaitX();\n", ); \
-        } \
     } \
 }
 

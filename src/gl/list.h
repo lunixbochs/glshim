@@ -13,5 +13,6 @@ extern void dl_call(displaylist_t *dl);
 extern void dl_close(displaylist_t *dl);
 extern void dl_extend(displaylist_t *dl, displaylist_t *append);
 extern void dl_free(displaylist_t *dl);
+extern void *dl_retain(displaylist_t *dl, const void *ptr, size_t size);
 
 #endif

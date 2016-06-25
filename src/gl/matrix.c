@@ -3,6 +3,7 @@
 #include "matrix.h"
 #include "types.h"
 #include "remote.h"
+#include "list.h"
 
 #ifdef LOCAL_MATRIX
 #define PROXY_MATRIX(name)
@@ -59,6 +60,10 @@ static matrix_state_t *get_current_state() {
     return get_matrix_state(state.matrix.mode);
 }
 
+static const void *retain_mat(const GLfloat *m) {
+    return dl_retain(state.list.active, m, 16 * sizeof(GLfloat));
+}
+
 static void update_mvp() {
     mat4 *model = get_matrix(GL_MODELVIEW);
     mat4 *projection = get_matrix(GL_PROJECTION);
@@ -68,13 +73,12 @@ static void update_mvp() {
 }
 
 static void upload_matrix() {
-    GLfloat tmp[16];
-    mat4_save(get_current_matrix(), tmp);
+    GLfloat m[16];
+    mat4_save(get_current_matrix(), m);
     if (state.remote) {
-        forward_glLoadMatrixf(tmp);
+        forward_glLoadMatrixf(m);
     } else {
-        LOAD_GLES(glLoadMatrixf);
-        gles_glLoadMatrixf(tmp);
+        PROXY_MATRIX(glLoadMatrixf);
     }
 }
 
@@ -88,6 +92,7 @@ void glLoadIdentity() {
 }
 
 void glLoadMatrixf(const GLfloat *m) {
+    m = retain_mat(m);
     PUSH_IF_COMPILING(glLoadMatrixf);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -96,6 +101,7 @@ void glLoadMatrixf(const GLfloat *m) {
 }
 
 void glLoadTransposeMatrixf(const GLfloat *m) {
+    m = retain_mat(m);
     PUSH_IF_COMPILING(glLoadTransposeMatrixf);
     ERROR_IN_BLOCK();
     GLfloat tmp[16];
@@ -120,6 +126,7 @@ void glMatrixMode(GLenum mode) {
 }
 
 void glMultMatrixf(const GLfloat *m) {
+    m = retain_mat(m);
     PUSH_IF_COMPILING(glMultMatrixf);
     ERROR_IN_BLOCK();
     mvp_dirty = true;
@@ -130,6 +137,7 @@ void glMultMatrixf(const GLfloat *m) {
 }
 
 void glMultTransposeMatrixf(const GLfloat *m) {
+    m = retain_mat(m);
     PUSH_IF_COMPILING(glMultTransposeMatrixf);
     ERROR_IN_BLOCK();
     GLfloat tmp[16];
