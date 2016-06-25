@@ -102,6 +102,11 @@
 #define direct_glTexCoordPointer
 #define direct_glVertexPointer
 
+#define direct_glGetTexParameterfv
+#define direct_glGetTexParameteriv
+#define direct_glGetTexParameterIiv
+#define direct_glGetTexParameterIuiv
+
 // don't glIndexedCall these functions
 #define skip_index_glAccum
 #define skip_index_glAccumxOES
