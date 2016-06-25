@@ -29,6 +29,7 @@ void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
             case GL_AMBIENT:
             case GL_DIFFUSE:
             case GL_EMISSION:
+            case GL_SPECULAR:
                 len = 4;
                 break;
             case GL_COLOR_INDEXES:
