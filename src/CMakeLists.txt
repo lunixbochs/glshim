@@ -16,7 +16,7 @@ if(DUALMODE)
 endif()
 
 add_library(GL SHARED ${GL_SOURCES})
-set_target_properties(GL PROPERTIES VERSION 1 SOVERSION 1.2.0)
+set_target_properties(GL PROPERTIES VERSION 1.2.0 SOVERSION 1)
 target_link_libraries(GL X11 m dl pthread)
 
 add_library(GL_static STATIC EXCLUDE_FROM_ALL ${GL_SOURCES})
