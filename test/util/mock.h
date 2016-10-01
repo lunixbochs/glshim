@@ -31,6 +31,15 @@ static int failed_test = 0;
 #define VT100_RED "\e[1;31m"
 #define VT100_CLEAR "\e[0m"
 
+static int floatcmp(float *a, float *b, size_t len) {
+	len /= sizeof(float);
+    for (size_t i = 0; i < len; i++) {
+        if (b[i] - a[i] > 0.00001) return 1;
+        if (a[i] - b[i] > 0.00001) return -1;
+    }
+    return 0;
+}
+
 #define mock_print_ptr(prefix, ptr, other, size) \
     printf("%s ", prefix); \
     if (ptr == NULL) { \
@@ -42,7 +51,8 @@ static int failed_test = 0;
             if (i > 0 && i % 32 == 0) { \
                 printf("| "); \
                 for (int j = i - 32; j < i; j += 4) { \
-                    printf("%f ", *(float *)&ac[j]); \
+                    if (ac[j] == bc[j]) printf("%f ", *(float *)&ac[j]); \
+                    else                printf(VT100_RED "%f " VT100_CLEAR, *(float *)&ac[j]); \
                 } \
                 printf("\n"); \
                 printf("            "); \
@@ -56,7 +66,8 @@ static int failed_test = 0;
         } \
         printf(" | "); \
         for (int j = start; j < size; j += 4) { \
-            printf("%f ", *(float *)&ac[j]); \
+            if (ac[j] == bc[j]) printf("%f ", *(float *)&ac[j]); \
+            else                printf(VT100_RED "%f " VT100_CLEAR, *(float *)&ac[j]); \
         } \
     } \
     printf("\n");
@@ -507,7 +518,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.equation, b = _equation; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_equation)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_equation)) != 0))) { \
             printf("  ERROR: arg mismatch: equation\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_equation)); \
             mock_print_ptr("     found:", a, b, sizeof(_equation)); \
@@ -1177,7 +1188,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -1435,7 +1446,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.equation, b = _equation; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_equation)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_equation)) != 0))) { \
             printf("  ERROR: arg mismatch: equation\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_equation)); \
             mock_print_ptr("     found:", a, b, sizeof(_equation)); \
@@ -1520,7 +1531,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -1573,7 +1584,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -1629,7 +1640,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -1728,7 +1739,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -1812,7 +1823,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -1989,7 +2000,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -2087,7 +2098,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -2207,7 +2218,7 @@ static int failed_test = 0;
         int match = 1; \
         void *a, *b; \
         a = packed->args.m, b = _m; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_m)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_m)) != 0))) { \
             printf("  ERROR: arg mismatch: m\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_m)); \
             mock_print_ptr("     found:", a, b, sizeof(_m)); \
@@ -2299,7 +2310,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -2391,7 +2402,7 @@ static int failed_test = 0;
         int match = 1; \
         void *a, *b; \
         a = packed->args.m, b = _m; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_m)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_m)) != 0))) { \
             printf("  ERROR: arg mismatch: m\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_m)); \
             mock_print_ptr("     found:", a, b, sizeof(_m)); \
@@ -2682,7 +2693,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -3232,7 +3243,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
@@ -3434,7 +3445,7 @@ static int failed_test = 0;
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
             mock_print_ptr("  expected:", b, a, sizeof(_params)); \
             mock_print_ptr("     found:", a, b, sizeof(_params)); \
