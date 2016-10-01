@@ -15,11 +15,13 @@ if(DUALMODE)
     set(GL_SOURCES ${GL_SOURCES} ${REMOTE_SOURCES})
 endif()
 
-add_library(GL SHARED ${GL_SOURCES})
-set_target_properties(GL PROPERTIES VERSION 1.2.0 SOVERSION 1)
+add_library(GL_obj OBJECT ${GL_SOURCES})
+set_target_properties(GL_obj PROPERTIES POSITION_INDEPENDENT_CODE 1)
+
+add_library(GL SHARED $<TARGET_OBJECTS:GL_obj>)
 target_link_libraries(GL X11 m dl pthread)
 
-add_library(GL_static STATIC EXCLUDE_FROM_ALL ${GL_SOURCES})
+add_library(GL_static STATIC $<TARGET_OBJECTS:GL_obj>)
 set_target_properties(GL_static PROPERTIES OUTPUT_NAME GL)
 
 add_library(GL2 SHARED EXCLUDE_FROM_ALL ${GL_SOURCES})
