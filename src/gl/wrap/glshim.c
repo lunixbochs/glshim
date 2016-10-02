@@ -1,5 +1,5 @@
 #ifndef USE_ES2
-#include "glpack.h"
+#include "pack_gles.h"
 #include "../loader.h"
 #include "../skip.h"
 #include "../remote.h"

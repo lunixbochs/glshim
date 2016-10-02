@@ -10,7 +10,7 @@
 #include "khash.h"
 #include "tack.h"
 #include "wrap/types.h"
-#include "../util/mat4.h"
+#include "mat4.h"
 #include "ring.h"
 
 // block.h

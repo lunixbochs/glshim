@@ -3,7 +3,8 @@
 #include "../get.h"
 #include "../list.h"
 #include "../remote.h"
-#include "./glpack.h"
+#include "./pack_extern.h"
+#include "./index.h"
 #include "./remote.h"
 #include "gl_helpers.h"
 

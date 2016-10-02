@@ -1,7 +1,8 @@
 #include <GL/gl.h>
 
 #include "glx.h"
-#include "../gl/loader.h"
+#include "../gl/load/gles.h"
+#include "../gl/load/gl.h"
 #include "../gl/wrap/extra.h"
 
 #define MAP(func_name, func) \

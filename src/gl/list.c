@@ -3,6 +3,7 @@
 #include "block.h"
 #include "gl.h"
 #include "list.h"
+#include "wrap/pack_extern.h"
 
 displaylist_t *dl_alloc() {
     displaylist_t *dl = calloc(1, sizeof(displaylist_t));

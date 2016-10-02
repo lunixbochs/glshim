@@ -2,10 +2,11 @@
 #include "block.h"
 #include "error.h"
 #include "list.h"
-#include "loader.h"
 #include "texture.h"
 #include "types.h"
 #include "remote.h"
+
+#include "load/gl.h"
 
 glstate_t state = {
     0,

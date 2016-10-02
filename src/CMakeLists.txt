@@ -1,4 +1,4 @@
-include_directories(. util)
+include_directories(util)
 
 file(GLOB_RECURSE REMOTE_SOURCES remote/*.c)
 add_executable(remote EXCLUDE_FROM_ALL ${REMOTE_SOURCES})

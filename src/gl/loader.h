@@ -7,7 +7,7 @@
 #include <string.h>
 
 #include "const.h"
-#include "wrap/glpack.h"
+#include "wrap/pack_extern.h"
 #include "wrap/stub.h"
 
 // will become references to dlopen'd gles and egl

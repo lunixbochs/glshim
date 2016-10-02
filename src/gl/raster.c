@@ -1,11 +1,12 @@
 #include "error.h"
-#include "loader.h"
 #include "pixel.h"
 #include "raster.h"
 #include "texture.h"
 #include "matrix.h"
 #include "remote.h"
 #include "list.h"
+
+#include "load/gl.h"
 
 /* raster engine:
     we render pixels to memory somewhere

@@ -9,7 +9,7 @@
 #include <sys/wait.h>
 
 #include "remote.h"
-#include "wrap/glpack.h"
+#include "wrap/pack_gl.h"
 #include "types.h"
 #include "ring.h"
 

@@ -2,9 +2,10 @@
 #include "gl_str.h"
 #include "light.h"
 #include "list.h"
-#include "loader.h"
 #include "matrix.h"
 #include "remote.h"
+
+#include "load/gl.h"
 
 #ifndef USE_ES2
 void glLightModelf(GLenum pname, GLfloat param) {

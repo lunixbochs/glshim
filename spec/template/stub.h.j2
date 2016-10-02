@@ -1,8 +1,12 @@
+{% from "base/util.j2" import args, call %}
 {% extends "base/header.j2" %}
 {% block content %}
 
+#include <GL/gl.h>
+#include "extypes.h"
+
 {% for func in functions %}
-{{ func.return }} stub_{{ func.name }}({{ func.name }}_ARG_EXPAND);
+{{ func.return }} stub_{{ func.name }}({{ func.args|args }});
 {% endfor %}
 
 {% endblock %}

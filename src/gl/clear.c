@@ -1,6 +1,6 @@
 #include "error.h"
-#include "loader.h"
 #include "remote.h"
+#include "load/gl.h"
 
 void glClear(GLbitfield mask) {
     ERROR_IN_BLOCK();

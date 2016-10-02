@@ -1,6 +1,8 @@
 #include <limits.h>
 #include "../error.h"
 #include "extra.h"
+#include "pack_gles.h"
+#include "pack_gl.h"
 
 #define constArrayToFloat(a, size) \
     GLfloat s[size];                \

@@ -15,9 +15,9 @@
 #include "gl_helpers.h"
 #include "remote.h"
 #include "ring.h"
-#include "wrap/glpack.h"
 #include "wrap/remote.h"
 #include "wrap/types.h"
+#include "wrap/pack_extern.h"
 
 static ring_t ring = {0};
 static int g_remote_noisy = 0;

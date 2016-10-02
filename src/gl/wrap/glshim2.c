@@ -1,5 +1,5 @@
 #ifdef USE_ES2
-#include "glpack.h"
+#include "pack_gles2.h"
 #include "../loader.h"
 
 #ifndef skip_glActiveTexture

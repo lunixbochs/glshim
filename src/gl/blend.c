@@ -1,6 +1,8 @@
 #include "error.h"
-#include "loader.h"
 #include "remote.h"
+
+#include "load/gl.h"
+#include "load/gles.h"
 
 void glAlphaFunc(GLenum func, GLclampf ref) {
     ERROR_IN_BLOCK();

@@ -3,7 +3,10 @@
 extern "C" {
 #endif
 #include "gl_str.h"
-#include "wrap/glpack.h"
+#include "wrap/index.h"
+#include "wrap/pack_egl.h"
+#include "wrap/pack_gles.h"
+#include "wrap/pack_glx.h"
 #ifndef MOCK_H
 #define MOCK_H
 

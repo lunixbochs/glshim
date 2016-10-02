@@ -12,7 +12,8 @@
 
 #include "glx.h"
 
-#include "../gl/loader.h"
+#include "../gl/load/gl.h"
+#include "../gl/load/gles.h"
 #include "../gl/raster.h"
 #include "../gl/remote.h"
 #include "text.h"

@@ -1,7 +1,8 @@
 #include "error.h"
 #include "stack.h"
-#include "loader.h"
 #include "remote.h"
+
+#include "load/gl.h"
 
 void glPushAttrib(GLbitfield mask) {
     ERROR_IN_BLOCK();

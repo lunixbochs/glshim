@@ -1,9 +1,11 @@
 #include "error.h"
-#include "loader.h"
 #include "matrix.h"
 #include "types.h"
 #include "remote.h"
 #include "list.h"
+
+#include "load/gl.h"
+#include "load/gles.h"
 
 #ifdef LOCAL_MATRIX
 #define PROXY_MATRIX(name)

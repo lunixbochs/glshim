@@ -1,12 +1,13 @@
 #include "block.h"
 #include "gl_helpers.h"
 #include "line.h"
-#include "loader.h"
 #include "matrix.h"
 #include "render.h"
 #include "texgen.h"
 #include "texture.h"
 #include "remote.h"
+
+#include "load/gles.h"
 
 #define alloc_sublist(n, type, cap) \
     (GLfloat *)malloc(n * gl_sizeof(type) * cap)

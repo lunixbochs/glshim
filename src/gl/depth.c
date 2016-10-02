@@ -1,6 +1,6 @@
 #include "error.h"
-#include "loader.h"
 #include "remote.h"
+#include "load/gles.h"
 
 void glDepthFunc(GLenum func) {
     ERROR_IN_BLOCK();

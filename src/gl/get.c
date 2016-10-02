@@ -3,9 +3,10 @@
 #include "error.h"
 #include "gl_helpers.h"
 #include "gl_str.h"
-#include "loader.h"
 #include "matrix.h"
 #include "remote.h"
+
+#include "load/gl.h"
 
 void gl_clear_error() {
     while (glGetError()) {}

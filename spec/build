@@ -10,21 +10,31 @@ egl="yml/egl.yml"
 cats="VERSION_1_0,VERSION_1_1,VERSION_1_2,VERSION_1_3,VERSION_1_4,VERSION_1_5,glx,EXT_swap_control"
 
 ./gen.py --deep "$glx,$gles" mock.c.j2 mock.c mock.h > "$base/../test/util/mock.c" &
-./gen.py --deep "$glx,$gles" --ifndef USE_ES2 mock.h.j2 mock.h "gl_str.h" "wrap/glpack.h" > "$base/../test/util/mock.h" &
+./gen.py --deep "$glx,$gles" --ifndef USE_ES2 mock.h.j2 mock.h "gl_str.h" wrap/index.h wrap/pack_egl.h wrap/pack_gles.h wrap/pack_glx.h > "$base/../test/util/mock.h" &
 
-./gen.py --deep "$gles,$glx,$opengl" --ifndef USE_ES2 call.c.j2 call.c glpack.h ../loader.h ../skip.h > "$base/gl/wrap/call.c" &
-./gen.py --deep "$gles2,$glx,$opengl" --ifdef USE_ES2 call.c.j2 call2.c glpack.h ../loader.h > "$base/gl/wrap/call2.c" &
+./gen.py --deep "$gles,$glx,$opengl" --ifndef USE_ES2 call.c.j2 call.c pack_gles.h pack_gl.h pack_glx.h ../loader.h ../skip.h index.h > "$base/gl/wrap/call.c" &
+./gen.py --deep "$gles2,$glx,$opengl" --ifdef USE_ES2 call.c.j2 call2.c pack_gles2.h pack_gl.h pack_glx.h ../loader.h index2.h > "$base/gl/wrap/call2.c" &
+
+./gen.py --deep "$gles,$glx,$opengl" --ifndef USE_ES2 index.c.j2 index.c pack_glx.h pack_gl.h pack_gles.h ../skip.h index.h > "$base/gl/wrap/index.c" &
+./gen.py --deep "$gles,$glx,$opengl" --ifndef USE_ES2 index.h.j2 index.h pack_glx.h pack_gl.h pack_gles.h ../skip.h > "$base/gl/wrap/index.h" &
+./gen.py --deep "$gles2,$glx,$opengl" --ifdef USE_ES2 index.c.j2 index2.c pack_glx.h pack_gl.h pack_gles2.h index2.h > "$base/gl/wrap/index2.c" &
+./gen.py --deep "$gles2,$glx,$opengl" --ifdef USE_ES2 index.h.j2 index2.h pack_glx.h pack_gl.h pack_gles2.h > "$base/gl/wrap/index2.h" &
 
 ./gen.py "$gles" --ifndef USE_ES2 stub.c.j2 stub.c stub.h ../loader.h > "$base/gl/wrap/stub.c" &
-./gen.py "$gles" --ifndef USE_ES2 stub.h.j2 stub.h glpack.h > "$base/gl/wrap/stub.h" &
+./gen.py "$gles" --ifndef USE_ES2 stub.h.j2 stub.h > "$base/gl/wrap/stub.h" &
 ./gen.py "$gles" --ifdef USE_ES2 stub.c.j2 stub2.c stub2.h ../loader.h > "$base/gl/wrap/stub2.c" &
-./gen.py "$gles" --ifdef USE_ES2 stub.h.j2 stub2.h glpack.h > "$base/gl/wrap/stub2.h" &
+./gen.py "$gles" --ifdef USE_ES2 stub.h.j2 stub2.h > "$base/gl/wrap/stub2.h" &
 
-./gen.py "$gles" --ifndef USE_ES2 glshim.c.j2 glshim.c glpack.h ../loader.h ../skip.h ../remote.h > "$base/gl/wrap/glshim.c" &
-./gen.py --deep "$glx,$opengl,$gles,$gles2,$egl" base/pack.h.j2 pack.h ../types.h > "$base/gl/wrap/glpack.h" &
+./gen.py "$gles" --ifndef USE_ES2 glshim.c.j2 glshim.c pack_gles.h ../loader.h ../skip.h ../remote.h > "$base/gl/wrap/glshim.c" &
 ./gen.py "$gles" --ifndef USE_ES2 glxfuncs.j2 glxfuncs.inc > "$base/glx/glesfuncs.inc" &
 
-./gen.py "$gles2" --ifdef USE_ES2 glshim.c.j2 glshim2.c glpack.h ../loader.h > "$base/gl/wrap/glshim2.c" &
+./gen.py --deep "$glx" base/pack.h.j2 pack_glx.h ../types.h > "$base/gl/wrap/pack_glx.h" &
+./gen.py --deep "$opengl" base/pack.h.j2 pack_gl.h ../types.h > "$base/gl/wrap/pack_gl.h" &
+./gen.py --deep "$gles" base/pack.h.j2 pack_gles.h ../types.h > "$base/gl/wrap/pack_gles.h" &
+./gen.py --deep "$gles2" base/pack.h.j2 pack_gles2.h ../types.h > "$base/gl/wrap/pack_gles2.h" &
+./gen.py --deep "$egl" base/pack.h.j2 pack_egl.h ../types.h > "$base/gl/wrap/pack_egl.h" &
+
+./gen.py "$gles2" --ifdef USE_ES2 glshim.c.j2 glshim2.c pack_gles2.h ../loader.h > "$base/gl/wrap/glshim2.c" &
 ./gen.py "$gles2" --ifdef USE_ES2 glxfuncs.j2 gles2funcs.inc > "$base/glx/gles2funcs.inc" &
 
 rm -rf "$base/../test/build"
