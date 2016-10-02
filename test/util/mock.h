@@ -31,46 +31,9 @@ static int failed_test = 0;
 #define VT100_RED "\e[1;31m"
 #define VT100_CLEAR "\e[0m"
 
-static int floatcmp(float *a, float *b, size_t len) {
-	len /= sizeof(float);
-    for (size_t i = 0; i < len; i++) {
-        if (b[i] - a[i] > 0.00001) return 1;
-        if (a[i] - b[i] > 0.00001) return -1;
-    }
-    return 0;
-}
-
-#define mock_print_ptr(prefix, ptr, other, size) \
-    printf("%s ", prefix); \
-    if (ptr == NULL) { \
-        printf("NULL"); \
-    } else { \
-        char *ac = ptr, *bc = other; \
-        for (size_t i = 0; i < size; i++) { \
-            if (i > 0 && i % 4 == 0) printf(" "); \
-            if (i > 0 && i % 32 == 0) { \
-                printf("| "); \
-                for (int j = i - 32; j < i; j += 4) { \
-                    if (ac[j] == bc[j]) printf("%f ", *(float *)&ac[j]); \
-                    else                printf(VT100_RED "%f " VT100_CLEAR, *(float *)&ac[j]); \
-                } \
-                printf("\n"); \
-                printf("            "); \
-            } \
-            if (ac[i] == bc[i]) printf("%02X", (unsigned char)ac[i]); \
-            else                printf(VT100_RED "%02X" VT100_CLEAR, (unsigned char)ac[i]); \
-        } \
-        int start = size - 32; \
-        if (size % 32 != 0) { \
-            size - (size % 32); \
-        } \
-        printf(" | "); \
-        for (int j = start; j < size; j += 4) { \
-            if (ac[j] == bc[j]) printf("%f ", *(float *)&ac[j]); \
-            else                printf(VT100_RED "%f " VT100_CLEAR, *(float *)&ac[j]); \
-        } \
-    } \
-    printf("\n");
+int mock_fcmp(float *a, float *b, size_t len);
+void mock_fdiff(float *a, float *b, size_t len);
+void mock_ptrdiff(char *prefix, void *ptr, void *other, size_t size);
 
 #define mock_return { \
     packed_call_t *call = NULL; \
@@ -317,8 +280,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.data, b = _data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_data)) != 0))) { \
             printf("  ERROR: arg mismatch: data\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_data)); \
-            mock_print_ptr("     found:", a, b, sizeof(_data)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_data)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_data)); \
             match = 0; \
         } \
         if (packed->args.usage != _usage) { \
@@ -351,8 +314,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.data, b = _data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_data)) != 0))) { \
             printf("  ERROR: arg mismatch: data\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_data)); \
-            mock_print_ptr("     found:", a, b, sizeof(_data)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_data)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_data)); \
             match = 0; \
         } \
         if (! match) { \
@@ -518,10 +481,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.equation, b = _equation; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_equation)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_equation)) != 0))) { \
             printf("  ERROR: arg mismatch: equation\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_equation)); \
-            mock_print_ptr("     found:", a, b, sizeof(_equation)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_equation)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_equation)); \
             match = 0; \
         } \
         if (! match) { \
@@ -545,8 +508,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.equation, b = _equation; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_equation)) != 0))) { \
             printf("  ERROR: arg mismatch: equation\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_equation)); \
-            mock_print_ptr("     found:", a, b, sizeof(_equation)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_equation)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_equation)); \
             match = 0; \
         } \
         if (! match) { \
@@ -684,8 +647,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pointer, b = _pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pointer)) != 0))) { \
             printf("  ERROR: arg mismatch: pointer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pointer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pointer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pointer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pointer)); \
             match = 0; \
         } \
         if (! match) { \
@@ -727,8 +690,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.data, b = _data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_data)) != 0))) { \
             printf("  ERROR: arg mismatch: data\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_data)); \
-            mock_print_ptr("     found:", a, b, sizeof(_data)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_data)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_data)); \
             match = 0; \
         } \
         if (! match) { \
@@ -773,8 +736,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.data, b = _data; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_data)) != 0))) { \
             printf("  ERROR: arg mismatch: data\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_data)); \
-            mock_print_ptr("     found:", a, b, sizeof(_data)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_data)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_data)); \
             match = 0; \
         } \
         if (! match) { \
@@ -894,8 +857,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.buffers, b = _buffers; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_buffers)) != 0))) { \
             printf("  ERROR: arg mismatch: buffers\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_buffers)); \
-            mock_print_ptr("     found:", a, b, sizeof(_buffers)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_buffers)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_buffers)); \
             match = 0; \
         } \
         if (! match) { \
@@ -919,8 +882,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.textures, b = _textures; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_textures)) != 0))) { \
             printf("  ERROR: arg mismatch: textures\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_textures)); \
-            mock_print_ptr("     found:", a, b, sizeof(_textures)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_textures)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_textures)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1088,8 +1051,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.indices, b = _indices; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_indices)) != 0))) { \
             printf("  ERROR: arg mismatch: indices\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_indices)); \
-            mock_print_ptr("     found:", a, b, sizeof(_indices)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_indices)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_indices)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1188,10 +1151,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1236,8 +1199,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1345,8 +1308,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.buffers, b = _buffers; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_buffers)) != 0))) { \
             printf("  ERROR: arg mismatch: buffers\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_buffers)); \
-            mock_print_ptr("     found:", a, b, sizeof(_buffers)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_buffers)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_buffers)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1370,8 +1333,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.textures, b = _textures; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_textures)) != 0))) { \
             printf("  ERROR: arg mismatch: textures\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_textures)); \
-            mock_print_ptr("     found:", a, b, sizeof(_textures)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_textures)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_textures)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1395,8 +1358,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1423,8 +1386,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1446,10 +1409,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.equation, b = _equation; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_equation)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_equation)) != 0))) { \
             printf("  ERROR: arg mismatch: equation\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_equation)); \
-            mock_print_ptr("     found:", a, b, sizeof(_equation)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_equation)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_equation)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1473,8 +1436,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.equation, b = _equation; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_equation)) != 0))) { \
             printf("  ERROR: arg mismatch: equation\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_equation)); \
-            mock_print_ptr("     found:", a, b, sizeof(_equation)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_equation)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_equation)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1508,8 +1471,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1531,10 +1494,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1558,8 +1521,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1584,10 +1547,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1614,8 +1577,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1640,10 +1603,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1670,8 +1633,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1695,8 +1658,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1739,10 +1702,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1769,8 +1732,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1797,8 +1760,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1823,10 +1786,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1853,8 +1816,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -1881,8 +1844,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2000,10 +1963,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2048,8 +2011,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2098,10 +2061,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2152,8 +2115,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2218,10 +2181,10 @@ static int floatcmp(float *a, float *b, size_t len) {
         int match = 1; \
         void *a, *b; \
         a = packed->args.m, b = _m; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_m)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_m)) != 0))) { \
             printf("  ERROR: arg mismatch: m\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_m)); \
-            mock_print_ptr("     found:", a, b, sizeof(_m)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_m)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_m)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2242,8 +2205,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.m, b = _m; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_m)) != 0))) { \
             printf("  ERROR: arg mismatch: m\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_m)); \
-            mock_print_ptr("     found:", a, b, sizeof(_m)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_m)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_m)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2310,10 +2273,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2364,8 +2327,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2402,10 +2365,10 @@ static int floatcmp(float *a, float *b, size_t len) {
         int match = 1; \
         void *a, *b; \
         a = packed->args.m, b = _m; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_m)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_m)) != 0))) { \
             printf("  ERROR: arg mismatch: m\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_m)); \
-            mock_print_ptr("     found:", a, b, sizeof(_m)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_m)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_m)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2426,8 +2389,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.m, b = _m; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_m)) != 0))) { \
             printf("  ERROR: arg mismatch: m\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_m)); \
-            mock_print_ptr("     found:", a, b, sizeof(_m)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_m)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_m)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2562,8 +2525,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pointer, b = _pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pointer)) != 0))) { \
             printf("  ERROR: arg mismatch: pointer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pointer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pointer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pointer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pointer)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2693,10 +2656,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2741,8 +2704,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2787,8 +2750,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pointer, b = _pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pointer)) != 0))) { \
             printf("  ERROR: arg mismatch: pointer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pointer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pointer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pointer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pointer)); \
             match = 0; \
         } \
         if (! match) { \
@@ -2907,8 +2870,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pixels, b = _pixels; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pixels)) != 0))) { \
             printf("  ERROR: arg mismatch: pixels\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pixels)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pixels)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pixels)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pixels)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3193,8 +3156,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pointer, b = _pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pointer)) != 0))) { \
             printf("  ERROR: arg mismatch: pointer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pointer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pointer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pointer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pointer)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3243,10 +3206,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3297,8 +3260,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3349,8 +3312,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3395,8 +3358,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pixels, b = _pixels; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pixels)) != 0))) { \
             printf("  ERROR: arg mismatch: pixels\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pixels)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pixels)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pixels)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pixels)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3445,10 +3408,10 @@ static int floatcmp(float *a, float *b, size_t len) {
             match = 0; \
         } \
         a = packed->args.params, b = _params; \
-        if (b == NULL && a != NULL || (a != NULL && b != NULL && (floatcmp(a, b, sizeof(_params)) != 0))) { \
+        if (b == NULL && a != NULL || (a != NULL && b != NULL && (mock_fcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3499,8 +3462,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3551,8 +3514,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3597,8 +3560,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pixels, b = _pixels; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pixels)) != 0))) { \
             printf("  ERROR: arg mismatch: pixels\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pixels)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pixels)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pixels)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pixels)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3676,8 +3639,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pointer, b = _pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pointer)) != 0))) { \
             printf("  ERROR: arg mismatch: pointer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pointer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pointer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pointer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pointer)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3725,8 +3688,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pbuffer != _pbuffer) { \
@@ -3735,8 +3698,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.params, b = _params; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_params)) != 0))) { \
             printf("  ERROR: arg mismatch: params\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_params)); \
-            mock_print_ptr("     found:", a, b, sizeof(_params)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_params)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_params)); \
             match = 0; \
         } \
         if (packed->args.dmbuffer != _dmbuffer) { \
@@ -3760,8 +3723,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -3791,8 +3754,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.hpId != _hpId) { \
@@ -3816,8 +3779,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.group != _group) { \
@@ -3844,8 +3807,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -3872,8 +3835,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -3885,8 +3848,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3907,8 +3870,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.video_capture_slot != _video_capture_slot) { \
@@ -3935,8 +3898,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.video_slot != _video_slot) { \
@@ -3948,8 +3911,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         if (! match) { \
@@ -3970,8 +3933,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.VideoDevice != _VideoDevice) { \
@@ -4037,8 +4000,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -4077,8 +4040,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -4108,8 +4071,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -4118,15 +4081,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         a = packed->args.nelements, b = _nelements; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
             printf("  ERROR: arg mismatch: nelements\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_nelements)); \
-            mock_print_ptr("     found:", a, b, sizeof(_nelements)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_nelements)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_nelements)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4147,8 +4110,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -4157,15 +4120,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         a = packed->args.nelements, b = _nelements; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
             printf("  ERROR: arg mismatch: nelements\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_nelements)); \
-            mock_print_ptr("     found:", a, b, sizeof(_nelements)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_nelements)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_nelements)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4186,8 +4149,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -4196,8 +4159,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attribList, b = _attribList; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attribList)) != 0))) { \
             printf("  ERROR: arg mismatch: attribList\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attribList)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attribList)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attribList)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attribList)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4228,8 +4191,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.src != _src) { \
@@ -4259,8 +4222,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.srcCtx != _srcCtx) { \
@@ -4332,8 +4295,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -4369,15 +4332,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         a = packed->args.vis, b = _vis; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_vis)) != 0))) { \
             printf("  ERROR: arg mismatch: vis\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_vis)); \
-            mock_print_ptr("     found:", a, b, sizeof(_vis)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_vis)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_vis)); \
             match = 0; \
         } \
         if (packed->args.shareList != _shareList) { \
@@ -4404,8 +4367,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4420,8 +4383,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4442,8 +4405,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4476,8 +4439,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4492,8 +4455,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4514,15 +4477,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         a = packed->args.visual, b = _visual; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_visual)) != 0))) { \
             printf("  ERROR: arg mismatch: visual\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_visual)); \
-            mock_print_ptr("     found:", a, b, sizeof(_visual)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_visual)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_visual)); \
             match = 0; \
         } \
         if (packed->args.pixmap != _pixmap) { \
@@ -4546,15 +4509,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         a = packed->args.visual, b = _visual; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_visual)) != 0))) { \
             printf("  ERROR: arg mismatch: visual\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_visual)); \
-            mock_print_ptr("     found:", a, b, sizeof(_visual)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_visual)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_visual)); \
             match = 0; \
         } \
         if (packed->args.pixmap != _pixmap) { \
@@ -4581,8 +4544,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4609,8 +4572,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -4646,8 +4609,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4680,8 +4643,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4690,8 +4653,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4712,8 +4675,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4725,8 +4688,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4747,8 +4710,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -4760,8 +4723,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attrib_list, b = _attrib_list; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attrib_list)) != 0))) { \
             printf("  ERROR: arg mismatch: attrib_list\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attrib_list)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attrib_list)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attrib_list)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attrib_list)); \
             match = 0; \
         } \
         if (! match) { \
@@ -4782,8 +4745,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.window != _window) { \
@@ -4810,8 +4773,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.ctx != _ctx) { \
@@ -4835,8 +4798,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pbuf != _pbuf) { \
@@ -4860,8 +4823,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pixmap != _pixmap) { \
@@ -4885,8 +4848,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.glxvideosource != _glxvideosource) { \
@@ -4910,8 +4873,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.hpId != _hpId) { \
@@ -4935,8 +4898,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pbuf != _pbuf) { \
@@ -4960,8 +4923,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pixmap != _pixmap) { \
@@ -4985,8 +4948,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.win != _win) { \
@@ -5010,8 +4973,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -5020,8 +4983,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.nelements, b = _nelements; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
             printf("  ERROR: arg mismatch: nelements\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_nelements)); \
-            mock_print_ptr("     found:", a, b, sizeof(_nelements)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_nelements)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_nelements)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5042,8 +5005,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -5052,8 +5015,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.nelements, b = _nelements; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
             printf("  ERROR: arg mismatch: nelements\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_nelements)); \
-            mock_print_ptr("     found:", a, b, sizeof(_nelements)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_nelements)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_nelements)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5074,8 +5037,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.context != _context) { \
@@ -5099,8 +5062,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pointer, b = _pointer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pointer)) != 0))) { \
             printf("  ERROR: arg mismatch: pointer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pointer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pointer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pointer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pointer)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5121,8 +5084,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         if (packed->args.name != _name) { \
@@ -5146,15 +5109,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         a = packed->args.visual, b = _visual; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_visual)) != 0))) { \
             printf("  ERROR: arg mismatch: visual\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_visual)); \
-            mock_print_ptr("     found:", a, b, sizeof(_visual)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_visual)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_visual)); \
             match = 0; \
         } \
         if (packed->args.attribute != _attribute) { \
@@ -5163,8 +5126,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5299,8 +5262,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -5312,8 +5275,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5334,8 +5297,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -5347,8 +5310,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5369,15 +5332,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         a = packed->args.vis, b = _vis; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_vis)) != 0))) { \
             printf("  ERROR: arg mismatch: vis\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_vis)); \
-            mock_print_ptr("     found:", a, b, sizeof(_vis)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_vis)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_vis)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5398,8 +5361,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -5408,8 +5371,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.nelements, b = _nelements; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_nelements)) != 0))) { \
             printf("  ERROR: arg mismatch: nelements\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_nelements)); \
-            mock_print_ptr("     found:", a, b, sizeof(_nelements)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_nelements)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_nelements)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5440,8 +5403,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -5450,15 +5413,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.numerator, b = _numerator; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_numerator)) != 0))) { \
             printf("  ERROR: arg mismatch: numerator\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_numerator)); \
-            mock_print_ptr("     found:", a, b, sizeof(_numerator)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_numerator)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_numerator)); \
             match = 0; \
         } \
         a = packed->args.denominator, b = _denominator; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_denominator)) != 0))) { \
             printf("  ERROR: arg mismatch: denominator\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_denominator)); \
-            mock_print_ptr("     found:", a, b, sizeof(_denominator)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_denominator)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_denominator)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5479,8 +5442,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.procName, b = _procName; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_procName)) != 0))) { \
             printf("  ERROR: arg mismatch: procName\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_procName)); \
-            mock_print_ptr("     found:", a, b, sizeof(_procName)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_procName)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_procName)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5501,8 +5464,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.procName, b = _procName; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_procName)) != 0))) { \
             printf("  ERROR: arg mismatch: procName\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_procName)); \
-            mock_print_ptr("     found:", a, b, sizeof(_procName)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_procName)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_procName)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5523,8 +5486,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.draw != _draw) { \
@@ -5533,8 +5496,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.event_mask, b = _event_mask; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_event_mask)) != 0))) { \
             printf("  ERROR: arg mismatch: event_mask\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_event_mask)); \
-            mock_print_ptr("     found:", a, b, sizeof(_event_mask)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_event_mask)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_event_mask)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5555,8 +5518,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -5565,8 +5528,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.mask, b = _mask; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_mask)) != 0))) { \
             printf("  ERROR: arg mismatch: mask\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_mask)); \
-            mock_print_ptr("     found:", a, b, sizeof(_mask)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_mask)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_mask)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5587,8 +5550,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -5597,22 +5560,22 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.ust, b = _ust; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_ust)) != 0))) { \
             printf("  ERROR: arg mismatch: ust\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_ust)); \
-            mock_print_ptr("     found:", a, b, sizeof(_ust)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_ust)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_ust)); \
             match = 0; \
         } \
         a = packed->args.msc, b = _msc; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_msc)) != 0))) { \
             printf("  ERROR: arg mismatch: msc\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_msc)); \
-            mock_print_ptr("     found:", a, b, sizeof(_msc)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_msc)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_msc)); \
             match = 0; \
         } \
         a = packed->args.sbc, b = _sbc; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_sbc)) != 0))) { \
             printf("  ERROR: arg mismatch: sbc\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_sbc)); \
-            mock_print_ptr("     found:", a, b, sizeof(_sbc)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_sbc)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_sbc)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5633,8 +5596,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.overlay != _overlay) { \
@@ -5646,8 +5609,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pTransparentIndex, b = _pTransparentIndex; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pTransparentIndex)) != 0))) { \
             printf("  ERROR: arg mismatch: pTransparentIndex\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pTransparentIndex)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pTransparentIndex)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pTransparentIndex)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pTransparentIndex)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5668,8 +5631,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -5681,8 +5644,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pVideoDevice, b = _pVideoDevice; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pVideoDevice)) != 0))) { \
             printf("  ERROR: arg mismatch: pVideoDevice\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pVideoDevice)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pVideoDevice)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pVideoDevice)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pVideoDevice)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5703,8 +5666,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -5716,15 +5679,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pulCounterOutputPbuffer, b = _pulCounterOutputPbuffer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pulCounterOutputPbuffer)) != 0))) { \
             printf("  ERROR: arg mismatch: pulCounterOutputPbuffer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pulCounterOutputPbuffer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pulCounterOutputPbuffer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pulCounterOutputPbuffer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pulCounterOutputPbuffer)); \
             match = 0; \
         } \
         a = packed->args.pulCounterOutputVideo, b = _pulCounterOutputVideo; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pulCounterOutputVideo)) != 0))) { \
             printf("  ERROR: arg mismatch: pulCounterOutputVideo\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pulCounterOutputVideo)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pulCounterOutputVideo)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pulCounterOutputVideo)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pulCounterOutputVideo)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5745,8 +5708,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.count, b = _count; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_count)) != 0))) { \
             printf("  ERROR: arg mismatch: count\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_count)); \
-            mock_print_ptr("     found:", a, b, sizeof(_count)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_count)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_count)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5777,8 +5740,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -5802,8 +5765,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.config != _config) { \
@@ -5827,8 +5790,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.timeSlice != _timeSlice) { \
@@ -5843,8 +5806,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attribList, b = _attribList; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attribList)) != 0))) { \
             printf("  ERROR: arg mismatch: attribList\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attribList)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attribList)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attribList)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attribList)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5865,8 +5828,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.networkId != _networkId) { \
@@ -5878,15 +5841,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.cfg, b = _cfg; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_cfg)) != 0))) { \
             printf("  ERROR: arg mismatch: cfg\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_cfg)); \
-            mock_print_ptr("     found:", a, b, sizeof(_cfg)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_cfg)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_cfg)); \
             match = 0; \
         } \
         a = packed->args.hpId, b = _hpId; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_hpId)) != 0))) { \
             printf("  ERROR: arg mismatch: hpId\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_hpId)); \
-            mock_print_ptr("     found:", a, b, sizeof(_hpId)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_hpId)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_hpId)); \
             match = 0; \
         } \
         if (! match) { \
@@ -5907,8 +5870,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.contextID != _contextID) { \
@@ -5932,8 +5895,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.ctx != _ctx) { \
@@ -5957,8 +5920,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -5985,8 +5948,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -6013,8 +5976,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.device != _device) { \
@@ -6038,8 +6001,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.draw != _draw) { \
@@ -6069,8 +6032,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -6097,8 +6060,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.draw != _draw) { \
@@ -6128,8 +6091,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6141,29 +6104,29 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.x, b = _x; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_x)) != 0))) { \
             printf("  ERROR: arg mismatch: x\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_x)); \
-            mock_print_ptr("     found:", a, b, sizeof(_x)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_x)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_x)); \
             match = 0; \
         } \
         a = packed->args.y, b = _y; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_y)) != 0))) { \
             printf("  ERROR: arg mismatch: y\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_y)); \
-            mock_print_ptr("     found:", a, b, sizeof(_y)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_y)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_y)); \
             match = 0; \
         } \
         a = packed->args.w, b = _w; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_w)) != 0))) { \
             printf("  ERROR: arg mismatch: w\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_w)); \
-            mock_print_ptr("     found:", a, b, sizeof(_w)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_w)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_w)); \
             match = 0; \
         } \
         a = packed->args.h, b = _h; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_h)) != 0))) { \
             printf("  ERROR: arg mismatch: h\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_h)); \
-            mock_print_ptr("     found:", a, b, sizeof(_h)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_h)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_h)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6184,8 +6147,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6197,29 +6160,29 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dx, b = _dx; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dx)) != 0))) { \
             printf("  ERROR: arg mismatch: dx\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dx)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dx)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dx)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dx)); \
             match = 0; \
         } \
         a = packed->args.dy, b = _dy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dy)) != 0))) { \
             printf("  ERROR: arg mismatch: dy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dy)); \
             match = 0; \
         } \
         a = packed->args.dw, b = _dw; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dw)) != 0))) { \
             printf("  ERROR: arg mismatch: dw\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dw)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dw)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dw)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dw)); \
             match = 0; \
         } \
         a = packed->args.dh, b = _dh; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dh)) != 0))) { \
             printf("  ERROR: arg mismatch: dh\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dh)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dh)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dh)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dh)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6240,8 +6203,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.ctx != _ctx) { \
@@ -6253,8 +6216,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6275,8 +6238,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.context != _context) { \
@@ -6288,8 +6251,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6310,8 +6273,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.draw != _draw) { \
@@ -6323,8 +6286,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6345,22 +6308,22 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.display, b = _display; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_display)) != 0))) { \
             printf("  ERROR: arg mismatch: display\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_display)); \
-            mock_print_ptr("     found:", a, b, sizeof(_display)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_display)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_display)); \
             match = 0; \
         } \
         a = packed->args.errorBase, b = _errorBase; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_errorBase)) != 0))) { \
             printf("  ERROR: arg mismatch: errorBase\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_errorBase)); \
-            mock_print_ptr("     found:", a, b, sizeof(_errorBase)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_errorBase)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_errorBase)); \
             match = 0; \
         } \
         a = packed->args.eventBase, b = _eventBase; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_eventBase)) != 0))) { \
             printf("  ERROR: arg mismatch: eventBase\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_eventBase)); \
-            mock_print_ptr("     found:", a, b, sizeof(_eventBase)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_eventBase)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_eventBase)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6381,8 +6344,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6406,8 +6369,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6416,8 +6379,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.count, b = _count; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_count)) != 0))) { \
             printf("  ERROR: arg mismatch: count\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_count)); \
-            mock_print_ptr("     found:", a, b, sizeof(_count)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_count)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_count)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6438,8 +6401,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pbuf != _pbuf) { \
@@ -6451,8 +6414,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6473,8 +6436,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.timeSlice != _timeSlice) { \
@@ -6489,8 +6452,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.returnAttribList, b = _returnAttribList; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_returnAttribList)) != 0))) { \
             printf("  ERROR: arg mismatch: returnAttribList\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_returnAttribList)); \
-            mock_print_ptr("     found:", a, b, sizeof(_returnAttribList)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_returnAttribList)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_returnAttribList)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6511,8 +6474,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.timeSlice != _timeSlice) { \
@@ -6527,15 +6490,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.attribList, b = _attribList; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_attribList)) != 0))) { \
             printf("  ERROR: arg mismatch: attribList\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_attribList)); \
-            mock_print_ptr("     found:", a, b, sizeof(_attribList)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_attribList)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_attribList)); \
             match = 0; \
         } \
         a = packed->args.returnAttribList, b = _returnAttribList; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_returnAttribList)) != 0))) { \
             printf("  ERROR: arg mismatch: returnAttribList\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_returnAttribList)); \
-            mock_print_ptr("     found:", a, b, sizeof(_returnAttribList)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_returnAttribList)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_returnAttribList)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6556,8 +6519,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.hpId != _hpId) { \
@@ -6566,8 +6529,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.npipes, b = _npipes; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_npipes)) != 0))) { \
             printf("  ERROR: arg mismatch: npipes\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_npipes)); \
-            mock_print_ptr("     found:", a, b, sizeof(_npipes)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_npipes)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_npipes)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6588,15 +6551,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         a = packed->args.npipes, b = _npipes; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_npipes)) != 0))) { \
             printf("  ERROR: arg mismatch: npipes\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_npipes)); \
-            mock_print_ptr("     found:", a, b, sizeof(_npipes)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_npipes)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_npipes)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6617,8 +6580,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6627,8 +6590,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.max, b = _max; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_max)) != 0))) { \
             printf("  ERROR: arg mismatch: max\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_max)); \
-            mock_print_ptr("     found:", a, b, sizeof(_max)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_max)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_max)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6649,8 +6612,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6659,15 +6622,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.maxGroups, b = _maxGroups; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_maxGroups)) != 0))) { \
             printf("  ERROR: arg mismatch: maxGroups\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_maxGroups)); \
-            mock_print_ptr("     found:", a, b, sizeof(_maxGroups)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_maxGroups)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_maxGroups)); \
             match = 0; \
         } \
         a = packed->args.maxBarriers, b = _maxBarriers; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_maxBarriers)) != 0))) { \
             printf("  ERROR: arg mismatch: maxBarriers\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_maxBarriers)); \
-            mock_print_ptr("     found:", a, b, sizeof(_maxBarriers)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_maxBarriers)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_maxBarriers)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6688,8 +6651,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6716,8 +6679,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -6726,15 +6689,15 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.group, b = _group; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_group)) != 0))) { \
             printf("  ERROR: arg mismatch: group\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_group)); \
-            mock_print_ptr("     found:", a, b, sizeof(_group)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_group)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_group)); \
             match = 0; \
         } \
         a = packed->args.barrier, b = _barrier; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_barrier)) != 0))) { \
             printf("  ERROR: arg mismatch: barrier\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_barrier)); \
-            mock_print_ptr("     found:", a, b, sizeof(_barrier)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_barrier)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_barrier)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6755,22 +6718,22 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         a = packed->args.maj, b = _maj; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_maj)) != 0))) { \
             printf("  ERROR: arg mismatch: maj\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_maj)); \
-            mock_print_ptr("     found:", a, b, sizeof(_maj)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_maj)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_maj)); \
             match = 0; \
         } \
         a = packed->args.min, b = _min; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_min)) != 0))) { \
             printf("  ERROR: arg mismatch: min\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_min)); \
-            mock_print_ptr("     found:", a, b, sizeof(_min)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_min)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_min)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6791,8 +6754,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.device != _device) { \
@@ -6804,8 +6767,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.value, b = _value; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_value)) != 0))) { \
             printf("  ERROR: arg mismatch: value\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_value)); \
-            mock_print_ptr("     found:", a, b, sizeof(_value)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_value)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_value)); \
             match = 0; \
         } \
         if (! match) { \
@@ -6826,8 +6789,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -6851,8 +6814,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -6879,8 +6842,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.device != _device) { \
@@ -6904,8 +6867,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -6932,8 +6895,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pbuf != _pbuf) { \
@@ -6977,8 +6940,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.screen != _screen) { \
@@ -7002,8 +6965,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.draw != _draw) { \
@@ -7030,8 +6993,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -7058,8 +7021,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.pbuf != _pbuf) { \
@@ -7071,8 +7034,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.pulCounterPbuffer, b = _pulCounterPbuffer; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_pulCounterPbuffer)) != 0))) { \
             printf("  ERROR: arg mismatch: pulCounterPbuffer\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_pulCounterPbuffer)); \
-            mock_print_ptr("     found:", a, b, sizeof(_pulCounterPbuffer)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_pulCounterPbuffer)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_pulCounterPbuffer)); \
             match = 0; \
         } \
         if (packed->args.bBlock != _bBlock) { \
@@ -7114,8 +7077,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -7139,8 +7102,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -7173,8 +7136,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -7284,8 +7247,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -7303,22 +7266,22 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.ust, b = _ust; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_ust)) != 0))) { \
             printf("  ERROR: arg mismatch: ust\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_ust)); \
-            mock_print_ptr("     found:", a, b, sizeof(_ust)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_ust)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_ust)); \
             match = 0; \
         } \
         a = packed->args.msc, b = _msc; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_msc)) != 0))) { \
             printf("  ERROR: arg mismatch: msc\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_msc)); \
-            mock_print_ptr("     found:", a, b, sizeof(_msc)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_msc)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_msc)); \
             match = 0; \
         } \
         a = packed->args.sbc, b = _sbc; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_sbc)) != 0))) { \
             printf("  ERROR: arg mismatch: sbc\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_sbc)); \
-            mock_print_ptr("     found:", a, b, sizeof(_sbc)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_sbc)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_sbc)); \
             match = 0; \
         } \
         if (! match) { \
@@ -7339,8 +7302,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.dpy, b = _dpy; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_dpy)) != 0))) { \
             printf("  ERROR: arg mismatch: dpy\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_dpy)); \
-            mock_print_ptr("     found:", a, b, sizeof(_dpy)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_dpy)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_dpy)); \
             match = 0; \
         } \
         if (packed->args.drawable != _drawable) { \
@@ -7352,22 +7315,22 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.ust, b = _ust; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_ust)) != 0))) { \
             printf("  ERROR: arg mismatch: ust\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_ust)); \
-            mock_print_ptr("     found:", a, b, sizeof(_ust)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_ust)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_ust)); \
             match = 0; \
         } \
         a = packed->args.msc, b = _msc; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_msc)) != 0))) { \
             printf("  ERROR: arg mismatch: msc\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_msc)); \
-            mock_print_ptr("     found:", a, b, sizeof(_msc)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_msc)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_msc)); \
             match = 0; \
         } \
         a = packed->args.sbc, b = _sbc; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_sbc)) != 0))) { \
             printf("  ERROR: arg mismatch: sbc\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_sbc)); \
-            mock_print_ptr("     found:", a, b, sizeof(_sbc)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_sbc)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_sbc)); \
             match = 0; \
         } \
         if (! match) { \
@@ -7404,8 +7367,8 @@ static int floatcmp(float *a, float *b, size_t len) {
         a = packed->args.count, b = _count; \
         if (b == NULL && a != NULL || (a != NULL && b != NULL && (memcmp(a, b, sizeof(_count)) != 0))) { \
             printf("  ERROR: arg mismatch: count\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_count)); \
-            mock_print_ptr("     found:", a, b, sizeof(_count)); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_count)); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_count)); \
             match = 0; \
         } \
         if (! match) { \

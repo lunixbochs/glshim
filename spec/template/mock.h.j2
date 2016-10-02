@@ -37,46 +37,9 @@ static int failed_test = 0;
 #define VT100_RED "\e[1;31m"
 #define VT100_CLEAR "\e[0m"
 
-static int floatcmp(float *a, float *b, size_t len) {
-	len /= sizeof(float);
-    for (size_t i = 0; i < len; i++) {
-        if (b[i] - a[i] > 0.00001) return 1;
-        if (a[i] - b[i] > 0.00001) return -1;
-    }
-    return 0;
-}
-
-#define mock_print_ptr(prefix, ptr, other, size) \
-    printf("%s ", prefix); \
-    if (ptr == NULL) { \
-        printf("NULL"); \
-    } else { \
-        char *ac = ptr, *bc = other; \
-        for (size_t i = 0; i < size; i++) { \
-            if (i > 0 && i % 4 == 0) printf(" "); \
-            if (i > 0 && i % 32 == 0) { \
-                printf("| "); \
-                for (int j = i - 32; j < i; j += 4) { \
-                    if (ac[j] == bc[j]) printf("%f ", *(float *)&ac[j]); \
-                    else                printf(VT100_RED "%f " VT100_CLEAR, *(float *)&ac[j]); \
-                } \
-                printf("\n"); \
-                printf("            "); \
-            } \
-            if (ac[i] == bc[i]) printf("%02X", (unsigned char)ac[i]); \
-            else                printf(VT100_RED "%02X" VT100_CLEAR, (unsigned char)ac[i]); \
-        } \
-        int start = size - 32; \
-        if (size % 32 != 0) { \
-            size - (size % 32); \
-        } \
-        printf(" | "); \
-        for (int j = start; j < size; j += 4) { \
-            if (ac[j] == bc[j]) printf("%f ", *(float *)&ac[j]); \
-            else                printf(VT100_RED "%f " VT100_CLEAR, *(float *)&ac[j]); \
-        } \
-    } \
-    printf("\n");
+int mock_fcmp(float *a, float *b, size_t len);
+void mock_fdiff(float *a, float *b, size_t len);
+void mock_ptrdiff(char *prefix, void *ptr, void *other, size_t size);
 
 #define mock_return { \
     packed_call_t *call = NULL; \
@@ -104,11 +67,11 @@ static int floatcmp(float *a, float *b, size_t len) {
         {% if '*' in arg.type %}
         a = packed->args.{{ arg.name }}, b = _{{ arg.name }}; \
         {% set cmp = 'memcmp' %}
-        {% if 'float' in arg.type %}{% set cmp = 'floatcmp' %}{% endif %}
+        {% if 'float' in arg.type %}{% set cmp = 'mock_fcmp' %}{% endif %}
         if (b == NULL && a != NULL || (a != NULL && b != NULL && ({{ cmp }}(a, b, sizeof(_{{ arg.name }})) != 0))) { \
             printf("  ERROR: arg mismatch: {{ arg.name }}\n"); \
-            mock_print_ptr("  expected:", b, a, sizeof(_{{ arg.name }})); \
-            mock_print_ptr("     found:", a, b, sizeof(_{{ arg.name }})); \
+            mock_ptrdiff("  expected:", (void *)b, (void *)a, sizeof(_{{ arg.name }})); \
+            mock_ptrdiff("     found:", (void *)a, (void *)b, sizeof(_{{ arg.name }})); \
         {% elif 'float' in arg.type or 'double' in arg.type %}
         if (packed->args.{{ arg.name }} - _{{ arg.name }} >= 0.01) { \
         {% else %}

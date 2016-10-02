@@ -3,6 +3,55 @@
 #include <stdio.h>
 #include "tack.h"
 
+int mock_fcmp(float *a, float *b, size_t len) {
+    len /= sizeof(float);
+    for (size_t i = 0; i < len; i++) {
+        if (b[i] - a[i] > 0.00001) return 1;
+        if (a[i] - b[i] > 0.00001) return -1;
+    }
+    return 0;
+}
+
+void mock_fdiff(float *a, float *b, size_t len) {
+    for (int i = 0; i < len; i++) {
+        if (mock_fcmp(&a[i], &b[i], sizeof(float)) == 0) {
+            printf("%f ", a[i]);
+        } else {
+            printf(VT100_RED "%f " VT100_CLEAR, a[i]);
+        }
+    }
+}
+
+void mock_ptrdiff(char *prefix, void *ptr, void *other, size_t size) {
+    printf("%s ", prefix);
+    if (ptr == NULL) {
+        printf("NULL");
+    } else {
+        char *ac = ptr, *bc = other;
+        for (size_t i = 0; i < size; i++) {
+            if (i > 0 && i % 4 == 0) printf(" ");
+            if (i > 0 && i % 32 == 0) {
+                printf("| ");
+                mock_fdiff((float *)&ac[i - 32], (float *)&bc[i - 32], 8);
+                printf("\n");
+                printf("            ");
+            }
+            if (ac[i] != bc[i]) {
+                printf("%02X", (unsigned char)ac[i]);
+            } else {
+                printf(VT100_RED "%02X" VT100_CLEAR, (unsigned char)ac[i]);
+            }
+        }
+        int start = size - 32;
+        if (size % 32 != 0) {
+            size - (size % 32);
+        }
+        printf(" | ");
+        mock_fdiff((float *)&ac[start], (float *)&bc[start], (size - start) / sizeof(float));
+    }
+    printf("\n");
+}
+
 static tack_t mock = {0};
 
 const char *mock_name(int func) {
