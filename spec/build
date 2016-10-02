@@ -15,6 +15,11 @@ cats="VERSION_1_0,VERSION_1_1,VERSION_1_2,VERSION_1_3,VERSION_1_4,VERSION_1_5,gl
 ./gen.py --deep "$gles,$glx,$opengl" --ifndef USE_ES2 call.c.j2 call.c glpack.h ../loader.h ../skip.h > "$base/gl/wrap/call.c" &
 ./gen.py --deep "$gles2,$glx,$opengl" --ifdef USE_ES2 call.c.j2 call2.c glpack.h ../loader.h > "$base/gl/wrap/call2.c" &
 
+./gen.py "$gles" --ifndef USE_ES2 stub.c.j2 stub.c stub.h ../loader.h > "$base/gl/wrap/stub.c" &
+./gen.py "$gles" --ifndef USE_ES2 stub.h.j2 stub.h glpack.h > "$base/gl/wrap/stub.h" &
+./gen.py "$gles" --ifdef USE_ES2 stub.c.j2 stub2.c stub2.h ../loader.h > "$base/gl/wrap/stub2.c" &
+./gen.py "$gles" --ifdef USE_ES2 stub.h.j2 stub2.h glpack.h > "$base/gl/wrap/stub2.h" &
+
 ./gen.py "$gles" --ifndef USE_ES2 glshim.c.j2 glshim.c glpack.h ../loader.h ../skip.h ../remote.h > "$base/gl/wrap/glshim.c" &
 ./gen.py --deep "$glx,$opengl,$gles,$gles2,$egl" base/pack.h.j2 pack.h ../types.h > "$base/gl/wrap/glpack.h" &
 ./gen.py "$gles" --ifndef USE_ES2 glxfuncs.j2 glxfuncs.inc > "$base/glx/glesfuncs.inc" &

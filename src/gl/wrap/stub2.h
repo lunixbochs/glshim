@@ -1,7 +1,7 @@
-#ifndef USE_ES2
+#ifdef USE_ES2
 #include "glpack.h"
-#ifndef STUB_H
-#define STUB_H
+#ifndef STUB2_H
+#define STUB2_H
 
 void stub_glActiveTexture(glActiveTexture_ARG_EXPAND);
 void stub_glAlphaFunc(glAlphaFunc_ARG_EXPAND);

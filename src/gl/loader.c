@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include "loader.h"
 
 void *gles = NULL, *egl = NULL, *bcm_host = NULL, *vcos = NULL;
@@ -84,4 +85,21 @@ void load_libs() {
     char *egl_override = getenv("LIBGL_EGL");
     egl = open_lib(egl_lib, egl_override);
     WARN_NULL(egl);
+}
+
+void debugf(char *fmt, ...) {
+    static int debug = -1;
+    if (debug < 0) {
+        debug = 0;
+        char *tmp = getenv("LIBGL_DEBUG");
+        if (tmp && strcmp(tmp, "1") == 0) {
+            debug = 1;
+        }
+    }
+    if (debug == 1) {
+        va_list arg;
+        va_start(arg, fmt);
+        vprintf(fmt, arg);
+        va_end(arg);
+    }
 }

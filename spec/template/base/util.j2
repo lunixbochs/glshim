@@ -1,8 +1,8 @@
-{% macro fprint(f, prefix='') %}
+{% macro fprint(f, prefix='', pfunc='printf') %}
 {% if f.args %}
-    printf("{{ prefix + f.name }}({{ f.args|printf }});\n", {{ f.args|args(0) }});
+    {{ pfunc }}("{{ prefix + f.name }}({{ f.args|printf }});\n", {{ f.args|args(0) }});
 {% else %}
-    printf("{{ prefix + f.name }}();\n");
+    {{ pfunc }}("{{ prefix + f.name }}();\n");
 {% endif %}
 {% endmacro %}
 

@@ -63,7 +63,6 @@ void glIndexedPrint(const packed_call_t *packed);
 } while(0)
 {{ func.return }} {{ func.name }}({{ func.name }}_ARG_EXPAND);
 packed_call_t *pack_{{ func.name }}({{ func.name }}_PACKED *_dst {{ func.name }}_ARG_EXPAND_TAIL);
-{{ func.return }} stub_{{ func.name }}({{ func.name }}_ARG_EXPAND);
 typedef {{ func.return }} (*{{ func.name }}_PTR)({{ func.name }}_ARG_EXPAND);
 {% endfor %}
 
