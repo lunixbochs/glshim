@@ -6,7 +6,7 @@ set_target_properties(remote PROPERTIES OUTPUT_NAME libgl_remote)
 target_link_libraries(remote GL_static X11 m dl pthread)
 
 file(GLOB_RECURSE GL_SOURCES gl/*.c gl/*.cpp)
-file(GLOB UTIL_SOURCES util/*.c util/math/*.c util/glouija/*.c)
+file(GLOB UTIL_SOURCES util/*.c util/math/*.c)
 
 include_directories(glx)
 aux_source_directory(glx GLX_SOURCES)
