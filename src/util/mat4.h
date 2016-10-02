@@ -9,7 +9,6 @@ typedef simd4x4f mat4;
 mat4 mat4_new();
 void mat4_transpose(mat4 *m);
 void mat4_identity(mat4 *m);
-void mat4_clone(mat4 *m);
 void mat4_load(mat4 *m, const float *load);
 void mat4_save(mat4 *m, float *out);
 void mat4_mul(mat4 *m, mat4 *quotient);
