@@ -19,6 +19,15 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
             }
             break;
         }
+        case glXChooseVisual_INDEX:
+        {
+            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
+            int *attribList = n->args.attribList;
+            int size = 0;
+            while (attribList[size++]) {}
+            ring_write(ring, attribList, size);
+            break;
+        }
         case glXMakeCurrent_INDEX:
         {
             Display *dpy = ((glXMakeCurrent_PACKED *)call)->args.dpy;
@@ -121,19 +130,6 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
             ring_write(ring, n->args.params, gl_fogv_length(n->args.pname) * sizeof(GLint));
             break;
         }
-#if 0
-        // this is disabled to remove the X dependency for now
-        // it looks like glXChooseVisual returns don't matter anyway
-        case glXChooseVisual_INDEX:
-        {
-            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
-            int *attribList = n->args.attribList;
-            int size = 0;
-            while (attribList[size++]) {}
-            ring_write(ring, attribList, size);
-            break;
-        }
-#endif
     }
 }
 
@@ -158,23 +154,22 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
             // prevent too many frames from clogging up the ring buffer
             ring_read(ring, NULL);
             break;
-#if 0
-        // see above
         case glXChooseVisual_INDEX:
         {
             glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
             XVisualInfo **ret_vis = (XVisualInfo **)ret_v;
             if (*ret_vis) {
-                XVisualInfo *visual = ret->arg[1].data.block.data;
+                *ret_vis = malloc(sizeof(XVisualInfo));
+                ring_read_into(ring, *ret_vis);
+                /*
                 int count;
                 XVisualInfo tmp;
                 XMatchVisualInfo(n->args.dpy, visual->screen, visual->depth, visual->class, &tmp);
                 memcpy(visual, &tmp, sizeof(XVisualInfo));
-                *ret_vis = visual;
+                */
             }
             break;
         }
-#endif
     }
 }
 
@@ -208,6 +203,19 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             glIndexedCall(call, ret);
             ring_dma_done(ring);
             return;
+        case glXChooseVisual_INDEX:
+        {
+            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
+            n->args.dpy = target_display;
+            n->args.attribList = ring_read(ring, NULL);
+            glIndexedCall(call, ret);
+            if (ret) {
+                XVisualInfo *info = (XVisualInfo *)ret;
+                ring_write(ring, info, sizeof(XVisualInfo));
+                free(info);
+            }
+            return;
+        }
         case REMOTE_BLOCK_DRAW:
         {
             if (state.list.active) {
@@ -241,21 +249,6 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             ring_dma_done(ring);
             return;
         }
-#if 0
-        // see above
-        case glXChooseVisual_INDEX:
-        {
-            PACKED_glXChooseVisual *n = (PACKED_glXChooseVisual *)call;
-            n->args.attribList = ring_read(ring, NULL);
-            int *attribList = n->args.attribList;
-            XVisualInfo *info = NULL;
-            glIndexedCall(call, (void *)&info);
-            if (info) {
-                ring_write(ring, info, sizeof(XVisualInfo));
-            }
-            return;
-        }
-#endif
     }
     glIndexedCall(call, ret);
 }
