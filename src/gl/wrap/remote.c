@@ -160,14 +160,13 @@ void remote_local_post(ring_t *ring, packed_call_t *call, void *ret_v, size_t re
             glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
             XVisualInfo **ret_vis = (XVisualInfo **)ret_v;
             if (*ret_vis) {
-                *ret_vis = malloc(sizeof(XVisualInfo));
-                ring_read_into(ring, *ret_vis);
-                /*
-                int count;
+                XVisualInfo *visual = malloc(sizeof(XVisualInfo));
+                ring_read_into(ring, visual);
+                // need to use XMatchVisualInfo because the visual passed from the remote is associated with a different Display *
                 XVisualInfo tmp;
                 XMatchVisualInfo(n->args.dpy, visual->screen, visual->depth, visual->class, &tmp);
                 memcpy(visual, &tmp, sizeof(XVisualInfo));
-                */
+                *ret_vis = visual;
             }
             break;
         }
