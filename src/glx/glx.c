@@ -398,6 +398,8 @@ Display *glXGetCurrentDisplay() {
 }
 
 XVisualInfo *glXChooseVisual(Display *dpy, int screen, int *attribList) {
+    scan_env();
+    FORWARD_IF_REMOTE(glXChooseVisual);
     PROXY_GLES(glXChooseVisual);
     dpy = get_display(dpy);
     int depth = DefaultDepth(dpy, screen);

@@ -12,7 +12,9 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
         case glXCreateContext_INDEX:
         {
             glXCreateContext_PACKED *n = (glXCreateContext_PACKED *)call;
-            ring_write(ring, n->args.vis, sizeof(XVisualInfo));
+            if (n->args.vis) {
+                ring_write(ring, n->args.vis, sizeof(XVisualInfo));
+            }
             if (n->args.shareList) {
                 ring_write(ring, n->args.shareList, sizeof(GLXContext));
             }
@@ -181,7 +183,9 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
         {
             glXCreateContext_PACKED *n = (glXCreateContext_PACKED *)call;
             n->args.dpy = target_display;
-            n->args.vis = ring_read(ring, NULL);
+            if (n->args.vis) {
+                n->args.vis = ring_read(ring, NULL);
+            }
             if (n->args.shareList) {
                 n->args.shareList = ring_read(ring, NULL);
             }
