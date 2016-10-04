@@ -20,9 +20,14 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
             break;
         }
         case glXMakeCurrent_INDEX:
+        {
+            Display *dpy = ((glXMakeCurrent_PACKED *)call)->args.dpy;
             // if the window create hasn't flushed yet, we can't init on the remote
-            XFlush(((glXMakeCurrent_PACKED *)call)->args.dpy);
+            if (dpy) {
+                XFlush(dpy);
+            }
             break;
+        }
         case glDeleteTextures_INDEX:
         {
             glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
