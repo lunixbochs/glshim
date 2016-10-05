@@ -211,11 +211,6 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             n->args.dpy = target_display;
             n->args.attribList = ring_read(ring, NULL);
             glIndexedCall(call, ret);
-            XVisualInfo **info = (XVisualInfo **)ret;
-            if (*info) {
-                ring_write(ring, *info, sizeof(XVisualInfo));
-                free(*info);
-            }
             return;
         }
         case REMOTE_BLOCK_DRAW:
@@ -262,6 +257,14 @@ void remote_target_post(ring_t *ring, packed_call_t *call, void *ret) {
             char *str = *(char **)ret;
             ring_write(ring, str, strlen(str) + 1);
             return;
+        }
+        case glXChooseVisual_INDEX:
+        {
+            XVisualInfo **info = (XVisualInfo **)ret;
+            if (*info) {
+                ring_write(ring, *info, sizeof(XVisualInfo));
+                free(*info);
+            }
         }
     }
 }
