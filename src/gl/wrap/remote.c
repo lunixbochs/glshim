@@ -211,10 +211,10 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             n->args.dpy = target_display;
             n->args.attribList = ring_read(ring, NULL);
             glIndexedCall(call, ret);
-            if (ret) {
-                XVisualInfo *info = (XVisualInfo *)ret;
-                ring_write(ring, info, sizeof(XVisualInfo));
-                free(info);
+            XVisualInfo **info = (XVisualInfo **)ret;
+            if (*info) {
+                ring_write(ring, *info, sizeof(XVisualInfo));
+                free(*info);
             }
             return;
         }
