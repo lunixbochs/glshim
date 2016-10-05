@@ -2,9 +2,9 @@
 
 import argparse
 import jinja2
-import sys
 import re
-from yaml import load
+import sys
+import yaml
 
 split_re = re.compile(r'^(?P<type>.*?)\s*(?P<name>\w+)$')
 env = jinja2.Environment(
@@ -111,7 +111,7 @@ def split_arg(arg):
         return {'type': 'unknown', 'name': arg}
 
 def gen(files, template, guard_name, headers,
-        deep=False, cats=(), ifdef=None, ifndef=None):
+        deep=False, cats=(), ifdef=None, ifndef=None, skip=None):
     funcs = {}
     formats = []
     unique_formats = set()
@@ -123,6 +123,8 @@ def gen(files, template, guard_name, headers,
                     functions.extend(f.items())
         else:
             functions = data.items()
+
+        functions = [f for f in functions if not skip or not f[0] in skip]
 
         for name, args in sorted(functions):
             props = {}
@@ -181,15 +183,21 @@ if __name__ == '__main__':
     parser.add_argument('--cats', help='deep category filter')
     parser.add_argument('--ifdef', help='wrap with ifdef')
     parser.add_argument('--ifndef', help='wrap with ifndef')
+    parser.add_argument('--skip', help='skip function from yml')
 
     args = parser.parse_args()
 
     files = []
     for name in args.yaml.split(','):
         with open(name) as f:
-            data = load(f)
+            data = yaml.load(f)
             if data:
                 files.append(data)
+
+    skip = None
+    if args.skip:
+        with open(args.skip) as f:
+            skip = yaml.load(f)
 
     if args.cats:
         cats = args.cats.split(',')
@@ -197,4 +205,4 @@ if __name__ == '__main__':
         cats = None
     print gen(files, args.template, args.name,
               args.headers, args.deep, cats,
-              args.ifdef, args.ifndef)
+              args.ifdef, args.ifndef, skip=skip)

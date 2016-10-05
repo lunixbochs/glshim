@@ -1,12 +1,11 @@
 {% from "base/util.j2" import args %}
+
 void glIndexedCall(const packed_call_t *packed, void *ret_v) {
     switch (packed->index) {
         {% for f in functions %}
-        #ifndef skip_index_{{ f.name }}
         case {{ f.name }}_INDEX:
             call_{{ f.name }}(packed, ret_v);
             break;
-        #endif
         {% endfor %}
         default:
             fprintf(stderr, "warning: glIndexedCall with unknown index %d\n", packed->index);
@@ -33,3 +32,4 @@ void glIndexedPrint(const packed_call_t *packed) {
             break;
     }
 }
+
