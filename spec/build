@@ -9,7 +9,7 @@ opengl="yml/opengl.yml"
 egl="yml/egl.yml"
 cats="VERSION_1_0,VERSION_1_1,VERSION_1_2,VERSION_1_3,VERSION_1_4,VERSION_1_5,glx,EXT_swap_control"
 
-./gen.py --deep "$glx,$gles" mock.c.j2 mock.c mock.h > "$base/../test/util/mock.c" &
+./gen.py --deep "$glx,$gles" --skip yml/skip_index.yml mock.c.j2 mock.c mock.h > "$base/../test/util/mock.c" &
 ./gen.py --deep "$glx,$gles" --ifndef USE_ES2 mock.h.j2 mock.h "gl_str.h" "wrap/glpack.h" > "$base/../test/util/mock.h" &
 
 ./gen.py --deep "$gles,$glx,$opengl" --ifndef USE_ES2 --skip yml/skip_index.yml call.c.j2 call.c glpack.h ../loader.h ../skip.h > "$base/gl/wrap/call.c" &

@@ -5,1536 +5,2556 @@
 
 void glIndexedCall(const packed_call_t *packed, void *ret_v) {
     switch (packed->index) {
+        #ifndef skip_index_glActiveTexture
         case glActiveTexture_INDEX:
             call_glActiveTexture(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glActiveTextureARB
         case glActiveTextureARB_INDEX:
             call_glActiveTextureARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glAlphaFunc
         case glAlphaFunc_INDEX:
             call_glAlphaFunc(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glAlphaFuncx
         case glAlphaFuncx_INDEX:
             call_glAlphaFuncx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glAreTexturesResident
         case glAreTexturesResident_INDEX:
             call_glAreTexturesResident(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glArrayElement
         case glArrayElement_INDEX:
             call_glArrayElement(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBegin
         case glBegin_INDEX:
             call_glBegin(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBindBuffer
         case glBindBuffer_INDEX:
             call_glBindBuffer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBindTexture
         case glBindTexture_INDEX:
             call_glBindTexture(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBitmap
         case glBitmap_INDEX:
             call_glBitmap(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendColor
         case glBlendColor_INDEX:
             call_glBlendColor(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendColorOES
         case glBlendColorOES_INDEX:
             call_glBlendColorOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendEquation
         case glBlendEquation_INDEX:
             call_glBlendEquation(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendEquationOES
         case glBlendEquationOES_INDEX:
             call_glBlendEquationOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendEquationSeparate
         case glBlendEquationSeparate_INDEX:
             call_glBlendEquationSeparate(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendEquationSeparateOES
         case glBlendEquationSeparateOES_INDEX:
             call_glBlendEquationSeparateOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendEquationSeparatei
         case glBlendEquationSeparatei_INDEX:
             call_glBlendEquationSeparatei(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendFunc
         case glBlendFunc_INDEX:
             call_glBlendFunc(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendFuncSeparate
         case glBlendFuncSeparate_INDEX:
             call_glBlendFuncSeparate(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendFuncSeparateOES
         case glBlendFuncSeparateOES_INDEX:
             call_glBlendFuncSeparateOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBlendFuncSeparatei
         case glBlendFuncSeparatei_INDEX:
             call_glBlendFuncSeparatei(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBufferData
         case glBufferData_INDEX:
             call_glBufferData(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glBufferSubData
         case glBufferSubData_INDEX:
             call_glBufferSubData(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCallList
         case glCallList_INDEX:
             call_glCallList(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCallLists
         case glCallLists_INDEX:
             call_glCallLists(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClear
         case glClear_INDEX:
             call_glClear(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearAccum
         case glClearAccum_INDEX:
             call_glClearAccum(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearColor
         case glClearColor_INDEX:
             call_glClearColor(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearColorx
         case glClearColorx_INDEX:
             call_glClearColorx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearDepth
         case glClearDepth_INDEX:
             call_glClearDepth(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearDepthf
         case glClearDepthf_INDEX:
             call_glClearDepthf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearDepthfOES
         case glClearDepthfOES_INDEX:
             call_glClearDepthfOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearDepthx
         case glClearDepthx_INDEX:
             call_glClearDepthx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClearStencil
         case glClearStencil_INDEX:
             call_glClearStencil(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClientActiveTexture
         case glClientActiveTexture_INDEX:
             call_glClientActiveTexture(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClientActiveTextureARB
         case glClientActiveTextureARB_INDEX:
             call_glClientActiveTextureARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClipPlane
         case glClipPlane_INDEX:
             call_glClipPlane(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClipPlanef
         case glClipPlanef_INDEX:
             call_glClipPlanef(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClipPlanefOES
         case glClipPlanefOES_INDEX:
             call_glClipPlanefOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glClipPlanex
         case glClipPlanex_INDEX:
             call_glClipPlanex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3b
         case glColor3b_INDEX:
             call_glColor3b(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3bv
         case glColor3bv_INDEX:
             call_glColor3bv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3d
         case glColor3d_INDEX:
             call_glColor3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3dv
         case glColor3dv_INDEX:
             call_glColor3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3f
         case glColor3f_INDEX:
             call_glColor3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3fv
         case glColor3fv_INDEX:
             call_glColor3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3i
         case glColor3i_INDEX:
             call_glColor3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3iv
         case glColor3iv_INDEX:
             call_glColor3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3s
         case glColor3s_INDEX:
             call_glColor3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3sv
         case glColor3sv_INDEX:
             call_glColor3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3ub
         case glColor3ub_INDEX:
             call_glColor3ub(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3ubv
         case glColor3ubv_INDEX:
             call_glColor3ubv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3ui
         case glColor3ui_INDEX:
             call_glColor3ui(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3uiv
         case glColor3uiv_INDEX:
             call_glColor3uiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3us
         case glColor3us_INDEX:
             call_glColor3us(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor3usv
         case glColor3usv_INDEX:
             call_glColor3usv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4b
         case glColor4b_INDEX:
             call_glColor4b(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4bv
         case glColor4bv_INDEX:
             call_glColor4bv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4d
         case glColor4d_INDEX:
             call_glColor4d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4dv
         case glColor4dv_INDEX:
             call_glColor4dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4f
         case glColor4f_INDEX:
             call_glColor4f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4fv
         case glColor4fv_INDEX:
             call_glColor4fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4i
         case glColor4i_INDEX:
             call_glColor4i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4iv
         case glColor4iv_INDEX:
             call_glColor4iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4s
         case glColor4s_INDEX:
             call_glColor4s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4sv
         case glColor4sv_INDEX:
             call_glColor4sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4ub
         case glColor4ub_INDEX:
             call_glColor4ub(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4ubv
         case glColor4ubv_INDEX:
             call_glColor4ubv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4ui
         case glColor4ui_INDEX:
             call_glColor4ui(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4uiv
         case glColor4uiv_INDEX:
             call_glColor4uiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4us
         case glColor4us_INDEX:
             call_glColor4us(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4usv
         case glColor4usv_INDEX:
             call_glColor4usv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColor4x
         case glColor4x_INDEX:
             call_glColor4x(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColorMask
         case glColorMask_INDEX:
             call_glColorMask(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColorMaterial
         case glColorMaterial_INDEX:
             call_glColorMaterial(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glColorPointer
         case glColorPointer_INDEX:
             call_glColorPointer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCompressedTexImage2D
         case glCompressedTexImage2D_INDEX:
             call_glCompressedTexImage2D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCompressedTexSubImage2D
         case glCompressedTexSubImage2D_INDEX:
             call_glCompressedTexSubImage2D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCopyPixels
         case glCopyPixels_INDEX:
             call_glCopyPixels(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCopyTexImage2D
         case glCopyTexImage2D_INDEX:
             call_glCopyTexImage2D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCopyTexSubImage2D
         case glCopyTexSubImage2D_INDEX:
             call_glCopyTexSubImage2D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glCullFace
         case glCullFace_INDEX:
             call_glCullFace(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDeleteBuffers
         case glDeleteBuffers_INDEX:
             call_glDeleteBuffers(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDeleteLists
         case glDeleteLists_INDEX:
             call_glDeleteLists(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDeleteTextures
         case glDeleteTextures_INDEX:
             call_glDeleteTextures(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDepthFunc
         case glDepthFunc_INDEX:
             call_glDepthFunc(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDepthMask
         case glDepthMask_INDEX:
             call_glDepthMask(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDepthRange
         case glDepthRange_INDEX:
             call_glDepthRange(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDepthRangef
         case glDepthRangef_INDEX:
             call_glDepthRangef(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDepthRangefOES
         case glDepthRangefOES_INDEX:
             call_glDepthRangefOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDepthRangex
         case glDepthRangex_INDEX:
             call_glDepthRangex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDisable
         case glDisable_INDEX:
             call_glDisable(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDisableClientState
         case glDisableClientState_INDEX:
             call_glDisableClientState(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDrawArrays
         case glDrawArrays_INDEX:
             call_glDrawArrays(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDrawBuffer
         case glDrawBuffer_INDEX:
             call_glDrawBuffer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDrawElements
         case glDrawElements_INDEX:
             call_glDrawElements(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDrawPixels
         case glDrawPixels_INDEX:
             call_glDrawPixels(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glDrawRangeElements
         case glDrawRangeElements_INDEX:
             call_glDrawRangeElements(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEdgeFlag
         case glEdgeFlag_INDEX:
             call_glEdgeFlag(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEnable
         case glEnable_INDEX:
             call_glEnable(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEnableClientState
         case glEnableClientState_INDEX:
             call_glEnableClientState(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEnd
         case glEnd_INDEX:
             call_glEnd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEndList
         case glEndList_INDEX:
             call_glEndList(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord1d
         case glEvalCoord1d_INDEX:
             call_glEvalCoord1d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord1dv
         case glEvalCoord1dv_INDEX:
             call_glEvalCoord1dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord1f
         case glEvalCoord1f_INDEX:
             call_glEvalCoord1f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord1fv
         case glEvalCoord1fv_INDEX:
             call_glEvalCoord1fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord2d
         case glEvalCoord2d_INDEX:
             call_glEvalCoord2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord2dv
         case glEvalCoord2dv_INDEX:
             call_glEvalCoord2dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord2f
         case glEvalCoord2f_INDEX:
             call_glEvalCoord2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalCoord2fv
         case glEvalCoord2fv_INDEX:
             call_glEvalCoord2fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalMesh1
         case glEvalMesh1_INDEX:
             call_glEvalMesh1(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalMesh2
         case glEvalMesh2_INDEX:
             call_glEvalMesh2(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalPoint1
         case glEvalPoint1_INDEX:
             call_glEvalPoint1(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glEvalPoint2
         case glEvalPoint2_INDEX:
             call_glEvalPoint2(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFeedbackBuffer
         case glFeedbackBuffer_INDEX:
             call_glFeedbackBuffer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFinish
         case glFinish_INDEX:
             call_glFinish(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFlush
         case glFlush_INDEX:
             call_glFlush(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogCoordd
         case glFogCoordd_INDEX:
             call_glFogCoordd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogCoorddv
         case glFogCoorddv_INDEX:
             call_glFogCoorddv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogCoordf
         case glFogCoordf_INDEX:
             call_glFogCoordf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogCoordfv
         case glFogCoordfv_INDEX:
             call_glFogCoordfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogf
         case glFogf_INDEX:
             call_glFogf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogfv
         case glFogfv_INDEX:
             call_glFogfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogi
         case glFogi_INDEX:
             call_glFogi(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogiv
         case glFogiv_INDEX:
             call_glFogiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogx
         case glFogx_INDEX:
             call_glFogx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFogxv
         case glFogxv_INDEX:
             call_glFogxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFrontFace
         case glFrontFace_INDEX:
             call_glFrontFace(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFrustum
         case glFrustum_INDEX:
             call_glFrustum(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFrustumf
         case glFrustumf_INDEX:
             call_glFrustumf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFrustumfOES
         case glFrustumfOES_INDEX:
             call_glFrustumfOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glFrustumx
         case glFrustumx_INDEX:
             call_glFrustumx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGenBuffers
         case glGenBuffers_INDEX:
             call_glGenBuffers(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGenLists
         case glGenLists_INDEX:
             call_glGenLists(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGenTextures
         case glGenTextures_INDEX:
             call_glGenTextures(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetBooleanv
         case glGetBooleanv_INDEX:
             call_glGetBooleanv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetBufferParameteriv
         case glGetBufferParameteriv_INDEX:
             call_glGetBufferParameteriv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetClipPlanef
         case glGetClipPlanef_INDEX:
             call_glGetClipPlanef(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetClipPlanefOES
         case glGetClipPlanefOES_INDEX:
             call_glGetClipPlanefOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetClipPlanex
         case glGetClipPlanex_INDEX:
             call_glGetClipPlanex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetDoublev
         case glGetDoublev_INDEX:
             call_glGetDoublev(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetError
         case glGetError_INDEX:
             call_glGetError(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetFixedv
         case glGetFixedv_INDEX:
             call_glGetFixedv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetFloatv
         case glGetFloatv_INDEX:
             call_glGetFloatv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetIntegerv
         case glGetIntegerv_INDEX:
             call_glGetIntegerv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetLightfv
         case glGetLightfv_INDEX:
             call_glGetLightfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetLightxv
         case glGetLightxv_INDEX:
             call_glGetLightxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetMapdv
         case glGetMapdv_INDEX:
             call_glGetMapdv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetMapfv
         case glGetMapfv_INDEX:
             call_glGetMapfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetMapiv
         case glGetMapiv_INDEX:
             call_glGetMapiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetMaterialfv
         case glGetMaterialfv_INDEX:
             call_glGetMaterialfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetMaterialiv
         case glGetMaterialiv_INDEX:
             call_glGetMaterialiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetMaterialxv
         case glGetMaterialxv_INDEX:
             call_glGetMaterialxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetPointerv
         case glGetPointerv_INDEX:
             call_glGetPointerv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetString
         case glGetString_INDEX:
             call_glGetString(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexEnvfv
         case glGetTexEnvfv_INDEX:
             call_glGetTexEnvfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexEnviv
         case glGetTexEnviv_INDEX:
             call_glGetTexEnviv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexEnvxv
         case glGetTexEnvxv_INDEX:
             call_glGetTexEnvxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexImage
         case glGetTexImage_INDEX:
             call_glGetTexImage(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexLevelParameterfv
         case glGetTexLevelParameterfv_INDEX:
             call_glGetTexLevelParameterfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexLevelParameteriv
         case glGetTexLevelParameteriv_INDEX:
             call_glGetTexLevelParameteriv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexParameterfv
         case glGetTexParameterfv_INDEX:
             call_glGetTexParameterfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexParameteriv
         case glGetTexParameteriv_INDEX:
             call_glGetTexParameteriv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glGetTexParameterxv
         case glGetTexParameterxv_INDEX:
             call_glGetTexParameterxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glHint
         case glHint_INDEX:
             call_glHint(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexd
         case glIndexd_INDEX:
             call_glIndexd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexdv
         case glIndexdv_INDEX:
             call_glIndexdv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexf
         case glIndexf_INDEX:
             call_glIndexf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexfv
         case glIndexfv_INDEX:
             call_glIndexfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexi
         case glIndexi_INDEX:
             call_glIndexi(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexiv
         case glIndexiv_INDEX:
             call_glIndexiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexs
         case glIndexs_INDEX:
             call_glIndexs(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexsv
         case glIndexsv_INDEX:
             call_glIndexsv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexub
         case glIndexub_INDEX:
             call_glIndexub(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIndexubv
         case glIndexubv_INDEX:
             call_glIndexubv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glInitNames
         case glInitNames_INDEX:
             call_glInitNames(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glInterleavedArrays
         case glInterleavedArrays_INDEX:
             call_glInterleavedArrays(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIsBuffer
         case glIsBuffer_INDEX:
             call_glIsBuffer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIsEnabled
         case glIsEnabled_INDEX:
             call_glIsEnabled(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIsList
         case glIsList_INDEX:
             call_glIsList(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glIsTexture
         case glIsTexture_INDEX:
             call_glIsTexture(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightModelf
         case glLightModelf_INDEX:
             call_glLightModelf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightModelfv
         case glLightModelfv_INDEX:
             call_glLightModelfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightModeli
         case glLightModeli_INDEX:
             call_glLightModeli(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightModeliv
         case glLightModeliv_INDEX:
             call_glLightModeliv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightModelx
         case glLightModelx_INDEX:
             call_glLightModelx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightModelxv
         case glLightModelxv_INDEX:
             call_glLightModelxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightf
         case glLightf_INDEX:
             call_glLightf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightfv
         case glLightfv_INDEX:
             call_glLightfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLighti
         case glLighti_INDEX:
             call_glLighti(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightiv
         case glLightiv_INDEX:
             call_glLightiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightx
         case glLightx_INDEX:
             call_glLightx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLightxv
         case glLightxv_INDEX:
             call_glLightxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLineStipple
         case glLineStipple_INDEX:
             call_glLineStipple(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLineWidth
         case glLineWidth_INDEX:
             call_glLineWidth(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLineWidthx
         case glLineWidthx_INDEX:
             call_glLineWidthx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glListBase
         case glListBase_INDEX:
             call_glListBase(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLoadIdentity
         case glLoadIdentity_INDEX:
             call_glLoadIdentity(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLoadMatrixd
         case glLoadMatrixd_INDEX:
             call_glLoadMatrixd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLoadMatrixf
         case glLoadMatrixf_INDEX:
             call_glLoadMatrixf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLoadMatrixx
         case glLoadMatrixx_INDEX:
             call_glLoadMatrixx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLoadName
         case glLoadName_INDEX:
             call_glLoadName(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLoadTransposeMatrixd
         case glLoadTransposeMatrixd_INDEX:
             call_glLoadTransposeMatrixd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLoadTransposeMatrixf
         case glLoadTransposeMatrixf_INDEX:
             call_glLoadTransposeMatrixf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLockArraysEXT
         case glLockArraysEXT_INDEX:
             call_glLockArraysEXT(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glLogicOp
         case glLogicOp_INDEX:
             call_glLogicOp(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMap1d
         case glMap1d_INDEX:
             call_glMap1d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMap1f
         case glMap1f_INDEX:
             call_glMap1f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMap2d
         case glMap2d_INDEX:
             call_glMap2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMap2f
         case glMap2f_INDEX:
             call_glMap2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMapGrid1d
         case glMapGrid1d_INDEX:
             call_glMapGrid1d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMapGrid1f
         case glMapGrid1f_INDEX:
             call_glMapGrid1f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMapGrid2d
         case glMapGrid2d_INDEX:
             call_glMapGrid2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMapGrid2f
         case glMapGrid2f_INDEX:
             call_glMapGrid2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMaterialf
         case glMaterialf_INDEX:
             call_glMaterialf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMaterialfv
         case glMaterialfv_INDEX:
             call_glMaterialfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMateriali
         case glMateriali_INDEX:
             call_glMateriali(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMaterialiv
         case glMaterialiv_INDEX:
             call_glMaterialiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMaterialx
         case glMaterialx_INDEX:
             call_glMaterialx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMaterialxv
         case glMaterialxv_INDEX:
             call_glMaterialxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMatrixMode
         case glMatrixMode_INDEX:
             call_glMatrixMode(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultMatrixd
         case glMultMatrixd_INDEX:
             call_glMultMatrixd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultMatrixf
         case glMultMatrixf_INDEX:
             call_glMultMatrixf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultMatrixx
         case glMultMatrixx_INDEX:
             call_glMultMatrixx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultTransposeMatrixd
         case glMultTransposeMatrixd_INDEX:
             call_glMultTransposeMatrixd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultTransposeMatrixf
         case glMultTransposeMatrixf_INDEX:
             call_glMultTransposeMatrixf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1d
         case glMultiTexCoord1d_INDEX:
             call_glMultiTexCoord1d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1dv
         case glMultiTexCoord1dv_INDEX:
             call_glMultiTexCoord1dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1f
         case glMultiTexCoord1f_INDEX:
             call_glMultiTexCoord1f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1fv
         case glMultiTexCoord1fv_INDEX:
             call_glMultiTexCoord1fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1i
         case glMultiTexCoord1i_INDEX:
             call_glMultiTexCoord1i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1iv
         case glMultiTexCoord1iv_INDEX:
             call_glMultiTexCoord1iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1s
         case glMultiTexCoord1s_INDEX:
             call_glMultiTexCoord1s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord1sv
         case glMultiTexCoord1sv_INDEX:
             call_glMultiTexCoord1sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2d
         case glMultiTexCoord2d_INDEX:
             call_glMultiTexCoord2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2dv
         case glMultiTexCoord2dv_INDEX:
             call_glMultiTexCoord2dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2f
         case glMultiTexCoord2f_INDEX:
             call_glMultiTexCoord2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2fARB
         case glMultiTexCoord2fARB_INDEX:
             call_glMultiTexCoord2fARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2fv
         case glMultiTexCoord2fv_INDEX:
             call_glMultiTexCoord2fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2fvARB
         case glMultiTexCoord2fvARB_INDEX:
             call_glMultiTexCoord2fvARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2i
         case glMultiTexCoord2i_INDEX:
             call_glMultiTexCoord2i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2iv
         case glMultiTexCoord2iv_INDEX:
             call_glMultiTexCoord2iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2s
         case glMultiTexCoord2s_INDEX:
             call_glMultiTexCoord2s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord2sv
         case glMultiTexCoord2sv_INDEX:
             call_glMultiTexCoord2sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3d
         case glMultiTexCoord3d_INDEX:
             call_glMultiTexCoord3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3dv
         case glMultiTexCoord3dv_INDEX:
             call_glMultiTexCoord3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3f
         case glMultiTexCoord3f_INDEX:
             call_glMultiTexCoord3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3fv
         case glMultiTexCoord3fv_INDEX:
             call_glMultiTexCoord3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3i
         case glMultiTexCoord3i_INDEX:
             call_glMultiTexCoord3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3iv
         case glMultiTexCoord3iv_INDEX:
             call_glMultiTexCoord3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3s
         case glMultiTexCoord3s_INDEX:
             call_glMultiTexCoord3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord3sv
         case glMultiTexCoord3sv_INDEX:
             call_glMultiTexCoord3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4d
         case glMultiTexCoord4d_INDEX:
             call_glMultiTexCoord4d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4dv
         case glMultiTexCoord4dv_INDEX:
             call_glMultiTexCoord4dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4f
         case glMultiTexCoord4f_INDEX:
             call_glMultiTexCoord4f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4fARB
         case glMultiTexCoord4fARB_INDEX:
             call_glMultiTexCoord4fARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4fv
         case glMultiTexCoord4fv_INDEX:
             call_glMultiTexCoord4fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4fvARB
         case glMultiTexCoord4fvARB_INDEX:
             call_glMultiTexCoord4fvARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4i
         case glMultiTexCoord4i_INDEX:
             call_glMultiTexCoord4i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4iv
         case glMultiTexCoord4iv_INDEX:
             call_glMultiTexCoord4iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4s
         case glMultiTexCoord4s_INDEX:
             call_glMultiTexCoord4s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4sv
         case glMultiTexCoord4sv_INDEX:
             call_glMultiTexCoord4sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glMultiTexCoord4x
         case glMultiTexCoord4x_INDEX:
             call_glMultiTexCoord4x(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNewList
         case glNewList_INDEX:
             call_glNewList(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3b
         case glNormal3b_INDEX:
             call_glNormal3b(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3bv
         case glNormal3bv_INDEX:
             call_glNormal3bv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3d
         case glNormal3d_INDEX:
             call_glNormal3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3dv
         case glNormal3dv_INDEX:
             call_glNormal3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3f
         case glNormal3f_INDEX:
             call_glNormal3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3fv
         case glNormal3fv_INDEX:
             call_glNormal3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3i
         case glNormal3i_INDEX:
             call_glNormal3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3iv
         case glNormal3iv_INDEX:
             call_glNormal3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3s
         case glNormal3s_INDEX:
             call_glNormal3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3sv
         case glNormal3sv_INDEX:
             call_glNormal3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormal3x
         case glNormal3x_INDEX:
             call_glNormal3x(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glNormalPointer
         case glNormalPointer_INDEX:
             call_glNormalPointer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glOrtho
         case glOrtho_INDEX:
             call_glOrtho(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glOrthof
         case glOrthof_INDEX:
             call_glOrthof(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glOrthofOES
         case glOrthofOES_INDEX:
             call_glOrthofOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glOrthox
         case glOrthox_INDEX:
             call_glOrthox(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPassThrough
         case glPassThrough_INDEX:
             call_glPassThrough(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPixelStorei
         case glPixelStorei_INDEX:
             call_glPixelStorei(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPixelTransferf
         case glPixelTransferf_INDEX:
             call_glPixelTransferf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPixelTransferi
         case glPixelTransferi_INDEX:
             call_glPixelTransferi(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPixelZoom
         case glPixelZoom_INDEX:
             call_glPixelZoom(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPointParameterf
         case glPointParameterf_INDEX:
             call_glPointParameterf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPointParameterfv
         case glPointParameterfv_INDEX:
             call_glPointParameterfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPointParameterx
         case glPointParameterx_INDEX:
             call_glPointParameterx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPointParameterxv
         case glPointParameterxv_INDEX:
             call_glPointParameterxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPointSize
         case glPointSize_INDEX:
             call_glPointSize(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPointSizePointerOES
         case glPointSizePointerOES_INDEX:
             call_glPointSizePointerOES(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPointSizex
         case glPointSizex_INDEX:
             call_glPointSizex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPolygonMode
         case glPolygonMode_INDEX:
             call_glPolygonMode(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPolygonOffset
         case glPolygonOffset_INDEX:
             call_glPolygonOffset(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPolygonOffsetx
         case glPolygonOffsetx_INDEX:
             call_glPolygonOffsetx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPolygonStipple
         case glPolygonStipple_INDEX:
             call_glPolygonStipple(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPopAttrib
         case glPopAttrib_INDEX:
             call_glPopAttrib(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPopClientAttrib
         case glPopClientAttrib_INDEX:
             call_glPopClientAttrib(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPopMatrix
         case glPopMatrix_INDEX:
             call_glPopMatrix(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPopName
         case glPopName_INDEX:
             call_glPopName(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPrioritizeTextures
         case glPrioritizeTextures_INDEX:
             call_glPrioritizeTextures(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPushAttrib
         case glPushAttrib_INDEX:
             call_glPushAttrib(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPushClientAttrib
         case glPushClientAttrib_INDEX:
             call_glPushClientAttrib(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPushMatrix
         case glPushMatrix_INDEX:
             call_glPushMatrix(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glPushName
         case glPushName_INDEX:
             call_glPushName(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2d
         case glRasterPos2d_INDEX:
             call_glRasterPos2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2dv
         case glRasterPos2dv_INDEX:
             call_glRasterPos2dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2f
         case glRasterPos2f_INDEX:
             call_glRasterPos2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2fv
         case glRasterPos2fv_INDEX:
             call_glRasterPos2fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2i
         case glRasterPos2i_INDEX:
             call_glRasterPos2i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2iv
         case glRasterPos2iv_INDEX:
             call_glRasterPos2iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2s
         case glRasterPos2s_INDEX:
             call_glRasterPos2s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos2sv
         case glRasterPos2sv_INDEX:
             call_glRasterPos2sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3d
         case glRasterPos3d_INDEX:
             call_glRasterPos3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3dv
         case glRasterPos3dv_INDEX:
             call_glRasterPos3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3f
         case glRasterPos3f_INDEX:
             call_glRasterPos3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3fv
         case glRasterPos3fv_INDEX:
             call_glRasterPos3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3i
         case glRasterPos3i_INDEX:
             call_glRasterPos3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3iv
         case glRasterPos3iv_INDEX:
             call_glRasterPos3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3s
         case glRasterPos3s_INDEX:
             call_glRasterPos3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos3sv
         case glRasterPos3sv_INDEX:
             call_glRasterPos3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4d
         case glRasterPos4d_INDEX:
             call_glRasterPos4d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4dv
         case glRasterPos4dv_INDEX:
             call_glRasterPos4dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4f
         case glRasterPos4f_INDEX:
             call_glRasterPos4f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4fv
         case glRasterPos4fv_INDEX:
             call_glRasterPos4fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4i
         case glRasterPos4i_INDEX:
             call_glRasterPos4i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4iv
         case glRasterPos4iv_INDEX:
             call_glRasterPos4iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4s
         case glRasterPos4s_INDEX:
             call_glRasterPos4s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRasterPos4sv
         case glRasterPos4sv_INDEX:
             call_glRasterPos4sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glReadBuffer
         case glReadBuffer_INDEX:
             call_glReadBuffer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glReadPixels
         case glReadPixels_INDEX:
             call_glReadPixels(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRectd
         case glRectd_INDEX:
             call_glRectd(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRectdv
         case glRectdv_INDEX:
             call_glRectdv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRectf
         case glRectf_INDEX:
             call_glRectf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRectfv
         case glRectfv_INDEX:
             call_glRectfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRecti
         case glRecti_INDEX:
             call_glRecti(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRectiv
         case glRectiv_INDEX:
             call_glRectiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRects
         case glRects_INDEX:
             call_glRects(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRectsv
         case glRectsv_INDEX:
             call_glRectsv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRenderMode
         case glRenderMode_INDEX:
             call_glRenderMode(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRotated
         case glRotated_INDEX:
             call_glRotated(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRotatef
         case glRotatef_INDEX:
             call_glRotatef(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glRotatex
         case glRotatex_INDEX:
             call_glRotatex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSampleCoverage
         case glSampleCoverage_INDEX:
             call_glSampleCoverage(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSampleCoveragex
         case glSampleCoveragex_INDEX:
             call_glSampleCoveragex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glScaled
         case glScaled_INDEX:
             call_glScaled(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glScalef
         case glScalef_INDEX:
             call_glScalef(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glScalex
         case glScalex_INDEX:
             call_glScalex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glScissor
         case glScissor_INDEX:
             call_glScissor(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3b
         case glSecondaryColor3b_INDEX:
             call_glSecondaryColor3b(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3bv
         case glSecondaryColor3bv_INDEX:
             call_glSecondaryColor3bv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3d
         case glSecondaryColor3d_INDEX:
             call_glSecondaryColor3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3dv
         case glSecondaryColor3dv_INDEX:
             call_glSecondaryColor3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3f
         case glSecondaryColor3f_INDEX:
             call_glSecondaryColor3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3fv
         case glSecondaryColor3fv_INDEX:
             call_glSecondaryColor3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3i
         case glSecondaryColor3i_INDEX:
             call_glSecondaryColor3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3iv
         case glSecondaryColor3iv_INDEX:
             call_glSecondaryColor3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3s
         case glSecondaryColor3s_INDEX:
             call_glSecondaryColor3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3sv
         case glSecondaryColor3sv_INDEX:
             call_glSecondaryColor3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3ub
         case glSecondaryColor3ub_INDEX:
             call_glSecondaryColor3ub(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3ubv
         case glSecondaryColor3ubv_INDEX:
             call_glSecondaryColor3ubv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3ui
         case glSecondaryColor3ui_INDEX:
             call_glSecondaryColor3ui(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3uiv
         case glSecondaryColor3uiv_INDEX:
             call_glSecondaryColor3uiv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3us
         case glSecondaryColor3us_INDEX:
             call_glSecondaryColor3us(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSecondaryColor3usv
         case glSecondaryColor3usv_INDEX:
             call_glSecondaryColor3usv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glSelectBuffer
         case glSelectBuffer_INDEX:
             call_glSelectBuffer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glShadeModel
         case glShadeModel_INDEX:
             call_glShadeModel(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glStencilFunc
         case glStencilFunc_INDEX:
             call_glStencilFunc(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glStencilMask
         case glStencilMask_INDEX:
             call_glStencilMask(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glStencilOp
         case glStencilOp_INDEX:
             call_glStencilOp(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1d
         case glTexCoord1d_INDEX:
             call_glTexCoord1d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1dv
         case glTexCoord1dv_INDEX:
             call_glTexCoord1dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1f
         case glTexCoord1f_INDEX:
             call_glTexCoord1f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1fv
         case glTexCoord1fv_INDEX:
             call_glTexCoord1fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1i
         case glTexCoord1i_INDEX:
             call_glTexCoord1i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1iv
         case glTexCoord1iv_INDEX:
             call_glTexCoord1iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1s
         case glTexCoord1s_INDEX:
             call_glTexCoord1s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord1sv
         case glTexCoord1sv_INDEX:
             call_glTexCoord1sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2d
         case glTexCoord2d_INDEX:
             call_glTexCoord2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2dv
         case glTexCoord2dv_INDEX:
             call_glTexCoord2dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2f
         case glTexCoord2f_INDEX:
             call_glTexCoord2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2fv
         case glTexCoord2fv_INDEX:
             call_glTexCoord2fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2i
         case glTexCoord2i_INDEX:
             call_glTexCoord2i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2iv
         case glTexCoord2iv_INDEX:
             call_glTexCoord2iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2s
         case glTexCoord2s_INDEX:
             call_glTexCoord2s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord2sv
         case glTexCoord2sv_INDEX:
             call_glTexCoord2sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3d
         case glTexCoord3d_INDEX:
             call_glTexCoord3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3dv
         case glTexCoord3dv_INDEX:
             call_glTexCoord3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3f
         case glTexCoord3f_INDEX:
             call_glTexCoord3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3fv
         case glTexCoord3fv_INDEX:
             call_glTexCoord3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3i
         case glTexCoord3i_INDEX:
             call_glTexCoord3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3iv
         case glTexCoord3iv_INDEX:
             call_glTexCoord3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3s
         case glTexCoord3s_INDEX:
             call_glTexCoord3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord3sv
         case glTexCoord3sv_INDEX:
             call_glTexCoord3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4d
         case glTexCoord4d_INDEX:
             call_glTexCoord4d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4dv
         case glTexCoord4dv_INDEX:
             call_glTexCoord4dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4f
         case glTexCoord4f_INDEX:
             call_glTexCoord4f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4fv
         case glTexCoord4fv_INDEX:
             call_glTexCoord4fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4i
         case glTexCoord4i_INDEX:
             call_glTexCoord4i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4iv
         case glTexCoord4iv_INDEX:
             call_glTexCoord4iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4s
         case glTexCoord4s_INDEX:
             call_glTexCoord4s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoord4sv
         case glTexCoord4sv_INDEX:
             call_glTexCoord4sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexCoordPointer
         case glTexCoordPointer_INDEX:
             call_glTexCoordPointer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexEnvf
         case glTexEnvf_INDEX:
             call_glTexEnvf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexEnvfv
         case glTexEnvfv_INDEX:
             call_glTexEnvfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexEnvi
         case glTexEnvi_INDEX:
             call_glTexEnvi(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexEnviv
         case glTexEnviv_INDEX:
             call_glTexEnviv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexEnvx
         case glTexEnvx_INDEX:
             call_glTexEnvx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexEnvxv
         case glTexEnvxv_INDEX:
             call_glTexEnvxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexGend
         case glTexGend_INDEX:
             call_glTexGend(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexGendv
         case glTexGendv_INDEX:
             call_glTexGendv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexGenf
         case glTexGenf_INDEX:
             call_glTexGenf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexGenfv
         case glTexGenfv_INDEX:
             call_glTexGenfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexGeni
         case glTexGeni_INDEX:
             call_glTexGeni(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexGeniv
         case glTexGeniv_INDEX:
             call_glTexGeniv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexImage1D
         case glTexImage1D_INDEX:
             call_glTexImage1D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexImage2D
         case glTexImage2D_INDEX:
             call_glTexImage2D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexImage3D
         case glTexImage3D_INDEX:
             call_glTexImage3D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexParameterf
         case glTexParameterf_INDEX:
             call_glTexParameterf(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexParameterfv
         case glTexParameterfv_INDEX:
             call_glTexParameterfv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexParameteri
         case glTexParameteri_INDEX:
             call_glTexParameteri(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexParameteriv
         case glTexParameteriv_INDEX:
             call_glTexParameteriv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexParameterx
         case glTexParameterx_INDEX:
             call_glTexParameterx(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexParameterxv
         case glTexParameterxv_INDEX:
             call_glTexParameterxv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexSubImage1D
         case glTexSubImage1D_INDEX:
             call_glTexSubImage1D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexSubImage2D
         case glTexSubImage2D_INDEX:
             call_glTexSubImage2D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTexSubImage3D
         case glTexSubImage3D_INDEX:
             call_glTexSubImage3D(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTranslated
         case glTranslated_INDEX:
             call_glTranslated(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTranslatef
         case glTranslatef_INDEX:
             call_glTranslatef(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glTranslatex
         case glTranslatex_INDEX:
             call_glTranslatex(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glUnlockArraysEXT
         case glUnlockArraysEXT_INDEX:
             call_glUnlockArraysEXT(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2d
         case glVertex2d_INDEX:
             call_glVertex2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2dv
         case glVertex2dv_INDEX:
             call_glVertex2dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2f
         case glVertex2f_INDEX:
             call_glVertex2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2fv
         case glVertex2fv_INDEX:
             call_glVertex2fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2i
         case glVertex2i_INDEX:
             call_glVertex2i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2iv
         case glVertex2iv_INDEX:
             call_glVertex2iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2s
         case glVertex2s_INDEX:
             call_glVertex2s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex2sv
         case glVertex2sv_INDEX:
             call_glVertex2sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3d
         case glVertex3d_INDEX:
             call_glVertex3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3dv
         case glVertex3dv_INDEX:
             call_glVertex3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3f
         case glVertex3f_INDEX:
             call_glVertex3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3fv
         case glVertex3fv_INDEX:
             call_glVertex3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3i
         case glVertex3i_INDEX:
             call_glVertex3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3iv
         case glVertex3iv_INDEX:
             call_glVertex3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3s
         case glVertex3s_INDEX:
             call_glVertex3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex3sv
         case glVertex3sv_INDEX:
             call_glVertex3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4d
         case glVertex4d_INDEX:
             call_glVertex4d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4dv
         case glVertex4dv_INDEX:
             call_glVertex4dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4f
         case glVertex4f_INDEX:
             call_glVertex4f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4fv
         case glVertex4fv_INDEX:
             call_glVertex4fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4i
         case glVertex4i_INDEX:
             call_glVertex4i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4iv
         case glVertex4iv_INDEX:
             call_glVertex4iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4s
         case glVertex4s_INDEX:
             call_glVertex4s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertex4sv
         case glVertex4sv_INDEX:
             call_glVertex4sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glVertexPointer
         case glVertexPointer_INDEX:
             call_glVertexPointer(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glViewport
         case glViewport_INDEX:
             call_glViewport(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2d
         case glWindowPos2d_INDEX:
             call_glWindowPos2d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2dv
         case glWindowPos2dv_INDEX:
             call_glWindowPos2dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2f
         case glWindowPos2f_INDEX:
             call_glWindowPos2f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2fv
         case glWindowPos2fv_INDEX:
             call_glWindowPos2fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2i
         case glWindowPos2i_INDEX:
             call_glWindowPos2i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2iv
         case glWindowPos2iv_INDEX:
             call_glWindowPos2iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2s
         case glWindowPos2s_INDEX:
             call_glWindowPos2s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos2sv
         case glWindowPos2sv_INDEX:
             call_glWindowPos2sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3d
         case glWindowPos3d_INDEX:
             call_glWindowPos3d(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3dv
         case glWindowPos3dv_INDEX:
             call_glWindowPos3dv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3f
         case glWindowPos3f_INDEX:
             call_glWindowPos3f(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3fv
         case glWindowPos3fv_INDEX:
             call_glWindowPos3fv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3i
         case glWindowPos3i_INDEX:
             call_glWindowPos3i(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3iv
         case glWindowPos3iv_INDEX:
             call_glWindowPos3iv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3s
         case glWindowPos3s_INDEX:
             call_glWindowPos3s(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glWindowPos3sv
         case glWindowPos3sv_INDEX:
             call_glWindowPos3sv(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXChooseFBConfig
         case glXChooseFBConfig_INDEX:
             call_glXChooseFBConfig(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXChooseVisual
         case glXChooseVisual_INDEX:
             call_glXChooseVisual(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXCopyContext
         case glXCopyContext_INDEX:
             call_glXCopyContext(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXCreateContext
         case glXCreateContext_INDEX:
             call_glXCreateContext(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXCreateContextAttribsARB
         case glXCreateContextAttribsARB_INDEX:
             call_glXCreateContextAttribsARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXCreateGLXPixmap
         case glXCreateGLXPixmap_INDEX:
             call_glXCreateGLXPixmap(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXCreateNewContext
         case glXCreateNewContext_INDEX:
             call_glXCreateNewContext(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXCreateWindow
         case glXCreateWindow_INDEX:
             call_glXCreateWindow(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXDestroyContext
         case glXDestroyContext_INDEX:
             call_glXDestroyContext(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXDestroyGLXPixmap
         case glXDestroyGLXPixmap_INDEX:
             call_glXDestroyGLXPixmap(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXDestroyWindow
         case glXDestroyWindow_INDEX:
             call_glXDestroyWindow(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetClientString
         case glXGetClientString_INDEX:
             call_glXGetClientString(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetConfig
         case glXGetConfig_INDEX:
             call_glXGetConfig(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetCurrentContext
         case glXGetCurrentContext_INDEX:
             call_glXGetCurrentContext(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetCurrentDisplay
         case glXGetCurrentDisplay_INDEX:
             call_glXGetCurrentDisplay(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetCurrentDrawable
         case glXGetCurrentDrawable_INDEX:
             call_glXGetCurrentDrawable(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetFBConfigAttrib
         case glXGetFBConfigAttrib_INDEX:
             call_glXGetFBConfigAttrib(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetFBConfigs
         case glXGetFBConfigs_INDEX:
             call_glXGetFBConfigs(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetProcAddress
         case glXGetProcAddress_INDEX:
             call_glXGetProcAddress(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetProcAddressARB
         case glXGetProcAddressARB_INDEX:
             call_glXGetProcAddressARB(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXGetVisualFromFBConfig
         case glXGetVisualFromFBConfig_INDEX:
             call_glXGetVisualFromFBConfig(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXIsDirect
         case glXIsDirect_INDEX:
             call_glXIsDirect(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXMakeContextCurrent
         case glXMakeContextCurrent_INDEX:
             call_glXMakeContextCurrent(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXMakeCurrent
         case glXMakeCurrent_INDEX:
             call_glXMakeCurrent(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXQueryExtension
         case glXQueryExtension_INDEX:
             call_glXQueryExtension(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXQueryExtensionsString
         case glXQueryExtensionsString_INDEX:
             call_glXQueryExtensionsString(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXQueryServerString
         case glXQueryServerString_INDEX:
             call_glXQueryServerString(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXQueryVersion
         case glXQueryVersion_INDEX:
             call_glXQueryVersion(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXReleaseBuffersMESA
         case glXReleaseBuffersMESA_INDEX:
             call_glXReleaseBuffersMESA(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXSwapBuffers
         case glXSwapBuffers_INDEX:
             call_glXSwapBuffers(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXSwapIntervalEXT
         case glXSwapIntervalEXT_INDEX:
             call_glXSwapIntervalEXT(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXSwapIntervalMESA
         case glXSwapIntervalMESA_INDEX:
             call_glXSwapIntervalMESA(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXSwapIntervalSGI
         case glXSwapIntervalSGI_INDEX:
             call_glXSwapIntervalSGI(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXUseXFont
         case glXUseXFont_INDEX:
             call_glXUseXFont(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXWaitGL
         case glXWaitGL_INDEX:
             call_glXWaitGL(packed, ret_v);
             break;
+        #endif
+        #ifndef skip_index_glXWaitX
         case glXWaitX_INDEX:
             call_glXWaitX(packed, ret_v);
             break;
+        #endif
         default:
             fprintf(stderr, "warning: glIndexedCall with unknown index %d\n", packed->index);
             break;
