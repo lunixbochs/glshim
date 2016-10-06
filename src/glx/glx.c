@@ -209,12 +209,10 @@ static void signal_handler(int sig) {
     raise(sig);
 }
 
-static void scan_env() {
-    static bool first = true;
-    if (! first)
-        return;
+#define ONCE do { static bool first = true; if (! first) return; first = true; } while (0);
 
-    first = false;
+static void scan_env() {
+    ONCE;
     printf("libGL: built on %s %s\n", __DATE__, __TIME__);
     #define env(name, global, message)                    \
         char *env_##name = getenv(#name);                 \
@@ -225,12 +223,6 @@ static void scan_env() {
 
     env(LIBGL_XREFRESH, g_xrefresh, "xrefresh will be called on cleanup");
     env(LIBGL_STACKTRACE, g_stacktrace, "stacktrace will be printed on crash");
-    if (bcm_host) {
-        bcm_host_init = dlsym(bcm_host, "bcm_host_init");
-        bcm_host_deinit = dlsym(bcm_host, "bcm_host_deinit");
-        if (bcm_host_init && bcm_host_deinit)
-            g_bcmhost = true;
-    }
     if (g_xrefresh || g_stacktrace || g_bcmhost) {
         // TODO: a bit gross. Maybe look at this: http://stackoverflow.com/a/13290134/293352
         signal(SIGBUS, signal_handler);
@@ -244,8 +236,6 @@ static void scan_env() {
         }
         if (g_xrefresh)
             atexit(xrefresh);
-        if (g_bcmhost && g_bcm_active)
-            atexit(bcm_host_deinit);
     }
     env(LIBGL_FB, g_usefb, "framebuffer output enabled");
     env(LIBGL_FPS, g_showfps, "fps counter enabled");
@@ -269,10 +259,24 @@ static void scan_env() {
     }
 }
 
+static void bcm_setup() {
+    ONCE;
+    if (bcm_host) {
+        bcm_host_init = dlsym(bcm_host, "bcm_host_init");
+        bcm_host_deinit = dlsym(bcm_host, "bcm_host_deinit");
+        if (bcm_host_init && bcm_host_deinit)
+            g_bcmhost = true;
+        if (g_bcmhost)
+            atexit(bcm_host_deinit);
+    }
+}
+
 GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct) {
     scan_env();
     FORWARD_IF_REMOTE(glXCreateContext);
     PROXY_GLES(glXCreateContext);
+    bcm_setup();
+
     LOAD_EGL(eglBindAPI);
     LOAD_EGL(eglChooseConfig);
     LOAD_EGL(eglCreateContext);
@@ -306,7 +310,6 @@ GLXContext glXCreateContext(Display *dpy, XVisualInfo *vis, GLXContext shareList
 #else
     EGLint *attrib_list = NULL;
 #endif
-
 
     if (g_bcmhost && !g_bcm_active) {
         g_bcm_active = true;
