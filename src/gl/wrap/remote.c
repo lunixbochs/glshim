@@ -9,6 +9,16 @@
 
 void remote_local_pre(ring_t *ring, packed_call_t *call) {
     switch (call->index) {
+        // glX functions
+        case glXChooseVisual_INDEX:
+        {
+            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
+            int *attribList = n->args.attribList;
+            int size = 0;
+            while (attribList[size++]) {}
+            ring_write(ring, attribList, size);
+            break;
+        }
         case glXCreateContext_INDEX:
         {
             glXCreateContext_PACKED *n = (glXCreateContext_PACKED *)call;
@@ -20,15 +30,6 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
             }
             break;
         }
-        case glXChooseVisual_INDEX:
-        {
-            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
-            int *attribList = n->args.attribList;
-            int size = 0;
-            while (attribList[size++]) {}
-            ring_write(ring, attribList, size);
-            break;
-        }
         case glXMakeCurrent_INDEX:
         {
             Display *dpy = ((glXMakeCurrent_PACKED *)call)->args.dpy;
@@ -38,38 +39,37 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
             }
             break;
         }
+        // GL functions
+        case glBitmap_INDEX:
+        {
+            glBitmap_PACKED *n = (glBitmap_PACKED *)call;
+            size_t size = ((n->args.width + 7) / 8) * n->args.height;
+            ring_write(ring, n->args.bitmap, size);
+            break;
+        }
         case glDeleteTextures_INDEX:
         {
             glDeleteTextures_PACKED *n = (glDeleteTextures_PACKED *)call;
             ring_write(ring, n->args.textures, n->args.n * sizeof(GLuint));
             break;
         }
-        case glTexImage2D_INDEX:
+        case glDrawPixels_INDEX:
         {
-            glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
-            if (n->args.pixels) {
-                size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-                ring_write(ring, n->args.pixels, size);
-            }
+            glDrawPixels_PACKED *n = (glDrawPixels_PACKED *)call;
+            size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
+            ring_write(ring, n->args.pixels, size);
             break;
         }
-        case glTexSubImage2D_INDEX:
+        case glFogiv_INDEX:
         {
-            glTexSubImage2D_PACKED *n = (glTexSubImage2D_PACKED *)call;
-            if (n->args.pixels) {
-                size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-                ring_write(ring, n->args.pixels, size);
-            }
+            glFogiv_PACKED *n = (glFogiv_PACKED *)call;
+            ring_write(ring, n->args.params, gl_fogv_length(n->args.pname) * sizeof(GLint));
             break;
         }
-        case glLoadMatrixf_INDEX:
-        case glLoadTransposeMatrixf_INDEX:
-        case glMultMatrixf_INDEX:
-        case glMultTransposeMatrixf_INDEX:
-
+        case glFogfv_INDEX:
         {
-            glLoadMatrixf_PACKED *n = (glLoadMatrixf_PACKED *)call;
-            ring_write(ring, n->args.m, 16 * sizeof(GLfloat));
+            glFogfv_PACKED *n = (glFogfv_PACKED *)call;
+            ring_write(ring, n->args.params, gl_fogv_length(n->args.pname) * sizeof(GLint));
             break;
         }
         case glLightfv_INDEX:
@@ -90,6 +90,16 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
             ring_write(ring, n->args.params, count * sizeof(GLfloat));
             break;
         }
+        case glLoadMatrixf_INDEX:
+        case glLoadTransposeMatrixf_INDEX:
+        case glMultMatrixf_INDEX:
+        case glMultTransposeMatrixf_INDEX:
+
+        {
+            glLoadMatrixf_PACKED *n = (glLoadMatrixf_PACKED *)call;
+            ring_write(ring, n->args.m, 16 * sizeof(GLfloat));
+            break;
+        }
         case glMaterialfv_INDEX:
         {
             glMaterialfv_PACKED *n = (glMaterialfv_PACKED *)call;
@@ -105,30 +115,22 @@ void remote_local_pre(ring_t *ring, packed_call_t *call) {
             ring_write(ring, n->args.params, count * sizeof(GLfloat));
             break;
         }
-        case glBitmap_INDEX:
+        case glTexImage2D_INDEX:
         {
-            glBitmap_PACKED *n = (glBitmap_PACKED *)call;
-            size_t size = ((n->args.width + 7) / 8) * n->args.height;
-            ring_write(ring, n->args.bitmap, size);
+            glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
+            if (n->args.pixels) {
+                size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
+                ring_write(ring, n->args.pixels, size);
+            }
             break;
         }
-        case glDrawPixels_INDEX:
+        case glTexSubImage2D_INDEX:
         {
-            glDrawPixels_PACKED *n = (glDrawPixels_PACKED *)call;
-            size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
-            ring_write(ring, n->args.pixels, size);
-            break;
-        }
-        case glFogiv_INDEX:
-        {
-            glFogiv_PACKED *n = (glFogiv_PACKED *)call;
-            ring_write(ring, n->args.params, gl_fogv_length(n->args.pname) * sizeof(GLint));
-            break;
-        }
-        case glFogfv_INDEX:
-        {
-            glFogfv_PACKED *n = (glFogfv_PACKED *)call;
-            ring_write(ring, n->args.params, gl_fogv_length(n->args.pname) * sizeof(GLint));
+            glTexSubImage2D_PACKED *n = (glTexSubImage2D_PACKED *)call;
+            if (n->args.pixels) {
+                size_t size = n->args.width * n->args.height * gl_pixel_sizeof(n->args.format, n->args.type);
+                ring_write(ring, n->args.pixels, size);
+            }
             break;
         }
     }
@@ -177,42 +179,7 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
     static Display *target_display = NULL;
     if (! target_display) target_display = XOpenDisplay(NULL);
     switch (call->index) {
-        // can't pass a Display * through the proxy
-        case glXCreateContext_INDEX:
-        {
-            glXCreateContext_PACKED *n = (glXCreateContext_PACKED *)call;
-            n->args.dpy = target_display;
-            if (n->args.vis) {
-                n->args.vis = ring_read(ring, NULL);
-            }
-            if (n->args.shareList) {
-                n->args.shareList = ring_read(ring, NULL);
-            }
-            break;
-        }
-        case glXMakeCurrent_INDEX:
-            ((glXCreateContext_PACKED *)call)->args.dpy = target_display;
-            break;
-        case glXDestroyContext_INDEX:
-            ((glXDestroyContext_PACKED *)call)->args.dpy = target_display;
-            break;
-        case glXSwapBuffers_INDEX:
-            ring_write(ring, NULL, 0);
-            ((glXSwapBuffers_PACKED *)call)->args.dpy = target_display;
-            break;
-        case glXGetConfig_INDEX:
-            ((glXGetConfig_PACKED *)call)->args.value = ring_dma(ring, sizeof(int));
-            glIndexedCall(call, ret);
-            ring_dma_done(ring);
-            return;
-        case glXChooseVisual_INDEX:
-        {
-            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
-            n->args.dpy = target_display;
-            n->args.attribList = ring_read(ring, NULL);
-            glIndexedCall(call, ret);
-            return;
-        }
+        // glshim functions
         case REMOTE_BLOCK_DRAW:
         {
             if (state.list.active) {
@@ -233,8 +200,58 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             gl_get(buf[1], buf[2], ret);
             return;
         }
+        // glX functions
+        // can't pass a Display * through the proxy
+        case glXChooseVisual_INDEX:
+        {
+            glXChooseVisual_PACKED *n = (glXChooseVisual_PACKED *)call;
+            n->args.dpy = target_display;
+            n->args.attribList = ring_read(ring, NULL);
+            glIndexedCall(call, ret);
+            return;
+        }
+        case glXCreateContext_INDEX:
+        {
+            glXCreateContext_PACKED *n = (glXCreateContext_PACKED *)call;
+            n->args.dpy = target_display;
+            if (n->args.vis) {
+                n->args.vis = ring_read(ring, NULL);
+            }
+            if (n->args.shareList) {
+                n->args.shareList = ring_read(ring, NULL);
+            }
+            break;
+        }
+        case glXDestroyContext_INDEX:
+            ((glXDestroyContext_PACKED *)call)->args.dpy = target_display;
+            break;
+        case glXGetConfig_INDEX:
+            ((glXGetConfig_PACKED *)call)->args.value = ring_dma(ring, sizeof(int));
+            glIndexedCall(call, ret);
+            ring_dma_done(ring);
+            return;
+        case glXMakeCurrent_INDEX:
+            ((glXCreateContext_PACKED *)call)->args.dpy = target_display;
+            break;
+        case glXSwapBuffers_INDEX:
+            ring_write(ring, NULL, 0);
+            ((glXSwapBuffers_PACKED *)call)->args.dpy = target_display;
+            break;
+        // GL functions
+        case glBitmap_INDEX:
+            ((glBitmap_PACKED *)call)->args.bitmap = ring_read(ring, NULL);
+            break;
         case glDeleteTextures_INDEX:
             ((glDeleteTextures_PACKED *)call)->args.textures = ring_read(ring, NULL);
+            break;
+        case glDrawPixels_INDEX:
+            ((glDrawPixels_PACKED *)call)->args.pixels = ring_read(ring, NULL);
+            break;
+        case glFogiv_INDEX:
+            ((glFogiv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            break;
+        case glFogfv_INDEX:
+            ((glFogfv_PACKED *)call)->args.params = ring_read(ring, NULL);
             break;
         case glGenTextures_INDEX:
         {
@@ -245,6 +262,34 @@ void remote_target_pre(ring_t *ring, packed_call_t *call, size_t size, void *ret
             glIndexedCall((packed_call_t *)&tmp, NULL);
             ring_dma_done(ring);
             return;
+        }
+		case glLightfv_INDEX:
+            ((glLightfv_PACKED *)call)->args.params = ring_read(ring, NULL);
+			break;
+        case glLoadMatrixf_INDEX:
+        case glLoadTransposeMatrixf_INDEX:
+        case glMultMatrixf_INDEX:
+        case glMultTransposeMatrixf_INDEX:
+			((glLoadMatrixf_PACKED *)call)->args.m = ring_read(ring, NULL);
+            break;
+        case glMaterialfv_INDEX:
+            ((glMaterialfv_PACKED *)call)->args.params = ring_read(ring, NULL);
+            break;
+        case glTexImage2D_INDEX:
+        {
+            glTexImage2D_PACKED *n = (glTexImage2D_PACKED *)call;
+            if (n->args.pixels) {
+                n->args.pixels = ring_read(ring, NULL);
+            }
+            break;
+        }
+        case glTexSubImage2D_INDEX:
+        {
+            glTexSubImage2D_PACKED *n = (glTexSubImage2D_PACKED *)call;
+            if (n->args.pixels) {
+                n->args.pixels = ring_read(ring, NULL);
+            }
+            break;
         }
     }
     glIndexedCall(call, ret);
