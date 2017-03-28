@@ -579,7 +579,6 @@ void glCallList(GLuint list) {
     }
     state.list.recursion++;
     displaylist_t *l = get_list(list);
-    displaylist_t *active = state.list.active;
     if (l) {
         dl_call(l);
     }

@@ -51,7 +51,6 @@ void glMaterialfv(GLenum face, GLenum pname, const GLfloat *params) {
 
 void glLightfv(GLenum light, GLenum pname, const GLfloat *params) {
     ERROR_IN_BLOCK();
-    GLfloat tmp[4];
     if (state.list.active) {
         int len = 0;
         switch (pname) {
@@ -80,6 +79,7 @@ void glLightfv(GLenum light, GLenum pname, const GLfloat *params) {
     PUSH_IF_COMPILING(glLightfv);
     LOAD_GLES(glLightfv);
 #ifdef LOCAL_MATRIX
+    GLfloat tmp[4];
     switch (pname) {
         case GL_POSITION:
             gl_transform_light(tmp, params);

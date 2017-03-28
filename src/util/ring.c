@@ -121,7 +121,6 @@ void *ring_dma(ring_t *ring, size_t size) {
     }
     // wait for free space
     ring_wait_write(ring, size);
-    size_t remain = ring->size - *ring->write;
 
     // we're mapped twice, so writes to the end will auto-wrap
     void *dst = ring->buf + *ring->write;
@@ -219,7 +218,6 @@ static void *ring_map(ring_t *ring, int fd, uint32_t header_size, uint32_t ring_
 uint32_t MAGIC = 0xBEEFCAFE;
 
 int ring_server_handshake(ring_t *ring) {
-    int n;
     ring->me = 0;
     // check magic number
     // endianness is explicitly ignored for this part
@@ -268,7 +266,6 @@ int ring_server_handshake(ring_t *ring) {
 }
 
 int ring_client_handshake(ring_t *ring, char *title) {
-    int n;
     ring->me = 1;
     // check magic number
     uint32_t magic = 0;

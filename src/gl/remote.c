@@ -128,11 +128,6 @@ int remote_spawn(const char *path) {
     return pid;
 }
 
-static void write_memcpy(uintptr_t *dst, void *src, size_t size) {
-    memcpy(*(void **)dst, src, size);
-    *dst += size;
-}
-
 static void write_uint32(uintptr_t *dst, uint32_t i) {
     **(uint32_t **)dst = i;
     *dst += sizeof(uint32_t);
@@ -142,12 +137,6 @@ static void *read_ptr(uintptr_t *src, size_t size) {
     void *pos = (void *)*src;
     *src += size;
     return pos;
-}
-
-static uint32_t read_uint32(uintptr_t *src) {
-    uint32_t i = *(uint32_t *)src;
-    *src += sizeof(uint32_t);
-    return i;
 }
 
 void remote_write_block(ring_t *ring, block_t *block) {

@@ -108,7 +108,7 @@ static inline void tex_coord_loop(block_t *block, GLfloat *out, GLenum type, GLf
     }
     simd4f plane, eyeplane;
     if (plane_in) {
-        simd4f plane = simd4f_uload4(plane_in);
+        plane = simd4f_uload4(plane_in);
         if (type == GL_EYE_LINEAR) {
             simd4x4f_matrix_vector_mul(&inverse, &plane, &eyeplane);
         }

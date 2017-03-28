@@ -247,7 +247,6 @@ void glPopAttrib() {
         glLogicOp(cur->logic_op);
 #endif
 
-        GLfloat *c;
         glClearColor(v4(cur->clear_color));
         glColorMask(v4(cur->color_mask));
     }

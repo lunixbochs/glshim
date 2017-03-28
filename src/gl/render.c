@@ -373,7 +373,6 @@ void gl_feedback_block(block_t *block) {
     }
     int size = feedback_sizeof(state.feedback.type);
 
-    GLfloat *v, *c, *t;
     int v1, v2, v3;
     int first = _index(block, 0);
     for (int j = 0; j < block->len; j++) {
