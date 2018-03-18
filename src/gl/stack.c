@@ -337,7 +337,7 @@ void glPopAttrib() {
 
 #ifndef USE_ES2
     if (cur->mask & GL_POINT_BIT) {
-        if (! cur->mask & GL_ENABLE_BIT) {
+        if (! (cur->mask & GL_ENABLE_BIT)) {
             enable_disable(GL_POINT_SMOOTH, cur->point_smooth);
         }
         glPointSize(cur->point_size);
