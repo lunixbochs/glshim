@@ -1,8 +1,9 @@
 #ifdef __linux__
 #include <linux/fb.h>
 #endif
-
+#ifdef __GLIBC__
 #include <execinfo.h>
+#endif
 #include <fcntl.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -186,7 +187,7 @@ static void signal_handler(int sig) {
         g_bcm_active = false;
         bcm_host_deinit();
     }
-
+#ifdef __GLIBC__
     if (g_stacktrace) {
         switch (sig) {
             case SIGBUS:
@@ -205,6 +206,7 @@ static void signal_handler(int sig) {
             }
         }
     }
+#endif
     signal(sig, SIG_DFL);
     raise(sig);
 }

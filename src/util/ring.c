@@ -9,7 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
+#ifdef __GLIBC__
 #include <sys/sysctl.h>
+#endif
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -167,7 +169,7 @@ int ring_write(ring_t *ring, void *buf, size_t bufsize) {
 
 const size_t cache_line_size() {
     size_t size;
-#ifdef __linux__
+#ifdef __GLIBC__
     size = sysconf(_SC_LEVEL1_DCACHE_LINESIZE);
 #elif __APPLE__
     size_t ret_size = sizeof(size_t);

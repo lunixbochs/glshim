@@ -72,7 +72,7 @@ void ZB_fillTriangleSmooth(ZBuffer *zb, ZBufferPoint *p0, ZBufferPoint *p1, ZBuf
     og1 = g1; \
     ob1 = b1; \
     unsigned short multiplier[4] = {0, 1, 2, 3}; \
-    asm volatile ( \
+    __asm__ volatile ( \
         /* local vectors z, or1, og1, ob1 */ \
         "zzz .req d0\n"  /* d0     q0 */ \
         "red .req d1\n"  /* d1        */ \
