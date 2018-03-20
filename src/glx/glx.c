@@ -1,9 +1,6 @@
 #ifdef __linux__
 #include <linux/fb.h>
 #endif
-#ifdef __GLIBC__
-#include <execinfo.h>
-#endif
 #include <fcntl.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -127,7 +124,6 @@ static bool g_fps_overlay = false;
 static bool g_usefb = false;
 static bool g_vsync = false;
 static bool g_xrefresh = false;
-static bool g_stacktrace = false;
 static bool g_x11_reopen = false;
 // raspberry pi globals
 static bool g_bcm_active = false;
@@ -187,26 +183,6 @@ static void signal_handler(int sig) {
         g_bcm_active = false;
         bcm_host_deinit();
     }
-#ifdef __GLIBC__
-    if (g_stacktrace) {
-        switch (sig) {
-            case SIGBUS:
-            case SIGFPE:
-            case SIGILL:
-            case SIGSEGV: {
-                void *array[10];
-                size_t size = backtrace(array, 10);
-                if (! size) {
-                    printf("No stacktrace. Compile with -funwind-tables.\n");
-                } else {
-                    printf("Stacktrace: %lu\n", size);
-                    backtrace_symbols_fd(array, size, 2);
-                }
-                break;
-            }
-        }
-    }
-#endif
     signal(sig, SIG_DFL);
     raise(sig);
 }
@@ -224,8 +200,7 @@ static void scan_env() {
         }
 
     env(LIBGL_XREFRESH, g_xrefresh, "xrefresh will be called on cleanup");
-    env(LIBGL_STACKTRACE, g_stacktrace, "stacktrace will be printed on crash");
-    if (g_xrefresh || g_stacktrace || g_bcmhost) {
+    if (g_xrefresh || g_bcmhost) {
         // TODO: a bit gross. Maybe look at this: http://stackoverflow.com/a/13290134/293352
         signal(SIGBUS, signal_handler);
         signal(SIGFPE, signal_handler);
