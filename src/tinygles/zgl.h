@@ -148,7 +148,7 @@ typedef struct {
 } GLRasterPos;
 
 typedef struct {
-    float *p;
+    const float *p;
     int size;
     int stride;
 } GLArray;
@@ -300,6 +300,48 @@ typedef struct GLContext {
 
 extern GLContext *gl_ctx;
 
+/* vertex.c */
+void tglNormal3f(GLfloat x, GLfloat y, GLfloat z);
+void tglTexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q);
+void tglEdgeFlag(GLboolean flag);
+void tglColor4f(GLfloat r, GLfloat g, GLfloat b, GLfloat a);
+void tglBegin(GLenum type);
+void tglVertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+void tglEnd();
+
+/* matrix.c */
+void tglMatrixMode(GLenum mode);
+void tglLoadMatrixf(const GLfloat *matrix);
+void tglLoadIdentity();
+void tglMultMatrixf(const GLfloat *matrix);
+void tglPushMatrix();
+void tglPopMatrix();
+void tglRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+void tglScalef(GLfloat x, GLfloat y, GLfloat z);
+void tglTranslatef(GLfloat x, GLfloat y, GLfloat z);
+void tglFrustumf(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
+void tglOrthof(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
+
+/* light.c */
+void tglMaterialf(GLenum face, GLenum pname, GLfloat param);
+void tglMaterialfv(GLenum face, GLenum pname, const GLfloat *v);
+void tglColorMaterial(GLenum face, GLenum mode);
+void tglLightf(GLenum light, GLenum pname, GLfloat param);
+void tglLightfv(GLenum light, GLenum pname, const GLfloat *param);
+void tglLightModeli(GLenum pname, GLint param);
+void tglLightModelfv(GLenum pname, const GLfloat *param);
+
+/* texture.c */
+void tglInitTextures(GLContext *c);
+void tglGenTextures(int n, unsigned int *textures);
+void tglDeleteTextures(GLsizei n, const GLuint *textures);
+void tglBindTexture(GLenum target, GLuint texture);
+void tglTexImage2D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+void tglTexEnvf(GLenum target, GLenum pname, GLfloat param);
+void tglTexEnvi(GLenum target, GLenum pname, GLint param);
+void tglTexParameteri(GLenum target, GLenum pname, GLint param);
+void tglPixelStorei(GLenum pname, GLint param);
+
 /* clip.c */
 void gl_transform_to_viewport(GLContext *c, GLVertex *v);
 void gl_draw_triangle(GLContext *c, GLVertex *p0, GLVertex *p1, GLVertex *p2);
@@ -316,8 +358,8 @@ void gl_print_matrix(const float *m);
 /* light.c */
 void gl_shade_vertex(GLContext *c, GLVertex *v);
 
-void glInitTextures(GLContext *c);
-void glEndTextures(GLContext *c);
+void tglInitTextures(GLContext *c);
+void tglEndTextures(GLContext *c);
 GLTexture *alloc_texture(GLContext *c, int h);
 
 /* image_util.c */
@@ -326,10 +368,13 @@ void gl_convertRGB_to_8A8R8G8B(unsigned int *pixmap, unsigned char *rgb, int xsi
 void gl_resizeImage(unsigned char *dest, int xsize_dest, int ysize_dest, unsigned char *src, int xsize_src, int ysize_src);
 void gl_resizeImageNoInterpolate(unsigned char *dest, int xsize_dest, int ysize_dest, unsigned char *src, int xsize_src, int ysize_src);
 
+/* misc.c */
+void tglViewport(GLint x, GLint y, GLint width, GLint height);
+
 GLContext *gl_get_context(void);
 
-void glClose(void);
-void glInit(void *zbuffer1);
+void tglClose(void);
+void tglInit(void *zbuffer1);
 
 /* specular buffer "api" */
 GLSpecBuf *specbuf_get_buffer(GLContext *c, const int shininess_i, const float shininess);

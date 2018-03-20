@@ -84,4 +84,5 @@ GLboolean tglIsEnabled(GLenum cap) {
             }
     }
 #undef offset_bit
+    return 0;
 }

@@ -12,6 +12,7 @@
 
 // will become references to dlopen'd gles and egl
 extern void *gles, *egl, *bcm_host, *vcos;
+extern int use_tgl;
 
 extern void *open_lib(const char **names, const char *override);
 extern void load_libs();
@@ -31,9 +32,13 @@ extern void debugf(char *fmt, ...);
             if (lib == NULL) { \
                 load_libs(); \
             } \
-            if (lib != NULL) { \
-                lib##_##name = (name##_PTR)__VA_ARGS__; \
+            void *sym = NULL; \
+            if (use_tgl) { \
+                sym = dlsym(RTLD_DEFAULT, "t" #name); \
+            } else if (lib != NULL) { \
+                sym = __VA_ARGS__; \
             } \
+            lib##_##name = (name##_PTR)sym; \
         } \
     }
 #endif

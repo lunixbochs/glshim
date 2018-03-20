@@ -327,9 +327,9 @@ Bool tglXMakeCurrent(Display *dpy, GLXDrawable drawable, GLXContext ctx1) {
         tglInit(zb);
         ctx->gl_context = gl_get_context();
         ctx->gl_context->opaque=(void *) ctx;
-        ctx->gl_context->gl_resize_viewport = glX_resize_viewport;
+        ctx->gl_context->gl_resize_viewport = tglX_resize_viewport;
 
-        /* set the viewport : we force a call to glX_resize_viewport */
+        /* set the viewport : we force a call to tglX_resize_viewport */
         ctx->gl_context->viewport.xsize=-1;
         ctx->gl_context->viewport.ysize=-1;
 

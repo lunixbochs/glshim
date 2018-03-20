@@ -6,11 +6,12 @@ set_target_properties(remote PROPERTIES OUTPUT_NAME libgl_remote)
 target_link_libraries(remote GL_static X11 m dl pthread)
 
 file(GLOB_RECURSE GL_SOURCES gl/*.c gl/*.cpp)
+file(GLOB_RECURSE TGL_SOURCES tinygles/*.c)
 file(GLOB UTIL_SOURCES util/*.c util/math/*.c)
 
 include_directories(glx)
 aux_source_directory(glx GLX_SOURCES)
-set(GL_SOURCES ${GL_SOURCES} ${GLX_SOURCES} ${UTIL_SOURCES})
+set(GL_SOURCES ${GL_SOURCES} ${GLX_SOURCES} ${UTIL_SOURCES} ${TGL_SOURCES})
 if(DUALMODE)
     set(GL_SOURCES ${GL_SOURCES} ${REMOTE_SOURCES})
 endif()
@@ -19,7 +20,8 @@ add_library(GL_obj OBJECT ${GL_SOURCES})
 set_target_properties(GL_obj PROPERTIES POSITION_INDEPENDENT_CODE 1)
 
 add_library(GL SHARED $<TARGET_OBJECTS:GL_obj>)
-target_link_libraries(GL X11 m dl pthread)
+target_link_libraries(GL X11 Xext m dl pthread)
+set_target_properties(GL PROPERTIES VERSION "4.0.0" SOVERSION "4.0.0")
 
 add_library(GL_static STATIC $<TARGET_OBJECTS:GL_obj>)
 set_target_properties(GL_static PROPERTIES OUTPUT_NAME GL)
@@ -38,6 +40,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         target_link_libraries(GL -fPIE -pie)
     endif()
 endif()
+
 
 INSTALL(TARGETS GL
     ${INSTALL_TARGETS_DEFAULT_ARGS}

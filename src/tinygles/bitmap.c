@@ -1,5 +1,5 @@
 #include "zgl.h"
-#include "pixel.h"
+#include "util/pixel.h"
 #include "gl_helpers.h"
 
 void tglRasterPos3f(GLfloat x, GLfloat y, GLfloat z) {

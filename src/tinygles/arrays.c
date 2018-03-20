@@ -14,7 +14,7 @@ static inline void tglArrayElement(GLint idx) {
 
     if (states & COLOR_ARRAY) {
         int size = c->array.color.size;
-        float *ptr = c->array.color.p;
+        const float *ptr = c->array.color.p;
         i = idx * (size + c->array.color.stride);
         tglColor4f(
             ptr[i],

@@ -98,11 +98,11 @@ int ZDither_lookupColor(int r, int g, int b) {
 void ZB_ditherFrameBuffer(ZBuffer *zb,  unsigned char *buf, int linesize) {
     int xk, yk, x, y, c1, c2;
     unsigned char *dest1;
-    unsigned short *pp1;
+    PIXEL *pp1;
     int r_d, g_d, b_d;
     unsigned char *ctable = zb->dctable;
     register unsigned char *dest;
-    register unsigned short *pp;
+    register PIXEL *pp;
 
     assert( ((long)buf & 1) == 0 && (linesize & 1) == 0);
 

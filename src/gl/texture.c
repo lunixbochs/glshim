@@ -6,10 +6,10 @@
 #include "gl_str.h"
 #include "list.h"
 #include "loader.h"
-#include "pixel.h"
 #include "texture.h"
 #include "types.h"
 #include "remote.h"
+#include "util/pixel.h"
 
 // expand non-power-of-two sizes
 // TODO: what does this do to repeating textures?

@@ -2,6 +2,7 @@
 #include "loader.h"
 
 void *gles = NULL, *egl = NULL, *bcm_host = NULL, *vcos = NULL;
+int use_tgl = 0;
 
 static const char *path_prefix[] = {
     "",
@@ -85,6 +86,12 @@ void load_libs() {
     char *egl_override = getenv("LIBGL_EGL");
     egl = open_lib(egl_lib, egl_override);
     WARN_NULL(egl);
+
+    if (!gles || !egl) {
+        fprintf(stderr, "glshim: falling back to software renderer\n");
+        gles = egl = bcm_host = vcos = NULL;
+        use_tgl = 1;
+    }
 }
 
 void debugf(char *fmt, ...) {
