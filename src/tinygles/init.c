@@ -123,23 +123,9 @@ void tglInit(void *zbuffer1) {
     c->clear.depth = 0;
 
     /* matrix */
-    c->matrix.mode = 0;
-
-    c->matrix.stack_depth_max[0] = MAX_MODELVIEW_STACK_DEPTH;
-    c->matrix.stack_depth_max[1] = MAX_PROJECTION_STACK_DEPTH;
-    c->matrix.stack_depth_max[2] = MAX_TEXTURE_STACK_DEPTH;
-
-    for (i = 0; i < 3; i++) {
-        c->matrix.stack[i] = calloc(1, c->matrix.stack_depth_max[i] * sizeof(M4));
-        c->matrix.stack_ptr[i] = c->matrix.stack[i];
-    }
-
-    tglMatrixMode(GL_PROJECTION);
-    tglLoadIdentity();
-    tglMatrixMode(GL_TEXTURE);
-    tglLoadIdentity();
-    tglMatrixMode(GL_MODELVIEW);
-    tglLoadIdentity();
+    mat4_identity(&c->matrix.model_view);
+    mat4_identity(&c->matrix.projection);
+    mat4_identity(&c->matrix.texture);
 
     c->matrix.model_projection_updated = 1;
 

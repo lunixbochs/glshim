@@ -56,8 +56,6 @@ void gl_eval_viewport(GLContext * c) {
 
 void tglBegin(GLenum type) {
     GLContext *c = gl_get_context();
-    M4 tmp;
-
     assert(c->in_begin == 0);
 
     c->begin_type = type;
@@ -69,22 +67,15 @@ void tglBegin(GLenum type) {
 
         if (c->light.enabled) {
             /* precompute inverse modelview */
-            gl_M4_Inv(&tmp, c->matrix.stack_ptr[0]);
-            gl_M4_Transpose(&c->matrix.model_view_inv, &tmp);
+            mat4_inverse(&c->matrix.model_view, &c->matrix.model_view_inv);
+            mat4_transpose(&c->matrix.model_view_inv);
         } else {
-            float *m = &c->matrix.model_projection.m[0][0];
-            /* precompute projection matrix */
-            gl_M4_Mul(&c->matrix.model_projection, c->matrix.stack_ptr[1], c->matrix.stack_ptr[0]);
-            /* test to accelerate computation */
-            c->matrix.model_projection_no_w_transform = 0;
-            if (m[12] == 0.0 && m[13] == 0.0 && m[14] == 0.0) {
-                c->matrix.model_projection_no_w_transform = 1;
-            }
+            c->matrix.model_projection = c->matrix.projection;
+            mat4_mul(&c->matrix.model_projection, &c->matrix.model_view);
         }
 
         /* test if the texture matrix is not Identity */
-        c->matrix.apply_texture = !gl_M4_IsId(c->matrix.stack_ptr[2]);
-
+        c->matrix.apply_texture = !mat4_is_identity(&c->matrix.texture);
         c->matrix.model_projection_updated = 0;
     }
     /*  viewport */
@@ -121,48 +112,22 @@ void tglBegin(GLenum type) {
 /* coords, tranformation , clip code and projection */
 /* TODO : handle all cases */
 static inline void gl_vertex_transform(GLContext *c, GLVertex *v) {
-    float *m;
     V4 *n;
 
     if (c->light.enabled) {
         /* eye coordinates needed for lighting */
-
-        m = &c->matrix.stack_ptr[0]->m[0][0];
-        v->ec.X = (v->coord.X * m[0]  + v->coord.Y * m[1]  + v->coord.Z * m[2]  + m[3]);
-        v->ec.Y = (v->coord.X * m[4]  + v->coord.Y * m[5]  + v->coord.Z * m[6]  + m[7]);
-        v->ec.Z = (v->coord.X * m[8]  + v->coord.Y * m[9]  + v->coord.Z * m[10] + m[11]);
-        v->ec.W = (v->coord.X * m[12] + v->coord.Y * m[13] + v->coord.Z * m[14] + m[15]);
+        mat4_mul_vec4(&c->matrix.model_view, v->ec.v, v->coord.v);
 
         /* projection coordinates */
-        m = &c->matrix.stack_ptr[1]->m[0][0];
-        v->pc.X = (v->ec.X * m[0]  + v->ec.Y * m[1]  + v->ec.Z * m[2]  + v->ec.W * m[3]);
-        v->pc.Y = (v->ec.X * m[4]  + v->ec.Y * m[5]  + v->ec.Z * m[6]  + v->ec.W * m[7]);
-        v->pc.Z = (v->ec.X * m[8]  + v->ec.Y * m[9]  + v->ec.Z * m[10] + v->ec.W * m[11]);
-        v->pc.W = (v->ec.X * m[12] + v->ec.Y * m[13] + v->ec.Z * m[14] + v->ec.W * m[15]);
-
-        m = &c->matrix.model_view_inv.m[0][0];
-        n = &c->current.normal;
-
-        v->normal.X = (n->X * m[0] + n->Y * m[1] + n->Z * m[2]);
-        v->normal.Y = (n->X * m[4] + n->Y * m[5] + n->Z * m[6]);
-        v->normal.Z = (n->X * m[8] + n->Y * m[9] + n->Z * m[10]);
-
+        mat4_mul_vec4(&c->matrix.projection, v->pc.v, v->ec.v);
+        mat4_mul_vec3(&c->matrix.model_view_inv, v->normal.v, c->current.normal.v);
         if (c->normalize_enabled) {
             gl_V3_Norm(&v->normal);
         }
     } else {
         /* no eye coordinates needed, no normal */
         /* NOTE: W = 1 is assumed */
-        m = &c->matrix.model_projection.m[0][0];
-
-        v->pc.X = (v->coord.X * m[0] + v->coord.Y * m[1] + v->coord.Z * m[2] + m[3]);
-        v->pc.Y = (v->coord.X * m[4] + v->coord.Y * m[5] + v->coord.Z * m[6] + m[7]);
-        v->pc.Z = (v->coord.X * m[8] + v->coord.Y * m[9] + v->coord.Z * m[10] + m[11]);
-        if (c->matrix.model_projection_no_w_transform) {
-            v->pc.W = m[15];
-        } else {
-            v->pc.W = (v->coord.X * m[12] + v->coord.Y * m[13] + v->coord.Z * m[14] + m[15]);
-        }
+        mat4_mul_vec4(&c->matrix.model_projection, v->pc.v, v->coord.v);
     }
 
     v->clip_code = gl_clipcode(v->pc.X, v->pc.Y, v->pc.Z, v->pc.W);
@@ -214,7 +179,7 @@ void tglVertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
     /* tex coords */
     if (c->texture.enabled_2d) {
         if (c->matrix.apply_texture) {
-            gl_M4_MulV4(&v->tex_coord, c->matrix.stack_ptr[2], &c->current.tex_coord);
+            mat4_mul_vec4(&c->matrix.texture, v->tex_coord.v, c->current.tex_coord.v);
         } else {
             v->tex_coord = c->current.tex_coord;
         }

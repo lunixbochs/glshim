@@ -4,6 +4,7 @@
 #include "types.h"
 #include "remote.h"
 #include "list.h"
+#include "tinygles/zgl.h"
 
 #ifdef LOCAL_MATRIX
 #define PROXY_MATRIX(name)
@@ -73,12 +74,16 @@ static void update_mvp() {
 }
 
 static void upload_matrix() {
+    if (g_use_tgl) {
+        tgl_matrix_set(state.matrix.mode, get_current_matrix());
+        return;
+    }
     GLfloat m[16];
     mat4_save(get_current_matrix(), m);
     if (state.remote) {
         forward_glLoadMatrixf(m);
     } else {
-        PROXY_MATRIX(glLoadMatrixf);
+        PROXY_GLES(glLoadMatrixf);
     }
 }
 
@@ -88,7 +93,7 @@ void glLoadIdentity() {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_identity(get_current_matrix());
-    PROXY_MATRIX(glLoadIdentity);
+    upload_matrix();
 }
 
 void glLoadMatrixf(const GLfloat *m) {
@@ -97,7 +102,7 @@ void glLoadMatrixf(const GLfloat *m) {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_load(get_current_matrix(), m);
-    PROXY_MATRIX(glLoadMatrixf);
+    upload_matrix();
 }
 
 void glLoadTransposeMatrixf(const GLfloat *m) {

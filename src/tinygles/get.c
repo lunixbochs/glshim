@@ -39,48 +39,8 @@ void tglGetIntegerv(GLenum pname, GLint *params) {
 
 void tglGetFloatv(GLenum pname, GLfloat *v) {
     int i;
-    int mnr = 0; /* just a trick to return the correct matrix */
     GLContext *c = gl_get_context();
     switch (pname) {
-        case GL_CURRENT_COLOR: {
-            GLfloat *color = c->current.color.v;
-            *v++ = *color++;
-            *v++ = *color++;
-            *v++ = *color++;
-            *v++ = *color++;
-            break;
-        }
-        case GL_CURRENT_NORMAL: {
-            GLfloat *normal = c->current.normal.v;
-            *v++ = *normal++;
-            *v++ = *normal++;
-            *v++ = *normal++;
-            break;
-        }
-        case GL_CURRENT_TEXTURE_COORDS: {
-            GLfloat *tex_coord = c->current.tex_coord.v;
-            *v++ = *tex_coord++;
-            *v++ = *tex_coord++;
-            *v++ = *tex_coord++;
-            *v++ = *tex_coord++;
-            break;
-        }
-        case GL_TEXTURE_MATRIX:
-            mnr++;
-        case GL_PROJECTION_MATRIX:
-            mnr++;
-        case GL_MODELVIEW_MATRIX:
-            {
-                float *p = &c->matrix.stack_ptr[mnr]->m[0][0];
-                for (i = 0; i < 4; i++) {
-                    *v++ = p[0];
-                    *v++ = p[4];
-                    *v++ = p[8];
-                    *v++ = p[12];
-                    p++;
-                }
-            }
-            break;
         case GL_LINE_WIDTH:
             *v = 1.0f;
             break;

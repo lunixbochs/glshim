@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "mat4.h"
 
 mat4 mat4_new() {
@@ -10,8 +11,21 @@ void mat4_transpose(mat4 *m) {
     simd4x4f_transpose_inplace(m);
 }
 
+void mat4_inverse(mat4 *m, mat4 *out) {
+    simd4x4f_inverse(m, out);
+}
+
 void mat4_identity(mat4 *m) {
     simd4x4f_identity(m);
+}
+
+int mat4_is_identity(mat4 *m) {
+    mat4 id;
+    mat4_identity(&id);
+    float a[16], b[16];
+    mat4_save(&id, a);
+    mat4_save(m, b);
+    return memcmp(a, b, 16 * sizeof(float)) == 0;
 }
 
 void mat4_load(mat4 *m, const float *load) {

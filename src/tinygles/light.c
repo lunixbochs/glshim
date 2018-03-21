@@ -84,15 +84,12 @@ void tglLightfv(GLenum light, GLenum pname, const GLfloat *param) {
         case GL_POSITION:
             {
                 V4 pos;
-                gl_M4_MulV4(&pos, c->matrix.stack_ptr[0], &v);
-
+                mat4_mul_vec4(&c->matrix.model_view, pos.v, v.v);
                 l->position = pos;
-
                 if (l->position.v[3] == 0) {
                     l->norm_position.X = pos.X;
                     l->norm_position.Y = pos.Y;
                     l->norm_position.Z = pos.Z;
-
                     gl_V3_Norm(&l->norm_position);
                 }
             }

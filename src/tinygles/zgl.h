@@ -11,6 +11,7 @@
 #include <GL/gl.h>
 #include "zbuffer.h"
 #include "zmath.h"
+#include "util/mat4.h"
 
 #ifndef MIN
 #define MIN(a, b) (((a) < (b) ? (a) : (b)))
@@ -203,15 +204,9 @@ typedef struct GLContext {
 
     /* matrix */
     struct {
-        int mode;
-        M4 *stack[3];
-        M4 *stack_ptr[3];
-        int stack_depth_max[3];
-
-        M4 model_view_inv;
-        M4 model_projection;
+        mat4 model_view, projection, texture;
+        mat4 model_view_inv, model_projection;
         int model_projection_updated;
-        int model_projection_no_w_transform;
         int apply_texture;
     } matrix;
 
@@ -344,7 +339,7 @@ void gl_draw_triangle_line(GLContext *c, GLVertex *p0, GLVertex *p1, GLVertex *p
 void gl_draw_triangle_fill(GLContext *c, GLVertex *p0, GLVertex *p1, GLVertex *p2);
 
 /* matrix.c */
-void gl_print_matrix(const float *m);
+void tgl_matrix_set(int mode, mat4 *m);
 
 /* light.c */
 void gl_shade_vertex(GLContext *c, GLVertex *v);
