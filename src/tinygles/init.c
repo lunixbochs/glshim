@@ -145,9 +145,6 @@ void tglInit(void *zbuffer1) {
 
     c->matrix.model_projection_updated = 1;
 
-    /* opengl 1.1 arrays */
-    c->client_states = 0;
-
     /* opengl 1.1 polygon offset */
     c->offset.states = 0;
 

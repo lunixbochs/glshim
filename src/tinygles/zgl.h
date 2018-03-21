@@ -248,15 +248,6 @@ typedef struct GLContext {
         int edge_flag;
     } current;
 
-    /* opengl 1.1 arrays  */
-    struct {
-        GLArray vertex,
-                normal,
-                color,
-                tex_coord;
-    } array;
-    int client_states;
-
     /* opengl 1.1 polygon offset */
     struct {
         float factor;

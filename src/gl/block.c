@@ -7,6 +7,7 @@
 #include "texgen.h"
 #include "texture.h"
 #include "remote.h"
+#include "tinygles/block.h"
 
 #define alloc_sublist(n, type, cap) \
     (GLfloat *)malloc(n * gl_sizeof(type) * cap)
@@ -245,6 +246,18 @@ void bl_draw(block_t *block) {
         return;
     }
 
+    GLushort *indices = block->indices;
+    // if glDrawElements or glArrayElement was used, we should have already updated block->indices with q2t
+    if (block->q2t && !indices) {
+        // make sure we resized q2t. this block might be from remote.
+        q2t_calc(block->len);
+        indices = q2t.cache;
+    }
+    if (g_use_tgl) {
+        tgl_block_draw(block, indices);
+        return;
+    }
+
     LOAD_GLES(glDrawArrays);
     LOAD_GLES(glDrawElements);
 
@@ -304,14 +317,6 @@ void bl_draw(block_t *block) {
             glDisableClientState(GL_TEXTURE_COORD_ARRAY);
             glClientActiveTexture(old);
         }
-    }
-
-    GLushort *indices = block->indices;
-    // if glDrawElements or glArrayElement was used, we should have already updated block->indices with q2t
-    if (block->q2t && !indices) {
-        // make sure we resized q2t. this block might be from remote.
-        q2t_calc(block->len);
-        indices = q2t.cache;
     }
 
     if (indices) {

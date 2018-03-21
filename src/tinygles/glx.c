@@ -33,14 +33,14 @@ XVisualInfo* tglXChooseVisual(Display *dpy, int screen, int *attribList) {
     /* the attribList is ignored : we consider only RGBA rendering (no
        direct color) */
 
-    if (XMatchVisualInfo (dpy, screen, 16, TrueColor, &vinfo)) {
-        /* 16 bit visual (fastest with TinyGL) */
+    if (XMatchVisualInfo (dpy, screen, 32, TrueColor, &vinfo)) {
+        /* 32 bit visual (fastest with TinyGL) */
 
     } else if (XMatchVisualInfo (dpy, screen, 24, TrueColor, &vinfo)) {
         /* 24 bit visual */
 
-    } else if (XMatchVisualInfo (dpy, screen, 32, TrueColor, &vinfo)) {
-        /* 32 bit visual */
+    } else if (XMatchVisualInfo (dpy, screen, 16, TrueColor, &vinfo)) {
+        /* 16 bit visual */
 
     } else if (XMatchVisualInfo (dpy, screen, 8, PseudoColor, &vinfo)) {
         /* 8 bit visual */
