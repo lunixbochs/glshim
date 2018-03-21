@@ -21,7 +21,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 add_executable(tmp ${GL_SOURCES} {{ sources }})
-target_link_libraries(tmp X11 m dl pthread)
+target_link_libraries(tmp X11 Xext m dl pthread)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(tmp rt)
 endif()

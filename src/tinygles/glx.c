@@ -25,7 +25,6 @@ Bool tglXQueryExtension(Display *dpy, int *errorb, int *event) {
     return True;
 }
 
-
 XVisualInfo* tglXChooseVisual(Display *dpy, int screen, int *attribList) {
     XVisualInfo vinfo;
     int n;

@@ -1,7 +1,5 @@
 #include "zgl.h"
 
-GLContext *gl_ctx;
-
 void initSharedState(GLContext *c) {
     GLSharedState *s = &c->shared_state;
     s->texture_hash_table = calloc(1, sizeof(GLTexture *) * TEXTURE_HASH_TABLE_SIZE);

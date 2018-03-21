@@ -13,6 +13,7 @@ typedef int32_t GLfixed;
 
 // glx + x11
 
+#ifndef GLX_H
 typedef void *DMbuffer;
 typedef void *GLXContextID;
 typedef int GLXDrawable;
@@ -95,6 +96,7 @@ struct __GLXFBConfigRec {
     double minAlpha, maxAlpha;
 };
 typedef struct __GLXFBConfigRec *GLXFBConfig;
+#endif // GLX_H
 
 // egl
 #if !defined(__unix__) && defined(__APPLE__) && defined(__MACH__)
