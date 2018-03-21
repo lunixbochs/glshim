@@ -93,7 +93,7 @@ void glLoadIdentity() {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_identity(get_current_matrix());
-    upload_matrix();
+    PROXY_GLES(glLoadIdentity);
 }
 
 void glLoadMatrixf(const GLfloat *m) {
@@ -102,12 +102,10 @@ void glLoadMatrixf(const GLfloat *m) {
     ERROR_IN_BLOCK();
     mvp_dirty = true;
     mat4_load(get_current_matrix(), m);
-    upload_matrix();
+    PROXY_GLES(glLoadMatrixf);
 }
 
 void glLoadTransposeMatrixf(const GLfloat *m) {
-    m = retain_mat(m);
-    PUSH_IF_COMPILING(glLoadTransposeMatrixf);
     ERROR_IN_BLOCK();
     GLfloat tmp[16];
     transpose(tmp, m);
