@@ -5,6 +5,376 @@
 
 void glIndexedCall(const packed_call_t *packed, void *ret_v) {
     switch (packed->index) {
+        #ifndef skip_index_eglBindAPI
+        case eglBindAPI_INDEX:
+            call_eglBindAPI(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglBindTexImage
+        case eglBindTexImage_INDEX:
+            call_eglBindTexImage(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglChooseConfig
+        case eglChooseConfig_INDEX:
+            call_eglChooseConfig(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglClientWaitSyncKHR
+        case eglClientWaitSyncKHR_INDEX:
+            call_eglClientWaitSyncKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglClientWaitSyncNV
+        case eglClientWaitSyncNV_INDEX:
+            call_eglClientWaitSyncNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCopyBuffers
+        case eglCopyBuffers_INDEX:
+            call_eglCopyBuffers(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateContext
+        case eglCreateContext_INDEX:
+            call_eglCreateContext(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateDRMImageMESA
+        case eglCreateDRMImageMESA_INDEX:
+            call_eglCreateDRMImageMESA(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateFenceSyncNV
+        case eglCreateFenceSyncNV_INDEX:
+            call_eglCreateFenceSyncNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateImageKHR
+        case eglCreateImageKHR_INDEX:
+            call_eglCreateImageKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreatePbufferFromClientBuffer
+        case eglCreatePbufferFromClientBuffer_INDEX:
+            call_eglCreatePbufferFromClientBuffer(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreatePbufferSurface
+        case eglCreatePbufferSurface_INDEX:
+            call_eglCreatePbufferSurface(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreatePixmapSurface
+        case eglCreatePixmapSurface_INDEX:
+            call_eglCreatePixmapSurface(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreatePixmapSurfaceHI
+        case eglCreatePixmapSurfaceHI_INDEX:
+            call_eglCreatePixmapSurfaceHI(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateStreamFromFileDescriptorKHR
+        case eglCreateStreamFromFileDescriptorKHR_INDEX:
+            call_eglCreateStreamFromFileDescriptorKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateStreamKHR
+        case eglCreateStreamKHR_INDEX:
+            call_eglCreateStreamKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateStreamProducerSurfaceKHR
+        case eglCreateStreamProducerSurfaceKHR_INDEX:
+            call_eglCreateStreamProducerSurfaceKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateSyncKHR
+        case eglCreateSyncKHR_INDEX:
+            call_eglCreateSyncKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglCreateWindowSurface
+        case eglCreateWindowSurface_INDEX:
+            call_eglCreateWindowSurface(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglDestroyContext
+        case eglDestroyContext_INDEX:
+            call_eglDestroyContext(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglDestroyImageKHR
+        case eglDestroyImageKHR_INDEX:
+            call_eglDestroyImageKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglDestroyStreamKHR
+        case eglDestroyStreamKHR_INDEX:
+            call_eglDestroyStreamKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglDestroySurface
+        case eglDestroySurface_INDEX:
+            call_eglDestroySurface(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglDestroySyncKHR
+        case eglDestroySyncKHR_INDEX:
+            call_eglDestroySyncKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglDestroySyncNV
+        case eglDestroySyncNV_INDEX:
+            call_eglDestroySyncNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglDupNativeFenceFDANDROID
+        case eglDupNativeFenceFDANDROID_INDEX:
+            call_eglDupNativeFenceFDANDROID(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglExportDRMImageMESA
+        case eglExportDRMImageMESA_INDEX:
+            call_eglExportDRMImageMESA(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglFenceNV
+        case eglFenceNV_INDEX:
+            call_eglFenceNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetConfigAttrib
+        case eglGetConfigAttrib_INDEX:
+            call_eglGetConfigAttrib(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetConfigs
+        case eglGetConfigs_INDEX:
+            call_eglGetConfigs(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetCurrentContext
+        case eglGetCurrentContext_INDEX:
+            call_eglGetCurrentContext(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetCurrentDisplay
+        case eglGetCurrentDisplay_INDEX:
+            call_eglGetCurrentDisplay(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetCurrentSurface
+        case eglGetCurrentSurface_INDEX:
+            call_eglGetCurrentSurface(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetDisplay
+        case eglGetDisplay_INDEX:
+            call_eglGetDisplay(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetError
+        case eglGetError_INDEX:
+            call_eglGetError(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetProcAddress
+        case eglGetProcAddress_INDEX:
+            call_eglGetProcAddress(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetStreamFileDescriptorKHR
+        case eglGetStreamFileDescriptorKHR_INDEX:
+            call_eglGetStreamFileDescriptorKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetSyncAttribKHR
+        case eglGetSyncAttribKHR_INDEX:
+            call_eglGetSyncAttribKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetSyncAttribNV
+        case eglGetSyncAttribNV_INDEX:
+            call_eglGetSyncAttribNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetSystemTimeFrequencyNV
+        case eglGetSystemTimeFrequencyNV_INDEX:
+            call_eglGetSystemTimeFrequencyNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglGetSystemTimeNV
+        case eglGetSystemTimeNV_INDEX:
+            call_eglGetSystemTimeNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglInitialize
+        case eglInitialize_INDEX:
+            call_eglInitialize(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglLockSurfaceKHR
+        case eglLockSurfaceKHR_INDEX:
+            call_eglLockSurfaceKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglMakeCurrent
+        case eglMakeCurrent_INDEX:
+            call_eglMakeCurrent(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglPostSubBufferNV
+        case eglPostSubBufferNV_INDEX:
+            call_eglPostSubBufferNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryAPI
+        case eglQueryAPI_INDEX:
+            call_eglQueryAPI(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryContext
+        case eglQueryContext_INDEX:
+            call_eglQueryContext(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryNativeDisplayNV
+        case eglQueryNativeDisplayNV_INDEX:
+            call_eglQueryNativeDisplayNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryNativePixmapNV
+        case eglQueryNativePixmapNV_INDEX:
+            call_eglQueryNativePixmapNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryNativeWindowNV
+        case eglQueryNativeWindowNV_INDEX:
+            call_eglQueryNativeWindowNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryStreamKHR
+        case eglQueryStreamKHR_INDEX:
+            call_eglQueryStreamKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryStreamTimeKHR
+        case eglQueryStreamTimeKHR_INDEX:
+            call_eglQueryStreamTimeKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryStreamu64KHR
+        case eglQueryStreamu64KHR_INDEX:
+            call_eglQueryStreamu64KHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQueryString
+        case eglQueryString_INDEX:
+            call_eglQueryString(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQuerySurface
+        case eglQuerySurface_INDEX:
+            call_eglQuerySurface(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglQuerySurfacePointerANGLE
+        case eglQuerySurfacePointerANGLE_INDEX:
+            call_eglQuerySurfacePointerANGLE(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglReleaseTexImage
+        case eglReleaseTexImage_INDEX:
+            call_eglReleaseTexImage(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglReleaseThread
+        case eglReleaseThread_INDEX:
+            call_eglReleaseThread(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglSignalSyncKHR
+        case eglSignalSyncKHR_INDEX:
+            call_eglSignalSyncKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglSignalSyncNV
+        case eglSignalSyncNV_INDEX:
+            call_eglSignalSyncNV(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglStreamAttribKHR
+        case eglStreamAttribKHR_INDEX:
+            call_eglStreamAttribKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglStreamConsumerAcquireKHR
+        case eglStreamConsumerAcquireKHR_INDEX:
+            call_eglStreamConsumerAcquireKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglStreamConsumerGLTextureExternalKHR
+        case eglStreamConsumerGLTextureExternalKHR_INDEX:
+            call_eglStreamConsumerGLTextureExternalKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglStreamConsumerReleaseKHR
+        case eglStreamConsumerReleaseKHR_INDEX:
+            call_eglStreamConsumerReleaseKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglSurfaceAttrib
+        case eglSurfaceAttrib_INDEX:
+            call_eglSurfaceAttrib(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglSwapBuffers
+        case eglSwapBuffers_INDEX:
+            call_eglSwapBuffers(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglSwapBuffersWithDamageEXT
+        case eglSwapBuffersWithDamageEXT_INDEX:
+            call_eglSwapBuffersWithDamageEXT(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglSwapInterval
+        case eglSwapInterval_INDEX:
+            call_eglSwapInterval(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglTerminate
+        case eglTerminate_INDEX:
+            call_eglTerminate(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglUnlockSurfaceKHR
+        case eglUnlockSurfaceKHR_INDEX:
+            call_eglUnlockSurfaceKHR(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglWaitClient
+        case eglWaitClient_INDEX:
+            call_eglWaitClient(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglWaitGL
+        case eglWaitGL_INDEX:
+            call_eglWaitGL(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglWaitNative
+        case eglWaitNative_INDEX:
+            call_eglWaitNative(packed, ret_v);
+            break;
+        #endif
+        #ifndef skip_index_eglWaitSyncKHR
+        case eglWaitSyncKHR_INDEX:
+            call_eglWaitSyncKHR(packed, ret_v);
+            break;
+        #endif
         #ifndef skip_index_glActiveTexture
         case glActiveTexture_INDEX:
             call_glActiveTexture(packed, ret_v);
@@ -2563,6 +2933,432 @@ void glIndexedCall(const packed_call_t *packed, void *ret_v) {
 
 void glIndexedPrint(const packed_call_t *packed) {
     switch (packed->index) {
+        case eglBindAPI_INDEX: {
+            eglBindAPI_PACKED *unpacked = (eglBindAPI_PACKED *)packed;
+            eglBindAPI_ARGS *args = (eglBindAPI_ARGS *)&unpacked->args;
+            printf("eglBindAPI(%p);\n", args->api);
+            break;
+        }
+        case eglBindTexImage_INDEX: {
+            eglBindTexImage_PACKED *unpacked = (eglBindTexImage_PACKED *)packed;
+            eglBindTexImage_ARGS *args = (eglBindTexImage_ARGS *)&unpacked->args;
+            printf("eglBindTexImage(%p, %p, %p);\n", args->dpy, args->surface, args->buffer);
+            break;
+        }
+        case eglChooseConfig_INDEX: {
+            eglChooseConfig_PACKED *unpacked = (eglChooseConfig_PACKED *)packed;
+            eglChooseConfig_ARGS *args = (eglChooseConfig_ARGS *)&unpacked->args;
+            printf("eglChooseConfig(%p, %p, %p, %p, %p);\n", args->dpy, args->attrib_list, args->configs, args->config_size, args->num_config);
+            break;
+        }
+        case eglClientWaitSyncKHR_INDEX: {
+            eglClientWaitSyncKHR_PACKED *unpacked = (eglClientWaitSyncKHR_PACKED *)packed;
+            eglClientWaitSyncKHR_ARGS *args = (eglClientWaitSyncKHR_ARGS *)&unpacked->args;
+            printf("eglClientWaitSyncKHR(%p, %p, %p, %p);\n", args->dpy, args->sync, args->flags, args->timeout);
+            break;
+        }
+        case eglClientWaitSyncNV_INDEX: {
+            eglClientWaitSyncNV_PACKED *unpacked = (eglClientWaitSyncNV_PACKED *)packed;
+            eglClientWaitSyncNV_ARGS *args = (eglClientWaitSyncNV_ARGS *)&unpacked->args;
+            printf("eglClientWaitSyncNV(%p, %p, %p);\n", args->sync, args->flags, args->timeout);
+            break;
+        }
+        case eglCopyBuffers_INDEX: {
+            eglCopyBuffers_PACKED *unpacked = (eglCopyBuffers_PACKED *)packed;
+            eglCopyBuffers_ARGS *args = (eglCopyBuffers_ARGS *)&unpacked->args;
+            printf("eglCopyBuffers(%p, %p, %p);\n", args->dpy, args->surface, args->target);
+            break;
+        }
+        case eglCreateContext_INDEX: {
+            eglCreateContext_PACKED *unpacked = (eglCreateContext_PACKED *)packed;
+            eglCreateContext_ARGS *args = (eglCreateContext_ARGS *)&unpacked->args;
+            printf("eglCreateContext(%p, %p, %p, %p);\n", args->dpy, args->config, args->share_context, args->attrib_list);
+            break;
+        }
+        case eglCreateDRMImageMESA_INDEX: {
+            eglCreateDRMImageMESA_PACKED *unpacked = (eglCreateDRMImageMESA_PACKED *)packed;
+            eglCreateDRMImageMESA_ARGS *args = (eglCreateDRMImageMESA_ARGS *)&unpacked->args;
+            printf("eglCreateDRMImageMESA(%p, %p);\n", args->dpy, args->attrib_list);
+            break;
+        }
+        case eglCreateFenceSyncNV_INDEX: {
+            eglCreateFenceSyncNV_PACKED *unpacked = (eglCreateFenceSyncNV_PACKED *)packed;
+            eglCreateFenceSyncNV_ARGS *args = (eglCreateFenceSyncNV_ARGS *)&unpacked->args;
+            printf("eglCreateFenceSyncNV(%p, %p, %p);\n", args->dpy, args->condition, args->attrib_list);
+            break;
+        }
+        case eglCreateImageKHR_INDEX: {
+            eglCreateImageKHR_PACKED *unpacked = (eglCreateImageKHR_PACKED *)packed;
+            eglCreateImageKHR_ARGS *args = (eglCreateImageKHR_ARGS *)&unpacked->args;
+            printf("eglCreateImageKHR(%p, %p, %p, %p, %p);\n", args->dpy, args->ctx, args->target, args->buffer, args->attrib_list);
+            break;
+        }
+        case eglCreatePbufferFromClientBuffer_INDEX: {
+            eglCreatePbufferFromClientBuffer_PACKED *unpacked = (eglCreatePbufferFromClientBuffer_PACKED *)packed;
+            eglCreatePbufferFromClientBuffer_ARGS *args = (eglCreatePbufferFromClientBuffer_ARGS *)&unpacked->args;
+            printf("eglCreatePbufferFromClientBuffer(%p, %p, %p, %p, %p);\n", args->dpy, args->buftype, args->buffer, args->config, args->attrib_list);
+            break;
+        }
+        case eglCreatePbufferSurface_INDEX: {
+            eglCreatePbufferSurface_PACKED *unpacked = (eglCreatePbufferSurface_PACKED *)packed;
+            eglCreatePbufferSurface_ARGS *args = (eglCreatePbufferSurface_ARGS *)&unpacked->args;
+            printf("eglCreatePbufferSurface(%p, %p, %p);\n", args->dpy, args->config, args->attrib_list);
+            break;
+        }
+        case eglCreatePixmapSurface_INDEX: {
+            eglCreatePixmapSurface_PACKED *unpacked = (eglCreatePixmapSurface_PACKED *)packed;
+            eglCreatePixmapSurface_ARGS *args = (eglCreatePixmapSurface_ARGS *)&unpacked->args;
+            printf("eglCreatePixmapSurface(%p, %p, %p, %p);\n", args->dpy, args->config, args->pixmap, args->attrib_list);
+            break;
+        }
+        case eglCreatePixmapSurfaceHI_INDEX: {
+            eglCreatePixmapSurfaceHI_PACKED *unpacked = (eglCreatePixmapSurfaceHI_PACKED *)packed;
+            eglCreatePixmapSurfaceHI_ARGS *args = (eglCreatePixmapSurfaceHI_ARGS *)&unpacked->args;
+            printf("eglCreatePixmapSurfaceHI(%p, %p, %p);\n", args->dpy, args->config, args->pixmap);
+            break;
+        }
+        case eglCreateStreamFromFileDescriptorKHR_INDEX: {
+            eglCreateStreamFromFileDescriptorKHR_PACKED *unpacked = (eglCreateStreamFromFileDescriptorKHR_PACKED *)packed;
+            eglCreateStreamFromFileDescriptorKHR_ARGS *args = (eglCreateStreamFromFileDescriptorKHR_ARGS *)&unpacked->args;
+            printf("eglCreateStreamFromFileDescriptorKHR(%p, %p);\n", args->dpy, args->file_descriptor);
+            break;
+        }
+        case eglCreateStreamKHR_INDEX: {
+            eglCreateStreamKHR_PACKED *unpacked = (eglCreateStreamKHR_PACKED *)packed;
+            eglCreateStreamKHR_ARGS *args = (eglCreateStreamKHR_ARGS *)&unpacked->args;
+            printf("eglCreateStreamKHR(%p, %p);\n", args->dpy, args->attrib_list);
+            break;
+        }
+        case eglCreateStreamProducerSurfaceKHR_INDEX: {
+            eglCreateStreamProducerSurfaceKHR_PACKED *unpacked = (eglCreateStreamProducerSurfaceKHR_PACKED *)packed;
+            eglCreateStreamProducerSurfaceKHR_ARGS *args = (eglCreateStreamProducerSurfaceKHR_ARGS *)&unpacked->args;
+            printf("eglCreateStreamProducerSurfaceKHR(%p, %p, %p, %p);\n", args->dpy, args->config, args->stream, args->attrib_list);
+            break;
+        }
+        case eglCreateSyncKHR_INDEX: {
+            eglCreateSyncKHR_PACKED *unpacked = (eglCreateSyncKHR_PACKED *)packed;
+            eglCreateSyncKHR_ARGS *args = (eglCreateSyncKHR_ARGS *)&unpacked->args;
+            printf("eglCreateSyncKHR(%p, %p, %p);\n", args->dpy, args->type, args->attrib_list);
+            break;
+        }
+        case eglCreateWindowSurface_INDEX: {
+            eglCreateWindowSurface_PACKED *unpacked = (eglCreateWindowSurface_PACKED *)packed;
+            eglCreateWindowSurface_ARGS *args = (eglCreateWindowSurface_ARGS *)&unpacked->args;
+            printf("eglCreateWindowSurface(%p, %p, %p, %p);\n", args->dpy, args->config, args->win, args->attrib_list);
+            break;
+        }
+        case eglDestroyContext_INDEX: {
+            eglDestroyContext_PACKED *unpacked = (eglDestroyContext_PACKED *)packed;
+            eglDestroyContext_ARGS *args = (eglDestroyContext_ARGS *)&unpacked->args;
+            printf("eglDestroyContext(%p, %p);\n", args->dpy, args->ctx);
+            break;
+        }
+        case eglDestroyImageKHR_INDEX: {
+            eglDestroyImageKHR_PACKED *unpacked = (eglDestroyImageKHR_PACKED *)packed;
+            eglDestroyImageKHR_ARGS *args = (eglDestroyImageKHR_ARGS *)&unpacked->args;
+            printf("eglDestroyImageKHR(%p, %p);\n", args->dpy, args->image);
+            break;
+        }
+        case eglDestroyStreamKHR_INDEX: {
+            eglDestroyStreamKHR_PACKED *unpacked = (eglDestroyStreamKHR_PACKED *)packed;
+            eglDestroyStreamKHR_ARGS *args = (eglDestroyStreamKHR_ARGS *)&unpacked->args;
+            printf("eglDestroyStreamKHR(%p, %p);\n", args->dpy, args->stream);
+            break;
+        }
+        case eglDestroySurface_INDEX: {
+            eglDestroySurface_PACKED *unpacked = (eglDestroySurface_PACKED *)packed;
+            eglDestroySurface_ARGS *args = (eglDestroySurface_ARGS *)&unpacked->args;
+            printf("eglDestroySurface(%p, %p);\n", args->dpy, args->surface);
+            break;
+        }
+        case eglDestroySyncKHR_INDEX: {
+            eglDestroySyncKHR_PACKED *unpacked = (eglDestroySyncKHR_PACKED *)packed;
+            eglDestroySyncKHR_ARGS *args = (eglDestroySyncKHR_ARGS *)&unpacked->args;
+            printf("eglDestroySyncKHR(%p, %p);\n", args->dpy, args->sync);
+            break;
+        }
+        case eglDestroySyncNV_INDEX: {
+            eglDestroySyncNV_PACKED *unpacked = (eglDestroySyncNV_PACKED *)packed;
+            eglDestroySyncNV_ARGS *args = (eglDestroySyncNV_ARGS *)&unpacked->args;
+            printf("eglDestroySyncNV(%p);\n", args->sync);
+            break;
+        }
+        case eglDupNativeFenceFDANDROID_INDEX: {
+            eglDupNativeFenceFDANDROID_PACKED *unpacked = (eglDupNativeFenceFDANDROID_PACKED *)packed;
+            eglDupNativeFenceFDANDROID_ARGS *args = (eglDupNativeFenceFDANDROID_ARGS *)&unpacked->args;
+            printf("eglDupNativeFenceFDANDROID(%p, %p);\n", args->dpy, args->sync);
+            break;
+        }
+        case eglExportDRMImageMESA_INDEX: {
+            eglExportDRMImageMESA_PACKED *unpacked = (eglExportDRMImageMESA_PACKED *)packed;
+            eglExportDRMImageMESA_ARGS *args = (eglExportDRMImageMESA_ARGS *)&unpacked->args;
+            printf("eglExportDRMImageMESA(%p, %p, %p, %p, %p);\n", args->dpy, args->image, args->name, args->handle, args->stride);
+            break;
+        }
+        case eglFenceNV_INDEX: {
+            eglFenceNV_PACKED *unpacked = (eglFenceNV_PACKED *)packed;
+            eglFenceNV_ARGS *args = (eglFenceNV_ARGS *)&unpacked->args;
+            printf("eglFenceNV(%p);\n", args->sync);
+            break;
+        }
+        case eglGetConfigAttrib_INDEX: {
+            eglGetConfigAttrib_PACKED *unpacked = (eglGetConfigAttrib_PACKED *)packed;
+            eglGetConfigAttrib_ARGS *args = (eglGetConfigAttrib_ARGS *)&unpacked->args;
+            printf("eglGetConfigAttrib(%p, %p, %p, %p);\n", args->dpy, args->config, args->attribute, args->value);
+            break;
+        }
+        case eglGetConfigs_INDEX: {
+            eglGetConfigs_PACKED *unpacked = (eglGetConfigs_PACKED *)packed;
+            eglGetConfigs_ARGS *args = (eglGetConfigs_ARGS *)&unpacked->args;
+            printf("eglGetConfigs(%p, %p, %p, %p);\n", args->dpy, args->configs, args->config_size, args->num_config);
+            break;
+        }
+        case eglGetCurrentContext_INDEX: {
+            printf("eglGetCurrentContext();\n");
+            break;
+        }
+        case eglGetCurrentDisplay_INDEX: {
+            printf("eglGetCurrentDisplay();\n");
+            break;
+        }
+        case eglGetCurrentSurface_INDEX: {
+            eglGetCurrentSurface_PACKED *unpacked = (eglGetCurrentSurface_PACKED *)packed;
+            eglGetCurrentSurface_ARGS *args = (eglGetCurrentSurface_ARGS *)&unpacked->args;
+            printf("eglGetCurrentSurface(%p);\n", args->readdraw);
+            break;
+        }
+        case eglGetDisplay_INDEX: {
+            eglGetDisplay_PACKED *unpacked = (eglGetDisplay_PACKED *)packed;
+            eglGetDisplay_ARGS *args = (eglGetDisplay_ARGS *)&unpacked->args;
+            printf("eglGetDisplay(%p);\n", args->display_id);
+            break;
+        }
+        case eglGetError_INDEX: {
+            printf("eglGetError();\n");
+            break;
+        }
+        case eglGetProcAddress_INDEX: {
+            eglGetProcAddress_PACKED *unpacked = (eglGetProcAddress_PACKED *)packed;
+            eglGetProcAddress_ARGS *args = (eglGetProcAddress_ARGS *)&unpacked->args;
+            printf("eglGetProcAddress(%p);\n", args->procname);
+            break;
+        }
+        case eglGetStreamFileDescriptorKHR_INDEX: {
+            eglGetStreamFileDescriptorKHR_PACKED *unpacked = (eglGetStreamFileDescriptorKHR_PACKED *)packed;
+            eglGetStreamFileDescriptorKHR_ARGS *args = (eglGetStreamFileDescriptorKHR_ARGS *)&unpacked->args;
+            printf("eglGetStreamFileDescriptorKHR(%p, %p);\n", args->dpy, args->stream);
+            break;
+        }
+        case eglGetSyncAttribKHR_INDEX: {
+            eglGetSyncAttribKHR_PACKED *unpacked = (eglGetSyncAttribKHR_PACKED *)packed;
+            eglGetSyncAttribKHR_ARGS *args = (eglGetSyncAttribKHR_ARGS *)&unpacked->args;
+            printf("eglGetSyncAttribKHR(%p, %p, %p, %p);\n", args->dpy, args->sync, args->attribute, args->value);
+            break;
+        }
+        case eglGetSyncAttribNV_INDEX: {
+            eglGetSyncAttribNV_PACKED *unpacked = (eglGetSyncAttribNV_PACKED *)packed;
+            eglGetSyncAttribNV_ARGS *args = (eglGetSyncAttribNV_ARGS *)&unpacked->args;
+            printf("eglGetSyncAttribNV(%p, %p, %p);\n", args->sync, args->attribute, args->value);
+            break;
+        }
+        case eglGetSystemTimeFrequencyNV_INDEX: {
+            printf("eglGetSystemTimeFrequencyNV();\n");
+            break;
+        }
+        case eglGetSystemTimeNV_INDEX: {
+            printf("eglGetSystemTimeNV();\n");
+            break;
+        }
+        case eglInitialize_INDEX: {
+            eglInitialize_PACKED *unpacked = (eglInitialize_PACKED *)packed;
+            eglInitialize_ARGS *args = (eglInitialize_ARGS *)&unpacked->args;
+            printf("eglInitialize(%p, %p, %p);\n", args->dpy, args->major, args->minor);
+            break;
+        }
+        case eglLockSurfaceKHR_INDEX: {
+            eglLockSurfaceKHR_PACKED *unpacked = (eglLockSurfaceKHR_PACKED *)packed;
+            eglLockSurfaceKHR_ARGS *args = (eglLockSurfaceKHR_ARGS *)&unpacked->args;
+            printf("eglLockSurfaceKHR(%p, %p, %p);\n", args->display, args->surface, args->attrib_list);
+            break;
+        }
+        case eglMakeCurrent_INDEX: {
+            eglMakeCurrent_PACKED *unpacked = (eglMakeCurrent_PACKED *)packed;
+            eglMakeCurrent_ARGS *args = (eglMakeCurrent_ARGS *)&unpacked->args;
+            printf("eglMakeCurrent(%p, %p, %p, %p);\n", args->dpy, args->draw, args->read, args->ctx);
+            break;
+        }
+        case eglPostSubBufferNV_INDEX: {
+            eglPostSubBufferNV_PACKED *unpacked = (eglPostSubBufferNV_PACKED *)packed;
+            eglPostSubBufferNV_ARGS *args = (eglPostSubBufferNV_ARGS *)&unpacked->args;
+            printf("eglPostSubBufferNV(%p, %p, %p, %p, %p, %p);\n", args->dpy, args->surface, args->x, args->y, args->width, args->height);
+            break;
+        }
+        case eglQueryAPI_INDEX: {
+            printf("eglQueryAPI();\n");
+            break;
+        }
+        case eglQueryContext_INDEX: {
+            eglQueryContext_PACKED *unpacked = (eglQueryContext_PACKED *)packed;
+            eglQueryContext_ARGS *args = (eglQueryContext_ARGS *)&unpacked->args;
+            printf("eglQueryContext(%p, %p, %p, %p);\n", args->dpy, args->ctx, args->attribute, args->value);
+            break;
+        }
+        case eglQueryNativeDisplayNV_INDEX: {
+            eglQueryNativeDisplayNV_PACKED *unpacked = (eglQueryNativeDisplayNV_PACKED *)packed;
+            eglQueryNativeDisplayNV_ARGS *args = (eglQueryNativeDisplayNV_ARGS *)&unpacked->args;
+            printf("eglQueryNativeDisplayNV(%p, %p);\n", args->dpy, args->display_id);
+            break;
+        }
+        case eglQueryNativePixmapNV_INDEX: {
+            eglQueryNativePixmapNV_PACKED *unpacked = (eglQueryNativePixmapNV_PACKED *)packed;
+            eglQueryNativePixmapNV_ARGS *args = (eglQueryNativePixmapNV_ARGS *)&unpacked->args;
+            printf("eglQueryNativePixmapNV(%p, %p, %p);\n", args->dpy, args->surf, args->pixmap);
+            break;
+        }
+        case eglQueryNativeWindowNV_INDEX: {
+            eglQueryNativeWindowNV_PACKED *unpacked = (eglQueryNativeWindowNV_PACKED *)packed;
+            eglQueryNativeWindowNV_ARGS *args = (eglQueryNativeWindowNV_ARGS *)&unpacked->args;
+            printf("eglQueryNativeWindowNV(%p, %p, %p);\n", args->dpy, args->surf, args->window);
+            break;
+        }
+        case eglQueryStreamKHR_INDEX: {
+            eglQueryStreamKHR_PACKED *unpacked = (eglQueryStreamKHR_PACKED *)packed;
+            eglQueryStreamKHR_ARGS *args = (eglQueryStreamKHR_ARGS *)&unpacked->args;
+            printf("eglQueryStreamKHR(%p, %p, %p, %p);\n", args->dpy, args->stream, args->attribute, args->value);
+            break;
+        }
+        case eglQueryStreamTimeKHR_INDEX: {
+            eglQueryStreamTimeKHR_PACKED *unpacked = (eglQueryStreamTimeKHR_PACKED *)packed;
+            eglQueryStreamTimeKHR_ARGS *args = (eglQueryStreamTimeKHR_ARGS *)&unpacked->args;
+            printf("eglQueryStreamTimeKHR(%p, %p, %p, %p);\n", args->dpy, args->stream, args->attribute, args->value);
+            break;
+        }
+        case eglQueryStreamu64KHR_INDEX: {
+            eglQueryStreamu64KHR_PACKED *unpacked = (eglQueryStreamu64KHR_PACKED *)packed;
+            eglQueryStreamu64KHR_ARGS *args = (eglQueryStreamu64KHR_ARGS *)&unpacked->args;
+            printf("eglQueryStreamu64KHR(%p, %p, %p, %p);\n", args->dpy, args->stream, args->attribute, args->value);
+            break;
+        }
+        case eglQueryString_INDEX: {
+            eglQueryString_PACKED *unpacked = (eglQueryString_PACKED *)packed;
+            eglQueryString_ARGS *args = (eglQueryString_ARGS *)&unpacked->args;
+            printf("eglQueryString(%p, %p);\n", args->dpy, args->name);
+            break;
+        }
+        case eglQuerySurface_INDEX: {
+            eglQuerySurface_PACKED *unpacked = (eglQuerySurface_PACKED *)packed;
+            eglQuerySurface_ARGS *args = (eglQuerySurface_ARGS *)&unpacked->args;
+            printf("eglQuerySurface(%p, %p, %p, %p);\n", args->dpy, args->surface, args->attribute, args->value);
+            break;
+        }
+        case eglQuerySurfacePointerANGLE_INDEX: {
+            eglQuerySurfacePointerANGLE_PACKED *unpacked = (eglQuerySurfacePointerANGLE_PACKED *)packed;
+            eglQuerySurfacePointerANGLE_ARGS *args = (eglQuerySurfacePointerANGLE_ARGS *)&unpacked->args;
+            printf("eglQuerySurfacePointerANGLE(%p, %p, %p, %p);\n", args->dpy, args->surface, args->attribute, args->value);
+            break;
+        }
+        case eglReleaseTexImage_INDEX: {
+            eglReleaseTexImage_PACKED *unpacked = (eglReleaseTexImage_PACKED *)packed;
+            eglReleaseTexImage_ARGS *args = (eglReleaseTexImage_ARGS *)&unpacked->args;
+            printf("eglReleaseTexImage(%p, %p, %p);\n", args->dpy, args->surface, args->buffer);
+            break;
+        }
+        case eglReleaseThread_INDEX: {
+            printf("eglReleaseThread();\n");
+            break;
+        }
+        case eglSignalSyncKHR_INDEX: {
+            eglSignalSyncKHR_PACKED *unpacked = (eglSignalSyncKHR_PACKED *)packed;
+            eglSignalSyncKHR_ARGS *args = (eglSignalSyncKHR_ARGS *)&unpacked->args;
+            printf("eglSignalSyncKHR(%p, %p, %p);\n", args->dpy, args->sync, args->mode);
+            break;
+        }
+        case eglSignalSyncNV_INDEX: {
+            eglSignalSyncNV_PACKED *unpacked = (eglSignalSyncNV_PACKED *)packed;
+            eglSignalSyncNV_ARGS *args = (eglSignalSyncNV_ARGS *)&unpacked->args;
+            printf("eglSignalSyncNV(%p, %p);\n", args->sync, args->mode);
+            break;
+        }
+        case eglStreamAttribKHR_INDEX: {
+            eglStreamAttribKHR_PACKED *unpacked = (eglStreamAttribKHR_PACKED *)packed;
+            eglStreamAttribKHR_ARGS *args = (eglStreamAttribKHR_ARGS *)&unpacked->args;
+            printf("eglStreamAttribKHR(%p, %p, %p, %p);\n", args->dpy, args->stream, args->attribute, args->value);
+            break;
+        }
+        case eglStreamConsumerAcquireKHR_INDEX: {
+            eglStreamConsumerAcquireKHR_PACKED *unpacked = (eglStreamConsumerAcquireKHR_PACKED *)packed;
+            eglStreamConsumerAcquireKHR_ARGS *args = (eglStreamConsumerAcquireKHR_ARGS *)&unpacked->args;
+            printf("eglStreamConsumerAcquireKHR(%p, %p);\n", args->dpy, args->stream);
+            break;
+        }
+        case eglStreamConsumerGLTextureExternalKHR_INDEX: {
+            eglStreamConsumerGLTextureExternalKHR_PACKED *unpacked = (eglStreamConsumerGLTextureExternalKHR_PACKED *)packed;
+            eglStreamConsumerGLTextureExternalKHR_ARGS *args = (eglStreamConsumerGLTextureExternalKHR_ARGS *)&unpacked->args;
+            printf("eglStreamConsumerGLTextureExternalKHR(%p, %p);\n", args->dpy, args->stream);
+            break;
+        }
+        case eglStreamConsumerReleaseKHR_INDEX: {
+            eglStreamConsumerReleaseKHR_PACKED *unpacked = (eglStreamConsumerReleaseKHR_PACKED *)packed;
+            eglStreamConsumerReleaseKHR_ARGS *args = (eglStreamConsumerReleaseKHR_ARGS *)&unpacked->args;
+            printf("eglStreamConsumerReleaseKHR(%p, %p);\n", args->dpy, args->stream);
+            break;
+        }
+        case eglSurfaceAttrib_INDEX: {
+            eglSurfaceAttrib_PACKED *unpacked = (eglSurfaceAttrib_PACKED *)packed;
+            eglSurfaceAttrib_ARGS *args = (eglSurfaceAttrib_ARGS *)&unpacked->args;
+            printf("eglSurfaceAttrib(%p, %p, %p, %p);\n", args->dpy, args->surface, args->attribute, args->value);
+            break;
+        }
+        case eglSwapBuffers_INDEX: {
+            eglSwapBuffers_PACKED *unpacked = (eglSwapBuffers_PACKED *)packed;
+            eglSwapBuffers_ARGS *args = (eglSwapBuffers_ARGS *)&unpacked->args;
+            printf("eglSwapBuffers(%p, %p);\n", args->dpy, args->surface);
+            break;
+        }
+        case eglSwapBuffersWithDamageEXT_INDEX: {
+            eglSwapBuffersWithDamageEXT_PACKED *unpacked = (eglSwapBuffersWithDamageEXT_PACKED *)packed;
+            eglSwapBuffersWithDamageEXT_ARGS *args = (eglSwapBuffersWithDamageEXT_ARGS *)&unpacked->args;
+            printf("eglSwapBuffersWithDamageEXT(%p, %p, %p, %p);\n", args->dpy, args->surface, args->rects, args->n_rects);
+            break;
+        }
+        case eglSwapInterval_INDEX: {
+            eglSwapInterval_PACKED *unpacked = (eglSwapInterval_PACKED *)packed;
+            eglSwapInterval_ARGS *args = (eglSwapInterval_ARGS *)&unpacked->args;
+            printf("eglSwapInterval(%p, %p);\n", args->dpy, args->interval);
+            break;
+        }
+        case eglTerminate_INDEX: {
+            eglTerminate_PACKED *unpacked = (eglTerminate_PACKED *)packed;
+            eglTerminate_ARGS *args = (eglTerminate_ARGS *)&unpacked->args;
+            printf("eglTerminate(%p);\n", args->dpy);
+            break;
+        }
+        case eglUnlockSurfaceKHR_INDEX: {
+            eglUnlockSurfaceKHR_PACKED *unpacked = (eglUnlockSurfaceKHR_PACKED *)packed;
+            eglUnlockSurfaceKHR_ARGS *args = (eglUnlockSurfaceKHR_ARGS *)&unpacked->args;
+            printf("eglUnlockSurfaceKHR(%p, %p);\n", args->display, args->surface);
+            break;
+        }
+        case eglWaitClient_INDEX: {
+            printf("eglWaitClient();\n");
+            break;
+        }
+        case eglWaitGL_INDEX: {
+            printf("eglWaitGL();\n");
+            break;
+        }
+        case eglWaitNative_INDEX: {
+            eglWaitNative_PACKED *unpacked = (eglWaitNative_PACKED *)packed;
+            eglWaitNative_ARGS *args = (eglWaitNative_ARGS *)&unpacked->args;
+            printf("eglWaitNative(%p);\n", args->engine);
+            break;
+        }
+        case eglWaitSyncKHR_INDEX: {
+            eglWaitSyncKHR_PACKED *unpacked = (eglWaitSyncKHR_PACKED *)packed;
+            eglWaitSyncKHR_ARGS *args = (eglWaitSyncKHR_ARGS *)&unpacked->args;
+            printf("eglWaitSyncKHR(%p, %p, %p);\n", args->dpy, args->sync, args->flags);
+            break;
+        }
         case glActiveTexture_INDEX: {
             glActiveTexture_PACKED *unpacked = (glActiveTexture_PACKED *)packed;
             glActiveTexture_ARGS *args = (glActiveTexture_ARGS *)&unpacked->args;
@@ -5595,6 +6391,80 @@ void glIndexedPrint(const packed_call_t *packed) {
 
 const int INDEX_RET_SIZE[] = {
     0,
+    [eglBindAPI_INDEX] =     sizeof(EGLBoolean),
+    [eglBindTexImage_INDEX] =     sizeof(EGLBoolean),
+    [eglChooseConfig_INDEX] =     sizeof(EGLBoolean),
+    [eglClientWaitSyncKHR_INDEX] =     sizeof(EGLint),
+    [eglClientWaitSyncNV_INDEX] =     sizeof(EGLint),
+    [eglCopyBuffers_INDEX] =     sizeof(EGLBoolean),
+    [eglCreateContext_INDEX] =     sizeof(EGLContext),
+    [eglCreateDRMImageMESA_INDEX] =     sizeof(EGLImageKHR),
+    [eglCreateFenceSyncNV_INDEX] =     sizeof(EGLSyncNV),
+    [eglCreateImageKHR_INDEX] =     sizeof(EGLImageKHR),
+    [eglCreatePbufferFromClientBuffer_INDEX] =     sizeof(EGLSurface),
+    [eglCreatePbufferSurface_INDEX] =     sizeof(EGLSurface),
+    [eglCreatePixmapSurface_INDEX] =     sizeof(EGLSurface),
+    [eglCreatePixmapSurfaceHI_INDEX] =     sizeof(EGLSurface),
+    [eglCreateStreamFromFileDescriptorKHR_INDEX] =     sizeof(EGLStreamKHR),
+    [eglCreateStreamKHR_INDEX] =     sizeof(EGLStreamKHR),
+    [eglCreateStreamProducerSurfaceKHR_INDEX] =     sizeof(EGLSurface),
+    [eglCreateSyncKHR_INDEX] =     sizeof(EGLSyncKHR),
+    [eglCreateWindowSurface_INDEX] =     sizeof(EGLSurface),
+    [eglDestroyContext_INDEX] =     sizeof(EGLBoolean),
+    [eglDestroyImageKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglDestroyStreamKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglDestroySurface_INDEX] =     sizeof(EGLBoolean),
+    [eglDestroySyncKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglDestroySyncNV_INDEX] =     sizeof(EGLBoolean),
+    [eglDupNativeFenceFDANDROID_INDEX] =     sizeof(EGLint),
+    [eglExportDRMImageMESA_INDEX] =     sizeof(EGLBoolean),
+    [eglFenceNV_INDEX] =     sizeof(EGLBoolean),
+    [eglGetConfigAttrib_INDEX] =     sizeof(EGLBoolean),
+    [eglGetConfigs_INDEX] =     sizeof(EGLBoolean),
+    [eglGetCurrentContext_INDEX] =     sizeof(EGLContext),
+    [eglGetCurrentDisplay_INDEX] =     sizeof(EGLDisplay),
+    [eglGetCurrentSurface_INDEX] =     sizeof(EGLSurface),
+    [eglGetDisplay_INDEX] =     sizeof(EGLDisplay),
+    [eglGetError_INDEX] =     sizeof(EGLint),
+    [eglGetProcAddress_INDEX] =     sizeof(__eglMustCastToProperFunctionPointerType),
+    [eglGetStreamFileDescriptorKHR_INDEX] =     sizeof(EGLNativeFileDescriptorKHR),
+    [eglGetSyncAttribKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglGetSyncAttribNV_INDEX] =     sizeof(EGLBoolean),
+    [eglGetSystemTimeFrequencyNV_INDEX] =     sizeof(EGLuint64NV),
+    [eglGetSystemTimeNV_INDEX] =     sizeof(EGLuint64NV),
+    [eglInitialize_INDEX] =     sizeof(EGLBoolean),
+    [eglLockSurfaceKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglMakeCurrent_INDEX] =     sizeof(EGLBoolean),
+    [eglPostSubBufferNV_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryAPI_INDEX] =     sizeof(EGLenum),
+    [eglQueryContext_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryNativeDisplayNV_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryNativePixmapNV_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryNativeWindowNV_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryStreamKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryStreamTimeKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryStreamu64KHR_INDEX] =     sizeof(EGLBoolean),
+    [eglQueryString_INDEX] =     sizeof(const char *),
+    [eglQuerySurface_INDEX] =     sizeof(EGLBoolean),
+    [eglQuerySurfacePointerANGLE_INDEX] =     sizeof(EGLBoolean),
+    [eglReleaseTexImage_INDEX] =     sizeof(EGLBoolean),
+    [eglReleaseThread_INDEX] =     sizeof(EGLBoolean),
+    [eglSignalSyncKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglSignalSyncNV_INDEX] =     sizeof(EGLBoolean),
+    [eglStreamAttribKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglStreamConsumerAcquireKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglStreamConsumerGLTextureExternalKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglStreamConsumerReleaseKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglSurfaceAttrib_INDEX] =     sizeof(EGLBoolean),
+    [eglSwapBuffers_INDEX] =     sizeof(EGLBoolean),
+    [eglSwapBuffersWithDamageEXT_INDEX] =     sizeof(EGLBoolean),
+    [eglSwapInterval_INDEX] =     sizeof(EGLBoolean),
+    [eglTerminate_INDEX] =     sizeof(EGLBoolean),
+    [eglUnlockSurfaceKHR_INDEX] =     sizeof(EGLBoolean),
+    [eglWaitClient_INDEX] =     sizeof(EGLBoolean),
+    [eglWaitGL_INDEX] =     sizeof(EGLBoolean),
+    [eglWaitNative_INDEX] =     sizeof(EGLBoolean),
+    [eglWaitSyncKHR_INDEX] =     sizeof(EGLint),
     [glActiveTexture_INDEX] =     0,
     [glActiveTextureARB_INDEX] =     0,
     [glAlphaFunc_INDEX] =     0,
@@ -6109,6 +6979,80 @@ const int INDEX_RET_SIZE[] = {
 
 const int INDEX_PACKED_SIZE[] = {
     0,
+    [eglBindAPI_INDEX] = sizeof(eglBindAPI_PACKED),
+    [eglBindTexImage_INDEX] = sizeof(eglBindTexImage_PACKED),
+    [eglChooseConfig_INDEX] = sizeof(eglChooseConfig_PACKED),
+    [eglClientWaitSyncKHR_INDEX] = sizeof(eglClientWaitSyncKHR_PACKED),
+    [eglClientWaitSyncNV_INDEX] = sizeof(eglClientWaitSyncNV_PACKED),
+    [eglCopyBuffers_INDEX] = sizeof(eglCopyBuffers_PACKED),
+    [eglCreateContext_INDEX] = sizeof(eglCreateContext_PACKED),
+    [eglCreateDRMImageMESA_INDEX] = sizeof(eglCreateDRMImageMESA_PACKED),
+    [eglCreateFenceSyncNV_INDEX] = sizeof(eglCreateFenceSyncNV_PACKED),
+    [eglCreateImageKHR_INDEX] = sizeof(eglCreateImageKHR_PACKED),
+    [eglCreatePbufferFromClientBuffer_INDEX] = sizeof(eglCreatePbufferFromClientBuffer_PACKED),
+    [eglCreatePbufferSurface_INDEX] = sizeof(eglCreatePbufferSurface_PACKED),
+    [eglCreatePixmapSurface_INDEX] = sizeof(eglCreatePixmapSurface_PACKED),
+    [eglCreatePixmapSurfaceHI_INDEX] = sizeof(eglCreatePixmapSurfaceHI_PACKED),
+    [eglCreateStreamFromFileDescriptorKHR_INDEX] = sizeof(eglCreateStreamFromFileDescriptorKHR_PACKED),
+    [eglCreateStreamKHR_INDEX] = sizeof(eglCreateStreamKHR_PACKED),
+    [eglCreateStreamProducerSurfaceKHR_INDEX] = sizeof(eglCreateStreamProducerSurfaceKHR_PACKED),
+    [eglCreateSyncKHR_INDEX] = sizeof(eglCreateSyncKHR_PACKED),
+    [eglCreateWindowSurface_INDEX] = sizeof(eglCreateWindowSurface_PACKED),
+    [eglDestroyContext_INDEX] = sizeof(eglDestroyContext_PACKED),
+    [eglDestroyImageKHR_INDEX] = sizeof(eglDestroyImageKHR_PACKED),
+    [eglDestroyStreamKHR_INDEX] = sizeof(eglDestroyStreamKHR_PACKED),
+    [eglDestroySurface_INDEX] = sizeof(eglDestroySurface_PACKED),
+    [eglDestroySyncKHR_INDEX] = sizeof(eglDestroySyncKHR_PACKED),
+    [eglDestroySyncNV_INDEX] = sizeof(eglDestroySyncNV_PACKED),
+    [eglDupNativeFenceFDANDROID_INDEX] = sizeof(eglDupNativeFenceFDANDROID_PACKED),
+    [eglExportDRMImageMESA_INDEX] = sizeof(eglExportDRMImageMESA_PACKED),
+    [eglFenceNV_INDEX] = sizeof(eglFenceNV_PACKED),
+    [eglGetConfigAttrib_INDEX] = sizeof(eglGetConfigAttrib_PACKED),
+    [eglGetConfigs_INDEX] = sizeof(eglGetConfigs_PACKED),
+    [eglGetCurrentContext_INDEX] = sizeof(eglGetCurrentContext_PACKED),
+    [eglGetCurrentDisplay_INDEX] = sizeof(eglGetCurrentDisplay_PACKED),
+    [eglGetCurrentSurface_INDEX] = sizeof(eglGetCurrentSurface_PACKED),
+    [eglGetDisplay_INDEX] = sizeof(eglGetDisplay_PACKED),
+    [eglGetError_INDEX] = sizeof(eglGetError_PACKED),
+    [eglGetProcAddress_INDEX] = sizeof(eglGetProcAddress_PACKED),
+    [eglGetStreamFileDescriptorKHR_INDEX] = sizeof(eglGetStreamFileDescriptorKHR_PACKED),
+    [eglGetSyncAttribKHR_INDEX] = sizeof(eglGetSyncAttribKHR_PACKED),
+    [eglGetSyncAttribNV_INDEX] = sizeof(eglGetSyncAttribNV_PACKED),
+    [eglGetSystemTimeFrequencyNV_INDEX] = sizeof(eglGetSystemTimeFrequencyNV_PACKED),
+    [eglGetSystemTimeNV_INDEX] = sizeof(eglGetSystemTimeNV_PACKED),
+    [eglInitialize_INDEX] = sizeof(eglInitialize_PACKED),
+    [eglLockSurfaceKHR_INDEX] = sizeof(eglLockSurfaceKHR_PACKED),
+    [eglMakeCurrent_INDEX] = sizeof(eglMakeCurrent_PACKED),
+    [eglPostSubBufferNV_INDEX] = sizeof(eglPostSubBufferNV_PACKED),
+    [eglQueryAPI_INDEX] = sizeof(eglQueryAPI_PACKED),
+    [eglQueryContext_INDEX] = sizeof(eglQueryContext_PACKED),
+    [eglQueryNativeDisplayNV_INDEX] = sizeof(eglQueryNativeDisplayNV_PACKED),
+    [eglQueryNativePixmapNV_INDEX] = sizeof(eglQueryNativePixmapNV_PACKED),
+    [eglQueryNativeWindowNV_INDEX] = sizeof(eglQueryNativeWindowNV_PACKED),
+    [eglQueryStreamKHR_INDEX] = sizeof(eglQueryStreamKHR_PACKED),
+    [eglQueryStreamTimeKHR_INDEX] = sizeof(eglQueryStreamTimeKHR_PACKED),
+    [eglQueryStreamu64KHR_INDEX] = sizeof(eglQueryStreamu64KHR_PACKED),
+    [eglQueryString_INDEX] = sizeof(eglQueryString_PACKED),
+    [eglQuerySurface_INDEX] = sizeof(eglQuerySurface_PACKED),
+    [eglQuerySurfacePointerANGLE_INDEX] = sizeof(eglQuerySurfacePointerANGLE_PACKED),
+    [eglReleaseTexImage_INDEX] = sizeof(eglReleaseTexImage_PACKED),
+    [eglReleaseThread_INDEX] = sizeof(eglReleaseThread_PACKED),
+    [eglSignalSyncKHR_INDEX] = sizeof(eglSignalSyncKHR_PACKED),
+    [eglSignalSyncNV_INDEX] = sizeof(eglSignalSyncNV_PACKED),
+    [eglStreamAttribKHR_INDEX] = sizeof(eglStreamAttribKHR_PACKED),
+    [eglStreamConsumerAcquireKHR_INDEX] = sizeof(eglStreamConsumerAcquireKHR_PACKED),
+    [eglStreamConsumerGLTextureExternalKHR_INDEX] = sizeof(eglStreamConsumerGLTextureExternalKHR_PACKED),
+    [eglStreamConsumerReleaseKHR_INDEX] = sizeof(eglStreamConsumerReleaseKHR_PACKED),
+    [eglSurfaceAttrib_INDEX] = sizeof(eglSurfaceAttrib_PACKED),
+    [eglSwapBuffers_INDEX] = sizeof(eglSwapBuffers_PACKED),
+    [eglSwapBuffersWithDamageEXT_INDEX] = sizeof(eglSwapBuffersWithDamageEXT_PACKED),
+    [eglSwapInterval_INDEX] = sizeof(eglSwapInterval_PACKED),
+    [eglTerminate_INDEX] = sizeof(eglTerminate_PACKED),
+    [eglUnlockSurfaceKHR_INDEX] = sizeof(eglUnlockSurfaceKHR_PACKED),
+    [eglWaitClient_INDEX] = sizeof(eglWaitClient_PACKED),
+    [eglWaitGL_INDEX] = sizeof(eglWaitGL_PACKED),
+    [eglWaitNative_INDEX] = sizeof(eglWaitNative_PACKED),
+    [eglWaitSyncKHR_INDEX] = sizeof(eglWaitSyncKHR_PACKED),
     [glActiveTexture_INDEX] = sizeof(glActiveTexture_PACKED),
     [glActiveTextureARB_INDEX] = sizeof(glActiveTextureARB_PACKED),
     [glAlphaFunc_INDEX] = sizeof(glAlphaFunc_PACKED),
@@ -6623,6 +7567,80 @@ const int INDEX_PACKED_SIZE[] = {
 
 const char *INDEX_NAME[] = {
     0,
+    [eglBindAPI_INDEX] = "eglBindAPI",
+    [eglBindTexImage_INDEX] = "eglBindTexImage",
+    [eglChooseConfig_INDEX] = "eglChooseConfig",
+    [eglClientWaitSyncKHR_INDEX] = "eglClientWaitSyncKHR",
+    [eglClientWaitSyncNV_INDEX] = "eglClientWaitSyncNV",
+    [eglCopyBuffers_INDEX] = "eglCopyBuffers",
+    [eglCreateContext_INDEX] = "eglCreateContext",
+    [eglCreateDRMImageMESA_INDEX] = "eglCreateDRMImageMESA",
+    [eglCreateFenceSyncNV_INDEX] = "eglCreateFenceSyncNV",
+    [eglCreateImageKHR_INDEX] = "eglCreateImageKHR",
+    [eglCreatePbufferFromClientBuffer_INDEX] = "eglCreatePbufferFromClientBuffer",
+    [eglCreatePbufferSurface_INDEX] = "eglCreatePbufferSurface",
+    [eglCreatePixmapSurface_INDEX] = "eglCreatePixmapSurface",
+    [eglCreatePixmapSurfaceHI_INDEX] = "eglCreatePixmapSurfaceHI",
+    [eglCreateStreamFromFileDescriptorKHR_INDEX] = "eglCreateStreamFromFileDescriptorKHR",
+    [eglCreateStreamKHR_INDEX] = "eglCreateStreamKHR",
+    [eglCreateStreamProducerSurfaceKHR_INDEX] = "eglCreateStreamProducerSurfaceKHR",
+    [eglCreateSyncKHR_INDEX] = "eglCreateSyncKHR",
+    [eglCreateWindowSurface_INDEX] = "eglCreateWindowSurface",
+    [eglDestroyContext_INDEX] = "eglDestroyContext",
+    [eglDestroyImageKHR_INDEX] = "eglDestroyImageKHR",
+    [eglDestroyStreamKHR_INDEX] = "eglDestroyStreamKHR",
+    [eglDestroySurface_INDEX] = "eglDestroySurface",
+    [eglDestroySyncKHR_INDEX] = "eglDestroySyncKHR",
+    [eglDestroySyncNV_INDEX] = "eglDestroySyncNV",
+    [eglDupNativeFenceFDANDROID_INDEX] = "eglDupNativeFenceFDANDROID",
+    [eglExportDRMImageMESA_INDEX] = "eglExportDRMImageMESA",
+    [eglFenceNV_INDEX] = "eglFenceNV",
+    [eglGetConfigAttrib_INDEX] = "eglGetConfigAttrib",
+    [eglGetConfigs_INDEX] = "eglGetConfigs",
+    [eglGetCurrentContext_INDEX] = "eglGetCurrentContext",
+    [eglGetCurrentDisplay_INDEX] = "eglGetCurrentDisplay",
+    [eglGetCurrentSurface_INDEX] = "eglGetCurrentSurface",
+    [eglGetDisplay_INDEX] = "eglGetDisplay",
+    [eglGetError_INDEX] = "eglGetError",
+    [eglGetProcAddress_INDEX] = "eglGetProcAddress",
+    [eglGetStreamFileDescriptorKHR_INDEX] = "eglGetStreamFileDescriptorKHR",
+    [eglGetSyncAttribKHR_INDEX] = "eglGetSyncAttribKHR",
+    [eglGetSyncAttribNV_INDEX] = "eglGetSyncAttribNV",
+    [eglGetSystemTimeFrequencyNV_INDEX] = "eglGetSystemTimeFrequencyNV",
+    [eglGetSystemTimeNV_INDEX] = "eglGetSystemTimeNV",
+    [eglInitialize_INDEX] = "eglInitialize",
+    [eglLockSurfaceKHR_INDEX] = "eglLockSurfaceKHR",
+    [eglMakeCurrent_INDEX] = "eglMakeCurrent",
+    [eglPostSubBufferNV_INDEX] = "eglPostSubBufferNV",
+    [eglQueryAPI_INDEX] = "eglQueryAPI",
+    [eglQueryContext_INDEX] = "eglQueryContext",
+    [eglQueryNativeDisplayNV_INDEX] = "eglQueryNativeDisplayNV",
+    [eglQueryNativePixmapNV_INDEX] = "eglQueryNativePixmapNV",
+    [eglQueryNativeWindowNV_INDEX] = "eglQueryNativeWindowNV",
+    [eglQueryStreamKHR_INDEX] = "eglQueryStreamKHR",
+    [eglQueryStreamTimeKHR_INDEX] = "eglQueryStreamTimeKHR",
+    [eglQueryStreamu64KHR_INDEX] = "eglQueryStreamu64KHR",
+    [eglQueryString_INDEX] = "eglQueryString",
+    [eglQuerySurface_INDEX] = "eglQuerySurface",
+    [eglQuerySurfacePointerANGLE_INDEX] = "eglQuerySurfacePointerANGLE",
+    [eglReleaseTexImage_INDEX] = "eglReleaseTexImage",
+    [eglReleaseThread_INDEX] = "eglReleaseThread",
+    [eglSignalSyncKHR_INDEX] = "eglSignalSyncKHR",
+    [eglSignalSyncNV_INDEX] = "eglSignalSyncNV",
+    [eglStreamAttribKHR_INDEX] = "eglStreamAttribKHR",
+    [eglStreamConsumerAcquireKHR_INDEX] = "eglStreamConsumerAcquireKHR",
+    [eglStreamConsumerGLTextureExternalKHR_INDEX] = "eglStreamConsumerGLTextureExternalKHR",
+    [eglStreamConsumerReleaseKHR_INDEX] = "eglStreamConsumerReleaseKHR",
+    [eglSurfaceAttrib_INDEX] = "eglSurfaceAttrib",
+    [eglSwapBuffers_INDEX] = "eglSwapBuffers",
+    [eglSwapBuffersWithDamageEXT_INDEX] = "eglSwapBuffersWithDamageEXT",
+    [eglSwapInterval_INDEX] = "eglSwapInterval",
+    [eglTerminate_INDEX] = "eglTerminate",
+    [eglUnlockSurfaceKHR_INDEX] = "eglUnlockSurfaceKHR",
+    [eglWaitClient_INDEX] = "eglWaitClient",
+    [eglWaitGL_INDEX] = "eglWaitGL",
+    [eglWaitNative_INDEX] = "eglWaitNative",
+    [eglWaitSyncKHR_INDEX] = "eglWaitSyncKHR",
     [glActiveTexture_INDEX] = "glActiveTexture",
     [glActiveTextureARB_INDEX] = "glActiveTextureARB",
     [glAlphaFunc_INDEX] = "glAlphaFunc",
@@ -7135,6 +8153,565 @@ const char *INDEX_NAME[] = {
     [glXWaitX_INDEX] = "glXWaitX",
 };
 
+packed_call_t *pack_eglBindAPI(eglBindAPI_PACKED *_dst, EGLenum api) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglBindAPI_PACKED));
+    _dst->index = eglBindAPI_INDEX;
+    _dst->args.api = (EGLenum)api;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglBindTexImage(eglBindTexImage_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLint buffer) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglBindTexImage_PACKED));
+    _dst->index = eglBindTexImage_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.buffer = (EGLint)buffer;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglChooseConfig(eglChooseConfig_PACKED *_dst, EGLDisplay dpy, const EGLint * attrib_list, EGLConfig * configs, EGLint config_size, EGLint * num_config) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglChooseConfig_PACKED));
+    _dst->index = eglChooseConfig_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    _dst->args.configs = (EGLConfig *)configs;
+    _dst->args.config_size = (EGLint)config_size;
+    _dst->args.num_config = (EGLint *)num_config;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglClientWaitSyncKHR(eglClientWaitSyncKHR_PACKED *_dst, EGLDisplay dpy, EGLSyncKHR sync, EGLint flags, EGLTimeKHR timeout) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglClientWaitSyncKHR_PACKED));
+    _dst->index = eglClientWaitSyncKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.sync = (EGLSyncKHR)sync;
+    _dst->args.flags = (EGLint)flags;
+    _dst->args.timeout = (EGLTimeKHR)timeout;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglClientWaitSyncNV(eglClientWaitSyncNV_PACKED *_dst, EGLSyncNV sync, EGLint flags, EGLTimeNV timeout) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglClientWaitSyncNV_PACKED));
+    _dst->index = eglClientWaitSyncNV_INDEX;
+    _dst->args.sync = (EGLSyncNV)sync;
+    _dst->args.flags = (EGLint)flags;
+    _dst->args.timeout = (EGLTimeNV)timeout;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCopyBuffers(eglCopyBuffers_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCopyBuffers_PACKED));
+    _dst->index = eglCopyBuffers_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.target = (EGLNativePixmapType)target;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateContext(eglCreateContext_PACKED *_dst, EGLDisplay dpy, EGLConfig config, EGLContext share_context, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateContext_PACKED));
+    _dst->index = eglCreateContext_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.share_context = (EGLContext)share_context;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateDRMImageMESA(eglCreateDRMImageMESA_PACKED *_dst, EGLDisplay dpy, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateDRMImageMESA_PACKED));
+    _dst->index = eglCreateDRMImageMESA_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateFenceSyncNV(eglCreateFenceSyncNV_PACKED *_dst, EGLDisplay dpy, EGLenum condition, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateFenceSyncNV_PACKED));
+    _dst->index = eglCreateFenceSyncNV_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.condition = (EGLenum)condition;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateImageKHR(eglCreateImageKHR_PACKED *_dst, EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateImageKHR_PACKED));
+    _dst->index = eglCreateImageKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.ctx = (EGLContext)ctx;
+    _dst->args.target = (EGLenum)target;
+    _dst->args.buffer = (EGLClientBuffer)buffer;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreatePbufferFromClientBuffer(eglCreatePbufferFromClientBuffer_PACKED *_dst, EGLDisplay dpy, EGLenum buftype, EGLClientBuffer buffer, EGLConfig config, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreatePbufferFromClientBuffer_PACKED));
+    _dst->index = eglCreatePbufferFromClientBuffer_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.buftype = (EGLenum)buftype;
+    _dst->args.buffer = (EGLClientBuffer)buffer;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreatePbufferSurface(eglCreatePbufferSurface_PACKED *_dst, EGLDisplay dpy, EGLConfig config, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreatePbufferSurface_PACKED));
+    _dst->index = eglCreatePbufferSurface_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreatePixmapSurface(eglCreatePixmapSurface_PACKED *_dst, EGLDisplay dpy, EGLConfig config, EGLNativePixmapType pixmap, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreatePixmapSurface_PACKED));
+    _dst->index = eglCreatePixmapSurface_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.pixmap = (EGLNativePixmapType)pixmap;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreatePixmapSurfaceHI(eglCreatePixmapSurfaceHI_PACKED *_dst, EGLDisplay dpy, EGLConfig config, struct EGLClientPixmapHI * pixmap) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreatePixmapSurfaceHI_PACKED));
+    _dst->index = eglCreatePixmapSurfaceHI_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.pixmap = (struct EGLClientPixmapHI *)pixmap;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateStreamFromFileDescriptorKHR(eglCreateStreamFromFileDescriptorKHR_PACKED *_dst, EGLDisplay dpy, EGLNativeFileDescriptorKHR file_descriptor) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateStreamFromFileDescriptorKHR_PACKED));
+    _dst->index = eglCreateStreamFromFileDescriptorKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.file_descriptor = (EGLNativeFileDescriptorKHR)file_descriptor;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateStreamKHR(eglCreateStreamKHR_PACKED *_dst, EGLDisplay dpy, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateStreamKHR_PACKED));
+    _dst->index = eglCreateStreamKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateStreamProducerSurfaceKHR(eglCreateStreamProducerSurfaceKHR_PACKED *_dst, EGLDisplay dpy, EGLConfig config, EGLStreamKHR stream, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateStreamProducerSurfaceKHR_PACKED));
+    _dst->index = eglCreateStreamProducerSurfaceKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateSyncKHR(eglCreateSyncKHR_PACKED *_dst, EGLDisplay dpy, EGLenum type, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateSyncKHR_PACKED));
+    _dst->index = eglCreateSyncKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.type = (EGLenum)type;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglCreateWindowSurface(eglCreateWindowSurface_PACKED *_dst, EGLDisplay dpy, EGLConfig config, EGLNativeWindowType win, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglCreateWindowSurface_PACKED));
+    _dst->index = eglCreateWindowSurface_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.win = (EGLNativeWindowType)win;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglDestroyContext(eglDestroyContext_PACKED *_dst, EGLDisplay dpy, EGLContext ctx) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglDestroyContext_PACKED));
+    _dst->index = eglDestroyContext_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.ctx = (EGLContext)ctx;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglDestroyImageKHR(eglDestroyImageKHR_PACKED *_dst, EGLDisplay dpy, EGLImageKHR image) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglDestroyImageKHR_PACKED));
+    _dst->index = eglDestroyImageKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.image = (EGLImageKHR)image;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglDestroyStreamKHR(eglDestroyStreamKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglDestroyStreamKHR_PACKED));
+    _dst->index = eglDestroyStreamKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglDestroySurface(eglDestroySurface_PACKED *_dst, EGLDisplay dpy, EGLSurface surface) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglDestroySurface_PACKED));
+    _dst->index = eglDestroySurface_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglDestroySyncKHR(eglDestroySyncKHR_PACKED *_dst, EGLDisplay dpy, EGLSyncKHR sync) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglDestroySyncKHR_PACKED));
+    _dst->index = eglDestroySyncKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.sync = (EGLSyncKHR)sync;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglDestroySyncNV(eglDestroySyncNV_PACKED *_dst, EGLSyncNV sync) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglDestroySyncNV_PACKED));
+    _dst->index = eglDestroySyncNV_INDEX;
+    _dst->args.sync = (EGLSyncNV)sync;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglDupNativeFenceFDANDROID(eglDupNativeFenceFDANDROID_PACKED *_dst, EGLDisplay dpy, EGLSyncKHR sync) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglDupNativeFenceFDANDROID_PACKED));
+    _dst->index = eglDupNativeFenceFDANDROID_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.sync = (EGLSyncKHR)sync;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglExportDRMImageMESA(eglExportDRMImageMESA_PACKED *_dst, EGLDisplay dpy, EGLImageKHR image, EGLint * name, EGLint * handle, EGLint * stride) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglExportDRMImageMESA_PACKED));
+    _dst->index = eglExportDRMImageMESA_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.image = (EGLImageKHR)image;
+    _dst->args.name = (EGLint *)name;
+    _dst->args.handle = (EGLint *)handle;
+    _dst->args.stride = (EGLint *)stride;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglFenceNV(eglFenceNV_PACKED *_dst, EGLSyncNV sync) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglFenceNV_PACKED));
+    _dst->index = eglFenceNV_INDEX;
+    _dst->args.sync = (EGLSyncNV)sync;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetConfigAttrib(eglGetConfigAttrib_PACKED *_dst, EGLDisplay dpy, EGLConfig config, EGLint attribute, EGLint * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetConfigAttrib_PACKED));
+    _dst->index = eglGetConfigAttrib_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.config = (EGLConfig)config;
+    _dst->args.attribute = (EGLint)attribute;
+    _dst->args.value = (EGLint *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetConfigs(eglGetConfigs_PACKED *_dst, EGLDisplay dpy, EGLConfig * configs, EGLint config_size, EGLint * num_config) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetConfigs_PACKED));
+    _dst->index = eglGetConfigs_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.configs = (EGLConfig *)configs;
+    _dst->args.config_size = (EGLint)config_size;
+    _dst->args.num_config = (EGLint *)num_config;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetCurrentContext(eglGetCurrentContext_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetCurrentContext_PACKED));
+    _dst->index = eglGetCurrentContext_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetCurrentDisplay(eglGetCurrentDisplay_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetCurrentDisplay_PACKED));
+    _dst->index = eglGetCurrentDisplay_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetCurrentSurface(eglGetCurrentSurface_PACKED *_dst, EGLint readdraw) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetCurrentSurface_PACKED));
+    _dst->index = eglGetCurrentSurface_INDEX;
+    _dst->args.readdraw = (EGLint)readdraw;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetDisplay(eglGetDisplay_PACKED *_dst, EGLNativeDisplayType display_id) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetDisplay_PACKED));
+    _dst->index = eglGetDisplay_INDEX;
+    _dst->args.display_id = (EGLNativeDisplayType)display_id;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetError(eglGetError_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetError_PACKED));
+    _dst->index = eglGetError_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetProcAddress(eglGetProcAddress_PACKED *_dst, const char * procname) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetProcAddress_PACKED));
+    _dst->index = eglGetProcAddress_INDEX;
+    _dst->args.procname = (char *)procname;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetStreamFileDescriptorKHR(eglGetStreamFileDescriptorKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetStreamFileDescriptorKHR_PACKED));
+    _dst->index = eglGetStreamFileDescriptorKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetSyncAttribKHR(eglGetSyncAttribKHR_PACKED *_dst, EGLDisplay dpy, EGLSyncKHR sync, EGLint attribute, EGLint * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetSyncAttribKHR_PACKED));
+    _dst->index = eglGetSyncAttribKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.sync = (EGLSyncKHR)sync;
+    _dst->args.attribute = (EGLint)attribute;
+    _dst->args.value = (EGLint *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetSyncAttribNV(eglGetSyncAttribNV_PACKED *_dst, EGLSyncNV sync, EGLint attribute, EGLint * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetSyncAttribNV_PACKED));
+    _dst->index = eglGetSyncAttribNV_INDEX;
+    _dst->args.sync = (EGLSyncNV)sync;
+    _dst->args.attribute = (EGLint)attribute;
+    _dst->args.value = (EGLint *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetSystemTimeFrequencyNV(eglGetSystemTimeFrequencyNV_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetSystemTimeFrequencyNV_PACKED));
+    _dst->index = eglGetSystemTimeFrequencyNV_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglGetSystemTimeNV(eglGetSystemTimeNV_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglGetSystemTimeNV_PACKED));
+    _dst->index = eglGetSystemTimeNV_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglInitialize(eglInitialize_PACKED *_dst, EGLDisplay dpy, EGLint * major, EGLint * minor) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglInitialize_PACKED));
+    _dst->index = eglInitialize_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.major = (EGLint *)major;
+    _dst->args.minor = (EGLint *)minor;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglLockSurfaceKHR(eglLockSurfaceKHR_PACKED *_dst, EGLDisplay display, EGLSurface surface, const EGLint * attrib_list) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglLockSurfaceKHR_PACKED));
+    _dst->index = eglLockSurfaceKHR_INDEX;
+    _dst->args.display = (EGLDisplay)display;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.attrib_list = (EGLint *)attrib_list;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglMakeCurrent(eglMakeCurrent_PACKED *_dst, EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglMakeCurrent_PACKED));
+    _dst->index = eglMakeCurrent_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.draw = (EGLSurface)draw;
+    _dst->args.read = (EGLSurface)read;
+    _dst->args.ctx = (EGLContext)ctx;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglPostSubBufferNV(eglPostSubBufferNV_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLint x, EGLint y, EGLint width, EGLint height) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglPostSubBufferNV_PACKED));
+    _dst->index = eglPostSubBufferNV_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.x = (EGLint)x;
+    _dst->args.y = (EGLint)y;
+    _dst->args.width = (EGLint)width;
+    _dst->args.height = (EGLint)height;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryAPI(eglQueryAPI_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryAPI_PACKED));
+    _dst->index = eglQueryAPI_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryContext(eglQueryContext_PACKED *_dst, EGLDisplay dpy, EGLContext ctx, EGLint attribute, EGLint * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryContext_PACKED));
+    _dst->index = eglQueryContext_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.ctx = (EGLContext)ctx;
+    _dst->args.attribute = (EGLint)attribute;
+    _dst->args.value = (EGLint *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryNativeDisplayNV(eglQueryNativeDisplayNV_PACKED *_dst, EGLDisplay dpy, EGLNativeDisplayType * display_id) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryNativeDisplayNV_PACKED));
+    _dst->index = eglQueryNativeDisplayNV_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.display_id = (EGLNativeDisplayType *)display_id;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryNativePixmapNV(eglQueryNativePixmapNV_PACKED *_dst, EGLDisplay dpy, EGLSurface surf, EGLNativePixmapType * pixmap) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryNativePixmapNV_PACKED));
+    _dst->index = eglQueryNativePixmapNV_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surf = (EGLSurface)surf;
+    _dst->args.pixmap = (EGLNativePixmapType *)pixmap;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryNativeWindowNV(eglQueryNativeWindowNV_PACKED *_dst, EGLDisplay dpy, EGLSurface surf, EGLNativeWindowType * window) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryNativeWindowNV_PACKED));
+    _dst->index = eglQueryNativeWindowNV_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surf = (EGLSurface)surf;
+    _dst->args.window = (EGLNativeWindowType *)window;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryStreamKHR(eglQueryStreamKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream, EGLenum attribute, EGLint * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryStreamKHR_PACKED));
+    _dst->index = eglQueryStreamKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    _dst->args.attribute = (EGLenum)attribute;
+    _dst->args.value = (EGLint *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryStreamTimeKHR(eglQueryStreamTimeKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream, EGLenum attribute, EGLTimeKHR * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryStreamTimeKHR_PACKED));
+    _dst->index = eglQueryStreamTimeKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    _dst->args.attribute = (EGLenum)attribute;
+    _dst->args.value = (EGLTimeKHR *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryStreamu64KHR(eglQueryStreamu64KHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream, EGLenum attribute, EGLuint64KHR * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryStreamu64KHR_PACKED));
+    _dst->index = eglQueryStreamu64KHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    _dst->args.attribute = (EGLenum)attribute;
+    _dst->args.value = (EGLuint64KHR *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQueryString(eglQueryString_PACKED *_dst, EGLDisplay dpy, EGLint name) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQueryString_PACKED));
+    _dst->index = eglQueryString_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.name = (EGLint)name;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQuerySurface(eglQuerySurface_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLint attribute, EGLint * value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQuerySurface_PACKED));
+    _dst->index = eglQuerySurface_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.attribute = (EGLint)attribute;
+    _dst->args.value = (EGLint *)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglQuerySurfacePointerANGLE(eglQuerySurfacePointerANGLE_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLint attribute, void ** value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglQuerySurfacePointerANGLE_PACKED));
+    _dst->index = eglQuerySurfacePointerANGLE_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.attribute = (EGLint)attribute;
+    _dst->args.value = (void **)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglReleaseTexImage(eglReleaseTexImage_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLint buffer) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglReleaseTexImage_PACKED));
+    _dst->index = eglReleaseTexImage_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.buffer = (EGLint)buffer;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglReleaseThread(eglReleaseThread_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglReleaseThread_PACKED));
+    _dst->index = eglReleaseThread_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglSignalSyncKHR(eglSignalSyncKHR_PACKED *_dst, EGLDisplay dpy, EGLSyncKHR sync, EGLenum mode) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglSignalSyncKHR_PACKED));
+    _dst->index = eglSignalSyncKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.sync = (EGLSyncKHR)sync;
+    _dst->args.mode = (EGLenum)mode;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglSignalSyncNV(eglSignalSyncNV_PACKED *_dst, EGLSyncNV sync, EGLenum mode) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglSignalSyncNV_PACKED));
+    _dst->index = eglSignalSyncNV_INDEX;
+    _dst->args.sync = (EGLSyncNV)sync;
+    _dst->args.mode = (EGLenum)mode;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglStreamAttribKHR(eglStreamAttribKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream, EGLenum attribute, EGLint value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglStreamAttribKHR_PACKED));
+    _dst->index = eglStreamAttribKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    _dst->args.attribute = (EGLenum)attribute;
+    _dst->args.value = (EGLint)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglStreamConsumerAcquireKHR(eglStreamConsumerAcquireKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglStreamConsumerAcquireKHR_PACKED));
+    _dst->index = eglStreamConsumerAcquireKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglStreamConsumerGLTextureExternalKHR(eglStreamConsumerGLTextureExternalKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglStreamConsumerGLTextureExternalKHR_PACKED));
+    _dst->index = eglStreamConsumerGLTextureExternalKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglStreamConsumerReleaseKHR(eglStreamConsumerReleaseKHR_PACKED *_dst, EGLDisplay dpy, EGLStreamKHR stream) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglStreamConsumerReleaseKHR_PACKED));
+    _dst->index = eglStreamConsumerReleaseKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.stream = (EGLStreamKHR)stream;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglSurfaceAttrib(eglSurfaceAttrib_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLint attribute, EGLint value) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglSurfaceAttrib_PACKED));
+    _dst->index = eglSurfaceAttrib_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.attribute = (EGLint)attribute;
+    _dst->args.value = (EGLint)value;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglSwapBuffers(eglSwapBuffers_PACKED *_dst, EGLDisplay dpy, EGLSurface surface) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglSwapBuffers_PACKED));
+    _dst->index = eglSwapBuffers_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglSwapBuffersWithDamageEXT(eglSwapBuffersWithDamageEXT_PACKED *_dst, EGLDisplay dpy, EGLSurface surface, EGLint * rects, EGLint n_rects) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglSwapBuffersWithDamageEXT_PACKED));
+    _dst->index = eglSwapBuffersWithDamageEXT_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.surface = (EGLSurface)surface;
+    _dst->args.rects = (EGLint *)rects;
+    _dst->args.n_rects = (EGLint)n_rects;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglSwapInterval(eglSwapInterval_PACKED *_dst, EGLDisplay dpy, EGLint interval) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglSwapInterval_PACKED));
+    _dst->index = eglSwapInterval_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.interval = (EGLint)interval;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglTerminate(eglTerminate_PACKED *_dst, EGLDisplay dpy) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglTerminate_PACKED));
+    _dst->index = eglTerminate_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglUnlockSurfaceKHR(eglUnlockSurfaceKHR_PACKED *_dst, EGLDisplay display, EGLSurface surface) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglUnlockSurfaceKHR_PACKED));
+    _dst->index = eglUnlockSurfaceKHR_INDEX;
+    _dst->args.display = (EGLDisplay)display;
+    _dst->args.surface = (EGLSurface)surface;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglWaitClient(eglWaitClient_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglWaitClient_PACKED));
+    _dst->index = eglWaitClient_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglWaitGL(eglWaitGL_PACKED *_dst) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglWaitGL_PACKED));
+    _dst->index = eglWaitGL_INDEX;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglWaitNative(eglWaitNative_PACKED *_dst, EGLint engine) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglWaitNative_PACKED));
+    _dst->index = eglWaitNative_INDEX;
+    _dst->args.engine = (EGLint)engine;
+    return (packed_call_t *)_dst;
+}
+packed_call_t *pack_eglWaitSyncKHR(eglWaitSyncKHR_PACKED *_dst, EGLDisplay dpy, EGLSyncKHR sync, EGLint flags) {
+    if (_dst == NULL) _dst = malloc(sizeof(eglWaitSyncKHR_PACKED));
+    _dst->index = eglWaitSyncKHR_INDEX;
+    _dst->args.dpy = (EGLDisplay)dpy;
+    _dst->args.sync = (EGLSyncKHR)sync;
+    _dst->args.flags = (EGLint)flags;
+    return (packed_call_t *)_dst;
+}
 packed_call_t *pack_glActiveTexture(glActiveTexture_PACKED *_dst, GLenum texture) {
     if (_dst == NULL) _dst = malloc(sizeof(glActiveTexture_PACKED));
     _dst->index = glActiveTexture_INDEX;
