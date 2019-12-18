@@ -19,7 +19,9 @@ GLU
 
 You probably want the glu branch from https://github.com/lunixbochs/glues
 
-    git clone git@github.com:lunixbochs/glues.git; git checkout glu; cmake .; make
+    git clone https://github.com/lunixbochs/glues.git --depth 1 \
+    && cd glues && git checkout glu && cmake . && cmake --build .
+
 
 ----
 
